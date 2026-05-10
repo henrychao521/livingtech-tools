@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>教師後台 ｜ 生活科技互動教學平台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E👨‍🏫%3C/text%3E%3C/svg%3E">
+<style>
+.teacher-theme { --primary: #4F46E5; --primary-dark: #3730A3; --primary-light: #E0E7FF; --primary-glow: rgba(79,70,229,.3); --accent: #EAB308; --accent-light: #FEF9C3; }
+.teacher-theme .brand .logo { filter: drop-shadow(0 2px 4px rgba(79,70,229,.4)); }
+.tab-bar { display:flex; gap:8px; max-width:1100px; margin:0 auto; padding:24px 36px 0; flex-wrap:wrap; }
+.tab-btn { background:#fff; border:1.5px solid var(--border); padding:10px 18px; border-radius:10px; cursor:pointer; font-family:var(--font-sans); font-size:14px; font-weight:600; transition:all .2s; }
+.tab-btn:hover { border-color:var(--primary); }
+.tab-btn.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+.tab-pane { display:none; max-width:1100px; margin:0 auto; padding:30px 36px 60px; }
+.tab-pane.active { display:block; animation:fadeInUp .3s var(--easing); }
+
+.upload-zone { background:#fff; border:2px dashed var(--border-strong); border-radius:18px; padding:40px; text-align:center; transition:all .25s; cursor:pointer; }
+.upload-zone.over { border-color:var(--primary); background:var(--primary-light); }
+.upload-zone .upload-icon { font-size:48px; margin-bottom:10px; }
+.upload-zone h4 { font-size:18px; margin-bottom:6px; }
+.upload-zone p { font-size:13px; color:var(--text-muted); }
+
+.student-table { width:100%; background:#fff; border:1px solid var(--border); border-radius:14px; overflow:hidden; margin-top:24px; }
+.student-table table { width:100%; border-collapse:collapse; font-size:13px; }
+.student-table thead { background:var(--bg-soft); }
+.student-table th { padding:12px 14px; text-align:left; font-weight:700; color:var(--text-soft); border-bottom:1px solid var(--border); }
+.student-table td { padding:10px 14px; border-bottom:1px dashed var(--border); }
+.student-table tr:last-child td { border-bottom:none; }
+.student-table tr:hover { background:var(--bg-soft); }
+.tool-cell { display:inline-flex; align-items:center; gap:6px; font-weight:600; }
+.progress-cell { display:inline-block; width:80px; height:6px; background:var(--bg-soft); border-radius:999px; overflow:hidden; vertical-align:middle; margin-right:6px; }
+.progress-cell-fill { height:100%; background:linear-gradient(90deg,var(--primary),var(--success)); }
+.stars-cell { color:var(--warning); font-size:14px; letter-spacing:1px; }
+
+.resource-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; margin-top:18px; }
+.resource-card { background:#fff; border:1px solid var(--border); border-radius:14px; padding:20px; transition:all .25s; }
+.resource-card:hover { transform:translateY(-2px); box-shadow:var(--shadow-md); border-color:var(--primary); }
+.resource-card .res-icon { font-size:36px; margin-bottom:10px; }
+.resource-card h4 { font-size:16px; margin-bottom:6px; }
+.resource-card p { font-size:13px; color:var(--text-soft); margin-bottom:10px; line-height:1.6; }
+
+.export-btn { display:inline-block; background:var(--success); color:#fff; padding:8px 16px; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; border:none; }
+.export-btn:hover { background:#1e9450; }
+</style>
+</head>
+<body class="teacher-theme">
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">👨‍🏫</span>
+    <div>
+      <h1>教師後台</h1>
+      <p class="subtitle">班級管理 ・ 進度檢視 ・ 教學資源</p>
+    </div>
+  </div>
+  <nav class="topnav">
+    <a href="#dashboard">總覽</a>
+    <a href="#class">班級進度</a>
+    <a href="#resources">教學資源</a>
+    <a href="../" style="color:var(--primary-dark);font-weight:600">← 平台首頁</a>
+  </nav>
+</header>
+
+<main>
+  <div class="tab-bar">
+    <button class="tab-btn active" data-tab="overview">📊 個人進度（本機）</button>
+    <button class="tab-btn" data-tab="class">👥 班級彙整</button>
+    <button class="tab-btn" data-tab="resources">📚 教學資源</button>
+    <button class="tab-btn" data-tab="export">📤 匯出工具</button>
+  </div>
+
+  <div class="tab-pane active" data-tab="overview">
+    <h3 class="section-title" style="text-align:left;font-size:24px">本機學生進度</h3>
+    <p class="muted">從這台瀏覽器（學生個人裝置或共用電腦）讀取的當前進度。</p>
+    <div id="local-progress"></div>
+    <p class="muted" style="font-size:13px;margin-top:20px">💡 教學現場建議流程：學生在自己裝置上完成學習 → 點選工具首頁的「匯出進度」按鈕 → 把 JSON 檔交給老師 → 老師在「班級彙整」分頁上傳所有學生的檔案。</p>
+  </div>
+
+  <div class="tab-pane" data-tab="class">
+    <h3 class="section-title" style="text-align:left;font-size:24px">班級進度彙整</h3>
+    <p class="muted">上傳多名學生的進度 JSON 檔（從學生「匯出進度」取得），系統會合併成班級總表。</p>
+    <label class="upload-zone" id="upload-zone">
+      <div class="upload-icon">📥</div>
+      <h4>拖曳或點擊上傳學生進度 JSON 檔</h4>
+      <p>可一次上傳多份。檔名建議格式：「班級_座號_姓名.json」（例：701_15_王小明.json）</p>
+      <input type="file" id="upload-input" accept=".json" multiple hidden>
+    </label>
+    <div id="class-result"></div>
+  </div>
+
+  <div class="tab-pane" data-tab="resources">
+    <h3 class="section-title" style="text-align:left;font-size:24px">教學資源</h3>
+    <p class="muted">本平台對應 108 課綱、教學排課建議、學習單範本與工具課程銜接。</p>
+
+    <h4 style="margin-top:24px;margin-bottom:8px;font-size:18px">📋 排課建議</h4>
+    <div style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px;line-height:1.9">
+      <p><strong>單元 1（4 節課）：認識與安全</strong></p>
+      <ul style="padding-left:24px;color:var(--text-soft)">
+        <li>第 1 節：模組 1（認識結構） + 模組 2（安全規範）— 必滿分通關</li>
+        <li>第 2 節：模組 3（操作步驟）+ 課堂演示</li>
+        <li>第 3 節：模組 4 模擬練習，課末測驗</li>
+        <li>第 4 節：實體機具操作（先安全的工具）</li>
+      </ul>
+      <p style="margin-top:16px"><strong>單元 2（2–3 節課）：應用與創作</strong></p>
+      <ul style="padding-left:24px;color:var(--text-soft)">
+        <li>模組 5（創作 / 故障排除）</li>
+        <li>個人或小組創作專題</li>
+        <li>成果展示與互評</li>
+      </ul>
+    </div>
+
+    <h4 style="margin-top:32px;margin-bottom:8px;font-size:18px">📂 各工具教學資源</h4>
+    <div class="resource-grid" id="resource-grid"></div>
+
+    <h4 style="margin-top:32px;margin-bottom:8px;font-size:18px">🎓 課綱對應</h4>
+    <div style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px;line-height:1.8">
+      <p style="margin-bottom:8px"><strong>核心素養</strong></p>
+      <ul style="padding-left:24px;color:var(--text-soft)">
+        <li><strong>生 J-A2</strong> 工具與機具的安全使用 — 所有工具的模組 2「安全闖關」對應</li>
+        <li><strong>生 J-B3</strong> 設計與製作能力 — 模組 4「模擬」+ 模組 5「創作」對應</li>
+        <li><strong>自 J-Md</strong> 認識電器與電路 — 電烙鐵、麵包板平台對應</li>
+        <li><strong>科技 J-A2</strong> 數位資源運用 — 3D 印表機平台對應</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tab-pane" data-tab="export">
+    <h3 class="section-title" style="text-align:left;font-size:24px">匯出工具</h3>
+    <p class="muted">把當前瀏覽器的進度匯出成檔案，方便傳給老師或備份。</p>
+    <div class="resource-grid" style="margin-top:18px">
+      <div class="resource-card">
+        <div class="res-icon">📤</div>
+        <h4>匯出個人進度（JSON）</h4>
+        <p>把所有工具的進度合併成一個 JSON 檔。學生用此檔交給老師。</p>
+        <button class="export-btn" onclick="exportProgressJSON()">下載 progress.json</button>
+      </div>
+      <div class="resource-card">
+        <div class="res-icon">📊</div>
+        <h4>匯出班級表（CSV）</h4>
+        <p>需先在「班級彙整」分頁上傳學生檔案。產生 Excel 可開啟的 CSV 表。</p>
+        <button class="export-btn" onclick="exportClassCSV()">下載 class.csv</button>
+      </div>
+      <div class="resource-card">
+        <div class="res-icon">🔄</div>
+        <h4>匯入個人進度</h4>
+        <p>從之前匯出的 JSON 檔還原進度。可用來在不同電腦間同步。</p>
+        <label class="export-btn" style="cursor:pointer">
+          選擇檔案
+          <input type="file" accept=".json" hidden onchange="importProgressJSON(event)">
+        </label>
+      </div>
+      <div class="resource-card">
+        <div class="res-icon">🗑️</div>
+        <h4>清除本機進度</h4>
+        <p>把本機所有工具的進度清空（不可復原）。</p>
+        <button class="export-btn" style="background:var(--danger)" onclick="clearLocalProgress()">清除</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="../js/main.js"></script>
+<script src="../js/audio.js"></script>
+<script src="js/teacher.js"></script>
+</body>
+</html>
