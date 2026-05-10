@@ -59,7 +59,7 @@ php -S localhost:8080
 
 1. 進入 GitHub repo 設定 → Pages
 2. Source 選 `Deploy from a branch` → `main` 分支 → `/ (root)`
-3. 等 1–2 分鐘即可在 `https://<你的帳號>.github.io/scrollsaw-platform/` 使用
+3. 等 1–2 分鐘即可在 `https://<你的帳號>.github.io/livingtech-tools/` 使用
 
 ---
 
@@ -92,7 +92,7 @@ php -S localhost:8080
 ## 🏗 技術架構
 
 ```
-scrollsaw-platform/
+livingtech-tools/
 ├── index.html              # 首頁（模組地圖 + 進度儀表板 + 成就徽章）
 ├── css/
 │   └── style.css           # 全站樣式（含動畫、響應式）
