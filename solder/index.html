@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>數位電烙鐵 ｜ 生活科技互動教學平台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="css/solder.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🔥%3C/text%3E%3C/svg%3E">
+</head>
+<body class="home solder-theme">
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">🔥</span>
+    <div>
+      <h1>數位電烙鐵</h1>
+      <p class="subtitle">生活科技互動教學平台</p>
+    </div>
+  </div>
+  <nav class="topnav">
+    <a href="#modules">學習模組</a>
+    <a href="../index.html">← 切換工具</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-text">
+      <span class="badge">108 課綱・電子電路實作</span>
+      <h2>讓學生第一次焊接<br>就焊出飽滿的焊點</h2>
+      <p>從認識烙鐵、安全規範、操作步驟，到模擬焊接與錯誤對照，五大模組協助學生在真實焊接前先建立正確操作概念與焊點審美。</p>
+      <div class="hero-cta">
+        <a href="pages/module1.html" class="btn btn-primary">開始學習 →</a>
+        <a href="#modules" class="btn btn-ghost">看模組地圖</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <svg viewBox="0 0 480 420" class="hero-iron">
+        <defs>
+          <linearGradient id="ironHandle" x1="0" x2="1" y1="0" y2="0">
+            <stop offset="0" stop-color="#1d4ed8"/>
+            <stop offset=".5" stop-color="#3b82f6"/>
+            <stop offset="1" stop-color="#1e3a8a"/>
+          </linearGradient>
+          <linearGradient id="ironTip" x1="0" x2="1" y1="0" y2="0">
+            <stop offset="0" stop-color="#fbbf24"/>
+            <stop offset=".5" stop-color="#f59e0b"/>
+            <stop offset="1" stop-color="#dc2626"/>
+          </linearGradient>
+          <radialGradient id="heatGlow">
+            <stop offset="0" stop-color="rgba(255,100,0,.7)"/>
+            <stop offset=".5" stop-color="rgba(255,150,0,.3)"/>
+            <stop offset="1" stop-color="rgba(255,100,0,0)"/>
+          </radialGradient>
+          <filter id="ironShadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="5"/>
+            <feOffset dx="0" dy="6"/>
+            <feComponentTransfer><feFuncA type="linear" slope="0.25"/></feComponentTransfer>
+            <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- 桌面陰影 -->
+        <ellipse cx="240" cy="380" rx="200" ry="14" fill="rgba(0,0,0,.15)"/>
+
+        <!-- 烙鐵架（叉狀彈簧）-->
+        <g filter="url(#ironShadow)">
+          <rect x="280" y="320" width="160" height="50" rx="6" fill="#374151"/>
+          <rect x="290" y="312" width="140" height="10" fill="#1f2937"/>
+          <!-- 海綿盤 -->
+          <rect x="300" y="290" width="60" height="22" rx="3" fill="#4b5563"/>
+          <rect x="304" y="288" width="52" height="6" fill="#fbbf24" opacity=".8"/>
+          <!-- 彈簧線圈 -->
+          <path d="M 380 295 Q 390 270 405 280 Q 420 290 415 270 Q 420 255 410 250 Q 395 245 400 230 Q 410 220 395 215" fill="none" stroke="#9ca3af" stroke-width="3" stroke-linecap="round"/>
+        </g>
+
+        <!-- 烙鐵本體（橫躺）-->
+        <g transform="translate(240,200) rotate(-25)" filter="url(#ironShadow)">
+          <!-- 握柄 -->
+          <rect x="-100" y="-22" width="140" height="44" rx="22" fill="url(#ironHandle)"/>
+          <!-- 握柄紋路 -->
+          <line x1="-80" y1="-22" x2="-80" y2="22" stroke="rgba(0,0,0,.2)" stroke-width="1"/>
+          <line x1="-65" y1="-22" x2="-65" y2="22" stroke="rgba(0,0,0,.2)" stroke-width="1"/>
+          <line x1="-50" y1="-22" x2="-50" y2="22" stroke="rgba(0,0,0,.2)" stroke-width="1"/>
+          <!-- 溫度指示燈 -->
+          <circle cx="-70" cy="0" r="5" fill="#22c55e"/>
+          <circle cx="-70" cy="0" r="3" fill="#dcfce7"/>
+          <!-- 溫度顯示 -->
+          <rect x="-30" y="-12" width="50" height="24" rx="3" fill="#0a2a0a"/>
+          <text x="-5" y="4" text-anchor="middle" fill="#3aff6a" font-size="13" font-family="monospace" font-weight="700">350°C</text>
+          <!-- 金屬連接段 -->
+          <rect x="40" y="-12" width="40" height="24" rx="2" fill="#6b7280"/>
+          <rect x="40" y="-10" width="40" height="2" fill="#9ca3af"/>
+          <rect x="40" y="8" width="40" height="2" fill="#374151"/>
+          <!-- 烙鐵頭發紅 -->
+          <ellipse cx="100" cy="0" rx="40" ry="30" fill="url(#heatGlow)"/>
+          <rect x="80" y="-7" width="32" height="14" fill="url(#ironTip)"/>
+          <polygon points="112,-7 130,0 112,7" fill="url(#ironTip)"/>
+          <!-- 高光 -->
+          <rect x="80" y="-5" width="32" height="3" fill="rgba(255,255,255,.4)"/>
+        </g>
+
+        <!-- 電源線（從握柄末端延伸）-->
+        <path d="M 130 245 Q 90 280 60 290 Q 30 300 20 320" fill="none" stroke="#1f2937" stroke-width="6" stroke-linecap="round"/>
+
+        <!-- 焊錫絲（捲）-->
+        <g transform="translate(80,330)" filter="url(#ironShadow)">
+          <ellipse cx="0" cy="0" rx="36" ry="10" fill="#9ca3af"/>
+          <ellipse cx="0" cy="-3" rx="36" ry="10" fill="#d1d5db"/>
+          <ellipse cx="0" cy="-3" rx="32" ry="8" fill="none" stroke="#6b7280" stroke-width="1"/>
+          <text x="0" y="0" text-anchor="middle" font-size="8" fill="#374151" font-weight="700" font-family="Inter,sans-serif">SOLDER</text>
+        </g>
+
+        <!-- 煙的飄逸 -->
+        <g opacity=".5">
+          <circle cx="320" cy="120" r="8" fill="#9ca3af">
+            <animate attributeName="cy" values="160;90;160" dur="3s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;.5;0" dur="3s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="335" cy="100" r="6" fill="#9ca3af">
+            <animate attributeName="cy" values="150;70;150" dur="4s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;.4;0" dur="4s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="310" cy="80" r="5" fill="#9ca3af">
+            <animate attributeName="cy" values="140;60;140" dur="3.5s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;.3;0" dur="3.5s" repeatCount="indefinite"/>
+          </circle>
+        </g>
+
+        <!-- 標籤 -->
+        <g font-family="Noto Sans TC, sans-serif">
+          <line x1="380" y1="160" x2="318" y2="195" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3 3"/>
+          <circle cx="380" cy="160" r="3" fill="#dc2626"/>
+          <text x="386" y="164" font-size="11" fill="#444" font-weight="600">烙鐵頭 350°C</text>
+
+          <line x1="100" y1="160" x2="170" y2="180" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="3 3"/>
+          <circle cx="100" cy="160" r="3" fill="#3b82f6"/>
+          <text x="20" y="164" font-size="11" fill="#444" font-weight="600">隔熱握柄</text>
+
+          <line x1="430" y1="280" x2="385" y2="305" stroke="#10b981" stroke-width="1.5" stroke-dasharray="3 3"/>
+          <circle cx="430" cy="280" r="3" fill="#10b981"/>
+          <text x="395" y="270" font-size="11" fill="#444" font-weight="600">烙鐵架</text>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <section id="modules" class="modules">
+    <h3 class="section-title">五大學習模組</h3>
+    <p class="section-sub">闖關制設計，安全模組需滿分才能進入操作練習</p>
+    <div class="module-grid">
+      <a class="card card-1" href="pages/module1.html">
+        <div class="card-num">01</div>
+        <div class="card-icon">🔍</div>
+        <h4>認識電烙鐵</h4>
+        <p>互動部位介紹，認識 8 個關鍵元件與耗材。</p>
+        <span class="card-tag">15 分鐘</span>
+      </a>
+      <a class="card card-2" href="pages/module2.html">
+        <div class="card-num">02</div>
+        <div class="card-icon">🛡️</div>
+        <h4>安全規範闖關</h4>
+        <p>燙傷預防、通風、放置位置，必過關才能進階。</p>
+        <span class="card-tag">必修・10 分鐘</span>
+      </a>
+      <a class="card card-3" href="pages/module3.html">
+        <div class="card-num">03</div>
+        <div class="card-icon">📖</div>
+        <h4>焊接步驟教學</h4>
+        <p>八個分解動作：開機→上錫養護→焊接→收尾。</p>
+        <span class="card-tag">15 分鐘</span>
+      </a>
+      <a class="card card-4" href="pages/module4.html">
+        <div class="card-num">04</div>
+        <div class="card-icon">🎮</div>
+        <h4>模擬焊接練習</h4>
+        <p>五個關卡：單點→多點→排針→SMD→修正。</p>
+        <span class="card-tag">核心・25 分鐘</span>
+      </a>
+      <a class="card card-5" href="pages/module5.html">
+        <div class="card-num">05</div>
+        <div class="card-icon">🔬</div>
+        <h4>焊點品質鑑定</h4>
+        <p>對照 8 種常見焊接錯誤，學會判讀焊點好壞。</p>
+        <span class="card-tag">15 分鐘</span>
+      </a>
+      <div class="card card-locked">
+        <div class="card-num">👨‍🏫</div>
+        <div class="card-icon">📊</div>
+        <h4>教師後台</h4>
+        <p>班級進度、成績匯出、派任務（開發中）。</p>
+        <span class="card-tag">教師專用</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="about">
+    <h3 class="section-title">為什麼焊接需要數位前置？</h3>
+    <div class="reason-grid">
+      <div class="reason"><span>🔥</span><h4>避免燙傷</h4><p>烙鐵頭 350°C，第一次操作沒概念極危險，模擬可建立距離感。</p></div>
+      <div class="reason"><span>👁</span><h4>培養焊點審美</h4><p>看過正確 vs 錯誤焊點對比，動手時自然知道目標長什麼樣。</p></div>
+      <div class="reason"><span>⏱</span><h4>掌握時間感</h4><p>焊接停留時間是關鍵，模擬器即時回饋避免燒板或虛焊。</p></div>
+      <div class="reason"><span>🛠</span><h4>排除常見問題</h4><p>連錫、虛焊、錫珠等常見錯誤先在數位環境中遇過、學會修正。</p></div>
+    </div>
+  </section>
+
+  <section class="teacher">
+    <div class="teacher-card">
+      <h3>給教師的話</h3>
+      <p>本平台對應 108 課綱<strong> 生 J-A2 工具與機具的安全使用</strong>與<strong>自 J-Md 認識電器與電路</strong>。建議排課方式：</p>
+      <ol>
+        <li>第一節：模組 1–3（認識、安全、步驟），課末以模組 2 滿分為通行證。</li>
+        <li>第二節：模組 4 模擬焊接五關，課末用模組 5 對照學生作品。</li>
+        <li>第三節：實體焊接 LED 電路或 IC，回家作業評估自己的焊點屬於哪類錯誤。</li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<script src="../js/main.js"></script>
+<script src="../js/audio.js"></script>
+</body>
+</html>

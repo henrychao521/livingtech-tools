@@ -389,6 +389,96 @@ a { color: inherit; text-decoration: none; transition: color .2s var(--easing); 
   font-size: 15px;
 }
 
+/* === 工具切換器 === */
+.tool-switcher {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 36px 30px;
+}
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.tool-card {
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all .25s var(--easing);
+  position: relative;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.tool-card:hover:not(.disabled) {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary);
+}
+.tool-card.active {
+  background: linear-gradient(135deg, #fff8f0 0%, #fff 60%);
+  border-color: var(--primary);
+  box-shadow: 0 4px 14px var(--primary-glow);
+  cursor: default;
+}
+.tool-card.disabled {
+  opacity: .55;
+  cursor: not-allowed;
+  filter: grayscale(.5);
+}
+.tool-icon {
+  font-size: 48px;
+  margin: 4px 0 10px;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,.08));
+  transition: transform .35s var(--easing-bounce);
+}
+.tool-card:hover:not(.disabled) .tool-icon {
+  transform: scale(1.12) rotate(-5deg);
+}
+.tool-card h4 {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  letter-spacing: -.01em;
+}
+.tool-card p {
+  font-size: 12px;
+  color: var(--text-soft);
+  margin-bottom: 10px;
+}
+.tool-meta {
+  display: inline-block;
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  letter-spacing: .03em;
+  font-weight: 500;
+}
+.tool-status {
+  position: absolute;
+  top: 12px; right: 12px;
+  font-size: 10px;
+  background: var(--text-muted);
+  color: #fff;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: .03em;
+}
+.tool-card.active .tool-status {
+  background: var(--success);
+}
+.tool-status.new {
+  background: linear-gradient(135deg, #FF7A00, #FF4444);
+  animation: pulse 2s infinite;
+}
+@media (max-width: 900px) {
+  .tool-grid { grid-template-columns: 1fr 1fr; }
+}
+
 /* === 模組卡片 === */
 .modules {
   max-width: 1200px;

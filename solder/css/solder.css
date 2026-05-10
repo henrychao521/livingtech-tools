@@ -1,0 +1,168 @@
+/* 焊接平台主題色覆蓋 — 用紅 / 橘紅暖色配藍灰 */
+.solder-theme {
+  --primary: #DC2626;
+  --primary-dark: #B91C1C;
+  --primary-light: #FEE2E2;
+  --primary-glow: rgba(220,38,38,.3);
+  --accent: #2563EB;
+  --accent-light: #DBEAFE;
+}
+.solder-theme body { /* placeholder */ }
+.solder-theme .brand .logo {
+  filter: drop-shadow(0 2px 4px rgba(220,38,38,.4));
+}
+.solder-theme .hero h2 {
+  background: linear-gradient(135deg, #1a1a1a 30%, #DC2626 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* hero 烙鐵插圖 */
+.hero-iron {
+  width: 100%;
+  max-width: 540px;
+  filter: drop-shadow(0 20px 40px rgba(0,0,0,.12));
+  animation: slow-float 6s ease-in-out infinite;
+}
+
+/* 模組 4：焊接模擬器專用 */
+.solder-canvas-wrap {
+  background: #1a1a1a;
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  position: relative;
+  border: 1px solid #333;
+}
+#solder-canvas {
+  width: 100%;
+  max-width: 760px;
+  height: auto;
+  display: block;
+  background: #0a3d1f;
+  border-radius: var(--radius);
+  cursor: crosshair;
+  touch-action: none;
+}
+#solder-canvas.holding {
+  cursor: grabbing;
+}
+
+/* 焊點品質指示燈 */
+.quality-meter {
+  display: flex;
+  gap: 4px;
+  margin: 8px 0;
+}
+.quality-bar {
+  flex: 1;
+  height: 8px;
+  background: #333;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.quality-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ef4444, #f59e0b, #10b981);
+  transition: width .3s var(--easing);
+}
+
+/* 工具資訊面板 */
+.iron-status {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+.iron-status .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px dashed #eee;
+  font-size: 13px;
+}
+.iron-status .row:last-child { border-bottom: none; }
+.iron-status .row .label { color: #888; }
+.iron-status .row .value {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--text);
+}
+.iron-status .temp-display {
+  text-align: center;
+  padding: 12px;
+  background: #0a2a0a;
+  color: #3aff6a;
+  font-family: monospace;
+  font-size: 22px;
+  font-weight: 700;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+.iron-status .temp-display.heating { color: #f59e0b; }
+.iron-status .temp-display.ready { color: #3aff6a; }
+
+/* 焊點錯誤範例卡片 */
+.error-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+.error-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  transition: all .25s var(--easing);
+  cursor: pointer;
+}
+.error-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary);
+}
+.error-card .err-visual {
+  width: 100%;
+  height: 140px;
+  background: linear-gradient(180deg, #1f2937, #0f1419);
+  border-radius: 10px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.error-card .err-tag {
+  display: inline-block;
+  font-size: 11px;
+  background: var(--danger-light);
+  color: var(--danger);
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.error-card.good .err-tag {
+  background: var(--success-light);
+  color: var(--success);
+}
+.error-card h4 { font-size: 16px; margin-bottom: 6px; }
+.error-card p {
+  font-size: 13px;
+  color: var(--text-soft);
+  line-height: 1.65;
+  margin-bottom: 8px;
+}
+.error-card .err-fix {
+  font-size: 12px;
+  color: var(--accent);
+  background: var(--accent-light);
+  padding: 8px 10px;
+  border-radius: 8px;
+  border-left: 3px solid var(--accent);
+}
+.error-card .err-fix strong {
+  color: #1f4798;
+}

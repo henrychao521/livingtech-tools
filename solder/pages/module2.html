@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 2：焊接安全規範闖關</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../css/solder.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🔥%3C/text%3E%3C/svg%3E">
+</head>
+<body class="solder-theme">
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">🔥</span>
+    <div>
+      <h1>數位電烙鐵</h1>
+      <p class="subtitle">生活科技互動教學平台</p>
+    </div>
+  </div>
+  <a href="../index.html" class="module-back">← 回首頁</a>
+</header>
+
+<main class="module-page">
+  <div class="module-header">
+    <div>
+      <span class="module-step" style="background:var(--danger-light);color:#B83333">MODULE 02 ・ 必修</span>
+      <h2>焊接安全規範闖關</h2>
+      <p class="muted">請完成所有題目（滿分通關）才能進入操作教學。</p>
+    </div>
+    <div class="muted" style="font-size:16px">總分：<span id="score-display" style="color:var(--primary-dark);font-weight:800;font-size:22px;font-family:Inter,sans-serif">0</span> / 100</div>
+  </div>
+
+  <div class="safety-progress">
+    <div class="safety-progress-bar" id="progress-bar" style="width:0%"></div>
+  </div>
+
+  <section class="panel">
+    <h3>🎯 關卡 1 ／ 焊接環境檢查 <span style="color:var(--text-muted);font-weight:500;font-size:14px;margin-left:8px">30 分</span></h3>
+    <p class="muted" style="margin-bottom:18px">把右側「正確配備」拖曳到左側場景的對應位置。錯誤的物品請不要拖。</p>
+    <div class="dressup">
+      <div class="dressup-character" id="scene">
+        <svg viewBox="0 0 280 440" class="character-svg">
+          <defs>
+            <linearGradient id="deskG" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0" stop-color="#d4c190"/>
+              <stop offset="1" stop-color="#a89770"/>
+            </linearGradient>
+          </defs>
+          <!-- 桌面 -->
+          <rect x="0" y="280" width="280" height="120" fill="url(#deskG)"/>
+          <line x1="0" y1="280" x2="280" y2="280" stroke="#806b3a" stroke-width="2"/>
+          <!-- 後方牆 -->
+          <rect x="0" y="0" width="280" height="280" fill="#f5f5f4"/>
+          <!-- 窗戶（通風用）-->
+          <rect x="200" y="40" width="60" height="60" fill="#dbeafe" stroke="#1e40af" stroke-width="2"/>
+          <line x1="230" y1="40" x2="230" y2="100" stroke="#1e40af"/>
+          <line x1="200" y1="70" x2="260" y2="70" stroke="#1e40af"/>
+          <text x="230" y="120" text-anchor="middle" font-size="9" fill="#1e40af" font-family="Inter,sans-serif">窗戶</text>
+
+          <!-- PCB 板 -->
+          <rect x="80" y="320" width="120" height="60" fill="#22c55e" rx="2"/>
+          <circle cx="100" cy="335" r="3" fill="#fbbf24"/>
+          <circle cx="120" cy="335" r="3" fill="#fbbf24"/>
+          <circle cx="140" cy="335" r="3" fill="#fbbf24"/>
+          <circle cx="160" cy="335" r="3" fill="#fbbf24"/>
+          <circle cx="180" cy="335" r="3" fill="#fbbf24"/>
+          <line x1="100" y1="350" x2="180" y2="350" stroke="#fff" stroke-width="1"/>
+          <line x1="100" y1="365" x2="180" y2="365" stroke="#fff" stroke-width="1"/>
+
+          <!-- 學生角色（簡化）-->
+          <g transform="translate(60,200)">
+            <!-- 頭 -->
+            <circle cx="0" cy="0" r="28" fill="#fdd9b8"/>
+            <!-- 頭髮 -->
+            <path d="M-26 -6 Q-25 -28 0 -32 Q25 -28 26 -6 Q26 -16 18 -20 Q0 -28 -18 -20 Q-26 -16 -26 -6 Z" fill="#3a2618"/>
+            <!-- 眼 -->
+            <circle cx="-8" cy="0" r="2" fill="#1a1a1a"/>
+            <circle cx="8" cy="0" r="2" fill="#1a1a1a"/>
+            <!-- 嘴 -->
+            <path d="M-5 12 Q0 16 5 12" fill="none" stroke="#9b3a3a" stroke-width="1.5"/>
+          </g>
+        </svg>
+
+        <!-- 拖放區 -->
+        <div class="dropzone" data-accept="goggles" data-label="眼睛保護" style="left:18%;top:42%;width:30%;height:14%"></div>
+        <div class="dropzone" data-accept="apron" data-label="身體保護" style="left:14%;top:55%;width:36%;height:18%"></div>
+        <div class="dropzone" data-accept="ventilation" data-label="排煙設備" style="left:65%;top:8%;width:28%;height:22%"></div>
+        <div class="dropzone" data-accept="iron-stand" data-label="桌上烙鐵架" style="left:55%;top:62%;width:35%;height:22%"></div>
+      </div>
+
+      <div class="dressup-items" id="dress-items">
+        <div class="draggable" draggable="true" data-id="goggles" data-correct="1"><span class="icon">🥽</span><div><div style="font-weight:700">護目鏡</div><div style="font-size:12px;color:#888">放到「眼睛保護」位置</div></div></div>
+        <div class="draggable" draggable="true" data-id="apron" data-correct="1"><span class="icon">🧥</span><div><div style="font-weight:700">實作圍裙</div><div style="font-size:12px;color:#888">放到「身體保護」位置</div></div></div>
+        <div class="draggable" draggable="true" data-id="ventilation" data-correct="1"><span class="icon">💨</span><div><div style="font-weight:700">開窗通風 / 排煙器</div><div style="font-size:12px;color:#888">放到「排煙設備」位置</div></div></div>
+        <div class="draggable" draggable="true" data-id="iron-stand" data-correct="1"><span class="icon">🛠</span><div><div style="font-weight:700">烙鐵架</div><div style="font-size:12px;color:#888">放到「桌上烙鐵架」位置</div></div></div>
+        <div class="draggable" draggable="true" data-id="paper" data-correct="0"><span class="icon">📄</span><div><div style="font-weight:700">紙上直接放烙鐵</div><div style="font-size:12px;color:#a72d2d">⚠ 火災風險！</div></div></div>
+        <div class="draggable" draggable="true" data-id="bare-hand" data-correct="0"><span class="icon">✋</span><div><div style="font-weight:700">徒手摸烙鐵頭</div><div style="font-size:12px;color:#a72d2d">⚠ 350°C 燙傷！</div></div></div>
+        <div class="draggable" draggable="true" data-id="cup" data-correct="0"><span class="icon">🥤</span><div><div style="font-weight:700">桌上放飲料</div><div style="font-size:12px;color:#a72d2d">⚠ 觸電 + 污染！</div></div></div>
+      </div>
+    </div>
+    <div id="dressup-feedback"></div>
+  </section>
+
+  <section class="panel">
+    <h3>🎯 關卡 2 ／ 情境判斷 <span style="color:var(--text-muted);font-weight:500;font-size:14px;margin-left:8px">每題 10 分</span></h3>
+    <p class="muted" style="margin-bottom:16px">每題從兩個選項中選出較安全或正確的做法。</p>
+    <div id="scenario-list"></div>
+    <div id="scenario-result"></div>
+  </section>
+
+  <div class="unlock-banner hidden" id="unlock">
+    <h3>🏆 焊接安全規範闖關完成！</h3>
+    <p>你已掌握使用電烙鐵前的安全要點，可以前往下一個模組學習焊接步驟。</p>
+    <a href="module3.html" class="btn" style="background:#fff;color:#1e9450;margin-top:18px;font-weight:700">進入模組 3：焊接步驟教學 →</a>
+  </div>
+
+  <div class="module-nav-bottom">
+    <a href="module1.html" class="btn btn-ghost">← 上一關</a>
+    <a href="module3.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關：焊接步驟 →</a>
+  </div>
+</main>
+
+<script src="../../js/main.js"></script>
+<script src="../../js/audio.js"></script>
+<script src="../js/module2.js"></script>
+</body>
+</html>
