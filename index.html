@@ -38,8 +38,67 @@
         <a href="#modules" class="btn btn-ghost">看模組地圖</a>
       </div>
     </div>
-    <div class="hero-visual" aria-hidden="true">
-      <svg viewBox="0 0 480 420" class="hero-saw">
+    <div class="hero-visual">
+      <div class="hero-carousel" aria-label="平台功能輪播">
+        <div class="hc-slides">
+          <!-- Slide 1: 即時切割演示動畫（自動播放）-->
+          <div class="hc-slide active" data-slide="cutting-demo">
+            <canvas id="cutting-demo-canvas"></canvas>
+            <div class="hc-caption">
+              <span class="hc-tag">M4 ・ 即時演示</span>
+              <strong>自動切割愛心輪廓</strong>
+              <span class="hc-sub">木板沿路徑移動，鋸條留下軌跡與木屑</span>
+            </div>
+          </div>
+          <!-- Slide 2: 3D 視角 -->
+          <div class="hc-slide" data-slide="3d">
+            <img src="assets/screenshots/03-module1-3d.jpg" alt="3D 立體線鋸機">
+            <div class="hc-caption">
+              <span class="hc-tag">M1 ・ 3D 立體</span>
+              <strong>可旋轉的 3D 模型</strong>
+              <span class="hc-sub">Three.js 完整建模，8 個編號標籤</span>
+            </div>
+          </div>
+          <!-- Slide 3: 安全闖關 -->
+          <div class="hc-slide" data-slide="safety">
+            <img src="assets/screenshots/05-module2-safety.jpg" alt="安全規範闖關">
+            <div class="hc-caption">
+              <span class="hc-tag">M2 ・ 必修</span>
+              <strong>拖曳服儀檢查</strong>
+              <span class="hc-sub">滿分通關才能進操作教學</span>
+            </div>
+          </div>
+          <!-- Slide 4: 步驟教學 -->
+          <div class="hc-slide" data-slide="steps">
+            <img src="assets/screenshots/06-module3-steps.jpg" alt="操作步驟教學">
+            <div class="hc-caption">
+              <span class="hc-tag">M3 ・ 操作步驟</span>
+              <strong>8 步分解動畫</strong>
+              <span class="hc-sub">每步都有 SVG 動畫示範</span>
+            </div>
+          </div>
+          <!-- Slide 5: 創作計畫書 -->
+          <div class="hc-slide" data-slide="plan">
+            <img src="assets/screenshots/08-module5-plan.jpg" alt="切割計畫書">
+            <div class="hc-caption">
+              <span class="hc-tag">M5 ・ 創作挑戰</span>
+              <strong>切割計畫書自動分析</strong>
+              <span class="hc-sub">標出尖角難點與預估時間</span>
+            </div>
+          </div>
+        </div>
+        <button class="hc-nav hc-prev" aria-label="上一張">‹</button>
+        <button class="hc-nav hc-next" aria-label="下一張">›</button>
+        <div class="hc-dots">
+          <button class="hc-dot active" aria-label="第 1 張"></button>
+          <button class="hc-dot" aria-label="第 2 張"></button>
+          <button class="hc-dot" aria-label="第 3 張"></button>
+          <button class="hc-dot" aria-label="第 4 張"></button>
+          <button class="hc-dot" aria-label="第 5 張"></button>
+        </div>
+      </div>
+      <!-- 隱藏的舊 SVG（保留結構但不顯示） -->
+      <svg viewBox="0 0 480 420" class="hero-saw" style="display:none">
         <defs>
           <linearGradient id="bodyG" x1="0" x2="0" y1="0" y2="1">
             <stop offset="0" stop-color="#FFAA55"/>
@@ -360,5 +419,7 @@
 <script src="js/main.js"></script>
 <script src="js/audio.js"></script>
 <script src="js/achievements.js"></script>
+<script src="js/cutting-demo.js"></script>
+<script src="js/hero-carousel.js"></script>
 </body>
 </html>
