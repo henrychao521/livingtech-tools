@@ -17,8 +17,8 @@ class ScrollSaw3D {
     const w = this.container.clientWidth;
     const h = this.container.clientHeight || 480;
 
-    // Renderer
-    this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+    // Renderer（preserveDrawingBuffer 讓畫面能被 toDataURL/html2canvas 擷取）
+    this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, preserveDrawingBuffer: true });
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.renderer.setSize(w, h);
     this.renderer.shadowMap.enabled = true;
