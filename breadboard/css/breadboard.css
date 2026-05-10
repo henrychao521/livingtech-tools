@@ -1,0 +1,137 @@
+/* 麵包板平台主題色 — 綠色（PCB 綠 + 元件配色）*/
+.breadboard-theme {
+  --primary: #16A34A;
+  --primary-dark: #15803D;
+  --primary-light: #DCFCE7;
+  --primary-glow: rgba(22,163,74,.3);
+  --accent: #EAB308;
+  --accent-light: #FEF9C3;
+}
+.breadboard-theme .brand .logo {
+  filter: drop-shadow(0 2px 4px rgba(22,163,74,.4));
+}
+.breadboard-theme .hero h2 {
+  background: linear-gradient(135deg, #1a1a1a 30%, #16A34A 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-bb {
+  width: 100%;
+  max-width: 540px;
+  filter: drop-shadow(0 20px 40px rgba(0,0,0,.12));
+  animation: slow-float 6s ease-in-out infinite;
+}
+
+/* 模組 4：麵包板模擬器專用 */
+.bb-canvas-wrap {
+  background: #1a2e1a;
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  position: relative;
+  border: 1px solid #333;
+}
+#bb-canvas {
+  width: 100%;
+  max-width: 760px;
+  height: auto;
+  display: block;
+  background: #f5f5dc;
+  border-radius: var(--radius);
+  cursor: pointer;
+  touch-action: none;
+}
+
+.bb-component-tray {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  margin-bottom: 12px;
+}
+.bb-component-tray h4 {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin-bottom: 10px;
+}
+.bb-component {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--bg-soft);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 6px;
+  cursor: grab;
+  transition: all .2s var(--easing);
+  user-select: none;
+}
+.bb-component:hover { border-color: var(--primary); }
+.bb-component:active { cursor: grabbing; }
+.bb-component.placed { opacity: .4; pointer-events: none; }
+.bb-component.selected { background: var(--primary-light); border-color: var(--primary); }
+.bb-component-icon {
+  width: 36px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bb-component-info {
+  flex: 1;
+  font-size: 13px;
+}
+.bb-component-info strong { display: block; }
+.bb-component-info .spec {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.bb-goal {
+  background: linear-gradient(135deg, var(--primary-light), #fff);
+  border: 1px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 14px;
+  margin-bottom: 12px;
+}
+.bb-goal h4 {
+  color: var(--primary-dark);
+  font-size: 14px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.bb-goal p {
+  font-size: 13px;
+  color: var(--text-soft);
+  line-height: 1.6;
+}
+
+/* 元件圖鑑卡片 */
+.bb-error-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+.bb-error-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  transition: all .25s var(--easing);
+}
+.bb-error-card .visual {
+  height: 140px;
+  background: linear-gradient(180deg, #f5f5dc, #e6e2c0);
+  border-radius: 10px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>數位麵包板電路 ｜ 生活科技互動教學平台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="css/breadboard.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🔌%3C/text%3E%3C/svg%3E">
+</head>
+<body class="home breadboard-theme">
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">🔌</span>
+    <div>
+      <h1>數位麵包板電路</h1>
+      <p class="subtitle">生活科技互動教學平台</p>
+    </div>
+  </div>
+  <nav class="topnav">
+    <a href="#modules">學習模組</a>
+    <a href="../" style="color:var(--primary-dark);font-weight:600">← 平台首頁</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-text">
+      <span class="badge">電學基礎・電路組裝</span>
+      <h2>從一顆 LED 開始<br>讓電流可視化</h2>
+      <p>麵包板是電子實作的核心工具。本平台引導學生從認識行/列、正負電源軌、跳線開始，到搭建串聯、並聯、分壓電路，理解電子元件如何彼此「對話」。</p>
+      <div class="hero-cta">
+        <a href="pages/module1.html" class="btn btn-primary">開始學習 →</a>
+        <a href="#modules" class="btn btn-ghost">看模組地圖</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <svg viewBox="0 0 480 420" class="hero-bb">
+        <defs>
+          <linearGradient id="bbBoardG" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="#fefce8"/>
+            <stop offset="1" stop-color="#e7e2c0"/>
+          </linearGradient>
+          <filter id="bbShadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="5"/>
+            <feOffset dx="0" dy="6"/>
+            <feComponentTransfer><feFuncA type="linear" slope="0.25"/></feComponentTransfer>
+            <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <ellipse cx="240" cy="380" rx="200" ry="14" fill="rgba(0,0,0,.15)"/>
+
+        <!-- 麵包板本體 -->
+        <g filter="url(#bbShadow)">
+          <rect x="50" y="100" width="380" height="240" rx="10" fill="url(#bbBoardG)" stroke="#a89770" stroke-width="2"/>
+          <!-- 上電源軌 -->
+          <line x1="60" y1="125" x2="420" y2="125" stroke="#dc2626" stroke-width="2"/>
+          <line x1="60" y1="142" x2="420" y2="142" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="3 2"/>
+          <text x="65" y="123" font-size="9" fill="#dc2626" font-weight="700">+</text>
+          <text x="65" y="140" font-size="9" fill="#1a1a1a" font-weight="700">−</text>
+          <!-- 下電源軌 -->
+          <line x1="60" y1="305" x2="420" y2="305" stroke="#dc2626" stroke-width="2"/>
+          <line x1="60" y1="322" x2="420" y2="322" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="3 2"/>
+          <!-- 中央溝槽 -->
+          <line x1="60" y1="220" x2="420" y2="220" stroke="#a89770" stroke-width="3"/>
+          <!-- 洞洞陣列 -->
+          <g fill="#888">
+            <!-- 上電源軌洞 -->
+            <g>
+              <circle cx="80" cy="125" r="2"/><circle cx="100" cy="125" r="2"/><circle cx="120" cy="125" r="2"/>
+              <circle cx="140" cy="125" r="2"/><circle cx="160" cy="125" r="2"/><circle cx="180" cy="125" r="2"/>
+              <circle cx="200" cy="125" r="2"/><circle cx="220" cy="125" r="2"/><circle cx="240" cy="125" r="2"/>
+              <circle cx="260" cy="125" r="2"/><circle cx="280" cy="125" r="2"/><circle cx="300" cy="125" r="2"/>
+              <circle cx="320" cy="125" r="2"/><circle cx="340" cy="125" r="2"/><circle cx="360" cy="125" r="2"/>
+              <circle cx="380" cy="125" r="2"/><circle cx="400" cy="125" r="2"/>
+            </g>
+            <g>
+              <circle cx="80" cy="142" r="2"/><circle cx="100" cy="142" r="2"/><circle cx="120" cy="142" r="2"/>
+              <circle cx="140" cy="142" r="2"/><circle cx="160" cy="142" r="2"/><circle cx="180" cy="142" r="2"/>
+              <circle cx="200" cy="142" r="2"/><circle cx="220" cy="142" r="2"/><circle cx="240" cy="142" r="2"/>
+              <circle cx="260" cy="142" r="2"/><circle cx="280" cy="142" r="2"/><circle cx="300" cy="142" r="2"/>
+              <circle cx="320" cy="142" r="2"/><circle cx="340" cy="142" r="2"/><circle cx="360" cy="142" r="2"/>
+              <circle cx="380" cy="142" r="2"/><circle cx="400" cy="142" r="2"/>
+            </g>
+            <!-- 中間區塊 5x17 -->
+            <g>
+              <g><circle cx="80" cy="170" r="2"/><circle cx="100" cy="170" r="2"/><circle cx="120" cy="170" r="2"/><circle cx="140" cy="170" r="2"/><circle cx="160" cy="170" r="2"/><circle cx="180" cy="170" r="2"/><circle cx="200" cy="170" r="2"/><circle cx="220" cy="170" r="2"/><circle cx="240" cy="170" r="2"/><circle cx="260" cy="170" r="2"/><circle cx="280" cy="170" r="2"/><circle cx="300" cy="170" r="2"/><circle cx="320" cy="170" r="2"/><circle cx="340" cy="170" r="2"/><circle cx="360" cy="170" r="2"/><circle cx="380" cy="170" r="2"/><circle cx="400" cy="170" r="2"/></g>
+              <g><circle cx="80" cy="185" r="2"/><circle cx="100" cy="185" r="2"/><circle cx="120" cy="185" r="2"/><circle cx="140" cy="185" r="2"/><circle cx="160" cy="185" r="2"/><circle cx="180" cy="185" r="2"/><circle cx="200" cy="185" r="2"/><circle cx="220" cy="185" r="2"/><circle cx="240" cy="185" r="2"/><circle cx="260" cy="185" r="2"/><circle cx="280" cy="185" r="2"/><circle cx="300" cy="185" r="2"/><circle cx="320" cy="185" r="2"/><circle cx="340" cy="185" r="2"/><circle cx="360" cy="185" r="2"/><circle cx="380" cy="185" r="2"/><circle cx="400" cy="185" r="2"/></g>
+              <g><circle cx="80" cy="200" r="2"/><circle cx="100" cy="200" r="2"/><circle cx="120" cy="200" r="2"/><circle cx="140" cy="200" r="2"/><circle cx="160" cy="200" r="2"/><circle cx="180" cy="200" r="2"/><circle cx="200" cy="200" r="2"/><circle cx="220" cy="200" r="2"/><circle cx="240" cy="200" r="2"/><circle cx="260" cy="200" r="2"/><circle cx="280" cy="200" r="2"/><circle cx="300" cy="200" r="2"/><circle cx="320" cy="200" r="2"/><circle cx="340" cy="200" r="2"/><circle cx="360" cy="200" r="2"/><circle cx="380" cy="200" r="2"/><circle cx="400" cy="200" r="2"/></g>
+              <g><circle cx="80" cy="240" r="2"/><circle cx="100" cy="240" r="2"/><circle cx="120" cy="240" r="2"/><circle cx="140" cy="240" r="2"/><circle cx="160" cy="240" r="2"/><circle cx="180" cy="240" r="2"/><circle cx="200" cy="240" r="2"/><circle cx="220" cy="240" r="2"/><circle cx="240" cy="240" r="2"/><circle cx="260" cy="240" r="2"/><circle cx="280" cy="240" r="2"/><circle cx="300" cy="240" r="2"/><circle cx="320" cy="240" r="2"/><circle cx="340" cy="240" r="2"/><circle cx="360" cy="240" r="2"/><circle cx="380" cy="240" r="2"/><circle cx="400" cy="240" r="2"/></g>
+              <g><circle cx="80" cy="255" r="2"/><circle cx="100" cy="255" r="2"/><circle cx="120" cy="255" r="2"/><circle cx="140" cy="255" r="2"/><circle cx="160" cy="255" r="2"/><circle cx="180" cy="255" r="2"/><circle cx="200" cy="255" r="2"/><circle cx="220" cy="255" r="2"/><circle cx="240" cy="255" r="2"/><circle cx="260" cy="255" r="2"/><circle cx="280" cy="255" r="2"/><circle cx="300" cy="255" r="2"/><circle cx="320" cy="255" r="2"/><circle cx="340" cy="255" r="2"/><circle cx="360" cy="255" r="2"/><circle cx="380" cy="255" r="2"/><circle cx="400" cy="255" r="2"/></g>
+              <g><circle cx="80" cy="270" r="2"/><circle cx="100" cy="270" r="2"/><circle cx="120" cy="270" r="2"/><circle cx="140" cy="270" r="2"/><circle cx="160" cy="270" r="2"/><circle cx="180" cy="270" r="2"/><circle cx="200" cy="270" r="2"/><circle cx="220" cy="270" r="2"/><circle cx="240" cy="270" r="2"/><circle cx="260" cy="270" r="2"/><circle cx="280" cy="270" r="2"/><circle cx="300" cy="270" r="2"/><circle cx="320" cy="270" r="2"/><circle cx="340" cy="270" r="2"/><circle cx="360" cy="270" r="2"/><circle cx="380" cy="270" r="2"/><circle cx="400" cy="270" r="2"/></g>
+            </g>
+            <!-- 下電源軌 -->
+            <g>
+              <circle cx="80" cy="305" r="2"/><circle cx="100" cy="305" r="2"/><circle cx="120" cy="305" r="2"/><circle cx="140" cy="305" r="2"/><circle cx="160" cy="305" r="2"/><circle cx="180" cy="305" r="2"/><circle cx="200" cy="305" r="2"/><circle cx="220" cy="305" r="2"/><circle cx="240" cy="305" r="2"/><circle cx="260" cy="305" r="2"/><circle cx="280" cy="305" r="2"/><circle cx="300" cy="305" r="2"/><circle cx="320" cy="305" r="2"/><circle cx="340" cy="305" r="2"/><circle cx="360" cy="305" r="2"/><circle cx="380" cy="305" r="2"/><circle cx="400" cy="305" r="2"/>
+            </g>
+          </g>
+        </g>
+
+        <!-- 跳線：紅色（電源）-->
+        <path d="M 100 142 Q 130 80 160 170" stroke="#dc2626" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <circle cx="100" cy="142" r="3" fill="#dc2626"/>
+        <circle cx="160" cy="170" r="3" fill="#dc2626"/>
+        <!-- 跳線：黑色（地）-->
+        <path d="M 280 305 Q 250 360 220 270" stroke="#1a1a1a" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <circle cx="280" cy="305" r="3" fill="#1a1a1a"/>
+        <circle cx="220" cy="270" r="3" fill="#1a1a1a"/>
+
+        <!-- LED -->
+        <g transform="translate(200,170)">
+          <circle cx="0" cy="0" r="14" fill="#ef4444" opacity=".8"/>
+          <circle cx="0" cy="0" r="14" fill="none" stroke="#991b1b" stroke-width="1.5"/>
+          <circle cx="-3" cy="-3" r="4" fill="#fef9c3" opacity=".7"/>
+          <line x1="-3" y1="14" x2="-3" y2="20" stroke="#9ca3af" stroke-width="1.5"/>
+          <line x1="3" y1="14" x2="3" y2="20" stroke="#9ca3af" stroke-width="1.5"/>
+          <!-- 發光光暈 -->
+          <circle cx="0" cy="0" r="20" fill="#ef4444" opacity=".25">
+            <animate attributeName="r" values="14;30;14" dur="2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values=".4;0;.4" dur="2s" repeatCount="indefinite"/>
+          </circle>
+        </g>
+
+        <!-- 電阻 -->
+        <g transform="translate(160,240)">
+          <rect x="-18" y="-5" width="36" height="10" rx="3" fill="#fef3c7" stroke="#92400e"/>
+          <rect x="-12" y="-5" width="3" height="10" fill="#dc2626"/>
+          <rect x="-7" y="-5" width="3" height="10" fill="#1a1a1a"/>
+          <rect x="2" y="-5" width="3" height="10" fill="#92400e"/>
+          <line x1="-18" y1="0" x2="-25" y2="0" stroke="#9ca3af" stroke-width="1.5"/>
+          <line x1="18" y1="0" x2="25" y2="0" stroke="#9ca3af" stroke-width="1.5"/>
+        </g>
+
+        <!-- 標籤 -->
+        <g font-family="Noto Sans TC, sans-serif">
+          <text x="35" y="123" font-size="11" fill="#dc2626" font-weight="700">+</text>
+          <text x="425" y="148" font-size="11" fill="#444" font-weight="600">電源軌</text>
+          <line x1="425" y1="135" x2="425" y2="138" stroke="#444"/>
+          <text x="200" y="150" font-size="10" fill="#444">LED 發光</text>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <section id="modules" class="modules">
+    <h3 class="section-title">五大學習模組</h3>
+    <p class="section-sub">從電路概念到實作組裝</p>
+    <div class="module-grid">
+      <a class="card card-1" href="pages/module1.html">
+        <div class="card-num">01</div>
+        <div class="card-icon">🔍</div>
+        <h4>認識麵包板</h4>
+        <p>電源軌、行列、跳線洞 — 理解內部金屬條的連通邏輯。</p>
+        <span class="card-tag">10 分鐘</span>
+      </a>
+      <a class="card card-2" href="pages/module2.html">
+        <div class="card-num">02</div>
+        <div class="card-icon">🛡️</div>
+        <h4>電路安全規範</h4>
+        <p>正負極、短路、極性元件，避免燒毀元件的關鍵原則。</p>
+        <span class="card-tag">必修・10 分鐘</span>
+      </a>
+      <a class="card card-3" href="pages/module3.html">
+        <div class="card-num">03</div>
+        <div class="card-icon">📖</div>
+        <h4>接線步驟教學</h4>
+        <p>八步驟組裝最基本的 LED 點亮電路。</p>
+        <span class="card-tag">15 分鐘</span>
+      </a>
+      <a class="card card-4" href="pages/module4.html">
+        <div class="card-num">04</div>
+        <div class="card-icon">🎮</div>
+        <h4>電路組裝模擬</h4>
+        <p>五個關卡：基本→串聯→並聯→開關→分壓器。</p>
+        <span class="card-tag">核心・25 分鐘</span>
+      </a>
+      <a class="card card-5" href="pages/module5.html">
+        <div class="card-num">05</div>
+        <div class="card-icon">🔬</div>
+        <h4>故障排除圖鑑</h4>
+        <p>對照 8 種常見電路故障與排除方法。</p>
+        <span class="card-tag">15 分鐘</span>
+      </a>
+      <div class="card card-locked">
+        <div class="card-num">👨‍🏫</div>
+        <div class="card-icon">📊</div>
+        <h4>教師後台</h4>
+        <p>班級進度、成績匯出（開發中）。</p>
+        <span class="card-tag">教師專用</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="about">
+    <h3 class="section-title">為什麼從麵包板開始？</h3>
+    <div class="reason-grid">
+      <div class="reason"><span>🔬</span><h4>免焊接</h4><p>插拔即連接，不需要烙鐵，學生可自由實驗、修改設計。</p></div>
+      <div class="reason"><span>👁</span><h4>視覺化</h4><p>所有元件擺在板上看得見，比 PCB 板更容易理解電路結構。</p></div>
+      <div class="reason"><span>♻️</span><h4>可重複使用</h4><p>同一塊板可做數十種電路，元件也可拆下來重用。</p></div>
+      <div class="reason"><span>🧠</span><h4>建立電路概念</h4><p>從真實的「行/列連通」理解電子如何流動，比抽象示意圖更具體。</p></div>
+    </div>
+  </section>
+</main>
+
+<script src="../js/main.js"></script>
+<script src="../js/audio.js"></script>
+</body>
+</html>

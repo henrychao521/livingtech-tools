@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 5：故障排除圖鑑</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../css/breadboard.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🔌%3C/text%3E%3C/svg%3E">
+</head>
+<body class="breadboard-theme">
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">🔌</span>
+    <div>
+      <h1>數位麵包板電路</h1>
+      <p class="subtitle">生活科技互動教學平台</p>
+    </div>
+  </div>
+  <a href="../index.html" class="module-back">← 回首頁</a>
+</header>
+
+<main class="module-page">
+  <div class="module-header">
+    <div>
+      <span class="module-step" style="background:var(--purple-light);color:#7a3399">MODULE 05</span>
+      <h2>故障排除圖鑑</h2>
+      <p class="muted">8 種常見電路故障 + 排除方法。電路不會動的時候，先對照這份清單。</p>
+    </div>
+  </div>
+
+  <section class="panel">
+    <h3>故障與排除對照表</h3>
+    <div class="bb-error-grid" id="error-gallery"></div>
+  </section>
+
+  <section class="panel">
+    <h3>除錯流程小卡</h3>
+    <div style="background:var(--bg-soft);border-radius:14px;padding:20px;line-height:1.9">
+      <ol style="padding-left:24px;color:var(--text-soft);font-size:15px">
+        <li><strong>看：</strong>電源燈 / LED 有沒有亮？冒煙？發燙？</li>
+        <li><strong>聞：</strong>有沒有焦味？電容、電阻燒焦的味道很明顯。</li>
+        <li><strong>摸：</strong>關電後輕摸元件（小心燙），找出異常溫度。</li>
+        <li><strong>量：</strong>用電表測電壓 / 電流，從電源端逐段往負載端追。</li>
+        <li><strong>拆：</strong>逐一拔掉元件 / 跳線，找出問題段。</li>
+      </ol>
+    </div>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="module4.html" class="btn btn-ghost">← 上一關</a>
+    <a href="../index.html" class="btn btn-primary">完成全部模組 ✓</a>
+  </div>
+</main>
+
+<script src="../../js/main.js"></script>
+<script src="../../js/audio.js"></script>
+<script src="../js/module5.js"></script>
+</body>
+</html>
