@@ -1,0 +1,70 @@
+/* 3D 印表機平台主題色 — 青藍色（科技感）*/
+.printer-theme {
+  --primary: #0891B2;
+  --primary-dark: #0E7490;
+  --primary-light: #CFFAFE;
+  --primary-glow: rgba(8,145,178,.3);
+  --accent: #8B5CF6;
+  --accent-light: #EDE9FE;
+}
+.printer-theme .brand .logo { filter: drop-shadow(0 2px 4px rgba(8,145,178,.4)); }
+.printer-theme .hero h2 {
+  background: linear-gradient(135deg, #1a1a1a 30%, #0891B2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero-printer { width: 100%; max-width: 540px; filter: drop-shadow(0 20px 40px rgba(0,0,0,.12)); animation: slow-float 6s ease-in-out infinite; }
+
+/* 模組 4 切片預覽 */
+.printer-canvas-wrap {
+  background: #0f172a;
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  position: relative;
+  border: 1px solid #1e293b;
+}
+#printer-canvas {
+  width: 100%;
+  max-width: 760px;
+  height: auto;
+  display: block;
+  background: #1e293b;
+  border-radius: var(--radius);
+}
+
+.printer-status {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  margin-bottom: 12px;
+}
+.printer-status .row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; border-bottom: 1px dashed #eee; }
+.printer-status .row:last-child { border-bottom: none; }
+.printer-status .label { color: #888; }
+.printer-status .value { font-family: var(--font-mono); font-weight: 700; }
+.printer-status .display {
+  text-align: center;
+  padding: 12px;
+  background: #0a2a0a;
+  color: #3aff6a;
+  font-family: monospace;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.print-progress {
+  height: 14px;
+  background: #1e293b;
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+.print-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #06B6D4, #0891B2);
+  transition: width .3s var(--easing);
+}

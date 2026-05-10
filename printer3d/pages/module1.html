@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 1：認識 3D 印表機</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../css/printer3d.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🖨️%3C/text%3E%3C/svg%3E">
+</head>
+<body class="printer-theme">
+<header class="topbar">
+  <div class="brand"><span class="logo">🖨️</span><div><h1>數位 3D 印表機</h1><p class="subtitle">生活科技互動教學平台</p></div></div>
+  <a href="../index.html" class="module-back">← 回首頁</a>
+</header>
+<main class="module-page">
+  <div class="module-header">
+    <div><span class="module-step">MODULE 01</span><h2>認識 3D 印表機</h2><p class="muted">點擊圖中橘色標記，認識每個部件的功能。</p></div>
+    <div class="muted" id="progress-text">已認識 0 / 8 個部件</div>
+  </div>
+  <div class="parts-layout">
+    <div class="saw-stage">
+      <svg viewBox="0 0 600 540" class="saw-svg">
+        <defs>
+          <linearGradient id="m1pFrame" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#475569"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+          <linearGradient id="m1pBed" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#dc2626"/><stop offset="1" stop-color="#7f1d1d"/></linearGradient>
+        </defs>
+        <ellipse cx="300" cy="510" rx="220" ry="14" fill="rgba(0,0,0,.15)"/>
+        <!-- 框架 -->
+        <rect x="80" y="60" width="22" height="400" rx="4" fill="url(#m1pFrame)"/>
+        <rect x="498" y="60" width="22" height="400" rx="4" fill="url(#m1pFrame)"/>
+        <rect x="80" y="60" width="440" height="22" rx="4" fill="#334155"/>
+        <rect x="60" y="430" width="480" height="50" rx="6" fill="#1e293b"/>
+        <!-- 控制面板 -->
+        <rect x="380" y="442" width="140" height="28" rx="3" fill="#0a2a0a"/>
+        <text x="450" y="462" text-anchor="middle" fill="#3aff6a" font-size="13" font-family="monospace" font-weight="700">READY</text>
+        <!-- X 軸 -->
+        <rect x="100" y="180" width="400" height="16" rx="2" fill="#64748b"/>
+        <!-- 噴頭組 -->
+        <g transform="translate(280,180)">
+          <rect x="-30" y="0" width="60" height="60" rx="3" fill="#1e293b"/>
+          <rect x="-26" y="4" width="52" height="16" fill="#dc2626"/>
+          <text x="0" y="16" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">200°C</text>
+          <polygon points="-8,60 8,60 0,76" fill="#facc15"/>
+          <circle cx="-18" cy="40" r="7" fill="#475569"/>
+        </g>
+        <!-- Z 軸絲桿 -->
+        <line x1="100" y1="100" x2="100" y2="430" stroke="#06B6D4" stroke-width="2" stroke-dasharray="4 4"/>
+        <line x1="500" y1="100" x2="500" y2="430" stroke="#06B6D4" stroke-width="2" stroke-dasharray="4 4"/>
+        <!-- 熱床 -->
+        <rect x="120" y="360" width="360" height="60" rx="4" fill="url(#m1pBed)"/>
+        <text x="300" y="395" text-anchor="middle" fill="#fef2f2" font-size="13" font-weight="700" font-family="Inter">HEATED BED 60°C</text>
+        <!-- 絲線卷 -->
+        <g transform="translate(560,250)">
+          <circle cx="0" cy="0" r="40" fill="#06B6D4" opacity=".9"/>
+          <circle cx="0" cy="0" r="14" fill="#1e293b"/>
+          <text x="0" y="3" text-anchor="middle" font-size="10" fill="#fff" font-weight="700">PLA</text>
+        </g>
+        <!-- 擠出機 -->
+        <g transform="translate(120,170)">
+          <rect x="-15" y="-10" width="30" height="20" rx="2" fill="#475569"/>
+          <circle cx="0" cy="0" r="6" fill="#0891B2"/>
+        </g>
+        <!-- 互動熱點 -->
+        <g id="hotspots">
+          <g class="hotspot-group" data-id="nozzle"><circle class="hotspot-pulse" cx="280" cy="250" r="14"><animate attributeName="r" values="14;22;14" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0;1" dur="2s" repeatCount="indefinite"/></circle><circle class="hotspot" cx="280" cy="250" r="14"/><text class="hotspot-label" x="280" y="254">1</text></g>
+          <g class="hotspot-group" data-id="hotend"><circle class="hotspot" cx="280" cy="200" r="14"/><text class="hotspot-label" x="280" y="204">2</text></g>
+          <g class="hotspot-group" data-id="bed"><circle class="hotspot" cx="300" cy="390" r="14"/><text class="hotspot-label" x="300" y="394">3</text></g>
+          <g class="hotspot-group" data-id="x-axis"><circle class="hotspot" cx="160" cy="188" r="14"/><text class="hotspot-label" x="160" y="192">4</text></g>
+          <g class="hotspot-group" data-id="z-axis"><circle class="hotspot" cx="500" cy="280" r="14"/><text class="hotspot-label" x="500" y="284">5</text></g>
+          <g class="hotspot-group" data-id="extruder"><circle class="hotspot" cx="120" cy="170" r="14"/><text class="hotspot-label" x="120" y="174">6</text></g>
+          <g class="hotspot-group" data-id="filament"><circle class="hotspot" cx="560" cy="250" r="14"/><text class="hotspot-label" x="560" y="254">7</text></g>
+          <g class="hotspot-group" data-id="lcd"><circle class="hotspot" cx="450" cy="455" r="14"/><text class="hotspot-label" x="450" y="459">8</text></g>
+        </g>
+      </svg>
+    </div>
+    <div class="parts-info" id="parts-info">
+      <div class="empty"><div class="empty-icon">👆</div><p style="font-size:16px;font-weight:600">點擊橘色數字</p><p style="font-size:13px;opacity:.7">8 個項目都認完才能進下一關</p></div>
+    </div>
+  </div>
+  <div class="parts-checklist" id="parts-checklist"></div>
+  <div class="module-nav-bottom"><a href="../index.html" class="btn btn-ghost">← 回首頁</a><a href="module2.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關：列印安全 →</a></div>
+</main>
+<script src="../../js/main.js"></script>
+<script src="../../js/audio.js"></script>
+<script src="../js/module1.js"></script>
+</body>
+</html>

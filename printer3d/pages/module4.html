@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 4：切片參數模擬</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../css/printer3d.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🖨️%3C/text%3E%3C/svg%3E">
+<style>
+  .slicer-controls { background:#fff; border:1px solid var(--border); border-radius:14px; padding:16px; margin-bottom:12px; }
+  .slider-row { margin-bottom:14px; }
+  .slider-row label { display:flex; justify-content:space-between; font-size:13px; margin-bottom:4px; }
+  .slider-row label .v { font-family:var(--font-mono); font-weight:700; color:var(--primary-dark); }
+  .slider-row input[type="range"] { width:100%; }
+  .slicer-controls h4 { font-size:13px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.1em; margin-bottom:10px; }
+  .estimates { background:var(--primary-light); border-radius:10px; padding:12px; margin-top:8px; }
+  .estimates .row { display:flex; justify-content:space-between; padding:4px 0; font-size:13px; }
+  .estimates .row strong { color:var(--primary-dark); font-family:var(--font-mono); }
+</style>
+</head>
+<body class="printer-theme">
+<header class="topbar"><div class="brand"><span class="logo">🖨️</span><div><h1>數位 3D 印表機</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<main class="module-page">
+  <div class="module-header"><div><span class="module-step" style="background:var(--success-light);color:#1b6e3a">MODULE 04 ・ 核心</span><h2>切片參數模擬</h2><p class="muted">調整參數，看 G-code 路徑、預估時間與耗材即時變化。</p></div></div>
+
+  <div class="practice-layout">
+    <div class="printer-canvas-wrap">
+      <canvas id="printer-canvas" width="760" height="500"></canvas>
+      <div class="sim-controls">
+        <button class="btn btn-primary" id="btn-print">▶ 開始列印</button>
+        <button class="btn btn-ghost" id="btn-reset">↺ 重置</button>
+      </div>
+    </div>
+
+    <div class="sim-side">
+      <div class="slicer-controls">
+        <h4>切片參數</h4>
+        <div class="slider-row">
+          <label>模型 <select id="model" style="font-family:var(--font-sans);font-size:13px;padding:2px 6px;border-radius:4px"><option value="cube">立方體</option><option value="cylinder">圓柱</option><option value="benchy" selected>3D Benchy（小船）</option><option value="vase">花瓶</option></select></label>
+        </div>
+        <div class="slider-row">
+          <label>層厚 <span class="v" id="v-layer">0.20 mm</span></label>
+          <input type="range" id="s-layer" min="0.1" max="0.4" step="0.05" value="0.2">
+        </div>
+        <div class="slider-row">
+          <label>填充密度 <span class="v" id="v-infill">20%</span></label>
+          <input type="range" id="s-infill" min="0" max="100" step="5" value="20">
+        </div>
+        <div class="slider-row">
+          <label>列印速度 <span class="v" id="v-speed">60 mm/s</span></label>
+          <input type="range" id="s-speed" min="20" max="150" step="5" value="60">
+        </div>
+        <div class="slider-row">
+          <label>列印溫度 <span class="v" id="v-temp">200°C</span></label>
+          <input type="range" id="s-temp" min="180" max="260" step="5" value="200">
+        </div>
+        <div class="estimates">
+          <div class="row"><span>預估時間</span><strong id="e-time">—</strong></div>
+          <div class="row"><span>耗材重量</span><strong id="e-weight">—</strong></div>
+          <div class="row"><span>切片層數</span><strong id="e-layers">—</strong></div>
+          <div class="row"><span>品質評分</span><strong id="e-quality">—</strong></div>
+        </div>
+      </div>
+
+      <div class="help-card">
+        <strong>💡 參考</strong>
+        <ul>
+          <li>層厚 0.2mm = 平衡品質與時間</li>
+          <li>層厚 0.1mm = 細節精緻但時間 ×2</li>
+          <li>填充 20% = 一般用途</li>
+          <li>速度 50–80 = 品質佳</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-nav-bottom"><a href="module3.html" class="btn btn-ghost">← 上一關</a><a href="module5.html" class="btn btn-primary">下一關：故障圖鑑 →</a></div>
+</main>
+<script src="../../js/main.js"></script><script src="../../js/audio.js"></script><script src="../js/module4.js"></script>
+</body></html>
