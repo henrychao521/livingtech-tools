@@ -51,18 +51,51 @@ const PARTS = {
 };
 
 // === Wikimedia Commons 授權圖片 ===
-// 所有圖片以 Special:FilePath 格式 hot-link，包含完整 attribution
+// 所有圖片已下載至 assets/wiki-photos/，每張附完整 attribution
+// 授權詳見根目錄 LICENSE_IMAGES.md
 const PHOTOS = [
   {
-    id: 'whole-saw',
+    id: 'operation',
     title: '操作中的線鋸機',
-    desc: '工匠使用線鋸機切割木板的工作畫面。',
-    relatedPart: '整機',
-    file: 'Scroll_saw.jpg',
-    width: 600,
+    desc: '工匠使用線鋸機切割木板的工作畫面，可看出操作姿勢。',
+    relatedPart: '操作姿勢',
+    localPath: 'Scroll_saw.jpg',
     author: 'Agashi5859',
     license: 'CC BY-SA 3.0',
     sourceUrl: 'https://commons.wikimedia.org/wiki/File:Scroll_saw.jpg',
+    licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/',
+  },
+  {
+    id: 'dremel',
+    title: 'Dremel 桌上型線鋸機',
+    desc: '小型家用電動線鋸機，與課堂教學機台尺寸相近。',
+    relatedPart: '現代機型',
+    localPath: 'Scroll_saw_-_Dremel.jpg',
+    author: 'Scott Ehardt',
+    license: '公有領域 (Public Domain)',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Scroll_saw_-_Dremel.jpg',
+    licenseUrl: 'https://en.wikipedia.org/wiki/Public_domain',
+  },
+  {
+    id: 'delta-industrial',
+    title: 'Delta 40-560 工業級線鋸機',
+    desc: '展示於博物館的工業等級機台，整體結構與課堂機型一致，比例更大。',
+    relatedPart: '工業機型',
+    localPath: 'AGPIConvention2018Delta40-560ScrollSaw.jpg',
+    author: 'DanielPenfield',
+    license: 'CC BY-SA 4.0',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:AGPIConvention2018Delta40-560ScrollSaw.jpg',
+    licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+  },
+  {
+    id: 'power-coping',
+    title: '電磁式電動線鋸機',
+    desc: '採用電磁推動的線鋸機，可看清完整工作台、夾頭與機身結構。',
+    relatedPart: '整機解剖',
+    localPath: 'Power_coping_saw_01.jpg',
+    author: 'Alessio Sbarbaro',
+    license: 'CC BY-SA 3.0 / GFDL',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Power_coping_saw_01.jpg',
     licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/',
   },
   {
@@ -70,8 +103,7 @@ const PHOTOS = [
     title: '鋸條近照',
     desc: '單一線鋸鋸條，可清楚看見鋸齒紋路與粗細。',
     relatedPart: '鋸條',
-    file: 'Scrollsaw_blade.JPG',
-    width: 600,
+    localPath: 'Scrollsaw_blade.JPG',
     author: 'Angelsharum',
     license: 'CC BY-SA 3.0',
     sourceUrl: 'https://commons.wikimedia.org/wiki/File:Scrollsaw_blade.JPG',
@@ -82,8 +114,7 @@ const PHOTOS = [
     title: '上夾頭結構特寫',
     desc: 'Central Machinery 線鋸機上夾頭，可見彈簧鋼片與固定螺絲。',
     relatedPart: '上夾頭',
-    file: 'Upper_Blade_Holder.JPG',
-    width: 600,
+    localPath: 'Upper_Blade_Holder.JPG',
     author: 'Jstapko',
     license: 'CC BY-SA 3.0',
     sourceUrl: 'https://commons.wikimedia.org/wiki/File:Upper_Blade_Holder.JPG',
@@ -94,8 +125,7 @@ const PHOTOS = [
     title: '古董手動線鋸機（約 1900 年）',
     desc: '攝於大鍵琴製作工坊內，腳踏式古董機台，可對照看現代電動機型的演進。',
     relatedPart: '歷史對照',
-    file: 'Dekupiersaege_scroll_saw.jpg',
-    width: 600,
+    localPath: 'Dekupiersaege_scroll_saw.jpg',
     author: 'Eva Kröcher (EvaK)',
     license: 'CC BY-SA 2.5 / GFDL',
     sourceUrl: 'https://commons.wikimedia.org/wiki/File:Dekupiersaege_scroll_saw.jpg',
@@ -196,8 +226,9 @@ tabs.forEach(tab => {
 });
 
 // === 渲染照片相簿 ===
-function buildWikimediaUrl(filename, width = 600) {
-  return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(filename)}?width=${width}`;
+// 注意：照片放在 /assets/wiki-photos/，pages/module1.html 在 /pages/，所以相對路徑要回上一層
+function buildLocalUrl(filename) {
+  return `../assets/wiki-photos/${filename}`;
 }
 
 function renderPhotos() {
@@ -210,18 +241,19 @@ function renderPhotos() {
   banner.className = 'attribution-banner';
   banner.style.gridColumn = '1 / -1';
   banner.innerHTML = `
-    <strong>📸 圖片來源</strong>　以下實物照片皆來自 <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener">Wikimedia Commons</a>，採 <strong>CC BY-SA</strong> 授權。本平台依授權條款保留作者署名與來源連結，您可自由轉用，但需維持相同的授權方式並標註原作者。
+    <strong>📸 圖片來源</strong>　以下 ${PHOTOS.length} 張實物照片皆取自 <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener">Wikimedia Commons</a>（已下載至本平台伺服器，避免外部連結失效）。
+    多數採 <strong>CC BY-SA</strong>（創用 CC 姓名標示-相同方式分享）授權，部分為公有領域。
+    依授權條款，本平台保留作者署名與授權連結；下游再使用須維持相同授權並標註原作者。
+    完整 attribution 清單見 <a href="../LICENSE_IMAGES.md" target="_blank" rel="noopener">LICENSE_IMAGES.md</a>。
   `;
   grid.appendChild(banner);
 
   PHOTOS.forEach(photo => {
     const card = document.createElement('div');
     card.className = 'photo-card';
-    const url = buildWikimediaUrl(photo.file, photo.width);
-    const fullUrl = buildWikimediaUrl(photo.file, 1200);
+    const url = buildLocalUrl(photo.localPath);
     card.innerHTML = `
-      <img class="photo-img" src="${url}" alt="${photo.title}" loading="lazy"
-        onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\\'photo-img-loading\\'>圖片載入中…若持續無法顯示，請點擊查看原始來源</div>')">
+      <img class="photo-img" src="${url}" alt="${photo.title}" loading="lazy">
       <span class="photo-tag">${photo.relatedPart}</span>
       <div class="photo-meta">
         <div class="photo-title">${photo.title}</div>
@@ -236,7 +268,7 @@ function renderPhotos() {
     `;
     card.addEventListener('click', e => {
       if (e.target.tagName === 'A') return;
-      openLightbox(fullUrl, photo);
+      openLightbox(url, photo);
     });
     grid.appendChild(card);
   });

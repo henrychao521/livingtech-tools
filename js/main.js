@@ -38,6 +38,25 @@ function showToast(msg, type = '') {
   }, 2000);
 }
 
+// 自動為所有頁面注入授權 footer（沒有 footer 的頁面才會加，例如 module 頁面）
+document.addEventListener('DOMContentLoaded', () => {
+  if (!document.querySelector('footer')) {
+    // 判斷層級：是否在 /pages/ 子目錄
+    const inSubdir = location.pathname.includes('/pages/');
+    const prefix = inSubdir ? '../' : '';
+    const footer = document.createElement('footer');
+    footer.innerHTML = `
+      <p>© 翰林出版・生活科技互動教學平台原型</p>
+      <p style="font-size:11px;color:var(--text-muted);margin-top:8px;line-height:1.7;max-width:780px;margin-left:auto;margin-right:auto;padding:0 16px">
+        本平台部分實物照片取自 <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline">Wikimedia Commons</a>，採 <strong>CC BY-SA</strong> 與公有領域授權。
+        依 CC BY-SA「相同方式分享」條款，本平台衍生作品須以相同授權釋出並保留原作者署名。
+        完整圖片授權清單見 <a href="${prefix}LICENSE_IMAGES.md" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline">LICENSE_IMAGES.md</a>。
+      </p>
+    `;
+    document.body.appendChild(footer);
+  }
+});
+
 // 給首頁用：標示已完成模組與顯示進度
 document.addEventListener('DOMContentLoaded', () => {
   if (!document.body.classList.contains('home')) return;
