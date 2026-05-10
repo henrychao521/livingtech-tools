@@ -11,43 +11,69 @@ function saveSolderProgress(p) {
   localStorage.setItem(PROGRESS_KEY_S, JSON.stringify(p));
 }
 
+// 座標依新的 viewBox 500×540
 const EQUIP_VISUALS = {
   goggles: { render: () => `
-    <g transform="translate(34,180)">
-      <ellipse cx="14" cy="9" rx="20" ry="11" fill="#1a1a1a"/>
-      <ellipse cx="62" cy="9" rx="20" ry="11" fill="#1a1a1a"/>
-      <line x1="34" y1="9" x2="42" y2="9" stroke="#1a1a1a" stroke-width="3"/>
-      <ellipse cx="14" cy="9" rx="16" ry="8" fill="rgba(135,206,250,.6)"/>
-      <ellipse cx="62" cy="9" rx="16" ry="8" fill="rgba(135,206,250,.6)"/>
+    <g transform="translate(106,158)">
+      <ellipse cx="16" cy="12" rx="22" ry="13" fill="#1a1a1a"/>
+      <ellipse cx="72" cy="12" rx="22" ry="13" fill="#1a1a1a"/>
+      <line x1="38" y1="12" x2="50" y2="12" stroke="#1a1a1a" stroke-width="4"/>
+      <ellipse cx="16" cy="12" rx="18" ry="10" fill="rgba(135,206,250,.65)"/>
+      <ellipse cx="72" cy="12" rx="18" ry="10" fill="rgba(135,206,250,.65)"/>
+      <ellipse cx="11" cy="9" rx="4" ry="2" fill="rgba(255,255,255,.7)"/>
+      <ellipse cx="67" cy="9" rx="4" ry="2" fill="rgba(255,255,255,.7)"/>
+      <!-- 鬆緊帶 -->
+      <line x1="-4" y1="14" x2="4" y2="13" stroke="#444" stroke-width="2"/>
+      <line x1="92" y1="14" x2="100" y2="13" stroke="#444" stroke-width="2"/>
     </g>` },
   apron: { render: () => `
     <g>
-      <path d="M30 245 Q60 250 90 245 L92 380 L28 380 Z" fill="#5C4033"/>
-      <path d="M30 245 Q35 235 60 235 Q85 235 90 245" fill="none" stroke="#3a2618" stroke-width="3" stroke-linecap="round"/>
-      <text x="60" y="320" text-anchor="middle" font-size="9" fill="#FFB066" font-weight="700">SAFETY</text>
+      <path d="M120 210 Q150 218 180 210 L182 330 L118 330 Z" fill="#5C4033"/>
+      <!-- 圍裙頸帶 -->
+      <path d="M120 210 Q130 196 150 196 Q170 196 180 210" fill="none" stroke="#3a2618" stroke-width="3" stroke-linecap="round"/>
+      <!-- 中央口袋 -->
+      <rect x="135" y="270" width="30" height="38" rx="2" fill="rgba(0,0,0,.2)"/>
+      <text x="150" y="252" text-anchor="middle" font-size="11" fill="#FFB066" font-weight="700" font-family="Inter,sans-serif">SAFETY</text>
     </g>` },
   ventilation: { render: () => `
-    <g transform="translate(195,38)">
-      <rect x="0" y="0" width="70" height="60" fill="#dbeafe" stroke="#1e40af" stroke-width="2"/>
-      <line x1="35" y1="0" x2="35" y2="60" stroke="#1e40af"/>
-      <line x1="0" y1="30" x2="70" y2="30" stroke="#1e40af"/>
-      <!-- 通風指示 -->
-      <path d="M 75 15 Q 90 20 100 30" stroke="#10b981" stroke-width="2" fill="none" stroke-dasharray="3 2"/>
-      <path d="M 75 30 Q 95 35 105 45" stroke="#10b981" stroke-width="2" fill="none" stroke-dasharray="3 2"/>
-      <text x="105" y="22" font-size="14">💨</text>
+    <g transform="translate(310,40)">
+      <!-- 窗戶 -->
+      <rect x="0" y="0" width="80" height="80" fill="#dbeafe" stroke="#1e40af" stroke-width="2"/>
+      <line x1="40" y1="0" x2="40" y2="80" stroke="#1e40af"/>
+      <line x1="0" y1="40" x2="80" y2="40" stroke="#1e40af"/>
+      <!-- 排煙風扇 -->
+      <g transform="translate(105,15)">
+        <rect x="0" y="0" width="50" height="50" fill="#475569" rx="4"/>
+        <circle cx="25" cy="25" r="18" fill="#1e293b"/>
+        <g fill="#94a3b8">
+          <ellipse cx="25" cy="10" rx="3" ry="14"><animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="2s" repeatCount="indefinite"/></ellipse>
+          <ellipse cx="25" cy="10" rx="3" ry="14" transform="rotate(60 25 25)"><animateTransform attributeName="transform" type="rotate" from="60 25 25" to="420 25 25" dur="2s" repeatCount="indefinite"/></ellipse>
+          <ellipse cx="25" cy="10" rx="3" ry="14" transform="rotate(120 25 25)"><animateTransform attributeName="transform" type="rotate" from="120 25 25" to="480 25 25" dur="2s" repeatCount="indefinite"/></ellipse>
+        </g>
+        <text x="25" y="65" text-anchor="middle" font-size="9" fill="#1e293b" font-family="Noto Sans TC">排煙器</text>
+      </g>
+      <!-- 通風指示箭頭 -->
+      <path d="M -10 25 L 90 25" stroke="#10b981" stroke-width="2" fill="none" stroke-dasharray="4 3"><animate attributeName="stroke-dashoffset" values="0;-14" dur="1s" repeatCount="indefinite"/></path>
     </g>` },
   'iron-stand': { render: () => `
-    <g transform="translate(160,290)">
-      <rect x="0" y="40" width="70" height="40" rx="3" fill="#374151"/>
-      <rect x="6" y="36" width="58" height="6" fill="#1f2937"/>
-      <!-- 海綿 -->
-      <rect x="10" y="20" width="32" height="14" rx="2" fill="#fbbf24"/>
-      <!-- 彈簧 -->
-      <path d="M 50 30 Q 60 10 72 18 Q 80 24 76 8" fill="none" stroke="#9ca3af" stroke-width="3" stroke-linecap="round"/>
+    <g transform="translate(310,400)">
+      <!-- 桌上的烙鐵架底座 -->
+      <rect x="0" y="48" width="100" height="38" rx="4" fill="#374151"/>
+      <rect x="6" y="44" width="88" height="6" fill="#1f2937"/>
+      <!-- 海綿盤 -->
+      <rect x="14" y="26" width="42" height="20" rx="2" fill="#4b5563"/>
+      <rect x="17" y="22" width="36" height="6" fill="#fbbf24"/>
+      <!-- 彈簧（烙鐵插座）-->
+      <path d="M 65 36 Q 75 12 92 22 Q 100 28 95 8" fill="none" stroke="#9ca3af" stroke-width="3" stroke-linecap="round"/>
       <!-- 烙鐵橫躺在架上 -->
-      <rect x="8" y="2" width="50" height="10" rx="5" fill="#3b82f6"/>
-      <rect x="58" y="3" width="14" height="8" fill="#9ca3af"/>
-      <ellipse cx="78" cy="7" rx="6" ry="4" fill="url(#m1-tip)"/>
+      <g transform="translate(15,2)">
+        <rect x="0" y="0" width="55" height="11" rx="5" fill="#3b82f6"/>
+        <circle cx="14" cy="5" r="3" fill="#22c55e"/>
+        <rect x="55" y="2" width="14" height="8" fill="#9ca3af"/>
+        <polygon points="69,2 78,5 69,8" fill="#dc2626"/>
+      </g>
+      <!-- 標籤 -->
+      <text x="50" y="105" text-anchor="middle" font-size="10" fill="#444" font-family="Noto Sans TC">烙鐵架（必備）</text>
     </g>` },
 };
 
