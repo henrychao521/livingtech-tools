@@ -50,6 +50,59 @@ const PARTS = {
   },
 };
 
+// === Wikimedia Commons 授權圖片 ===
+// 所有圖片以 Special:FilePath 格式 hot-link，包含完整 attribution
+const PHOTOS = [
+  {
+    id: 'whole-saw',
+    title: '操作中的線鋸機',
+    desc: '工匠使用線鋸機切割木板的工作畫面。',
+    relatedPart: '整機',
+    file: 'Scroll_saw.jpg',
+    width: 600,
+    author: 'Agashi5859',
+    license: 'CC BY-SA 3.0',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Scroll_saw.jpg',
+    licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/',
+  },
+  {
+    id: 'blade-closeup',
+    title: '鋸條近照',
+    desc: '單一線鋸鋸條，可清楚看見鋸齒紋路與粗細。',
+    relatedPart: '鋸條',
+    file: 'Scrollsaw_blade.JPG',
+    width: 600,
+    author: 'Angelsharum',
+    license: 'CC BY-SA 3.0',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Scrollsaw_blade.JPG',
+    licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/',
+  },
+  {
+    id: 'upper-chuck-closeup',
+    title: '上夾頭結構特寫',
+    desc: 'Central Machinery 線鋸機上夾頭，可見彈簧鋼片與固定螺絲。',
+    relatedPart: '上夾頭',
+    file: 'Upper_Blade_Holder.JPG',
+    width: 600,
+    author: 'Jstapko',
+    license: 'CC BY-SA 3.0',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Upper_Blade_Holder.JPG',
+    licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/',
+  },
+  {
+    id: 'historical',
+    title: '古董手動線鋸機（約 1900 年）',
+    desc: '攝於大鍵琴製作工坊內，腳踏式古董機台，可對照看現代電動機型的演進。',
+    relatedPart: '歷史對照',
+    file: 'Dekupiersaege_scroll_saw.jpg',
+    width: 600,
+    author: 'Eva Kröcher (EvaK)',
+    license: 'CC BY-SA 2.5 / GFDL',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Dekupiersaege_scroll_saw.jpg',
+    licenseUrl: 'https://creativecommons.org/licenses/by-sa/2.5/',
+  },
+];
+
 const seenSet = new Set();
 const totalParts = Object.keys(PARTS).length;
 
@@ -58,13 +111,11 @@ const progressEl = document.getElementById('progress-text');
 const checklistEl = document.getElementById('parts-checklist');
 const nextBtn = document.getElementById('next-btn');
 
-// 載入既有進度
 const savedProg = loadProgress();
 if (savedProg.module1_seen) {
   savedProg.module1_seen.forEach(id => seenSet.add(id));
 }
 
-// 初始化 chip 列表
 Object.entries(PARTS).forEach(([id, p], i) => {
   const chip = document.createElement('span');
   chip.className = 'part-chip';
@@ -74,7 +125,6 @@ Object.entries(PARTS).forEach(([id, p], i) => {
   checklistEl.appendChild(chip);
 });
 
-// 同步已看過的部位 UI
 function syncSeenUI() {
   document.querySelectorAll('.hotspot-group').forEach(g => {
     const seen = seenSet.has(g.dataset.id);
@@ -122,6 +172,9 @@ function render(id) {
   });
 }
 
+// 把 render 暴露給 3D 模組使用
+window.module1RenderPart = render;
+
 document.querySelectorAll('.hotspot-group').forEach(g => {
   g.addEventListener('click', () => render(g.dataset.id));
 });
@@ -129,3 +182,83 @@ document.querySelectorAll('.hotspot-group').forEach(g => {
 document.querySelectorAll('.part-chip').forEach(c => {
   c.addEventListener('click', () => render(c.dataset.id));
 });
+
+// === 視角分頁切換 ===
+const tabs = document.querySelectorAll('.view-tab');
+const panes = document.querySelectorAll('.view-pane');
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    const view = tab.dataset.view;
+    if (typeof SoundFX !== 'undefined') SoundFX.click();
+    tabs.forEach(t => t.classList.toggle('active', t === tab));
+    panes.forEach(p => p.classList.toggle('active', p.dataset.pane === view));
+  });
+});
+
+// === 渲染照片相簿 ===
+function buildWikimediaUrl(filename, width = 600) {
+  return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(filename)}?width=${width}`;
+}
+
+function renderPhotos() {
+  const grid = document.getElementById('photo-grid');
+  if (!grid || grid.dataset.rendered === '1') return;
+  grid.dataset.rendered = '1';
+
+  // 授權說明 banner
+  const banner = document.createElement('div');
+  banner.className = 'attribution-banner';
+  banner.style.gridColumn = '1 / -1';
+  banner.innerHTML = `
+    <strong>📸 圖片來源</strong>　以下實物照片皆來自 <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener">Wikimedia Commons</a>，採 <strong>CC BY-SA</strong> 授權。本平台依授權條款保留作者署名與來源連結，您可自由轉用，但需維持相同的授權方式並標註原作者。
+  `;
+  grid.appendChild(banner);
+
+  PHOTOS.forEach(photo => {
+    const card = document.createElement('div');
+    card.className = 'photo-card';
+    const url = buildWikimediaUrl(photo.file, photo.width);
+    const fullUrl = buildWikimediaUrl(photo.file, 1200);
+    card.innerHTML = `
+      <img class="photo-img" src="${url}" alt="${photo.title}" loading="lazy"
+        onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\\'photo-img-loading\\'>圖片載入中…若持續無法顯示，請點擊查看原始來源</div>')">
+      <span class="photo-tag">${photo.relatedPart}</span>
+      <div class="photo-meta">
+        <div class="photo-title">${photo.title}</div>
+        <div class="photo-desc">${photo.desc}</div>
+        <div class="photo-attribution">
+          📷 <strong>${photo.author}</strong>　／　${photo.license}
+          <br>
+          <a href="${photo.sourceUrl}" target="_blank" rel="noopener">原始檔案 →</a>
+          <a href="${photo.licenseUrl}" target="_blank" rel="noopener">授權條款 →</a>
+        </div>
+      </div>
+    `;
+    card.addEventListener('click', e => {
+      if (e.target.tagName === 'A') return;
+      openLightbox(fullUrl, photo);
+    });
+    grid.appendChild(card);
+  });
+}
+
+function openLightbox(url, photo) {
+  let modal = document.querySelector('.photo-modal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.className = 'photo-modal';
+    document.body.appendChild(modal);
+    modal.addEventListener('click', () => modal.classList.remove('show'));
+  }
+  modal.innerHTML = `
+    <img src="${url}" alt="${photo.title}">
+    <div class="photo-modal-caption">
+      <strong>${photo.title}</strong>　／　📷 ${photo.author}　／　${photo.license}
+      <br><a href="${photo.sourceUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation()">查看原始來源 →</a>
+    </div>
+  `;
+  modal.classList.add('show');
+  if (typeof SoundFX !== 'undefined') SoundFX.pop();
+}
+
+renderPhotos();

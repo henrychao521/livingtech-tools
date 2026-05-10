@@ -505,6 +505,266 @@ footer {
   gap: 10px;
 }
 
+/* === Module 1: 視角切換標籤 === */
+.view-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  background: var(--bg-soft);
+  padding: 6px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  max-width: 600px;
+}
+.view-tab {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all .25s var(--easing);
+  color: var(--text-soft);
+}
+.view-tab:hover { background: rgba(255,255,255,.6); }
+.view-tab.active {
+  background: #fff;
+  color: var(--primary-dark);
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+.view-tab .tab-icon { font-size: 22px; }
+.view-tab .tab-label {
+  font-weight: 700;
+  font-size: 14px;
+  display: block;
+}
+.view-tab .tab-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+  display: block;
+}
+.view-tab.active .tab-desc { color: var(--primary); }
+.view-tab > span:not(.tab-icon) {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.3;
+}
+
+.view-stage { position: relative; }
+.view-pane { display: none; animation: fadeInUp .3s var(--easing); }
+.view-pane.active { display: block; }
+
+/* 3D 舞台 */
+.three-stage {
+  background: linear-gradient(180deg, #e8e8e8, #cfcfcf);
+  border-radius: var(--radius-lg);
+  position: relative;
+  height: 540px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.three-stage canvas {
+  display: block;
+  cursor: grab;
+}
+.three-stage canvas:active { cursor: grabbing; }
+.three-loader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  background: rgba(255,255,255,.6);
+  backdrop-filter: blur(4px);
+}
+.three-controls {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  z-index: 5;
+}
+.three-btn {
+  background: rgba(20,20,20,.85);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.15);
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all .2s var(--easing);
+}
+.three-btn:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+.three-help {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 12px;
+  color: var(--text-soft);
+  max-width: 200px;
+  box-shadow: var(--shadow-sm);
+  z-index: 5;
+}
+.three-help strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--primary-dark);
+  font-size: 13px;
+}
+.three-help ul {
+  padding-left: 16px;
+  margin: 0;
+}
+.three-help li { margin-bottom: 2px; }
+
+/* 照片相簿 */
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+  padding: 4px;
+}
+.photo-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: all .25s var(--easing);
+  cursor: pointer;
+  box-shadow: var(--shadow-xs);
+  position: relative;
+}
+.photo-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary);
+}
+.photo-card .photo-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+  display: block;
+}
+.photo-card .photo-img-loading {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f5f5f5, #e8e8e8);
+  color: var(--text-muted);
+  font-size: 13px;
+}
+.photo-card .photo-meta {
+  padding: 14px 16px;
+}
+.photo-card .photo-title {
+  font-weight: 700;
+  margin-bottom: 4px;
+  font-size: 15px;
+}
+.photo-card .photo-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+.photo-card .photo-attribution {
+  font-size: 10.5px;
+  color: var(--text-light);
+  border-top: 1px dashed var(--border);
+  padding-top: 8px;
+  line-height: 1.5;
+}
+.photo-card .photo-attribution a {
+  color: var(--accent);
+  text-decoration: underline;
+}
+.photo-card .photo-attribution a:hover { color: var(--primary); }
+.photo-card .photo-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(20,20,20,.85);
+  color: #fff;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+  backdrop-filter: blur(8px);
+}
+
+/* 照片 lightbox */
+.photo-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 500;
+  padding: 24px;
+  cursor: zoom-out;
+}
+.photo-modal.show { display: flex; animation: fadeIn .2s; }
+.photo-modal img {
+  max-width: 90vw;
+  max-height: 80vh;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+}
+.photo-modal-caption {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,.8);
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 13px;
+  text-align: center;
+  max-width: 700px;
+}
+.photo-modal-caption a { color: #FFB066; text-decoration: underline; }
+
+.attribution-banner {
+  background: var(--accent-light);
+  border-left: 4px solid var(--accent);
+  padding: 14px 18px;
+  border-radius: 0 12px 12px 0;
+  margin-bottom: 18px;
+  font-size: 13px;
+  color: var(--text-soft);
+  line-height: 1.7;
+}
+.attribution-banner strong { color: var(--accent); }
+.attribution-banner a {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
 /* === Module 1: 部位互動 === */
 .parts-layout {
   display: grid;
