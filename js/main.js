@@ -38,12 +38,19 @@ function showToast(msg, type = '') {
   }, 2000);
 }
 
-// 自動為所有頁面注入授權 footer（沒有 footer 的頁面才會加，例如 module 頁面）
+// 計算從目前頁面回到 repo 根目錄需要的相對路徑前綴
+// 支援多層子目錄：/scrollsaw/、/solder/、/.../pages/
+function rootRelativePrefix() {
+  let depth = 0;
+  if (location.pathname.includes('/pages/')) depth++;
+  if (/\/(scrollsaw|solder)\//.test(location.pathname)) depth++;
+  return '../'.repeat(depth);
+}
+
+// 自動為所有頁面注入授權 footer（沒有 footer 的頁面才會加）
 document.addEventListener('DOMContentLoaded', () => {
   if (!document.querySelector('footer')) {
-    // 判斷層級：是否在 /pages/ 子目錄
-    const inSubdir = location.pathname.includes('/pages/');
-    const prefix = inSubdir ? '../' : '';
+    const prefix = rootRelativePrefix();
     const footer = document.createElement('footer');
     footer.innerHTML = `
       <p>© 翰林出版・生活科技互動教學平台原型</p>

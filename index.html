@@ -3,458 +3,505 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>數位線鋸機 ｜ 生活科技互動教學平台</title>
+<title>生活科技 數位教具系列 ｜ 互動教學平台</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🪚%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📚%3C/text%3E%3C/svg%3E">
+<style>
+  body.hub {
+    background:
+      radial-gradient(ellipse at top right, rgba(255,122,0,.07), transparent 50%),
+      radial-gradient(ellipse at top left, rgba(220,38,38,.05), transparent 50%),
+      radial-gradient(ellipse at bottom, rgba(44,95,191,.05), transparent 50%),
+      var(--bg);
+  }
+  .hub-hero {
+    text-align: center;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 80px 36px 40px;
+  }
+  .hub-hero h1 {
+    font-size: 56px;
+    line-height: 1.15;
+    margin: 22px 0 18px;
+    font-weight: 900;
+    letter-spacing: -.025em;
+  }
+  .hub-hero h1 .gradient {
+    background: linear-gradient(135deg, #FF7A00 0%, #DC2626 50%, #2563EB 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hub-hero p {
+    font-size: 19px;
+    color: var(--text-soft);
+    line-height: 1.7;
+    max-width: 700px;
+    margin: 0 auto 32px;
+  }
+  .hub-tools {
+    max-width: 1200px;
+    margin: 24px auto 0;
+    padding: 40px 36px 80px;
+  }
+  .hub-tool-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 8px;
+  }
+  .hub-tool {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 36px 32px;
+    text-decoration: none;
+    color: inherit;
+    transition: all .35s var(--easing);
+    position: relative;
+    overflow: hidden;
+    display: block;
+  }
+  .hub-tool::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: var(--primary);
+  }
+  .hub-tool.tool-saw::before { background: linear-gradient(90deg, #FF7A00, #FFB066); }
+  .hub-tool.tool-solder::before { background: linear-gradient(90deg, #DC2626, #F97316); }
+  .hub-tool.tool-soon::before { background: linear-gradient(90deg, #888, #aaa); }
+  .hub-tool:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(255,122,0,.35);
+  }
+  .hub-tool .tool-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 18px;
+  }
+  .hub-tool .tool-emoji {
+    font-size: 64px;
+    line-height: 1;
+    filter: drop-shadow(0 6px 12px rgba(0,0,0,.1));
+    transition: transform .35s var(--easing-bounce);
+  }
+  .hub-tool:hover .tool-emoji {
+    transform: scale(1.1) rotate(-6deg);
+  }
+  .hub-tool h3 {
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 4px;
+    letter-spacing: -.01em;
+  }
+  .hub-tool .tool-tagline {
+    font-size: 14px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-weight: 600;
+    letter-spacing: .05em;
+  }
+  .hub-tool .tool-desc {
+    font-size: 15px;
+    color: var(--text-soft);
+    line-height: 1.7;
+    margin-bottom: 18px;
+  }
+  .hub-tool .tool-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 22px;
+  }
+  .hub-tool .tool-feature {
+    font-size: 12px;
+    background: var(--bg-soft);
+    color: var(--text-soft);
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .hub-tool .tool-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 22px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 15px;
+    background: var(--primary);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(255,122,0,.35);
+    transition: all .25s var(--easing);
+  }
+  .hub-tool.tool-solder .tool-cta {
+    background: #DC2626;
+    box-shadow: 0 4px 12px rgba(220,38,38,.35);
+  }
+  .hub-tool:hover .tool-cta {
+    transform: translateX(4px);
+  }
+  .hub-tool .tool-soon-tag {
+    display: inline-block;
+    background: #efefef;
+    color: #888;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .hub-tool.tool-soon {
+    opacity: .55;
+    cursor: default;
+  }
+  .hub-tool.tool-soon:hover {
+    transform: none;
+    box-shadow: var(--shadow-xs);
+    border-color: var(--border);
+  }
+  .hub-tool.tool-soon:hover .tool-emoji {
+    transform: none;
+  }
+  .badge-new {
+    position: absolute;
+    top: 18px; right: 18px;
+    background: linear-gradient(135deg, #FF7A00, #DC2626);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 999px;
+    letter-spacing: .05em;
+    box-shadow: 0 2px 6px rgba(220,38,38,.3);
+  }
+  .pedagogy {
+    background: #fff;
+    padding: 80px 36px;
+    border-top: 1px solid var(--border);
+  }
+  .pedagogy-grid {
+    max-width: 1100px;
+    margin: 30px auto 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+  }
+  .ped-step {
+    text-align: center;
+    padding: 18px 12px;
+    border-radius: var(--radius);
+    transition: all .25s var(--easing);
+    position: relative;
+  }
+  .ped-step::after {
+    content: '→';
+    position: absolute;
+    right: -16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+    font-size: 20px;
+  }
+  .ped-step:last-child::after { display: none; }
+  .ped-step:hover {
+    background: var(--bg-soft);
+  }
+  .ped-step .ped-num {
+    width: 40px;
+    height: 40px;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 18px;
+    margin: 0 auto 10px;
+    font-family: var(--font-mono);
+  }
+  .ped-step .ped-icon {
+    font-size: 32px;
+    margin-bottom: 6px;
+  }
+  .ped-step h4 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .ped-step p {
+    font-size: 12px;
+    color: var(--text-soft);
+    line-height: 1.5;
+  }
+  .why {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 80px 36px;
+  }
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-top: 30px;
+  }
+  .why-item {
+    text-align: center;
+    padding: 24px 18px;
+  }
+  .why-item .why-icon {
+    font-size: 44px;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .why-item h4 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .why-item p {
+    font-size: 14px;
+    color: var(--text-soft);
+    line-height: 1.65;
+  }
+  .hub-cta {
+    background: linear-gradient(135deg, #FF7A00 0%, #DC2626 100%);
+    color: #fff;
+    padding: 64px 36px;
+    text-align: center;
+  }
+  .hub-cta h2 {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    letter-spacing: -.01em;
+  }
+  .hub-cta p {
+    font-size: 16px;
+    opacity: .92;
+    margin-bottom: 28px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hub-cta .btn {
+    background: #fff;
+    color: var(--primary-dark);
+    box-shadow: 0 8px 20px rgba(0,0,0,.15);
+  }
+  .hub-cta .btn:hover {
+    background: #fff8f0;
+  }
+  @media (max-width: 900px) {
+    .hub-hero h1 { font-size: 38px; }
+    .hub-tool-grid { grid-template-columns: 1fr; }
+    .pedagogy-grid { grid-template-columns: 1fr 1fr; }
+    .ped-step::after { display: none; }
+    .why-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
 </head>
-<body class="home">
+<body class="hub">
 <header class="topbar">
   <div class="brand">
-    <span class="logo">🪚</span>
+    <span class="logo">📚</span>
     <div>
-      <h1>數位線鋸機</h1>
+      <h1>數位教具系列</h1>
       <p class="subtitle">生活科技互動教學平台</p>
     </div>
   </div>
   <nav class="topnav">
-    <a href="#modules">學習模組</a>
-    <a href="#showcase">實際畫面</a>
-    <a href="#about">關於平台</a>
-    <a href="#teacher">教師資源</a>
+    <a href="#tools">教學工具</a>
+    <a href="#pedagogy">教學設計</a>
+    <a href="#why">教學理念</a>
   </nav>
 </header>
 
 <main>
-  <section class="hero">
-    <div class="hero-text">
-      <span class="badge">108 課綱・國中生活科技</span>
-      <h2>用模擬，把第一次切的緊張<br>留在電腦裡</h2>
-      <p>從認識結構、安全規範、操作步驟，到模擬切割與創作挑戰，五大模組依序闖關，學生在進實作教室前就能熟悉線鋸機。</p>
-      <div class="hero-cta">
-        <a href="pages/module1.html" class="btn btn-primary">開始學習 →</a>
-        <a href="#modules" class="btn btn-ghost">看模組地圖</a>
-      </div>
-    </div>
-    <div class="hero-visual">
-      <div class="hero-carousel" aria-label="平台功能輪播">
-        <div class="hc-slides">
-          <!-- Slide 1: 即時切割演示動畫（自動播放）-->
-          <div class="hc-slide active" data-slide="cutting-demo">
-            <canvas id="cutting-demo-canvas"></canvas>
-            <div class="hc-caption">
-              <span class="hc-tag">M4 ・ 即時演示</span>
-              <strong>自動切割愛心輪廓</strong>
-              <span class="hc-sub">木板沿路徑移動，鋸條留下軌跡與木屑</span>
-            </div>
-          </div>
-          <!-- Slide 2: 3D 視角 -->
-          <div class="hc-slide" data-slide="3d">
-            <img src="assets/screenshots/03-module1-3d.jpg" alt="3D 立體線鋸機">
-            <div class="hc-caption">
-              <span class="hc-tag">M1 ・ 3D 立體</span>
-              <strong>可旋轉的 3D 模型</strong>
-              <span class="hc-sub">Three.js 完整建模，8 個編號標籤</span>
-            </div>
-          </div>
-          <!-- Slide 3: 安全闖關 -->
-          <div class="hc-slide" data-slide="safety">
-            <img src="assets/screenshots/05-module2-safety.jpg" alt="安全規範闖關">
-            <div class="hc-caption">
-              <span class="hc-tag">M2 ・ 必修</span>
-              <strong>拖曳服儀檢查</strong>
-              <span class="hc-sub">滿分通關才能進操作教學</span>
-            </div>
-          </div>
-          <!-- Slide 4: 步驟教學 -->
-          <div class="hc-slide" data-slide="steps">
-            <img src="assets/screenshots/06-module3-steps.jpg" alt="操作步驟教學">
-            <div class="hc-caption">
-              <span class="hc-tag">M3 ・ 操作步驟</span>
-              <strong>8 步分解動畫</strong>
-              <span class="hc-sub">每步都有 SVG 動畫示範</span>
-            </div>
-          </div>
-          <!-- Slide 5: 創作計畫書 -->
-          <div class="hc-slide" data-slide="plan">
-            <img src="assets/screenshots/08-module5-plan.jpg" alt="切割計畫書">
-            <div class="hc-caption">
-              <span class="hc-tag">M5 ・ 創作挑戰</span>
-              <strong>切割計畫書自動分析</strong>
-              <span class="hc-sub">標出尖角難點與預估時間</span>
-            </div>
-          </div>
-        </div>
-        <button class="hc-nav hc-prev" aria-label="上一張">‹</button>
-        <button class="hc-nav hc-next" aria-label="下一張">›</button>
-        <div class="hc-dots">
-          <button class="hc-dot active" aria-label="第 1 張"></button>
-          <button class="hc-dot" aria-label="第 2 張"></button>
-          <button class="hc-dot" aria-label="第 3 張"></button>
-          <button class="hc-dot" aria-label="第 4 張"></button>
-          <button class="hc-dot" aria-label="第 5 張"></button>
-        </div>
-      </div>
-      <!-- 隱藏的舊 SVG（保留結構但不顯示） -->
-      <svg viewBox="0 0 480 420" class="hero-saw" style="display:none">
-        <defs>
-          <linearGradient id="bodyG" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0" stop-color="#FFAA55"/>
-            <stop offset=".5" stop-color="#FF7A00"/>
-            <stop offset="1" stop-color="#D85F00"/>
-          </linearGradient>
-          <linearGradient id="armG" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0" stop-color="#FF9933"/>
-            <stop offset="1" stop-color="#E66A00"/>
-          </linearGradient>
-          <linearGradient id="tableG" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0" stop-color="#e8e8e8"/>
-            <stop offset="1" stop-color="#b8b8b8"/>
-          </linearGradient>
-          <linearGradient id="baseG" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0" stop-color="#4a4a4a"/>
-            <stop offset="1" stop-color="#2a2a2a"/>
-          </linearGradient>
-          <linearGradient id="woodG" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0" stop-color="#e8c896"/>
-            <stop offset="1" stop-color="#c89a5e"/>
-          </linearGradient>
-          <radialGradient id="shadowG">
-            <stop offset="0" stop-color="rgba(0,0,0,.3)"/>
-            <stop offset="1" stop-color="rgba(0,0,0,0)"/>
-          </radialGradient>
-          <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
-            <feOffset dx="0" dy="6" result="offsetblur"/>
-            <feComponentTransfer><feFuncA type="linear" slope="0.3"/></feComponentTransfer>
-            <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-        </defs>
-
-        <!-- 地面陰影 -->
-        <ellipse cx="240" cy="395" rx="180" ry="14" fill="url(#shadowG)"/>
-
-        <!-- 底座 -->
-        <g filter="url(#softShadow)">
-          <rect x="60" y="340" width="360" height="56" rx="10" fill="url(#baseG)"/>
-          <rect x="80" y="332" width="320" height="14" fill="#1a1a1a"/>
-          <!-- 通風孔 -->
-          <g fill="#1a1a1a" opacity=".6">
-            <rect x="100" y="358" width="40" height="3" rx="1"/>
-            <rect x="100" y="365" width="40" height="3" rx="1"/>
-            <rect x="100" y="372" width="40" height="3" rx="1"/>
-            <rect x="100" y="379" width="40" height="3" rx="1"/>
-          </g>
-          <!-- LOGO 標牌 -->
-          <rect x="200" y="358" width="80" height="22" rx="3" fill="#1a1a1a"/>
-          <text x="240" y="373" text-anchor="middle" fill="#FF7A00" font-size="11" font-weight="700" font-family="Inter, sans-serif">SCROLL SAW</text>
-        </g>
-
-        <!-- 工作台 -->
-        <g filter="url(#softShadow)">
-          <rect x="100" y="280" width="280" height="56" rx="6" fill="url(#tableG)" stroke="#999" stroke-width="1"/>
-          <rect x="100" y="278" width="280" height="8" fill="#a0a0a0"/>
-          <!-- 鋸縫 -->
-          <line x1="240" y1="280" x2="240" y2="336" stroke="#666" stroke-width="3"/>
-          <line x1="244" y1="280" x2="244" y2="336" stroke="#666" stroke-width="3"/>
-          <!-- 角度刻度 -->
-          <g stroke="#666" stroke-width=".5" fill="none">
-            <path d="M260 320 A 20 20 0 0 1 280 300"/>
-            <path d="M270 320 A 30 30 0 0 1 290 290"/>
-          </g>
-          <text x="280" y="295" font-size="7" fill="#666">45°</text>
-        </g>
-
-        <!-- 木板（在工作台上）-->
-        <g>
-          <rect x="140" y="270" width="180" height="14" fill="url(#woodG)" stroke="#8b6914" stroke-width=".5"/>
-          <!-- 木紋 -->
-          <path d="M140 274 Q200 272 260 275 T 320 274" fill="none" stroke="rgba(80,40,10,.2)" stroke-width=".7"/>
-          <path d="M140 280 Q210 278 270 281 T 320 280" fill="none" stroke="rgba(80,40,10,.15)" stroke-width=".6"/>
-          <!-- 切割線（鉛筆描繪）-->
-          <path d="M150 277 Q200 273 240 277 Q280 281 310 277" fill="none" stroke="#444" stroke-width="1" stroke-dasharray="3 2"/>
-        </g>
-
-        <!-- 機身 -->
-        <g filter="url(#softShadow)">
-          <rect x="140" y="170" width="200" height="120" rx="8" fill="url(#bodyG)"/>
-          <!-- 控制面板 -->
-          <rect x="280" y="200" width="50" height="80" rx="4" fill="#2a2a2a"/>
-          <!-- 速度旋鈕 -->
-          <circle cx="305" cy="220" r="14" fill="#fff" stroke="#1a1a1a" stroke-width="2"/>
-          <circle cx="305" cy="220" r="9" fill="#f0f0f0"/>
-          <line x1="305" y1="220" x2="305" y2="210" stroke="#222" stroke-width="2.5" stroke-linecap="round"/>
-          <text x="305" y="240" text-anchor="middle" font-size="6" fill="#888" font-family="Inter, sans-serif">SPEED</text>
-          <!-- 數位顯示 -->
-          <rect x="288" y="246" width="34" height="14" rx="2" fill="#0a2a0a"/>
-          <text x="305" y="256" text-anchor="middle" fill="#3aff6a" font-size="9" font-family="monospace" font-weight="700">800</text>
-          <!-- 開關 -->
-          <rect x="288" y="266" width="14" height="10" rx="2" fill="#2EBD66"/>
-          <rect x="306" y="266" width="14" height="10" rx="2" fill="#5a1a1a"/>
-          <text x="295" y="274" text-anchor="middle" fill="#fff" font-size="6" font-weight="700">ON</text>
-          <text x="313" y="274" text-anchor="middle" fill="#fff" font-size="6" font-weight="700">OFF</text>
-        </g>
-
-        <!-- 上臂（懸臂）-->
-        <g filter="url(#softShadow)">
-          <path d="M140 110 Q240 70 340 110 L340 170 L280 180 L200 180 L140 170 Z" fill="url(#armG)"/>
-          <!-- 上臂表面紋路 -->
-          <path d="M170 130 Q240 110 310 130" fill="none" stroke="rgba(0,0,0,.15)" stroke-width="1"/>
-          <!-- 翰林標誌 -->
-          <ellipse cx="240" cy="130" rx="32" ry="14" fill="rgba(255,255,255,.15)"/>
-          <text x="240" y="135" text-anchor="middle" fill="#fff" font-size="10" font-weight="700" letter-spacing="2">HANLIN</text>
-        </g>
-
-        <!-- 鋸條 -->
-        <rect x="240" y="180" width="4" height="100" fill="#222"/>
-        <rect x="241" y="180" width="2" height="100" fill="#888" opacity=".4"/>
-        <line x1="242" y1="180" x2="242" y2="280" stroke="#fff" stroke-width=".6" stroke-dasharray="2 2"/>
-
-        <!-- 上夾頭 -->
-        <g>
-          <rect x="226" y="168" width="32" height="16" rx="2" fill="#2a2a2a"/>
-          <rect x="228" y="170" width="28" height="3" fill="#666"/>
-          <circle cx="232" cy="176" r="2" fill="#888"/>
-          <circle cx="252" cy="176" r="2" fill="#888"/>
-        </g>
-
-        <!-- 下夾頭 -->
-        <g>
-          <rect x="226" y="280" width="32" height="16" rx="2" fill="#2a2a2a"/>
-        </g>
-
-        <!-- 壓料桿 -->
-        <g>
-          <rect x="180" y="195" width="60" height="4" fill="#888" rx="1"/>
-          <line x1="180" y1="197" x2="155" y2="180" stroke="#888" stroke-width="3" stroke-linecap="round"/>
-          <rect x="200" y="240" width="40" height="6" fill="#aaa" rx="2"/>
-          <rect x="218" y="246" width="6" height="20" fill="#888"/>
-          <rect x="210" y="265" width="22" height="8" rx="2" fill="#666"/>
-        </g>
-
-        <!-- 吹氣管 -->
-        <path d="M280 200 Q 268 220 252 230 Q 244 234 244 240" stroke="#444" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-        <circle cx="244" cy="240" r="3" fill="#222"/>
-
-        <!-- 木屑/亮粒（裝飾）-->
-        <g opacity=".7">
-          <circle cx="200" cy="295" r="1.5" fill="#FFB066"/>
-          <circle cx="285" cy="298" r="1" fill="#FFB066"/>
-          <circle cx="180" cy="300" r="1.2" fill="#D85F00"/>
-          <circle cx="260" cy="300" r="1" fill="#FFB066"/>
-        </g>
-
-        <!-- 標籤箭頭（教學引導風格）-->
-        <g font-family="Noto Sans TC, sans-serif">
-          <line x1="80" y1="180" x2="138" y2="180" stroke="#FF7A00" stroke-width="1.5" stroke-dasharray="3 3"/>
-          <circle cx="80" cy="180" r="3" fill="#FF7A00"/>
-          <text x="20" y="184" font-size="11" fill="#444" font-weight="600">機身</text>
-
-          <line x1="400" y1="240" x2="332" y2="240" stroke="#2C5FBF" stroke-width="1.5" stroke-dasharray="3 3"/>
-          <circle cx="400" cy="240" r="3" fill="#2C5FBF"/>
-          <text x="408" y="244" font-size="11" fill="#444" font-weight="600">控制台</text>
-
-          <line x1="380" y1="100" x2="310" y2="115" stroke="#2EBD66" stroke-width="1.5" stroke-dasharray="3 3"/>
-          <circle cx="380" cy="100" r="3" fill="#2EBD66"/>
-          <text x="386" y="104" font-size="11" fill="#444" font-weight="600">懸臂</text>
-        </g>
-      </svg>
+  <section class="hub-hero">
+    <span class="badge">108 課綱・國中生活科技</span>
+    <h1>動手前，<span class="gradient">先在數位環境練熟</span></h1>
+    <p>本平台提供一系列互動式工具操作模擬，協助學生在實作教室前先建立正確的操作概念、安全意識與肌肉記憶。每個工具都採五段式闖關設計，從認識到創作，循序漸進。</p>
+    <div class="hero-cta" style="justify-content:center">
+      <a href="#tools" class="btn btn-primary">選擇工具開始 ↓</a>
+      <a href="#pedagogy" class="btn btn-ghost">了解設計理念</a>
     </div>
   </section>
 
-  <section class="tool-switcher">
-    <h3 class="section-title">數位教具系列</h3>
-    <p class="section-sub">同一套架構，不同領域的操作練習</p>
-    <div class="tool-grid">
-      <div class="tool-card active">
-        <span class="tool-status">使用中</span>
-        <div class="tool-icon">🪚</div>
-        <h4>線鋸機</h4>
-        <p>生活科技 ・ 木作切割</p>
-        <span class="tool-meta">5 模組 ・ 國中生科</span>
-      </div>
-      <a class="tool-card" href="solder/">
-        <span class="tool-status new">新</span>
-        <div class="tool-icon">🔥</div>
-        <h4>電烙鐵</h4>
-        <p>生活科技 ・ 電子焊接</p>
-        <span class="tool-meta">5 模組 ・ 國中電學</span>
+  <section id="tools" class="hub-tools">
+    <h3 class="section-title">教學工具列表</h3>
+    <p class="section-sub">點選工具進入該工具的五大模組</p>
+    <div class="hub-tool-grid">
+
+      <a class="hub-tool tool-saw" href="scrollsaw/">
+        <div class="tool-head">
+          <div class="tool-emoji">🪚</div>
+          <div>
+            <h3>線鋸機</h3>
+            <div class="tool-tagline">SCROLL SAW ・ 木作切割</div>
+          </div>
+        </div>
+        <p class="tool-desc">用模擬把第一次切的緊張留在電腦裡。從認識結構、安全規範、操作步驟，到模擬切割（5 個關卡）與創作挑戰，學生在進實作教室前就能熟悉線鋸機。</p>
+        <div class="tool-features">
+          <span class="tool-feature">📐 平面圖解</span>
+          <span class="tool-feature">🎲 3D 視角</span>
+          <span class="tool-feature">📷 實物照片</span>
+          <span class="tool-feature">🎮 切割模擬</span>
+          <span class="tool-feature">✨ 創作計畫書</span>
+        </div>
+        <span class="tool-cta">進入線鋸機平台 →</span>
       </a>
-      <div class="tool-card disabled">
-        <span class="tool-status">規劃中</span>
-        <div class="tool-icon">🔌</div>
-        <h4>麵包板電路</h4>
-        <p>電學 ・ 元件組裝</p>
-        <span class="tool-meta">即將推出</span>
+
+      <a class="hub-tool tool-solder" href="solder/">
+        <span class="badge-new">NEW</span>
+        <div class="tool-head">
+          <div class="tool-emoji">🔥</div>
+          <div>
+            <h3>電烙鐵</h3>
+            <div class="tool-tagline">SOLDERING IRON ・ 電子焊接</div>
+          </div>
+        </div>
+        <p class="tool-desc">讓學生第一次焊接就焊出飽滿的焊點。從認識烙鐵、安全規範、焊接步驟，到模擬焊接（5 種焊點類型）與焊點品質鑑定（9 種錯誤對照）。</p>
+        <div class="tool-features">
+          <span class="tool-feature">🔍 部位互動</span>
+          <span class="tool-feature">🛡️ 燙傷預防</span>
+          <span class="tool-feature">📖 8 步動畫</span>
+          <span class="tool-feature">🎮 焊接模擬</span>
+          <span class="tool-feature">🔬 9 種錯誤圖鑑</span>
+        </div>
+        <span class="tool-cta">進入電烙鐵平台 →</span>
+      </a>
+
+      <div class="hub-tool tool-soon">
+        <div class="tool-head">
+          <div class="tool-emoji">🔌</div>
+          <div>
+            <h3>麵包板電路</h3>
+            <div class="tool-tagline">BREADBOARD ・ 電路組裝</div>
+          </div>
+        </div>
+        <p class="tool-desc">拖放電子元件到麵包板上，連接導線，學習串並聯與基本電路概念。即時模擬電流流向、電壓電流測量，避免短路造成元件損壞。</p>
+        <div class="tool-features">
+          <span class="tool-feature">📦 元件拖放</span>
+          <span class="tool-feature">⚡ 電流模擬</span>
+          <span class="tool-feature">🔬 測量工具</span>
+        </div>
+        <span class="tool-soon-tag">🚧 規劃中</span>
       </div>
-      <div class="tool-card disabled">
-        <span class="tool-status">規劃中</span>
-        <div class="tool-icon">🖨️</div>
-        <h4>3D 印表機</h4>
-        <p>數位製造 ・ G-code</p>
-        <span class="tool-meta">即將推出</span>
+
+      <div class="hub-tool tool-soon">
+        <div class="tool-head">
+          <div class="tool-emoji">🖨️</div>
+          <div>
+            <h3>3D 印表機</h3>
+            <div class="tool-tagline">3D PRINTER ・ 數位製造</div>
+          </div>
+        </div>
+        <p class="tool-desc">G-code 路徑視覺化、切片參數調整、列印過程模擬與故障排除（翹邊、漏料、絲線斷裂）。讓學生在按下「列印」前就懂背後發生什麼事。</p>
+        <div class="tool-features">
+          <span class="tool-feature">🎯 G-code 視覺化</span>
+          <span class="tool-feature">⚙️ 切片參數</span>
+          <span class="tool-feature">🚨 故障排除</span>
+        </div>
+        <span class="tool-soon-tag">🚧 規劃中</span>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="pedagogy" class="pedagogy">
+    <h3 class="section-title">五段式教學設計</h3>
+    <p class="section-sub">每個工具都依此架構設計，讓學生循序漸進</p>
+    <div class="pedagogy-grid">
+      <div class="ped-step">
+        <div class="ped-num">1</div>
+        <div class="ped-icon">🔍</div>
+        <h4>認識</h4>
+        <p>互動標示工具部位，理解每個元件的功能。</p>
+      </div>
+      <div class="ped-step">
+        <div class="ped-num">2</div>
+        <div class="ped-icon">🛡️</div>
+        <h4>安全</h4>
+        <p>必修闖關，須滿分才能進入操作。情境題與服儀檢查。</p>
+      </div>
+      <div class="ped-step">
+        <div class="ped-num">3</div>
+        <div class="ped-icon">📖</div>
+        <h4>步驟</h4>
+        <p>分解動作為 8 個步驟，每步都有動畫與重點提醒。</p>
+      </div>
+      <div class="ped-step">
+        <div class="ped-num">4</div>
+        <div class="ped-icon">🎮</div>
+        <h4>模擬</h4>
+        <p>核心模組。互動式 Canvas 模擬器，5 個關卡與三星評分。</p>
+      </div>
+      <div class="ped-step">
+        <div class="ped-num">5</div>
+        <div class="ped-icon">✨</div>
+        <h4>應用</h4>
+        <p>創作挑戰或品質鑑定，把學到的內容延伸到實際作品。</p>
       </div>
     </div>
   </section>
 
-  <section id="modules" class="modules">
-    <h3 class="section-title">五大學習模組</h3>
-    <p class="section-sub">闖關制設計，安全模組需滿分才能解鎖實作</p>
-    <div class="module-grid">
-      <a class="card card-1" href="pages/module1.html">
-        <div class="card-num">01</div>
-        <div class="card-icon">🔍</div>
-        <h4>認識線鋸機</h4>
-        <p>互動 3D 視角，點擊各部位學習名稱與功能。</p>
-        <span class="card-tag">15 分鐘</span>
-      </a>
-      <a class="card card-2" href="pages/module2.html">
-        <div class="card-num">02</div>
-        <div class="card-icon">🛡️</div>
-        <h4>安全規範闖關</h4>
-        <p>服儀檢查、情境判斷，必過關才能進入下一階段。</p>
-        <span class="card-tag">必修・10 分鐘</span>
-      </a>
-      <a class="card card-3" href="pages/module3.html">
-        <div class="card-num">03</div>
-        <div class="card-icon">📖</div>
-        <h4>操作步驟教學</h4>
-        <p>八個分解步驟，動畫示範與語音導覽。</p>
-        <span class="card-tag">15 分鐘</span>
-      </a>
-      <a class="card card-4" href="pages/module4.html">
-        <div class="card-num">04</div>
-        <div class="card-icon">🎮</div>
-        <h4>模擬切割練習</h4>
-        <p>五個關卡：直線→轉角→曲線→內挖→綜合。</p>
-        <span class="card-tag">核心・30 分鐘</span>
-      </a>
-      <a class="card card-5" href="pages/module5.html">
-        <div class="card-num">05</div>
-        <div class="card-icon">✨</div>
-        <h4>創作挑戰</h4>
-        <p>選擇圖樣或上傳設計，預測難點與切割計畫。</p>
-        <span class="card-tag">20 分鐘</span>
-      </a>
-      <div class="card card-locked">
-        <div class="card-num">👨‍🏫</div>
-        <div class="card-icon">📊</div>
-        <h4>教師後台</h4>
-        <p>班級進度、成績匯出、派任務（開發中）。</p>
-        <span class="card-tag">教師專用</span>
+  <section id="why" class="why">
+    <h3 class="section-title">為什麼需要數位前置？</h3>
+    <p class="section-sub">實作教室時間有限，數位模擬讓有限時間發揮最大價值</p>
+    <div class="why-grid">
+      <div class="why-item">
+        <span class="why-icon">⚡</span>
+        <h4>降低風險</h4>
+        <p>第一次操作高溫、利刃機具壓力大，數位模擬讓肌肉記憶先建立。</p>
+      </div>
+      <div class="why-item">
+        <span class="why-icon">⏱</span>
+        <h4>節省時間</h4>
+        <p>50 分鐘的課讓每位學生都有機會多次練習，不用排隊等機台。</p>
+      </div>
+      <div class="why-item">
+        <span class="why-icon">🧠</span>
+        <h4>建立心智模型</h4>
+        <p>切割路徑、焊接時間、電流方向的因果關係，用視覺化方式內化。</p>
+      </div>
+      <div class="why-item">
+        <span class="why-icon">📈</span>
+        <h4>數據化評量</h4>
+        <p>偏移量、安全動作、焊點品質自動評分，老師可追蹤每位學生進度。</p>
       </div>
     </div>
   </section>
 
-  <section id="showcase" class="showcase">
-    <h3 class="section-title">實際畫面</h3>
-    <p class="section-sub">每個模組的真實截圖（拍攝於 GitHub Pages 線上版）</p>
-    <div class="showcase-grid">
-      <a class="shot-card shot-feature" href="pages/module1.html">
-        <img src="assets/screenshots/03-module1-3d.jpg" alt="3D 立體線鋸機">
-        <div class="shot-meta">
-          <span class="shot-tag">M1 ・ 3D 視角</span>
-          <h4>可旋轉的 3D 線鋸機</h4>
-          <p>Three.js 完整建模，滑鼠拖曳轉視角、滾輪縮放，點擊部位查看資訊。</p>
-        </div>
-      </a>
-      <a class="shot-card" href="pages/module1.html">
-        <img src="assets/screenshots/02-module1-svg.jpg" alt="模組 1 平面圖解">
-        <div class="shot-meta">
-          <span class="shot-tag">M1 ・ 平面圖解</span>
-          <h4>8 個互動熱點</h4>
-          <p>橘色標記點擊認識每個部位的功能與冷知識。</p>
-        </div>
-      </a>
-      <a class="shot-card" href="pages/module1.html">
-        <img src="assets/screenshots/04-module1-photo.jpg" alt="模組 1 實物照片">
-        <div class="shot-meta">
-          <span class="shot-tag">M1 ・ 實物照片</span>
-          <h4>4 張 Wikimedia 授權圖</h4>
-          <p>含完整作者署名、CC BY-SA 授權與來源連結。</p>
-        </div>
-      </a>
-      <a class="shot-card" href="pages/module2.html">
-        <img src="assets/screenshots/05-module2-safety.jpg" alt="模組 2 安全闖關">
-        <div class="shot-meta">
-          <span class="shot-tag">M2 ・ 安全闖關</span>
-          <h4>拖曳服儀檢查</h4>
-          <p>把正確配備拖到人物身上，錯的會抖動警示。必須滿分通關。</p>
-        </div>
-      </a>
-      <a class="shot-card" href="pages/module3.html">
-        <img src="assets/screenshots/06-module3-steps.jpg" alt="模組 3 步驟教學">
-        <div class="shot-meta">
-          <span class="shot-tag">M3 ・ 操作步驟</span>
-          <h4>8 步分解動畫</h4>
-          <p>每一步都有 SVG 動畫示範，附提示與安全警告。</p>
-        </div>
-      </a>
-      <a class="shot-card shot-feature" href="pages/module4.html">
-        <img src="assets/screenshots/07-module4-simulator.jpg" alt="模組 4 切割模擬器">
-        <div class="shot-meta">
-          <span class="shot-tag">M4 ・ 模擬切割（核心）</span>
-          <h4>Canvas 即時切割引擎</h4>
-          <p>拖曳木板過鋸條，即時計算偏移、速度、燒焦程度，三星評分。</p>
-        </div>
-      </a>
-      <a class="shot-card" href="pages/module5.html">
-        <img src="assets/screenshots/08-module5-plan.jpg" alt="模組 5 創作計畫書">
-        <div class="shot-meta">
-          <span class="shot-tag">M5 ・ 創作挑戰</span>
-          <h4>切割計畫書自動分析</h4>
-          <p>選圖樣或上傳設計，系統算出長度、預估時間、標出尖角難點。</p>
-        </div>
-      </a>
-      <a class="shot-card" href="index.html">
-        <img src="assets/screenshots/01-home-hero.jpg" alt="平台首頁">
-        <div class="shot-meta">
-          <span class="shot-tag">首頁</span>
-          <h4>進度儀表板</h4>
-          <p>自動記錄學習進度與星數，回到首頁一目瞭然。</p>
-        </div>
-      </a>
-    </div>
+  <section class="hub-cta">
+    <h2>準備好開始了嗎？</h2>
+    <p>選一個工具，從認識結構開始，闖關直到能獨立完成創作。所有進度自動儲存於瀏覽器，下次回來可以接著學。</p>
+    <a href="#tools" class="btn">選擇工具 →</a>
   </section>
 
-  <section id="about" class="about">
-    <h3 class="section-title">為什麼需要數位模擬？</h3>
-    <div class="reason-grid">
-      <div class="reason"><span>⚡</span><h4>降低風險</h4><p>第一次操作就上機壓力大，數位模擬讓肌肉記憶先建立。</p></div>
-      <div class="reason"><span>⏱</span><h4>節省時間</h4><p>50 分鐘的課讓每位學生都有機會多次練習，不用排隊等機台。</p></div>
-      <div class="reason"><span>🧠</span><h4>建立心智模型</h4><p>切割路徑、速度、轉向的因果關係用視覺化方式內化。</p></div>
-      <div class="reason"><span>📈</span><h4>數據化評量</h4><p>偏移量、安全動作、完成度自動評分，老師可追蹤每位學生。</p></div>
-    </div>
-  </section>
-
-  <section id="teacher" class="teacher">
+  <section class="teacher" style="background:#fafafa">
     <div class="teacher-card">
       <h3>給教師的話</h3>
-      <p>本平台對應 108 課綱<strong> 生 J-A2 工具與機具的安全使用</strong>與<strong> 生 J-B3 設計與製作能力</strong>。建議排課方式：</p>
+      <p>本系列工具對應 108 課綱<strong> 生 J-A2 工具與機具的安全使用</strong>與<strong> 生 J-B3 設計與製作能力</strong>，可作為實體實作課的數位前置教材。建議排課方式：</p>
       <ol>
         <li>第一節：模組 1–3（認識、安全、步驟），課末以模組 2 滿分為通行證。</li>
-        <li>第二節：模組 4 模擬切割五關，配合學習單記錄星等與失誤紀錄。</li>
-        <li>第三節：實體機台操作，回家作業以模組 5 完成個人作品的切割計畫書。</li>
+        <li>第二節：模組 4 模擬練習，配合學習單記錄星等與失誤紀錄。</li>
+        <li>第三節：實體機具操作，回家作業以模組 5 完成個人作品設計或品質鑑定。</li>
       </ol>
+      <p style="margin-top:16px;color:var(--text-muted);font-size:14px">本平台以 GitHub Pages 免費部署，學生只要瀏覽器網址即可使用，不需要安裝任何 App。</p>
     </div>
   </section>
 </main>
 
-<footer>
-  <p>© 翰林出版・生活科技互動教學平台原型 ｜ 對應 108 課綱國中階段</p>
-  <p style="font-size:11px;color:var(--text-muted);margin-top:8px;line-height:1.7;max-width:780px;margin-left:auto;margin-right:auto">
-    本平台部分實物照片取自 <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline">Wikimedia Commons</a>，採 <strong>CC BY-SA</strong> 與公有領域授權。
-    依 CC BY-SA「相同方式分享」條款，本平台之衍生作品須以相同授權釋出並保留原作者署名。
-    完整圖片授權清單見 <a href="LICENSE_IMAGES.md" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline">LICENSE_IMAGES.md</a>。
-  </p>
-</footer>
-
 <script src="js/main.js"></script>
 <script src="js/audio.js"></script>
-<script src="js/achievements.js"></script>
-<script src="js/cutting-demo.js"></script>
-<script src="js/hero-carousel.js"></script>
 </body>
 </html>
