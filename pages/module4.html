@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 4：模擬切割練習</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🪚%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">🪚</span>
+    <div>
+      <h1>數位線鋸機</h1>
+      <p class="subtitle">生活科技互動教學平台</p>
+    </div>
+  </div>
+  <a href="../index.html" class="module-back">← 回首頁</a>
+</header>
+
+<main class="module-page">
+  <div class="module-header">
+    <div>
+      <span class="module-step" style="background:var(--success-light);color:#1b6e3a">MODULE 04 ・ 核心</span>
+      <h2>模擬切割練習</h2>
+      <p class="muted">用滑鼠拖曳「木板」通過鋸條來切割。注意速度與切線偏移量。</p>
+    </div>
+    <div id="speed-indicator" class="muted" style="font-family:Inter,sans-serif">速度：<span style="font-weight:700">—</span></div>
+  </div>
+
+  <div class="practice-layout">
+    <div class="canvas-wrap">
+      <canvas id="sim-canvas" width="760" height="500"></canvas>
+      <div class="sim-overlay" id="sim-overlay">關卡未開始</div>
+      <div class="sim-controls">
+        <button class="btn btn-primary" id="btn-start">▶ 開始切割</button>
+        <button class="btn btn-ghost" id="btn-reset">↺ 重置</button>
+        <button class="btn btn-ghost" id="btn-stop">■ 停止</button>
+      </div>
+    </div>
+
+    <div class="sim-side">
+      <div class="level-list">
+        <h4>關卡選單</h4>
+        <button class="level-btn active" data-lvl="L1">
+          <span>L1 直線切割</span>
+          <span class="stars" id="star-L1">☆☆☆</span>
+        </button>
+        <button class="level-btn" data-lvl="L2">
+          <span>L2 轉角切割</span>
+          <span class="stars" id="star-L2">☆☆☆</span>
+        </button>
+        <button class="level-btn" data-lvl="L3">
+          <span>L3 曲線切割</span>
+          <span class="stars" id="star-L3">☆☆☆</span>
+        </button>
+        <button class="level-btn" data-lvl="L4">
+          <span>L4 內挖切割</span>
+          <span class="stars" id="star-L4">☆☆☆</span>
+        </button>
+        <button class="level-btn" data-lvl="L5">
+          <span>L5 綜合圖形</span>
+          <span class="stars" id="star-L5">☆☆☆</span>
+        </button>
+      </div>
+
+      <div class="metrics">
+        <div class="metric"><span>偏移量</span><span class="v" id="m-offset">0 mm</span></div>
+        <div class="metric"><span>速度狀態</span><span class="v" id="m-speed">—</span></div>
+        <div class="metric"><span>完成度</span><span class="v" id="m-progress">0%</span></div>
+        <div class="metric"><span>失誤</span><span class="v" id="m-errors">0</span></div>
+      </div>
+
+      <div class="help-card">
+        <strong>📖 操作說明</strong>
+        <ul>
+          <li>按住滑鼠拖曳木板</li>
+          <li>跟著虛線（切割線）走</li>
+          <li>太快 → 鋸條斷裂</li>
+          <li>偏離太多 → 失敗</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-nav-bottom">
+    <a href="module3.html" class="btn btn-ghost">← 上一關</a>
+    <a href="module5.html" class="btn btn-primary">下一關：創作挑戰 →</a>
+  </div>
+</main>
+
+<div class="result-modal" id="result-modal">
+  <div class="result-card">
+    <h2 id="r-title">關卡完成！</h2>
+    <div class="result-stars" id="r-stars">★★★</div>
+    <div class="result-detail" id="r-detail"></div>
+    <div class="result-actions">
+      <button class="btn btn-ghost" id="r-retry">再挑戰一次</button>
+      <button class="btn btn-primary" id="r-next">下一關</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/main.js"></script>
+<script src="../js/audio.js"></script>
+<script src="../js/module4.js"></script>
+</body>
+</html>

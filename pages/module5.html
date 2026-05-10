@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 5：創作挑戰</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🪚%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">🪚</span>
+    <div>
+      <h1>數位線鋸機</h1>
+      <p class="subtitle">生活科技互動教學平台</p>
+    </div>
+  </div>
+  <a href="../index.html" class="module-back">← 回首頁</a>
+</header>
+
+<main class="module-page">
+  <div class="module-header">
+    <div>
+      <span class="module-step" style="background:var(--purple-light);color:#7a3399">MODULE 05</span>
+      <h2>創作挑戰：切割計畫書</h2>
+      <p class="muted">挑一個圖樣（或上傳自己的設計），系統會分析切割路徑、預估時間、標出難點。</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>① 選擇圖樣</h3>
+    <div class="template-grid" id="template-grid"></div>
+    <div style="margin-top:22px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+      <label class="btn btn-ghost" style="cursor:pointer">
+        📎 上傳自己的 SVG / PNG
+        <input type="file" id="upload-input" accept=".svg,.png,.jpg" hidden>
+      </label>
+      <span class="muted" style="font-size:13px">或從上方挑選現成圖樣</span>
+    </div>
+  </div>
+
+  <div class="plan-output hidden" id="plan-output">
+    <h3>② 切割計畫分析</h3>
+    <div class="plan-canvas-wrap">
+      <canvas id="plan-canvas" width="760" height="420" style="width:100%"></canvas>
+    </div>
+    <div class="plan-stats">
+      <div class="plan-stat"><div class="label">總切割長度</div><div class="value" id="stat-len">—</div></div>
+      <div class="plan-stat"><div class="label">預估時間</div><div class="value" id="stat-time">—</div></div>
+      <div class="plan-stat"><div class="label">難度等級</div><div class="value" id="stat-diff">—</div></div>
+    </div>
+    <div id="plan-tips"></div>
+    <div style="display:flex;gap:10px;margin-top:24px;flex-wrap:wrap">
+      <button class="btn btn-primary" id="btn-print">🖨 列印計畫書</button>
+      <button class="btn btn-ghost" id="btn-download">⬇ 下載 PNG</button>
+      <a class="btn btn-secondary" href="module4.html">回模組 4 練習切割</a>
+    </div>
+  </div>
+
+  <div class="module-nav-bottom">
+    <a href="module4.html" class="btn btn-ghost">← 上一關</a>
+    <a href="../index.html" class="btn btn-primary">完成全部模組 ✓</a>
+  </div>
+</main>
+
+<script src="../js/main.js"></script>
+<script src="../js/audio.js"></script>
+<script src="../js/module5.js"></script>
+</body>
+</html>
