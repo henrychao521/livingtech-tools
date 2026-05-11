@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>補充模組：剝線基本功 ｜ 數位麵包板電路</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../css/breadboard.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🔌%3C/text%3E%3C/svg%3E">
+<style>
+  /* === 剝線模擬器專用樣式 === */
+  .ws-method-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px; }
+  .ws-method { background:#fff; border:1px solid var(--border); border-radius:14px; padding:16px; position:relative; transition:transform .15s; }
+  .ws-method:hover { transform:translateY(-2px); box-shadow:0 6px 18px rgba(0,0,0,.06); }
+  .ws-method.pick { border:2px solid #16A34A; background:#f0fdf4; }
+  .ws-method .ws-rank { position:absolute; top:-10px; right:14px; background:var(--primary); color:#fff; font-weight:700; padding:2px 10px; border-radius:99px; font-size:12px; }
+  .ws-method.pick .ws-rank { background:#16A34A; }
+  .ws-method h4 { font-size:16px; margin:8px 0 6px; }
+  .ws-method p { font-size:13px; color:var(--text-soft); line-height:1.6; margin:0; }
+  .ws-method .ws-icon { font-size:32px; }
+
+  .ws-step-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; }
+  .ws-step { background:linear-gradient(180deg,#fff,#fafafa); border:1px solid var(--border); border-radius:14px; padding:18px; text-align:center; position:relative; }
+  .ws-step .ws-num { position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:var(--primary); color:#fff; width:30px; height:30px; line-height:30px; border-radius:50%; font-weight:700; font-size:14px; }
+  .ws-step svg { width:100%; max-width:140px; height:80px; margin:8px auto 6px; display:block; }
+  .ws-step h4 { font-size:15px; margin:4px 0; }
+  .ws-step p { font-size:12px; color:var(--text-soft); line-height:1.6; margin:0; }
+
+  /* 模擬器舞台 */
+  .ws-sim-wrap { background:linear-gradient(135deg,#f8fafc,#eef2f7); border-radius:14px; padding:16px; border:1px solid var(--border); }
+  .ws-sim-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:10px; }
+  .ws-level-tabs { display:flex; gap:6px; background:#fff; border-radius:10px; padding:4px; border:1px solid var(--border); }
+  .ws-level-tab { padding:6px 12px; border:none; background:transparent; border-radius:7px; cursor:pointer; font-size:13px; font-weight:600; color:var(--text-soft); }
+  .ws-level-tab.cleared { color:#16A34A; }
+  .ws-level-tab.cleared::after { content:" ✓"; }
+  .ws-level-tab.active { background:var(--primary); color:#fff; }
+  .ws-level-tab.active.cleared { color:#fff; }
+  .ws-level-tab.active.cleared::after { content:" ✓"; color:#bbf7d0; }
+
+  .ws-stage { background:#fff; border-radius:12px; padding:14px; border:1px solid #e5e7eb; margin-bottom:12px; }
+  .ws-stage svg { width:100%; height:auto; display:block; max-width:760px; margin:0 auto; }
+
+  .ws-controls { display:grid; grid-template-columns:1fr 1fr; gap:14px; align-items:start; }
+  @media (max-width:680px){ .ws-controls{grid-template-columns:1fr} }
+  .ws-control-block { background:#fff; border:1px solid var(--border); border-radius:10px; padding:14px; }
+  .ws-control-block h5 { font-size:13px; margin:0 0 8px; color:var(--text-soft); font-weight:600; letter-spacing:.5px; text-transform:uppercase; }
+  .ws-slider { width:100%; -webkit-appearance:none; appearance:none; height:8px; background:#e5e7eb; border-radius:4px; outline:none; }
+  .ws-slider::-webkit-slider-thumb { -webkit-appearance:none; width:22px; height:22px; background:var(--primary); border-radius:50%; cursor:pointer; box-shadow:0 2px 4px rgba(0,0,0,.2); }
+  .ws-slider::-moz-range-thumb { width:22px; height:22px; background:var(--primary); border-radius:50%; cursor:pointer; border:none; }
+  .ws-readout { display:flex; justify-content:space-between; font-size:13px; margin-top:6px; color:var(--text-soft); }
+  .ws-readout strong { color:var(--text); font-size:18px; font-weight:700; }
+
+  .ws-actions { display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; }
+  .ws-btn-pull { flex:1; min-width:140px; background:linear-gradient(180deg,#dc2626,#b91c1c); color:#fff; border:none; padding:14px 20px; border-radius:10px; font-size:15px; font-weight:700; cursor:pointer; transition:all .15s; }
+  .ws-btn-pull:hover:not(:disabled) { transform:translateY(-1px); box-shadow:0 6px 14px rgba(220,38,38,.3); }
+  .ws-btn-pull:disabled { opacity:.4; cursor:not-allowed; }
+  .ws-btn-reset { background:#fff; border:1px solid var(--border); padding:14px 20px; border-radius:10px; cursor:pointer; font-weight:600; font-size:14px; }
+
+  .ws-result { margin-top:14px; padding:14px 16px; border-radius:10px; display:none; }
+  .ws-result.show { display:block; animation:slideIn .25s ease-out; }
+  .ws-result.win { background:#f0fdf4; border:1px solid #16A34A; color:#14532d; }
+  .ws-result.lose { background:#fef2f2; border:1px solid #dc2626; color:#7f1d1d; }
+  .ws-result h4 { font-size:16px; margin:0 0 6px; display:flex; align-items:center; gap:8px; }
+  .ws-result p { font-size:13px; margin:0; line-height:1.6; }
+  @keyframes slideIn { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:none} }
+
+  .ws-tips { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:14px; }
+  .ws-tip { background:#fffbeb; border-left:3px solid #f59e0b; padding:10px 14px; border-radius:6px; font-size:13px; line-height:1.6; }
+
+  .ws-progress-pill { display:inline-block; background:var(--primary-light); color:var(--primary); padding:4px 12px; border-radius:99px; font-size:12px; font-weight:600; }
+</style>
+</head>
+<body class="breadboard-theme">
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">🔌</span>
+    <div>
+      <h1>數位麵包板電路</h1>
+      <p class="subtitle">生活科技互動教學平台</p>
+    </div>
+  </div>
+  <a href="../index.html" class="module-back">← 回首頁</a>
+</header>
+
+<main class="module-page">
+  <div class="module-header">
+    <div>
+      <span class="module-step" style="background:#fef3c7;color:#92400e">補充模組 · EXTRA</span>
+      <h2>剝線基本功：尖嘴鉗 + 斜口鉗</h2>
+      <p class="muted">學會用實驗室最常見的兩支鉗子，安全且精準地剝開電線外皮。</p>
+    </div>
+    <div class="muted"><span class="ws-progress-pill" id="ws-progress-pill">已通關 0 / 3</span></div>
+  </div>
+
+  <section class="panel">
+    <h3>① 為什麼要學「剝電線」？</h3>
+    <p class="muted" style="margin-bottom:14px">麵包板電路、焊接、感測器接線都需要把多芯線、單芯線的絕緣外皮剝開。剝得好不好直接影響：接觸電阻、機械強度、短路風險。</p>
+    <p style="font-size:14px;line-height:1.8">業界與實驗室常見有 5 種剝線方式。下面綠色高亮的就是本模組重點：<strong>用實驗室現成的兩支鉗子組合操作</strong>。</p>
+    <div class="ws-method-grid" style="margin-top:14px">
+      <div class="ws-method">
+        <span class="ws-rank">最快</span>
+        <div class="ws-icon">🛠️</div>
+        <h4>自動剝線鉗</h4>
+        <p>一壓一拉、自動定位線徑。最快、最不傷線芯，但工具較貴。</p>
+      </div>
+      <div class="ws-method">
+        <span class="ws-rank">常用</span>
+        <div class="ws-icon">🔧</div>
+        <h4>手動剝線鉗</h4>
+        <p>有刻度孔對應 AWG 線徑。對線徑要選對洞才行。</p>
+      </div>
+      <div class="ws-method">
+        <span class="ws-rank">應急</span>
+        <div class="ws-icon">🔪</div>
+        <h4>美工刀環切</h4>
+        <p>沿外皮輕劃一圈再扳開。練不熟容易切到手。</p>
+      </div>
+      <div class="ws-method pick">
+        <span class="ws-rank">★ 本模組</span>
+        <div class="ws-icon">✂️🦷</div>
+        <h4>斜口鉗 + 尖嘴鉗</h4>
+        <p>實驗室最常備的兩支工具。考驗「咬合深度」手感，學到了就終身受用。</p>
+      </div>
+      <div class="ws-method">
+        <span class="ws-rank">業界</span>
+        <div class="ws-icon">🔥</div>
+        <h4>熱剝線器</h4>
+        <p>用電熱燒斷外皮。多用於航太/特殊線材，學校少見。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>② 操作五步驟</h3>
+    <p class="muted" style="margin-bottom:18px">兩鉗組合法核心：<strong>斜口鉗負責「切外皮、不切銅」</strong>，<strong>尖嘴鉗負責「夾住線端、反向施力」</strong>。記住這個分工，動作就會很順。</p>
+    <div class="ws-step-grid">
+      <div class="ws-step">
+        <div class="ws-num">1</div>
+        <svg viewBox="0 0 140 80">
+          <rect x="10" y="34" width="120" height="12" rx="3" fill="#dc2626"/>
+          <rect x="10" y="34" width="120" height="12" rx="3" fill="url(#gradWire1)" opacity=".3"/>
+          <defs><linearGradient id="gradWire1" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".5"/><stop offset="1" stop-color="#000" stop-opacity=".2"/></linearGradient></defs>
+          <line x1="120" y1="28" x2="120" y2="52" stroke="#16A34A" stroke-width="2" stroke-dasharray="2 2"/>
+          <line x1="100" y1="28" x2="100" y2="52" stroke="#16A34A" stroke-width="2" stroke-dasharray="2 2"/>
+          <text x="110" y="22" font-size="9" fill="#16A34A" text-anchor="middle" font-weight="600">8-10mm</text>
+        </svg>
+        <h4>量距</h4>
+        <p>從線端起算 8–10mm，是麵包板插孔深度的安全長度。</p>
+      </div>
+      <div class="ws-step">
+        <div class="ws-num">2</div>
+        <svg viewBox="0 0 140 80">
+          <rect x="10" y="34" width="120" height="12" rx="3" fill="#dc2626"/>
+          <g transform="translate(95,12)">
+            <path d="M 0 0 L 12 12 L 10 22 L 0 18 Z" fill="#94a3b8" stroke="#64748b"/>
+            <path d="M 20 0 L 8 12 L 10 22 L 20 18 Z" fill="#94a3b8" stroke="#64748b"/>
+          </g>
+          <line x1="95" y1="40" x2="115" y2="40" stroke="#fbbf24" stroke-width="3"/>
+        </svg>
+        <h4>輕咬</h4>
+        <p>斜口鉗咬住外皮，<strong>不能咬到銅</strong>。靠手感停在「快斷不斷」。</p>
+      </div>
+      <div class="ws-step">
+        <div class="ws-num">3</div>
+        <svg viewBox="0 0 140 80">
+          <rect x="10" y="34" width="120" height="12" rx="3" fill="#dc2626"/>
+          <path d="M 100 20 Q 115 28 100 36 Q 85 44 100 52 Q 115 60 100 68" stroke="#16A34A" stroke-width="2.5" fill="none" stroke-dasharray="3 2"/>
+          <polygon points="100,68 96,62 104,62" fill="#16A34A"/>
+        </svg>
+        <h4>旋轉一圈</h4>
+        <p>夾住的同時繞線旋轉 360°，讓切口環繞整圈外皮。</p>
+      </div>
+      <div class="ws-step">
+        <div class="ws-num">4</div>
+        <svg viewBox="0 0 140 80">
+          <rect x="10" y="34" width="120" height="12" rx="3" fill="#dc2626"/>
+          <g transform="translate(15,16)">
+            <path d="M 0 4 L 14 18 L 12 26 L 0 22 Z" fill="#94a3b8" stroke="#64748b"/>
+            <path d="M 28 4 L 14 18 L 12 26 L 28 22 Z" fill="#94a3b8" stroke="#64748b"/>
+          </g>
+          <line x1="15" y1="40" x2="35" y2="40" stroke="#3b82f6" stroke-width="3"/>
+        </svg>
+        <h4>鎖夾</h4>
+        <p>尖嘴鉗從電線左端夾緊，確保拉的時候電線本體不會動。</p>
+      </div>
+      <div class="ws-step">
+        <div class="ws-num">5</div>
+        <svg viewBox="0 0 140 80">
+          <rect x="10" y="34" width="85" height="12" rx="3" fill="#dc2626"/>
+          <rect x="95" y="38" width="35" height="4" rx="1" fill="#fbbf24"/>
+          <line x1="95" y1="34" x2="95" y2="46" stroke="#92400e" stroke-width="1"/>
+          <path d="M 100 60 L 130 60" stroke="#16A34A" stroke-width="2"/>
+          <polygon points="130,60 124,56 124,64" fill="#16A34A"/>
+          <text x="115" y="74" font-size="10" fill="#16A34A" text-anchor="middle">反向拉</text>
+        </svg>
+        <h4>反向拉</h4>
+        <p>兩鉗朝反方向施力，外皮脫離，銅芯露出 8–10mm。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>③ 剝線挑戰：模擬手感</h3>
+    <p class="muted" style="margin-bottom:14px">下面三關，從細到粗逐步挑戰。<strong>關鍵在「咬合深度」</strong>——太淺拉不開，太深會把銅芯切斷。三關都過才算學會。</p>
+    <div class="ws-sim-wrap">
+      <div class="ws-sim-top">
+        <div class="ws-level-tabs" id="ws-level-tabs">
+          <button class="ws-level-tab active" data-level="0">L1：22 AWG 一般線</button>
+          <button class="ws-level-tab" data-level="1">L2：18 AWG 粗線</button>
+          <button class="ws-level-tab" data-level="2">L3：多芯絞線</button>
+        </div>
+        <div class="muted" style="font-size:13px" id="ws-attempts">嘗試次數：0</div>
+      </div>
+
+      <div class="ws-stage">
+        <svg viewBox="0 0 760 240" id="ws-stage-svg"></svg>
+      </div>
+
+      <div class="ws-controls">
+        <div class="ws-control-block">
+          <h5>① 量距：距線端 mm</h5>
+          <input type="range" min="4" max="14" value="8" step="0.5" class="ws-slider" id="ws-length-slider">
+          <div class="ws-readout"><span>4mm</span><strong id="ws-length-val">8.0 mm</strong><span>14mm</span></div>
+        </div>
+        <div class="ws-control-block">
+          <h5>② 斜口鉗咬合深度 %</h5>
+          <input type="range" min="0" max="100" value="50" class="ws-slider" id="ws-depth-slider">
+          <div class="ws-readout"><span>太淺</span><strong id="ws-depth-val">50 %</strong><span>太深</span></div>
+        </div>
+      </div>
+
+      <div class="ws-actions">
+        <button class="ws-btn-pull" id="ws-btn-pull">③ 鎖夾尖嘴鉗 → 反向拉開</button>
+        <button class="ws-btn-reset" id="ws-btn-reset">重新嘗試</button>
+      </div>
+
+      <div class="ws-result" id="ws-result"></div>
+
+      <div class="ws-tips">
+        <div class="ws-tip">💡 <strong>提示：</strong>每種線徑的「最佳深度區間」不同——粗線外皮較厚，要咬深一點才穿透。</div>
+        <div class="ws-tip">⚠️ <strong>真實警告：</strong>實作時若銅芯有刻痕（細微 V 字凹陷），整段線都要剪掉重剝。</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>④ 教師備課與課堂操作提醒</h3>
+    <ul style="line-height:2;font-size:14.5px;color:var(--text-soft);padding-left:24px">
+      <li><strong>安全：</strong>剝下來的外皮碎屑要丟到垃圾桶，不可進排水孔。學生戴護目鏡（電線可能彈飛）。</li>
+      <li><strong>共用工具：</strong>建議 2–3 人一組共用斜口鉗。檢查鉗口是否有缺口，缺口會讓咬合不均勻。</li>
+      <li><strong>失敗反饋：</strong>銅芯有刻痕的線重接電路時容易在彎折處斷裂——讓學生親手體驗一次（剪兩段，一段完整一段刻痕，反覆彎折比較）。</li>
+      <li><strong>替代方案：</strong>若實驗室有自動剝線鉗，建議在「兩鉗組合法」練熟後再讓學生用，否則學生會跳過思考。</li>
+    </ul>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="../index.html" class="btn btn-ghost">← 回 Breadboard 首頁</a>
+    <a href="module2.html" class="btn btn-primary">下一步：電路安全規範 →</a>
+  </div>
+</main>
+
+<script src="../../js/main.js"></script>
+<script src="../../js/audio.js"></script>
+<script src="../js/wire-stripping.js"></script>
+</body>
+</html>
