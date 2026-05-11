@@ -142,12 +142,16 @@ function renderAnim(type) {
         <circle cx="200" cy="155" r="100" fill="none" stroke="#FF7A00" stroke-width="1" stroke-dasharray="3 3" opacity=".5">
           <animateTransform attributeName="transform" type="rotate" from="360 200 155" to="0 200 155" dur="8s" repeatCount="indefinite"/>
         </circle>
-        <!-- 檢查項目（漂浮）-->
-        <g font-family="Noto Sans TC,sans-serif" font-size="12" fill="#444">
-          <text x="40" y="50">✓ 工作台乾淨</text>
-          <text x="270" y="50">✓ 護目鏡</text>
-          <text x="30" y="220">✓ 鋸條牢固</text>
-          <text x="280" y="220">✓ 周圍淨空</text>
+        <!-- 檢查項目（角落白卡片，避開機台與圈圈）-->
+        <g font-family="Noto Sans TC,sans-serif" font-size="11" font-weight="600">
+          <rect x="4" y="6" width="92" height="22" rx="4" fill="#fff" stroke="#16a34a" stroke-width="1.5"/>
+          <text x="50" y="22" text-anchor="middle" fill="#15803d">✓ 工作台乾淨</text>
+          <rect x="304" y="6" width="92" height="22" rx="4" fill="#fff" stroke="#16a34a" stroke-width="1.5"/>
+          <text x="350" y="22" text-anchor="middle" fill="#15803d">✓ 護目鏡</text>
+          <rect x="4" y="212" width="92" height="22" rx="4" fill="#fff" stroke="#16a34a" stroke-width="1.5"/>
+          <text x="50" y="228" text-anchor="middle" fill="#15803d">✓ 鋸條牢固</text>
+          <rect x="304" y="212" width="92" height="22" rx="4" fill="#fff" stroke="#16a34a" stroke-width="1.5"/>
+          <text x="350" y="228" text-anchor="middle" fill="#15803d">✓ 周圍淨空</text>
         </g>
         <!-- 中央眼睛 -->
         <text x="200" y="165" text-anchor="middle" font-size="38">👀</text>

@@ -56,7 +56,28 @@
 - **來源**：https://commons.wikimedia.org/wiki/File:Upper_Blade_Holder.JPG
 - **下載日期**：2026-05-10
 
-### 7. Dekupiersaege_scroll_saw.jpg ｜ 古董手動線鋸機（約 1900 年）
+### 7a. Soldering-good.jpg ｜ 良好焊接示範
+- **作者**：Tlapicka
+- **授權**：CC BY-SA 3.0（[條款連結](https://creativecommons.org/licenses/by-sa/3.0/)）
+- **來源**：https://commons.wikimedia.org/wiki/File:Soldering-good.jpg
+- **下載日期**：2026-05-11
+- **位置**：/solder/assets/wiki-photos/
+
+### 7b. Soldering-bad.jpg ｜ 不良焊接示範
+- **作者**：Tlapicka
+- **授權**：CC BY-SA 3.0（[條款連結](https://creativecommons.org/licenses/by-sa/3.0/)）
+- **來源**：https://commons.wikimedia.org/wiki/File:Soldering-bad.jpg
+- **下載日期**：2026-05-11
+- **位置**：/solder/assets/wiki-photos/
+
+### 7c. Cold_solder_joint.jpg ｜ 冷焊典型
+- **作者**：Coronium
+- **授權**：CC BY-SA 3.0 / GFDL 多重授權（[條款連結](https://creativecommons.org/licenses/by-sa/3.0/)）
+- **來源**：https://commons.wikimedia.org/wiki/File:Cold_solder_joint.jpg
+- **下載日期**：2026-05-11
+- **位置**：/solder/assets/wiki-photos/
+
+### 8. Dekupiersaege_scroll_saw.jpg ｜ 古董手動線鋸機（約 1900 年）
 - **作者**：Eva Kröcher (Wikipedia 帳號 EvaK)
 - **授權**：CC BY-SA 2.5 / GFDL 多重授權（[條款連結](https://creativecommons.org/licenses/by-sa/2.5/)）
 - **來源**：https://commons.wikimedia.org/wiki/File:Dekupiersaege_scroll_saw.jpg
