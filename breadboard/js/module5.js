@@ -11,129 +11,275 @@ const ERRORS = [
 ];
 
 // 各錯誤對應的 SVG 視覺
+// 共用：寫實麵包板紋理（含黃色板、洞洞陣列、紅黑電源軌）
+function bbBase(showRails, gradientId) {
+  return `
+    <defs>
+      <linearGradient id="${gradientId}" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0" stop-color="#fefce8"/>
+        <stop offset="1" stop-color="#e7e2c0"/>
+      </linearGradient>
+    </defs>
+    <rect x="10" y="40" width="180" height="80" rx="3" fill="url(#${gradientId})" stroke="#a89770" stroke-width="1.2"/>
+    ${showRails ? `
+      <line x1="14" y1="50" x2="186" y2="50" stroke="#dc2626" stroke-width="1.2"/>
+      <line x1="14" y1="56" x2="186" y2="56" stroke="#1a1a1a" stroke-width="1"/>
+      <line x1="14" y1="106" x2="186" y2="106" stroke="#dc2626" stroke-width="1.2"/>
+      <line x1="14" y1="112" x2="186" y2="112" stroke="#1a1a1a" stroke-width="1"/>
+      <text x="6" y="53" font-size="6" fill="#dc2626" font-weight="700">+</text>
+      <text x="6" y="59" font-size="6" fill="#1a1a1a" font-weight="700">−</text>
+    ` : ''}
+    <g fill="#666">
+      ${[50, 56, 70, 76, 82, 88, 94, 100, 106, 112].map(y =>
+        [20, 35, 50, 65, 80, 95, 110, 125, 140, 155, 170, 180].map(x =>
+          `<circle cx="${x}" cy="${y}" r="1.2"/>`
+        ).join('')
+      ).join('')}
+    </g>
+  `;
+}
+
 function renderErrorSVG(id) {
   const SVGs = {
     'no-resistor': `<svg viewBox="0 0 200 140" style="width:90%">
-      <rect x="10" y="80" width="180" height="40" fill="#fef9c3" stroke="#a89770" rx="3"/>
-      <line x1="10" y1="100" x2="190" y2="100" stroke="#dc2626" stroke-width="1.5"/>
-      <line x1="40" y1="100" x2="40" y2="65" stroke="#dc2626" stroke-width="2"/>
-      <line x1="120" y1="100" x2="120" y2="65" stroke="#dc2626" stroke-width="2"/>
-      <circle cx="120" cy="50" r="14" fill="#7f1d1d" stroke="#1a1a1a"/>
-      <text x="120" y="55" text-anchor="middle" font-size="14" fill="#1a1a1a">💀</text>
-      <text x="40" y="40" text-anchor="middle" font-size="11" fill="#dc2626" font-weight="700">+5V</text>
-      <line x1="55" y1="55" x2="68" y2="42" stroke="#fbbf24" stroke-width="2"><animate attributeName="opacity" values="0;1;0" dur="0.4s" repeatCount="indefinite"/></line>
-      <line x1="60" y1="42" x2="73" y2="55" stroke="#fbbf24" stroke-width="2"><animate attributeName="opacity" values="0;1;0" dur="0.4s" repeatCount="indefinite"/></line>
-      <text x="100" y="20" text-anchor="middle" font-size="11" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">⚠ LED 燒毀</text>
+      ${bbBase(true, 'bbg-nr')}
+      <!-- 直接接：5V → LED → 地（沒電阻）-->
+      <line x1="50" y1="50" x2="50" y2="78" stroke="#dc2626" stroke-width="2.2"/>
+      <circle cx="50" cy="50" r="2.5" fill="#dc2626"/>
+      <line x1="80" y1="106" x2="80" y2="92" stroke="#1a1a1a" stroke-width="2.2"/>
+      <circle cx="80" cy="106" r="2.5" fill="#1a1a1a"/>
+      <!-- 燒毀的 LED（黑色、冒煙）-->
+      <ellipse cx="65" cy="78" rx="15" ry="14" fill="#1a1a1a" stroke="#444"/>
+      <ellipse cx="65" cy="78" rx="10" ry="8" fill="#4a4a4a"/>
+      <line x1="50" y1="78" x2="50" y2="92" stroke="#9ca3af" stroke-width="1.5"/>
+      <line x1="80" y1="92" x2="80" y2="78" stroke="#9ca3af" stroke-width="1.5"/>
+      <!-- 焦黑裂縫 -->
+      <line x1="58" y1="74" x2="72" y2="82" stroke="#fbbf24" stroke-width="1" opacity=".7"/>
+      <line x1="72" y1="74" x2="58" y2="82" stroke="#fbbf24" stroke-width="1" opacity=".7"/>
+      <!-- 飄煙 -->
+      <circle cx="63" cy="60" r="3" fill="#9ca3af" opacity=".7"><animate attributeName="cy" values="68;40;68" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.7;0" dur="2s" repeatCount="indefinite"/></circle>
+      <circle cx="68" cy="55" r="2.5" fill="#9ca3af" opacity=".6"><animate attributeName="cy" values="62;35;62" dur="2.5s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.6;0" dur="2.5s" repeatCount="indefinite"/></circle>
+      <!-- 對照組：右側顯示應該有電阻 -->
+      <g transform="translate(110,0)">
+        <line x1="20" y1="50" x2="20" y2="62" stroke="#dc2626" stroke-width="2.2"/>
+        <circle cx="20" cy="50" r="2.5" fill="#dc2626"/>
+        <!-- 電阻 -->
+        <rect x="10" y="62" width="20" height="8" rx="2" fill="#d4a574" stroke="#7c4a14"/>
+        <rect x="14" y="62" width="2" height="8" fill="#dc2626"/>
+        <rect x="18" y="62" width="2" height="8" fill="#dc2626"/>
+        <rect x="22" y="62" width="2" height="8" fill="#92400e"/>
+        <line x1="20" y1="70" x2="20" y2="82" stroke="#9ca3af" stroke-width="1.5"/>
+        <!-- LED 亮起 -->
+        <ellipse cx="20" cy="92" rx="14" ry="12" fill="#22c55e" opacity=".9"/>
+        <ellipse cx="16" cy="88" rx="4" ry="3" fill="rgba(255,255,255,.7)"/>
+        <line x1="20" y1="82" x2="20" y2="78" stroke="#9ca3af" stroke-width="1.5"/>
+        <line x1="20" y1="104" x2="20" y2="106" stroke="#9ca3af" stroke-width="1.5"/>
+      </g>
+      <text x="65" y="32" text-anchor="middle" font-size="9" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">✗ 無電阻 → 燒毀</text>
+      <text x="130" y="32" text-anchor="middle" font-size="9" fill="#16a34a" font-weight="700" font-family="Noto Sans TC">✓ 串聯 220Ω</text>
     </svg>`,
 
     'led-reversed': `<svg viewBox="0 0 200 140" style="width:90%">
-      <rect x="10" y="80" width="180" height="40" fill="#fef9c3" stroke="#a89770" rx="3"/>
-      <line x1="10" y1="100" x2="190" y2="100" stroke="#dc2626" stroke-width="1.5"/>
-      <rect x="40" y="92" width="44" height="14" rx="3" fill="#fef3c7" stroke="#92400e"/>
-      <rect x="48" y="92" width="3" height="14" fill="#dc2626"/>
-      <rect x="55" y="92" width="3" height="14" fill="#1a1a1a"/>
-      <rect x="62" y="92" width="3" height="14" fill="#92400e"/>
-      <line x1="100" y1="100" x2="100" y2="65" stroke="#9ca3af" stroke-width="2"/>
-      <line x1="108" y1="100" x2="108" y2="65" stroke="#9ca3af" stroke-width="2"/>
-      <circle cx="104" cy="50" r="14" fill="#475569" stroke="#1f2937"/>
-      <text x="98" y="62" font-size="10" fill="#1a1a1a" font-weight="700">−</text>
-      <text x="106" y="62" font-size="10" fill="#1a1a1a" font-weight="700">+</text>
-      <text x="100" y="20" text-anchor="middle" font-size="11" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">⚠ 極性接反 → 不亮</text>
+      ${bbBase(true, 'bbg-lr')}
+      <!-- 紅軌跳線 -->
+      <path d="M 30 50 Q 35 38 50 50" stroke="#dc2626" stroke-width="1.5" fill="none"/>
+      <circle cx="30" cy="50" r="2.5" fill="#dc2626"/>
+      <!-- 電阻 -->
+      <rect x="55" y="62" width="32" height="9" rx="2" fill="#d4a574" stroke="#7c4a14"/>
+      <rect x="61" y="62" width="2.5" height="9" fill="#dc2626"/>
+      <rect x="66" y="62" width="2.5" height="9" fill="#1a1a1a"/>
+      <rect x="71" y="62" width="2.5" height="9" fill="#92400e"/>
+      <line x1="55" y1="66" x2="50" y2="66" stroke="#9ca3af" stroke-width="1.5"/>
+      <line x1="87" y1="66" x2="95" y2="66" stroke="#9ca3af" stroke-width="1.5"/>
+      <line x1="50" y1="50" x2="50" y2="62" stroke="#9ca3af" stroke-width="1.5"/>
+      <!-- LED（反接：短腳在電阻側）-->
+      <ellipse cx="110" cy="75" rx="13" ry="12" fill="#475569" stroke="#1f2937"/>
+      <ellipse cx="106" cy="71" rx="3.5" ry="2.5" fill="rgba(255,255,255,.4)"/>
+      <!-- 內部 die（暗的，因為沒通電）-->
+      <rect x="106" y="73" width="8" height="4" fill="#7f1d1d" opacity=".4"/>
+      <!-- 接腳 -->
+      <line x1="106" y1="86" x2="106" y2="106" stroke="#9ca3af" stroke-width="1.5"/>
+      <line x1="114" y1="86" x2="114" y2="106" stroke="#9ca3af" stroke-width="1.5"/>
+      <!-- 接腳長度顛倒（極性錯誤）-->
+      <text x="100" y="92" font-size="7" fill="#dc2626" font-weight="700">−</text>
+      <text x="117" y="92" font-size="7" fill="#dc2626" font-weight="700">+</text>
+      <!-- 電流箭頭：被阻擋 -->
+      <line x1="95" y1="66" x2="100" y2="75" stroke="#dc2626" stroke-width="1.5"/>
+      <text x="105" y="55" font-size="9" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">⛔ 不通</text>
+      <text x="100" y="32" text-anchor="middle" font-size="10" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">⚠ LED 反接 → 不亮但不會壞</text>
     </svg>`,
 
     'wrong-row': `<svg viewBox="0 0 200 140" style="width:90%">
-      <rect x="10" y="20" width="180" height="100" fill="#fef9c3" stroke="#a89770" rx="3"/>
-      <g fill="#666">
-        <circle cx="40" cy="50" r="2"/><circle cx="60" cy="50" r="2"/><circle cx="80" cy="50" r="2"/><circle cx="100" cy="50" r="2"/><circle cx="120" cy="50" r="2"/>
-        <circle cx="40" cy="70" r="2"/><circle cx="60" cy="70" r="2"/><circle cx="80" cy="70" r="2"/><circle cx="100" cy="70" r="2"/><circle cx="120" cy="70" r="2"/>
-        <circle cx="40" cy="90" r="2"/><circle cx="60" cy="90" r="2"/><circle cx="80" cy="90" r="2"/><circle cx="100" cy="90" r="2"/><circle cx="120" cy="90" r="2"/>
+      ${bbBase(false, 'bbg-wr')}
+      <!-- 凸顯同一行的金屬條（紅色虛線）-->
+      <rect x="14" y="68" width="172" height="6" fill="rgba(220,38,38,.15)" stroke="#dc2626" stroke-width="1" stroke-dasharray="3 2"/>
+      <text x="100" y="65" text-anchor="middle" font-size="7" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">同一行 → 金屬條相連</text>
+      <!-- LED 兩腳都插在同一行 -->
+      <line x1="80" y1="71" x2="80" y2="32" stroke="#9ca3af" stroke-width="1.5"/>
+      <line x1="88" y1="71" x2="88" y2="32" stroke="#9ca3af" stroke-width="1.5"/>
+      <ellipse cx="84" cy="22" rx="11" ry="10" fill="#ef4444" stroke="#7f1d1d" stroke-width="1"/>
+      <ellipse cx="81" cy="19" rx="3" ry="2" fill="rgba(255,255,255,.5)"/>
+      <!-- 短路電流符號 -->
+      <g>
+        <polygon points="79,65 87,65 83,55 91,55 79,42 81,52 73,52" fill="#fbbf24" stroke="#dc2626" stroke-width=".5">
+          <animate attributeName="opacity" values=".5;1;.5" dur=".4s" repeatCount="indefinite"/>
+        </polygon>
       </g>
-      <!-- 同一行內部金屬條（虛線示意）-->
-      <line x1="35" y1="70" x2="125" y2="70" stroke="#dc2626" stroke-width="1" stroke-dasharray="2 2" opacity=".6"/>
-      <!-- 錯誤：LED 兩腳都在同一行 -->
-      <line x1="70" y1="50" x2="70" y2="40" stroke="#9ca3af" stroke-width="2"/>
-      <line x1="78" y1="50" x2="78" y2="40" stroke="#9ca3af" stroke-width="2"/>
-      <circle cx="74" cy="30" r="8" fill="#ef4444" stroke="#7f1d1d"/>
-      <!-- 短路標記 -->
-      <text x="74" y="80" text-anchor="middle" font-size="20">⚡</text>
-      <text x="74" y="105" text-anchor="middle" font-size="10" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">同行＝短路</text>
+      <!-- 對照組：正確接法 -->
+      <g transform="translate(105,0)">
+        <line x1="20" y1="71" x2="20" y2="32" stroke="#9ca3af" stroke-width="1.5"/>
+        <line x1="35" y1="83" x2="35" y2="32" stroke="#9ca3af" stroke-width="1.5"/>
+        <line x1="20" y1="71" x2="35" y2="71" stroke="#16a34a" stroke-width="1" stroke-dasharray="2 1" opacity=".4"/>
+        <ellipse cx="27" cy="22" rx="11" ry="10" fill="#22c55e" stroke="#15803d" stroke-width="1"/>
+        <ellipse cx="24" cy="19" rx="3" ry="2" fill="rgba(255,255,255,.7)"/>
+        <text x="27" y="125" text-anchor="middle" font-size="8" fill="#16a34a" font-weight="700" font-family="Noto Sans TC">✓ 不同行</text>
+      </g>
+      <text x="55" y="125" text-anchor="middle" font-size="8" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">✗ 同行 = 短路</text>
     </svg>`,
 
     'rail-broken': `<svg viewBox="0 0 200 140" style="width:90%">
-      <rect x="10" y="40" width="180" height="60" fill="#fef9c3" stroke="#a89770" rx="3"/>
-      <line x1="20" y1="60" x2="90" y2="60" stroke="#dc2626" stroke-width="2"/>
-      <line x1="110" y1="60" x2="180" y2="60" stroke="#dc2626" stroke-width="2"/>
-      <line x1="90" y1="55" x2="110" y2="55" stroke="#dc2626" stroke-width="2" stroke-dasharray="3 2" opacity=".3"/>
-      <rect x="92" y="48" width="16" height="20" fill="#fef9c3"/>
-      <text x="100" y="78" text-anchor="middle" font-size="9" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">斷點</text>
-      <path d="M 92 55 L 108 55" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="2 1"/>
-      <text x="22" y="50" font-size="11" fill="#dc2626" font-weight="700">+</text>
-      <text x="183" y="50" font-size="11" fill="#16a34a">✓ 有電</text>
-      <text x="22" y="120" font-size="10" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">左半亮</text>
-      <text x="160" y="120" font-size="10" fill="#888" font-family="Noto Sans TC">右半 ❌</text>
+      ${bbBase(false, 'bbg-rb')}
+      <!-- 上電源軌（中間有實體斷點）-->
+      <line x1="14" y1="50" x2="94" y2="50" stroke="#dc2626" stroke-width="2"/>
+      <line x1="106" y1="50" x2="186" y2="50" stroke="#dc2626" stroke-width="2"/>
+      <rect x="92" y="44" width="16" height="12" fill="#fefce8" stroke="#a89770" stroke-width=".5"/>
+      <text x="100" y="55" text-anchor="middle" font-size="6" fill="#92400e">斷點</text>
+      <!-- 左半 LED 亮 -->
+      <line x1="35" y1="50" x2="35" y2="68" stroke="#dc2626" stroke-width="1.5"/>
+      <ellipse cx="35" cy="80" rx="11" ry="10" fill="#22c55e" stroke="#15803d"/>
+      <ellipse cx="32" cy="77" rx="3" ry="2" fill="rgba(255,255,255,.7)"/>
+      <text x="35" y="105" text-anchor="middle" font-size="8" fill="#16a34a" font-weight="700" font-family="Noto Sans TC">✓ 亮</text>
+      <!-- 右半 LED 不亮 -->
+      <line x1="165" y1="50" x2="165" y2="68" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="2 1" opacity=".3"/>
+      <ellipse cx="165" cy="80" rx="11" ry="10" fill="#9ca3af" stroke="#475569"/>
+      <text x="165" y="105" text-anchor="middle" font-size="8" fill="#888" font-weight="700" font-family="Noto Sans TC">✗ 不亮</text>
+      <!-- 標示電源 -->
+      <text x="35" y="40" text-anchor="middle" font-size="9" fill="#dc2626" font-weight="700">+5V</text>
+      <text x="100" y="35" text-anchor="middle" font-size="9" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">⚠ 軌中央有斷點</text>
+      <!-- 修正方案：用紅線跨接 -->
+      <path d="M 92 30 Q 100 22 108 30" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="3 2" fill="none"/>
+      <text x="100" y="22" text-anchor="middle" font-size="7" fill="#16a34a" font-weight="700">解：跨接</text>
     </svg>`,
 
     'short-circuit': `<svg viewBox="0 0 200 140" style="width:90%">
-      <rect x="10" y="40" width="180" height="80" fill="#fef9c3" stroke="#a89770" rx="3"/>
-      <line x1="20" y1="60" x2="180" y2="60" stroke="#dc2626" stroke-width="2"/>
-      <line x1="20" y1="100" x2="180" y2="100" stroke="#1a1a1a" stroke-width="2"/>
-      <!-- 直接從紅軌接到黑軌 -->
-      <line x1="100" y1="60" x2="100" y2="100" stroke="#dc2626" stroke-width="3"/>
-      <circle cx="100" cy="60" r="3" fill="#dc2626"/>
-      <circle cx="100" cy="100" r="3" fill="#1a1a1a"/>
-      <!-- 火花 -->
+      ${bbBase(true, 'bbg-sc')}
+      <!-- 直接從紅軌接到黑軌（無負載）-->
+      <line x1="100" y1="50" x2="100" y2="106" stroke="#dc2626" stroke-width="3"/>
+      <circle cx="100" cy="50" r="3.5" fill="#dc2626"/>
+      <circle cx="100" cy="106" r="3.5" fill="#1a1a1a"/>
+      <!-- 火花動畫 -->
       <g>
-        <circle cx="100" cy="80" r="5" fill="#fbbf24"><animate attributeName="r" values="5;12;5" dur="0.3s" repeatCount="indefinite"/></circle>
-        <text x="100" y="85" text-anchor="middle" font-size="18">⚡</text>
+        <circle cx="100" cy="80" r="8" fill="#fbbf24" opacity=".8">
+          <animate attributeName="r" values="6;14;6" dur=".3s" repeatCount="indefinite"/>
+        </circle>
+        <polygon points="92,75 108,75 100,65 104,75 96,75 100,85" fill="#fff" opacity=".9">
+          <animateTransform attributeName="transform" type="rotate" from="0 100 80" to="360 100 80" dur="1s" repeatCount="indefinite"/>
+        </polygon>
       </g>
-      <text x="100" y="20" text-anchor="middle" font-size="11" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">⚠ 短路 → 電池過熱</text>
+      <!-- 電池冒煙 -->
+      <g transform="translate(160,90)">
+        <rect x="0" y="0" width="20" height="14" rx="2" fill="#1f2937"/>
+        <rect x="2" y="2" width="8" height="10" fill="#dc2626"/>
+        <rect x="11" y="2" width="7" height="10" fill="#1a1a1a"/>
+        <!-- 冒煙 -->
+        <circle cx="10" cy="-4" r="3" fill="#9ca3af" opacity=".6"><animate attributeName="cy" values="-2;-18;-2" dur="1.5s" repeatCount="indefinite"/></circle>
+        <text x="10" y="-12" text-anchor="middle" font-size="11">🔥</text>
+      </g>
+      <text x="100" y="32" text-anchor="middle" font-size="10" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">⚠ +/− 直接短路 → 電池過熱</text>
     </svg>`,
 
     'loose-wire': `<svg viewBox="0 0 200 140" style="width:90%">
-      <rect x="10" y="50" width="180" height="60" fill="#fef9c3" stroke="#a89770" rx="3"/>
-      <g fill="#666"><circle cx="100" cy="80" r="3"/></g>
-      <!-- 跳線插得太淺 -->
-      <line x1="100" y1="40" x2="100" y2="76" stroke="#dc2626" stroke-width="2.5"/>
-      <line x1="100" y1="76" x2="100" y2="82" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="2 1"/>
-      <!-- 紅圈標出沒接觸 -->
-      <circle cx="100" cy="80" r="10" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="3 2"><animate attributeName="r" values="10;14;10" dur="1s" repeatCount="indefinite"/></circle>
-      <text x="125" y="84" font-size="10" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">未接觸</text>
-      <text x="100" y="125" text-anchor="middle" font-size="10" fill="#666" font-family="Noto Sans TC">跳線插得不夠深</text>
+      ${bbBase(false, 'bbg-lw')}
+      <!-- 第一個跳線：插得太淺 -->
+      <line x1="50" y1="20" x2="50" y2="70" stroke="#dc2626" stroke-width="2.2"/>
+      <!-- 金屬針沒到底 -->
+      <rect x="48" y="60" width="4" height="14" fill="#9ca3af"/>
+      <!-- 紅圈警示 -->
+      <circle cx="50" cy="76" r="10" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="3 2">
+        <animate attributeName="r" values="9;13;9" dur="1s" repeatCount="indefinite"/>
+      </circle>
+      <text x="50" y="100" text-anchor="middle" font-size="8" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">✗ 沒到底</text>
+      <text x="50" y="110" text-anchor="middle" font-size="7" fill="#dc2626">不接觸金屬條</text>
+      <!-- 第二個跳線：插到底（正確）-->
+      <line x1="150" y1="20" x2="150" y2="76" stroke="#16a34a" stroke-width="2.2"/>
+      <rect x="148" y="62" width="4" height="20" fill="#9ca3af"/>
+      <text x="150" y="100" text-anchor="middle" font-size="8" fill="#16a34a" font-weight="700" font-family="Noto Sans TC">✓ 壓到底</text>
+      <text x="150" y="110" text-anchor="middle" font-size="7" fill="#16a34a">聽到「卡」聲</text>
+      <text x="100" y="32" text-anchor="middle" font-size="10" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">⚠ 跳線插不夠深</text>
     </svg>`,
 
     'wrong-resistor': `<svg viewBox="0 0 200 140" style="width:90%">
-      <rect x="20" y="55" width="64" height="20" rx="3" fill="#fef3c7" stroke="#92400e"/>
-      <rect x="32" y="55" width="3" height="20" fill="#dc2626"/>
-      <rect x="40" y="55" width="3" height="20" fill="#1a1a1a"/>
-      <rect x="48" y="55" width="3" height="20" fill="#f97316"/>
-      <text x="52" y="90" text-anchor="middle" font-size="9" fill="#1a1a1a" font-family="monospace">紅黑橙</text>
-      <text x="52" y="102" text-anchor="middle" font-size="11" fill="#dc2626" font-weight="700">20kΩ ✗</text>
+      <!-- 左：錯誤的電阻 20kΩ -->
+      <g transform="translate(20,55)">
+        <!-- 接腳 -->
+        <line x1="-10" y1="10" x2="0" y2="10" stroke="#9ca3af" stroke-width="1.5"/>
+        <line x1="60" y1="10" x2="70" y2="10" stroke="#9ca3af" stroke-width="1.5"/>
+        <!-- 電阻本體（陶瓷米色）-->
+        <ellipse cx="30" cy="10" rx="32" ry="6" fill="#e7c89a" stroke="#7c4a14"/>
+        <rect x="0" y="6" width="60" height="8" fill="#e7c89a"/>
+        <rect x="0" y="6" width="60" height="8" fill="none" stroke="#7c4a14" stroke-width=".5"/>
+        <!-- 色環：紅黑橙 = 20kΩ -->
+        <rect x="14" y="6" width="3.5" height="8" fill="#dc2626"/>
+        <rect x="20" y="6" width="3.5" height="8" fill="#1a1a1a"/>
+        <rect x="26" y="6" width="3.5" height="8" fill="#f97316"/>
+        <rect x="42" y="6" width="3.5" height="8" fill="#fbbf24"/>
+        <text x="30" y="34" text-anchor="middle" font-size="9" fill="#1a1a1a" font-family="monospace" font-weight="700">紅 黑 橙</text>
+        <text x="30" y="46" text-anchor="middle" font-size="14" fill="#dc2626" font-weight="700">20 kΩ</text>
+        <text x="30" y="58" text-anchor="middle" font-size="9" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">✗ 太大 LED 很暗</text>
+      </g>
 
-      <rect x="116" y="55" width="64" height="20" rx="3" fill="#fef3c7" stroke="#92400e"/>
-      <rect x="128" y="55" width="3" height="20" fill="#dc2626"/>
-      <rect x="136" y="55" width="3" height="20" fill="#dc2626"/>
-      <rect x="144" y="55" width="3" height="20" fill="#92400e"/>
-      <text x="148" y="90" text-anchor="middle" font-size="9" fill="#1a1a1a" font-family="monospace">紅紅棕</text>
-      <text x="148" y="102" text-anchor="middle" font-size="11" fill="#16a34a" font-weight="700">220Ω ✓</text>
+      <!-- VS 分隔 -->
+      <text x="100" y="80" text-anchor="middle" font-size="14" fill="#888" font-weight="700">VS</text>
 
-      <text x="100" y="125" text-anchor="middle" font-size="10" fill="#666" font-family="Noto Sans TC">看色環確認阻值</text>
+      <!-- 右：正確的電阻 220Ω -->
+      <g transform="translate(110,55)">
+        <line x1="-10" y1="10" x2="0" y2="10" stroke="#9ca3af" stroke-width="1.5"/>
+        <line x1="60" y1="10" x2="70" y2="10" stroke="#9ca3af" stroke-width="1.5"/>
+        <ellipse cx="30" cy="10" rx="32" ry="6" fill="#e7c89a" stroke="#7c4a14"/>
+        <rect x="0" y="6" width="60" height="8" fill="#e7c89a"/>
+        <rect x="0" y="6" width="60" height="8" fill="none" stroke="#7c4a14" stroke-width=".5"/>
+        <!-- 色環：紅紅棕 = 220Ω -->
+        <rect x="14" y="6" width="3.5" height="8" fill="#dc2626"/>
+        <rect x="20" y="6" width="3.5" height="8" fill="#dc2626"/>
+        <rect x="26" y="6" width="3.5" height="8" fill="#92400e"/>
+        <rect x="42" y="6" width="3.5" height="8" fill="#fbbf24"/>
+        <text x="30" y="34" text-anchor="middle" font-size="9" fill="#1a1a1a" font-family="monospace" font-weight="700">紅 紅 棕</text>
+        <text x="30" y="46" text-anchor="middle" font-size="14" fill="#16a34a" font-weight="700">220 Ω</text>
+        <text x="30" y="58" text-anchor="middle" font-size="9" fill="#16a34a" font-weight="700" font-family="Noto Sans TC">✓ 正常</text>
+      </g>
+      <text x="100" y="20" text-anchor="middle" font-size="10" fill="#1a1a1a" font-weight="700" font-family="Noto Sans TC">色環 → 阻值</text>
     </svg>`,
 
     'cap-reversed': `<svg viewBox="0 0 200 140" style="width:90%">
-      <ellipse cx="100" cy="80" rx="22" ry="36" fill="#1e3a8a"/>
-      <ellipse cx="100" cy="50" rx="22" ry="8" fill="#1e40af"/>
-      <text x="100" y="55" text-anchor="middle" font-size="10" fill="#fff" font-weight="700">−</text>
-      <!-- 鼓起 -->
-      <ellipse cx="100" cy="35" rx="14" ry="6" fill="#3b82f6">
-        <animate attributeName="rx" values="14;18;14" dur="1s" repeatCount="indefinite"/>
+      <defs>
+        <linearGradient id="capG" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0" stop-color="#1e3a8a"/><stop offset=".5" stop-color="#3b82f6"/><stop offset="1" stop-color="#1e3a8a"/>
+        </linearGradient>
+      </defs>
+      <!-- 電解電容（圓柱形、有金屬殼）-->
+      <ellipse cx="100" cy="46" rx="22" ry="6" fill="#1e40af"/>
+      <rect x="78" y="46" width="44" height="56" fill="url(#capG)"/>
+      <ellipse cx="100" cy="102" rx="22" ry="6" fill="#1e3a8a"/>
+      <!-- 鼓起的頂部（動畫）-->
+      <ellipse cx="100" cy="42" rx="14" ry="5" fill="#60a5fa">
+        <animate attributeName="rx" values="14;20;14" dur="1s" repeatCount="indefinite"/>
+        <animate attributeName="cy" values="42;36;42" dur="1s" repeatCount="indefinite"/>
       </ellipse>
-      <!-- 噴煙 -->
-      <circle cx="92" cy="20" r="4" fill="#9ca3af" opacity=".6"><animate attributeName="cy" values="30;5;30" dur="2s" repeatCount="indefinite"/></circle>
-      <circle cx="108" cy="20" r="3" fill="#9ca3af" opacity=".5"><animate attributeName="cy" values="30;10;30" dur="2.3s" repeatCount="indefinite"/></circle>
+      <!-- 標示 -->
+      <text x="100" y="80" text-anchor="middle" font-size="14" fill="#fff" font-weight="700" font-family="Inter">−</text>
+      <text x="93" y="65" font-size="6" fill="#fff" font-weight="700">100μF</text>
+      <text x="93" y="72" font-size="6" fill="#fff" font-weight="700">16V</text>
+      <!-- 漏液 -->
+      <path d="M 80 85 Q 75 95 78 105 L 82 105 Q 79 95 83 85 Z" fill="#a78bfa" opacity=".7">
+        <animate attributeName="opacity" values=".4;.9;.4" dur="2s" repeatCount="indefinite"/>
+      </path>
+      <!-- 冒煙 -->
+      <circle cx="92" cy="30" r="3.5" fill="#9ca3af" opacity=".6"><animate attributeName="cy" values="36;10;36" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.7;0" dur="2s" repeatCount="indefinite"/></circle>
+      <circle cx="108" cy="28" r="3" fill="#9ca3af" opacity=".5"><animate attributeName="cy" values="34;5;34" dur="2.4s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.6;0" dur="2.4s" repeatCount="indefinite"/></circle>
       <!-- 接腳 -->
-      <line x1="93" y1="115" x2="93" y2="130" stroke="#9ca3af" stroke-width="1.5"/>
-      <line x1="107" y1="115" x2="107" y2="130" stroke="#9ca3af" stroke-width="1.5"/>
-      <text x="100" y="20" text-anchor="middle" font-size="11" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">⚠ 鼓起爆炸</text>
+      <line x1="92" y1="108" x2="92" y2="125" stroke="#9ca3af" stroke-width="1.5"/>
+      <line x1="108" y1="108" x2="108" y2="125" stroke="#9ca3af" stroke-width="1.5"/>
+      <text x="100" y="20" text-anchor="middle" font-size="10" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">⚠ 反接 → 鼓起 → 爆炸</text>
     </svg>`,
   };
   return SVGs[id] || `<span style="font-size:60px">⚠️</span>`;
