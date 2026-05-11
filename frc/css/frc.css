@@ -1,0 +1,220 @@
+/* FRC 平台主題色 — FIRST 官方藍 + 警示橘 */
+.frc-theme {
+  --primary: #0066B3;
+  --primary-dark: #004A87;
+  --primary-light: #DBEAFE;
+  --primary-glow: rgba(0,102,179,.3);
+  --accent: #FF6600;
+  --accent-light: #FFEDD5;
+  --frc-blue: #0066B3;
+  --frc-orange: #FF6600;
+  --frc-yellow: #FFD200;
+}
+.frc-theme .brand .logo { filter: drop-shadow(0 2px 4px rgba(0,102,179,.4)); }
+.frc-theme .hero h2 {
+  background: linear-gradient(135deg, #1a1a1a 30%, #0066B3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero-robot {
+  width: 100%;
+  max-width: 540px;
+  filter: drop-shadow(0 20px 40px rgba(0,0,0,.12));
+  animation: slow-float 6s ease-in-out infinite;
+}
+
+/* 子隊架構卡 */
+.subteam-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 14px;
+}
+.subteam-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  border-left: 5px solid var(--primary);
+}
+.subteam-card.hardware { border-left-color: #DC2626; }
+.subteam-card.software { border-left-color: #16A34A; }
+.subteam-card.strategy { border-left-color: #8B5CF6; }
+.subteam-card.business { border-left-color: #F59E0B; }
+.subteam-card h4 { margin-bottom: 6px; }
+.subteam-card .role { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; font-family: var(--font-mono); }
+.subteam-card p { font-size: 13px; color: var(--text-soft); line-height: 1.6; }
+
+/* 工程設計流程環圖 */
+.edp-flow {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin: 20px 0;
+  position: relative;
+}
+.edp-step {
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 8px;
+  text-align: center;
+  position: relative;
+  transition: all .25s var(--easing);
+}
+.edp-step::after {
+  content: '→';
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: var(--primary);
+  z-index: 1;
+}
+.edp-step:last-child::after { display: none; }
+.edp-step.active {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px var(--primary-glow);
+}
+.edp-step .num {
+  width: 28px; height: 28px;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  margin: 0 auto 6px;
+  font-family: var(--font-mono);
+}
+.edp-step h4 { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.edp-step p { font-size: 11px; color: var(--text-muted); }
+
+@media (max-width: 900px) {
+  .edp-flow { grid-template-columns: 1fr 1fr; }
+  .edp-step::after { display: none; }
+}
+
+/* M4 場地策略模擬器 */
+.frc-field-wrap {
+  background: #1e293b;
+  border-radius: 14px;
+  padding: 16px;
+  position: relative;
+}
+#frc-field {
+  width: 100%;
+  max-width: 760px;
+  height: auto;
+  display: block;
+  background: #2d4f6e;
+  border-radius: 10px;
+}
+
+/* M5 工程筆記頁面樣本 */
+.notebook-page {
+  background: #fffbeb;
+  border: 1px solid #d4c190;
+  border-radius: 8px;
+  padding: 18px;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0,0,0,.06);
+}
+.notebook-page::before {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 24px;
+  width: 1px;
+  background: #dc2626;
+  opacity: .3;
+}
+.notebook-page h5 {
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  color: #92400e;
+  border-bottom: 1px dashed #d4c190;
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+  padding-left: 12px;
+}
+.notebook-page .nb-content {
+  font-size: 12px;
+  color: #4a3a1a;
+  line-height: 1.7;
+  padding-left: 12px;
+}
+.notebook-page .nb-sketch {
+  background: #fff;
+  border: 1px dashed #92400e;
+  border-radius: 4px;
+  padding: 10px;
+  margin-top: 8px;
+}
+
+/* 獎項卡 */
+.award-card {
+  background: linear-gradient(135deg, #fffbeb, #fff);
+  border: 2px solid #fbbf24;
+  border-radius: 14px;
+  padding: 18px;
+  position: relative;
+}
+.award-card .award-trophy {
+  position: absolute;
+  top: -10px; right: 14px;
+  font-size: 36px;
+}
+.award-card h4 { color: #92400e; }
+.award-card .award-name-en {
+  font-size: 11px;
+  color: #b45309;
+  font-style: italic;
+  margin-bottom: 8px;
+  font-family: var(--font-mono);
+}
+.award-card p { font-size: 13px; color: var(--text-soft); }
+
+/* 比賽計時器 */
+.match-timer {
+  background: #0a2a0a;
+  color: #3aff6a;
+  font-family: monospace;
+  font-size: 28px;
+  font-weight: 700;
+  padding: 16px;
+  border-radius: 10px;
+  text-align: center;
+  margin-bottom: 14px;
+  letter-spacing: 4px;
+}
+.match-phase {
+  display: flex;
+  gap: 8px;
+  margin: 10px 0;
+}
+.match-phase-cell {
+  flex: 1;
+  background: var(--bg-soft);
+  border-radius: 8px;
+  padding: 10px 8px;
+  text-align: center;
+  font-size: 12px;
+  border: 1px solid var(--border);
+}
+.match-phase-cell.active {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary-dark);
+  font-weight: 700;
+}
+.match-phase-cell .duration {
+  font-size: 18px;
+  font-weight: 700;
+  display: block;
+  font-family: var(--font-mono);
+}

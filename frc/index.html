@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FRC 機器人教學平台 ｜ 生活科技互動教學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="css/frc.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🤖%3C/text%3E%3C/svg%3E">
+</head>
+<body class="home frc-theme">
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">🤖</span>
+    <div>
+      <h1>FRC 機器人教學</h1>
+      <p class="subtitle">工程設計流程 ・ 機器人結構 ・ 競賽策略</p>
+    </div>
+  </div>
+  <nav class="topnav">
+    <a href="#modules">學習模組</a>
+    <a href="#about">關於 FRC</a>
+    <a href="../" style="color:var(--primary-dark);font-weight:600">← 平台首頁</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-text">
+      <span class="badge">FIRST Robotics Competition ・ 高中工程教育</span>
+      <h2>從零開始打造<br>能上場比賽的機器人</h2>
+      <p>FRC 是全球最大的高中機器人競賽。本平台引導學生認識機器人結構、工程設計流程、安全規範、隊伍分工，並學習如何撰寫優秀的工程筆記 (Engineering Notebook)。</p>
+      <div class="hero-cta">
+        <a href="pages/module1.html" class="btn btn-primary">開始學習 →</a>
+        <a href="#modules" class="btn btn-ghost">看模組地圖</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <svg viewBox="0 0 480 420" class="hero-robot">
+        <defs>
+          <linearGradient id="robotBody" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="#3b82f6"/>
+            <stop offset="1" stop-color="#0066B3"/>
+          </linearGradient>
+          <linearGradient id="bumperG" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="#ef4444"/>
+            <stop offset="1" stop-color="#991b1b"/>
+          </linearGradient>
+        </defs>
+        <ellipse cx="240" cy="390" rx="180" ry="14" fill="rgba(0,0,0,.15)"/>
+        <!-- 場地地板（含格紋）-->
+        <rect x="20" y="320" width="440" height="70" fill="#334155"/>
+        <g stroke="#475569" stroke-width=".5">
+          <line x1="60" y1="320" x2="60" y2="390"/><line x1="100" y1="320" x2="100" y2="390"/>
+          <line x1="140" y1="320" x2="140" y2="390"/><line x1="180" y1="320" x2="180" y2="390"/>
+          <line x1="220" y1="320" x2="220" y2="390"/><line x1="260" y1="320" x2="260" y2="390"/>
+          <line x1="300" y1="320" x2="300" y2="390"/><line x1="340" y1="320" x2="340" y2="390"/>
+          <line x1="380" y1="320" x2="380" y2="390"/><line x1="420" y1="320" x2="420" y2="390"/>
+        </g>
+        <!-- 機器人主體（帶 bumper、輪子、機械手臂）-->
+        <!-- Bumper（紅色保險桿）-->
+        <rect x="120" y="280" width="240" height="40" rx="6" fill="url(#bumperG)"/>
+        <text x="240" y="307" text-anchor="middle" font-size="14" fill="#fff" font-weight="700" font-family="Inter">2026</text>
+        <!-- 主框架 -->
+        <rect x="135" y="200" width="210" height="80" rx="6" fill="url(#robotBody)"/>
+        <!-- 電池盒 -->
+        <rect x="145" y="240" width="40" height="30" rx="3" fill="#fbbf24"/>
+        <text x="165" y="259" text-anchor="middle" font-size="9" fill="#1a1a1a" font-weight="700">12V</text>
+        <!-- 控制板（RoboRIO）-->
+        <rect x="195" y="240" width="50" height="30" rx="3" fill="#dc2626"/>
+        <text x="220" y="259" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">roboRIO</text>
+        <!-- PDP -->
+        <rect x="255" y="240" width="40" height="30" rx="3" fill="#1e293b"/>
+        <text x="275" y="259" text-anchor="middle" font-size="8" fill="#fbbf24" font-weight="700">PDP</text>
+        <!-- 機械手臂 -->
+        <g transform="translate(280,200)">
+          <rect x="-6" y="-100" width="12" height="100" fill="#374151"/>
+          <rect x="-30" y="-120" width="60" height="20" rx="4" fill="#1f2937"/>
+          <rect x="-25" y="-115" width="50" height="10" fill="#475569"/>
+          <!-- 抓取裝置 -->
+          <polygon points="-25,-100 -30,-90 -25,-80" fill="#9ca3af"/>
+          <polygon points="25,-100 30,-90 25,-80" fill="#9ca3af"/>
+        </g>
+        <!-- 球（Game Piece）-->
+        <circle cx="280" cy="80" r="14" fill="#ff6600" stroke="#c2410c"/>
+        <text x="280" y="84" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">NOTE</text>
+        <!-- 輪子（左右兩組）-->
+        <circle cx="150" cy="320" r="22" fill="#1f2937" stroke="#374151" stroke-width="3"/>
+        <circle cx="150" cy="320" r="10" fill="#475569"/>
+        <g stroke="#9ca3af" stroke-width="1.5">
+          <line x1="150" y1="305" x2="150" y2="335"/>
+          <line x1="135" y1="320" x2="165" y2="320"/>
+          <line x1="140" y1="310" x2="160" y2="330"/>
+          <line x1="140" y1="330" x2="160" y2="310"/>
+        </g>
+        <circle cx="220" cy="320" r="22" fill="#1f2937" stroke="#374151" stroke-width="3"/>
+        <circle cx="220" cy="320" r="10" fill="#475569"/>
+        <circle cx="290" cy="320" r="22" fill="#1f2937" stroke="#374151" stroke-width="3"/>
+        <circle cx="290" cy="320" r="10" fill="#475569"/>
+        <circle cx="360" cy="320" r="22" fill="#1f2937" stroke="#374151" stroke-width="3"/>
+        <circle cx="360" cy="320" r="10" fill="#475569"/>
+        <!-- 隊號徽章 -->
+        <rect x="190" y="220" width="100" height="20" rx="3" fill="#fff"/>
+        <text x="240" y="234" text-anchor="middle" font-size="11" fill="#0066B3" font-weight="900" font-family="Inter">TEAM 8214</text>
+        <!-- LED 燈條 -->
+        <g>
+          <circle cx="140" cy="290" r="2" fill="#22c55e"><animate attributeName="opacity" values=".3;1;.3" dur="1.2s" repeatCount="indefinite"/></circle>
+          <circle cx="160" cy="290" r="2" fill="#22c55e"><animate attributeName="opacity" values=".3;1;.3" dur="1.2s" begin=".2s" repeatCount="indefinite"/></circle>
+          <circle cx="180" cy="290" r="2" fill="#22c55e"><animate attributeName="opacity" values=".3;1;.3" dur="1.2s" begin=".4s" repeatCount="indefinite"/></circle>
+        </g>
+        <!-- 標籤 -->
+        <g font-family="Noto Sans TC, sans-serif">
+          <text x="60" y="260" font-size="11" fill="#444" font-weight="600">Bumper</text>
+          <line x1="100" y1="265" x2="125" y2="295" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3 2"/>
+          <text x="395" y="120" font-size="11" fill="#444" font-weight="600">機械手臂</text>
+          <line x1="395" y1="125" x2="320" y2="120" stroke="#374151" stroke-width="1.5" stroke-dasharray="3 2"/>
+          <text x="60" y="350" font-size="11" fill="#444" font-weight="600">輪組</text>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <section id="modules" class="modules">
+    <h3 class="section-title">五大學習模組</h3>
+    <p class="section-sub">從認識 FRC 到撰寫優秀工程筆記</p>
+    <div class="module-grid">
+      <a class="card card-1" href="pages/module1.html"><div class="card-num">01</div><div class="card-icon">🤖</div><h4>認識 FRC 與隊伍</h4><p>機器人結構、子系統、隊伍 8 大分工、比賽結構（自動 / 手動 / 終局）。</p><span class="card-tag">15 分鐘</span></a>
+      <a class="card card-2" href="pages/module2.html"><div class="card-num">02</div><div class="card-icon">🛡️</div><h4>機械工坊安全</h4><p>鑽床、CNC、3D 列印、焊接、電池等多元安全規範。</p><span class="card-tag">必修・10 分鐘</span></a>
+      <a class="card card-3" href="pages/module3.html"><div class="card-num">03</div><div class="card-icon">📐</div><h4>工程設計流程</h4><p>7 步驟：定義→研究→構想→原型→測試→迭代→文件化。</p><span class="card-tag">20 分鐘</span></a>
+      <a class="card card-4" href="pages/module4.html"><div class="card-num">04</div><div class="card-icon">🎮</div><h4>機器人策略模擬</h4><p>選擇 drivetrain + manipulator + 場地策略，看勝率分析。</p><span class="card-tag">核心・25 分鐘</span></a>
+      <a class="card card-5" href="pages/module5.html"><div class="card-num">05</div><div class="card-icon">📓</div><h4>工程筆記範本</h4><p>8 種筆記頁面範例 + Excellence in Engineering 評鑑指標。</p><span class="card-tag">20 分鐘</span></a>
+      <div class="card card-locked"><div class="card-num">👨‍🏫</div><div class="card-icon">📊</div><h4>教師後台</h4><p>班級進度、成績匯出（開發中）。</p><span class="card-tag">教師專用</span></div>
+    </div>
+  </section>
+
+  <section id="about" class="about">
+    <h3 class="section-title">FRC 是什麼？</h3>
+    <div style="max-width:900px;margin:30px auto 0">
+      <div class="match-phase">
+        <div class="match-phase-cell active">
+          <span class="duration">15s</span>
+          自動期<br><small style="color:#888">Autonomous</small>
+        </div>
+        <div class="match-phase-cell">
+          <span class="duration">2:15</span>
+          操控期<br><small style="color:#888">Teleop</small>
+        </div>
+        <div class="match-phase-cell">
+          <span class="duration">30s</span>
+          終局<br><small style="color:#888">Endgame</small>
+        </div>
+      </div>
+      <p class="muted" style="text-align:center;margin-top:14px">每場比賽 2 分 30 秒，2 隊聯盟對抗，3 機器人 vs 3 機器人</p>
+    </div>
+    <div class="reason-grid">
+      <div class="reason"><span>🌍</span><h4>全球規模</h4><p>3,700+ 隊伍、30+ 國家，每年超過 60,000 名高中生參賽。</p></div>
+      <div class="reason"><span>🏆</span><h4>核心價值</h4><p>Gracious Professionalism（紳士風度）+ Coopertition（合作競爭）。</p></div>
+      <div class="reason"><span>📅</span><h4>賽季時程</h4><p>1 月 Kickoff → 6 週設計建造 → 區域賽 → 4 月世界錦標賽。</p></div>
+      <div class="reason"><span>🇹🇼</span><h4>台灣參與</h4><p>10+ 隊伍，包含建中、北一女、新興科技中心、台南二中等。</p></div>
+    </div>
+  </section>
+
+  <section class="teacher">
+    <div class="teacher-card">
+      <h3>給教師的話</h3>
+      <p>FRC 是真正的「工程設計 + 跨領域整合」教育平台。即使學校沒有正式參加 FRC，本平台的內容也適用於：</p>
+      <ol>
+        <li><strong>108 課綱「生活科技 + 自然科學跨領域」</strong>：工程設計流程是核心課綱要求</li>
+        <li><strong>機器人社團 / 微學分課程</strong>：低成本、模擬式入門，學生不需先有實機</li>
+        <li><strong>STEM 教育推廣</strong>：可作為 FLL（樂高機器人）的進階橋接</li>
+        <li><strong>實機隊伍前期培訓</strong>：學生在加入正式隊伍前的基礎課</li>
+      </ol>
+      <p style="margin-top:16px;color:var(--text-muted);font-size:14px">本平台基於 Citrus Circuits (Team 1678)、OP Robotics (Team 2056) 等頂尖隊伍的公開教學資源規劃。</p>
+    </div>
+  </section>
+</main>
+
+<script src="../js/main.js"></script>
+<script src="../js/audio.js"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 3：工程設計流程</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../css/frc.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🤖%3C/text%3E%3C/svg%3E">
+</head>
+<body class="frc-theme">
+<header class="topbar"><div class="brand"><span class="logo">🤖</span><div><h1>FRC 機器人教學</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<main class="module-page">
+  <div class="module-header"><div><span class="module-step">MODULE 03</span><h2>工程設計流程</h2><p class="muted">FRC 6 週的瘋狂衝刺 (Build Season) 怎麼運作？7 個關鍵階段。</p></div><div class="muted" id="step-progress">已學習 0 / 7 步</div></div>
+
+  <section class="panel">
+    <h3>七大階段環圖（點擊跳到該階段）</h3>
+    <div class="edp-flow" id="edp-flow"></div>
+  </section>
+
+  <section class="panel" id="step-detail-panel">
+    <div id="step-detail"></div>
+  </section>
+
+  <section class="panel">
+    <h3>🏆 Team 254 的設計時程範例（典型 6 週 Build Season）</h3>
+    <div style="background:var(--bg-soft);border-radius:14px;padding:18px;line-height:1.9">
+      <p><strong style="color:var(--primary-dark)">Week 1 ・ Kickoff 週</strong>：早上看遊戲影片 → 下午策略會議 → 開始 game analysis、規則拆解、機制 brainstorm。</p>
+      <p><strong style="color:var(--primary-dark)">Week 2 ・ 原型週</strong>：3-4 個 mechanism 同步做木板/PVC 原型，測試可行性。決定主架構方向。</p>
+      <p><strong style="color:var(--primary-dark)">Week 3-4 ・ CAD + 製造</strong>：CAD 設計 → CNC 加工 → 組裝。電氣與軟體子隊同步開始。</p>
+      <p><strong style="color:var(--primary-dark)">Week 5 ・ 整合測試</strong>：所有 subsystem 上機。寫自動程式、調 PID、訓練駕駛員。</p>
+      <p><strong style="color:var(--primary-dark)">Week 6 ・ Practice + Bag Day</strong>：模擬比賽訓練。Stop Build Day（即週末前必須完成）。後來改成隨時可加工，但仍須在規定日期前停止改造。</p>
+    </div>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="module2.html" class="btn btn-ghost">← 上一關</a>
+    <a href="module4.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關：策略模擬 →</a>
+  </div>
+</main>
+<script src="../../js/main.js"></script><script src="../../js/audio.js"></script><script src="../js/module3.js"></script>
+</body></html>

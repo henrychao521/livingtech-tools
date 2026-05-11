@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 1：認識 FRC 與隊伍架構</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../css/frc.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🤖%3C/text%3E%3C/svg%3E">
+</head>
+<body class="frc-theme">
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">🤖</span>
+    <div>
+      <h1>FRC 機器人教學</h1>
+      <p class="subtitle">生活科技互動教學平台</p>
+    </div>
+  </div>
+  <a href="../index.html" class="module-back">← 回首頁</a>
+</header>
+
+<main class="module-page">
+  <div class="module-header">
+    <div>
+      <span class="module-step">MODULE 01</span>
+      <h2>認識 FRC 與隊伍架構</h2>
+      <p class="muted">先了解比賽規則、機器人標準結構、頂尖隊伍如何組織分工。</p>
+    </div>
+    <div class="muted" id="progress-text">已認識 0 / 8 個項目</div>
+  </div>
+
+  <section class="panel">
+    <h3>① 比賽結構（2 分 30 秒）</h3>
+    <p class="muted" style="margin-bottom:14px">每場比賽分三個階段。每階段機器人能做什麼、得分機制都不同。</p>
+    <div class="match-timer" id="match-timer">02:30</div>
+    <div class="match-phase">
+      <div class="match-phase-cell active" data-phase="auto">
+        <span class="duration">15s</span>
+        <strong>自動期</strong><br>
+        <small style="color:#888">Autonomous</small>
+      </div>
+      <div class="match-phase-cell" data-phase="teleop">
+        <span class="duration">2:15</span>
+        <strong>操控期</strong><br>
+        <small style="color:#888">Teleop</small>
+      </div>
+      <div class="match-phase-cell" data-phase="endgame">
+        <span class="duration">30s</span>
+        <strong>終局</strong><br>
+        <small style="color:#888">Endgame</small>
+      </div>
+    </div>
+    <div id="phase-detail" style="background:var(--bg-soft);border-radius:12px;padding:16px;margin-top:14px;font-size:14px;line-height:1.7">
+      <strong style="color:var(--primary-dark)">自動期 (Autonomous)：</strong>機器人完全自主運作，無人類操控。預先寫好的程式判斷場地位置、執行任務（射球、移動、抓取等）。通常是得分關鍵時段，分數加權較高。
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>② 機器人標準結構（互動點擊）</h3>
+    <p class="muted" style="margin-bottom:14px">點擊機器人各部位的橘色數字，認識每個 subsystem 的功能。</p>
+    <div class="parts-layout">
+      <div class="saw-stage">
+        <svg viewBox="0 0 600 540" class="saw-svg" id="frc-svg">
+          <defs>
+            <linearGradient id="m1RobotBody" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0" stop-color="#3b82f6"/>
+              <stop offset="1" stop-color="#0066B3"/>
+            </linearGradient>
+            <linearGradient id="m1Bumper" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0" stop-color="#ef4444"/>
+              <stop offset="1" stop-color="#991b1b"/>
+            </linearGradient>
+          </defs>
+          <!-- 場地 -->
+          <rect x="20" y="430" width="560" height="80" fill="#334155"/>
+          <g stroke="#475569" stroke-width=".5">
+            <line x1="80" y1="430" x2="80" y2="510"/><line x1="140" y1="430" x2="140" y2="510"/>
+            <line x1="200" y1="430" x2="200" y2="510"/><line x1="260" y1="430" x2="260" y2="510"/>
+            <line x1="320" y1="430" x2="320" y2="510"/><line x1="380" y1="430" x2="380" y2="510"/>
+            <line x1="440" y1="430" x2="440" y2="510"/><line x1="500" y1="430" x2="500" y2="510"/>
+          </g>
+          <!-- 機器人主體（更詳細）-->
+          <!-- Bumper -->
+          <rect x="150" y="380" width="300" height="50" rx="6" fill="url(#m1Bumper)"/>
+          <text x="300" y="412" text-anchor="middle" font-size="20" fill="#fff" font-weight="900" font-family="Inter">2026</text>
+          <!-- 主框架 -->
+          <rect x="170" y="270" width="260" height="115" rx="8" fill="url(#m1RobotBody)"/>
+          <!-- 電池盒（黃色，圓柱）-->
+          <rect x="180" y="320" width="55" height="42" rx="4" fill="#fbbf24"/>
+          <text x="207" y="345" text-anchor="middle" font-size="11" fill="#1a1a1a" font-weight="700">12V</text>
+          <text x="207" y="357" text-anchor="middle" font-size="9" fill="#1a1a1a">電池</text>
+          <!-- roboRIO -->
+          <rect x="247" y="320" width="65" height="42" rx="4" fill="#dc2626"/>
+          <text x="280" y="343" text-anchor="middle" font-size="10" fill="#fff" font-weight="700">roboRIO</text>
+          <text x="280" y="354" text-anchor="middle" font-size="8" fill="#fff">控制器</text>
+          <!-- PDP -->
+          <rect x="322" y="320" width="55" height="42" rx="4" fill="#1e293b"/>
+          <text x="349" y="343" text-anchor="middle" font-size="10" fill="#fbbf24" font-weight="700">PDP</text>
+          <text x="349" y="354" text-anchor="middle" font-size="8" fill="#fbbf24">配電板</text>
+          <!-- 機械手臂 + intake -->
+          <g transform="translate(360,270)">
+            <rect x="-8" y="-130" width="16" height="130" fill="#374151"/>
+            <rect x="-40" y="-156" width="80" height="26" rx="4" fill="#1f2937"/>
+            <rect x="-35" y="-151" width="70" height="14" fill="#475569"/>
+            <text x="0" y="-141" text-anchor="middle" font-size="8" fill="#fbbf24">INTAKE</text>
+            <!-- 抓爪 -->
+            <polygon points="-35,-130 -42,-115 -35,-100" fill="#9ca3af" stroke="#475569"/>
+            <polygon points="35,-130 42,-115 35,-100" fill="#9ca3af" stroke="#475569"/>
+          </g>
+          <!-- 隊號徽章 -->
+          <rect x="230" y="290" width="140" height="26" rx="4" fill="#fff" stroke="#0066B3" stroke-width="1.5"/>
+          <text x="300" y="308" text-anchor="middle" font-size="14" fill="#0066B3" font-weight="900" font-family="Inter">TEAM 8214</text>
+          <!-- LED 燈條 -->
+          <g>
+            <circle cx="160" cy="395" r="3" fill="#22c55e"><animate attributeName="opacity" values=".3;1;.3" dur="1s" repeatCount="indefinite"/></circle>
+            <circle cx="180" cy="395" r="3" fill="#22c55e"><animate attributeName="opacity" values=".3;1;.3" dur="1s" begin=".15s" repeatCount="indefinite"/></circle>
+            <circle cx="200" cy="395" r="3" fill="#22c55e"><animate attributeName="opacity" values=".3;1;.3" dur="1s" begin=".3s" repeatCount="indefinite"/></circle>
+            <circle cx="220" cy="395" r="3" fill="#22c55e"><animate attributeName="opacity" values=".3;1;.3" dur="1s" begin=".45s" repeatCount="indefinite"/></circle>
+          </g>
+          <!-- 視覺攝影機 -->
+          <rect x="290" y="248" width="20" height="14" rx="2" fill="#0f172a"/>
+          <circle cx="300" cy="255" r="4" fill="#06b6d4"/>
+          <!-- 四個輪子 -->
+          <circle cx="180" cy="430" r="28" fill="#1f2937" stroke="#374151" stroke-width="3"/>
+          <circle cx="180" cy="430" r="12" fill="#475569"/>
+          <g stroke="#9ca3af" stroke-width="2">
+            <line x1="180" y1="412" x2="180" y2="448"/>
+            <line x1="162" y1="430" x2="198" y2="430"/>
+            <line x1="167" y1="417" x2="193" y2="443"/>
+            <line x1="167" y1="443" x2="193" y2="417"/>
+          </g>
+          <circle cx="260" cy="430" r="28" fill="#1f2937" stroke="#374151" stroke-width="3"/>
+          <circle cx="260" cy="430" r="12" fill="#475569"/>
+          <circle cx="340" cy="430" r="28" fill="#1f2937" stroke="#374151" stroke-width="3"/>
+          <circle cx="340" cy="430" r="12" fill="#475569"/>
+          <circle cx="420" cy="430" r="28" fill="#1f2937" stroke="#374151" stroke-width="3"/>
+          <circle cx="420" cy="430" r="12" fill="#475569"/>
+          <!-- 互動熱點 -->
+          <g id="hotspots">
+            <g class="hotspot-group" data-id="drivetrain">
+              <circle class="hotspot-pulse" cx="180" cy="430" r="14"><animate attributeName="r" values="14;22;14" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0;1" dur="2s" repeatCount="indefinite"/></circle>
+              <circle class="hotspot" cx="180" cy="430" r="14"/>
+              <text class="hotspot-label" x="180" y="434">1</text>
+            </g>
+            <g class="hotspot-group" data-id="bumper">
+              <circle class="hotspot" cx="300" cy="405" r="14"/>
+              <text class="hotspot-label" x="300" y="409">2</text>
+            </g>
+            <g class="hotspot-group" data-id="frame">
+              <circle class="hotspot" cx="430" cy="280" r="14"/>
+              <text class="hotspot-label" x="430" y="284">3</text>
+            </g>
+            <g class="hotspot-group" data-id="battery">
+              <circle class="hotspot" cx="207" cy="340" r="14"/>
+              <text class="hotspot-label" x="207" y="344">4</text>
+            </g>
+            <g class="hotspot-group" data-id="roborio">
+              <circle class="hotspot" cx="280" cy="340" r="14"/>
+              <text class="hotspot-label" x="280" y="344">5</text>
+            </g>
+            <g class="hotspot-group" data-id="pdp">
+              <circle class="hotspot" cx="349" cy="340" r="14"/>
+              <text class="hotspot-label" x="349" y="344">6</text>
+            </g>
+            <g class="hotspot-group" data-id="manipulator">
+              <circle class="hotspot" cx="360" cy="135" r="14"/>
+              <text class="hotspot-label" x="360" y="139">7</text>
+            </g>
+            <g class="hotspot-group" data-id="vision">
+              <circle class="hotspot" cx="300" cy="255" r="14"/>
+              <text class="hotspot-label" x="300" y="259">8</text>
+            </g>
+          </g>
+        </svg>
+      </div>
+      <div class="parts-info" id="parts-info">
+        <div class="empty">
+          <div class="empty-icon">👆</div>
+          <p style="font-size:16px;font-weight:600">點擊橘色數字</p>
+          <p style="font-size:13px;opacity:.7">8 個項目都認完才能進下一關</p>
+        </div>
+      </div>
+    </div>
+    <div class="parts-checklist" id="parts-checklist"></div>
+  </section>
+
+  <section class="panel">
+    <h3>③ 頂尖隊伍如何分工？</h3>
+    <p class="muted" style="margin-bottom:14px">參考 <strong>Team 1678 Citrus Circuits</strong>（多次世界冠軍）的子隊架構。</p>
+    <div class="subteam-grid">
+      <div class="subteam-card hardware"><h4>🔧 Hardware Design</h4><div class="role">CAD ・ 3D 建模</div><p>用 Fusion 360 / SolidWorks 設計零件，輸出工程圖給製造組。</p></div>
+      <div class="subteam-card hardware"><h4>⚡ Hardware Electrical</h4><div class="role">電氣 ・ 接線</div><p>機械與軟體子隊之間的橋樑。接線、焊接、設計電路保護。</p></div>
+      <div class="subteam-card hardware"><h4>🛠️ Hardware Fabrication</h4><div class="role">製造 ・ 加工</div><p>依 CAD 圖用 CNC、車床、銑床、3D 列印製造零件（部分隊伍有 Haas 認證）。</p></div>
+      <div class="subteam-card software"><h4>💻 Software Robot</h4><div class="role">Java ・ WPILib</div><p>機器人控制程式（自動 / 手動 / 路徑規劃 / 視覺）。常用 Java + WPILib。</p></div>
+      <div class="subteam-card software"><h4>📊 Software Scouting</h4><div class="role">Kotlin + Python</div><p>偵查 App 收集對手資料，分析得分策略。Front-end Kotlin / Back-end Python。</p></div>
+      <div class="subteam-card strategy"><h4>♟️ Strategy</h4><div class="role">戰術 ・ Match Strategy</div><p>分析賽季規則，制定機器人功能優先順序。比賽時下達聯盟戰術。</p></div>
+      <div class="subteam-card business"><h4>📢 Business & Media</h4><div class="role">贊助 ・ 社群</div><p>找贊助商、寫獎項申請、財務管理、社群媒體、網站。</p></div>
+      <div class="subteam-card strategy"><h4>🏆 Impact Award</h4><div class="role">獎項申請</div><p>撰寫 FIRST Impact Award 申請（FRC 最高榮譽，超越機器人本身）。</p></div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>④ 學習資源：頂尖隊伍的公開資料</h3>
+    <p class="muted" style="margin-bottom:14px">這些隊伍開放了大量程式碼、CAD、文件，是學習 FRC 最好的教材：</p>
+    <div class="resource-grid" id="resources">
+      <div class="resource-card">
+        <div class="res-icon">🏆</div>
+        <h4>Team 254 ・ The Cheesy Poofs</h4>
+        <p>FRC 史上最強隊伍（8 屆世界冠軍）。GitHub 開源 2017–2025 完整程式碼，含 TrajectoryLib 路徑規劃。</p>
+        <a href="https://www.team254.com/resources/" target="_blank" rel="noopener" style="color:var(--primary);font-weight:600;font-size:13px">team254.com →</a>
+        <a href="https://github.com/Team254" target="_blank" rel="noopener" style="color:var(--primary);font-weight:600;font-size:13px;margin-left:12px">GitHub →</a>
+      </div>
+      <div class="resource-card">
+        <div class="res-icon">🍊</div>
+        <h4>Team 1678 ・ Citrus Circuits</h4>
+        <p>多屆世界冠軍。發布 CAD & Code、訓練資源、Build Blog、子隊架構模型。</p>
+        <a href="https://www.citruscircuits.org/" target="_blank" rel="noopener" style="color:var(--primary);font-weight:600;font-size:13px">citruscircuits.org →</a>
+      </div>
+      <div class="resource-card">
+        <div class="res-icon">🇨🇦</div>
+        <h4>Team 2056 ・ OP Robotics</h4>
+        <p>加拿大頂尖隊伍。以 Engineering Inspiration Award 著名。完整工程筆記範例。</p>
+        <a href="https://www.team2056.com/" target="_blank" rel="noopener" style="color:var(--primary);font-weight:600;font-size:13px">team2056.com →</a>
+      </div>
+      <div class="resource-card">
+        <div class="res-icon">📚</div>
+        <h4>WPILib 官方文件</h4>
+        <p>FRC 機器人控制系統的官方 SDK 與教學文件。所有隊伍必讀。</p>
+        <a href="https://docs.wpilib.org/" target="_blank" rel="noopener" style="color:var(--primary);font-weight:600;font-size:13px">docs.wpilib.org →</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="../index.html" class="btn btn-ghost">← 回首頁</a>
+    <a href="module2.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關：機械工坊安全 →</a>
+  </div>
+</main>
+
+<script src="../../js/main.js"></script>
+<script src="../../js/audio.js"></script>
+<script src="../js/module1.js"></script>
+</body>
+</html>

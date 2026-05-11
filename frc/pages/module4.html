@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 4：機器人策略模擬</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../css/frc.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🤖%3C/text%3E%3C/svg%3E">
+<style>
+  .robot-builder { display:grid; grid-template-columns: 1fr 320px; gap: 22px; }
+  @media (max-width: 900px) { .robot-builder { grid-template-columns: 1fr; } }
+  .config-panel { background:#fff; border:1px solid var(--border); border-radius:14px; padding:18px; }
+  .config-section { margin-bottom:18px; }
+  .config-section h4 { font-size:13px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.1em; margin-bottom:10px; font-family:var(--font-mono); }
+  .config-option { display:flex; gap:10px; align-items:center; padding:10px 12px; background:var(--bg-soft); border:2px solid var(--border); border-radius:10px; margin-bottom:6px; cursor:pointer; transition:all .2s; }
+  .config-option:hover { border-color:var(--primary); }
+  .config-option.selected { background:var(--primary-light); border-color:var(--primary); box-shadow:0 0 0 1px var(--primary); }
+  .config-option .opt-icon { font-size:24px; }
+  .config-option .opt-name { font-weight:700; font-size:14px; }
+  .config-option .opt-meta { font-size:11px; color:var(--text-muted); }
+  .config-option .opt-radio { margin-left:auto; width:16px; height:16px; border:2px solid var(--text-muted); border-radius:50%; display:flex; align-items:center; justify-content:center; }
+  .config-option.selected .opt-radio { border-color:var(--primary); }
+  .config-option.selected .opt-radio::after { content:''; width:8px; height:8px; background:var(--primary); border-radius:50%; }
+  .stat-card { background:linear-gradient(135deg,var(--primary-light),#fff); border-radius:14px; padding:18px; margin-bottom:14px; border:1px solid var(--border); }
+  .stat-row { display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px dashed #ddd; font-size:14px; }
+  .stat-row:last-child { border-bottom:none; }
+  .stat-row .val { font-weight:700; font-family:var(--font-mono); color:var(--primary-dark); }
+  .stat-row .val.good { color: #16a34a; }
+  .stat-row .val.bad { color: var(--danger); }
+  .score-display { background:#0a2a0a; color:#3aff6a; font-family:monospace; font-size:36px; font-weight:700; text-align:center; padding:18px; border-radius:10px; }
+  .recommendation { padding:14px 16px; border-radius:10px; margin-top:14px; font-size:14px; line-height:1.65; }
+  .recommendation.success { background:#dcfce7; border-left:4px solid #16a34a; color:#14532d; }
+  .recommendation.warn { background:#fef3c7; border-left:4px solid #f59e0b; color:#78350f; }
+  .recommendation.bad { background:#fee2e2; border-left:4px solid var(--danger); color:#7f1d1d; }
+</style>
+</head>
+<body class="frc-theme">
+<header class="topbar"><div class="brand"><span class="logo">🤖</span><div><h1>FRC 機器人教學</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<main class="module-page">
+  <div class="module-header"><div><span class="module-step" style="background:var(--success-light);color:#1b6e3a">MODULE 04 ・ 核心</span><h2>機器人配置策略模擬</h2><p class="muted">選擇 drivetrain、manipulator、自動程式策略，看綜合得分與排名預測。</p></div></div>
+
+  <div class="robot-builder">
+    <div>
+      <div class="frc-field-wrap">
+        <canvas id="frc-field" width="760" height="400"></canvas>
+      </div>
+      <div class="stat-card" style="margin-top:14px">
+        <h4 style="font-size:13px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;font-family:var(--font-mono)">綜合得分預測</h4>
+        <div class="score-display" id="total-score">0</div>
+        <div id="score-breakdown" style="margin-top:14px"></div>
+        <div id="recommendation"></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="config-panel">
+        <div class="config-section">
+          <h4>① Drivetrain（驅動底盤）</h4>
+          <label class="config-option selected" data-cat="drive" data-id="tank">
+            <span class="opt-icon">🚜</span>
+            <div><div class="opt-name">Tank Drive</div><div class="opt-meta">簡單可靠 ・ 入門首選</div></div>
+            <div class="opt-radio"></div>
+          </label>
+          <label class="config-option" data-cat="drive" data-id="mecanum">
+            <span class="opt-icon">↔️</span>
+            <div><div class="opt-name">Mecanum</div><div class="opt-meta">可橫向 ・ 中等難度</div></div>
+            <div class="opt-radio"></div>
+          </label>
+          <label class="config-option" data-cat="drive" data-id="swerve">
+            <span class="opt-icon">🌀</span>
+            <div><div class="opt-name">Swerve Drive</div><div class="opt-meta">頂尖隊伍標配 ・ 高難度</div></div>
+            <div class="opt-radio"></div>
+          </label>
+        </div>
+
+        <div class="config-section">
+          <h4>② Manipulator（操作裝置）</h4>
+          <label class="config-option selected" data-cat="manip" data-id="intake-only">
+            <span class="opt-icon">🤲</span>
+            <div><div class="opt-name">僅 Intake</div><div class="opt-meta">只能撿與放低處</div></div>
+            <div class="opt-radio"></div>
+          </label>
+          <label class="config-option" data-cat="manip" data-id="arm">
+            <span class="opt-icon">💪</span>
+            <div><div class="opt-name">機械手臂</div><div class="opt-meta">高處放置 ・ 中等複雜度</div></div>
+            <div class="opt-radio"></div>
+          </label>
+          <label class="config-option" data-cat="manip" data-id="shooter">
+            <span class="opt-icon">🎯</span>
+            <div><div class="opt-name">射擊機構</div><div class="opt-meta">遠距得分 ・ 需精確 PID</div></div>
+            <div class="opt-radio"></div>
+          </label>
+          <label class="config-option" data-cat="manip" data-id="combo">
+            <span class="opt-icon">🦾</span>
+            <div><div class="opt-name">手臂 + 射擊</div><div class="opt-meta">全能 ・ 最高難度</div></div>
+            <div class="opt-radio"></div>
+          </label>
+        </div>
+
+        <div class="config-section">
+          <h4>③ Autonomous（自動程式）</h4>
+          <label class="config-option selected" data-cat="auto" data-id="basic">
+            <span class="opt-icon">🚶</span>
+            <div><div class="opt-name">基本：走出起點</div><div class="opt-meta">+3 分 mobility</div></div>
+            <div class="opt-radio"></div>
+          </label>
+          <label class="config-option" data-cat="auto" data-id="score-one">
+            <span class="opt-icon">⚡</span>
+            <div><div class="opt-name">單次得分</div><div class="opt-meta">+5~8 分</div></div>
+            <div class="opt-radio"></div>
+          </label>
+          <label class="config-option" data-cat="auto" data-id="multi">
+            <span class="opt-icon">🚀</span>
+            <div><div class="opt-name">多任務（vision）</div><div class="opt-meta">+15~20 分 ・ 需視覺定位</div></div>
+            <div class="opt-radio"></div>
+          </label>
+        </div>
+
+        <div class="config-section">
+          <h4>④ Endgame（終局策略）</h4>
+          <label class="config-option selected" data-cat="end" data-id="park">
+            <span class="opt-icon">🅿️</span>
+            <div><div class="opt-name">Park（停在區域）</div><div class="opt-meta">+2 分 ・ 輕鬆</div></div>
+            <div class="opt-radio"></div>
+          </label>
+          <label class="config-option" data-cat="end" data-id="climb">
+            <span class="opt-icon">🧗</span>
+            <div><div class="opt-name">爬桿 / 吊掛</div><div class="opt-meta">+10~15 分</div></div>
+            <div class="opt-radio"></div>
+          </label>
+          <label class="config-option" data-cat="end" data-id="harmony">
+            <span class="opt-icon">🤝</span>
+            <div><div class="opt-name">合作（多機共爬）</div><div class="opt-meta">+20 分 ・ 需與聯盟同步</div></div>
+            <div class="opt-radio"></div>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-nav-bottom">
+    <a href="module3.html" class="btn btn-ghost">← 上一關</a>
+    <a href="module5.html" class="btn btn-primary">下一關：工程筆記 →</a>
+  </div>
+</main>
+<script src="../../js/main.js"></script><script src="../../js/audio.js"></script><script src="../js/module4.js"></script>
+</body></html>
