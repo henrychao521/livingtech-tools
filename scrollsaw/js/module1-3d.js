@@ -261,11 +261,11 @@ class ScrollSaw3D {
     arm.position.set(0, 4.0, 0);
     arm.castShadow = true;
     this.scene.add(arm);
-    // HANLIN logo on arm
-    const hanlinLogo = makeTextPlane('HANLIN', { color: '#fff', font: 'bold 100px Inter, sans-serif', bg: 'rgba(255,255,255,0.18)', w: 600, h: 120 });
-    hanlinLogo.position.set(0, 4.35, 0.71);
-    hanlinLogo.scale.set(1.8, 0.36, 1);
-    this.scene.add(hanlinLogo);
+    // 製作標記
+    const authorLogo = makeTextPlane('珩宇老師製作', { color: '#fff', font: 'bold 72px "Noto Sans TC", sans-serif', bg: 'rgba(255,255,255,0.15)', w: 720, h: 120 });
+    authorLogo.position.set(0, 4.35, 0.71);
+    authorLogo.scale.set(2.0, 0.36, 1);
+    this.scene.add(authorLogo);
 
     // === 鋸條 ===
     const blade = new THREE.Mesh(

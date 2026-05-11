@@ -338,7 +338,7 @@ function drawPlanCanvas(pts, template) {
   ctx.font = '11px "Inter", sans-serif';
   ctx.fillStyle = 'rgba(0,0,0,.3)';
   ctx.textAlign = 'right';
-  ctx.fillText('翰林・數位線鋸機教學平台', canvas.width - 16, canvas.height - 12);
+  ctx.fillText('珩宇老師製作・數位線鋸機教學平台', canvas.width - 16, canvas.height - 12);
 }
 
 function pathLength(pts) {
