@@ -77,6 +77,20 @@
 - **下載日期**：2026-05-11
 - **位置**：/solder/assets/wiki-photos/
 
+### 7d. 2015_FRC_Electronics.JPG ｜ FRC 機器人電子板實拍
+- **作者**：Tpdwkouaa（Team 2177 The Robettes）
+- **授權**：CC BY-SA 4.0
+- **來源**：https://commons.wikimedia.org/wiki/File:2015_FRC_Electronics.JPG
+- **位置**：/frc/assets/wiki-photos/
+- **下載日期**：2026-05-11
+
+### 7e. 2020_Infinite_Recharge_field.jpg ｜ FRC 2020 比賽場地俯視
+- **作者**：Chris857
+- **授權**：CC BY-SA 4.0
+- **來源**：https://commons.wikimedia.org/wiki/File:2020_Infinite_Recharge_field.jpg
+- **位置**：/frc/assets/wiki-photos/
+- **下載日期**：2026-05-11
+
 ### 8. Dekupiersaege_scroll_saw.jpg ｜ 古董手動線鋸機（約 1900 年）
 - **作者**：Eva Kröcher (Wikipedia 帳號 EvaK)
 - **授權**：CC BY-SA 2.5 / GFDL 多重授權（[條款連結](https://creativecommons.org/licenses/by-sa/2.5/)）
