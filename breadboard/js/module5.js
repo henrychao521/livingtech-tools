@@ -307,3 +307,188 @@ const PROGRESS_KEY_BB = 'breadboard_progress_v1';
 let p; try { p = JSON.parse(localStorage.getItem(PROGRESS_KEY_BB)) || {}; } catch { p = {}; }
 p.module5 = true;
 localStorage.setItem(PROGRESS_KEY_BB, JSON.stringify(p));
+
+// ============================================================
+// 互動：電阻色環計算器
+// ============================================================
+(function ResistorCalculator() {
+  const root = document.getElementById('resistor-calc');
+  if (!root) return;
+
+  // 色環顏色對照（順序代表數字 0-9）
+  const COLORS = [
+    { name: '黑', hex: '#1a1a1a', digit: 0, multiplier: 1, tolerance: null },
+    { name: '棕', hex: '#92400e', digit: 1, multiplier: 10, tolerance: 1 },
+    { name: '紅', hex: '#dc2626', digit: 2, multiplier: 100, tolerance: 2 },
+    { name: '橙', hex: '#f97316', digit: 3, multiplier: 1000, tolerance: null },
+    { name: '黃', hex: '#fbbf24', digit: 4, multiplier: 10000, tolerance: null },
+    { name: '綠', hex: '#16a34a', digit: 5, multiplier: 100000, tolerance: 0.5 },
+    { name: '藍', hex: '#2563eb', digit: 6, multiplier: 1000000, tolerance: 0.25 },
+    { name: '紫', hex: '#7c3aed', digit: 7, multiplier: 10000000, tolerance: 0.1 },
+    { name: '灰', hex: '#6b7280', digit: 8, multiplier: 100000000, tolerance: 0.05 },
+    { name: '白', hex: '#e5e7eb', digit: 9, multiplier: 1000000000, tolerance: null },
+    { name: '金', hex: '#d4af37', digit: null, multiplier: 0.1, tolerance: 5 },
+    { name: '銀', hex: '#c0c0c0', digit: null, multiplier: 0.01, tolerance: 10 },
+  ];
+
+  // 挑戰題目（5 個常見阻值）
+  const CHALLENGES = [
+    { target: 220, name: '220Ω（常見 LED 限流）' },
+    { target: 1000, name: '1kΩ（pull-up）' },
+    { target: 10000, name: '10kΩ（pull-up 標配）' },
+    { target: 4700, name: '4.7kΩ' },
+    { target: 100, name: '100Ω' },
+  ];
+
+  // 使用者目前選的色環（4 環電阻）
+  const bands = [
+    COLORS[1], // 第 1 環：數字 1
+    COLORS[1], // 第 2 環：數字 2
+    COLORS[2], // 第 3 環：multiplier (×100)
+    COLORS[10], // 第 4 環：容差 (金 ±5%)
+  ];
+  let currentChallenge = 0;
+  let successCount = 0;
+
+  function calcValue() {
+    const digit1 = bands[0].digit;
+    const digit2 = bands[1].digit;
+    if (digit1 === null || digit2 === null) return null;
+    const mult = bands[2].multiplier;
+    return (digit1 * 10 + digit2) * mult;
+  }
+
+  function formatOhms(v) {
+    if (v === null) return '— Ω';
+    if (v >= 1000000) return (v / 1000000).toFixed(v % 1000000 === 0 ? 0 : 2) + ' MΩ';
+    if (v >= 1000) return (v / 1000).toFixed(v % 1000 === 0 ? 0 : 2) + ' kΩ';
+    return v.toFixed(v < 1 ? 2 : 0) + ' Ω';
+  }
+
+  function render() {
+    const value = calcValue();
+    const tolerance = bands[3].tolerance;
+    const target = CHALLENGES[currentChallenge].target;
+    const isMatch = value === target;
+
+    root.innerHTML = `
+      <div style="background:#fef9c3;border:1px solid #d4c190;border-radius:14px;padding:24px">
+        <!-- 電阻視覺 -->
+        <div style="display:flex;justify-content:center;margin-bottom:20px">
+          <svg viewBox="0 0 320 80" style="width:90%;max-width:380px">
+            <!-- 接腳 -->
+            <line x1="20" y1="40" x2="60" y2="40" stroke="#9ca3af" stroke-width="3"/>
+            <line x1="260" y1="40" x2="300" y2="40" stroke="#9ca3af" stroke-width="3"/>
+            <!-- 電阻本體（陶瓷米色）-->
+            <ellipse cx="80" cy="40" rx="25" ry="14" fill="#e7c89a" stroke="#7c4a14"/>
+            <ellipse cx="240" cy="40" rx="25" ry="14" fill="#e7c89a" stroke="#7c4a14"/>
+            <rect x="80" y="26" width="160" height="28" fill="#e7c89a" stroke="#7c4a14" stroke-width="1"/>
+            <!-- 4 色環 -->
+            <rect x="100" y="26" width="14" height="28" fill="${bands[0].hex}"/>
+            <rect x="130" y="26" width="14" height="28" fill="${bands[1].hex}"/>
+            <rect x="160" y="26" width="14" height="28" fill="${bands[2].hex}"/>
+            <rect x="210" y="26" width="14" height="28" fill="${bands[3].hex}"/>
+          </svg>
+        </div>
+
+        <!-- 即時結果 -->
+        <div style="text-align:center;background:#fff;border-radius:10px;padding:14px;margin-bottom:18px;border:2px solid ${isMatch ? '#16a34a' : '#e5e7eb'}">
+          <div style="font-size:12px;color:#666;letter-spacing:.1em;font-family:Inter,monospace">CURRENT VALUE</div>
+          <div style="font-size:36px;font-weight:800;color:${isMatch ? '#16a34a' : '#1a1a1a'};font-family:Inter,monospace;margin:6px 0">${formatOhms(value)}</div>
+          <div style="font-size:12px;color:#666">±${tolerance}% 容差</div>
+        </div>
+
+        <!-- 挑戰目標 -->
+        <div style="background:${isMatch ? 'var(--success-light)' : 'var(--primary-light)'};border-radius:10px;padding:14px;margin-bottom:18px;border-left:4px solid ${isMatch ? '#16a34a' : 'var(--primary)'}">
+          <div style="font-size:13px;color:#666;margin-bottom:4px">🎯 挑戰目標 ${currentChallenge + 1} / ${CHALLENGES.length}（已通過 ${successCount}）</div>
+          <div style="font-size:18px;font-weight:700;color:${isMatch ? '#15803d' : 'var(--primary-dark)'}">${CHALLENGES[currentChallenge].name}</div>
+          ${isMatch ? '<div style="font-size:13px;margin-top:6px;color:#15803d">✓ 完美！點下方按鈕進入下一題。</div>' : ''}
+        </div>
+
+        <!-- 4 色環選擇器 -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px">
+          ${[0, 1, 2, 3].map(idx => `
+            <div>
+              <div style="font-size:12px;color:#666;margin-bottom:6px;text-align:center;font-weight:600">
+                ${idx === 0 ? '第 1 環（十位）' : idx === 1 ? '第 2 環（個位）' : idx === 2 ? '第 3 環（倍率）' : '第 4 環（容差）'}
+              </div>
+              <select class="band-select" data-band="${idx}" style="width:100%;padding:8px 6px;border-radius:8px;border:1.5px solid var(--border);background:${bands[idx].hex};color:${['#1a1a1a','#fbbf24','#e5e7eb','#fef9c3','#6b7280'].includes(bands[idx].hex)?'#1a1a1a':'#fff'};font-weight:700;font-family:Noto Sans TC,sans-serif;cursor:pointer">
+                ${COLORS.map((c, i) => {
+                  // 第 3 環允許金/銀（divider）；第 4 環只能金/銀
+                  // 第 1、2 環不能用金/銀
+                  if (idx < 2 && c.digit === null) return '';
+                  if (idx === 3 && c.tolerance === null) return '';
+                  return `<option value="${i}" ${bands[idx] === c ? 'selected' : ''} style="background:#fff;color:#1a1a1a">${c.name} (${idx < 2 ? c.digit : idx === 2 ? '×' + c.multiplier : '±' + c.tolerance + '%'})</option>`;
+                }).join('')}
+              </select>
+            </div>
+          `).join('')}
+        </div>
+
+        <!-- 動作按鈕 -->
+        <div style="display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap">
+          <button class="rc-prev btn btn-ghost" style="padding:8px 16px;font-size:13px">← 上一題</button>
+          <button class="rc-hint btn btn-ghost" style="padding:8px 16px;font-size:13px">💡 提示</button>
+          <button class="rc-next btn ${isMatch ? 'btn-primary' : 'btn-ghost'}" style="padding:8px 16px;font-size:13px" ${!isMatch && currentChallenge < CHALLENGES.length - 1 ? '' : !isMatch ? 'disabled' : ''}>
+            ${isMatch ? (currentChallenge < CHALLENGES.length - 1 ? '下一題 →' : '🏆 全部完成') : '下一題（先答對）'}
+          </button>
+        </div>
+
+        <div class="rc-hint-area" style="margin-top:12px"></div>
+      </div>
+    `;
+
+    // 綁定事件
+    root.querySelectorAll('.band-select').forEach(sel => {
+      sel.addEventListener('change', e => {
+        const idx = parseInt(e.target.dataset.band);
+        bands[idx] = COLORS[parseInt(e.target.value)];
+        if (typeof SoundFX !== 'undefined') SoundFX.click();
+        const wasMatch = isMatch;
+        render();
+        const nowMatch = calcValue() === CHALLENGES[currentChallenge].target;
+        if (!wasMatch && nowMatch) {
+          successCount = Math.max(successCount, currentChallenge + 1);
+          if (typeof SoundFX !== 'undefined') SoundFX.win();
+        }
+      });
+    });
+
+    root.querySelector('.rc-prev')?.addEventListener('click', () => {
+      if (currentChallenge > 0) { currentChallenge--; render(); }
+    });
+
+    root.querySelector('.rc-next')?.addEventListener('click', () => {
+      if (currentChallenge < CHALLENGES.length - 1 && isMatch) {
+        currentChallenge++;
+        render();
+      } else if (isMatch && currentChallenge === CHALLENGES.length - 1) {
+        if (typeof showToast === 'function') showToast('🏆 五題挑戰全通！你已掌握色環計算', 'good');
+        try {
+          const k = 'breadboard_progress_v1';
+          const p = JSON.parse(localStorage.getItem(k)) || {};
+          p.module5_resistor = true;
+          localStorage.setItem(k, JSON.stringify(p));
+        } catch (e) {}
+      }
+    });
+
+    root.querySelector('.rc-hint')?.addEventListener('click', () => {
+      const t = CHALLENGES[currentChallenge].target;
+      // 計算正確的色環組合
+      let temp = t;
+      let mult = 1;
+      while (temp >= 100) { temp = temp / 10; mult = mult * 10; }
+      const d1 = Math.floor(temp / 10);
+      const d2 = Math.floor(temp % 10);
+      const multBand = COLORS.findIndex(c => c.multiplier === mult);
+      root.querySelector('.rc-hint-area').innerHTML = `
+        <div style="background:var(--accent-light);border-left:4px solid var(--accent);padding:10px 14px;border-radius:0 8px 8px 0;font-size:13px">
+          💡 <strong>提示：</strong>${t}Ω = ${d1}${d2} × ${mult} → 色環應該是 <strong>${COLORS[d1].name} ${COLORS[d2].name} ${COLORS[multBand]?.name || '?'}</strong>
+        </div>
+      `;
+    });
+  }
+
+  render();
+})();

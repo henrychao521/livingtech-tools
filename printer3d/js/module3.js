@@ -320,3 +320,21 @@ function markDone(i) {
 }
 selectStep(0);
 window.selectStep = selectStep; window.markDone = markDone;
+
+// === 步驟排序拼圖 ===
+if (typeof Interactions !== 'undefined') {
+  Interactions.SequencePuzzle({
+    container: '#seq-puzzle',
+    items: STEPS.map(s => s.title),
+    title: '把打亂的步驟排回正確順序',
+    onComplete: () => {
+      try {
+        const k = 'printer3d_progress_v1';
+        const p = JSON.parse(localStorage.getItem(k)) || {};
+        p.module3_puzzle = true;
+        localStorage.setItem(k, JSON.stringify(p));
+      } catch (e) {}
+      if (typeof showToast === 'function') showToast('🏆 排序測驗通過！', 'good');
+    }
+  });
+}

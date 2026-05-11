@@ -290,3 +290,127 @@ function shuffle(a) {
   }
   return a;
 }
+
+// ============================================================
+// 互動：PCB 焊點找碴
+// 給一張 PCB SVG，6 個焊點裡有 4 個有問題，找出來
+// ============================================================
+(function PCBHotspotHunt() {
+  const root = document.getElementById('pcb-hunt');
+  if (!root) return;
+
+  // PCB SVG（綠色基板 + 6 個焊點，部分有問題）
+  const pcbSVG = `
+    <svg viewBox="0 0 600 320" style="width:100%;max-width:680px;display:block;margin:0 auto">
+      <defs>
+        <linearGradient id="pcbG" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stop-color="#22c55e"/>
+          <stop offset="1" stop-color="#15803d"/>
+        </linearGradient>
+      </defs>
+      <!-- PCB 基板 -->
+      <rect x="20" y="20" width="560" height="280" rx="8" fill="url(#pcbG)" stroke="#14532d" stroke-width="2"/>
+      <!-- 銅線軌跡 -->
+      <g stroke="#fbbf24" stroke-width="2.5" fill="none" opacity=".75">
+        <path d="M 100 100 L 300 100 L 300 200 L 500 200"/>
+        <path d="M 100 200 L 200 200 L 200 100"/>
+        <path d="M 400 100 L 400 200"/>
+        <path d="M 500 100 L 500 200"/>
+      </g>
+      <!-- 元件本體（電阻、LED、IC）-->
+      <g>
+        <!-- IC -->
+        <rect x="260" y="135" width="80" height="30" rx="3" fill="#0a0a0a" stroke="#374151"/>
+        <text x="300" y="154" text-anchor="middle" fill="#fff" font-size="10" font-weight="700" font-family="Inter">IC1</text>
+        <!-- 電阻 -->
+        <rect x="150" y="145" width="36" height="10" rx="2" fill="#e7c89a" stroke="#7c4a14"/>
+        <rect x="158" y="145" width="2" height="10" fill="#dc2626"/>
+        <rect x="163" y="145" width="2" height="10" fill="#dc2626"/>
+        <rect x="170" y="145" width="2" height="10" fill="#92400e"/>
+        <!-- LED -->
+        <circle cx="450" cy="150" r="14" fill="#ef4444" opacity=".85" stroke="#7f1d1d"/>
+        <ellipse cx="446" cy="146" rx="4" ry="3" fill="rgba(255,255,255,.5)"/>
+      </g>
+      <!-- 焊點 1：完美焊點（光亮錐形）✓ -->
+      <g transform="translate(100,100)">
+        <circle r="14" fill="#fbbf24" stroke="#b45309" stroke-width="1.5"/>
+        <ellipse rx="11" ry="8" fill="#c0c0c0"/>
+        <ellipse cx="-3" cy="-3" rx="3" ry="2" fill="rgba(255,255,255,.7)"/>
+        <circle r="4" fill="#0a0a0a"/>
+      </g>
+      <!-- 焊點 2：冷焊（霧面顆粒）✗ -->
+      <g transform="translate(100,200)">
+        <circle r="14" fill="#fbbf24" stroke="#b45309" stroke-width="1.5"/>
+        <circle r="12" fill="#888"/>
+        <circle cx="-3" cy="-2" r="1.2" fill="#444"/>
+        <circle cx="3" cy="-3" r="1" fill="#444"/>
+        <circle cx="0" cy="3" r="1.3" fill="#444"/>
+        <circle cx="-4" cy="3" r="1" fill="#444"/>
+        <circle cx="5" cy="2" r="1.1" fill="#444"/>
+      </g>
+      <!-- 焊點 3：完美焊點 ✓ -->
+      <g transform="translate(200,100)">
+        <circle r="14" fill="#fbbf24" stroke="#b45309" stroke-width="1.5"/>
+        <ellipse rx="11" ry="8" fill="#c0c0c0"/>
+        <ellipse cx="-3" cy="-3" rx="3" ry="2" fill="rgba(255,255,255,.7)"/>
+        <circle r="4" fill="#0a0a0a"/>
+      </g>
+      <!-- 焊點 4：過量錫（大圓球）✗ -->
+      <g transform="translate(200,200)">
+        <circle r="14" fill="#fbbf24" stroke="#b45309" stroke-width="1.5"/>
+        <circle r="18" fill="#888" stroke="#404040"/>
+        <ellipse cx="-5" cy="-5" rx="4" ry="3" fill="rgba(255,255,255,.4)"/>
+      </g>
+      <!-- 焊點 5：連錫（橫向連到 IC 腳）✗ -->
+      <g>
+        <g transform="translate(400,100)">
+          <circle r="14" fill="#fbbf24" stroke="#b45309" stroke-width="1.5"/>
+          <ellipse rx="11" ry="8" fill="#888"/>
+        </g>
+        <g transform="translate(500,100)">
+          <circle r="14" fill="#fbbf24" stroke="#b45309" stroke-width="1.5"/>
+          <ellipse rx="11" ry="8" fill="#888"/>
+        </g>
+        <ellipse cx="450" cy="100" rx="55" ry="11" fill="#888" stroke="#404040"/>
+      </g>
+      <!-- 焊點 6：完美 ✓ -->
+      <g transform="translate(400,200)">
+        <circle r="14" fill="#fbbf24" stroke="#b45309" stroke-width="1.5"/>
+        <ellipse rx="11" ry="8" fill="#c0c0c0"/>
+        <ellipse cx="-3" cy="-3" rx="3" ry="2" fill="rgba(255,255,255,.7)"/>
+      </g>
+      <!-- 焊點 7：缺錫（看到銅環）✗ -->
+      <g transform="translate(500,200)">
+        <circle r="14" fill="#fbbf24" stroke="#b45309" stroke-width="1.5"/>
+        <ellipse rx="6" ry="4" fill="#888"/>
+      </g>
+      <!-- 邊框 -->
+      <rect x="20" y="20" width="560" height="280" rx="8" fill="none" stroke="#14532d" stroke-width="2"/>
+    </svg>
+  `;
+
+  // 熱點定義（位置以圖內百分比，r=熱點半徑百分比）
+  const hotspots = [
+    // 良好焊點不算熱點，所以這裡只列「壞」焊點
+    { x: 16.7, y: 62.5, r: 8, label: '冷焊（虛焊）', explanation: '表面顆粒霧狀，焊錫沒潤濕銅環。重新加熱 + 補錫，並確認接點完全熱起來再送錫。' },
+    { x: 33.3, y: 62.5, r: 8, label: '過量錫（球狀）', explanation: '錫量太多形成大球，看不到元件腳。用吸錫器吸除多餘錫，再補少量錫成錐形。' },
+    { x: 75, y: 31.25, r: 12, label: '連錫（短路橋）', explanation: '兩個焊點被錫黏在一起，造成短路。用吸錫器或乾淨烙鐵頭把多餘錫帶走。' },
+    { x: 83.3, y: 62.5, r: 8, label: '缺錫', explanation: '錫量不足，看到銅環露出。重新加熱補送少量錫直到飽滿成錐形。' },
+  ];
+
+  Interactions.HotspotHunt({
+    container: root,
+    imageHTML: pcbSVG,
+    hotspots,
+    instruction: '點出 PCB 上的 4 個焊接錯誤（共 7 個焊點，3 個正確）',
+    onAllFound: () => {
+      try {
+        const k = 'solder_progress_v1';
+        const p = JSON.parse(localStorage.getItem(k)) || {};
+        p.module5_pcb_hunt = true;
+        localStorage.setItem(k, JSON.stringify(p));
+      } catch (e) {}
+      if (typeof showToast === 'function') showToast('🏆 PCB 焊點找碴全通過！', 'good');
+    },
+  });
+})();

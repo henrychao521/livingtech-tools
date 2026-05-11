@@ -323,3 +323,210 @@ const PK = 'printer3d_progress_v1';
 let p; try { p = JSON.parse(localStorage.getItem(PK)) || {}; } catch { p = {}; }
 p.module5 = true;
 localStorage.setItem(PK, JSON.stringify(p));
+
+// ============================================================
+// 互動：校正立方體診斷（5 個案例）
+// ============================================================
+(function CalibCubeDiagnosis() {
+  const root = document.getElementById('calib-quiz');
+  if (!root) return;
+
+  // 各種立方體 SVG（含「症狀」視覺）
+  function cubeSVG(variant) {
+    const variants = {
+      perfect: `<svg viewBox="0 0 200 180" style="width:80%;max-width:240px">
+        <ellipse cx="100" cy="158" rx="60" ry="6" fill="rgba(0,0,0,.15)"/>
+        <rect x="50" y="60" width="100" height="100" fill="#8b5cf6" stroke="#5b21b6" stroke-width="1.5"/>
+        <!-- 上面 -->
+        <polygon points="50,60 150,60 130,40 70,40" fill="#a78bfa" stroke="#5b21b6"/>
+        <!-- 右面 -->
+        <polygon points="150,60 130,40 130,140 150,160" fill="#7c3aed" stroke="#5b21b6"/>
+        <!-- 層紋 -->
+        <line x1="50" y1="75" x2="150" y2="75" stroke="rgba(0,0,0,.15)" stroke-width=".4"/>
+        <line x1="50" y1="90" x2="150" y2="90" stroke="rgba(0,0,0,.15)" stroke-width=".4"/>
+        <line x1="50" y1="105" x2="150" y2="105" stroke="rgba(0,0,0,.15)" stroke-width=".4"/>
+        <line x1="50" y1="120" x2="150" y2="120" stroke="rgba(0,0,0,.15)" stroke-width=".4"/>
+        <line x1="50" y1="135" x2="150" y2="135" stroke="rgba(0,0,0,.15)" stroke-width=".4"/>
+        <line x1="50" y1="150" x2="150" y2="150" stroke="rgba(0,0,0,.15)" stroke-width=".4"/>
+        <text x="100" y="178" text-anchor="middle" font-size="10" fill="#16a34a" font-weight="700">✓ 完美 20mm 立方</text>
+      </svg>`,
+
+      'elephant-foot': `<svg viewBox="0 0 200 180" style="width:80%;max-width:240px">
+        <ellipse cx="100" cy="158" rx="60" ry="6" fill="rgba(0,0,0,.15)"/>
+        <!-- 底部變寬（象腳）-->
+        <path d="M 30 160 L 50 60 L 150 60 L 170 160 Z" fill="#8b5cf6" stroke="#5b21b6" stroke-width="1.5"/>
+        <polygon points="50,60 150,60 130,40 70,40" fill="#a78bfa" stroke="#5b21b6"/>
+        <!-- 標示變寬 -->
+        <line x1="30" y1="160" x2="30" y2="170" stroke="#dc2626" stroke-width=".8"/>
+        <line x1="170" y1="160" x2="170" y2="170" stroke="#dc2626" stroke-width=".8"/>
+        <line x1="30" y1="170" x2="170" y2="170" stroke="#dc2626" stroke-width=".8"/>
+        <text x="100" y="178" text-anchor="middle" font-size="10" fill="#dc2626" font-weight="700">底部變寬</text>
+      </svg>`,
+
+      'corner-warp': `<svg viewBox="0 0 200 180" style="width:80%;max-width:240px">
+        <rect x="20" y="155" width="160" height="6" fill="#7f1d1d"/>
+        <!-- 翹角 -->
+        <path d="M 40 150 Q 50 60 80 60 L 150 60 L 150 155 Z" fill="#8b5cf6" stroke="#5b21b6" stroke-width="1.5"/>
+        <polygon points="80,60 150,60 130,40 80,40" fill="#a78bfa" stroke="#5b21b6"/>
+        <!-- 翹起的縫隙 -->
+        <path d="M 20 155 L 40 150 L 40 155 Z" fill="rgba(254,243,199,.7)" stroke="#dc2626" stroke-width="1" stroke-dasharray="2 1"/>
+        <text x="100" y="178" text-anchor="middle" font-size="10" fill="#dc2626" font-weight="700">邊角翹起</text>
+      </svg>`,
+
+      'stringing': `<svg viewBox="0 0 200 180" style="width:80%;max-width:240px">
+        <ellipse cx="100" cy="158" rx="60" ry="6" fill="rgba(0,0,0,.15)"/>
+        <rect x="50" y="60" width="100" height="100" fill="#8b5cf6" stroke="#5b21b6" stroke-width="1.5"/>
+        <polygon points="50,60 150,60 130,40 70,40" fill="#a78bfa" stroke="#5b21b6"/>
+        <!-- 牽絲（細毛刺）-->
+        <g stroke="#a78bfa" stroke-width=".4" fill="none">
+          <line x1="50" y1="70" x2="42" y2="72"/>
+          <line x1="50" y1="85" x2="38" y2="87"/>
+          <line x1="50" y1="100" x2="40" y2="105"/>
+          <line x1="50" y1="120" x2="44" y2="125"/>
+          <line x1="150" y1="80" x2="158" y2="82"/>
+          <line x1="150" y1="100" x2="160" y2="103"/>
+          <line x1="150" y1="125" x2="158" y2="128"/>
+        </g>
+        <text x="100" y="178" text-anchor="middle" font-size="10" fill="#dc2626" font-weight="700">表面有細毛刺</text>
+      </svg>`,
+
+      'gappy-top': `<svg viewBox="0 0 200 180" style="width:80%;max-width:240px">
+        <ellipse cx="100" cy="158" rx="60" ry="6" fill="rgba(0,0,0,.15)"/>
+        <rect x="50" y="60" width="100" height="100" fill="#8b5cf6" stroke="#5b21b6" stroke-width="1.5"/>
+        <!-- 上面（有縫隙）-->
+        <polygon points="50,60 150,60 130,40 70,40" fill="#a78bfa" stroke="#5b21b6"/>
+        <g fill="#7c3aed" opacity=".6">
+          <rect x="78" y="42" width="20" height="14"/>
+          <rect x="103" y="44" width="18" height="14"/>
+        </g>
+        <!-- 縫隙 -->
+        <g fill="#1e1b4b">
+          <rect x="98" y="42" width="5" height="14"/>
+          <rect x="121" y="44" width="6" height="14"/>
+        </g>
+        <text x="100" y="178" text-anchor="middle" font-size="10" fill="#dc2626" font-weight="700">頂層有縫隙</text>
+      </svg>`,
+
+      'small-cube': `<svg viewBox="0 0 200 180" style="width:80%;max-width:240px">
+        <ellipse cx="100" cy="158" rx="50" ry="5" fill="rgba(0,0,0,.15)"/>
+        <!-- 比例變小（19.6mm）-->
+        <rect x="62" y="72" width="76" height="88" fill="#8b5cf6" stroke="#5b21b6" stroke-width="1.5"/>
+        <polygon points="62,72 138,72 122,52 78,52" fill="#a78bfa" stroke="#5b21b6"/>
+        <!-- 標尺 -->
+        <line x1="62" y1="170" x2="138" y2="170" stroke="#dc2626" stroke-width="1"/>
+        <text x="100" y="178" text-anchor="middle" font-size="10" fill="#dc2626" font-weight="700">尺寸 19.6mm（目標 20mm）</text>
+      </svg>`,
+    };
+    return variants[variant] || variants.perfect;
+  }
+
+  const CASES = [
+    {
+      cube: 'elephant-foot',
+      question: '校正立方體底部寬出來像「象腳」，要調什麼？',
+      options: [
+        { text: '熱床溫度太高 → 降低 5–10°C', correct: true, explain: '正解！底層遇熱床高溫 PLA 軟化擠扁。把熱床降到 55–60°C（PLA）即可。也可以提高 Z 軸首層高度。' },
+        { text: '提高列印速度', correct: false },
+        { text: '加大層厚', correct: false },
+        { text: '換新噴嘴', correct: false },
+      ],
+    },
+    {
+      cube: 'corner-warp',
+      question: '立方體邊角從熱床翹起，主要原因？',
+      options: [
+        { text: '熱床溫度不足 + 沒附著輔助', correct: true, explain: '正解！PLA 熱床 60°C、ABS 100°C；可加 brim（裙邊）增加底面、塗一層膠水、或關閉外殼風扇。' },
+        { text: '層厚太薄', correct: false },
+        { text: '速度太慢', correct: false },
+        { text: '絲線受潮', correct: false },
+      ],
+    },
+    {
+      cube: 'stringing',
+      question: '立方體側面有許多細絲毛刺，要調什麼？',
+      options: [
+        { text: '增加回抽距離（retraction）+ 降低噴頭溫度 5°C', correct: true, explain: '正解！回抽不足 + 溫度太高造成「牽絲」。Bowden 系統建議 5-8mm retraction，Direct 系統 1-2mm。也檢查絲線是否受潮。' },
+        { text: '提高熱床溫度', correct: false },
+        { text: '換大噴嘴', correct: false },
+        { text: '增加層厚', correct: false },
+      ],
+    },
+    {
+      cube: 'gappy-top',
+      question: '立方體頂層有縫隙、像啃過的餅乾，要怎麼解？',
+      options: [
+        { text: '增加頂層數（top layers）至 4–5 層 + 提高 infill 密度到 20%+', correct: true, explain: '正解！頂層太少（< 3）或填充太稀（< 15%）支撐不住表面。也可開啟 ironing（熨平）功能讓表面更平滑。' },
+        { text: '降低列印速度', correct: false },
+        { text: '降低熱床溫度', correct: false },
+        { text: '換絲線顏色', correct: false },
+      ],
+    },
+    {
+      cube: 'small-cube',
+      question: '列印出來是 19.6mm 而非 20mm（小 2%），要怎麼校正？',
+      options: [
+        { text: '校正 X/Y 軸 steps/mm（韌體裡 M92 指令）+ 檢查皮帶張力', correct: true, explain: '正解！這是「尺寸縮放」問題，源於 X/Y 軸步進馬達校正不準或皮帶鬆。實測誤差後調整 steps/mm（如原 80 → 81.6）。' },
+        { text: '提高列印溫度', correct: false },
+        { text: '增加 wall 層數', correct: false },
+        { text: '換新絲線', correct: false },
+      ],
+    },
+  ];
+
+  let currentIdx = 0;
+  let answered = 0;
+  let correct = 0;
+
+  function renderCase() {
+    const c = CASES[currentIdx];
+    root.innerHTML = `
+      <div style="background:linear-gradient(135deg,#f0f9ff,#fff);border:1px solid var(--border);border-radius:14px;padding:18px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <span style="font-size:13px;color:var(--text-muted)">案例 ${currentIdx + 1} / ${CASES.length}　已答對 <strong style="color:var(--success)">${correct}</strong></span>
+          <div style="display:flex;gap:4px">
+            ${CASES.map((_, i) => `<div style="width:8px;height:8px;border-radius:50%;background:${i < answered ? 'var(--primary)' : 'var(--border)'}"></div>`).join('')}
+          </div>
+        </div>
+        <div id="cq-content"></div>
+        <div id="cq-nav" style="margin-top:14px;text-align:right"></div>
+      </div>
+    `;
+
+    Interactions.DiagnosisQuiz({
+      container: '#cq-content',
+      question: c.question,
+      image: cubeSVG(c.cube),
+      options: c.options,
+      onAnswer: (isCorrect) => {
+        answered = Math.max(answered, currentIdx + 1);
+        if (isCorrect) correct = Math.max(correct, currentIdx + 1);
+        document.getElementById('cq-nav').innerHTML = `
+          <button class="btn ${currentIdx < CASES.length - 1 ? 'btn-primary' : 'btn-success'}" id="cq-next" style="padding:10px 20px;font-size:14px">
+            ${currentIdx < CASES.length - 1 ? '下一案例 →' : '🏆 完成診斷挑戰'}
+          </button>
+        `;
+        document.getElementById('cq-next').addEventListener('click', () => {
+          if (currentIdx < CASES.length - 1) {
+            currentIdx++;
+            renderCase();
+          } else {
+            root.innerHTML += `
+              <div style="background:var(--success-light);border-left:4px solid var(--success);padding:14px 18px;border-radius:0 10px 10px 0;margin-top:14px;font-size:14px">
+                🏆 <strong>挑戰結束！</strong>${correct} / ${CASES.length} 答對。${correct === CASES.length ? '完美！你具備校正立方體判讀能力。' : correct >= 3 ? '不錯，多看幾次就掌握了。' : '建議重新看 M5 故障圖鑑再挑戰一次。'}
+              </div>
+            `;
+            try {
+              const k = 'printer3d_progress_v1';
+              const p = JSON.parse(localStorage.getItem(k)) || {};
+              p.module5_calib_quiz = true;
+              p.module5_calib_score = correct;
+              localStorage.setItem(k, JSON.stringify(p));
+            } catch (e) {}
+          }
+        });
+      },
+    });
+  }
+
+  renderCase();
+})();

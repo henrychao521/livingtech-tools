@@ -6,6 +6,7 @@ const TOOLS = [
   { id: 'solder', name: '電烙鐵', emoji: '🔥', key: 'solder_progress_v1', color: '#DC2626', url: '../solder/' },
   { id: 'breadboard', name: '麵包板', emoji: '🔌', key: 'breadboard_progress_v1', color: '#16A34A', url: '../breadboard/' },
   { id: 'printer3d', name: '3D 印表機', emoji: '🖨️', key: 'printer3d_progress_v1', color: '#0891B2', url: '../printer3d/' },
+  { id: 'frc', name: 'FRC 機器人', emoji: '🤖', key: 'frc_progress_v1', color: '#0066B3', url: '../frc/' },
 ];
 
 // === 分頁切換 ===
