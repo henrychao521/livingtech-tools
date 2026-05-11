@@ -75,7 +75,6 @@
   }
   .hub-tool.tool-saw::before { background: linear-gradient(90deg, #FF7A00, #FFB066); }
   .hub-tool.tool-solder::before { background: linear-gradient(90deg, #DC2626, #F97316); }
-  .hub-tool.tool-soon::before { background: linear-gradient(90deg, #888, #aaa); }
   .hub-tool:hover {
     transform: translateY(-6px);
     box-shadow: var(--shadow-lg);
@@ -148,27 +147,6 @@
   }
   .hub-tool:hover .tool-cta {
     transform: translateX(4px);
-  }
-  .hub-tool .tool-soon-tag {
-    display: inline-block;
-    background: #efefef;
-    color: #888;
-    padding: 8px 16px;
-    border-radius: 10px;
-    font-weight: 600;
-    font-size: 14px;
-  }
-  .hub-tool.tool-soon {
-    opacity: .55;
-    cursor: default;
-  }
-  .hub-tool.tool-soon:hover {
-    transform: none;
-    box-shadow: var(--shadow-xs);
-    border-color: var(--border);
-  }
-  .hub-tool.tool-soon:hover .tool-emoji {
-    transform: none;
   }
   .badge-new {
     position: absolute;
@@ -540,12 +518,21 @@
   <section class="teacher" style="background:#fafafa">
     <div class="teacher-card">
       <h3>給教師的話</h3>
-      <p>本系列工具對應 108 課綱<strong> 生 J-A2 工具與機具的安全使用</strong>與<strong> 生 J-B3 設計與製作能力</strong>，可作為實體實作課的數位前置教材。建議排課方式：</p>
-      <ol>
-        <li>第一節：模組 1–3（認識、安全、步驟），課末以模組 2 滿分為通行證。</li>
-        <li>第二節：模組 4 模擬練習，配合學習單記錄星等與失誤紀錄。</li>
-        <li>第三節：實體機具操作，回家作業以模組 5 完成個人作品設計或品質鑑定。</li>
-      </ol>
+      <p>本系列工具對應 108 課綱<strong> 生 J-A2 工具與機具的安全使用</strong>與<strong> 生 J-B3 設計與製作能力</strong>，可作為實體實作課的數位前置教材。建議排課方式（詳見<a href="teacher/" style="color:var(--primary);font-weight:600">教師後台 → 教學資源</a>）：</p>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px;margin-top:12px">
+        <p style="margin:0 0 8px"><strong>單元 1（4 節）：認識與安全</strong></p>
+        <ul style="padding-left:24px;color:var(--text-soft);margin:0 0 14px">
+          <li>第 1 節：模組 1 + 模組 2（必滿分通關）</li>
+          <li>第 2 節：模組 3 操作步驟 + 課堂演示</li>
+          <li>第 3 節：模組 4 模擬練習，課末測驗</li>
+          <li>第 4 節：實體機具操作（從風險最低的工具開始）</li>
+        </ul>
+        <p style="margin:0 0 8px"><strong>單元 2（2–3 節）：應用與創作</strong></p>
+        <ul style="padding-left:24px;color:var(--text-soft);margin:0">
+          <li>模組 5（創作 / 故障排除）+ 個人或小組創作專題</li>
+          <li>成果展示與互評</li>
+        </ul>
+      </div>
       <p style="margin-top:16px;color:var(--text-muted);font-size:14px">本平台以 GitHub Pages 免費部署，學生只要瀏覽器網址即可使用，不需要安裝任何 App。</p>
     </div>
   </section>

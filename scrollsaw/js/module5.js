@@ -207,6 +207,14 @@ function analyzeTemplate(t) {
   document.querySelectorAll('.template-card').forEach(c => c.classList.toggle('active', c.dataset.id === t.id));
   document.getElementById('plan-output').classList.remove('hidden');
 
+  try {
+    const PK = 'scrollsaw_progress_v1';
+    const p = JSON.parse(localStorage.getItem(PK)) || {};
+    p.module5 = true;
+    p.module5_template = t.id;
+    localStorage.setItem(PK, JSON.stringify(p));
+  } catch (e) {}
+
   const pts = scaleToCanvas(t.path);
   drawPlanCanvas(pts, t);
 

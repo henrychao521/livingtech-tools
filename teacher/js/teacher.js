@@ -34,7 +34,14 @@ function calcToolProgress(toolKey) {
   const stars = p.module4_levels ? Object.values(p.module4_levels).reduce((a, b) => a + b, 0) : 0;
   const maxStars = p.module4_levels ? Object.keys(p.module4_levels).length * 3 : 15;
 
-  return { completed, total, percent: Math.round(completed / total * 100), stars, maxStars, raw: p };
+  // 補充模組（目前僅 breadboard 有「剝線基本功」3 關）
+  const extras = [];
+  if (p.wire_stripping) {
+    const lvls = ['L1', 'L2', 'L3'].filter(k => p.wire_stripping[k]).length;
+    extras.push({ label: '剝線基本功', done: lvls, total: 3 });
+  }
+
+  return { completed, total, percent: Math.round(completed / total * 100), stars, maxStars, extras, raw: p };
 }
 
 // === 渲染本機進度 ===
@@ -43,9 +50,12 @@ function renderLocalProgress() {
   let html = `<div class="student-table"><table><thead><tr><th>工具</th><th>已完成模組</th><th>進度</th><th>★ 總星數</th><th>動作</th></tr></thead><tbody>`;
   TOOLS.forEach(t => {
     const p = calcToolProgress(t.key);
+    const extras = (p.extras || []).map(e =>
+      `<div style="font-size:11px;color:var(--text-muted);margin-top:3px">補充・${e.label} ${e.done}/${e.total}</div>`
+    ).join('');
     html += `<tr>
       <td><span class="tool-cell" style="color:${t.color}">${t.emoji} ${t.name}</span></td>
-      <td>${p.completed} / ${p.total}</td>
+      <td>${p.completed} / ${p.total}${extras}</td>
       <td><span class="progress-cell"><span class="progress-cell-fill" style="width:${p.percent}%"></span></span>${p.percent}%</td>
       <td><span class="stars-cell">★</span> ${p.stars} / ${p.maxStars}</td>
       <td><a href="${t.url}" style="color:var(--primary);font-weight:600">前往 →</a></td>
@@ -257,6 +267,13 @@ window.exportClassCSV = function() {
 };
 
 // === 教學資源卡 ===
+const RESOURCE_DESC = {
+  scrollsaw:  '木工基礎工具：認識線鋸機、安全操作、切割路徑模擬、創作挑戰。',
+  solder:     '電子焊接：烙鐵結構、5 種焊接姿勢、潤濕原理、9 種焊點品質鑑定。',
+  breadboard: '電路入門：麵包板連通邏輯、5 關修錯模擬、故障圖鑑＋補充剝線基本功。',
+  printer3d:  '加減成型：FDM 工作流程、切片參數模擬、校正立方體診斷、故障排除。',
+  frc:        'FRC 機器人工程：254 隊伍案例、工程設計流程、策略模擬、工程筆記範本。',
+};
 const resourceGrid = document.getElementById('resource-grid');
 TOOLS.forEach(t => {
   const card = document.createElement('div');
@@ -264,7 +281,7 @@ TOOLS.forEach(t => {
   card.innerHTML = `
     <div class="res-icon">${t.emoji}</div>
     <h4>${t.name}</h4>
-    <p>5 模組教學資源、課程銜接、學生答題情境分析。</p>
+    <p>${RESOURCE_DESC[t.id] || '5 模組教學資源、課程銜接、學生答題情境分析。'}</p>
     <a href="${t.url}" style="color:${t.color};font-weight:600;font-size:13px">前往 ${t.name} 平台 →</a>
   `;
   resourceGrid.appendChild(card);
