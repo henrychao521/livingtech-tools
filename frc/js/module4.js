@@ -93,7 +93,7 @@ function update() {
   }
   // 額外提醒
   if (CONFIG.drive === 'swerve' && CONFIG.manip === 'combo') {
-    rec += '<br><br>⚡ <strong>注意</strong>：Swerve + 全能 manipulator 是頂尖配置但**成本極高**（單 swerve module 約 $1500 USD × 4 = $6000+）。確保預算與時間。';
+    rec += '<br><br>⚡ <strong>注意</strong>：Swerve + 全能 manipulator 是頂尖配置但成本可觀（主流 COTS swerve 如 MK4i / MAXSwerve / SDS 約 $500–$700 / module，加馬達與編碼器後一組 $800–$1200；整套 4 個約 $3000–$5000 USD）。確保預算與時間。';
   }
   if (CONFIG.auto === 'multi' && m.reliability < 4) {
     rec += '<br><br>⚠️ <strong>注意</strong>：複雜自動程式 + 低可靠度 manipulator = 自動期失敗率高。建議先穩定 mechanism 再做進階 auto。';

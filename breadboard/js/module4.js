@@ -63,7 +63,7 @@ const LEVELS = {
   },
   L4: {
     name: 'L4 並聯兩顆 LED',
-    goal: '加入第二顆並聯 LED（共用電阻）。請點擊空槽放入第二顆 LED。',
+    goal: '加入第二顆 LED + 第二顆 220Ω 電阻（每顆 LED 各串一個電阻）。請點擊空槽完成。⚠ 兩顆 LED 共用一顆電阻是錯誤教法（current hogging：因正向電壓差異，電流不會均分，會造成一顆過亮另一顆暗或燒毀）。',
     initial: {
       battery: { row: 0, col: 0 },
       resistor: { col: 8 },

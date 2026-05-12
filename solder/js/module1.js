@@ -15,7 +15,7 @@ const PARTS = {
   handle: {
     name: '隔熱握柄（Handle）',
     role: 'INSULATED GRIP',
-    desc: '由耐高溫塑膠或軟木製成的握把，避免操作者燙傷。手持時應握在握柄中後段，距離烙鐵頭至少 12 公分。',
+    desc: '由耐高溫塑膠或軟木製成的握把，避免操作者燙傷。手持時應像握筆一樣握在握柄前段（不接觸金屬段為原則）以提高精度。',
     fact: '握柄如果發燙、變形、裂痕，就是危險警訊，要立即停用並通報老師。'
   },
   display: {
@@ -34,7 +34,7 @@ const PARTS = {
     name: '烙鐵架（Stand）',
     role: 'IRON HOLDER',
     desc: '金屬底座 + 螺旋彈簧，讓加熱中的烙鐵有安全停放處。烙鐵離手必須立刻放架上，**絕對不可以**直接放桌面或紙上。',
-    fact: '90% 的燙傷與火災都因為「沒放架」造成。'
+    fact: '直接放桌面是焊接最常見的火災與燙傷成因之一（依 Illinois DRS、MIT EHS 等安全教材）。'
   },
   sponge: {
     name: '清潔海綿（Cleaning Sponge）',

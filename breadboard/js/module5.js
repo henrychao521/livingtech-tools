@@ -1,8 +1,8 @@
 // 麵包板平台 模組 5：故障排除圖鑑
 const ERRORS = [
   { id: 'no-resistor', name: 'LED 沒接電阻就上電', symptom: '通電瞬間 LED 變很亮然後永遠變暗（燒掉）', cause: '5V 直接驅動 LED 沒有電阻限流。LED 內部 PN 接面瞬間燒毀。', fix: '永遠在 LED 串聯一顆 220Ω 以上電阻。LED 已燒毀只能換新。' },
-  { id: 'led-reversed', name: 'LED 反接', symptom: 'LED 沒亮但其他正常', cause: 'LED 是二極體，只允許電流從正極（長腳）流向負極（短腳）。反接電流不通。', fix: '把 LED 拔起來翻轉 180° 再插回去。長腳那邊應該接電阻側。' },
-  { id: 'wrong-row', name: '元件腳插同一行', symptom: '元件腳互相短路 / 電阻或 LED 沒作用', cause: '麵包板同行（a-e 或 f-j 同 row）內部相連。例如 LED 兩腳都插 a5，等於把兩腳接在一起 = 短路。', fix: '每個元件腳要插在不同行（不同 row 數字）。例如 LED 兩腳插 a5 和 a6（同列不同行）。' },
+  { id: 'led-reversed', name: 'LED 反接', symptom: 'LED 沒亮但其他正常', cause: 'LED 是二極體，只允許電流從正極（長腳）流向負極（短腳）。反接電流不通；且 LED 反向擊穿電壓僅約 5V，電源 ≥ 5V 反接會直接損壞。', fix: '把 LED 拔起來翻轉 180° 再插回去。長腳那邊應該接電阻側。' },
+  { id: 'wrong-row', name: '元件兩腳插同一直行', symptom: '元件腳互相短路 / 電阻或 LED 沒作用', cause: '麵包板同一直行 5 個洞（同數字、不同字母，如 a5-e5）內部金屬條相連。LED 兩腳都插 a5 與 b5 等於把兩腳直接連在一起 = 短路。', fix: '元件兩腳要插在不同數字（不同直行）。例如 LED 長腳插 a5、短腳插 a6（跨越兩個獨立的直行）。' },
   { id: 'rail-broken', name: '電源軌斷點未跨接', symptom: '左側電路正常，右側 LED 不亮', cause: '大型麵包板（830 點）電源軌中央有實體斷點，左半 與 右半其實是分開的金屬條。', fix: '在斷點兩側用同色跳線跨接（紅軌跨紅、黑軌跨黑）。' },
   { id: 'short-circuit', name: '正負極直接短路', symptom: '電池發燙、變形、電源燈狂閃，元件可能燒毀', cause: '一條跳線把 + 軌直接連到 − 軌（中間沒有任何負載）。電流瞬間衝到最大。', fix: '立刻拔電池！檢查所有跳線：每條紅線都應接到負載（電阻、LED 等）才轉到地。' },
   { id: 'loose-wire', name: '跳線沒插緊', symptom: '時好時壞，動到麵包板就斷電', cause: '跳線插得太淺，沒接觸到內部金屬簧片。', fix: '每條線都壓到底，插到聽到「卡」聲。線芯彎曲的話用斜口鉗剪斷重剝。' },
@@ -106,14 +106,14 @@ function renderErrorSVG(id) {
       <!-- 電流箭頭：被阻擋 -->
       <line x1="95" y1="66" x2="100" y2="75" stroke="#dc2626" stroke-width="1.5"/>
       <text x="105" y="55" font-size="9" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">⛔ 不通</text>
-      <text x="100" y="32" text-anchor="middle" font-size="10" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">⚠ LED 反接 → 不亮但不會壞</text>
+      <text x="100" y="32" text-anchor="middle" font-size="10" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">⚠ LED 反接 → 不亮（5V↑ 會擊穿）</text>
     </svg>`,
 
     'wrong-row': `<svg viewBox="0 0 200 140" style="width:90%">
       ${bbBase(false, 'bbg-wr')}
       <!-- 凸顯同一行的金屬條（紅色虛線）-->
       <rect x="14" y="68" width="172" height="6" fill="rgba(220,38,38,.15)" stroke="#dc2626" stroke-width="1" stroke-dasharray="3 2"/>
-      <text x="100" y="65" text-anchor="middle" font-size="7" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">同一行 → 金屬條相連</text>
+      <text x="100" y="65" text-anchor="middle" font-size="7" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">同一直行 → 金屬條相連</text>
       <!-- LED 兩腳都插在同一行 -->
       <line x1="80" y1="71" x2="80" y2="32" stroke="#9ca3af" stroke-width="1.5"/>
       <line x1="88" y1="71" x2="88" y2="32" stroke="#9ca3af" stroke-width="1.5"/>
@@ -325,7 +325,7 @@ localStorage.setItem(PROGRESS_KEY_BB, JSON.stringify(p));
     { name: '綠', hex: '#16a34a', digit: 5, multiplier: 100000, tolerance: 0.5 },
     { name: '藍', hex: '#2563eb', digit: 6, multiplier: 1000000, tolerance: 0.25 },
     { name: '紫', hex: '#7c3aed', digit: 7, multiplier: 10000000, tolerance: 0.1 },
-    { name: '灰', hex: '#6b7280', digit: 8, multiplier: 100000000, tolerance: 0.05 },
+    { name: '灰', hex: '#6b7280', digit: 8, multiplier: 100000000, tolerance: null },
     { name: '白', hex: '#e5e7eb', digit: 9, multiplier: 1000000000, tolerance: null },
     { name: '金', hex: '#d4af37', digit: null, multiplier: 0.1, tolerance: 5 },
     { name: '銀', hex: '#c0c0c0', digit: null, multiplier: 0.01, tolerance: 10 },

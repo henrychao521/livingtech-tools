@@ -15,8 +15,8 @@ const PARTS = {
   'middle-rows': {
     name: '中間區（行 a–e、f–j）',
     role: 'TIE POINTS GRID',
-    desc: '麵包板中央的元件區，分成上半（a-e）與下半（f-j）。<strong>同一行（橫向 5 個洞）金屬條連通</strong>，例如 a1-b1-c1-d1-e1 是相連的，但 a1-a2 不相連。',
-    fact: '元件腳插同一行就是「連在一起」；插不同行就是「分開」。理解這點是麵包板的核心。'
+    desc: '麵包板中央的元件區，分成上半（a-e）與下半（f-j）。<strong>同一直行 5 個洞（如 a1-b1-c1-d1-e1）內部金屬條相連</strong>，但 a1-a2 不相連（不同直行）。',
+    fact: '元件腳插「同一數字、不同字母」就是相連；插不同數字就是分開。理解這點是麵包板的核心。'
   },
   gap: {
     name: '中央溝槽（Gap）',
@@ -28,7 +28,7 @@ const PARTS = {
     name: 'LED（發光二極體）',
     role: 'LIGHT EMITTING DIODE',
     desc: '會發光的二極體，常見紅、綠、藍、黃。<strong>有方向性</strong>：長腳是正極（陽極/anode），短腳是負極（陰極/cathode）。電流必須從長腳進、短腳出才會發光。',
-    fact: '插反不會壞但不會亮。電壓超過時會燒掉，所以一定要搭配電阻使用。'
+    fact: '插反 LED 不會亮；3V 電池下通常不會壞，但 5V 以上（USB、9V 電池）會超過反向擊穿電壓而損壞。一定要搭配限流電阻使用。'
   },
   resistor: {
     name: '電阻（Resistor）',

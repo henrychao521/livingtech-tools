@@ -2,7 +2,7 @@
 const PHASES = {
   auto: { name: '自動期 (Autonomous)', desc: '<strong>15 秒</strong>，機器人完全自主運作，無人類操控。預先寫好的程式判斷場地位置、執行任務（射球、移動、抓取等）。通常是得分關鍵時段，分數加權較高。', color: '#0066B3' },
   teleop: { name: '操控期 (Teleop)', desc: '<strong>2 分 15 秒</strong>，駕駛員（drive team）用搖桿操作機器人。隊伍 3 機器人聯盟對抗，計算對方策略、收集 game piece、得分。', color: '#FF6600' },
-  endgame: { name: '終局 (Endgame)', desc: '<strong>最後 30 秒</strong>，通常有特殊得分機制（如爬桿、垂吊、合作協力等）。一場比賽的勝負常在這 30 秒決定。', color: '#DC2626' },
+  endgame: { name: '終局 (Endgame)', desc: '<strong>Teleop 末段，通常 20–30 秒</strong>（依年度賽季而定，例：2024 Crescendo 20 秒、2025 Reefscape 20 秒），有特殊得分機制（爬桿、垂吊、合作協力等）。一場比賽的勝負常在這段時間決定。', color: '#DC2626' },
 };
 
 const TIMER_TOTAL = 150; // 2:30
@@ -27,24 +27,24 @@ const PARTS = {
     name: 'Drivetrain（驅動底盤）',
     role: 'MOBILITY',
     desc: '機器人最重要的子系統。常見類型：<br>• <strong>Tank Drive</strong>：兩邊各 2-3 個輪，類似坦克<br>• <strong>Mecanum</strong>：四個 45° 滾子輪，可橫向移動<br>• <strong>Swerve</strong>：每輪可獨立轉向，最靈活（頂尖隊伍標配）',
-    fact: 'Team 254 從 2020 年起改用 Swerve drive，搭配自製的 TrajectoryLib 路徑規劃，可在自動期 15 秒內完成 4 個動作。',
+    fact: 'Team 254 自 2019 Deep Space 起嘗試 swerve、2022 後全面採用，搭配自家 254Lib 與 WPILib TrajectoryGenerator，在自動期 15 秒內可完成 3–4 個動作。',
   },
   bumper: {
     name: 'Bumper（保險桿）',
     role: 'IMPACT PROTECTION',
-    desc: '紅色或藍色的緩衝桿，繞機器人四周一圈。FRC 規則要求所有機器人都必須裝 bumper，避免碰撞時損壞。',
-    fact: 'Bumper 厚度規範：寬 6.5", 厚 5"，內含 2 層 pool noodle（游泳浮條）。比賽前必須通過 inspector 檢查。',
+    desc: '紅色或藍色的緩衝桿，繞機器人四周一圈。FRC 規則要求所有機器人都必須裝 bumper；bumper 顏色必須對應 alliance，每場比賽前換色。',
+    fact: 'Bumper 規範（規則 R402）：padding 至少 2.25" 深、4.5" 高，使用 pool noodle 填充；bumper zone 須在離地 2.5"–5.75" 之間。比賽前必須通過 inspector 檢查。',
   },
   frame: {
     name: 'Frame（主框架）',
     role: 'CHASSIS',
-    desc: '機器人的「骨架」。常用 2x1 鋁管 (例：80/20 系列) 或自製 CNC 鋁板組合。整機尺寸限制：起始狀態最大 30"×30"，伸展不超過 48" 立方體。',
-    fact: '重量上限通常是 125 磅 (約 56.7 kg)。比賽前要在 scale 上量測，超重就會被取消資格。',
+    desc: '機器人的「骨架」。常用 2x1 鋁管 (例：80/20 系列) 或自製 CNC 鋁板組合。尺寸限制（含 bumper）：frame perimeter ≤ 120"、起始高度 ≤ 4 ft（2024 起）；伸展超出 frame 不可超過 12"。',
+    fact: '重量上限：2024 賽季為 ≤ 125.5 lbs（不含 bumper、電池）；2025 起改為 ≤ 115 lbs。比賽前要在 scale 上量測，超重就會被取消資格。',
   },
   battery: {
     name: '電池（Battery）',
     role: 'POWER SOURCE',
-    desc: '12V 鉛酸電池（鎳鎘或鋰電池被禁用）。每場比賽用一顆全新充飽的電池。約 60 Ah，可支撐一場 2:30 比賽 + buffer。',
+    desc: '12V SLA 鉛酸電池（鎳鎘或鋰電池被禁用，規則 R601）。每場比賽用一顆全新充飽的電池。容量 17–18.2 Ah、重量 11–14.5 lb，可支撐一場 2:30 比賽 + buffer。',
     fact: '隊伍會替每顆電池編號，紀錄充放電次數。超過 100 次循環就建議淘汰。',
   },
   roborio: {
@@ -57,7 +57,7 @@ const PARTS = {
     name: 'PDP / PDH（配電板）',
     role: 'POWER DISTRIBUTION',
     desc: '把電池的 12V 分配給所有馬達控制器、感測器、roboRIO。內建電流監測（每個 channel）+ 保險絲保護。',
-    fact: 'PDP 有 16 個 channel，每個對應一個電路通道。透過 CAN bus 回報電流給 roboRIO，可即時偵測異常。',
+    fact: '現行 REV PDH（2022 起主流）有 20 個高電流 + 4 個低電流 = 共 24 個 channel；舊型 CTRE PDP 為 16 channel。透過 CAN bus 回報電流給 roboRIO，可即時偵測異常。',
   },
   manipulator: {
     name: 'Manipulator / Intake / Shooter',

@@ -45,7 +45,7 @@ const STEPS = [
     title: 'Test：壓力測試 + 駕駛員訓練',
     desc: '不只是「能動」，要測「能持續動 100 場」。模擬比賽情境（電池低電量、被撞、game piece 卡住）。訓練駕駛員建立肌肉記憶。',
     deliverable: '測試紀錄表 + 駕駛員訓練影片 + autonomous routine 成功率',
-    tip: 'Bag Day（停止製造日）前至少有 50+ practice match。Team 254 通常打 200+ 場練習賽。',
+    tip: 'Stop Build Day / Bag Day 已於 2020 賽季起取消，現行 FRC 可在賽季中持續改進。建議賽季結束前累積至少 50+ practice match；頂尖隊伍如 254 通常累積 100+ 場練習。',
     warn: '駕駛員需要練習。從沒練過 driver 上場 = 機器人再好也沒用。',
   },
   {

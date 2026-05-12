@@ -1,6 +1,6 @@
 // 3D 印表機 模組 1：認識部件
 const PARTS = {
-  nozzle: { name: '噴嘴（Nozzle）', role: 'NOZZLE TIP', desc: '熔融塑料從噴嘴擠出的位置。標準孔徑 0.4mm，會影響細節度與列印速度。較細孔徑（0.2mm）細節好但慢；較大（0.6–0.8mm）速度快但粗糙。', fact: '噴嘴是耗材，會磨損。列印金屬絲（含 PLA）約 1000+ 小時就要換。' },
+  nozzle: { name: '噴嘴（Nozzle）', role: 'NOZZLE TIP', desc: '熔融塑料絲（filament）從噴嘴擠出的位置。標準孔徑 0.4mm，會影響細節度與列印速度。較細孔徑（0.2mm）細節好但慢；較大（0.6–0.8mm）速度快但粗糙。', fact: '噴嘴是耗材，會磨損。黃銅噴嘴印一般 PLA/PETG 建議 300–600 小時更換；硬化鋼噴嘴印含碳/含金屬磨料絲可延長至 1000+ 小時（All3DP）。' },
   hotend: { name: '加熱頭（Hot-End）', role: 'HEATER BLOCK', desc: '把絲線加熱到熔融狀態的金屬塊，內含加熱棒與熱敏電阻。常見溫度：PLA 190–220°C、PETG 230–250°C、ABS 240–260°C。', fact: '加熱頭旁邊一定要有散熱風扇，否則熱會傳到上方造成「堵料」。' },
   bed: { name: '加熱平台（Heated Bed）', role: 'HEATED BUILD PLATE', desc: '列印物件附著的平面。可加熱以幫助第一層附著（PLA 約 60°C，ABS 約 100°C）。表面材質：玻璃、PEI 板、磁性彈簧鋼板等。', fact: '熱床平整度是列印成功的最大關鍵。每次列印前都要校正。' },
   'x-axis': { name: 'X 軸（Carriage）', role: 'HORIZONTAL TRAVEL', desc: '帶動噴頭左右移動的橫桿。透過皮帶 + 步進馬達精確定位。', fact: 'X 軸皮帶鬆動會造成「Z 紋」（垂直波浪紋）瑕疵。' },
