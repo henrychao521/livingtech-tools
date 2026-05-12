@@ -101,3 +101,88 @@ if (typeof Interactions !== 'undefined') {
     },
   });
 }
+
+// ============================================================
+// Master Demo 動畫：完整 8 步驟流程（anime.js）
+// ============================================================
+function playMasterDemo() {
+  if (typeof anime === 'undefined') return;
+  const svg = document.getElementById('m3-master-svg');
+  if (!svg) return;
+  const el = (id) => document.getElementById(id);
+  const label = el('m3-stage-label');
+  const num = el('m3-stage-num');
+
+  const setOpacity = (id, op) => { const e = el(id); if (e) e.style.opacity = op; };
+  ['m3-plane-top','m3-plane-front','m3-plane-right','m3-plane-active',
+   'm3-sketch','m3-sketch-fixed','m3-dim',
+   'm3-box-top-face','m3-box-front','m3-box-side','m3-axes'].forEach(id => setOpacity(id, '0'));
+  label.textContent = '準備開始...';
+  num.textContent = '';
+  el('m3-box-front').setAttribute('points', '220,150 300,150 300,150 220,150');
+  el('m3-box-side').setAttribute('points', '300,150 340,130 340,130 300,150');
+
+  const tl = anime.timeline({ easing: 'easeInOutQuad' });
+
+  tl.add({ targets: label, opacity: [0,1], duration: 300,
+      begin: () => { label.textContent = '① 建立 Document'; num.textContent = 'Step 1 / 8'; } })
+    .add({ targets: '#m3-axes', opacity: [0, 0.8], duration: 400 })
+    .add({ duration: 400 })
+    .add({ targets: label, opacity: [1, 1], duration: 100,
+      begin: () => { label.textContent = '② Part Studio + 3 大平面'; num.textContent = 'Step 2-3 / 8'; } })
+    .add({ targets: '#m3-plane-top', opacity: [0, 0.7], duration: 400 })
+    .add({ targets: '#m3-plane-front', opacity: [0, 0.6], duration: 400 }, '-=200')
+    .add({ targets: '#m3-plane-right', opacity: [0, 0.6], duration: 400 }, '-=200')
+    .add({ duration: 500 })
+    .add({ targets: label, opacity: [1,1], duration: 100,
+      begin: () => { label.textContent = '③ 選擇 Top 平面'; num.textContent = 'Step 3 / 8'; } })
+    .add({ targets: '#m3-plane-active', opacity: [{value: 0, duration: 0}, {value: 1, duration: 250}, {value: 0.5, duration: 250}, {value: 1, duration: 250}] })
+    .add({ duration: 200 })
+    .add({ targets: label, opacity: [1,1], duration: 100,
+      begin: () => { label.textContent = '④⑤ 開草圖 → 畫矩形'; num.textContent = 'Step 4-5 / 8'; } })
+    .add({ targets: '#m3-plane-active', opacity: 0, duration: 300 })
+    .add({ targets: '#m3-sketch', opacity: [0, 1], duration: 500 })
+    .add({ duration: 400 })
+    .add({ targets: label, opacity: [1,1], duration: 100,
+      begin: () => { label.textContent = '⑥ 約束 + 標尺寸（藍→黑）'; num.textContent = 'Step 6 / 8'; } })
+    .add({ targets: '#m3-sketch', opacity: 0, duration: 400 })
+    .add({ targets: '#m3-sketch-fixed', opacity: [0, 1], duration: 400 }, '-=300')
+    .add({ targets: '#m3-dim', opacity: [0, 1], duration: 400 })
+    .add({ duration: 500 })
+    .add({ targets: label, opacity: [1,1], duration: 100,
+      begin: () => { label.textContent = '⑦ 退出草圖'; num.textContent = 'Step 7 / 8'; } })
+    .add({ targets: '#m3-dim', opacity: 0, duration: 300 })
+    .add({ duration: 400 })
+    .add({ targets: label, opacity: [1,1], duration: 100,
+      begin: () => {
+        label.textContent = '⑧ Extrude 擠出！'; num.textContent = 'Step 8 / 8';
+        anime({ targets: '#m3-box-front',
+          points: '220,150 300,150 300,180 220,180',
+          duration: 900, easing: 'easeOutQuad' });
+        anime({ targets: '#m3-box-side',
+          points: '300,150 340,130 340,160 300,180',
+          duration: 900, easing: 'easeOutQuad' });
+      } })
+    .add({ targets: ['#m3-box-top-face','#m3-box-front','#m3-box-side'], opacity: [0, 1], duration: 600 })
+    .add({ targets: '#m3-sketch-fixed', opacity: 0, duration: 300 }, '-=600')
+    .add({ duration: 800 })
+    .add({ targets: label, opacity: [1,1], duration: 100,
+      begin: () => { label.textContent = '🎉 完成 3D 物件'; num.textContent = '草圖 → 特徵 完整流程'; } });
+}
+
+// 進入視窗自動播放
+const m3Svg = document.getElementById('m3-master-svg');
+if (m3Svg) {
+  const m3Io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !e.target.dataset.played) {
+        e.target.dataset.played = '1';
+        playMasterDemo();
+      }
+    });
+  }, { threshold: 0.4 });
+  m3Io.observe(m3Svg);
+}
+
+const replayBtn = document.getElementById('m3-replay');
+if (replayBtn) replayBtn.addEventListener('click', playMasterDemo);
