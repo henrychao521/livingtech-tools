@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 6：程式設計核心 ｜ FRC 機器人</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/svg-effects.css">
+<link rel="stylesheet" href="../css/frc.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🤖%3C/text%3E%3C/svg%3E">
+<style>
+  .code-block {
+    background: #0f172a; color: #e2e8f0;
+    border-radius: 10px; padding: 16px 20px;
+    font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+    font-size: 13px; line-height: 1.7;
+    overflow-x: auto; margin: 12px 0;
+  }
+  .code-block .kw { color: #c084fc; }    /* keyword */
+  .code-block .fn { color: #facc15; }    /* function */
+  .code-block .str { color: #86efac; }   /* string */
+  .code-block .num { color: #fbbf24; }   /* number */
+  .code-block .com { color: #64748b; }   /* comment */
+  .code-block .cls { color: #67e8f9; }   /* class */
+  .compare-table { width:100%; border-collapse:collapse; font-size:14px; }
+  .compare-table th, .compare-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align:left; }
+  .compare-table th { background: var(--bg-soft); }
+  .compare-table .best { background: rgba(34,197,94,.1); font-weight: 600; }
+  .control-sim {
+    background:#fff; border:1px solid var(--border); border-radius:14px;
+    padding:18px; margin-top:14px;
+  }
+  .control-sim svg { width:100%; height:200px; background:linear-gradient(180deg,#f8fafc,#eef2f7); border-radius:8px; }
+  .sliders { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:14px; margin-top:14px; }
+  .slider-block { background:var(--bg-soft); border-radius:8px; padding:10px 14px; }
+  .slider-block label { display:block; font-size:12px; font-weight:600; color:var(--text-soft); margin-bottom:4px; }
+  .slider-block input[type=range] { width:100%; }
+  .slider-block strong { display:block; font-size:16px; color:var(--primary-dark); text-align:right; }
+</style>
+</head>
+<body class="frc-theme">
+<header class="topbar">
+  <div class="brand"><span class="logo">🤖</span><div><h1>FRC 機器人教學</h1><p class="subtitle">程式設計核心：WPILib + PID + Path Planning</p></div></div>
+  <a href="../index.html" class="module-back">← 回首頁</a>
+</header>
+
+<main class="module-page">
+  <div class="module-header">
+    <div>
+      <span class="module-step">MODULE 06 ・ 進階</span>
+      <h2>程式設計核心：WPILib Command-based</h2>
+      <p class="muted">FRC 程式設計的入門票。看完知道：Command-based 是什麼、Subsystem 怎麼寫、PID 與 FeedForward 如何調、PathPlanner / Choreo 差在哪、AdvantageScope 怎麼用。</p>
+    </div>
+  </div>
+
+  <section class="panel">
+    <h3>① WPILib 三大框架對比</h3>
+    <p class="muted" style="margin-bottom:14px">FRC 程式有三種寫法，現在 90% 競爭隊伍用 Command-based。其他兩種是歷史。</p>
+    <table class="compare-table">
+      <thead><tr><th>框架</th><th>架構</th><th>適合</th><th>2026 狀態</th></tr></thead>
+      <tbody>
+        <tr><td>TimedRobot</td><td>類似 Arduino，loop() 每 20ms 執行</td><td>新手第一週入門、SimpleBot</td><td>仍可用，KOP 內建</td></tr>
+        <tr><td>Iterative</td><td>State machine 寫法</td><td>—</td><td>⚠ 已淘汰，不推薦</td></tr>
+        <tr class="best"><td>★ Command-based</td><td>Subsystem + Command + Trigger，CommandScheduler 驅動</td><td>所有競爭隊伍、複雜機構</td><td>主流；2027 有 Command-based v2</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="panel">
+    <h3>② Subsystem 標準模板（以 Drivetrain 為例）</h3>
+    <p class="muted" style="margin-bottom:14px">Command-based 的核心：每個機構是一個 Subsystem，提供 set/get 介面 + default command。</p>
+    <pre class="code-block"><span class="com">// DriveSubsystem.java — 五個必備區塊</span>
+<span class="kw">public class</span> <span class="cls">DriveSubsystem</span> <span class="kw">extends</span> <span class="cls">SubsystemBase</span> {
+  <span class="com">// 1️⃣ 硬體成員（建構式建立）</span>
+  <span class="kw">private final</span> <span class="cls">TalonFX</span> leftMotor = <span class="kw">new</span> <span class="cls">TalonFX</span>(<span class="num">1</span>);
+  <span class="kw">private final</span> <span class="cls">TalonFX</span> rightMotor = <span class="kw">new</span> <span class="cls">TalonFX</span>(<span class="num">2</span>);
+  <span class="kw">private final</span> <span class="cls">DifferentialDrive</span> drive = <span class="kw">new</span> <span class="cls">DifferentialDrive</span>(leftMotor, rightMotor);
+
+  <span class="com">// 2️⃣ periodic() — 每 20ms 自動執行（更新狀態 / log）</span>
+  <span class="fn">@Override</span>
+  <span class="kw">public void</span> <span class="fn">periodic</span>() {
+    <span class="cls">SmartDashboard</span>.<span class="fn">putNumber</span>(<span class="str">"LeftPos"</span>, leftMotor.<span class="fn">getPosition</span>().<span class="fn">getValue</span>());
+  }
+
+  <span class="com">// 3️⃣ 公開方法（讓 Command 操作）</span>
+  <span class="kw">public void</span> <span class="fn">arcadeDrive</span>(<span class="kw">double</span> speed, <span class="kw">double</span> rotation) {
+    drive.<span class="fn">arcadeDrive</span>(speed, rotation);
+  }
+
+  <span class="com">// 4️⃣ Command Factory — 回傳 Command（取代舊式繼承 Command）</span>
+  <span class="kw">public</span> <span class="cls">Command</span> <span class="fn">driveCommand</span>(<span class="cls">DoubleSupplier</span> fwd, <span class="cls">DoubleSupplier</span> rot) {
+    <span class="kw">return</span> <span class="fn">run</span>(() -> <span class="fn">arcadeDrive</span>(fwd.<span class="fn">getAsDouble</span>(), rot.<span class="fn">getAsDouble</span>()));
+  }
+}
+
+<span class="com">// 5️⃣ 在 RobotContainer 註冊 default command</span>
+drive.<span class="fn">setDefaultCommand</span>(drive.<span class="fn">driveCommand</span>(controller::<span class="fn">getLeftY</span>, controller::<span class="fn">getRightX</span>));</pre>
+    <p style="font-size:13px;color:var(--text-soft);margin-top:10px">💡 <strong>關鍵觀念</strong>：Subsystem 只「提供能力」，Command 才「決定什麼時候用」。例如 Drivetrain 提供 arcadeDrive() 方法，但是否要驅動由 Command（手動 / 自動 / 預設）決定。</p>
+  </section>
+
+  <section class="panel">
+    <h3>③ PID + FeedForward 調參互動模擬器</h3>
+    <p class="muted" style="margin-bottom:14px">P = 回正力 / I = 消除穩態誤差（FRC 多半不用）/ D = 阻尼 / FF = 已知物理（kS、kV、kA）的預測前饋。</p>
+    <div class="control-sim">
+      <svg viewBox="0 0 600 200" id="pid-svg">
+        <defs>
+          <linearGradient id="pidArea" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="rgba(0,102,179,.3)"/>
+            <stop offset="1" stop-color="rgba(0,102,179,0)"/>
+          </linearGradient>
+        </defs>
+        <!-- 目標線 -->
+        <line x1="50" y1="60" x2="580" y2="60" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <text x="585" y="64" font-size="11" fill="#dc2626" font-weight="700">Target</text>
+        <!-- 響應曲線 -->
+        <path id="pid-curve" d="" stroke="#0066B3" stroke-width="2.5" fill="url(#pidArea)"/>
+        <!-- 軸 -->
+        <line x1="50" y1="180" x2="580" y2="180" stroke="#94a3b8" stroke-width="1"/>
+        <line x1="50" y1="20" x2="50" y2="180" stroke="#94a3b8" stroke-width="1"/>
+        <text x="40" y="184" font-size="10" fill="#64748b" text-anchor="end">0</text>
+        <text x="40" y="64" font-size="10" fill="#64748b" text-anchor="end">1</text>
+        <text x="315" y="195" font-size="11" fill="#475569" text-anchor="middle" font-weight="600">時間 (s)</text>
+      </svg>
+      <div class="sliders">
+        <div class="slider-block"><label>kP（比例）</label><input type="range" min="0" max="20" step="0.1" value="3" id="pid-p"><strong id="val-p">3.0</strong></div>
+        <div class="slider-block"><label>kI（積分）</label><input type="range" min="0" max="5" step="0.1" value="0" id="pid-i"><strong id="val-i">0.0</strong></div>
+        <div class="slider-block"><label>kD（微分）</label><input type="range" min="0" max="5" step="0.1" value="0.5" id="pid-d"><strong id="val-d">0.5</strong></div>
+        <div class="slider-block"><label>kV（速度 FF）</label><input type="range" min="0" max="2" step="0.05" value="0" id="pid-v"><strong id="val-v">0.00</strong></div>
+      </div>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:10px;line-height:1.6">🎯 <strong>調參流程</strong>：先把 P 加大到看到震盪 → 加 D 抑制震盪 → 如果穩態有誤差再加 I。FeedForward kV / kS / kA 在跑 SysId 後自動算出，比手動調快十倍。</p>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>④ Path Planning：PathPlanner vs Choreo</h3>
+    <p class="muted" style="margin-bottom:14px">自動期（autonomous）的 15 秒，機器人要自己跑完整套路徑。兩大主流工具：</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
+      <div style="background:#fff;border:2px solid var(--primary);border-radius:14px;padding:16px">
+        <h4 style="font-size:16px;margin:0 0 8px;color:var(--primary-dark)">PathPlanner</h4>
+        <p style="font-size:13px;color:var(--text-soft);line-height:1.7;margin:0">
+          • <strong>GUI 編輯路徑</strong>（拖曳路徑點）<br>
+          • <strong>Auto routine</strong>：拖拉 Command 組合自動程序<br>
+          • 較易上手，新手友善<br>
+          • <strong>2026 主流</strong>，PPLib 可讀 Choreo 軌跡<br>
+          • 文件齊全
+        </p>
+      </div>
+      <div style="background:#fff;border:2px solid #f59e0b;border-radius:14px;padding:16px">
+        <h4 style="font-size:16px;margin:0 0 8px;color:#92400e">Choreo</h4>
+        <p style="font-size:13px;color:var(--text-soft);line-height:1.7;margin:0">
+          • <strong>時間最佳化軌跡</strong>（SleipnirGroup 引擎）<br>
+          • 數學求解，跑得比 PathPlanner 快<br>
+          • Swerve 競爭隊主流（Team 254 公開使用）<br>
+          • 學習曲線陡<br>
+          • 可匯出 .traj 給 PPLib 執行
+        </p>
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--text-soft);margin-top:14px;padding:10px 14px;background:#eff6ff;border-left:3px solid #3b82f6;border-radius:6px">💡 <strong>建議</strong>：第一年用 PathPlanner，熟悉後切到 Choreo 追求更短的 auto 路徑時間。兩者可混用（PathPlanner 編輯路徑 + Choreo 優化）。</p>
+  </section>
+
+  <section class="panel">
+    <h3>⑤ AprilTag + Vision Pose Estimation</h3>
+    <p class="muted" style="margin-bottom:14px">2024 後幾乎所有競爭隊伍標配。AprilTag 是場上貼的 QR-code 風格定位標籤，機器人用相機看到後反推自己在場地的位置。</p>
+    <ol style="line-height:2;font-size:14px;color:var(--text-soft);padding-left:24px">
+      <li>相機看到 AprilTag → <code>solvePnP</code> 算相機相對 tag 的姿態</li>
+      <li>結合 field layout JSON（2026 有兩套：welded / AndyMark）算 robot pose</li>
+      <li>用 <code>SwerveDrivePoseEstimator</code> 結合 odometry + vision，做 Kalman filter 融合</li>
+      <li>PathPlanner / Choreo auto 程式直接吃融合後的 pose</li>
+    </ol>
+    <p style="font-size:13px;color:var(--text-soft);margin-top:14px">
+      <strong>2026 規格</strong>：使用 36h11 tag 家族（誤識別率最低）。建議搭配 <strong>PhotonVision MultiTag</strong> 在 coprocessor（Orange Pi 5、Raspberry Pi 5）跑視覺處理，減少 roboRIO 負擔。
+    </p>
+  </section>
+
+  <section class="panel">
+    <h3>⑥ 三大調試介面定位</h3>
+    <table class="compare-table">
+      <thead><tr><th>工具</th><th>誰開發</th><th>2026 狀態</th></tr></thead>
+      <tbody>
+        <tr><td>SmartDashboard</td><td>WPILib（最古老）</td><td>陽春、已過時</td></tr>
+        <tr><td>Shuffleboard</td><td>WPILib</td><td>功能多但慢，被 Elastic 取代</td></tr>
+        <tr class="best"><td>★ Elastic</td><td>Gold872（Flutter 開源）</td><td>2023 後最流行，<strong>比賽 driver station 主流</strong></td></tr>
+        <tr class="best"><td>★ AdvantageScope + AdvantageKit</td><td>Team 6328（Mechanical Advantage）</td><td><strong>日誌回放</strong>必備、2026 支援 unit-aware</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:13px;color:var(--text-soft);margin-top:14px">建議：比賽 driver station 用 <strong>Elastic</strong>（精簡、快），開發中用 <strong>AdvantageScope</strong>（log replay 看 swerve module state 等）。</p>
+  </section>
+
+  <section class="panel">
+    <h3>📚 推薦深入學習</h3>
+    <ul style="line-height:2;font-size:14px;color:var(--text-soft);padding-left:24px">
+      <li><a href="https://docs.wpilib.org/en/stable/docs/software/commandbased/index.html" target="_blank" rel="noopener" style="color:var(--primary)">WPILib Command-Based 官方文件</a></li>
+      <li><a href="https://github.com/REVrobotics/MAXSwerve-Java-Template" target="_blank" rel="noopener" style="color:var(--primary)">REV MAXSwerve 範本（Java）</a></li>
+      <li><a href="https://choreo.autos/" target="_blank" rel="noopener" style="color:var(--primary)">Choreo（時間最佳化軌跡）</a></li>
+      <li><a href="https://docs.photonvision.org/en/latest/docs/programming/photonlib/robot-pose-estimator.html" target="_blank" rel="noopener" style="color:var(--primary)">PhotonVision AprilTag PoseEstimator</a></li>
+      <li><a href="https://docs.advantagekit.org/whats-new/" target="_blank" rel="noopener" style="color:var(--primary)">AdvantageKit 2026 新功能</a></li>
+      <li><a href="https://www.team254.com/resources/" target="_blank" rel="noopener" style="color:var(--primary)">Team 254 公開資源（whitepapers + GitHub）</a></li>
+    </ul>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="module5.html" class="btn btn-ghost">← 上一關</a>
+    <a href="../index.html" class="btn btn-primary">完成全部模組 ✓</a>
+  </div>
+</main>
+
+<script>
+// PID 模擬：以二階系統（彈簧-質量阻尼）模擬，響應曲線即時更新
+(() => {
+  const svg = document.getElementById('pid-svg');
+  const curveEl = document.getElementById('pid-curve');
+  const sliders = { p: document.getElementById('pid-p'), i: document.getElementById('pid-i'), d: document.getElementById('pid-d'), v: document.getElementById('pid-v') };
+  const labels = { p: document.getElementById('val-p'), i: document.getElementById('val-i'), d: document.getElementById('val-d'), v: document.getElementById('val-v') };
+
+  function simulate() {
+    const kP = parseFloat(sliders.p.value);
+    const kI = parseFloat(sliders.i.value);
+    const kD = parseFloat(sliders.d.value);
+    const kV = parseFloat(sliders.v.value);
+    labels.p.textContent = kP.toFixed(1);
+    labels.i.textContent = kI.toFixed(1);
+    labels.d.textContent = kD.toFixed(1);
+    labels.v.textContent = kV.toFixed(2);
+    // 二階離散模擬：位置 x，速度 v，目標 1
+    const target = 1.0;
+    let x = 0, v = 0, integral = 0, prevErr = target;
+    const dt = 0.02; // 50Hz
+    const points = [];
+    for (let t = 0; t < 100; t++) {
+      const err = target - x;
+      integral += err * dt;
+      const dErr = (err - prevErr) / dt;
+      prevErr = err;
+      // 控制輸出
+      const u = kP * err + kI * integral + kD * dErr + kV * v;
+      // 動態（簡化）：dv/dt = u - 0.5*v，dx/dt = v
+      v += (u - 0.5 * v) * dt;
+      x += v * dt;
+      points.push(x);
+    }
+    // 路徑：t=0..100 對應 x=50..580，y=180-(x/1.5)*120
+    let d = '';
+    points.forEach((y, i) => {
+      const sx = 50 + (i / 99) * 530;
+      const sy = Math.max(20, Math.min(180, 180 - (y / 1.5) * 120));
+      d += (i === 0 ? 'M ' : ' L ') + sx + ' ' + sy;
+    });
+    d += ` L 580 180 L 50 180 Z`;
+    curveEl.setAttribute('d', d);
+  }
+  Object.values(sliders).forEach(s => s.addEventListener('input', simulate));
+  simulate();
+})();
+</script>
+</body>
+</html>
