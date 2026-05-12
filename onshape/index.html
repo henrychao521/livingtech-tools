@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Onshape 3D 建模 ｜ 生活科技互動教學平台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="css/onshape.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📐%3C/text%3E%3C/svg%3E">
+</head>
+<body class="home onshape-theme">
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">📐</span>
+    <div>
+      <h1>Onshape 3D 建模</h1>
+      <p class="subtitle">生活科技互動教學平台</p>
+    </div>
+  </div>
+  <nav class="topnav">
+    <a href="#modules">學習模組</a>
+    <a href="../" style="color:var(--primary-dark);font-weight:600">← 平台首頁</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-text">
+      <span class="badge">CAD・雲端 3D 建模</span>
+      <h2>用瀏覽器就能<br>畫出 3D 物件</h2>
+      <p>Onshape 是業界第一個全雲端 CAD 軟體：開瀏覽器就能用、不需要安裝、教育版完全免費。本平台搭配珩宇老師 YouTube 教學課程，從草圖到 4 種建模方法、組裝與運動模擬，一步步把概念變成可列印的 3D 檔案。</p>
+      <div class="hero-cta">
+        <a href="pages/module1.html" class="btn btn-primary">開始學習 →</a>
+        <a href="#modules" class="btn btn-ghost">看模組地圖</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <svg viewBox="0 0 480 420" class="hero-os">
+        <defs>
+          <linearGradient id="osFront" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="#0091BD"/>
+            <stop offset="1" stop-color="#006B8C"/>
+          </linearGradient>
+          <linearGradient id="osTop" x1="0" x2="1" y1="0" y2="0">
+            <stop offset="0" stop-color="#4FC3DD"/>
+            <stop offset="1" stop-color="#0091BD"/>
+          </linearGradient>
+          <linearGradient id="osSide" x1="0" x2="1" y1="0" y2="0">
+            <stop offset="0" stop-color="#006B8C"/>
+            <stop offset="1" stop-color="#003F52"/>
+          </linearGradient>
+          <filter id="osShadow"><feGaussianBlur in="SourceAlpha" stdDeviation="5"/><feOffset dx="0" dy="8"/><feComponentTransfer><feFuncA type="linear" slope="0.3"/></feComponentTransfer><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <!-- 影子 -->
+        <ellipse cx="240" cy="380" rx="180" ry="14" fill="rgba(0,0,0,.15)"/>
+        <!-- 3D 立方體（左後） -->
+        <g filter="url(#osShadow)" opacity=".5">
+          <polygon points="120,200 200,240 200,310 120,270" fill="url(#osFront)"/>
+          <polygon points="200,240 280,200 280,270 200,310" fill="url(#osSide)"/>
+          <polygon points="120,200 200,160 280,200 200,240" fill="url(#osTop)"/>
+        </g>
+        <!-- 主立方體（中央，較大） -->
+        <g filter="url(#osShadow)">
+          <polygon points="160,180 280,240 280,340 160,280" fill="url(#osFront)"/>
+          <polygon points="280,240 400,180 400,280 280,340" fill="url(#osSide)"/>
+          <polygon points="160,180 280,120 400,180 280,240" fill="url(#osTop)"/>
+          <!-- 草圖線（在 top face） -->
+          <circle cx="280" cy="180" r="20" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="3 2"/>
+          <line x1="240" y1="160" x2="320" y2="200" stroke="#fbbf24" stroke-width="1.5"/>
+        </g>
+        <!-- 旋轉指示箭頭 -->
+        <g transform="translate(280,140)">
+          <path d="M -30 0 A 30 15 0 1 1 30 0" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="4 3"/>
+          <polygon points="30,0 24,-4 24,4" fill="#fbbf24"/>
+        </g>
+        <text x="280" y="100" text-anchor="middle" font-size="14" fill="#0091BD" font-weight="700">參數化 3D 建模</text>
+      </svg>
+    </div>
+  </section>
+
+  <section id="modules" class="modules">
+    <h3 class="section-title">五大學習模組</h3>
+    <p class="section-sub">從認識 Onshape 到機構運動模擬</p>
+    <div class="module-grid">
+      <a class="card card-1" href="pages/module1.html">
+        <div class="card-num">01</div>
+        <div class="card-icon">🔍</div>
+        <h4>認識 Onshape</h4>
+        <p>雲端 CAD 是什麼？為什麼用 Onshape？對應珩宇老師 L1+L2 課程。</p>
+        <span class="card-tag">15 分鐘</span>
+      </a>
+      <a class="card card-2" href="pages/module2.html">
+        <div class="card-num">02</div>
+        <div class="card-icon">🛡️</div>
+        <h4>帳號與使用規範</h4>
+        <p>教育版申請、公開 vs 私人 doc、智財權與隱私注意事項。</p>
+        <span class="card-tag">必修・10 分鐘</span>
+      </a>
+      <a class="card card-3" href="pages/module3.html">
+        <div class="card-num">03</div>
+        <div class="card-icon">📖</div>
+        <h4>草圖到特徵 8 步驟</h4>
+        <p>從基準平面到擠出的完整流程，含步驟排序拼圖。對應 L4 課程。</p>
+        <span class="card-tag">20 分鐘</span>
+      </a>
+      <a class="card card-4" href="pages/module4.html">
+        <div class="card-num">04</div>
+        <div class="card-icon">🎮</div>
+        <h4>4 種建模方式</h4>
+        <p>擠出 / 旋轉 / 薄殼 / 疊層拉伸 — 給目標形狀選最佳方法。對應 L5 馬克杯課程。</p>
+        <span class="card-tag">核心・25 分鐘</span>
+      </a>
+      <a class="card card-5" href="pages/module5.html">
+        <div class="card-num">05</div>
+        <div class="card-icon">🔬</div>
+        <h4>草圖找碴 + 機構應用</h4>
+        <p>8 種建模錯誤對照 + 凸輪機構與 CAE 模擬範例。對應 L4a / L8 / L9。</p>
+        <span class="card-tag">20 分鐘</span>
+      </a>
+      <div class="card card-locked">
+        <div class="card-num">👨‍🏫</div>
+        <div class="card-icon">📊</div>
+        <h4>教師後台</h4>
+        <p>班級進度、成績匯出（開發中）。</p>
+        <span class="card-tag">教師專用</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="about">
+    <h3 class="section-title">為什麼學 Onshape？</h3>
+    <div class="reason-grid">
+      <div class="reason"><span>☁️</span><h4>完全雲端</h4><p>瀏覽器即用、免安裝、無需高效能電腦，平板手機也能瀏覽。</p></div>
+      <div class="reason"><span>🆓</span><h4>教育版免費</h4><p>學生與教師申請 EDU 帳號完全免費，功能與商用版相同。</p></div>
+      <div class="reason"><span>👥</span><h4>即時協作</h4><p>多人同時編輯同一個 doc（像 Google Docs），看到彼此的游標與變更。</p></div>
+      <div class="reason"><span>🔄</span><h4>版本管理</h4><p>每次修改都記錄、可回溯、可分支，工程師等級的設計管理。</p></div>
+    </div>
+  </section>
+
+  <section class="teacher" style="background:#fafafa">
+    <div class="teacher-card">
+      <h3>給教師的話</h3>
+      <p>Onshape 與其他工具一樣對應 108 課綱<strong> 生 J-A2 工具與機具的安全使用</strong>與<strong> 生 J-B3 設計與製作能力</strong>，但定位在「<strong>產品設計前置技能</strong>」——學生畫好的 3D 檔案可以送到 3D 印表機列印（接續 3D 印表機模組）、或當作 FRC 機器人設計的入門。</p>
+      <p style="margin-top:16px"><strong>教學素材</strong>：本模組搭配 <a href="https://www.youtube.com/playlist?list=PLugQzHmEY4QhEzPd3mJyjrZTBnaDravVj" target="_blank" rel="noopener" style="color:var(--primary)">珩宇老師 YouTube Onshape 教學播放清單</a>（9 集核心課程 + 應用範例）與書籍《動手入門 Onshape 3D 繪圖到機構製作》。</p>
+    </div>
+  </section>
+</main>
+
+<script src="../js/main.js"></script>
+<script src="../js/audio.js"></script>
+</body>
+</html>

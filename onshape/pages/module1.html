@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 1：認識 Onshape ｜ 3D 建模</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../css/onshape.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📐%3C/text%3E%3C/svg%3E">
+</head>
+<body class="onshape-theme">
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">📐</span>
+    <div>
+      <h1>Onshape 3D 建模</h1>
+      <p class="subtitle">生活科技互動教學平台</p>
+    </div>
+  </div>
+  <a href="../index.html" class="module-back">← 回首頁</a>
+</header>
+
+<main class="module-page">
+  <div class="module-header">
+    <div>
+      <span class="module-step">MODULE 01</span>
+      <h2>認識 Onshape</h2>
+      <p class="muted">看珩宇老師示範 Onshape 是什麼、為什麼選它，並完成小測驗。</p>
+    </div>
+    <div class="muted" id="progress-text">已完成 0 / 3 項</div>
+  </div>
+
+  <section class="panel">
+    <h3>① 軟體介紹影片（珩宇老師 L1）</h3>
+    <p class="muted" style="margin-bottom:14px">看完整段約 7 分鐘，理解 Onshape 跟其他 CAD 軟體的差異。</p>
+    <div class="os-video-wrap">
+      <iframe src="https://www.youtube.com/embed/bd9q7l3LDI4?list=PLugQzHmEY4QhEzPd3mJyjrZTBnaDravVj"
+        title="Onshape 3D繪圖軟體介紹"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>② 基本介面與單位設定（珩宇老師 L2）</h3>
+    <p class="muted" style="margin-bottom:14px">L2 介紹：登入、開新檔、設定公制 / 英制、Part Studio 介面。</p>
+    <div class="os-video-wrap">
+      <iframe src="https://www.youtube.com/embed/mNDXXTVy6go?list=PLugQzHmEY4QhEzPd3mJyjrZTBnaDravVj"
+        title="Onshape 基本介面與單位設定"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>③ Onshape 4 大特色</h3>
+    <div class="reason-grid">
+      <div class="reason"><span>☁️</span><h4>全雲端</h4><p>不需安裝、不需高效能電腦。瀏覽器（Chrome / Safari / Edge）即可使用，平板與手機可瀏覽。</p></div>
+      <div class="reason"><span>🆓</span><h4>教育版免費</h4><p>持 .edu 信箱或教育機構認證可申請 Education Plan，功能與商用版相同。</p></div>
+      <div class="reason"><span>👥</span><h4>即時協作</h4><p>同一份 doc 多人同時編輯，看到對方的游標與變更，類似 Google Docs。</p></div>
+      <div class="reason"><span>🔄</span><h4>版本控制</h4><p>每次儲存自動建立版本記錄，可比較、可回溯、可分支（branch / merge）。</p></div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>④ 跟其他 CAD 軟體的比較</h3>
+    <div style="overflow-x:auto;margin-top:10px">
+      <table style="width:100%;border-collapse:collapse;font-size:14px">
+        <thead>
+          <tr style="background:var(--bg-soft);text-align:left">
+            <th style="padding:10px 12px;border-bottom:2px solid var(--border)">軟體</th>
+            <th style="padding:10px 12px;border-bottom:2px solid var(--border)">類型</th>
+            <th style="padding:10px 12px;border-bottom:2px solid var(--border)">免費版</th>
+            <th style="padding:10px 12px;border-bottom:2px solid var(--border)">適合</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background:var(--primary-light)">
+            <td style="padding:10px 12px;font-weight:700;color:var(--primary-dark)">Onshape</td>
+            <td style="padding:10px 12px">雲端參數化</td>
+            <td style="padding:10px 12px">教育版完全免費</td>
+            <td style="padding:10px 12px">中學以上、團隊協作</td>
+          </tr>
+          <tr><td style="padding:10px 12px;border-top:1px solid var(--border)">Tinkercad</td><td style="padding:10px 12px;border-top:1px solid var(--border)">瀏覽器積木式</td><td style="padding:10px 12px;border-top:1px solid var(--border)">完全免費</td><td style="padding:10px 12px;border-top:1px solid var(--border)">國小、入門</td></tr>
+          <tr><td style="padding:10px 12px;border-top:1px solid var(--border)">Fusion 360</td><td style="padding:10px 12px;border-top:1px solid var(--border)">桌面參數化</td><td style="padding:10px 12px;border-top:1px solid var(--border)">個人版有限制</td><td style="padding:10px 12px;border-top:1px solid var(--border)">產品設計、CAM</td></tr>
+          <tr><td style="padding:10px 12px;border-top:1px solid var(--border)">SolidWorks</td><td style="padding:10px 12px;border-top:1px solid var(--border)">桌面參數化</td><td style="padding:10px 12px;border-top:1px solid var(--border)">商用付費</td><td style="padding:10px 12px;border-top:1px solid var(--border)">工業設計、業界</td></tr>
+          <tr><td style="padding:10px 12px;border-top:1px solid var(--border)">Blender</td><td style="padding:10px 12px;border-top:1px solid var(--border)">桌面 mesh-based</td><td style="padding:10px 12px;border-top:1px solid var(--border)">完全免費（開源）</td><td style="padding:10px 12px;border-top:1px solid var(--border)">動畫、藝術造型</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>⑤ 小測驗</h3>
+    <p class="muted" style="margin-bottom:14px">3 題確認你掌握 Onshape 的核心觀念。</p>
+    <div id="quiz-container"></div>
+    <div id="quiz-result"></div>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="../index.html" class="btn btn-ghost">← 回 Onshape 首頁</a>
+    <a href="module2.html" class="btn btn-primary">下一關：帳號與規範 →</a>
+  </div>
+</main>
+
+<script src="../../js/main.js"></script>
+<script src="../../js/audio.js"></script>
+<script src="../js/module1.js"></script>
+</body>
+</html>

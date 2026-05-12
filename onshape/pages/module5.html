@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 5：草圖找碴 + 機構應用 ｜ 3D 建模</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../css/onshape.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📐%3C/text%3E%3C/svg%3E">
+</head>
+<body class="onshape-theme">
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">📐</span>
+    <div>
+      <h1>Onshape 3D 建模</h1>
+      <p class="subtitle">生活科技互動教學平台</p>
+    </div>
+  </div>
+  <a href="../index.html" class="module-back">← 回首頁</a>
+</header>
+
+<main class="module-page">
+  <div class="module-header">
+    <div>
+      <span class="module-step" style="background:var(--primary-light);color:var(--primary-dark)">MODULE 05</span>
+      <h2>草圖找碴 + 機構應用</h2>
+      <p class="muted">先學會避免 8 種常見錯誤，再看珩宇老師示範凸輪機構與結構模擬。</p>
+    </div>
+  </div>
+
+  <section class="panel">
+    <h3>① 8 種常見草圖 / 特徵錯誤</h3>
+    <p class="muted" style="margin-bottom:14px">每張卡上方是「錯誤示意」，下方是「為什麼會這樣」與「如何修正」。</p>
+    <div class="os-err-grid" id="err-gallery"></div>
+  </section>
+
+  <section class="panel">
+    <h3>② 錯誤判讀挑戰</h3>
+    <p class="muted" style="margin-bottom:14px">看圖選錯誤類型。每題 12.5 分，共 8 題。</p>
+    <div id="err-quiz"></div>
+    <div id="err-result"></div>
+  </section>
+
+  <section class="panel">
+    <h3>③ 進階：可動物件與機構運動（L8）</h3>
+    <p class="muted" style="margin-bottom:14px">珩宇老師示範用 Onshape 的 Assembly 做出凸輪機構玩具，零件之間定義 mate（連接關係）後就能模擬運動。</p>
+    <div class="os-video-wrap">
+      <iframe src="https://www.youtube.com/embed/0nGZzAY8GGU?list=PLugQzHmEY4QhEzPd3mJyjrZTBnaDravVj"
+        title="L8 可動物件 Onshape 組合操作（凸輪機構）"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>④ 進階：結構受力模擬 CAE（L9）</h3>
+    <p class="muted" style="margin-bottom:14px">Onshape 整合 CAEplex 可以做有限元素分析（FEA）— 看看你的設計在受力下會不會斷掉。</p>
+    <div class="os-video-wrap">
+      <iframe src="https://www.youtube.com/embed/uoWaeMUNcGc?list=PLugQzHmEY4QhEzPd3mJyjrZTBnaDravVj"
+        title="L9 Onshape 結構受力模擬"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>⑤ 進階素材</h3>
+    <ul style="line-height:2;font-size:14px;color:var(--text-soft);padding-left:24px">
+      <li><strong>L6 3D 物件電腦組裝</strong>：<a href="https://www.youtube.com/watch?v=eGRFCwH9lVE&list=PLugQzHmEY4QhEzPd3mJyjrZTBnaDravVj" target="_blank" rel="noopener" style="color:var(--primary)">看影片 →</a>（20 分鐘）</li>
+      <li><strong>L7 檔案共享與同步編輯</strong>：<a href="https://www.youtube.com/watch?v=zi2CxFj2qHM&list=PLugQzHmEY4QhEzPd3mJyjrZTBnaDravVj" target="_blank" rel="noopener" style="color:var(--primary)">看影片 →</a>（8 分鐘）</li>
+      <li><strong>應用：勒洛四面體（Reuleaux Tetrahedron）</strong>：<a href="https://www.youtube.com/watch?v=RIPe0FADylI&list=PLugQzHmEY4QhEzPd3mJyjrZTBnaDravVj" target="_blank" rel="noopener" style="color:var(--primary)">看影片 →</a>（2 分鐘）</li>
+      <li><strong>書籍</strong>：《動手入門 Onshape 3D 繪圖到機構製作》— 含完整實作專題。</li>
+      <li><strong>珩宇老師教學頻道全集</strong>：<a href="https://www.youtube.com/playlist?list=PLugQzHmEY4QhEzPd3mJyjrZTBnaDravVj" target="_blank" rel="noopener" style="color:var(--primary)">YouTube 播放清單 →</a></li>
+    </ul>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="module4.html" class="btn btn-ghost">← 上一關</a>
+    <a href="../index.html" class="btn btn-primary">完成全部模組 ✓</a>
+  </div>
+</main>
+
+<script src="../../js/main.js"></script>
+<script src="../../js/audio.js"></script>
+<script src="../js/module5.js"></script>
+</body>
+</html>

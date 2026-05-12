@@ -7,6 +7,7 @@ const TOOLS = [
   { id: 'breadboard', name: '麵包板', emoji: '🔌', key: 'breadboard_progress_v1', color: '#16A34A', url: '../breadboard/' },
   { id: 'printer3d', name: '3D 印表機', emoji: '🖨️', key: 'printer3d_progress_v1', color: '#0891B2', url: '../printer3d/' },
   { id: 'frc', name: 'FRC 機器人', emoji: '🤖', key: 'frc_progress_v1', color: '#0066B3', url: '../frc/' },
+  { id: 'onshape', name: 'Onshape 3D 建模', emoji: '📐', key: 'onshape_progress_v1', color: '#0091BD', url: '../onshape/' },
 ];
 
 // === 分頁切換 ===
@@ -273,6 +274,7 @@ const RESOURCE_DESC = {
   breadboard: '電路入門：麵包板連通邏輯、5 關修錯模擬、故障圖鑑＋補充剝線基本功。',
   printer3d:  '加減成型：FDM 工作流程、切片參數模擬、校正立方體診斷、故障排除。',
   frc:        'FRC 機器人工程：254 隊伍案例、工程設計流程、策略模擬、工程筆記範本。',
+  onshape:    'CAD 入門：雲端 Onshape、草圖→特徵 8 步驟、4 種建模方式、機構與 CAE 模擬。',
 };
 const resourceGrid = document.getElementById('resource-grid');
 TOOLS.forEach(t => {

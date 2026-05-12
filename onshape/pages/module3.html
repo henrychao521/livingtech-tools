@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 3：草圖到特徵 8 步驟 ｜ 3D 建模</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../css/onshape.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📐%3C/text%3E%3C/svg%3E">
+</head>
+<body class="onshape-theme">
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">📐</span>
+    <div>
+      <h1>Onshape 3D 建模</h1>
+      <p class="subtitle">生活科技互動教學平台</p>
+    </div>
+  </div>
+  <a href="../index.html" class="module-back">← 回首頁</a>
+</header>
+
+<main class="module-page">
+  <div class="module-header">
+    <div>
+      <span class="module-step">MODULE 03</span>
+      <h2>草圖到特徵：8 步驟</h2>
+      <p class="muted">Onshape 建模的核心流程：從選平面到拉伸成 3D 物件。對應珩宇老師 L4「方塊繪製」課程。</p>
+    </div>
+    <div class="muted" id="step-progress">已學習 0 / 8 步</div>
+  </div>
+
+  <section class="panel">
+    <h3>① 看完整示範影片（珩宇老師 L4）</h3>
+    <p class="muted" style="margin-bottom:14px">L4 用一個方塊範例完整示範 8 個步驟。看完再回來對照下方圖解。</p>
+    <div class="os-video-wrap">
+      <iframe src="https://www.youtube.com/embed/sU38GMGAlBE?list=PLugQzHmEY4QhEzPd3mJyjrZTBnaDravVj"
+        title="Onshape 方塊繪製（草圖+擠出操作）"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>② 8 步驟圖解</h3>
+    <p class="muted" style="margin-bottom:20px">每張卡點開（或對照影片）理解該步驟的目的與操作。</p>
+    <div class="os-step-grid" id="step-cards"></div>
+  </section>
+
+  <section class="panel">
+    <h3>③ 進階：繪製順序與常見錯誤（L4a + L4b）</h3>
+    <p class="muted" style="margin-bottom:14px">L4a 講「為什麼順序很重要」、L4b 講「繪製順序對特徵的影響」。</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px">
+      <div>
+        <span class="os-video-label">L4a・常見錯誤解析</span>
+        <div class="os-video-wrap">
+          <iframe src="https://www.youtube.com/embed/YAPMk4udSeI?list=PLugQzHmEY4QhEzPd3mJyjrZTBnaDravVj"
+            title="L4a 常見錯誤解析" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+      <div>
+        <span class="os-video-label">L4b・繪製順序</span>
+        <div class="os-video-wrap">
+          <iframe src="https://www.youtube.com/embed/wYVALBdV0fE?list=PLugQzHmEY4QhEzPd3mJyjrZTBnaDravVj"
+            title="L4b 繪製順序" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>④ 排序測驗</h3>
+    <p class="muted" style="margin-bottom:14px;font-size:13px">看完八個步驟後試試看 — 把打亂的步驟排回正確順序。雙擊卡片或用滑鼠拖曳交換位置。</p>
+    <div id="seq-puzzle"></div>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="module2.html" class="btn btn-ghost">← 上一關</a>
+    <a href="module4.html" class="btn btn-primary">下一關：4 種建模方式 →</a>
+  </div>
+</main>
+
+<script src="../../js/main.js"></script>
+<script src="../../js/audio.js"></script>
+<script src="../../js/interactions.js"></script>
+<script src="../js/module3.js"></script>
+</body>
+</html>

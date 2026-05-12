@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 4：4 種建模方式 ｜ 3D 建模</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../css/onshape.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📐%3C/text%3E%3C/svg%3E">
+</head>
+<body class="onshape-theme">
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">📐</span>
+    <div>
+      <h1>Onshape 3D 建模</h1>
+      <p class="subtitle">生活科技互動教學平台</p>
+    </div>
+  </div>
+  <a href="../index.html" class="module-back">← 回首頁</a>
+</header>
+
+<main class="module-page">
+  <div class="module-header">
+    <div>
+      <span class="module-step">MODULE 04</span>
+      <h2>4 種建模方式</h2>
+      <p class="muted">擠出 / 旋轉 / 薄殼 / 疊層拉伸 — 同一個物件常有多種畫法。對應珩宇老師 L5「馬克杯」課程。</p>
+    </div>
+    <div class="muted" id="quiz-progress">挑戰 0 / 5</div>
+  </div>
+
+  <section class="panel">
+    <h3>① 看珩宇老師的馬克杯範例（L5 + L5a）</h3>
+    <p class="muted" style="margin-bottom:14px">同樣是馬克杯，用<strong>擠出 + 鏡像</strong>、<strong>旋轉</strong>、<strong>薄殼</strong>、<strong>疊層拉伸</strong>四種方法都做得出來。看完比較差異。</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px">
+      <div>
+        <span class="os-video-label">L5・基本馬克杯</span>
+        <div class="os-video-wrap">
+          <iframe src="https://www.youtube.com/embed/phKp1hMxQx8?list=PLugQzHmEY4QhEzPd3mJyjrZTBnaDravVj"
+            title="L5 馬克杯繪製" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+      <div>
+        <span class="os-video-label">L5a・薄殼 / 疊層 / 旋轉</span>
+        <div class="os-video-wrap">
+          <iframe src="https://www.youtube.com/embed/RgbidSnOlqo?list=PLugQzHmEY4QhEzPd3mJyjrZTBnaDravVj"
+            title="L5a 其他馬克杯方法" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>② 4 種建模方式對照</h3>
+    <p class="muted" style="margin-bottom:14px">每種方法的核心觀念、操作流程與適合的形狀。</p>
+    <div class="os-method-grid" id="method-grid"></div>
+  </section>
+
+  <section class="panel">
+    <h3>③ 挑戰：給目標形狀，選最佳建模方法</h3>
+    <p class="muted" style="margin-bottom:14px">5 個目標形狀，每個選一種最適合的建模方法。答對 4 題以上通關。</p>
+    <div id="model-quiz"></div>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="module3.html" class="btn btn-ghost">← 上一關</a>
+    <a href="module5.html" class="btn btn-primary">下一關：草圖找碴 + 機構 →</a>
+  </div>
+</main>
+
+<script src="../../js/main.js"></script>
+<script src="../../js/audio.js"></script>
+<script src="../js/module4.js"></script>
+</body>
+</html>
