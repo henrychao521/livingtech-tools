@@ -133,194 +133,211 @@ class ScrollSaw3D {
   }
 
   buildSaw() {
-    // === 底座 ===
-    const baseGroup = new THREE.Group();
-    const baseMat = new THREE.MeshStandardMaterial({ color: 0x2a2a2a, roughness: 0.55, metalness: 0.4 });
-    const base = new THREE.Mesh(new THREE.BoxGeometry(7, 0.9, 3.5), baseMat);
-    base.position.y = 0.45;
-    base.castShadow = true;
-    base.receiveShadow = true;
-    baseGroup.add(base);
-    // 通風孔（凹槽）
-    for (let i = 0; i < 5; i++) {
-      const v = new THREE.Mesh(
-        new THREE.BoxGeometry(1.2, 0.06, 0.04),
-        new THREE.MeshStandardMaterial({ color: 0x111111 })
-      );
-      v.position.set(-2.4, 0.5, 1.6 - i * 0.08);
-      baseGroup.add(v);
-    }
-    // 銘牌
-    const plate = new THREE.Mesh(
-      new THREE.BoxGeometry(2.2, 0.5, 0.06),
-      new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.3 })
-    );
-    plate.position.set(0, 0.5, 1.78);
-    baseGroup.add(plate);
-    // 銘牌文字（用 Canvas 貼圖）
+    // ============================================================
+    // 重寫版線鋸機（依真實 Dremel/Excalibur/DeWalt 構造比例）
+    //
+    // 座標約定（左手座標系）:
+    //   X：左右（+ 右）
+    //   Y：高度（+ 上）
+    //   Z：前後（+ 前/朝向觀眾）
+    //
+    // 結構（由後往前 / 由下往上）:
+    //   Base + 馬達箱（位於後段，z = -1.0 ~ -0.2）
+    //   ├ 下臂（horizontal arm）伸出至前方 z = +0.9
+    //   ├ 工作台（小圓盤，位於下臂前端上方）
+    //   ├ 立柱（vertical column，從馬達箱頂部向上）
+    //   ├ 上懸臂（curved arm，從立柱頂部向前彎向工作台正上方）
+    //   ├ 上下夾頭 + 鋸條（位於懸臂前端 / 工作台中央）
+    //   ├ 壓料桿（從上懸臂前端垂下，緊鄰鋸條）
+    //   └ 吹氣管（從上懸臂下方延伸至鋸條切割點）
+    // ============================================================
+
+    const ORANGE = 0xFF7A00;
+    const ORANGE_LIGHT = 0xFF9933;
+    const DARK_METAL = 0x2a2a2a;
+    const TABLE_METAL = 0xc5c5c5;
+    const BLADE_DARK = 0x1a1a1a;
+
+    const matBody = new THREE.MeshStandardMaterial({ color: ORANGE, roughness: 0.45, metalness: 0.2 });
+    const matBodyLight = new THREE.MeshStandardMaterial({ color: ORANGE_LIGHT, roughness: 0.45, metalness: 0.2 });
+    const matBase = new THREE.MeshStandardMaterial({ color: DARK_METAL, roughness: 0.55, metalness: 0.4 });
+    const matTable = new THREE.MeshStandardMaterial({ color: TABLE_METAL, metalness: 0.55, roughness: 0.35 });
+    const matBlack = new THREE.MeshStandardMaterial({ color: 0x111111, metalness: 0.6, roughness: 0.4 });
+    const matMetal = new THREE.MeshStandardMaterial({ color: 0x9ca3af, metalness: 0.7, roughness: 0.3 });
+
+    // ============================================================
+    // 1. 底座（暗灰鑄鐵感）
+    // ============================================================
+    const base = new THREE.Mesh(new THREE.BoxGeometry(3.6, 0.55, 3.2), matBase);
+    base.position.set(0, 0.275, 0);
+    base.castShadow = true; base.receiveShadow = true;
+    this.scene.add(base);
+
+    // 銘牌（前面）
+    const plate = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.32, 0.04), new THREE.MeshStandardMaterial({ color: 0x111111 }));
+    plate.position.set(0, 0.3, 1.62);
+    this.scene.add(plate);
     const plateLabel = makeTextPlane('SCROLL SAW', { color: '#FF7A00', font: 'bold 70px Inter, sans-serif', bg: '#111', w: 440, h: 100 });
-    plateLabel.position.set(0, 0.5, 1.82);
-    plateLabel.scale.set(2, 0.45, 1);
-    baseGroup.add(plateLabel);
-    this.scene.add(baseGroup);
+    plateLabel.position.set(0, 0.3, 1.64);
+    plateLabel.scale.set(1.4, 0.28, 1);
+    this.scene.add(plateLabel);
 
-    // === 工作台 ===
-    const tableMat = new THREE.MeshStandardMaterial({ color: 0xc5c5c5, metalness: 0.55, roughness: 0.35 });
-    const table = new THREE.Mesh(new THREE.CylinderGeometry(2.4, 2.4, 0.18, 48), tableMat);
-    table.position.y = 1.85;
-    table.castShadow = true;
-    table.receiveShadow = true;
-    this.registerPart(table, 'table', '工作台');
-    this.scene.add(table);
-    // 鋸縫
-    const slot = new THREE.Mesh(
-      new THREE.BoxGeometry(0.05, 0.2, 1.2),
-      new THREE.MeshStandardMaterial({ color: 0x222222 })
-    );
-    slot.position.set(0, 1.85, 0);
-    this.scene.add(slot);
+    // ============================================================
+    // 2. 馬達箱（位於後段，較高的橘色塊）
+    // ============================================================
+    const motorBox = new THREE.Mesh(new THREE.BoxGeometry(2.8, 2.0, 1.5), matBody);
+    motorBox.position.set(0, 1.55, -0.85);
+    motorBox.castShadow = true;
+    this.scene.add(motorBox);
 
-    // === 機身 ===
-    const bodyMat = new THREE.MeshStandardMaterial({ color: 0xFF7A00, roughness: 0.45, metalness: 0.25 });
-    const body = new THREE.Mesh(new THREE.BoxGeometry(2.6, 1.9, 1.6), bodyMat);
-    body.position.set(0, 2.95, 0);
-    body.castShadow = true;
-    this.scene.add(body);
-    // 螺絲
-    [[-1.2, 3.7, 0.81], [1.2, 3.7, 0.81], [-1.2, 2.2, 0.81], [1.2, 2.2, 0.81]].forEach(p => {
-      const s = new THREE.Mesh(
-        new THREE.CylinderGeometry(0.05, 0.05, 0.05, 12),
-        new THREE.MeshStandardMaterial({ color: 0x111111, metalness: 0.8 })
-      );
-      s.rotation.x = Math.PI / 2;
-      s.position.set(...p);
-      this.scene.add(s);
+    // 馬達箱頂部斜面（裝飾）
+    const motorTop = new THREE.Mesh(new THREE.BoxGeometry(2.6, 0.35, 1.3), matBodyLight);
+    motorTop.position.set(0, 2.72, -0.85);
+    this.scene.add(motorTop);
+
+    // 通風孔（左右兩側）
+    [-1.4, 1.4].forEach(x => {
+      for (let i = 0; i < 6; i++) {
+        const v = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.05, 0.7), new THREE.MeshStandardMaterial({ color: 0x111 }));
+        v.position.set(x, 1.0 + i * 0.18, -0.85);
+        this.scene.add(v);
+      }
     });
 
-    // === 控制面板（嵌在機身右側）===
-    const panel = new THREE.Mesh(
-      new THREE.BoxGeometry(0.7, 1.1, 0.04),
-      new THREE.MeshStandardMaterial({ color: 0x0d0d0d, roughness: 0.5 })
-    );
-    panel.position.set(0.6, 2.7, 0.82);
-    this.scene.add(panel);
+    // ============================================================
+    // 3. 下臂（horizontal cantilever 從馬達箱底部向前延伸）
+    // ============================================================
+    const lowerArm = new THREE.Mesh(new THREE.BoxGeometry(0.45, 0.4, 2.2), matBodyLight);
+    lowerArm.position.set(0, 0.78, 0.4);
+    lowerArm.castShadow = true;
+    this.scene.add(lowerArm);
 
-    // === 速度旋鈕 ===
-    const dialGroup = new THREE.Group();
-    const dialBase = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.22, 0.22, 0.06, 32),
-      new THREE.MeshStandardMaterial({ color: 0xfafafa, roughness: 0.4 })
-    );
-    dialBase.rotation.x = Math.PI / 2;
-    dialGroup.add(dialBase);
-    const dialKnob = new THREE.Mesh(
-      new THREE.BoxGeometry(0.04, 0.18, 0.04),
-      new THREE.MeshStandardMaterial({ color: 0x222222 })
-    );
-    dialKnob.position.z = 0.04;
-    dialGroup.add(dialKnob);
-    dialGroup.position.set(0.6, 3.05, 0.85);
-    this.registerGroup(dialGroup, 'speed', '調速鈕');
-    this.scene.add(dialGroup);
+    // 下臂前端的鋸條安裝口（黑色方塊）
+    const lowerHousing = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.3, 0.3), matBlack);
+    lowerHousing.position.set(0, 0.78, 1.5);
+    this.scene.add(lowerHousing);
 
-    // === 數位顯示 ===
-    const display = makeTextPlane('800', { color: '#3aff6a', font: 'bold 90px monospace', bg: '#0a2a0a', w: 320, h: 120 });
-    display.position.set(0.6, 2.62, 0.85);
-    display.scale.set(0.55, 0.21, 1);
-    this.scene.add(display);
+    // ============================================================
+    // 4. 工作台（小圓盤，位於下臂前端正上方）
+    // ============================================================
+    const tableGroup = new THREE.Group();
+    const table = new THREE.Mesh(new THREE.CylinderGeometry(1.5, 1.5, 0.12, 48), matTable);
+    table.castShadow = true; table.receiveShadow = true;
+    tableGroup.add(table);
+    // 鋸縫
+    const slot = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.13, 0.6), new THREE.MeshStandardMaterial({ color: 0x222 }));
+    slot.position.set(0, 0, 0);
+    tableGroup.add(slot);
+    // 邊緣傾角刻度條
+    const tilt = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.2, 0.06), matBase);
+    tilt.position.set(0.95, -0.18, 0);
+    tableGroup.add(tilt);
+    tableGroup.position.set(0, 1.05, 0.95);
+    this.registerPart(table, 'table', '工作台');
+    this.scene.add(tableGroup);
 
-    // === 開關 ===
-    const swOn = new THREE.Mesh(
-      new THREE.BoxGeometry(0.22, 0.16, 0.04),
-      new THREE.MeshStandardMaterial({ color: 0x2EBD66, emissive: 0x114a22, emissiveIntensity: 0.8 })
-    );
-    swOn.position.set(0.45, 2.35, 0.85);
-    this.registerPart(swOn, 'switch', '電源開關');
-    this.scene.add(swOn);
-    const swOff = new THREE.Mesh(
-      new THREE.BoxGeometry(0.22, 0.16, 0.04),
-      new THREE.MeshStandardMaterial({ color: 0x5a1a1a, roughness: 0.3 })
-    );
-    swOff.position.set(0.75, 2.35, 0.85);
-    swOff.userData.partId = 'switch';
-    this.scene.add(swOff);
-    this.partsList.push(swOff);
-
-    // === 上臂 ===
-    const armMat = new THREE.MeshStandardMaterial({ color: 0xFF8A1A, roughness: 0.45, metalness: 0.25 });
-    // 用 Lathe 不對，用拉伸 + 倒角看起來更乾淨
-    const armShape = new THREE.Shape();
-    armShape.moveTo(-1.3, 0);
-    armShape.lineTo(-1.3, 0.55);
-    armShape.bezierCurveTo(-1.0, 0.95, 1.0, 0.95, 1.3, 0.55);
-    armShape.lineTo(1.3, 0);
-    armShape.lineTo(-1.3, 0);
-    const armGeom = new THREE.ExtrudeGeometry(armShape, { depth: 1.4, bevelEnabled: true, bevelSize: 0.05, bevelThickness: 0.05, bevelSegments: 4 });
-    armGeom.translate(0, 0, -0.7);
-    const arm = new THREE.Mesh(armGeom, armMat);
-    arm.position.set(0, 4.0, 0);
+    // ============================================================
+    // 5. 上懸臂（從馬達箱頂部向前彎曲延伸到鋸條上方）
+    //    用 Catmull-Rom curve + TubeGeometry 做出有機曲線
+    // ============================================================
+    const armCurvePoints = [
+      new THREE.Vector3(0, 2.9, -1.0),  // 起點：馬達箱頂後
+      new THREE.Vector3(0, 3.4, -0.5),  // 上升段
+      new THREE.Vector3(0, 3.55, 0.2),  // 弧頂
+      new THREE.Vector3(0, 3.45, 0.7),  // 下彎
+      new THREE.Vector3(0, 3.05, 1.0),  // 終點：上夾頭位置上方
+    ];
+    const armCurve = new THREE.CatmullRomCurve3(armCurvePoints);
+    const armGeom = new THREE.TubeGeometry(armCurve, 32, 0.32, 12, false);
+    const arm = new THREE.Mesh(armGeom, matBody);
     arm.castShadow = true;
     this.scene.add(arm);
-    // 製作標記
-    const authorLogo = makeTextPlane('珩宇老師製作', { color: '#fff', font: 'bold 72px "Noto Sans TC", sans-serif', bg: 'rgba(255,255,255,0.15)', w: 720, h: 120 });
-    authorLogo.position.set(0, 4.35, 0.71);
-    authorLogo.scale.set(2.0, 0.36, 1);
+
+    // 懸臂前端的鋸條安裝口
+    const upperHousing = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.32, 0.3), matBlack);
+    upperHousing.position.set(0, 2.85, 1.0);
+    this.scene.add(upperHousing);
+
+    // 製作標記（懸臂上方）
+    const authorLogo = makeTextPlane('珩宇老師製作', { color: '#fff', font: 'bold 72px "Noto Sans TC", sans-serif', bg: 'rgba(255,255,255,0.18)', w: 720, h: 120 });
+    authorLogo.position.set(0, 3.75, 0.2);
+    authorLogo.rotation.x = -0.5;
+    authorLogo.scale.set(1.6, 0.28, 1);
     this.scene.add(authorLogo);
 
-    // === 鋸條 ===
-    const blade = new THREE.Mesh(
-      new THREE.BoxGeometry(0.05, 1.85, 0.08),
-      new THREE.MeshStandardMaterial({ color: 0x1a1a1a, metalness: 0.9, roughness: 0.2 })
-    );
-    blade.position.set(0, 2.9, 0);
+    // ============================================================
+    // 6. 鋸條（連接上下夾頭，垂直）
+    // ============================================================
+    const blade = new THREE.Mesh(new THREE.BoxGeometry(0.04, 1.6, 0.06), new THREE.MeshStandardMaterial({ color: BLADE_DARK, metalness: 0.9, roughness: 0.2 }));
+    blade.position.set(0, 1.92, 1.0);
     blade.castShadow = true;
     this.registerPart(blade, 'blade', '鋸條');
     this.scene.add(blade);
 
-    // === 上夾頭 ===
-    const upperChuck = new THREE.Mesh(
-      new THREE.BoxGeometry(0.36, 0.18, 0.22),
-      new THREE.MeshStandardMaterial({ color: 0x111111, metalness: 0.6, roughness: 0.4 })
-    );
-    upperChuck.position.set(0, 3.85, 0);
+    // 鋸齒紋路
+    for (let i = 0; i < 16; i++) {
+      const tooth = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.04, 0.02), matMetal);
+      tooth.position.set(0.04, 1.2 + i * 0.09, 1.0);
+      this.scene.add(tooth);
+    }
+
+    // ============================================================
+    // 7. 上夾頭（在懸臂前端、下接鋸條頂端）
+    // ============================================================
+    const upperChuck = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.18, 0.22), matBlack);
+    upperChuck.position.set(0, 2.68, 1.0);
     upperChuck.castShadow = true;
     this.registerPart(upperChuck, 'upper-chuck', '上夾頭');
     this.scene.add(upperChuck);
+    // 夾頭螺絲
+    const upperScrew = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.12, 12), matMetal);
+    upperScrew.rotation.z = Math.PI / 2;
+    upperScrew.position.set(0.18, 2.68, 1.0);
+    this.scene.add(upperScrew);
 
-    // === 下夾頭 ===
-    const lowerChuck = upperChuck.clone();
-    lowerChuck.material = upperChuck.material.clone();
-    lowerChuck.position.y = 1.97;
-    lowerChuck.userData = { ...upperChuck.userData, partId: 'lower-chuck', partName: '下夾頭', origColor: upperChuck.material.color.clone(), origEmissive: upperChuck.material.emissive?.clone() };
-    this.parts['lower-chuck'] = lowerChuck;
-    this.partsList.push(lowerChuck);
+    // ============================================================
+    // 8. 下夾頭（位於工作台下方、下臂前端）
+    // ============================================================
+    const lowerChuck = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.18, 0.22), matBlack);
+    lowerChuck.position.set(0, 1.16, 1.0);
+    lowerChuck.castShadow = true;
+    this.registerPart(lowerChuck, 'lower-chuck', '下夾頭');
     this.scene.add(lowerChuck);
+    const lowerScrew = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.12, 12), matMetal);
+    lowerScrew.rotation.z = Math.PI / 2;
+    lowerScrew.position.set(0.18, 1.16, 1.0);
+    this.scene.add(lowerScrew);
 
-    // === 壓料桿 ===
+    // ============================================================
+    // 9. 壓料桿（從上夾頭附近垂下，緊靠鋸條）
+    // ============================================================
     const holdGroup = new THREE.Group();
-    const hMat = new THREE.MeshStandardMaterial({ color: 0x666666, metalness: 0.65, roughness: 0.35 });
-    const hArm = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.08, 0.08), hMat);
-    hArm.position.set(-0.7, 0, 0);
-    holdGroup.add(hArm);
-    const hVert = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.7, 0.08), hMat);
-    hVert.position.set(-1.35, -0.35, 0);
-    holdGroup.add(hVert);
-    const hFoot = new THREE.Mesh(
-      new THREE.BoxGeometry(0.4, 0.05, 0.18),
-      new THREE.MeshStandardMaterial({ color: 0x444444 })
-    );
-    hFoot.position.set(-1.35, -0.7, 0);
-    holdGroup.add(hFoot);
-    holdGroup.position.set(0.05, 3.15, 0.5);
+    const matHold = new THREE.MeshStandardMaterial({ color: 0x666, metalness: 0.65, roughness: 0.35 });
+    const hRod = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.85, 12), matHold);
+    hRod.position.set(0, -0.43, 0);
+    holdGroup.add(hRod);
+    const hFootGroup = new THREE.Group();
+    const hFoot = new THREE.Mesh(new THREE.BoxGeometry(0.45, 0.08, 0.18), new THREE.MeshStandardMaterial({ color: 0x4a4a4a }));
+    hFootGroup.add(hFoot);
+    // 壓料桿前端的弓形夾
+    const hClip = new THREE.Mesh(new THREE.TorusGeometry(0.08, 0.025, 8, 16, Math.PI), matHold);
+    hClip.rotation.x = Math.PI;
+    hClip.position.set(0, 0.04, 0);
+    hFootGroup.add(hClip);
+    hFootGroup.position.set(0, -0.9, 0);
+    holdGroup.add(hFootGroup);
+    holdGroup.position.set(0.18, 2.5, 1.0);
     holdGroup.traverse(m => { if (m.isMesh) m.castShadow = true; });
     this.registerGroup(holdGroup, 'hold-down', '壓料桿');
     this.scene.add(holdGroup);
 
-    // === 吹氣管 ===
+    // ============================================================
+    // 10. 吹氣管（從懸臂下方一條彈性管延伸到鋸條切割點）
+    // ============================================================
     const tubeCurve = new THREE.QuadraticBezierCurve3(
-      new THREE.Vector3(0.85, 3.4, 0.4),
-      new THREE.Vector3(0.4, 3.1, 0.5),
-      new THREE.Vector3(0.08, 2.6, 0.2)
+      new THREE.Vector3(0.5, 2.6, 0.6),
+      new THREE.Vector3(0.35, 2.35, 0.85),
+      new THREE.Vector3(0.18, 1.85, 0.98)
     );
     const tubeGeom = new THREE.TubeGeometry(tubeCurve, 24, 0.04, 10, false);
     const tube = new THREE.Mesh(tubeGeom, new THREE.MeshStandardMaterial({ color: 0x2a2a2a, roughness: 0.5 }));
@@ -328,17 +345,56 @@ class ScrollSaw3D {
     this.registerPart(tube, 'blower', '吹氣管');
     this.scene.add(tube);
 
-    // === 編號標籤（浮在每個部位上方）===
+    // ============================================================
+    // 11. 控制面板（在馬達箱右側）
+    // ============================================================
+    const panel = new THREE.Mesh(new THREE.BoxGeometry(0.05, 1.0, 0.7), new THREE.MeshStandardMaterial({ color: 0x0d0d0d, roughness: 0.5 }));
+    panel.position.set(1.42, 1.85, -0.6);
+    this.scene.add(panel);
+
+    // 數位顯示
+    const display = makeTextPlane('800', { color: '#3aff6a', font: 'bold 90px monospace', bg: '#0a2a0a', w: 320, h: 120 });
+    display.position.set(1.45, 2.15, -0.6);
+    display.rotation.y = Math.PI / 2;
+    display.scale.set(0.42, 0.18, 1);
+    this.scene.add(display);
+
+    // 速度旋鈕
+    const dialGroup = new THREE.Group();
+    const dialBase = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 0.04, 32), new THREE.MeshStandardMaterial({ color: 0xfafafa, roughness: 0.4 }));
+    dialBase.rotation.z = Math.PI / 2;
+    dialGroup.add(dialBase);
+    const dialKnob = new THREE.Mesh(new THREE.BoxGeometry(0.035, 0.14, 0.03), new THREE.MeshStandardMaterial({ color: 0x222 }));
+    dialKnob.position.x = 0.04;
+    dialGroup.add(dialKnob);
+    dialGroup.position.set(1.45, 1.85, -0.6);
+    this.registerGroup(dialGroup, 'speed', '調速鈕');
+    this.scene.add(dialGroup);
+
+    // 電源開關（綠色 ON / 紅色 OFF）
+    const swOn = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.18, 0.22), new THREE.MeshStandardMaterial({ color: 0x2EBD66, emissive: 0x114a22, emissiveIntensity: 0.8 }));
+    swOn.position.set(1.45, 1.55, -0.45);
+    this.registerPart(swOn, 'switch', '電源開關');
+    this.scene.add(swOn);
+    const swOff = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.18, 0.22), new THREE.MeshStandardMaterial({ color: 0x5a1a1a, roughness: 0.3 }));
+    swOff.position.set(1.45, 1.55, -0.75);
+    swOff.userData.partId = 'switch';
+    this.scene.add(swOff);
+    this.partsList.push(swOff);
+
+    // ============================================================
+    // 12. 編號標籤（浮在每個部位上方）
+    // ============================================================
     this.labels = {};
     const labelData = {
-      blade: { pos: [0, 2.9, 0.3], num: 1 },
-      'upper-chuck': { pos: [0, 3.85, 0.3], num: 2 },
-      'lower-chuck': { pos: [0, 1.97, 0.3], num: 3 },
-      table: { pos: [-2.5, 1.85, 0], num: 4 },
-      'hold-down': { pos: [-1.35, 2.85, 0.5], num: 5 },
-      blower: { pos: [0.5, 2.4, 0.6], num: 6 },
-      speed: { pos: [0.6, 3.4, 0.85], num: 7 },
-      switch: { pos: [0.6, 2.0, 0.85], num: 8 },
+      blade: { pos: [0.25, 1.92, 1.2], num: 1 },
+      'upper-chuck': { pos: [0.25, 2.68, 1.2], num: 2 },
+      'lower-chuck': { pos: [0.25, 1.16, 1.2], num: 3 },
+      table: { pos: [-1.6, 1.1, 0.95], num: 4 },
+      'hold-down': { pos: [-0.4, 1.7, 1.1], num: 5 },
+      blower: { pos: [0.5, 2.45, 0.85], num: 6 },
+      speed: { pos: [1.7, 1.85, -0.6], num: 7 },
+      switch: { pos: [1.7, 1.55, -0.45], num: 8 },
     };
     Object.entries(labelData).forEach(([id, d]) => {
       const sprite = makeNumberSprite(d.num);
