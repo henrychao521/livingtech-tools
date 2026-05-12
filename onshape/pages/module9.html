@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 9：機電整合應用 ｜ 3D 建模</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../css/onshape.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📐%3C/text%3E%3C/svg%3E">
+</head>
+<body class="onshape-theme">
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">📐</span>
+    <div>
+      <h1>Onshape 3D 建模</h1>
+      <p class="subtitle">生活科技互動教學平台</p>
+    </div>
+  </div>
+  <a href="../index.html" class="module-back">← 回首頁</a>
+</header>
+
+<main class="module-page">
+  <div class="module-header">
+    <div>
+      <span class="module-step">MODULE 09 ・ 進階專題</span>
+      <h2>機電整合應用</h2>
+      <p class="muted">把 Onshape 學到的能力與真實機電結合：兩個書中專題 — iPOE A5 四輪自走車改裝、指尖陀螺製作。對應書 Ch 8。</p>
+    </div>
+    <div class="muted"><span class="ws-progress-pill" id="m9-pill">已完成 0 / 2 專題</span></div>
+  </div>
+
+  <section class="panel">
+    <h3>① 專題一：DIY 自走車改裝（Arduino → iPOE A5 四輪路跑車）</h3>
+    <p class="muted" style="margin-bottom:14px">把 Arduino 三輪車改造成四輪驅動。書中明確兩個要解決的問題：</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px">
+        <h4 style="font-size:15px;margin:0 0 8px">🎯 問題 1：三輪 → 四輪</h4>
+        <p style="font-size:13px;line-height:1.6;color:var(--text-soft);margin:0">Arduino 原為三輪車，穩定性差。改造為前後各兩輪的四輪結構。</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px">
+        <h4 style="font-size:15px;margin:0 0 8px">🎯 問題 2：四輪空轉</h4>
+        <p style="font-size:13px;line-height:1.6;color:var(--text-soft);margin:0">四輪若非四輪驅動且結構過剛，遇地形落差時前輪被抬起會空轉。解法：前後輪車體中間加 <strong>625ZZ 軸承</strong>形成可旋轉機構。</p>
+      </div>
+    </div>
+    <h4 style="font-size:15px;margin-top:14px">設計流程</h4>
+    <ol style="line-height:2;font-size:14px;color:var(--text-soft);padding-left:24px">
+      <li><strong>測量</strong>：用游標卡尺測 Arduino 電路板大小、孔位（同一個角落或邊作參考避免出錯）</li>
+      <li><strong>繪圖</strong>：在 Onshape 畫前後車體 + 軸承座 + 結構支撐（脆弱處加肋）</li>
+      <li><strong>列印</strong>：注意「<strong>受力方向</strong>」— 3D 列印件最弱在層間黏合。範例書中講鏡架 90° 列印會斷，車體也是同樣道理</li>
+      <li><strong>組裝</strong>：用螺絲鎖上，含 625ZZ 軸承做旋轉接點</li>
+    </ol>
+    <p style="margin-top:14px;padding:10px 14px;background:#eff6ff;border-left:3px solid #3b82f6;border-radius:6px;font-size:13px">💡 <strong>另一種做法</strong>：用雷射切割 3mm 板材組裝（書中也有示範，建中周俊丞、賴政嘉同學作品）。</p>
+  </section>
+
+  <section class="panel">
+    <h3>② 專題二：指尖陀螺製作</h3>
+    <p class="muted" style="margin-bottom:14px">用 Onshape 設計可旋轉的指尖陀螺，重點：軸承尺寸選定 + 環狀複製排列。</p>
+    <h4 style="font-size:15px;margin-top:10px">關鍵設計參數</h4>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+      <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px">
+        <h5 style="font-size:13px;margin:0 0 6px;color:var(--primary-dark)">608ZZ 軸承（中央）</h5>
+        <p style="font-size:12.5px;line-height:1.6;margin:0;color:var(--text-soft)">外徑 22mm、內徑 8mm、厚度 7mm</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px">
+        <h5 style="font-size:13px;margin:0 0 6px;color:var(--primary-dark)">三軸夾角</h5>
+        <p style="font-size:12.5px;line-height:1.6;margin:0;color:var(--text-soft)">每軸間夾 <strong>120°</strong>（用尺規作圖法繪製）。書中用 X 軸 ±30° 作輔助線。</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px">
+        <h5 style="font-size:13px;margin:0 0 6px;color:var(--primary-dark)">外圓直徑</h5>
+        <p style="font-size:12.5px;line-height:1.6;margin:0;color:var(--text-soft)">範例用 30mm（軸承外徑 22mm + 兩側 4mm 結構）</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px">
+        <h5 style="font-size:13px;margin:0 0 6px;color:var(--primary-dark)">中心距</h5>
+        <p style="font-size:12.5px;line-height:1.6;margin:0;color:var(--text-soft)">中央軸到外圍軸 25mm（直線長度）</p>
+      </div>
+    </div>
+    <h4 style="font-size:15px;margin-top:14px">關鍵 Onshape 操作</h4>
+    <ol style="line-height:2;font-size:14px;color:var(--text-soft);padding-left:24px">
+      <li>畫中央 22mm 圓（軸承位置）</li>
+      <li>畫 25mm 輔助直線，末端加上另一個 22mm 圓</li>
+      <li>用尺規作圖法（X 軸 ±30°）建立 120° 夾角的三條軸線</li>
+      <li><strong>修剪</strong> 不需要的線段（直接刪除比剪刀工具有效率）</li>
+      <li><strong>環狀複製排列</strong>：全選 (Ctrl+A) → 環狀複製 → 預設 3 個（也可改 5 瓣等變化）</li>
+      <li>Extrude 4mm 厚度（依手感調整）</li>
+    </ol>
+  </section>
+
+  <section class="panel">
+    <h3>③ 互動：機電整合判讀</h3>
+    <p class="muted" style="margin-bottom:14px">給 4 個設計情境，選正確處理方式。</p>
+    <div id="mech-quiz"></div>
+  </section>
+
+  <section class="panel">
+    <h3>📚 書中其他延伸專題</h3>
+    <p style="font-size:14px;line-height:1.8">完整步驟與圖片詳見書 Ch 8 pp. 162–180。書中也介紹「動手入門 Onshape 3D 繪圖到機構製作」這本書其他章節：第 6 章動物拼圖、第 7 章三種輸出方式，本平台 M7、M8 已涵蓋。</p>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="module8.html" class="btn btn-ghost">← 上一關</a>
+    <a href="../index.html" class="btn btn-primary">完成全部模組 ✓</a>
+  </div>
+</main>
+
+<script src="../../js/main.js"></script>
+<script src="../../js/audio.js"></script>
+<script src="../js/module9.js"></script>
+</body>
+</html>

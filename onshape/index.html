@@ -128,6 +128,52 @@
         <span class="card-tag">教師專用</span>
       </div>
     </div>
+
+    <h3 class="section-title" style="margin-top:56px">進階專題（4 模組）</h3>
+    <p class="section-sub">取自珩宇老師《動手入門 Onshape 3D 繪圖到機構製作》Ch 5–8</p>
+    <div class="module-grid">
+      <a class="card" href="pages/module6.html" style="background:linear-gradient(135deg,#E0F4FA,#B3E5F0);border-color:#0091BD">
+        <div class="card-num" style="color:var(--primary-dark)">06</div>
+        <div class="card-icon">📏</div>
+        <h4>工程識圖與動態模擬</h4>
+        <p>游標卡尺測量、TT 直流減速馬達實作、Onshape Assembly mate 與動畫模擬。</p>
+        <span class="card-tag" style="background:var(--primary-light);color:var(--primary-dark)">書 Ch 5・25 分鐘</span>
+      </a>
+      <a class="card" href="pages/module7.html" style="background:linear-gradient(135deg,#E0F4FA,#B3E5F0);border-color:#0091BD">
+        <div class="card-num" style="color:var(--primary-dark)">07</div>
+        <div class="card-icon">🦕</div>
+        <h4>動物拼圖設計</h4>
+        <p>圖片置入、不規則曲線描繪、偏移平面、輸出 DXF 雷射切割三角龍拼圖。</p>
+        <span class="card-tag" style="background:var(--primary-light);color:var(--primary-dark)">書 Ch 6・25 分鐘</span>
+      </a>
+      <a class="card" href="pages/module8.html" style="background:linear-gradient(135deg,#E0F4FA,#B3E5F0);border-color:#0091BD">
+        <div class="card-num" style="color:var(--primary-dark)">08</div>
+        <div class="card-icon">🔧</div>
+        <h4>從模型到實體</h4>
+        <p>3D 列印（STL）/ 雷射切割（DXF）/ CNC 雕刻三種數位加工的選擇與工作流。</p>
+        <span class="card-tag" style="background:var(--primary-light);color:var(--primary-dark)">書 Ch 7・20 分鐘</span>
+      </a>
+      <a class="card" href="pages/module9.html" style="background:linear-gradient(135deg,#E0F4FA,#B3E5F0);border-color:#0091BD">
+        <div class="card-num" style="color:var(--primary-dark)">09</div>
+        <div class="card-icon">🤖</div>
+        <h4>機電整合應用</h4>
+        <p>iPOE A5 四輪自走車改裝 + 指尖陀螺製作（環狀複製排列 + 軸承尺寸）。</p>
+        <span class="card-tag" style="background:var(--primary-light);color:var(--primary-dark)">書 Ch 8・25 分鐘</span>
+      </a>
+    </div>
+
+    <h3 class="section-title" style="margin-top:56px">把 Onshape 嵌入到網頁？</h3>
+    <p class="section-sub">教學現場常見問題：能不能讓學生作品在班級網站直接被看到？</p>
+    <div style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px;max-width:900px;margin:0 auto">
+      <p style="font-size:14px;line-height:1.8;margin:0 0 12px"><strong>⚠️ Onshape 官方為了安全考量，封鎖直接 iframe 嵌入</strong>（X-Frame-Options: deny）。但有 4 種替代方案：</p>
+      <ol style="line-height:2;font-size:14px;color:var(--text-soft);padding-left:24px;margin:0">
+        <li><strong>「Open in Onshape」連結</strong>（最簡單）：把 public doc 的 share link 貼到網頁，學生點擊開新分頁查看。</li>
+        <li><strong>OnDisplay App</strong>（付費）：Onshape App Store 的官方授權嵌入器。一鍵產生 HTML embed code，觀看者不需要 Onshape 帳號。<a href="https://www.onshape.com/en/blog/app-store-ondisplay-interactive-3d-cad-model-viewer-showroom" target="_blank" rel="noopener" style="color:var(--primary)">官方介紹 →</a></li>
+        <li><strong>匯出 glTF / STL + Three.js</strong>：把作品匯出為通用 3D 格式，用 Three.js 在自己網頁顯示。完全自架、可控制 UI，但需要前端開發。</li>
+        <li><strong>Onshape REST API</strong>：完整存取（讀寫零件、特徵、組合件）。需要 OAuth 認證。適合做進階教學工具，但複雜度高。<a href="https://onshape-public.github.io/docs/api-intro/" target="_blank" rel="noopener" style="color:var(--primary)">官方文件 →</a></li>
+      </ol>
+      <p style="font-size:13px;line-height:1.7;margin-top:14px;padding:10px 14px;background:#eff6ff;border-left:3px solid #3b82f6;border-radius:6px">💡 <strong>本平台採用方案 1</strong>：未來可在每個專題模組旁邊加上「在 Onshape 查看完整模型 →」連結，連到老師建好的 public doc。</p>
+    </div>
   </section>
 
   <section class="about">

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 7：動物拼圖設計 ｜ 3D 建模</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../css/onshape.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📐%3C/text%3E%3C/svg%3E">
+</head>
+<body class="onshape-theme">
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">📐</span>
+    <div>
+      <h1>Onshape 3D 建模</h1>
+      <p class="subtitle">生活科技互動教學平台</p>
+    </div>
+  </div>
+  <a href="../index.html" class="module-back">← 回首頁</a>
+</header>
+
+<main class="module-page">
+  <div class="module-header">
+    <div>
+      <span class="module-step">MODULE 07 ・ 進階專題</span>
+      <h2>動物拼圖設計</h2>
+      <p class="muted">用 Onshape 的「圖片置入 + 不規則曲線描繪 + 多角度組合 + DXF 輸出」做出可雷射切割的拼圖。對應書 Ch 6。</p>
+    </div>
+    <div class="muted"><span class="ws-progress-pill" id="m7-pill">已完成 0 / 6 步</span></div>
+  </div>
+
+  <section class="panel">
+    <h3>① 完整工作流：6 步驟</h3>
+    <p class="muted" style="margin-bottom:14px">珩宇老師以三角龍為例的設計流程。每步驟點開卡片標記已學。</p>
+    <div class="os-step-grid" id="puzzle-steps"></div>
+  </section>
+
+  <section class="panel">
+    <h3>② 設計重點對照</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px">
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px">
+        <h4 style="font-size:15px;margin:0 0 8px">📷 圖片置入</h4>
+        <p style="font-size:13px;line-height:1.6;color:var(--text-soft);margin:0">「+」(插入新元素) → 匯入 → 選圖檔 → 上傳完成後在草圖中用「插入影像」→ 拖出矩形定位圖片。圖片變成草圖背景參考。</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px">
+        <h4 style="font-size:15px;margin:0 0 8px">📐 圖片尺寸對齊</h4>
+        <p style="font-size:13px;line-height:1.6;color:var(--text-soft);margin:0">用「尺寸」工具設定圖片符合作品大小（範例 120mm）。把動物的腳對齊 Top 平面 — 之後拼圖才會站得起來。</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px">
+        <h4 style="font-size:15px;margin:0 0 8px">✏️ 不規則曲線描繪</h4>
+        <p style="font-size:13px;line-height:1.6;color:var(--text-soft);margin:0">用 Spline（不規則曲線）沿輪廓線描繪。<strong>必須回到起始點形成封閉曲線</strong>（會出現橘色框框）才能 Extrude。彎折大的地方分段畫再修剪。</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px">
+        <h4 style="font-size:15px;margin:0 0 8px">🔄 偏移平面（Offset Plane）</h4>
+        <p style="font-size:13px;line-height:1.6;color:var(--text-soft);margin:0">畫腳要用：右側平面 → 右鍵 → 偏移平面 → 設定偏移距離（例 15mm）。兩腳分前後 → 建兩個偏移平面（雙箭頭改方向）。</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px">
+        <h4 style="font-size:15px;margin:0 0 8px">📏 與 Top 平面相切</h4>
+        <p style="font-size:13px;line-height:1.6;color:var(--text-soft);margin:0">畫腳的曲線要設定「曲線與 Top 平面相切」 — 確保腳底是平的，動物可以平穩站在桌上。</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px">
+        <h4 style="font-size:15px;margin:0 0 8px">🔪 輸出 DXF 雷射切割</h4>
+        <p style="font-size:13px;line-height:1.6;color:var(--text-soft);margin:0">建立 Drawing → 工程圖 → 各零件分別擺到圖頁上 → 右鍵 → 匯出 → 格式選 <strong>DXF</strong> → 拿去雷射切割。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>③ 雷射切割材料與設定</h3>
+    <ul style="line-height:2;font-size:14px;color:var(--text-soft);padding-left:24px">
+      <li><strong>常用材料</strong>：3mm 木板（椴木、合板）、3mm 壓克力、紙板</li>
+      <li><strong>厚度 = Extrude 深度</strong>。範例書中用 3mm，所以拼圖每片厚 3mm。換 5mm 材料時需重新調 Extrude 深度。</li>
+      <li><strong>切割參數</strong>：木材功率 60–80% 速度 10–20 mm/s；壓克力功率 80–100% 速度 5–10 mm/s（依機型調整）</li>
+      <li><strong>切口寬度（kerf）</strong>：雷射光束會吃掉約 0.1–0.3mm。精密配合的卡榫要預留 kerf。</li>
+    </ul>
+  </section>
+
+  <section class="panel">
+    <h3>④ 設計挑戰：工作流判讀</h3>
+    <p class="muted" style="margin-bottom:14px">給 5 個情境，選正確的下一步操作。</p>
+    <div id="puzzle-quiz"></div>
+  </section>
+
+  <section class="panel">
+    <h3>📚 書中完整範例</h3>
+    <p style="font-size:14px;line-height:1.8">三角龍拼圖含身體、左右側兩腳、頭盾共 4 片，完整 13 個 Step 詳見書 Ch 6 pp. 107–139。書中也提供作品成品照（木質與壓克力兩版）。</p>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="module6.html" class="btn btn-ghost">← 上一關</a>
+    <a href="module8.html" class="btn btn-primary">下一關：從模型到實體 →</a>
+  </div>
+</main>
+
+<script src="../../js/main.js"></script>
+<script src="../../js/audio.js"></script>
+<script src="../js/module7.js"></script>
+</body>
+</html>

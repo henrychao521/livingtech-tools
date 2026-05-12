@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 8：從模型到實體 ｜ 3D 建模</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../css/onshape.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📐%3C/text%3E%3C/svg%3E">
+</head>
+<body class="onshape-theme">
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">📐</span>
+    <div>
+      <h1>Onshape 3D 建模</h1>
+      <p class="subtitle">生活科技互動教學平台</p>
+    </div>
+  </div>
+  <a href="../index.html" class="module-back">← 回首頁</a>
+</header>
+
+<main class="module-page">
+  <div class="module-header">
+    <div>
+      <span class="module-step">MODULE 08 ・ 進階專題</span>
+      <h2>從模型到實體：3D 列印 / 雷射 / CNC</h2>
+      <p class="muted">Onshape 設計好後送到三大數位加工機具的完整工作流。對應書 Ch 7。</p>
+    </div>
+    <div class="muted"><span class="ws-progress-pill" id="m8-pill">已完成 0 / 3 關</span></div>
+  </div>
+
+  <section class="panel">
+    <h3>① 三大數位加工方式對照</h3>
+    <p class="muted" style="margin-bottom:14px">每種方式各有適合的材料、輸出檔案、優缺點。設計初期就要決定要用哪種加工，會影響建模方式。</p>
+    <div style="overflow-x:auto;margin-top:10px">
+      <table style="width:100%;border-collapse:collapse;font-size:14px">
+        <thead>
+          <tr style="background:var(--bg-soft);text-align:left">
+            <th style="padding:10px 12px;border-bottom:2px solid var(--border)">加工方式</th>
+            <th style="padding:10px 12px;border-bottom:2px solid var(--border)">類型</th>
+            <th style="padding:10px 12px;border-bottom:2px solid var(--border)">Onshape 輸出</th>
+            <th style="padding:10px 12px;border-bottom:2px solid var(--border)">材料</th>
+            <th style="padding:10px 12px;border-bottom:2px solid var(--border)">優點</th>
+            <th style="padding:10px 12px;border-bottom:2px solid var(--border)">缺點</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="padding:10px 12px;font-weight:700">🖨️ 3D 列印</td><td>加法</td><td><strong>STL</strong></td><td>PLA / PETG / ABS / 樹脂</td><td>任意形狀（含中空、有機曲面）</td><td>速度慢（幾小時～整天）、強度有層方向性</td></tr>
+          <tr style="background:#fafafa"><td style="padding:10px 12px;font-weight:700">🔪 雷射切割</td><td>減法</td><td><strong>DXF</strong></td><td>3mm 木板、壓克力、紙板</td><td>快、邊緣乾淨、價格便宜</td><td>只能 2D 切割（厚度固定 = 材料厚度）</td></tr>
+          <tr><td style="padding:10px 12px;font-weight:700">⚙️ CNC 雕刻</td><td>減法</td><td>STL 或 STEP → CAM 軟體生 G-code</td><td>木材、壓克力、鋁、銅</td><td>強度高（單一塊材）、表面細緻</td><td>需 CAM 軟體、加工前要懂銑床基本、廢料多</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>② 3D 列印工作流</h3>
+    <ol style="line-height:2;font-size:14px;color:var(--text-soft);padding-left:24px">
+      <li>Onshape doc → 在 Part Studio 標籤右鍵 → <strong>匯出</strong> → 格式選 <strong>STL</strong></li>
+      <li>勾選「將獨特的零件匯出成個別檔案」（重要！不勾的話拼圖會變成一坨）</li>
+      <li>下載 STL（多個零件會包成 zip）</li>
+      <li>在切片軟體（Cura / PrusaSlicer / Bambu Studio）開啟 → 排版 → 設定參數</li>
+      <li>儲存 G-code → 送到 3D 印表機 → 等待列印 → 取件 → 後處理</li>
+    </ol>
+    <p style="margin-top:14px;padding:10px 14px;background:#eff6ff;border-left:3px solid #3b82f6;border-radius:6px;font-size:13px">💡 詳細的切片參數、故障排除請參考 <a href="../../printer3d/" style="color:#1d4ed8;font-weight:600">3D 印表機平台 →</a>。本平台 Onshape 模組與 3D 印表機模組是設計與製造的接力關係。</p>
+  </section>
+
+  <section class="panel">
+    <h3>③ 雷射切割工作流</h3>
+    <ol style="line-height:2;font-size:14px;color:var(--text-soft);padding-left:24px">
+      <li>Onshape doc → 建立 <strong>Drawing</strong>（工程圖）</li>
+      <li>把每個零件投影到圖頁（例：身體 1 張、左右側腳 各 1 張）</li>
+      <li>在工程圖標籤右鍵 → 匯出 → 格式選 <strong>DXF</strong></li>
+      <li>下載 DXF → 在雷射軟體（RDWorks / LightBurn）開啟</li>
+      <li>設定速度 + 功率（依材料而定）→ 送雷射機切割</li>
+    </ol>
+  </section>
+
+  <section class="panel">
+    <h3>④ CNC 雕刻工作流</h3>
+    <ol style="line-height:2;font-size:14px;color:var(--text-soft);padding-left:24px">
+      <li>Onshape 設計完成 → 匯出 STL（或 STEP，更精確）</li>
+      <li>送 CAM 軟體（Roland MDX-40A 的 SRP Player、Fusion 360 CAM、Easel 等）</li>
+      <li>選擇加工方式（多數機台有預設範本）</li>
+      <li>選擇刀具與材料 → 預覽刀軌</li>
+      <li>輸出 G-code → 送 CNC 加工</li>
+    </ol>
+    <p style="margin-top:14px;padding:10px 14px;background:#fef3c7;border-left:3px solid #f59e0b;border-radius:6px;font-size:13px">⚠️ <strong>安全提醒</strong>：CNC 加工前必須對銑床、銑刀、材料特性有初步了解。書中強調這是「具備強度但需要安全意識」的加工方式。</p>
+  </section>
+
+  <section class="panel">
+    <h3>⑤ 互動：選對加工方式</h3>
+    <p class="muted" style="margin-bottom:14px">給 5 個作品需求，選最適合的加工方式。答對 4 題以上通關。</p>
+    <div id="craft-quiz"></div>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="module7.html" class="btn btn-ghost">← 上一關</a>
+    <a href="module9.html" class="btn btn-primary">下一關：機電整合應用 →</a>
+  </div>
+</main>
+
+<script src="../../js/main.js"></script>
+<script src="../../js/audio.js"></script>
+<script src="../js/module8.js"></script>
+</body>
+</html>

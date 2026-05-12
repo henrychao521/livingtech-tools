@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 6：工程識圖與動態模擬 ｜ 3D 建模</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../css/onshape.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📐%3C/text%3E%3C/svg%3E">
+</head>
+<body class="onshape-theme">
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">📐</span>
+    <div>
+      <h1>Onshape 3D 建模</h1>
+      <p class="subtitle">生活科技互動教學平台</p>
+    </div>
+  </div>
+  <a href="../index.html" class="module-back">← 回首頁</a>
+</header>
+
+<main class="module-page">
+  <div class="module-header">
+    <div>
+      <span class="module-step">MODULE 06 ・ 進階專題</span>
+      <h2>工程識圖與動態模擬</h2>
+      <p class="muted">從測量真實物件、看懂工程圖到把零件組合起來做動畫模擬。對應珩宇老師《動手入門 Onshape》Ch 5。</p>
+    </div>
+    <div class="muted"><span class="ws-progress-pill" id="m6-pill">已完成 0 / 4 項</span></div>
+  </div>
+
+  <section class="panel">
+    <h3>① 繪圖前的準備：測量工具</h3>
+    <p class="muted" style="margin-bottom:14px">畫一個能跟真實物件配合的 3D 模型，必須先知道實際尺寸。日常實作最常用的兩種測量工具：</p>
+    <div class="reason-grid">
+      <div class="reason"><span>📏</span><h4>直尺</h4><p>精度 ≈ 1mm。長度測量首選。<br><strong>不適用</strong>：內徑、深度、階差。</p></div>
+      <div class="reason"><span>📐</span><h4>游標卡尺</h4><p>精度 0.02–0.05mm，可測 <strong>外徑、內徑、深度</strong> 三種尺寸。數位式最方便。</p></div>
+      <div class="reason"><span>📊</span><h4>量角器</h4><p>測角度（0–180°）。配合直尺可做平面繪圖測量。</p></div>
+      <div class="reason"><span>🔬</span><h4>螺旋測微器</h4><p>精度 0.01mm，測量極小尺寸。實作課較少用。</p></div>
+    </div>
+    <p style="margin-top:14px;padding:10px 14px;background:#eff6ff;border-left:3px solid #3b82f6;border-radius:6px;font-size:13px">💡 <strong>游標卡尺測量範圍剛好對應教學現場 3D 印表機 / 雷射切割機的加工範圍</strong>。建議學生擁有一支自用游標卡尺。</p>
+  </section>
+
+  <section class="panel">
+    <h3>② 找工程圖：以 TT 直流減速馬達為例</h3>
+    <p class="muted" style="margin-bottom:14px">教室常見的 TT 馬達是 Arduino / micro:bit 課程的標準馬達。網路上可找到完整工程圖。</p>
+    <ol style="line-height:2;font-size:14px;color:var(--text-soft);padding-left:24px">
+      <li>Google 搜尋「<code style="background:#fef3c7;padding:2px 6px;border-radius:4px">TT 直流減速馬達工程圖</code>」→ 切到「圖片」分頁</li>
+      <li>下載解析度清楚的工程圖（最好附三視圖：俯視、側視、前視）</li>
+      <li>確認單位（亞洲多為 mm）— 若無單位標示，用游標卡尺實物比對驗證</li>
+      <li><strong>從最大範圍開始畫</strong>，再逐步補上細節（馬達本體 64.2 × 22.5 × 18.8 mm）</li>
+    </ol>
+    <p style="margin-top:14px;padding:10px 14px;background:#fef3c7;border-left:3px solid #f59e0b;border-radius:6px;font-size:13px">⚠️ <strong>注意</strong>：工程圖上的尺寸可能不完整（書中範例中，馬達高度是 18.8mm 而非標示的 22.5mm，因為 22.5 是側邊扣帶厚度）。圖面不足時用游標卡尺補測。</p>
+  </section>
+
+  <section class="panel">
+    <h3>③ Onshape Assembly：物件動態模擬</h3>
+    <p class="muted" style="margin-bottom:14px">畫好的零件可以放進 Assembly（組合件），定義零件間的「結合條件 mate」後即可模擬運動。書中以「凸輪玩具」為例。</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:10px">
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px">
+        <h4 style="font-size:15px;margin:0 0 8px">緊固結合（Fastened）</h4>
+        <p style="font-size:13px;line-height:1.6;color:var(--text-soft);margin:0">兩零件完全黏死、無相對運動。例：把手與軸固定。</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px">
+        <h4 style="font-size:15px;margin:0 0 8px">旋轉結合（Revolute）</h4>
+        <p style="font-size:13px;line-height:1.6;color:var(--text-soft);margin:0">繞同軸旋轉，例：軸承、輪子。</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px">
+        <h4 style="font-size:15px;margin:0 0 8px">滑動結合（Slider）</h4>
+        <p style="font-size:13px;line-height:1.6;color:var(--text-soft);margin:0">沿直線方向滑動，例：抽屜、活塞。</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px">
+        <h4 style="font-size:15px;margin:0 0 8px">點貼合結合</h4>
+        <p style="font-size:13px;line-height:1.6;color:var(--text-soft);margin:0">點到點對齊，常配合其他 mate 限制位置。</p>
+      </div>
+    </div>
+    <p style="margin-top:14px;font-size:14px;line-height:1.8">完成 mate 後，使用 <strong>Animate</strong> 功能可錄製傳動軸帶動凸輪、從動件上下移動的動畫。書 Ch 5-3 完整示範。</p>
+  </section>
+
+  <section class="panel">
+    <h3>④ 互動：測量工具情境題</h3>
+    <p class="muted" style="margin-bottom:14px">給 4 個測量情境，選最適合的工具。答對 3 題以上通關。</p>
+    <div id="measure-quiz"></div>
+  </section>
+
+  <section class="panel">
+    <h3>⑤ 結合條件配對</h3>
+    <p class="muted" style="margin-bottom:14px">給 4 個機構情境，選最適合的 Onshape Mate。</p>
+    <div id="mate-quiz"></div>
+  </section>
+
+  <section class="panel">
+    <h3>📚 書中示範作品</h3>
+    <p style="font-size:14px;line-height:1.8">完整 TT 馬達建模步驟（含工程圖判讀、12 個 Step）詳見《動手入門 Onshape 3D 繪圖到機構製作》第 5 章 pp. 79–105。書中還教如何把馬達與其他零件組裝、做凸輪玩具動畫。</p>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="module5.html" class="btn btn-ghost">← 上一關</a>
+    <a href="module7.html" class="btn btn-primary">下一關：動物拼圖設計 →</a>
+  </div>
+</main>
+
+<script src="../../js/main.js"></script>
+<script src="../../js/audio.js"></script>
+<script src="../js/module6.js"></script>
+</body>
+</html>
