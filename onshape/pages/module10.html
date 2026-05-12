@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 10：行動學習 + 齒輪機構 ｜ 3D 建模</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../css/onshape.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📐%3C/text%3E%3C/svg%3E">
+</head>
+<body class="onshape-theme">
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">📐</span>
+    <div>
+      <h1>Onshape 3D 建模</h1>
+      <p class="subtitle">生活科技互動教學平台</p>
+    </div>
+  </div>
+  <a href="../index.html" class="module-back">← 回首頁</a>
+</header>
+
+<main class="module-page">
+  <div class="module-header">
+    <div>
+      <span class="module-step">MODULE 10 ・ 進階專題</span>
+      <h2>行動學習 + 齒輪機構動畫</h2>
+      <p class="muted">用手機 / 平板就能畫 Onshape，並學會做齒輪動畫——把機構帶到課堂以外的時間繼續學習。對應珩宇老師 YouTube Onshape App 教學系列。</p>
+    </div>
+    <div class="muted"><span class="ws-progress-pill" id="m10-pill">已完成 0 / 4 項</span></div>
+  </div>
+
+  <section class="panel">
+    <h3>① Onshape App 基本介紹</h3>
+    <p class="muted" style="margin-bottom:14px">iOS / Android App 與桌面瀏覽器版同步同一份 doc。在通勤、家裡也能繼續設計。</p>
+    <div class="os-video-wrap">
+      <iframe src="https://www.youtube.com/embed/NGCdEfQsRxA?list=PLugQzHmEY4QjiG6X7PWYcWxypW_0HLtDh"
+        title="Onshape APP 基本介紹"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>② App 與桌面版差異對照</h3>
+    <p class="muted" style="margin-bottom:14px">不是所有桌面功能都在 App 上 — 認識限制才能合理分工。</p>
+    <div style="overflow-x:auto;margin-top:10px">
+      <table style="width:100%;border-collapse:collapse;font-size:14px">
+        <thead>
+          <tr style="background:var(--bg-soft);text-align:left">
+            <th style="padding:10px 12px;border-bottom:2px solid var(--border)">功能</th>
+            <th style="padding:10px 12px;border-bottom:2px solid var(--border)">桌面瀏覽器</th>
+            <th style="padding:10px 12px;border-bottom:2px solid var(--border)">行動 App</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="padding:10px 12px;font-weight:600">瀏覽 doc / 旋轉模型</td><td>✓ 完整</td><td>✓ 完整（多點觸控更直覺）</td></tr>
+          <tr style="background:#fafafa"><td style="padding:10px 12px;font-weight:600">畫草圖（簡單形狀）</td><td>✓ 完整</td><td>✓ 可用，觸控操作</td></tr>
+          <tr><td style="padding:10px 12px;font-weight:600">複雜 Sketch + 約束</td><td>✓ 鍵盤 + 滑鼠最佳</td><td>⚠ 較慢，但能做</td></tr>
+          <tr style="background:#fafafa"><td style="padding:10px 12px;font-weight:600">Assembly + Mate</td><td>✓ 完整</td><td>✓ 完整</td></tr>
+          <tr><td style="padding:10px 12px;font-weight:600">Drawing 工程圖</td><td>✓ 完整</td><td>⚠ 只能瀏覽，不能編輯</td></tr>
+          <tr style="background:#fafafa"><td style="padding:10px 12px;font-weight:600">匯出 STL / DXF</td><td>✓ 完整</td><td>✓ 可（透過 Share 功能）</td></tr>
+          <tr><td style="padding:10px 12px;font-weight:600">FeatureScript 客製化</td><td>✓ 完整</td><td>✗ 不支援</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:14px;padding:10px 14px;background:#eff6ff;border-left:3px solid #3b82f6;border-radius:6px;font-size:13px">💡 <strong>教學建議</strong>：課堂用桌面建立完整模型 → 回家用 App 檢視、做小修改、給老師回饋。學生對作品有「隨時都能看」的擁有感。</p>
+  </section>
+
+  <section class="panel">
+    <h3>③ Onshape App 基本繪圖示範</h3>
+    <p class="muted" style="margin-bottom:14px">珩宇老師示範如何在 App 上完成一個基本的草圖與擠出。看完即可在手機重現。</p>
+    <div class="os-video-wrap">
+      <iframe src="https://www.youtube.com/embed/cSC3u15DCGQ?list=PLugQzHmEY4QjiG6X7PWYcWxypW_0HLtDh"
+        title="Onshape APP 基本繪圖"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>④ 齒輪繪製與動畫設定</h3>
+    <p class="muted" style="margin-bottom:14px">把多顆齒輪用 <strong>齒輪結合（Gear Mate）</strong> 連起來，按播放就能看到嚙合運動 — 機構設計的核心。</p>
+    <div class="os-video-wrap">
+      <iframe src="https://www.youtube.com/embed/fnPLdwUlqBM?list=PLugQzHmEY4QjiG6X7PWYcWxypW_0HLtDh"
+        title="Onshape 齒輪繪製與動畫設定"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>⑤ 齒輪設計關鍵參數</h3>
+    <p class="muted" style="margin-bottom:14px">齒輪不是隨便畫，要遵守模數（Module）規則，否則兩齒輪嚙合不上。</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+      <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px">
+        <h5 style="font-size:13px;margin:0 0 6px;color:var(--primary-dark)">模數 m</h5>
+        <p style="font-size:12.5px;line-height:1.6;margin:0;color:var(--text-soft)">兩齒輪能嚙合的關鍵——<strong>m 必須相同</strong>。教育版常用 m = 1 或 2。節圓直徑 d = m × z（齒數）。</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px">
+        <h5 style="font-size:13px;margin:0 0 6px;color:var(--primary-dark)">齒數 z</h5>
+        <p style="font-size:12.5px;line-height:1.6;margin:0;color:var(--text-soft)">小齒輪通常 z ≥ 12（避免根切），大齒輪依需要的傳動比決定。</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px">
+        <h5 style="font-size:13px;margin:0 0 6px;color:var(--primary-dark)">壓力角</h5>
+        <p style="font-size:12.5px;line-height:1.6;margin:0;color:var(--text-soft)">標準 <strong>20°</strong>（業界 99% 用這個）。兩齒輪壓力角必須一致。</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px">
+        <h5 style="font-size:13px;margin:0 0 6px;color:var(--primary-dark)">中心距</h5>
+        <p style="font-size:12.5px;line-height:1.6;margin:0;color:var(--text-soft)">a = (d₁ + d₂) / 2 = m × (z₁ + z₂) / 2。Assembly 時兩齒輪軸心距離要剛好等於 a。</p>
+      </div>
+    </div>
+    <p style="margin-top:14px;padding:10px 14px;background:#fef3c7;border-left:3px solid #f59e0b;border-radius:6px;font-size:13px">💡 <strong>偷懶法</strong>：Onshape App Store 有「Spur Gear」FeatureScript（社群版），輸入 m、z、壓力角即自動生成齒輪。比手動畫快十倍。</p>
+  </section>
+
+  <section class="panel">
+    <h3>⑥ 互動：齒輪 + App 判讀</h3>
+    <p class="muted" style="margin-bottom:14px">5 題複合測驗：行動端使用 + 齒輪設計。</p>
+    <div id="m10-quiz"></div>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="module9.html" class="btn btn-ghost">← 上一關</a>
+    <a href="../index.html" class="btn btn-primary">完成全部模組 ✓</a>
+  </div>
+</main>
+
+<script src="../../js/main.js"></script>
+<script src="../../js/audio.js"></script>
+<script src="../js/module10.js"></script>
+</body>
+</html>
