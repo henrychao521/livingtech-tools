@@ -197,6 +197,7 @@ function draw() {
 
   // 繪製電阻
   if (state.config.resistor) drawResistor(colX(state.config.resistor.col));
+  if (state.config.resistor2) drawResistor(colX(state.config.resistor2.col));
 
   // 繪製 LED
   if (state.config.led) drawLED(colX(state.config.led.col), state.config.led.flipped);
@@ -387,17 +388,48 @@ function drawHotspot() {
 }
 
 function drawCurrentFlow() {
-  // 沿著電池→電源軌→中間區→LED→地，畫綠色電流流動點
-  const t = performance.now() / 50;
+  // 沿實際電路路徑畫電流（電池+ → +軌 → 電阻 → LED → −軌 → 電池−）
+  const t = performance.now() / 80;
   const flow = (t % 100) / 100;
   ctx.fillStyle = '#22c55e';
-  // 簡化：3 個點沿著電源軌循環
-  for (let i = 0; i < 3; i++) {
-    const p = (flow + i / 3) % 1;
-    const x = BB.x + 30 + p * (BB.w - 60);
-    ctx.beginPath();
-    ctx.arc(x, rowY_top('rail_p'), 4, 0, Math.PI * 2);
-    ctx.fill();
+  // 6 個關鍵節點，電流沿這條多段折線循環
+  const ledCol = state.config.led ? state.config.led.col : 12;
+  const resCol = state.config.resistor ? state.config.resistor.col : 8;
+  const path = [
+    { x: BB.x + 20, y: rowY_top('rail_p') },              // 電池 + 出
+    { x: colX(resCol), y: rowY_top('rail_p') },           // 沿 +軌到電阻
+    { x: colX(resCol), y: rowY_top('e') },                // 進電阻上端
+    { x: colX(resCol), y: rowY_bot('f') },                // 穿電阻到下端
+    { x: colX(ledCol), y: rowY_bot('f') },                // 到 LED（如同欄則為同點）
+    { x: colX(ledCol), y: rowY_top('e') },                // 經 LED 到上半
+    { x: colX(ledCol), y: rowY_top('rail_n') },           // 到 −軌
+    { x: BB.x + 20, y: rowY_top('rail_n') },              // 回電池 −
+  ];
+  // 計算路徑總長
+  let totalLen = 0;
+  const segs = [];
+  for (let i = 0; i < path.length - 1; i++) {
+    const dx = path[i + 1].x - path[i].x;
+    const dy = path[i + 1].y - path[i].y;
+    const len = Math.hypot(dx, dy);
+    segs.push({ len, start: totalLen });
+    totalLen += len;
+  }
+  // 畫 4 個流動點
+  for (let i = 0; i < 4; i++) {
+    const p = (flow + i / 4) % 1;
+    const dist = p * totalLen;
+    for (let j = 0; j < segs.length; j++) {
+      if (dist >= segs[j].start && dist < segs[j].start + segs[j].len) {
+        const localP = (dist - segs[j].start) / segs[j].len;
+        const x = path[j].x + (path[j + 1].x - path[j].x) * localP;
+        const y = path[j].y + (path[j + 1].y - path[j].y) * localP;
+        ctx.beginPath();
+        ctx.arc(x, y, 4, 0, Math.PI * 2);
+        ctx.fill();
+        break;
+      }
+    }
   }
 }
 
@@ -456,7 +488,9 @@ function applyFix() {
       state.config.railBridge = true;
       break;
     case 'led2':
+      // ⚠ 修正：兩 LED 並聯時必須各串一顆電阻（避免 current hogging）
       state.config.led2 = { col: 15, flipped: false };
+      state.config.resistor2 = { col: 13 };
       break;
     case 'switch':
       state.config.switch = { col: 11 };
