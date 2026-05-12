@@ -130,10 +130,20 @@ const SCENARIOS = [
 ];
 
 const items = document.querySelectorAll('.draggable');
-const zones = document.querySelectorAll('.dropzone');
+const zones = document.querySelectorAll('.svg-dropzone'); // SVG-based dropzones now
 const sceneEl = document.getElementById('scene');
 const sceneSvg = sceneEl.querySelector('svg');
 let dragged = null;
+
+// 在 SVG <rect> 上加 hover 樣式（取代 div 版本）
+zones.forEach(z => {
+  z.addEventListener('mouseenter', () => {
+    if (!z.classList.contains('filled')) z.setAttribute('stroke', '#FF7A00');
+  });
+  z.addEventListener('mouseleave', () => {
+    if (!z.classList.contains('filled')) z.setAttribute('stroke', '#cbd5e1');
+  });
+});
 
 items.forEach(item => {
   item.addEventListener('dragstart', e => { dragged = item; e.dataTransfer.effectAllowed = 'move'; if (typeof SoundFX !== 'undefined') SoundFX.click(); });
@@ -147,9 +157,26 @@ items.forEach(item => {
 });
 
 zones.forEach(zone => {
-  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('over'); });
-  zone.addEventListener('dragleave', () => zone.classList.remove('over'));
-  zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('over'); handleDrop(zone); });
+  zone.addEventListener('dragover', e => {
+    e.preventDefault();
+    zone.classList.add('over');
+    zone.setAttribute('stroke', '#FF7A00');
+    zone.setAttribute('stroke-width', '3');
+    zone.setAttribute('fill', 'rgba(255,122,0,.15)');
+  });
+  zone.addEventListener('dragleave', () => {
+    zone.classList.remove('over');
+    if (!zone.classList.contains('filled')) {
+      zone.setAttribute('stroke', '#cbd5e1');
+      zone.setAttribute('stroke-width', '1.5');
+      zone.setAttribute('fill', 'transparent');
+    }
+  });
+  zone.addEventListener('drop', e => {
+    e.preventDefault();
+    zone.classList.remove('over');
+    handleDrop(zone);
+  });
   zone.addEventListener('click', () => { if (dragged) handleDrop(zone); });
 });
 
@@ -160,6 +187,10 @@ function handleDrop(zone) {
   const correct = dragged.dataset.correct === '1';
   if (id === accept && correct) {
     zone.classList.add('filled');
+    // SVG dropzone 變綠色表示成功
+    zone.setAttribute('stroke', '#16A34A');
+    zone.setAttribute('stroke-width', '2');
+    zone.setAttribute('fill', 'rgba(22,163,74,.12)');
     dragged.classList.add('placed');
     dragged.style.outline = '';
     dressupScore += 7.5;
