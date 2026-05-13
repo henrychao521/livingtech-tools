@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>結構模擬器 ｜ 生活科技互動教學平台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/svg-effects.css">
+<link rel="stylesheet" href="css/structure-sim.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🏛%3C/text%3E%3C/svg%3E">
+</head>
+<body class="home struct-theme">
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">🏛</span>
+    <div>
+      <h1>結構模擬器</h1>
+      <p class="subtitle">生活科技互動教學平台</p>
+    </div>
+  </div>
+  <nav class="topnav">
+    <a href="#modules">學習模組</a>
+    <a href="../" style="color:var(--primary-dark);font-weight:600">← 平台首頁</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-text">
+      <span class="badge">108 課綱・1下 關卡 4 結構與機構</span>
+      <h2>從紙拖鞋到桁架橋，<br>讓力學變得看得見</h2>
+      <p>結構是把材料組合起來「承受力」的學問。本平台帶你認識 6 種結構類型（桁架 / 拱 / 纜索 / 框架 / 殼結構 / 懸吊），動手畫結構施加荷重看變形與節點力，並挑戰紙拖鞋承重與桁架橋負重賽。</p>
+      <div class="hero-cta">
+        <a href="pages/module1.html" class="btn btn-primary">開始學習 →</a>
+        <a href="#modules" class="btn btn-ghost">看模組地圖</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <svg viewBox="0 0 480 360" class="hero-struct svg-shadow-med">
+        <defs>
+          <linearGradient id="bgSky" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="#dbeafe"/>
+            <stop offset="1" stop-color="#bfdbfe"/>
+          </linearGradient>
+          <filter id="structShadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="5"/>
+            <feOffset dx="0" dy="6"/>
+            <feComponentTransfer><feFuncA type="linear" slope="0.2"/></feComponentTransfer>
+            <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <rect x="0" y="0" width="480" height="280" fill="url(#bgSky)" rx="14"/>
+        <rect x="0" y="280" width="480" height="60" fill="#a16207"/>
+
+        <!-- 桁架橋（中央） -->
+        <g filter="url(#structShadow)">
+          <!-- 上下弦 -->
+          <line x1="60" y1="200" x2="420" y2="200" stroke="#1E3A8A" stroke-width="5"/>
+          <line x1="60" y1="280" x2="420" y2="280" stroke="#1E3A8A" stroke-width="5"/>
+          <!-- 豎直桿 -->
+          <line x1="100" y1="200" x2="100" y2="280" stroke="#1D4ED8" stroke-width="3"/>
+          <line x1="150" y1="200" x2="150" y2="280" stroke="#1D4ED8" stroke-width="3"/>
+          <line x1="200" y1="200" x2="200" y2="280" stroke="#1D4ED8" stroke-width="3"/>
+          <line x1="250" y1="200" x2="250" y2="280" stroke="#1D4ED8" stroke-width="3"/>
+          <line x1="300" y1="200" x2="300" y2="280" stroke="#1D4ED8" stroke-width="3"/>
+          <line x1="350" y1="200" x2="350" y2="280" stroke="#1D4ED8" stroke-width="3"/>
+          <line x1="380" y1="200" x2="380" y2="280" stroke="#1D4ED8" stroke-width="3"/>
+          <!-- 斜桿（V 形拼） -->
+          <line x1="60" y1="200" x2="100" y2="280" stroke="#3B82F6" stroke-width="3"/>
+          <line x1="100" y1="280" x2="150" y2="200" stroke="#3B82F6" stroke-width="3"/>
+          <line x1="150" y1="200" x2="200" y2="280" stroke="#3B82F6" stroke-width="3"/>
+          <line x1="200" y1="280" x2="250" y2="200" stroke="#3B82F6" stroke-width="3"/>
+          <line x1="250" y1="200" x2="300" y2="280" stroke="#3B82F6" stroke-width="3"/>
+          <line x1="300" y1="280" x2="350" y2="200" stroke="#3B82F6" stroke-width="3"/>
+          <line x1="350" y1="200" x2="380" y2="280" stroke="#3B82F6" stroke-width="3"/>
+          <!-- 節點圓 -->
+          <g fill="#DC2626">
+            <circle cx="60" cy="200" r="5"/>
+            <circle cx="100" cy="200" r="5"/>
+            <circle cx="150" cy="200" r="5"/>
+            <circle cx="200" cy="200" r="5"/>
+            <circle cx="250" cy="200" r="5"/>
+            <circle cx="300" cy="200" r="5"/>
+            <circle cx="350" cy="200" r="5"/>
+            <circle cx="380" cy="200" r="5"/>
+            <circle cx="420" cy="200" r="5"/>
+            <circle cx="60" cy="280" r="5"/>
+            <circle cx="100" cy="280" r="5"/>
+            <circle cx="150" cy="280" r="5"/>
+            <circle cx="200" cy="280" r="5"/>
+            <circle cx="250" cy="280" r="5"/>
+            <circle cx="300" cy="280" r="5"/>
+            <circle cx="350" cy="280" r="5"/>
+            <circle cx="380" cy="280" r="5"/>
+            <circle cx="420" cy="280" r="5"/>
+          </g>
+        </g>
+
+        <!-- 載重箭頭 -->
+        <g>
+          <line x1="200" y1="120" x2="200" y2="190" stroke="#dc2626" stroke-width="4" marker-end="url(#loadArr)"/>
+          <line x1="250" y1="120" x2="250" y2="190" stroke="#dc2626" stroke-width="4" marker-end="url(#loadArr)"/>
+          <line x1="300" y1="120" x2="300" y2="190" stroke="#dc2626" stroke-width="4" marker-end="url(#loadArr)"/>
+          <defs><marker id="loadArr" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 12 6 L 0 12 z" fill="#dc2626"/></marker></defs>
+        </g>
+        <text x="250" y="110" text-anchor="middle" font-size="14" fill="#dc2626" font-weight="800" font-family="Inter">荷重 LOAD</text>
+
+        <!-- 支承 -->
+        <g fill="#1E3A8A">
+          <polygon points="50,280 70,280 60,290"/>
+          <polygon points="410,280 430,280 420,290"/>
+        </g>
+        <g stroke="#1E3A8A" stroke-width="2">
+          <line x1="40" y1="295" x2="80" y2="295"/>
+          <line x1="40" y1="295" x2="45" y2="305"/>
+          <line x1="50" y1="295" x2="55" y2="305"/>
+          <line x1="60" y1="295" x2="65" y2="305"/>
+          <line x1="70" y1="295" x2="75" y2="305"/>
+          <line x1="400" y1="295" x2="440" y2="295"/>
+          <line x1="400" y1="295" x2="405" y2="305"/>
+          <line x1="410" y1="295" x2="415" y2="305"/>
+          <line x1="420" y1="295" x2="425" y2="305"/>
+          <line x1="430" y1="295" x2="435" y2="305"/>
+        </g>
+
+        <!-- 標籤 -->
+        <text x="240" y="45" text-anchor="middle" font-size="14" fill="#1E3A8A" font-weight="800" font-family="Inter">PRATT TRUSS 桁架橋</text>
+      </svg>
+    </div>
+  </section>
+
+  <section id="modules" class="modules">
+    <h3 class="section-title">五大學習模組</h3>
+    <p class="section-sub">從結構認識到動手挑戰，理解力學的因果</p>
+    <div class="module-grid">
+      <a class="card card-1" href="pages/module1.html"><div class="card-num">01</div><div class="card-icon">🔍</div><h4>認識結構</h4><p>節點、桿件、支承三大基本元素；張力、壓力、剪力、彎矩、扭力 5 種內力。</p><span class="card-tag">15 分鐘</span></a>
+      <a class="card card-2" href="pages/module2.html"><div class="card-num">02</div><div class="card-icon">🧩</div><h4>6 種結構類型</h4><p>桁架 / 拱 / 纜索懸吊 / 框架 / 殼結構 / 張弦——各自的力學原理與經典範例。</p><span class="card-tag">必修・15 分鐘</span></a>
+      <a class="card card-3" href="pages/module3.html"><div class="card-num">03</div><div class="card-icon">📖</div><h4>結構設計流程</h4><p>8 步驟：定義功能 → 形態選擇 → 載重估算 → 受力分析 → 材料選擇 → 製造 → 測試 → 改良。</p><span class="card-tag">15 分鐘</span></a>
+      <a class="card card-4" href="pages/module4.html"><div class="card-num">04</div><div class="card-icon">🎮</div><h4>桁架受力模擬器</h4><p>畫節點與桿件、加支承、施荷重，看每根桿的張力 / 壓力與節點變形。</p><span class="card-tag">核心・25 分鐘</span></a>
+      <a class="card card-5" href="pages/module5.html"><div class="card-num">05</div><div class="card-icon">🏆</div><h4>結構挑戰</h4><p>紙拖鞋承重 / 紙桁架橋負重 / 結構塔高度 三大經典挑戰 + 失效模式圖鑑。</p><span class="card-tag">15 分鐘</span></a>
+      <div class="card card-locked"><div class="card-num">👨‍🏫</div><div class="card-icon">📊</div><h4>教師後台</h4><p>班級進度、成績匯出（共用平台教師後台）。</p><span class="card-tag">教師專用</span></div>
+    </div>
+  </section>
+
+  <section class="about">
+    <h3 class="section-title">為什麼結構要先在數位環境練？</h3>
+    <div class="reason-grid">
+      <div class="reason"><span>👁</span><h4>力看不見</h4><p>桿件受張力或壓力肉眼看不出來——必須先在模擬器把它畫出來，學生才會「相信」。</p></div>
+      <div class="reason"><span>📐</span><h4>幾何決定強度</h4><p>三角形最穩、四邊形會變形。先看過模擬，動手做的時候自然會用三角形分割。</p></div>
+      <div class="reason"><span>💡</span><h4>失效有模式</h4><p>挫屈、剪斷、塑性變形——這些英文名詞學生看不懂，但看到動畫就秒懂。</p></div>
+      <div class="reason"><span>🏗</span><h4>節省紙材</h4><p>紙橋負重賽材料貴。先在電腦試過幾種設計，上場一次成功率高很多。</p></div>
+    </div>
+  </section>
+</main>
+
+<script src="../js/main.js"></script>
+<script src="../js/audio.js"></script>
+</body>
+</html>
