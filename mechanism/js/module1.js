@@ -50,6 +50,13 @@ const MECHS = [
   },
 ];
 
+// 立體圖 viz 統一改用 OpenSCAD PNG（從 .scad 參數化建模渲染）
+// 保留原 SVG 動畫 viz 在 .vizAnim 欄位（M4 模擬器可用，本模組 M1 用靜態立體圖）
+MECHS.forEach(m => {
+  m.vizAnim = m.viz;
+  m.viz = `<img src="../../models/mechanism/${m.id}-iso.png" alt="${m.name}" style="width:100%;height:140px;object-fit:contain;background:#1E293B;border-radius:8px;display:block" loading="lazy">`;
+});
+
 const PK = 'mech_progress_v1';
 function loadP() { try { return JSON.parse(localStorage.getItem(PK)) || {}; } catch { return {}; } }
 function saveP(p) { localStorage.setItem(PK, JSON.stringify(p)); }
