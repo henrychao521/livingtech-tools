@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 4：鑽孔參數模擬</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/drill.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🔩%3C/text%3E%3C/svg%3E">
+<style>
+  .drill-controls { background:#fff; border:1px solid var(--border); border-radius:14px; padding:16px; margin-bottom:12px; }
+  .slider-row { margin-bottom:14px; }
+  .slider-row label { display:flex; justify-content:space-between; font-size:13px; margin-bottom:4px; }
+  .slider-row label .v { font-family:var(--font-mono); font-weight:700; color:var(--primary-dark); }
+  .slider-row input[type="range"] { width:100%; }
+  .drill-controls h4 { font-size:13px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.1em; margin-bottom:10px; }
+  .estimates { background:var(--primary-light); border-radius:10px; padding:12px; margin-top:8px; }
+  .estimates .row { display:flex; justify-content:space-between; padding:4px 0; font-size:13px; }
+  .estimates .row strong { color:var(--primary-dark); font-family:var(--font-mono); }
+  .verdict { padding:14px; border-radius:10px; margin-top:10px; font-size:14px; font-weight:700; }
+  .verdict.good { background:#dcfce7; color:#15803d; border-left:4px solid #22c55e; }
+  .verdict.warn { background:#fef9c3; color:#a16207; border-left:4px solid #eab308; }
+  .verdict.bad { background:#fee2e2; color:#991b1b; border-left:4px solid #dc2626; }
+</style>
+</head>
+<body class="drill-theme">
+<header class="topbar"><div class="brand"><span class="logo">🔩</span><div><h1>數位手電鑽</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<main class="module-page">
+  <div class="module-header"><div><span class="module-step" style="background:var(--success-light);color:#1b6e3a">MODULE 04 ・ 核心</span><h2>鑽孔參數模擬</h2><p class="muted">調整材料、鑽頭、轉速、進刀力，看鑽孔結果即時變化。</p></div></div>
+
+  <div class="practice-layout">
+    <div class="drill-canvas-wrap">
+      <canvas id="drill-canvas" width="760" height="500"></canvas>
+      <div class="sim-controls">
+        <button class="btn btn-primary" id="btn-drill">▶ 開始鑽孔</button>
+        <button class="btn btn-ghost" id="btn-reset">↺ 重置</button>
+      </div>
+    </div>
+
+    <div class="sim-side">
+      <div class="drill-controls">
+        <h4>鑽孔參數</h4>
+        <div class="slider-row">
+          <label>材料 <select id="material" style="font-family:var(--font-sans);font-size:13px;padding:2px 6px;border-radius:4px"><option value="wood" selected>軟木（松木）</option><option value="hardwood">硬木（橡木）</option><option value="plastic">塑膠（PVC）</option><option value="aluminum">鋁</option><option value="steel">不鏽鋼</option></select></label>
+        </div>
+        <div class="slider-row">
+          <label>鑽頭類型 <select id="bit-type" style="font-family:var(--font-sans);font-size:13px;padding:2px 6px;border-radius:4px"><option value="wood">木工螺旋</option><option value="hss" selected>HSS 高速鋼</option><option value="masonry">磚石碳化鎢</option></select></label>
+        </div>
+        <div class="slider-row">
+          <label>鑽頭直徑 <span class="v" id="v-dia">6 mm</span></label>
+          <input type="range" id="s-dia" min="1" max="13" step="0.5" value="6">
+        </div>
+        <div class="slider-row">
+          <label>轉速 <span class="v" id="v-rpm">800 RPM</span></label>
+          <input type="range" id="s-rpm" min="100" max="2000" step="50" value="800">
+        </div>
+        <div class="slider-row">
+          <label>進刀力 <span class="v" id="v-feed">中</span></label>
+          <input type="range" id="s-feed" min="1" max="5" step="1" value="3">
+        </div>
+        <div class="slider-row">
+          <label>扭力環段位 <span class="v" id="v-torque">鑽孔模式</span></label>
+          <input type="range" id="s-torque" min="0" max="20" step="1" value="0">
+        </div>
+        <div class="estimates">
+          <div class="row"><span>適配性</span><strong id="e-match">—</strong></div>
+          <div class="row"><span>切削速度</span><strong id="e-cut">—</strong></div>
+          <div class="row"><span>過熱風險</span><strong id="e-heat">—</strong></div>
+          <div class="row"><span>偏鑽風險</span><strong id="e-bias">—</strong></div>
+        </div>
+        <div id="verdict" class="verdict warn">點「開始鑽孔」看結果</div>
+      </div>
+
+      <div class="help-card">
+        <strong>💡 參考</strong>
+        <ul>
+          <li>木材：高轉速（1500+ RPM）、輕進刀</li>
+          <li>金屬：低轉速（400–800 RPM）、加切削油</li>
+          <li>磚石：中速 + 衝擊模式（一般電鑽做不到）</li>
+          <li>直徑越大、轉速要越低</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-nav-bottom"><a href="module3.html" class="btn btn-ghost">← 上一關</a><a href="module5.html" class="btn btn-primary">下一關：故障圖鑑 →</a></div>
+</main>
+<script src="../../js/main.js"></script><script src="../../js/audio.js"></script><script src="../js/module4.js"></script>
+</body></html>

@@ -1,0 +1,58 @@
+/* 手電鑽平台主題色 — 工業黃黑（DeWalt / Makita 經典電動工具配色）*/
+.drill-theme {
+  --primary: #F59E0B;
+  --primary-dark: #B45309;
+  --primary-light: #FEF3C7;
+  --primary-glow: rgba(245,158,11,.35);
+  --accent: #DC2626;
+  --accent-light: #FEE2E2;
+}
+.drill-theme .brand .logo { filter: drop-shadow(0 2px 4px rgba(245,158,11,.4)); }
+.drill-theme .hero h2 {
+  background: linear-gradient(135deg, #1a1a1a 30%, #B45309 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero-drill { width: 100%; max-width: 540px; filter: drop-shadow(0 20px 40px rgba(0,0,0,.12)); animation: slow-float 6s ease-in-out infinite; }
+
+/* 模組 4 鑽孔模擬器 */
+.drill-canvas-wrap {
+  background: #0f172a;
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  position: relative;
+  border: 1px solid #1e293b;
+}
+#drill-canvas {
+  width: 100%;
+  max-width: 760px;
+  height: auto;
+  display: block;
+  background: #1e293b;
+  border-radius: var(--radius);
+}
+
+.drill-status .display {
+  text-align: center;
+  padding: 12px;
+  background: #2a1a0a;
+  color: #fbbf24;
+  font-family: monospace;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+.drill-progress {
+  height: 14px;
+  background: #1e293b;
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+.drill-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #fbbf24, #F59E0B);
+  transition: width .3s var(--easing);
+}

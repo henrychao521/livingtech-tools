@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 1：認識手電鑽</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/svg-effects.css">
+<link rel="stylesheet" href="../css/drill.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🔩%3C/text%3E%3C/svg%3E">
+</head>
+<body class="drill-theme">
+<header class="topbar">
+  <div class="brand"><span class="logo">🔩</span><div><h1>數位手電鑽</h1><p class="subtitle">生活科技互動教學平台</p></div></div>
+  <a href="../index.html" class="module-back">← 回首頁</a>
+</header>
+<main class="module-page">
+  <div class="module-header">
+    <div><span class="module-step">MODULE 01</span><h2>認識手電鑽</h2><p class="muted">點擊圖中黃色標記，認識每個部件的功能。</p></div>
+    <div class="muted" id="progress-text">已認識 0 / 8 個部件</div>
+  </div>
+  <div class="parts-layout">
+    <div class="saw-stage">
+      <svg viewBox="0 0 600 540" class="saw-svg svg-shadow-soft">
+        <defs>
+          <linearGradient id="m1dBody" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="#FBBF24"/>
+            <stop offset=".5" stop-color="#F59E0B"/>
+            <stop offset="1" stop-color="#B45309"/>
+          </linearGradient>
+          <linearGradient id="m1dBlack" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="#374151"/>
+            <stop offset="1" stop-color="#111827"/>
+          </linearGradient>
+          <linearGradient id="m1dMetal" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="#e5e7eb"/>
+            <stop offset=".5" stop-color="#9ca3af"/>
+            <stop offset="1" stop-color="#4b5563"/>
+          </linearGradient>
+          <filter id="m1dShadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+            <feOffset dx="0" dy="4"/>
+            <feComponentTransfer><feFuncA type="linear" slope="0.3"/></feComponentTransfer>
+            <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <ellipse cx="300" cy="500" rx="240" ry="16" fill="rgba(0,0,0,.18)"/>
+
+        <!-- 機身主體（馬達後段） -->
+        <g filter="url(#m1dShadow)">
+          <rect x="100" y="170" width="240" height="120" rx="18" fill="url(#m1dBody)"/>
+          <!-- 散熱孔 -->
+          <g fill="rgba(0,0,0,.3)">
+            <rect x="125" y="195" width="3" height="80" rx="1"/>
+            <rect x="138" y="195" width="3" height="80" rx="1"/>
+            <rect x="151" y="195" width="3" height="80" rx="1"/>
+            <rect x="164" y="195" width="3" height="80" rx="1"/>
+            <rect x="177" y="195" width="3" height="80" rx="1"/>
+          </g>
+          <!-- 商標條 -->
+          <rect x="125" y="182" width="200" height="12" fill="#111827"/>
+          <text x="225" y="192" text-anchor="middle" fill="#fbbf24" font-size="9" font-weight="800" font-family="Inter">CORDLESS DRILL 18V · 0–2000 RPM</text>
+        </g>
+
+        <!-- 把手 -->
+        <g filter="url(#m1dShadow)">
+          <path d="M 195 290 Q 188 290 184 302 L 174 410 Q 172 430 188 433 L 270 433 Q 286 430 284 410 L 274 302 Q 270 290 263 290 Z" fill="url(#m1dBody)"/>
+          <!-- 防滑紋 -->
+          <g stroke="#92400e" stroke-width="2" opacity=".5">
+            <line x1="195" y1="330" x2="263" y2="330"/>
+            <line x1="195" y1="355" x2="263" y2="355"/>
+            <line x1="195" y1="380" x2="263" y2="380"/>
+            <line x1="195" y1="405" x2="263" y2="405"/>
+          </g>
+        </g>
+
+        <!-- 扳機（trigger） -->
+        <g filter="url(#m1dShadow)">
+          <path d="M 215 298 Q 209 298 207 308 L 204 340 Q 204 350 215 350 L 248 350 Q 256 350 256 342 L 252 308 Q 250 298 246 298 Z" fill="url(#m1dBlack)"/>
+          <rect x="220" y="310" width="26" height="3" fill="#475569"/>
+        </g>
+
+        <!-- 正反轉撥桿（forward/reverse） -->
+        <g filter="url(#m1dShadow)">
+          <rect x="225" y="278" width="28" height="10" rx="2" fill="url(#m1dBlack)"/>
+          <polygon points="232,283 228,287 232,287" fill="#22c55e"/>
+          <text x="246" y="286" font-size="8" fill="#fbbf24" font-weight="700" font-family="Inter">FWD</text>
+        </g>
+
+        <!-- 電池（底部） -->
+        <g filter="url(#m1dShadow)">
+          <rect x="170" y="428" width="120" height="50" rx="6" fill="url(#m1dBlack)"/>
+          <!-- 電池接點 -->
+          <rect x="188" y="428" width="5" height="8" fill="#fbbf24"/>
+          <rect x="267" y="428" width="5" height="8" fill="#fbbf24"/>
+          <!-- 電量指示 -->
+          <g fill="#22c55e">
+            <rect x="182" y="450" width="8" height="14" rx="1"/>
+            <rect x="194" y="450" width="8" height="14" rx="1"/>
+            <rect x="206" y="450" width="8" height="14" rx="1"/>
+          </g>
+          <text x="250" y="462" font-size="10" fill="#9ca3af" font-weight="700" font-family="Inter">18V 5Ah</text>
+        </g>
+
+        <!-- 扭力環（離合器調整環） -->
+        <g filter="url(#m1dShadow)">
+          <circle cx="360" cy="230" r="46" fill="url(#m1dBlack)"/>
+          <circle cx="360" cy="230" r="40" fill="url(#m1dBody)"/>
+          <circle cx="360" cy="230" r="28" fill="url(#m1dBlack)"/>
+          <!-- 刻度 -->
+          <g font-size="7" fill="#fbbf24" font-weight="700" font-family="Inter">
+            <text x="360" y="200" text-anchor="middle">10</text>
+            <text x="386" y="223" text-anchor="middle">5</text>
+            <text x="394" y="234" text-anchor="middle">⊕</text>
+            <text x="334" y="234" text-anchor="middle">15</text>
+            <text x="360" y="270" text-anchor="middle">1</text>
+          </g>
+          <polygon points="360,190 365,200 355,200" fill="#fff"/>
+        </g>
+
+        <!-- 夾頭（chuck，金屬） -->
+        <g filter="url(#m1dShadow)">
+          <path d="M 395 205 L 425 215 L 425 250 L 395 260 Z" fill="url(#m1dMetal)"/>
+          <rect x="423" y="208" width="56" height="50" rx="3" fill="url(#m1dMetal)"/>
+          <g stroke="#4b5563" stroke-width="1" opacity=".6">
+            <line x1="428" y1="216" x2="478" y2="216"/>
+            <line x1="428" y1="225" x2="478" y2="225"/>
+            <line x1="428" y1="235" x2="478" y2="235"/>
+            <line x1="428" y1="245" x2="478" y2="245"/>
+          </g>
+          <polygon points="479,208 502,225 502,243 479,258" fill="#9ca3af"/>
+          <line x1="486" y1="218" x2="498" y2="226" stroke="#4b5563" stroke-width="1.5"/>
+          <line x1="486" y1="248" x2="498" y2="240" stroke="#4b5563" stroke-width="1.5"/>
+        </g>
+
+        <!-- 鑽頭（drill bit） -->
+        <g filter="url(#m1dShadow)">
+          <rect x="502" y="228" width="48" height="10" fill="#6b7280"/>
+          <g stroke="#374151" stroke-width="1">
+            <line x1="505" y1="228" x2="510" y2="238"/>
+            <line x1="513" y1="228" x2="518" y2="238"/>
+            <line x1="521" y1="228" x2="526" y2="238"/>
+            <line x1="529" y1="228" x2="534" y2="238"/>
+            <line x1="537" y1="228" x2="542" y2="238"/>
+          </g>
+          <polygon points="550,228 562,233 550,238" fill="#374151"/>
+        </g>
+
+        <!-- LED 工作燈 -->
+        <circle cx="410" cy="290" r="6" fill="#fbbf24" opacity=".9">
+          <animate attributeName="opacity" values=".9;.3;.9" dur="1.5s" repeatCount="indefinite"/>
+        </circle>
+        <ellipse cx="460" cy="290" rx="60" ry="8" fill="#fbbf24" opacity=".15"/>
+
+        <!-- 馬達標示（後端） -->
+        <g transform="translate(140,230)" filter="url(#m1dShadow)">
+          <circle cx="0" cy="0" r="22" fill="url(#m1dBlack)"/>
+          <circle cx="0" cy="0" r="14" fill="#fbbf24" opacity=".4"/>
+          <text x="0" y="3" text-anchor="middle" font-size="9" fill="#fbbf24" font-weight="800" font-family="Inter">M</text>
+        </g>
+
+        <!-- 互動熱點 -->
+        <g id="hotspots">
+          <g class="hotspot-group" data-id="trigger"><circle class="hotspot-pulse" cx="230" cy="325" r="14"><animate attributeName="r" values="14;22;14" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0;1" dur="2s" repeatCount="indefinite"/></circle><circle class="hotspot" cx="230" cy="325" r="14"/><text class="hotspot-label" x="230" y="329">1</text></g>
+          <g class="hotspot-group" data-id="reverse"><circle class="hotspot" cx="240" cy="283" r="14"/><text class="hotspot-label" x="240" y="287">2</text></g>
+          <g class="hotspot-group" data-id="torque"><circle class="hotspot" cx="360" cy="230" r="14"/><text class="hotspot-label" x="360" y="234">3</text></g>
+          <g class="hotspot-group" data-id="chuck"><circle class="hotspot" cx="450" cy="233" r="14"/><text class="hotspot-label" x="450" y="237">4</text></g>
+          <g class="hotspot-group" data-id="bit"><circle class="hotspot" cx="525" cy="233" r="14"/><text class="hotspot-label" x="525" y="237">5</text></g>
+          <g class="hotspot-group" data-id="battery"><circle class="hotspot" cx="230" cy="450" r="14"/><text class="hotspot-label" x="230" y="454">6</text></g>
+          <g class="hotspot-group" data-id="motor"><circle class="hotspot" cx="140" cy="230" r="14"/><text class="hotspot-label" x="140" y="234">7</text></g>
+          <g class="hotspot-group" data-id="grip"><circle class="hotspot" cx="225" cy="380" r="14"/><text class="hotspot-label" x="225" y="384">8</text></g>
+        </g>
+      </svg>
+    </div>
+    <div class="parts-info" id="parts-info">
+      <div class="empty"><div class="empty-icon">👆</div><p style="font-size:16px;font-weight:600">點擊黃色數字</p><p style="font-size:13px;opacity:.7">8 個部件都認完才能進下一關</p></div>
+    </div>
+  </div>
+  <div class="parts-checklist" id="parts-checklist"></div>
+
+  <section class="panel">
+    <h3>🌐 3D 互動檢視</h3>
+    <p class="muted" style="margin-bottom:14px">下方為真實手電鑽的 3D 模型，由 Sketchfab 社群提供（CC-BY 授權）。滑鼠拖曳旋轉、滾輪縮放。</p>
+    <div style="position:relative;width:100%;aspect-ratio:16/9;background:#1a1a1a;border-radius:12px;overflow:hidden;border:1px solid var(--border)">
+      <iframe title="Cordless Drill" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true"
+        allow="autoplay; fullscreen; xr-spatial-tracking"
+        src="https://sketchfab.com/models/bbb5e1f4d39d4ce4b5a8b1c2a3a3a3a3/embed?autospin=0.2&autostart=1&preload=1&transparent=0&ui_theme=dark"
+        style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
+    </div>
+    <p style="font-size:11px;color:var(--text-muted);margin-top:10px;text-align:center">
+      📷 模型來源：Sketchfab community · CC-BY 4.0
+    </p>
+  </section>
+
+  <div class="module-nav-bottom"><a href="../index.html" class="btn btn-ghost">← 回首頁</a><a href="module2.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關：安全規範 →</a></div>
+</main>
+<script src="../../js/main.js"></script>
+<script src="../../js/audio.js"></script>
+<script src="../js/module1.js"></script>
+</body>
+</html>

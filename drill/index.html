@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>數位手電鑽 ｜ 生活科技互動教學平台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/svg-effects.css">
+<link rel="stylesheet" href="css/drill.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🔩%3C/text%3E%3C/svg%3E">
+</head>
+<body class="home drill-theme">
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">🔩</span>
+    <div>
+      <h1>數位手電鑽</h1>
+      <p class="subtitle">生活科技互動教學平台</p>
+    </div>
+  </div>
+  <nav class="topnav">
+    <a href="#modules">學習模組</a>
+    <a href="../" style="color:var(--primary-dark);font-weight:600">← 平台首頁</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-text">
+      <span class="badge">108 課綱・2上 關卡 0 電動機具</span>
+      <h2>第一次拿手電鑽，<br>先把扭力與夾頭搞懂</h2>
+      <p>手電鑽是生活科技教室最常用的電動機具之一。本平台帶你認識結構、學會安全握法、選對鑽頭與扭力、模擬鑽孔過程，並對照 8 種常見鑽孔故障與排除方法。</p>
+      <div class="hero-cta">
+        <a href="pages/module1.html" class="btn btn-primary">開始學習 →</a>
+        <a href="#modules" class="btn btn-ghost">看模組地圖</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <svg viewBox="0 0 480 380" class="hero-drill svg-shadow-med">
+        <defs>
+          <linearGradient id="drillBody" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="#FBBF24"/>
+            <stop offset=".5" stop-color="#F59E0B"/>
+            <stop offset="1" stop-color="#B45309"/>
+          </linearGradient>
+          <linearGradient id="drillBlack" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="#374151"/>
+            <stop offset="1" stop-color="#111827"/>
+          </linearGradient>
+          <linearGradient id="chuckMetal" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="#e5e7eb"/>
+            <stop offset=".5" stop-color="#9ca3af"/>
+            <stop offset="1" stop-color="#4b5563"/>
+          </linearGradient>
+          <filter id="drillShadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="5"/>
+            <feOffset dx="0" dy="6"/>
+            <feComponentTransfer><feFuncA type="linear" slope="0.25"/></feComponentTransfer>
+            <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <ellipse cx="240" cy="340" rx="200" ry="14" fill="rgba(0,0,0,.15)"/>
+
+        <!-- 機身（黃色主體）-->
+        <g filter="url(#drillShadow)">
+          <!-- 馬達後段（圓柱） -->
+          <rect x="120" y="120" width="170" height="90" rx="14" fill="url(#drillBody)"/>
+          <!-- 馬達散熱孔 -->
+          <g fill="rgba(0,0,0,.25)">
+            <rect x="135" y="135" width="3" height="60" rx="1"/>
+            <rect x="145" y="135" width="3" height="60" rx="1"/>
+            <rect x="155" y="135" width="3" height="60" rx="1"/>
+            <rect x="165" y="135" width="3" height="60" rx="1"/>
+          </g>
+          <!-- 上方標籤條 -->
+          <rect x="135" y="128" width="140" height="10" fill="#111827"/>
+          <text x="205" y="136" text-anchor="middle" fill="#fbbf24" font-size="8" font-weight="800" font-family="Inter">CORDLESS DRILL 18V</text>
+        </g>
+
+        <!-- 把手（豎直部分） -->
+        <g filter="url(#drillShadow)">
+          <path d="M 180 210 Q 175 210 173 218 L 168 290 Q 167 305 178 308 L 235 308 Q 246 305 245 290 L 240 218 Q 238 210 232 210 Z" fill="url(#drillBody)"/>
+          <!-- 防滑紋 -->
+          <g stroke="#92400e" stroke-width="1.5" opacity=".5">
+            <line x1="180" y1="240" x2="234" y2="240"/>
+            <line x1="180" y1="260" x2="234" y2="260"/>
+            <line x1="180" y1="280" x2="234" y2="280"/>
+          </g>
+        </g>
+
+        <!-- 扳機 -->
+        <g filter="url(#drillShadow)">
+          <path d="M 196 215 Q 192 215 190 222 L 188 245 Q 188 252 196 252 L 218 252 Q 224 252 224 246 L 222 222 Q 220 215 216 215 Z" fill="url(#drillBlack)"/>
+          <rect x="200" y="223" width="20" height="2" fill="#374151"/>
+        </g>
+
+        <!-- 正反轉開關 -->
+        <g filter="url(#drillShadow)">
+          <rect x="205" y="200" width="22" height="8" rx="2" fill="url(#drillBlack)"/>
+          <circle cx="210" cy="204" r="2" fill="#fbbf24"/>
+          <text x="220" y="207" font-size="7" fill="#fbbf24" font-weight="700" font-family="Inter">FWD</text>
+        </g>
+
+        <!-- 電池（底部） -->
+        <g filter="url(#drillShadow)">
+          <rect x="160" y="305" width="100" height="40" rx="6" fill="url(#drillBlack)"/>
+          <!-- 電池接點 -->
+          <rect x="175" y="305" width="4" height="6" fill="#fbbf24"/>
+          <rect x="240" y="305" width="4" height="6" fill="#fbbf24"/>
+          <!-- 電量指示 -->
+          <g fill="#22c55e">
+            <rect x="170" y="325" width="6" height="12" rx="1"/>
+            <rect x="180" y="325" width="6" height="12" rx="1"/>
+            <rect x="190" y="325" width="6" height="12" rx="1"/>
+          </g>
+          <text x="220" y="334" font-size="9" fill="#9ca3af" font-weight="700" font-family="Inter">18V 5Ah</text>
+        </g>
+
+        <!-- 扭力環（離合器調整環） -->
+        <g filter="url(#drillShadow)">
+          <circle cx="305" cy="165" r="32" fill="url(#drillBlack)"/>
+          <circle cx="305" cy="165" r="28" fill="url(#drillBody)"/>
+          <circle cx="305" cy="165" r="20" fill="url(#drillBlack)"/>
+          <!-- 數字刻度 -->
+          <g font-size="6" fill="#fbbf24" font-weight="700" font-family="Inter">
+            <text x="305" y="142" text-anchor="middle">10</text>
+            <text x="325" y="160" text-anchor="middle">5</text>
+            <text x="325" y="175" text-anchor="middle">⊕</text>
+            <text x="285" y="160" text-anchor="middle">15</text>
+            <text x="305" y="195" text-anchor="middle">1</text>
+          </g>
+          <!-- 指示三角 -->
+          <polygon points="305,135 309,142 301,142" fill="#fff"/>
+        </g>
+
+        <!-- 夾頭（金屬部分） -->
+        <g filter="url(#drillShadow)">
+          <!-- 圓錐過渡 -->
+          <path d="M 330 145 L 360 152 L 360 182 L 330 188 Z" fill="url(#chuckMetal)"/>
+          <!-- 主夾頭體 -->
+          <rect x="358" y="148" width="44" height="40" rx="3" fill="url(#chuckMetal)"/>
+          <!-- 夾頭螺紋 -->
+          <g stroke="#4b5563" stroke-width="1" opacity=".6">
+            <line x1="362" y1="155" x2="398" y2="155"/>
+            <line x1="362" y1="162" x2="398" y2="162"/>
+            <line x1="362" y1="170" x2="398" y2="170"/>
+            <line x1="362" y1="178" x2="398" y2="178"/>
+          </g>
+          <!-- 夾頭前端（鑽頭爪） -->
+          <polygon points="402,148 420,160 420,176 402,188" fill="#9ca3af"/>
+          <!-- 三個夾爪示意 -->
+          <line x1="408" y1="155" x2="416" y2="161" stroke="#4b5563" stroke-width="1.5"/>
+          <line x1="408" y1="180" x2="416" y2="174" stroke="#4b5563" stroke-width="1.5"/>
+        </g>
+
+        <!-- 鑽頭 -->
+        <g filter="url(#drillShadow)">
+          <rect x="420" y="164" width="36" height="8" fill="#6b7280"/>
+          <!-- 螺旋紋 -->
+          <g stroke="#374151" stroke-width="0.8">
+            <line x1="422" y1="164" x2="426" y2="172"/>
+            <line x1="428" y1="164" x2="432" y2="172"/>
+            <line x1="434" y1="164" x2="438" y2="172"/>
+            <line x1="440" y1="164" x2="444" y2="172"/>
+            <line x1="446" y1="164" x2="450" y2="172"/>
+          </g>
+          <polygon points="456,164 466,168 456,172" fill="#374151"/>
+        </g>
+
+        <!-- LED 工作燈 -->
+        <circle cx="335" cy="200" r="5" fill="#fbbf24" opacity=".9">
+          <animate attributeName="opacity" values=".9;.4;.9" dur="1.5s" repeatCount="indefinite"/>
+        </circle>
+        <ellipse cx="380" cy="200" rx="60" ry="10" fill="url(#drillBody)" opacity=".15"/>
+      </svg>
+    </div>
+  </section>
+
+  <section id="modules" class="modules">
+    <h3 class="section-title">五大學習模組</h3>
+    <p class="section-sub">從結構到實作，循序漸進學會手電鑽操作</p>
+    <div class="module-grid">
+      <a class="card card-1" href="pages/module1.html"><div class="card-num">01</div><div class="card-icon">🔍</div><h4>認識手電鑽</h4><p>扳機、扭力環、夾頭、鑽頭、電池、馬達、正反轉、握把 8 大部件。</p><span class="card-tag">15 分鐘</span></a>
+      <a class="card card-2" href="pages/module2.html"><div class="card-num">02</div><div class="card-icon">🛡️</div><h4>手電鑽安全規範</h4><p>服儀檢查、雙手握持、工件固定、鑽頭選擇、緊急處置。</p><span class="card-tag">必修・10 分鐘</span></a>
+      <a class="card card-3" href="pages/module3.html"><div class="card-num">03</div><div class="card-icon">📖</div><h4>鑽孔流程教學</h4><p>8 步驟：護具 → 選鑽頭 → 鎖夾頭 → 標位置 → 工件固定 → 鑽孔 → 退鑽 → 收工。</p><span class="card-tag">15 分鐘</span></a>
+      <a class="card card-4" href="pages/module4.html"><div class="card-num">04</div><div class="card-icon">🎮</div><h4>鑽孔參數模擬</h4><p>調整材料、鑽頭粗細、轉速、進刀力、扭力環，看鑽孔結果即時變化。</p><span class="card-tag">核心・25 分鐘</span></a>
+      <a class="card card-5" href="pages/module5.html"><div class="card-num">05</div><div class="card-icon">🔬</div><h4>故障排除圖鑑</h4><p>過熱燒孔、偏鑽、卡鑽、毛邊、鑽頭斷裂等 8 種常見問題。</p><span class="card-tag">15 分鐘</span></a>
+      <div class="card card-locked"><div class="card-num">👨‍🏫</div><div class="card-icon">📊</div><h4>教師後台</h4><p>班級進度、成績匯出（共用平台教師後台）。</p><span class="card-tag">教師專用</span></div>
+    </div>
+  </section>
+
+  <section class="about">
+    <h3 class="section-title">為什麼手電鑽要先在數位環境練？</h3>
+    <div class="reason-grid">
+      <div class="reason"><span>⚡</span><h4>瞬間轉速高</h4><p>無刷馬達可達 2000 RPM。一秒就能燒鑽頭、燒孔、爆裂底面。先看過再上機才安全。</p></div>
+      <div class="reason"><span>🎯</span><h4>扭力觀念複雜</h4><p>扭力環 1–20 段＋鑽孔模式，對應不同材料與螺絲。要先理解才會選對。</p></div>
+      <div class="reason"><span>🪵</span><h4>材料差異大</h4><p>木材、塑料、金屬鑽法完全不同。選錯鑽頭會壞工件也會壞鑽頭。</p></div>
+      <div class="reason"><span>🩹</span><h4>意外風險高</h4><p>單手握、衣袖捲入、工件飛起是教室最常見三大意外。要先排練過正確姿勢。</p></div>
+    </div>
+  </section>
+</main>
+
+<script src="../js/main.js"></script>
+<script src="../js/audio.js"></script>
+</body>
+</html>
