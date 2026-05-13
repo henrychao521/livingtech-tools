@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>能源系統 ｜ 生活科技互動教學平台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/svg-effects.css">
+<link rel="stylesheet" href="css/energy.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E⚡%3C/text%3E%3C/svg%3E">
+</head>
+<body class="home energy-theme">
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">⚡</span>
+    <div>
+      <h1>能源系統</h1>
+      <p class="subtitle">生活科技互動教學平台</p>
+    </div>
+  </div>
+  <nav class="topnav">
+    <a href="#modules">學習模組</a>
+    <a href="../" style="color:var(--primary-dark);font-weight:600">← 平台首頁</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-text">
+      <span class="badge">108 課綱・2上 K1 認識能源 + K3 能源與生活</span>
+      <h2>從太陽到家中電燈，<br>能源是怎麼轉換的？</h2>
+      <p>本平台覆蓋 5 種能源（化石、核能、太陽能、風力、水力）、6 種能量形式（動/熱/電/光/化學/位能）轉換、發電過程、家庭用電試算與節能策略。對應 2 上「認識能源」整章內容。</p>
+      <div class="hero-cta">
+        <a href="pages/module1.html" class="btn btn-primary">開始學習 →</a>
+        <a href="#modules" class="btn btn-ghost">看模組地圖</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <svg viewBox="0 0 480 360" class="hero-energy svg-shadow-med">
+        <defs>
+          <radialGradient id="sunG"><stop offset="0" stop-color="#FEF9C3"/><stop offset="1" stop-color="#CA8A04"/></radialGradient>
+          <linearGradient id="panelG" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#1E40AF"/><stop offset="1" stop-color="#1E3A8A"/></linearGradient>
+          <filter id="eShadow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur in="SourceAlpha" stdDeviation="4"/><feOffset dx="0" dy="5"/><feComponentTransfer><feFuncA type="linear" slope="0.22"/></feComponentTransfer><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+
+        <!-- 天空背景 -->
+        <rect x="0" y="0" width="480" height="280" fill="#DBEAFE" rx="14"/>
+        <rect x="0" y="280" width="480" height="80" fill="#a16207"/>
+
+        <!-- 太陽 -->
+        <g>
+          <circle cx="100" cy="80" r="40" fill="url(#sunG)"/>
+          <g stroke="#CA8A04" stroke-width="3" stroke-linecap="round">
+            <line x1="100" y1="20" x2="100" y2="30"/>
+            <line x1="100" y1="130" x2="100" y2="140"/>
+            <line x1="40" y1="80" x2="50" y2="80"/>
+            <line x1="150" y1="80" x2="160" y2="80"/>
+            <line x1="55" y1="35" x2="62" y2="42"/>
+            <line x1="145" y1="35" x2="138" y2="42"/>
+            <line x1="55" y1="125" x2="62" y2="118"/>
+            <line x1="145" y1="125" x2="138" y2="118"/>
+          </g>
+        </g>
+
+        <!-- 太陽能板 -->
+        <g filter="url(#eShadow)">
+          <rect x="200" y="120" width="180" height="100" fill="url(#panelG)" transform="skewX(-15)"/>
+          <g stroke="#3B82F6" stroke-width="1.5" transform="skewX(-15)">
+            <line x1="245" y1="120" x2="245" y2="220"/>
+            <line x1="290" y1="120" x2="290" y2="220"/>
+            <line x1="335" y1="120" x2="335" y2="220"/>
+            <line x1="200" y1="155" x2="380" y2="155"/>
+            <line x1="200" y1="190" x2="380" y2="190"/>
+          </g>
+          <rect x="170" y="220" width="20" height="60" fill="#475569"/>
+        </g>
+
+        <!-- 光箭頭 -->
+        <g stroke="#F59E0B" stroke-width="3" stroke-dasharray="5 3" fill="none">
+          <path d="M 130 100 L 200 140"/>
+          <path d="M 130 110 L 200 160"/>
+          <path d="M 130 120 L 200 180"/>
+        </g>
+
+        <!-- 電線通到房屋 -->
+        <path d="M 290 230 Q 360 250 410 270" stroke="#fbbf24" stroke-width="4" fill="none"/>
+        <!-- 房屋 -->
+        <g filter="url(#eShadow)">
+          <polygon points="380,250 440,250 410,220" fill="#7c2d12"/>
+          <rect x="385" y="250" width="50" height="40" fill="#fef3c7"/>
+          <rect x="402" y="265" width="16" height="20" fill="#a16207"/>
+          <circle cx="395" cy="265" r="4" fill="#fbbf24"/>
+          <circle cx="425" cy="265" r="4" fill="#fbbf24"/>
+        </g>
+
+        <!-- 標題 -->
+        <text x="240" y="40" text-anchor="middle" font-size="14" font-weight="800" fill="#854D0E" font-family="Inter">SOLAR ENERGY ・ 光能 → 電能</text>
+      </svg>
+    </div>
+  </section>
+
+  <section id="modules" class="modules">
+    <h3 class="section-title">五大學習模組</h3>
+    <p class="section-sub">從能源分類到節能行動</p>
+    <div class="module-grid">
+      <a class="card card-1" href="pages/module1.html"><div class="card-num">01</div><div class="card-icon">🔍</div><h4>認識 5 種能源</h4><p>化石、核能、太陽能、風力、水力——各自的優勢、限制與台灣現況。</p><span class="card-tag">15 分鐘</span></a>
+      <a class="card card-2" href="pages/module2.html"><div class="card-num">02</div><div class="card-icon">🧩</div><h4>能源轉換</h4><p>6 種能量形式（動/熱/電/光/化學/位能）與彼此轉換鏈。</p><span class="card-tag">必修・15 分鐘</span></a>
+      <a class="card card-3" href="pages/module3.html"><div class="card-num">03</div><div class="card-icon">📖</div><h4>發電過程 8 步驟</h4><p>從燃料到家中插座的完整能源傳輸鏈，並計算能源耗損。</p><span class="card-tag">15 分鐘</span></a>
+      <a class="card card-4" href="pages/module4.html"><div class="card-num">04</div><div class="card-icon">🎮</div><h4>能源轉換模擬器</h4><p>5 種發電方式可選，看每種發電的效率、成本、CO₂ 排放即時比較。</p><span class="card-tag">核心・20 分鐘</span></a>
+      <a class="card card-5" href="pages/module5.html"><div class="card-num">05</div><div class="card-icon">🏆</div><h4>家庭用電 + 節能</h4><p>計算家中電器一個月用電量、電費、節能策略對 CO₂ 的影響。</p><span class="card-tag">15 分鐘</span></a>
+      <div class="card card-locked"><div class="card-num">👨‍🏫</div><div class="card-icon">📊</div><h4>教師後台</h4><p>班級進度、成績匯出（共用平台教師後台）。</p><span class="card-tag">教師專用</span></div>
+    </div>
+  </section>
+
+  <section class="about">
+    <h3 class="section-title">為什麼能源要先在數位環境練？</h3>
+    <div class="reason-grid">
+      <div class="reason"><span>🌐</span><h4>全球議題</h4><p>氣候變遷、能源轉型不是抽象口號——透過模擬器看數據才有感。</p></div>
+      <div class="reason"><span>📊</span><h4>數字會說話</h4><p>「核能效率 33%」「燃煤 CO₂ 約 900g/kWh」——學生先在數據上比對，再做價值判斷。</p></div>
+      <div class="reason"><span>💡</span><h4>節能要算才知道</h4><p>家中每月用電量 300 度，可以省多少？換 LED、太陽能板、節能家電的差異一試算就懂。</p></div>
+      <div class="reason"><span>🇹🇼</span><h4>台灣能源現況</h4><p>2024 年燃煤 43%、燃氣 38%、核能 5%、再生能源 11%——學生要先認識本國能源結構。</p></div>
+    </div>
+  </section>
+</main>
+
+<script src="../js/main.js"></script>
+<script src="../js/audio.js"></script>
+</body>
+</html>

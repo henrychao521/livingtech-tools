@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 4：能源轉換模擬器</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/energy.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E⚡%3C/text%3E%3C/svg%3E">
+<style>.e-tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-bottom:14px}.e-tab{padding:8px 4px;text-align:center;font-size:11px;border-radius:6px;background:#f1f5f9;cursor:pointer;font-weight:700}.e-tab.active{background:#CA8A04;color:#fff}.estimates{background:var(--primary-light);border-radius:10px;padding:12px;margin-top:8px}.estimates .row{display:flex;justify-content:space-between;padding:4px 0;font-size:13px}.estimates .row strong{color:var(--primary-dark);font-family:var(--font-mono)}</style>
+</head><body class="energy-theme">
+<header class="topbar"><div class="brand"><span class="logo">⚡</span><div><h1>能源系統</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<main class="module-page">
+  <div class="module-header"><div><span class="module-step" style="background:var(--success-light);color:#1b6e3a">MODULE 04 ・ 核心</span><h2>5 種發電方式比較</h2><p class="muted">選擇能源類型，比較效率、成本、CO₂ 排放。</p></div></div>
+  <section class="panel">
+    <div class="e-tabs">
+      <div class="e-tab active" data-e="fossil">🛢 燃煤</div>
+      <div class="e-tab" data-e="gas">⛽ 燃氣</div>
+      <div class="e-tab" data-e="nuclear">☢ 核能</div>
+      <div class="e-tab" data-e="solar">☀ 太陽能</div>
+      <div class="e-tab" data-e="wind">🌬 風力</div>
+    </div>
+    <div id="info" style="background:#fff;padding:18px;border-radius:12px"></div>
+    <div class="estimates">
+      <div class="row"><span>發電效率</span><strong id="r-eff">—</strong></div>
+      <div class="row"><span>每度電成本（NTD）</span><strong id="r-cost">—</strong></div>
+      <div class="row"><span>CO₂ 排放（g/kWh）</span><strong id="r-co2">—</strong></div>
+      <div class="row"><span>建廠成本（億/MW）</span><strong id="r-build">—</strong></div>
+      <div class="row"><span>台灣 2024 佔比</span><strong id="r-share">—</strong></div>
+    </div>
+  </section>
+  <section class="panel"><h3>📊 能源排行</h3><div id="bars" style="display:grid;gap:14px"></div></section>
+  <div class="module-nav-bottom"><a href="module3.html" class="btn btn-ghost">← 上一關</a><a href="module5.html" class="btn btn-primary">下一關 →</a></div>
+</main>
+<script src="../../js/main.js"></script><script src="../../js/audio.js"></script><script src="../js/module4.js"></script>
+</body></html>
