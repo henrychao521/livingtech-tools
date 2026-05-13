@@ -75,36 +75,15 @@ function svgView(type, size = 80) {
   return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="background:${VIEW_BG};border-radius:4px">${inner}${shape()}</svg>`;
 }
 
-// 等角預覽 SVG：給 isoType，畫 isometric 視圖
+// 等角預覽：改用 OpenSCAD 預渲 PNG（精準等角投影 30°/30°/90° + 真實光影）
+// 路徑 models/orthographic/<name>-iso.png（由 scripts/build_models.sh 編譯產出）
+// type → 對應 .scad 檔名映射；M5 用的 type 與檔案命名不完全一致，這裡做別名表
+const ISO_FILE_MAP = { l: 'lblock' };  // 例：題目用 'l' 但檔名是 'lblock'
+
 function svgIso(type, size = 100) {
-  const s = size, c = s / 2, fill = '#6366F1', stroke = '#1E1B4B', side = '#4338CA', top = '#A5B4FC';
-  function draw() {
-    switch (type) {
-      case 'cube':
-        return `<polygon points="${c - 26},${c + 22} ${c},${c + 35} ${c + 26},${c + 22} ${c + 26},${c - 8} ${c},${c - 21} ${c - 26},${c - 8}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/><polygon points="${c - 26},${c + 22} ${c},${c + 35} ${c},${c + 5} ${c - 26},${c - 8}" fill="${side}" stroke="${stroke}" stroke-width="1.5"/><polygon points="${c + 26},${c + 22} ${c},${c + 35} ${c},${c + 5} ${c + 26},${c - 8}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/><polygon points="${c - 26},${c - 8} ${c},${c + 5} ${c + 26},${c - 8} ${c},${c - 21}" fill="${top}" stroke="${stroke}" stroke-width="1.5"/>`;
-      case 'cylinder':
-        return `<ellipse cx="${c}" cy="${c + 22}" rx="22" ry="7" fill="${side}" stroke="${stroke}" stroke-width="1.5"/><rect x="${c - 22}" y="${c - 14}" width="44" height="36" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/><ellipse cx="${c}" cy="${c - 14}" rx="22" ry="7" fill="${top}" stroke="${stroke}" stroke-width="1.5"/>`;
-      case 'cone':
-        return `<ellipse cx="${c}" cy="${c + 22}" rx="22" ry="7" fill="${side}" stroke="${stroke}" stroke-width="1.5"/><polygon points="${c - 22},${c + 22} ${c + 22},${c + 22} ${c},${c - 28}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/><ellipse cx="${c}" cy="${c + 22}" rx="22" ry="7" fill="none" stroke="${stroke}" stroke-width="1.5"/>`;
-      case 'sphere':
-        return `<circle cx="${c}" cy="${c + 4}" r="26" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/><ellipse cx="${c}" cy="${c + 4}" rx="26" ry="9" fill="none" stroke="${stroke}" stroke-width="1" opacity="0.5"/><ellipse cx="${c}" cy="${c + 4}" rx="9" ry="26" fill="none" stroke="${stroke}" stroke-width="1" opacity="0.5"/>`;
-      case 'lblock':
-        return `<g><polygon points="${c - 28},${c + 20} ${c - 4},${c + 32} ${c + 28},${c + 20} ${c + 28},${c - 4} ${c + 6},${c - 4} ${c + 6},${c + 10} ${c - 12},${c + 18} ${c - 28},${c + 8}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/><polygon points="${c - 28},${c + 8} ${c - 28},${c + 20} ${c - 4},${c + 32} ${c - 4},${c + 18}" fill="${side}" stroke="${stroke}" stroke-width="1.5"/><polygon points="${c + 6},${c - 4} ${c + 6},${c + 10} ${c - 12},${c + 18} ${c - 28},${c + 8} ${c - 14},${c} ${c - 6},${c - 6}" fill="${top}" stroke="${stroke}" stroke-width="1.5"/></g>`;
-      case 'step':
-        return `<g><polygon points="${c - 28},${c + 18} ${c - 6},${c + 30} ${c + 28},${c + 18} ${c + 28},${c} ${c},${c} ${c},${c - 12} ${c - 28},${c - 12}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/><polygon points="${c - 28},${c - 12} ${c - 28},${c + 18} ${c - 6},${c + 30} ${c - 6},${c}" fill="${side}" stroke="${stroke}" stroke-width="1.5"/><polygon points="${c - 28},${c - 12} ${c},${c - 12} ${c + 22},${c - 24} ${c - 6},${c - 24}" fill="${top}" stroke="${stroke}" stroke-width="1.5"/><polygon points="${c},${c - 12} ${c},${c} ${c + 28},${c} ${c + 22},${c - 24} ${c + 22},${c - 12}" fill="${top}" stroke="${stroke}" stroke-width="1.5"/></g>`;
-      case 'hole':
-        return `<g><polygon points="${c - 28},${c + 10} ${c - 4},${c + 22} ${c + 28},${c + 10} ${c + 28},${c - 10} ${c + 4},${c - 22} ${c - 28},${c - 10}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/><circle cx="${c}" cy="${c - 6}" r="7" fill="${VIEW_BG}" stroke="${stroke}" stroke-width="1.5"/><polygon points="${c - 28},${c + 10} ${c - 4},${c + 22} ${c - 4},${c + 2} ${c - 28},${c - 10}" fill="${side}" stroke="${stroke}" stroke-width="1.5"/></g>`;
-      case 'tslot':
-        return `<g><polygon points="${c - 28},${c + 18} ${c - 6},${c + 30} ${c + 28},${c + 18} ${c + 28},${c - 4} ${c + 8},${c - 4} ${c + 8},${c - 14} ${c - 8},${c - 14} ${c - 8},${c - 4} ${c - 28},${c - 4}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/></g>`;
-      case 'bracket':
-        return `<g><polygon points="${c - 26},${c + 8} ${c - 8},${c + 18} ${c + 22},${c + 8} ${c + 22},${c + 2} ${c - 4},${c + 2} ${c - 4},${c - 14} ${c - 26},${c - 14}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/></g>`;
-      case 'pyramid':
-        return `<g><polygon points="${c - 26},${c + 20} ${c},${c + 32} ${c + 26},${c + 20} ${c},${c - 26}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/><polygon points="${c - 26},${c + 20} ${c},${c + 32} ${c},${c - 26}" fill="${side}" stroke="${stroke}" stroke-width="1.5"/></g>`;
-      default:
-        return `<text x="${c}" y="${c}" text-anchor="middle" font-size="10" fill="${stroke}">?</text>`;
-    }
-  }
-  return `<svg width="${s}" height="${s}" viewBox="0 0 ${s} ${s}" xmlns="http://www.w3.org/2000/svg">${draw()}</svg>`;
+  const file = ISO_FILE_MAP[type] || type;
+  // 用 <img> 嵌入 PNG，外面再包一層 <svg> 保持原 API 介面（同尺寸、可內嵌）
+  return `<img src="../../models/orthographic/${file}-iso.png" width="${size}" height="${size}" style="background:#1E293B;border-radius:4px;display:block;margin:0 auto" alt="${type}" loading="lazy">`;
 }
 
 // =============================================================
