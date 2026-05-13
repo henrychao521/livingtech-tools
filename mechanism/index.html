@@ -50,38 +50,61 @@
         </defs>
         <ellipse cx="240" cy="330" rx="200" ry="14" fill="rgba(0,0,0,.15)"/>
 
-        <!-- 曲柄連桿動畫示意（中央） -->
+        <!--
+          曲柄滑塊機構幾何（中央）— 依公式 x_slider = Cx + R·cosθ + √(L² − (R·sinθ)²) 計算
+          參數：圓心 (Cx,Cy) = (120, 180)，曲柄半徑 R = 50，連桿長 L = 150
+          四個關鍵姿態：
+            θ=0°   pin=(170,180), slider=320  ← 死點（最右）
+            θ=90°  pin=(120,130), slider≈261  ← 上方
+            θ=180° pin=( 70,180), slider=220  ← 死點（最左）
+            θ=270° pin=(120,230), slider≈261  ← 下方
+          滑塊行程 = 2R = 100；軌道範圍 x ∈ [200, 340]（rect.x 對齊滑塊左緣）。
+        -->
         <g filter="url(#mShadow)">
-          <!-- 機架線 -->
-          <line x1="60" y1="180" x2="420" y2="180" stroke="#475569" stroke-width="3"/>
-          <!-- 曲柄圓盤 -->
+          <!-- 滑軌（畫在最底層，包覆整段行程）-->
+          <rect x="200" y="155" width="140" height="50" rx="3" fill="#F8FAFC" stroke="#475569" stroke-width="2" stroke-dasharray="4 3"/>
+
+          <!-- 機架線 / 滑塊軌道中心線 -->
+          <line x1="60" y1="180" x2="380" y2="180" stroke="#475569" stroke-width="3"/>
+
+          <!-- 半徑 R 與連桿 L 參考標註（淡灰）-->
+          <text x="120" y="148" text-anchor="middle" font-size="10" fill="#94A3B8" font-family="Inter" font-style="italic">R = 50</text>
+          <text x="245" y="170" text-anchor="middle" font-size="10" fill="#94A3B8" font-family="Inter" font-style="italic">L = 150</text>
+
+          <!-- 曲柄圓盤本體 -->
           <circle cx="120" cy="180" r="50" fill="#CCFBF1" stroke="#14B8A6" stroke-width="4"/>
+          <!-- 圓盤上的半徑指示線（隨曲柄銷一起轉動）-->
+          <line x1="120" y1="180" x2="170" y2="180" stroke="#0D9488" stroke-width="2" stroke-dasharray="3 2">
+            <animateTransform attributeName="transform" type="rotate" from="0 120 180" to="360 120 180" dur="3s" repeatCount="indefinite"/>
+          </line>
+          <!-- 圓盤中心軸 -->
           <circle cx="120" cy="180" r="10" fill="#0F766E"/>
-          <!-- 曲柄銷（動態位置 0°） -->
+
+          <!-- 曲柄銷（紅色）— 圍繞圓盤中心 (120,180) 旋轉，初始在 0°（東邊）-->
           <circle cx="170" cy="180" r="8" fill="#DC2626">
             <animateTransform attributeName="transform" type="rotate" from="0 120 180" to="360 120 180" dur="3s" repeatCount="indefinite"/>
           </circle>
-          <!-- 連桿 -->
-          <line x1="170" y1="180" x2="320" y2="180" stroke="#0F766E" stroke-width="6" stroke-linecap="round">
-            <animate attributeName="x1" values="170;120;70;120;170" dur="3s" repeatCount="indefinite"/>
-            <animate attributeName="y1" values="180;230;180;130;180" dur="3s" repeatCount="indefinite"/>
-            <animate attributeName="x2" values="320;330;320;310;320" dur="3s" repeatCount="indefinite"/>
+
+          <!-- 連桿：從曲柄銷連到滑塊左緣。x2 與 rect.x 同步 -->
+          <line x1="170" y1="180" x2="300" y2="180" stroke="#0F766E" stroke-width="6" stroke-linecap="round">
+            <animate attributeName="x1" values="170;120; 70;120;170" keyTimes="0;0.25;0.5;0.75;1" dur="3s" repeatCount="indefinite"/>
+            <animate attributeName="y1" values="180;130;180;230;180" keyTimes="0;0.25;0.5;0.75;1" dur="3s" repeatCount="indefinite"/>
+            <animate attributeName="x2" values="300;241;200;241;300" keyTimes="0;0.25;0.5;0.75;1" dur="3s" repeatCount="indefinite"/>
           </line>
-          <!-- 滑塊 -->
-          <rect x="300" y="160" width="40" height="40" rx="3" fill="#14B8A6">
-            <animate attributeName="x" values="300;260;300;340;300" dur="3s" repeatCount="indefinite"/>
+
+          <!-- 滑塊：行程 2R = 100，rect.x ∈ [200, 300]（rect 寬 40，左緣與連桿端點對齊）-->
+          <rect x="300" y="160" width="40" height="40" rx="3" fill="#14B8A6" stroke="#0F766E" stroke-width="1.5">
+            <animate attributeName="x" values="300;241;200;241;300" keyTimes="0;0.25;0.5;0.75;1" dur="3s" repeatCount="indefinite"/>
           </rect>
-          <!-- 滑軌 -->
-          <rect x="260" y="155" width="120" height="50" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="4 3"/>
         </g>
 
         <!-- 標題 -->
         <text x="240" y="50" text-anchor="middle" font-size="16" font-weight="800" fill="#0F766E" font-family="Inter">CRANK-SLIDER 曲柄滑塊機構</text>
-        <text x="240" y="75" text-anchor="middle" font-size="13" fill="#14B8A6" font-family="Inter">圓周旋轉 → 直線往復</text>
+        <text x="240" y="75" text-anchor="middle" font-size="13" fill="#14B8A6" font-family="Inter">圓周旋轉 → 直線往復（行程 = 2R）</text>
 
-        <!-- 標籤 -->
+        <!-- 標籤（對齊各構件 x 中心）-->
         <text x="120" y="270" text-anchor="middle" font-size="11" fill="#0F766E" font-weight="700">驅動圓盤</text>
-        <text x="240" y="270" text-anchor="middle" font-size="11" fill="#0F766E" font-weight="700">連桿</text>
+        <text x="220" y="270" text-anchor="middle" font-size="11" fill="#0F766E" font-weight="700">連桿</text>
         <text x="320" y="270" text-anchor="middle" font-size="11" fill="#0F766E" font-weight="700">滑塊</text>
       </svg>
     </div>
