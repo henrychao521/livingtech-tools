@@ -8,14 +8,13 @@ const TYPES = [
   { id: 'tensile', name: '張弦 / 張拉 Tensile', principle: '用纖維、薄膜、纜索組成的純張力結構。沒有壓桿，所以可以非常輕。形狀依張力分布動態確定。', uses: '帳篷、體育場屋頂、雕塑', example: 'Munich Olympic Stadium 慕尼黑奧運場 / Denver Airport', viz: 'tensile' },
 ];
 
-const VIZ = {
-  truss: `<svg viewBox="0 0 200 100"><line x1="20" y1="80" x2="180" y2="80" stroke="#1E3A8A" stroke-width="3"/><line x1="20" y1="80" x2="60" y2="30" stroke="#1D4ED8" stroke-width="2"/><line x1="60" y1="30" x2="100" y2="80" stroke="#1D4ED8" stroke-width="2"/><line x1="100" y1="80" x2="140" y2="30" stroke="#1D4ED8" stroke-width="2"/><line x1="140" y1="30" x2="180" y2="80" stroke="#1D4ED8" stroke-width="2"/><line x1="60" y1="30" x2="140" y2="30" stroke="#1E3A8A" stroke-width="3"/><line x1="100" y1="30" x2="100" y2="80" stroke="#3B82F6" stroke-width="2"/></svg>`,
-  arch: `<svg viewBox="0 0 200 100"><path d="M 20 90 Q 100 0 180 90" stroke="#1E3A8A" stroke-width="6" fill="none"/><rect x="15" y="88" width="14" height="14" fill="#a16207"/><rect x="171" y="88" width="14" height="14" fill="#a16207"/></svg>`,
-  cable: `<svg viewBox="0 0 200 100"><rect x="40" y="20" width="6" height="60" fill="#1E3A8A"/><rect x="154" y="20" width="6" height="60" fill="#1E3A8A"/><path d="M 20 30 Q 100 70 180 30" stroke="#1D4ED8" stroke-width="4" fill="none"/><line x1="60" y1="40" x2="60" y2="80" stroke="#3B82F6" stroke-width="1.5"/><line x1="80" y1="48" x2="80" y2="80" stroke="#3B82F6" stroke-width="1.5"/><line x1="100" y1="53" x2="100" y2="80" stroke="#3B82F6" stroke-width="1.5"/><line x1="120" y1="48" x2="120" y2="80" stroke="#3B82F6" stroke-width="1.5"/><line x1="140" y1="40" x2="140" y2="80" stroke="#3B82F6" stroke-width="1.5"/><line x1="20" y1="82" x2="180" y2="82" stroke="#1E3A8A" stroke-width="4"/></svg>`,
-  frame: `<svg viewBox="0 0 200 100"><rect x="40" y="20" width="120" height="65" fill="none" stroke="#1E3A8A" stroke-width="4"/><line x1="40" y1="50" x2="160" y2="50" stroke="#1D4ED8" stroke-width="3"/><line x1="100" y1="20" x2="100" y2="85" stroke="#1D4ED8" stroke-width="3"/><rect x="15" y="85" width="170" height="6" fill="#a16207"/></svg>`,
-  shell: `<svg viewBox="0 0 200 100"><path d="M 30 85 Q 100 5 170 85 Z" fill="#DBEAFE" stroke="#1E3A8A" stroke-width="3"/><path d="M 50 70 Q 100 30 150 70" stroke="#3B82F6" stroke-width="1" fill="none" opacity=".6"/></svg>`,
-  tensile: `<svg viewBox="0 0 200 100"><rect x="20" y="20" width="4" height="65" fill="#1E3A8A"/><rect x="176" y="20" width="4" height="65" fill="#1E3A8A"/><path d="M 22 25 Q 100 80 178 25" stroke="#1D4ED8" stroke-width="3" fill="none"/><path d="M 22 35 Q 100 90 178 35" stroke="#3B82F6" stroke-width="2" fill="#DBEAFE" opacity=".5"/></svg>`,
-};
+// 立體圖：OpenSCAD 參數化建模 → STL → 等角 PNG
+// 6 個 .scad 檔在 models/structure-sim/，由 scripts/build_models.sh 自動編譯
+const VIZ_NAMES = ['truss', 'arch', 'cable', 'frame', 'shell', 'tensile'];
+const VIZ = Object.fromEntries(VIZ_NAMES.map(n => [
+  n,
+  `<img src="../../models/structure-sim/${n}-iso.png" alt="${n}" style="width:100%;height:140px;object-fit:contain;background:#1E293B;border-radius:8px;display:block" loading="lazy">`
+]));
 
 const PK = 'struct_progress_v1';
 function loadP() { try { return JSON.parse(localStorage.getItem(PK)) || {}; } catch { return {}; } }
