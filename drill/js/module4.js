@@ -75,6 +75,10 @@ function updateValueDisplays() {
 
 function updateEstimates() {
   const p = readParams();
+  // 鑽頭適配（材質配對）與切削速度（RPM×直徑）為「獨立指標」：
+  // - 適配 = 鑽頭硬度／齒形是否對材料；可用但效率差時仍可成功，只是耗時與磨損加倍
+  // - 切削速度 = 轉速×直徑換算 SFM/SMM；過快會過熱、過慢會打滑
+  // 兩者可獨立出現任何組合（如「鑽頭非最佳」+「切削速度理想」=轉速對但鑽頭硬度不對）
   els.eMatch.textContent = p.match;
   els.eMatch.style.color = p.match === 'OK' ? '#22c55e' : p.match.includes('✗') ? '#dc2626' : '#eab308';
   els.eCut.textContent = p.cutLabel;

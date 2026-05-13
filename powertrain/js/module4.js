@@ -1,10 +1,15 @@
 // 動力與運輸 模組 4：效率模擬器
+// 基準：以中型房車（1500cc 汽油）= 1.0 對應 ~6 L/100km 或 ~15 kWh/100km
+// 數據來源：US EPA Fuel Economy、IEA Global EV Outlook 2024、台灣能源局《車輛能源消耗指南》
 const VEHICLES = {
-  sedan: { name: '中型房車', icon: '🚗', baseConsumption: 1, desc: '一般家用 4 門房車，1500cc 級' },
-  bus:   { name: '城市巴士', icon: '🚌', baseConsumption: 4, desc: '可載 40 人的城市公車' },
-  truck: { name: '大卡車', icon: '🚛', baseConsumption: 5, desc: '10 噸載重卡車' },
-  bike:  { name: '機車', icon: '🛵', baseConsumption: 0.3, desc: '125cc 速克達' },
+  sedan: { name: '中型房車', icon: '🚗', baseConsumption: 1, desc: '1500cc 級 4 門家用房車・基準耗能（汽油約 6 L/100km、電動約 15 kWh/100km）' },
+  bus:   { name: '城市巴士', icon: '🚌', baseConsumption: 4, desc: '40 人座城市公車・約為房車 4 倍耗能（柴油約 25 L/100km，但每人公里能耗比房車低）' },
+  truck: { name: '大卡車', icon: '🚛', baseConsumption: 5, desc: '10 噸載重卡車・滿載柴油約 30 L/100km' },
+  bike:  { name: '機車', icon: '🛵', baseConsumption: 0.3, desc: '125cc 速克達・約 2 L/100km（每公里能耗最低）' },
 };
+// 效率為「燃料／電能 → 車輪動力」之 well-to-wheel 系統效率
+// 汽油內燃機 ~25% 為動力總成上限（含變速箱、傳動損失）；電動車馬達效率 ~90%（但若計入發電廠效率則約 30-40%）
+// 來源：U.S. Department of Energy fueleconomy.gov、IEA《Global Energy Review 2024》
 const POWERS = {
   ice:    { name: '汽油內燃機', eff: 25, unit: 'L/100km', costPerUnit: 30, co2PerUnit: 2350, fuelMul: 1.0 },
   diesel: { name: '柴油內燃機', eff: 30, unit: 'L/100km', costPerUnit: 28, co2PerUnit: 2680, fuelMul: 0.85 },

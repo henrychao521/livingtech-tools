@@ -24,7 +24,7 @@
   .verdict.bad { background:#fee2e2; color:#991b1b; border-left:4px solid #dc2626; }
 </style>
 </head>
-<body class="drill-theme">
+<body data-tool="drill" class="drill-theme">
 <header class="topbar"><div class="brand"><span class="logo">🔩</span><div><h1>數位手電鑽</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
 <main class="module-page">
   <div class="module-header"><div><span class="module-step" style="background:var(--success-light);color:#1b6e3a">MODULE 04 ・ 核心</span><h2>鑽孔參數模擬</h2><p class="muted">調整材料、鑽頭、轉速、進刀力，看鑽孔結果即時變化。</p></div></div>
@@ -64,10 +64,11 @@
           <input type="range" id="s-torque" min="0" max="20" step="1" value="0">
         </div>
         <div class="estimates">
-          <div class="row"><span>適配性</span><strong id="e-match">—</strong></div>
-          <div class="row"><span>切削速度</span><strong id="e-cut">—</strong></div>
+          <div class="row"><span>鑽頭適配（材質配對）</span><strong id="e-match">—</strong></div>
+          <div class="row"><span>切削速度（RPM×直徑）</span><strong id="e-cut">—</strong></div>
           <div class="row"><span>過熱風險</span><strong id="e-heat">—</strong></div>
           <div class="row"><span>偏鑽風險</span><strong id="e-bias">—</strong></div>
+          <p style="font-size:11px;color:#64748B;margin-top:8px;line-height:1.5">📘 「鑽頭適配」與「切削速度」是<strong>獨立指標</strong>，可能同時出現「適配差」+「速度理想」（轉速對但鑽頭硬度不匹配——可成功但磨損加倍）。</p>
         </div>
         <div id="verdict" class="verdict warn">點「開始鑽孔」看結果</div>
       </div>
@@ -86,5 +87,5 @@
 
   <div class="module-nav-bottom"><a href="module3.html" class="btn btn-ghost">← 上一關</a><a href="module5.html" class="btn btn-primary">下一關：故障圖鑑 →</a></div>
 </main>
-<script src="../../js/main.js"></script><script src="../../js/audio.js"></script><script src="../js/module4.js"></script>
+<script src="../../js/main.js"></script><script src="../../js/sources.js"></script><script src="../../js/audio.js"></script><script src="../js/module4.js"></script>
 </body></html>
