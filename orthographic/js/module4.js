@@ -1,11 +1,14 @@
-// 三視圖 模組 4：3D ↔ 三視圖互動投影器（Three.js）
+// 三視圖 模組 4：3D ↔ 三視圖互動投影器（Three.js + OpenSCAD 模型）
 // - 主視窗：PerspectiveCamera + OrbitControls，學生可拖曳旋轉真實 3D 物件
-// - 三個小視窗：OrthographicCamera 從 +Y / +X / +Z 三個固定方向投影（CNS 3 第三角投影法）
-// - 切換物件時，4 個 scene 共用同一個 group 建構（每個 scene 有自己的 mesh clone）
+// - 三個小視窗：OrthographicCamera 從 +Z / -X / +Y 三個固定方向投影（CNS 3 第三角投影法）
+// - 物件 mesh 由 OpenSCAD 參數化建模生成 STL，前端 STLLoader 載入
+//   座標系：OpenSCAD 是 Z-up（建模時 Z 軸朝上），Three.js 預設 Y-up
+//   → 載入後繞 X 軸旋轉 -90° 對齊（使 OpenSCAD 的 Z 變成 Three.js 的 Y）
 // 依據：CNS 3《工程製圖》、ISO 128
 
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { STLLoader } from 'three/addons/loaders/STLLoader.js';
 
 const PK = 'ort_progress_v1';
 function loadP() { try { return JSON.parse(localStorage.getItem(PK)) || {}; } catch { return {}; } }
@@ -23,117 +26,58 @@ const INFOS = {
   bracket:  'L 角架：常見於支撐件。正視 = L 形，側視 = 直立矩形，俯視 = L 形（不同方位）。',
 };
 
-// ========== 物件工廠 ==========
-// 所有物件外接尺寸控制在 ~80 mm 立方內，方便相機固定縮放
-function makeShape(name) {
+// ========== STL 載入工廠（OpenSCAD pipeline）==========
+// 共 11 種物件的 STL 檔在 ../../models/orthographic/
+// 物件名 → 對應檔名（與 .scad 同名）
+const STL_NAMES = ['cube', 'cylinder', 'cone', 'sphere', 'step', 'lblock', 'l', 'hole', 'tslot', 'wedge', 'bracket', 'pyramid'];
+const FILENAME_ALIAS = { l: 'lblock' };  // module5.html / module4.html 可能用 'l'，但檔名是 lblock
+
+const stlLoader = new STLLoader();
+const geometryCache = new Map();
+
+function loadSTLGeometry(name) {
+  const file = FILENAME_ALIAS[name] || name;
+  if (geometryCache.has(file)) return Promise.resolve(geometryCache.get(file));
+  return new Promise((resolve, reject) => {
+    stlLoader.load(
+      `../../models/orthographic/${file}.stl`,
+      geo => {
+        // OpenSCAD 預設 Z-up，Three.js 預設 Y-up → 繞 X 軸旋轉 -90°
+        geo.rotateX(-Math.PI / 2);
+        geo.computeBoundingBox();
+        // 物件居中（OpenSCAD 中已大部分置中，這裡再 normalize 一次防呆）
+        const bb = geo.boundingBox;
+        const cx = (bb.min.x + bb.max.x) / 2;
+        const cy = (bb.min.y + bb.max.y) / 2;
+        const cz = (bb.min.z + bb.max.z) / 2;
+        geo.translate(-cx, -cy, -cz);
+        geo.computeVertexNormals();
+        geometryCache.set(file, geo);
+        resolve(geo);
+      },
+      undefined,
+      err => reject(err)
+    );
+  });
+}
+
+// 物件工廠：載入 STL → 組合 mesh + 輪廓線
+async function makeShape(name) {
   const group = new THREE.Group();
-  const mat = new THREE.MeshPhongMaterial({ color: 0x6366F1, flatShading: true, side: THREE.DoubleSide });
-  const matDark = new THREE.MeshPhongMaterial({ color: 0x4338CA, flatShading: true });
+  const mat = new THREE.MeshPhongMaterial({ color: 0x6366F1, flatShading: false, side: THREE.DoubleSide, shininess: 25 });
   const edgeMat = new THREE.LineBasicMaterial({ color: 0x1E1B4B, linewidth: 1 });
-
-  function addBoxWithEdges(w, h, d, ox = 0, oy = 0, oz = 0, m = mat) {
-    const geo = new THREE.BoxGeometry(w, h, d);
-    const mesh = new THREE.Mesh(geo, m);
-    mesh.position.set(ox, oy, oz);
+  try {
+    const geo = await loadSTLGeometry(name);
+    const mesh = new THREE.Mesh(geo, mat);
     group.add(mesh);
-    const edges = new THREE.LineSegments(new THREE.EdgesGeometry(geo), edgeMat);
-    edges.position.copy(mesh.position);
+    // 輪廓線（thresholdAngle 30° 隱藏平滑面上的邊）
+    const edges = new THREE.LineSegments(new THREE.EdgesGeometry(geo, 30), edgeMat);
     group.add(edges);
-  }
-
-  function addCylinderWithEdges(rTop, rBot, h, segs, ox = 0, oy = 0, oz = 0, m = mat) {
-    const geo = new THREE.CylinderGeometry(rTop, rBot, h, segs);
-    const mesh = new THREE.Mesh(geo, m);
-    mesh.position.set(ox, oy, oz);
-    group.add(mesh);
-    const edges = new THREE.LineSegments(new THREE.EdgesGeometry(geo, 12), edgeMat);
-    edges.position.copy(mesh.position);
-    group.add(edges);
-  }
-
-  switch (name) {
-    case 'cube':
-      addBoxWithEdges(60, 60, 60);
-      break;
-    case 'cylinder':
-      addCylinderWithEdges(30, 30, 70, 48);
-      break;
-    case 'cone':
-      addCylinderWithEdges(0, 35, 70, 48);
-      break;
-    case 'step':
-      // 下層大塊（80×30×60）+ 上層小塊（40×30×60），靠左對齊
-      addBoxWithEdges(80, 30, 60, 0, -15, 0);
-      addBoxWithEdges(40, 30, 60, -20, 15, 0);
-      break;
-    case 'l':
-      // L 型：直立矩形（30×80×40）+ 水平矩形（60×30×40）
-      addBoxWithEdges(30, 80, 40, -15, 0, 0);
-      addBoxWithEdges(60, 30, 40, 15, -25, 0);
-      break;
-    case 'hole': {
-      // 真正的圓孔板：用 Shape + holes + ExtrudeGeometry
-      const w = 80, h = 50, d = 50, hole = 18;
-      const shape = new THREE.Shape();
-      shape.moveTo(-w / 2, -h / 2);
-      shape.lineTo( w / 2, -h / 2);
-      shape.lineTo( w / 2,  h / 2);
-      shape.lineTo(-w / 2,  h / 2);
-      shape.closePath();
-      const holePath = new THREE.Path();
-      holePath.absarc(0, 0, hole, 0, Math.PI * 2, false);
-      shape.holes.push(holePath);
-      const geo = new THREE.ExtrudeGeometry(shape, { depth: d, bevelEnabled: false, curveSegments: 32 });
-      geo.translate(0, 0, -d / 2); // 居中
-      const mesh = new THREE.Mesh(geo, mat);
-      group.add(mesh);
-      const edges = new THREE.LineSegments(new THREE.EdgesGeometry(geo, 6), edgeMat);
-      group.add(edges);
-      break;
-    }
-    case 'tslot': {
-      // T 槽塊：底板（80×40×60）+ T 字形溝槽兩側殘餘
-      // 用三個 box 模擬：左、右各一個高 box，中間下半有 T 字
-      // 簡化：底板 + 上方左右兩個小塊，中間留 T 形空隙
-      addBoxWithEdges(80, 30, 60, 0, -15, 0);          // 底板
-      addBoxWithEdges(25, 30, 60, -27.5, 15, 0);        // 左上塊
-      addBoxWithEdges(25, 30, 60,  27.5, 15, 0);        // 右上塊
-      addBoxWithEdges(20, 15, 60,  0,   22.5, 0);       // 中央上方覆蓋（T 字頂橫）
-      break;
-    }
-    case 'wedge': {
-      // 楔形塊：三角柱 — 用 ExtrudeGeometry
-      const shape = new THREE.Shape();
-      shape.moveTo(-40, -25);
-      shape.lineTo(40, -25);
-      shape.lineTo(-40, 25);
-      shape.closePath();
-      const geo = new THREE.ExtrudeGeometry(shape, { depth: 50, bevelEnabled: false });
-      geo.translate(0, 0, -25);
-      const mesh = new THREE.Mesh(geo, mat);
-      group.add(mesh);
-      const edges = new THREE.LineSegments(new THREE.EdgesGeometry(geo, 12), edgeMat);
-      group.add(edges);
-      break;
-    }
-    case 'bracket': {
-      // L 角架：L 形 ExtrudeGeometry
-      const shape = new THREE.Shape();
-      shape.moveTo(-30, -30);
-      shape.lineTo(30, -30);
-      shape.lineTo(30, -15);
-      shape.lineTo(-15, -15);
-      shape.lineTo(-15, 30);
-      shape.lineTo(-30, 30);
-      shape.closePath();
-      const geo = new THREE.ExtrudeGeometry(shape, { depth: 40, bevelEnabled: false });
-      geo.translate(0, 0, -20);
-      const mesh = new THREE.Mesh(geo, mat);
-      group.add(mesh);
-      const edges = new THREE.LineSegments(new THREE.EdgesGeometry(geo, 12), edgeMat);
-      group.add(edges);
-      break;
-    }
+  } catch (e) {
+    console.error('STL 載入失敗：', name, e);
+    // fallback：顯示一個紅色立方體提示錯誤
+    const fb = new THREE.Mesh(new THREE.BoxGeometry(30, 30, 30), new THREE.MeshBasicMaterial({ color: 0xff0000 }));
+    group.add(fb);
   }
   return group;
 }
@@ -230,30 +174,38 @@ addGridFloor(topVP.scene, 'top');
 
 // ========== 切換物件 ==========
 let currentShape = 'cube';
+let loadingShape = false;
 
-function setShape(name) {
+async function setShape(name) {
+  if (loadingShape) return;
+  loadingShape = true;
   currentShape = name;
   document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.s === name));
-  document.getElementById('info').textContent = INFOS[name];
+  document.getElementById('info').textContent = INFOS[name] || '';
 
-  // 從 4 個 scene 移除舊 group，加入新 group（每個 scene 都要獨立 group，因為 mesh 不能跨 scene 共享 parent）
+  // 從 4 個 scene 移除舊 group。注意：geometry 是共用快取，不要 dispose！
+  // 只移除 mesh / line，不 dispose geometry
   [mainVP, frontVP, sideVP, topVP].forEach(vp => {
     if (vp.current) {
       vp.scene.remove(vp.current);
       vp.current.traverse(o => {
-        if (o.geometry) o.geometry.dispose();
         if (o.material) o.material.dispose();
       });
     }
-    const g = makeShape(name);
-    vp.scene.add(g);
-    vp.current = g;
+  });
+
+  // 平行載入 4 個 group（共用 STL geometry cache 後其實只第 1 次需要 fetch）
+  const groups = await Promise.all([makeShape(name), makeShape(name), makeShape(name), makeShape(name)]);
+  [mainVP, frontVP, sideVP, topVP].forEach((vp, i) => {
+    vp.scene.add(groups[i]);
+    vp.current = groups[i];
   });
 
   const p = loadP();
   p.module4 = true;
   p[`module4_${name}`] = true;
   saveP(p);
+  loadingShape = false;
 }
 
 document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => setShape(t.dataset.s)));
