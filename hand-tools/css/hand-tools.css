@@ -1,0 +1,15 @@
+/* 基本手工具主題色 — 鋼鐵灰（金屬工具質感） */
+.ht-theme {
+  --primary: #64748B;
+  --primary-dark: #334155;
+  --primary-light: #F1F5F9;
+  --primary-glow: rgba(100,116,139,.3);
+  --accent: #DC2626;
+  --accent-light: #FEE2E2;
+}
+.ht-theme .brand .logo { filter: drop-shadow(0 2px 4px rgba(100,116,139,.4)); }
+.ht-theme .hero h2 { background: linear-gradient(135deg, #1a1a1a 30%, #334155 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.hero-ht { width: 100%; max-width: 480px; filter: drop-shadow(0 20px 40px rgba(0,0,0,.12)); animation: slow-float 6s ease-in-out infinite; }
+.verdict { padding:14px; border-radius:10px; margin-top:10px; font-size:14px; font-weight:700; }
+.verdict.good { background:#dcfce7; color:#15803d; border-left:4px solid #22c55e; }
+.verdict.warn { background:#fef9c3; color:#a16207; border-left:4px solid #eab308; }
