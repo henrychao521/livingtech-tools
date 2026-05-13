@@ -53,11 +53,12 @@
         <!--
           曲柄滑塊機構幾何（中央）— 依公式 x_slider = Cx + R·cosθ + √(L² − (R·sinθ)²) 計算
           參數：圓心 (Cx,Cy) = (120, 180)，曲柄半徑 R = 50，連桿長 L = 150
-          四個關鍵姿態：
+          注意：SVG y 軸向下為正、rotate 為「順時針」，所以 90° 在下方、270° 在上方。
+          四個關鍵姿態（與 SVG rotate 0→360 一致）：
             θ=0°   pin=(170,180), slider=320  ← 死點（最右）
-            θ=90°  pin=(120,130), slider≈261  ← 上方
+            θ=90°  pin=(120,230), slider≈261  ← 下方
             θ=180° pin=( 70,180), slider=220  ← 死點（最左）
-            θ=270° pin=(120,230), slider≈261  ← 下方
+            θ=270° pin=(120,130), slider≈261  ← 上方
           滑塊行程 = 2R = 100；軌道範圍 x ∈ [200, 340]（rect.x 對齊滑塊左緣）。
         -->
         <g filter="url(#mShadow)">
@@ -85,10 +86,11 @@
             <animateTransform attributeName="transform" type="rotate" from="0 120 180" to="360 120 180" dur="3s" repeatCount="indefinite"/>
           </circle>
 
-          <!-- 連桿：從曲柄銷連到滑塊左緣。x2 與 rect.x 同步 -->
+          <!-- 連桿：從曲柄銷連到滑塊左緣。x2 與 rect.x 同步。
+               SVG rotate 順時針 → 90° 是下方（y=230）、270° 是上方（y=130） -->
           <line x1="170" y1="180" x2="300" y2="180" stroke="#0F766E" stroke-width="6" stroke-linecap="round">
             <animate attributeName="x1" values="170;120; 70;120;170" keyTimes="0;0.25;0.5;0.75;1" dur="3s" repeatCount="indefinite"/>
-            <animate attributeName="y1" values="180;130;180;230;180" keyTimes="0;0.25;0.5;0.75;1" dur="3s" repeatCount="indefinite"/>
+            <animate attributeName="y1" values="180;230;180;130;180" keyTimes="0;0.25;0.5;0.75;1" dur="3s" repeatCount="indefinite"/>
             <animate attributeName="x2" values="300;241;200;241;300" keyTimes="0;0.25;0.5;0.75;1" dur="3s" repeatCount="indefinite"/>
           </line>
 
