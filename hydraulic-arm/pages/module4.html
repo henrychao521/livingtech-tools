@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 4：4 軸控制模擬器</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/hydraulic-arm.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💪%3C/text%3E%3C/svg%3E">
+<style>.controls{background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px}.slider-row{margin-bottom:14px}.slider-row label{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px}.slider-row .v{font-family:var(--font-mono);font-weight:700;color:#075985}.slider-row input{width:100%}</style>
+</head><body class="ha-theme">
+<header class="topbar"><div class="brand"><span class="logo">💪</span><div><h1>液壓手臂</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<main class="module-page">
+  <div class="module-header"><div><span class="module-step" style="background:var(--success-light);color:#1b6e3a">MODULE 04 ・ 核心</span><h2>4 軸液壓手臂模擬器</h2><p class="muted">用 4 個滑桿控制手臂——把瓶子從 A 點搬到 B 點。</p></div></div>
+  <div class="practice-layout">
+    <div class="ha-canvas-wrap">
+      <canvas id="ha-canvas" width="760" height="500"></canvas>
+    </div>
+    <div class="sim-side">
+      <div class="controls">
+        <h4 style="font-size:13px;color:var(--text-muted);text-transform:uppercase;margin-bottom:10px">液壓控制台</h4>
+        <div class="slider-row"><label>🔄 軸 1 基座旋轉 <span class="v" id="v1">0°</span></label><input type="range" id="s1" min="-90" max="90" value="0"></div>
+        <div class="slider-row"><label>⬆ 軸 2 大臂上下 <span class="v" id="v2">45°</span></label><input type="range" id="s2" min="-20" max="80" value="45"></div>
+        <div class="slider-row"><label>↗ 軸 3 小臂彎曲 <span class="v" id="v3">90°</span></label><input type="range" id="s3" min="-30" max="120" value="90"></div>
+        <div class="slider-row"><label>🦞 軸 4 夾爪開合 <span class="v" id="v4">30 mm</span></label><input type="range" id="s4" min="0" max="60" value="30"></div>
+        <button id="btn-reset" class="btn btn-ghost" style="width:100%">↺ 重置</button>
+        <div id="verdict" class="verdict good" style="margin-top:10px">🎯 試著把瓶子搬到綠色目標</div>
+      </div>
+      <div class="help-card"><strong>💡 操作提示</strong><ul><li>夾爪要對準瓶子才能抓住</li><li>夾爪寬度 ≤ 35mm 才能夾緊</li><li>大臂+小臂組合決定高度</li><li>基座旋轉 = 左右位置</li></ul></div>
+    </div>
+  </div>
+  <div class="module-nav-bottom"><a href="module3.html" class="btn btn-ghost">← 上一關</a><a href="module5.html" class="btn btn-primary">下一關 →</a></div>
+</main>
+<script src="../../js/main.js"></script><script src="../../js/audio.js"></script><script src="../js/module4.js"></script>
+</body></html>

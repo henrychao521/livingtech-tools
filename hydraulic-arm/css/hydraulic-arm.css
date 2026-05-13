@@ -1,0 +1,17 @@
+/* 液壓手臂主題色 — 液壓藍 */
+.ha-theme {
+  --primary: #0284C7;
+  --primary-dark: #075985;
+  --primary-light: #E0F2FE;
+  --primary-glow: rgba(2,132,199,.3);
+  --accent: #DC2626;
+  --accent-light: #FEE2E2;
+}
+.ha-theme .brand .logo { filter: drop-shadow(0 2px 4px rgba(2,132,199,.4)); }
+.ha-theme .hero h2 { background: linear-gradient(135deg, #1a1a1a 30%, #075985 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.hero-ha { width: 100%; max-width: 480px; filter: drop-shadow(0 20px 40px rgba(0,0,0,.12)); animation: slow-float 6s ease-in-out infinite; }
+.ha-canvas-wrap { background: #0f172a; border-radius: var(--radius-lg); padding: 18px; border: 1px solid #1e293b; }
+#ha-canvas { width: 100%; max-width: 760px; height: auto; display: block; background: #1e293b; border-radius: var(--radius); }
+.verdict { padding:14px; border-radius:10px; margin-top:10px; font-size:14px; font-weight:700; }
+.verdict.good { background:#dcfce7; color:#15803d; border-left:4px solid #22c55e; }
+.verdict.warn { background:#fef9c3; color:#a16207; border-left:4px solid #eab308; }

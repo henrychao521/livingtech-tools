@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>液壓手臂 ｜ 生活科技互動教學平台</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/svg-effects.css"><link rel="stylesheet" href="css/hydraulic-arm.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💪%3C/text%3E%3C/svg%3E">
+</head><body class="home ha-theme">
+<header class="topbar">
+  <div class="brand"><span class="logo">💪</span><div><h1>液壓手臂</h1><p class="subtitle">生活科技互動教學平台</p></div></div>
+  <nav class="topnav"><a href="#modules">學習模組</a><a href="../" style="color:var(--primary-dark);font-weight:600">← 平台首頁</a></nav>
+</header>
+<main>
+  <section class="hero">
+    <div class="hero-text">
+      <span class="badge">108 課綱・2下 K5 製作電動液壓動力機械手臂</span>
+      <h2>從帕斯卡定律到機械手臂，<br>用針筒和水講懂液壓</h2>
+      <p>液壓是工業力量的根源——挖土機、堆高機、剎車系統、椅子升降都靠它。本平台覆蓋帕斯卡定律、4 軸液壓手臂結構、製作流程、互動 4 軸控制模擬器與真實工業應用，對應 2 下 K5 統整創作專題。</p>
+      <div class="hero-cta"><a href="pages/module1.html" class="btn btn-primary">開始學習 →</a><a href="#modules" class="btn btn-ghost">看模組地圖</a></div>
+    </div>
+    <div class="hero-visual">
+      <svg viewBox="0 0 480 360" class="hero-ha svg-shadow-med">
+        <ellipse cx="240" cy="320" rx="200" ry="14" fill="rgba(0,0,0,.15)"/>
+        <!-- 基座 -->
+        <rect x="160" y="280" width="160" height="40" rx="6" fill="#075985"/>
+        <rect x="180" y="270" width="120" height="14" fill="#0284C7"/>
+        <!-- 大臂 -->
+        <g transform="rotate(-30 240 280)">
+          <rect x="232" y="180" width="16" height="100" fill="#0284C7"/>
+          <circle cx="240" cy="180" r="10" fill="#075985"/>
+        </g>
+        <!-- 小臂 -->
+        <g transform="translate(150,170) rotate(45)">
+          <rect x="-8" y="0" width="16" height="100" fill="#38BDF8"/>
+          <circle cx="0" cy="0" r="8" fill="#0284C7"/>
+        </g>
+        <!-- 夾爪 -->
+        <g transform="translate(80,235)">
+          <rect x="-3" y="0" width="6" height="20" fill="#0284C7"/>
+          <g><line x1="-3" y1="20" x2="-12" y2="35" stroke="#0284C7" stroke-width="4" stroke-linecap="round"/><line x1="3" y1="20" x2="12" y2="35" stroke="#0284C7" stroke-width="4" stroke-linecap="round"/></g>
+        </g>
+        <!-- 控制針筒 -->
+        <g transform="translate(380,200)">
+          <rect x="0" y="0" width="30" height="80" fill="#E0F2FE" stroke="#0284C7" stroke-width="2"/>
+          <rect x="2" y="30" width="26" height="48" fill="#0284C7" opacity=".5"/>
+          <rect x="-2" y="-15" width="34" height="20" fill="#075985"/>
+          <line x1="15" y1="-30" x2="15" y2="-15" stroke="#1e293b" stroke-width="3"/>
+        </g>
+        <!-- 液壓管 -->
+        <path d="M 380 240 Q 320 230 240 240" stroke="#0284C7" stroke-width="3" fill="none" stroke-dasharray="5 3"/>
+        <text x="240" y="50" text-anchor="middle" font-size="14" font-weight="800" fill="#075985" font-family="Inter">HYDRAULIC ARM ・ 帕斯卡定律應用</text>
+      </svg>
+    </div>
+  </section>
+  <section id="modules" class="modules">
+    <h3 class="section-title">五大學習模組</h3>
+    <p class="section-sub">從原理到製作 4 軸液壓手臂</p>
+    <div class="module-grid">
+      <a class="card card-1" href="pages/module1.html"><div class="card-num">01</div><div class="card-icon">🔍</div><h4>液壓原理</h4><p>帕斯卡定律、油壓缸、機械利益、靜壓傳動。</p><span class="card-tag">15 分鐘</span></a>
+      <a class="card card-2" href="pages/module2.html"><div class="card-num">02</div><div class="card-icon">🦾</div><h4>4 軸手臂結構</h4><p>基座（旋轉）、大臂、小臂、夾爪——4 個自由度需要 4 對針筒。</p><span class="card-tag">必修・15 分鐘</span></a>
+      <a class="card card-3" href="pages/module3.html"><div class="card-num">03</div><div class="card-icon">📖</div><h4>手臂製作 8 步驟</h4><p>對應翰林附件 3，從裁切骨架到油路充水的完整流程。</p><span class="card-tag">15 分鐘</span></a>
+      <a class="card card-4" href="pages/module4.html"><div class="card-num">04</div><div class="card-icon">🎮</div><h4>4 軸控制模擬器</h4><p>用 4 個滑桿控制基座旋轉、大臂、小臂、夾爪——把瓶子搬到指定位置。</p><span class="card-tag">核心・25 分鐘</span></a>
+      <a class="card card-5" href="pages/module5.html"><div class="card-num">05</div><div class="card-icon">🏆</div><h4>工業液壓應用</h4><p>挖土機、堆高機、汽車剎車、椅子升降 8 種實際案例。</p><span class="card-tag">15 分鐘</span></a>
+      <div class="card card-locked"><div class="card-num">👨‍🏫</div><div class="card-icon">📊</div><h4>教師後台</h4><p>班級進度（共用平台）。</p><span class="card-tag">教師專用</span></div>
+    </div>
+  </section>
+  <section class="about">
+    <h3 class="section-title">為什麼液壓要先在數位環境練？</h3>
+    <div class="reason-grid">
+      <div class="reason"><span>💧</span><h4>看見「壓力傳遞」</h4><p>帕斯卡定律是抽象概念，模擬看到「按一邊另一邊就動」才秒懂。</p></div>
+      <div class="reason"><span>📏</span><h4>機械利益怎麼算</h4><p>大針筒推小針筒會省力還是費力？要算過才知道。</p></div>
+      <div class="reason"><span>🔧</span><h4>製作失敗很麻煩</h4><p>液壓手臂組裝後若漏水、卡死，整支拆掉重做。先模擬可避免。</p></div>
+      <div class="reason"><span>🏗</span><h4>工業基本款</h4><p>挖土機、堆高機、剎車、千斤頂都是液壓——學會原理一輩子用得到。</p></div>
+    </div>
+  </section>
+</main>
+<script src="../js/main.js"></script><script src="../js/audio.js"></script>
+</body></html>

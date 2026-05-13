@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 1：液壓原理</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/hydraulic-arm.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💪%3C/text%3E%3C/svg%3E">
+</head><body class="ha-theme">
+<header class="topbar"><div class="brand"><span class="logo">💪</span><div><h1>液壓手臂</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<main class="module-page">
+  <div class="module-header"><div><span class="module-step">MODULE 01</span><h2>液壓原理 4 核心概念</h2><p class="muted">理解液壓力量的來源與計算。</p></div><div class="muted" id="prog">已認識 0 / 4 項</div></div>
+  <section class="panel"><h3>4 大核心概念</h3><div id="grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px"></div></section>
+  <section class="panel"><h3>📊 機械利益計算範例</h3>
+    <div style="background:#E0F2FE;padding:18px;border-radius:12px">
+      <p style="margin-bottom:10px;font-size:14px"><strong>題目：</strong>大針筒（推力端）直徑 30mm，小針筒（控制端）直徑 10mm。手按小針筒施力 10N，大針筒能輸出多少力？</p>
+      <p style="font-family:var(--font-mono);background:#fff;padding:12px;border-radius:8px;color:#075985;font-weight:700">
+        步驟 1：A_大 ÷ A_小 = (15²π) ÷ (5²π) = 9 倍<br>
+        步驟 2：機械利益 MA = 9<br>
+        步驟 3：F_大 = F_小 × MA = 10N × 9 = <span style="color:#dc2626">90N</span>
+      </p>
+      <p style="margin-top:10px;font-size:13px;color:#666">⚠ 但要走 9 倍距離——能量守恆。手要推 9cm，大端只能推 1cm。</p>
+    </div>
+  </section>
+  <div class="module-nav-bottom"><a href="../index.html" class="btn btn-ghost">← 回首頁</a><a href="module2.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a></div>
+</main>
+<script src="../../js/main.js"></script><script src="../../js/audio.js"></script><script src="../js/module1.js"></script>
+</body></html>
