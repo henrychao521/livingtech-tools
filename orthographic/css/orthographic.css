@@ -1,0 +1,17 @@
+/* 三視圖主題色 — 工程靛 */
+.ort-theme {
+  --primary: #4F46E5;
+  --primary-dark: #3730A3;
+  --primary-light: #E0E7FF;
+  --primary-glow: rgba(79,70,229,.3);
+  --accent: #DC2626;
+  --accent-light: #FEE2E2;
+}
+.ort-theme .brand .logo { filter: drop-shadow(0 2px 4px rgba(79,70,229,.4)); }
+.ort-theme .hero h2 { background: linear-gradient(135deg, #1a1a1a 30%, #3730A3 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.hero-ort { width: 100%; max-width: 480px; filter: drop-shadow(0 20px 40px rgba(0,0,0,.12)); animation: slow-float 6s ease-in-out infinite; }
+.ort-canvas-wrap { background: #0f172a; border-radius: var(--radius-lg); padding: 18px; border: 1px solid #1e293b; }
+#ort-canvas { width: 100%; max-width: 760px; height: auto; display: block; background: #1e293b; border-radius: var(--radius); }
+.verdict { padding:14px; border-radius:10px; margin-top:10px; font-size:14px; font-weight:700; }
+.verdict.good { background:#dcfce7; color:#15803d; border-left:4px solid #22c55e; }
+.verdict.warn { background:#fef9c3; color:#a16207; border-left:4px solid #eab308; }

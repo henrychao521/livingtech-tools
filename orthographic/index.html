@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>三視圖 ｜ 生活科技互動教學平台</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/svg-effects.css"><link rel="stylesheet" href="css/orthographic.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📐%3C/text%3E%3C/svg%3E">
+</head><body class="home ort-theme">
+<header class="topbar"><div class="brand"><span class="logo">📐</span><div><h1>三視圖</h1><p class="subtitle">生活科技互動教學平台</p></div></div><nav class="topnav"><a href="#modules">學習模組</a><a href="../" style="color:var(--primary-dark);font-weight:600">← 平台首頁</a></nav></header>
+<main>
+  <section class="hero">
+    <div class="hero-text">
+      <span class="badge">108 課綱・1上 K3 挑戰 1 無所不在的視圖與製圖</span>
+      <h2>把 3D 物體投影成<br>正視 / 側視 / 俯視 三張平面圖</h2>
+      <p>三視圖是工程師、設計師、製造業的通用語言。本平台帶你認識「第三角投影」原理、等角圖 / 透視圖差異、繪製步驟、互動模擬與判讀挑戰——對應 Onshape CAD 課程的視圖基礎。</p>
+      <div class="hero-cta"><a href="pages/module1.html" class="btn btn-primary">開始學習 →</a><a href="#modules" class="btn btn-ghost">看模組地圖</a></div>
+    </div>
+    <div class="hero-visual">
+      <svg viewBox="0 0 480 360" class="hero-ort svg-shadow-med">
+        <ellipse cx="240" cy="330" rx="200" ry="14" fill="rgba(0,0,0,.15)"/>
+        <!-- 3D 立方體（中央）-->
+        <g transform="translate(240,180)">
+          <polygon points="-40,-40 40,-40 60,-20 -20,-20" fill="#818CF8" stroke="#3730A3" stroke-width="2"/>
+          <polygon points="-40,-40 -40,40 -20,60 -20,-20" fill="#6366F1" stroke="#3730A3" stroke-width="2"/>
+          <polygon points="40,-40 40,40 60,60 60,-20" fill="#4F46E5" stroke="#3730A3" stroke-width="2"/>
+        </g>
+        <!-- 三個視圖 -->
+        <g><rect x="40" y="40" width="60" height="60" fill="#fff" stroke="#3730A3" stroke-width="2"/><rect x="55" y="55" width="30" height="30" fill="#E0E7FF" stroke="#3730A3"/><text x="70" y="115" text-anchor="middle" font-size="10" fill="#3730A3" font-weight="800">正視</text></g>
+        <g><rect x="380" y="40" width="60" height="60" fill="#fff" stroke="#3730A3" stroke-width="2"/><rect x="395" y="55" width="30" height="30" fill="#E0E7FF" stroke="#3730A3"/><text x="410" y="115" text-anchor="middle" font-size="10" fill="#3730A3" font-weight="800">側視</text></g>
+        <g><rect x="210" y="260" width="60" height="60" fill="#fff" stroke="#3730A3" stroke-width="2"/><rect x="225" y="275" width="30" height="30" fill="#E0E7FF" stroke="#3730A3"/><text x="240" y="335" text-anchor="middle" font-size="10" fill="#3730A3" font-weight="800">俯視</text></g>
+        <!-- 投影線 -->
+        <line x1="100" y1="70" x2="200" y2="160" stroke="#4F46E5" stroke-width="1.5" stroke-dasharray="3 3"/>
+        <line x1="380" y1="70" x2="280" y2="160" stroke="#4F46E5" stroke-width="1.5" stroke-dasharray="3 3"/>
+        <line x1="240" y1="260" x2="240" y2="220" stroke="#4F46E5" stroke-width="1.5" stroke-dasharray="3 3"/>
+        <text x="240" y="40" text-anchor="middle" font-size="14" font-weight="800" fill="#3730A3" font-family="Inter">3 VIEW PROJECTION ・ 三視圖投影</text>
+      </svg>
+    </div>
+  </section>
+  <section id="modules" class="modules">
+    <h3 class="section-title">五大學習模組</h3>
+    <p class="section-sub">從投影原理到視圖判讀</p>
+    <div class="module-grid">
+      <a class="card card-1" href="pages/module1.html"><div class="card-num">01</div><div class="card-icon">🔍</div><h4>三視圖原理</h4><p>正視、側視、俯視怎麼來——第三角投影法基本概念。</p><span class="card-tag">15 分鐘</span></a>
+      <a class="card card-2" href="pages/module2.html"><div class="card-num">02</div><div class="card-icon">🎨</div><h4>視圖類型比較</h4><p>三視圖、等角圖、斜視圖、透視圖——四種視圖的差異與用途。</p><span class="card-tag">必修・15 分鐘</span></a>
+      <a class="card card-3" href="pages/module3.html"><div class="card-num">03</div><div class="card-icon">📖</div><h4>視圖繪製步驟</h4><p>8 步從 3D 物件到三視圖的繪製流程，含虛實線、中心線、尺寸標註。</p><span class="card-tag">15 分鐘</span></a>
+      <a class="card card-4" href="pages/module4.html"><div class="card-num">04</div><div class="card-icon">🎮</div><h4>3D ↔ 三視圖模擬器</h4><p>選擇 6 種 3D 物件，看正視/側視/俯視即時對應變化。</p><span class="card-tag">核心・20 分鐘</span></a>
+      <a class="card card-5" href="pages/module5.html"><div class="card-num">05</div><div class="card-icon">🏆</div><h4>視圖判讀挑戰</h4><p>看三視圖判斷 3D 物件——8 題難度遞增。</p><span class="card-tag">15 分鐘</span></a>
+      <div class="card card-locked"><div class="card-num">👨‍🏫</div><div class="card-icon">📊</div><h4>教師後台</h4><p>班級進度（共用平台）。</p><span class="card-tag">教師專用</span></div>
+    </div>
+  </section>
+  <section class="about">
+    <h3 class="section-title">為什麼三視圖要先在數位環境練？</h3>
+    <div class="reason-grid">
+      <div class="reason"><span>👁</span><h4>空間想像力</h4><p>看二維想三維是天賦差異——數位互動幫所有學生建立空間概念。</p></div>
+      <div class="reason"><span>📐</span><h4>製造業共通語</h4><p>工廠看圖製造、機械維修、組裝家具——三視圖是全球工程通用語。</p></div>
+      <div class="reason"><span>🔄</span><h4>CAD 前置技能</h4><p>Onshape / SolidWorks / AutoCAD 都從 2D 草圖開始——先懂視圖才會用 CAD。</p></div>
+      <div class="reason"><span>🎯</span><h4>降低繪圖恐懼</h4><p>許多學生看到三視圖就放棄——數位互動讓他們敢嘗試。</p></div>
+    </div>
+  </section>
+</main>
+<script src="../js/main.js"></script><script src="../js/audio.js"></script>
+</body></html>
