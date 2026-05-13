@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>簡單機械 ｜ 生活科技互動教學平台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/svg-effects.css">
+<link rel="stylesheet" href="css/simple-machines.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E⚙%3C/text%3E%3C/svg%3E">
+</head>
+<body class="home sm-theme">
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">⚙</span>
+    <div>
+      <h1>簡單機械</h1>
+      <p class="subtitle">生活科技互動教學平台</p>
+    </div>
+  </div>
+  <nav class="topnav">
+    <a href="#modules">學習模組</a>
+    <a href="../" style="color:var(--primary-dark);font-weight:600">← 平台首頁</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-text">
+      <span class="badge">108 課綱・1下 關卡 4 結構與機構</span>
+      <h2>6 種簡單機械，<br>把不可能變得輕鬆</h2>
+      <p>簡單機械（Simple Machines）是把日常費力工作「省力」的關鍵：槓桿、滑輪、輪軸、斜面、楔形、螺旋。本平台帶你計算機械利益（MA）、認識槓桿三類，並模擬剪刀、開瓶器、釣魚竿背後的力學原理。</p>
+      <div class="hero-cta">
+        <a href="pages/module1.html" class="btn btn-primary">開始學習 →</a>
+        <a href="#modules" class="btn btn-ghost">看模組地圖</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <svg viewBox="0 0 480 360" class="hero-sm svg-shadow-med">
+        <defs>
+          <filter id="smShadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
+            <feOffset dx="0" dy="5"/>
+            <feComponentTransfer><feFuncA type="linear" slope="0.22"/></feComponentTransfer>
+            <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <ellipse cx="240" cy="330" rx="200" ry="14" fill="rgba(0,0,0,.15)"/>
+
+        <!-- 槓桿（中央示意） -->
+        <g filter="url(#smShadow)">
+          <!-- 桿 -->
+          <rect x="80" y="200" width="320" height="10" rx="2" fill="#DB2777"/>
+          <!-- 支點 -->
+          <polygon points="200,205 220,205 210,235" fill="#9D174D"/>
+          <!-- 抗力（左端，重物） -->
+          <rect x="80" y="160" width="50" height="40" fill="#831843"/>
+          <text x="105" y="184" text-anchor="middle" fill="#fff" font-size="11" font-weight="800" font-family="Inter">100kg</text>
+          <!-- 施力箭頭（右端） -->
+          <line x1="380" y1="160" x2="380" y2="200" stroke="#16A34A" stroke-width="5" marker-end="url(#smarr)"/>
+          <defs><marker id="smarr" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 12 6 L 0 12 z" fill="#16A34A"/></marker></defs>
+          <text x="380" y="150" text-anchor="middle" fill="#16A34A" font-size="14" font-weight="800" font-family="Inter">施力 25kg</text>
+          <!-- 力臂尺度 -->
+          <line x1="125" y1="240" x2="210" y2="240" stroke="#0891B2" stroke-width="2"/>
+          <text x="167" y="258" text-anchor="middle" fill="#0891B2" font-size="11" font-weight="700">阻力臂 1m</text>
+          <line x1="210" y1="240" x2="385" y2="240" stroke="#16A34A" stroke-width="2"/>
+          <text x="297" y="258" text-anchor="middle" fill="#16A34A" font-size="11" font-weight="700">施力臂 4m</text>
+        </g>
+
+        <!-- 公式 -->
+        <text x="240" y="60" text-anchor="middle" font-size="18" font-weight="800" fill="#9D174D" font-family="Inter">MA = 施力臂 ÷ 阻力臂</text>
+        <text x="240" y="85" text-anchor="middle" font-size="14" fill="#DB2777" font-family="Inter">機械利益 = 4 ÷ 1 = 4 倍</text>
+        <text x="240" y="105" text-anchor="middle" font-size="13" fill="#831843" font-family="Inter">100kg ÷ 4 = 25kg 就推得動</text>
+
+        <!-- 標籤 -->
+        <text x="105" y="305" text-anchor="middle" font-size="11" fill="#9D174D" font-weight="700">抗力</text>
+        <text x="210" y="305" text-anchor="middle" font-size="11" fill="#9D174D" font-weight="700">支點</text>
+        <text x="380" y="305" text-anchor="middle" font-size="11" fill="#9D174D" font-weight="700">施力</text>
+      </svg>
+    </div>
+  </section>
+
+  <section id="modules" class="modules">
+    <h3 class="section-title">五大學習模組</h3>
+    <p class="section-sub">從省力的原理到日常生活中找答案</p>
+    <div class="module-grid">
+      <a class="card card-1" href="pages/module1.html"><div class="card-num">01</div><div class="card-icon">🔍</div><h4>認識 6 種簡單機械</h4><p>槓桿、滑輪、輪軸、斜面、楔形、螺旋——每種的原理與日常範例。</p><span class="card-tag">15 分鐘</span></a>
+      <a class="card card-2" href="pages/module2.html"><div class="card-num">02</div><div class="card-icon">🧩</div><h4>槓桿三類分類</h4><p>第一類（剪刀）、第二類（開瓶器）、第三類（鑷子）——依施力、抗力、支點位置區分。</p><span class="card-tag">必修・15 分鐘</span></a>
+      <a class="card card-3" href="pages/module3.html"><div class="card-num">03</div><div class="card-icon">📖</div><h4>機械利益計算</h4><p>MA = 施力臂 ÷ 阻力臂。學會計算每種簡單機械的省力倍數。</p><span class="card-tag">15 分鐘</span></a>
+      <a class="card card-4" href="pages/module4.html"><div class="card-num">04</div><div class="card-icon">🎮</div><h4>簡單機械模擬器</h4><p>調整槓桿支點、滑輪數量、斜面坡度，看施力如何變化。</p><span class="card-tag">核心・20 分鐘</span></a>
+      <a class="card card-5" href="pages/module5.html"><div class="card-num">05</div><div class="card-icon">🏆</div><h4>找找看生活中的簡單機械</h4><p>剪刀、釘書機、扳手、樓梯、螺絲——日常 12 件物品的簡單機械分析。</p><span class="card-tag">15 分鐘</span></a>
+      <div class="card card-locked"><div class="card-num">👨‍🏫</div><div class="card-icon">📊</div><h4>教師後台</h4><p>班級進度、成績匯出（共用平台教師後台）。</p><span class="card-tag">教師專用</span></div>
+    </div>
+  </section>
+
+  <section class="about">
+    <h3 class="section-title">為什麼簡單機械要先在數位環境練？</h3>
+    <div class="reason-grid">
+      <div class="reason"><span>🧮</span><h4>機械利益看不見</h4><p>MA 是「比例」概念，模擬器讓力臂縮短時施力就立刻變大，學生秒懂。</p></div>
+      <div class="reason"><span>✂</span><h4>槓桿三類容易混淆</h4><p>剪刀第幾類？指甲剪第幾類？要動手分類三次才能記住。</p></div>
+      <div class="reason"><span>🪜</span><h4>斜面比想的省力</h4><p>10° 斜面省 6 倍力，但要走 6 倍距離——能量守恆視覺化。</p></div>
+      <div class="reason"><span>🔍</span><h4>培養觀察眼</h4><p>每天用的剪刀、瓶蓋、樓梯都是簡單機械——學生會用全新眼光看世界。</p></div>
+    </div>
+  </section>
+</main>
+
+<script src="../js/main.js"></script>
+<script src="../js/audio.js"></script>
+</body>
+</html>

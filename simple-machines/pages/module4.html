@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 4：簡單機械模擬器</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/simple-machines.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E⚙%3C/text%3E%3C/svg%3E">
+<style>
+  .sm-controls { background:#fff; border:1px solid var(--border); border-radius:14px; padding:16px; margin-bottom:12px; }
+  .sm-controls h4 { font-size:13px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.1em; margin-bottom:10px; }
+  .slider-row { margin-bottom:14px; }
+  .slider-row label { display:flex; justify-content:space-between; font-size:13px; margin-bottom:4px; }
+  .slider-row label .v { font-family:var(--font-mono); font-weight:700; color:var(--primary-dark); }
+  .slider-row input[type="range"] { width:100%; }
+  .estimates { background:var(--primary-light); border-radius:10px; padding:12px; margin-top:8px; }
+  .estimates .row { display:flex; justify-content:space-between; padding:4px 0; font-size:13px; }
+  .estimates .row strong { color:var(--primary-dark); font-family:var(--font-mono); }
+  .machine-tabs { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin-bottom:14px; }
+  .machine-tab { padding:10px 6px; text-align:center; font-size:12px; border-radius:6px; background:#f1f5f9; cursor:pointer; font-weight:700; }
+  .machine-tab.active { background:#DB2777; color:#fff; }
+</style>
+</head>
+<body class="sm-theme">
+<header class="topbar"><div class="brand"><span class="logo">⚙</span><div><h1>簡單機械</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<main class="module-page">
+  <div class="module-header"><div><span class="module-step" style="background:var(--success-light);color:#1b6e3a">MODULE 04 ・ 核心</span><h2>簡單機械模擬器</h2><p class="muted">選擇機械，調整參數，看力的變化。</p></div></div>
+
+  <div class="practice-layout">
+    <div class="sm-canvas-wrap">
+      <canvas id="sm-canvas" width="760" height="500"></canvas>
+    </div>
+
+    <div class="sim-side">
+      <div class="sm-controls">
+        <div class="machine-tabs">
+          <div class="machine-tab active" data-m="lever">槓桿</div>
+          <div class="machine-tab" data-m="pulley">滑輪組</div>
+          <div class="machine-tab" data-m="incline">斜面</div>
+        </div>
+
+        <div id="lever-controls">
+          <div class="slider-row">
+            <label>抗力 (W) <span class="v" id="v-load">100 kg</span></label>
+            <input type="range" id="s-load" min="10" max="500" step="10" value="100">
+          </div>
+          <div class="slider-row">
+            <label>支點位置 <span class="v" id="v-pivot">中央</span></label>
+            <input type="range" id="s-pivot" min="10" max="90" step="5" value="50">
+          </div>
+        </div>
+
+        <div id="pulley-controls" style="display:none">
+          <div class="slider-row">
+            <label>抗力 (W) <span class="v" id="v-pload">100 kg</span></label>
+            <input type="range" id="s-pload" min="10" max="500" step="10" value="100">
+          </div>
+          <div class="slider-row">
+            <label>支撐繩段數 <span class="v" id="v-rope">3 段</span></label>
+            <input type="range" id="s-rope" min="1" max="6" step="1" value="3">
+          </div>
+        </div>
+
+        <div id="incline-controls" style="display:none">
+          <div class="slider-row">
+            <label>抗力 (W) <span class="v" id="v-iload">200 kg</span></label>
+            <input type="range" id="s-iload" min="50" max="500" step="10" value="200">
+          </div>
+          <div class="slider-row">
+            <label>斜面坡度 <span class="v" id="v-angle">30°</span></label>
+            <input type="range" id="s-angle" min="5" max="60" step="1" value="30">
+          </div>
+          <div class="slider-row">
+            <label>提升高度 <span class="v" id="v-height">1 m</span></label>
+            <input type="range" id="s-height" min="0.5" max="3" step="0.1" value="1">
+          </div>
+        </div>
+
+        <div class="estimates">
+          <div class="row"><span>機械利益 MA</span><strong id="e-ma">—</strong></div>
+          <div class="row"><span>所需施力</span><strong id="e-force">—</strong></div>
+          <div class="row"><span>施力距離</span><strong id="e-dist">—</strong></div>
+          <div class="row"><span>能量比較</span><strong id="e-energy">—</strong></div>
+        </div>
+        <div id="verdict" class="verdict good">調整參數看即時變化</div>
+      </div>
+
+      <div class="help-card">
+        <strong>💡 能量守恆鐵則</strong>
+        <ul>
+          <li>省力 × 距離 = 抗力 × 高度</li>
+          <li>MA = 4 倍省力，要走 4 倍距離</li>
+          <li>機械「省力」不省「功」</li>
+          <li>摩擦會讓實際 MA < 理論 MA</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-nav-bottom"><a href="module3.html" class="btn btn-ghost">← 上一關</a><a href="module5.html" class="btn btn-primary">下一關 →</a></div>
+</main>
+<script src="../../js/main.js"></script><script src="../../js/audio.js"></script><script src="../js/module4.js"></script>
+</body></html>
