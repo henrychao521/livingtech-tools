@@ -1,15 +1,89 @@
 <!DOCTYPE html>
 <html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>模組 5：視圖判讀挑戰</title>
+<title>模組 5：Projection Game 視圖闖關</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/orthographic.css">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📐%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎮%3C/text%3E%3C/svg%3E">
+<style>
+  .round-tabs{display:flex;gap:6px;margin-bottom:16px}
+  .round-tab{flex:1;padding:14px 8px;background:#F1F5F9;border-radius:10px;cursor:pointer;text-align:center;font-weight:700;transition:all .25s;border:2px solid transparent}
+  .round-tab.active{background:#4F46E5;color:#fff;transform:translateY(-2px);box-shadow:0 6px 16px rgba(79,70,229,.3)}
+  .round-tab.done{background:#16A34A;color:#fff}
+  .round-tab small{display:block;font-weight:500;opacity:.8;font-size:10.5px;margin-top:2px}
+  .qcard{background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:14px;border-left:6px solid #4F46E5}
+  .qhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+  .qbadge{background:#4F46E5;color:#fff;padding:3px 10px;border-radius:6px;font-size:12px;font-weight:700}
+  .qprompt{font-size:14px;color:#1E1B4B;margin:6px 0}
+  .view-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+  .view-cell{background:#0F172A;border-radius:8px;padding:8px;text-align:center}
+  .view-cell svg{display:block;margin:0 auto;background:#1E293B;border-radius:4px}
+  .view-cell-label{font-size:10.5px;color:#FBBF24;font-family:Inter;letter-spacing:.05em;margin-top:6px}
+  .opt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+  .opt-cell{background:#fff;border:2px solid var(--border);border-radius:10px;cursor:pointer;padding:6px;transition:all .2s;text-align:center}
+  .opt-cell:hover:not(.disabled){border-color:#4F46E5;transform:translateY(-2px)}
+  .opt-cell.disabled{cursor:not-allowed;opacity:.7}
+  .opt-cell.correct{border-color:#16A34A;background:#DCFCE7}
+  .opt-cell.wrong{border-color:#dc2626;background:#FEE2E2}
+  .opt-cell canvas, .opt-cell svg{display:block;margin:0 auto;background:#1E293B;border-radius:4px}
+  .opt-label{font-size:11px;color:#475569;margin-top:4px;font-weight:600}
+  .feedback{margin-top:10px;padding:10px;border-radius:8px;font-size:13px}
+  .feedback.success{background:#DCFCE7;color:#15803d;border-left:4px solid #16A34A}
+  .feedback.error{background:#FEE2E2;color:#991b1b;border-left:4px solid #dc2626}
+  .hint-toggle{font-size:12px;color:#4F46E5;cursor:pointer;text-decoration:underline}
+  .stack-game{background:#0F172A;border-radius:12px;padding:14px;color:#CBD5E1}
+  .stack-layout{display:grid;grid-template-columns:1.4fr 1fr;gap:12px;margin-top:10px}
+  .stack-3d{height:380px;background:#1E293B;border-radius:8px;position:relative;overflow:hidden;cursor:crosshair}
+  .stack-views{display:grid;grid-template-rows:repeat(3,1fr);gap:8px}
+  .stack-view{background:#1E293B;border-radius:8px;padding:10px;display:flex;align-items:center;justify-content:space-around;font-size:11px}
+  .stack-view .vlabel{color:#FBBF24;font-weight:700;letter-spacing:.05em;font-size:10.5px}
+  .stack-view canvas{background:#0F172A;border-radius:4px;border:1px solid #334155}
+  .stack-toolbar{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+  .stack-toolbar button{padding:8px 14px;background:rgba(99,102,241,.25);color:#E0E7FF;border:1px solid #4F46E5;border-radius:6px;cursor:pointer;font-weight:700;font-size:13px}
+  .stack-toolbar button:hover{background:rgba(99,102,241,.5)}
+  .stack-toolbar button.danger{border-color:#dc2626;color:#FCA5A5}
+  .match-bar{height:14px;background:#1E293B;border-radius:99px;overflow:hidden;margin-top:8px;border:1px solid #334155}
+  .match-bar-fill{height:100%;background:linear-gradient(90deg,#dc2626,#FBBF24,#16A34A);transition:width .35s}
+  .score-pill{background:#FBBF24;color:#1E1B4B;padding:6px 14px;border-radius:99px;font-weight:800;font-family:Inter;font-size:13px}
+  .legend{display:flex;gap:14px;margin-top:8px;font-size:12px;color:#CBD5E1;flex-wrap:wrap}
+  .legend-item{display:flex;align-items:center;gap:6px}
+  .legend-dot{width:14px;height:14px;border-radius:3px;display:inline-block}
+</style>
 </head><body data-tool="orthographic" class="ort-theme">
-<header class="topbar"><div class="brand"><span class="logo">📐</span><div><h1>三視圖</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<header class="topbar"><div class="brand"><span class="logo">🎮</span><div><h1>三視圖</h1><p class="subtitle">Projection Game 視圖闖關</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
 <main class="module-page">
-  <div class="module-header"><div><span class="module-step" style="background:var(--purple-light);color:#6f3aa6">MODULE 05</span><h2>視圖判讀挑戰</h2><p class="muted">看三視圖判斷 3D 物件——8 題遞增難度。</p></div><div class="muted" id="prog">已答 0 / 8 題</div></div>
-  <section class="panel"><h3>挑戰題目</h3><div id="quiz"></div></section>
+  <div class="module-header">
+    <div>
+      <span class="module-step" style="background:var(--purple-light);color:#6f3aa6">MODULE 05 ・ 挑戰</span>
+      <h2>Projection Game — 視圖闖關</h2>
+      <p class="muted">三輪遞進挑戰：視圖配對 → 缺失補完 → 方塊堆疊。培養 2D ↔ 3D 雙向轉換能力。</p>
+    </div>
+    <div class="score-pill">⭐ <span id="score">0</span> / <span id="total">11</span></div>
+  </div>
+
+  <div class="round-tabs">
+    <div class="round-tab active" data-r="1">Round 1<small>視圖 → 物件（5 題）</small></div>
+    <div class="round-tab" data-r="2">Round 2<small>補缺失視圖（4 題）</small></div>
+    <div class="round-tab" data-r="3">Round 3<small>方塊堆疊建構（2 題）</small></div>
+  </div>
+
+  <section class="panel">
+    <div id="round-1" class="round-content"></div>
+    <div id="round-2" class="round-content" style="display:none"></div>
+    <div id="round-3" class="round-content" style="display:none"></div>
+  </section>
+
   <div class="module-nav-bottom"><a href="module4.html" class="btn btn-ghost">← 上一關</a><a href="../index.html" class="btn btn-primary">完成全部模組 ✓</a></div>
 </main>
-<script src="../../js/main.js"></script><script src="../../js/sources.js"></script><script src="../../js/audio.js"></script><script src="../js/module5.js"></script>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+
+<script src="../../js/main.js"></script><script src="../../js/sources.js"></script><script src="../../js/audio.js"></script>
+<script type="module" src="../js/module5.js"></script>
 </body></html>
