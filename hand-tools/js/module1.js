@@ -84,7 +84,13 @@ const nextBtn = document.getElementById('next-btn');
 TOOLS.forEach(t => {
   const card = document.createElement('div');
   card.style.cssText = `background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px;cursor:pointer;border-left:5px solid #64748B;${seen.has(t.id) ? 'background:#F1F5F9' : ''}`;
-  card.innerHTML = `<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span style="font-size:30px">${t.icon}</span><h4 style="margin:0;color:#334155">${t.name}</h4></div>
+  // id 對應 .scad 檔名（cutter→knife、measure 保持、其他直接用 id）
+  const isoMap = { hammer: 'hammer', driver: 'driver', saw: 'saw', file: 'file', pliers: 'pliers', wrench: 'wrench', measure: 'measure', cutter: 'knife', clamp: 'clamp', punch: 'punch' };
+  const iso = isoMap[t.id] || t.id;
+  card.innerHTML = `<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+    <img src="../../models/hand-tools/${iso}-iso.png" alt="${t.name}" style="width:64px;height:64px;object-fit:contain;background:#1E293B;border-radius:6px;flex-shrink:0" loading="lazy">
+    <h4 style="margin:0;color:#334155">${t.name}</h4>
+  </div>
     <p style="font-size:12.5px;color:#666;margin:4px 0"><strong>類型：</strong>${t.types}</p>
     <p style="font-size:12.5px;color:#666;margin:4px 0"><strong>用途：</strong>${t.use}</p>
     <p style="font-size:12px;color:#16A34A;background:#DCFCE7;padding:6px 10px;border-radius:5px;margin:6px 0"><strong>💡 訣竅：</strong>${t.tip}</p>
