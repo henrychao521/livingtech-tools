@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 2：感測器與訊號</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/microcontroller.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🧠%3C/text%3E%3C/svg%3E">
+</head><body class="mc-theme">
+<header class="topbar"><div class="brand"><span class="logo">🧠</span><div><h1>微控制器</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<main class="module-page">
+  <div class="module-header"><div><span class="module-step" style="background:var(--primary-light);color:#4338CA">MODULE 02</span><h2>感測器 + 訊號類型</h2><p class="muted">8 種常見感測器 + 數位/類比訊號差異。</p></div><div class="muted" id="prog">已答 0 / 8 題</div></div>
+  <section class="panel"><h3>數位 vs 類比</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;border-left:5px solid #6366F1">
+        <h4 style="color:#4338CA">數位 Digital（0 / 1）</h4>
+        <p style="font-size:13px;color:#444">只有兩種狀態：HIGH（5V/3.3V）或 LOW（0V）。<br>讀取：<code style="background:#E0E7FF;padding:1px 4px;border-radius:3px">digitalRead(pin)</code> → 0 或 1<br>寫入：<code style="background:#E0E7FF;padding:1px 4px;border-radius:3px">digitalWrite(pin, HIGH)</code></p>
+        <p style="font-size:12.5px;color:#666"><strong>用途：</strong>按鈕、LED、繼電器、PIR、霍爾</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;border-left:5px solid #16A34A">
+        <h4 style="color:#15803D">類比 Analog（連續值）</h4>
+        <p style="font-size:13px;color:#444">連續電壓值（0V 到 5V）。Arduino ADC 解析到 0-1023（10-bit）。<br>讀取：<code style="background:#DCFCE7;padding:1px 4px;border-radius:3px">analogRead(A0)</code> → 0-1023<br>寫入：<code style="background:#DCFCE7;padding:1px 4px;border-radius:3px">analogWrite(pin, 0-255)</code>（PWM）</p>
+        <p style="font-size:12.5px;color:#666"><strong>用途：</strong>光敏、溫度、可變電阻、土壤濕度、霍爾類比</p>
+      </div>
+    </div>
+  </section>
+  <section class="panel"><h3>8 種常見感測器</h3><div id="sensors" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px"></div></section>
+  <section class="panel"><h3>🔍 感測器判斷測驗</h3><div id="quiz"></div></section>
+  <div class="module-nav-bottom"><a href="module1.html" class="btn btn-ghost">← 上一關</a><a href="module3.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a></div>
+</main>
+<script src="../../js/main.js"></script><script src="../../js/audio.js"></script><script src="../js/module2.js"></script>
+</body></html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>微控制器 ｜ 生活科技互動教學平台</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/svg-effects.css"><link rel="stylesheet" href="css/microcontroller.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🧠%3C/text%3E%3C/svg%3E">
+</head><body class="home mc-theme">
+<header class="topbar">
+  <div class="brand"><span class="logo">🧠</span><div><h1>微控制器</h1><p class="subtitle">生活科技互動教學平台</p></div></div>
+  <nav class="topnav"><a href="#modules">學習模組</a><a href="../" style="color:var(--primary-dark);font-weight:600">← 平台首頁</a></nav>
+</header>
+<main>
+  <section class="hero">
+    <div class="hero-text">
+      <span class="badge">108 課綱・3下 K4 認識電與控制（控制邏輯系統）</span>
+      <h2>讓電子裝置「會思考」<br>從感測 → 邏輯 → 動作</h2>
+      <p>微控制器（MCU）是物聯網與創客世界的核心：Arduino、micro:bit、ESP32 都是。本平台帶你認識三大平台、數位/類比訊號、感測器運作、簡單程式邏輯，並模擬「創意公仔燈」與「自動清掃機器人」（對應 3 下統整專題）。</p>
+      <div class="hero-cta"><a href="pages/module1.html" class="btn btn-primary">開始學習 →</a><a href="#modules" class="btn btn-ghost">看模組地圖</a></div>
+    </div>
+    <div class="hero-visual">
+      <svg viewBox="0 0 480 360" class="hero-mc svg-shadow-med">
+        <ellipse cx="240" cy="320" rx="200" ry="14" fill="rgba(0,0,0,.15)"/>
+        <!-- Arduino UNO 板 -->
+        <rect x="60" y="160" width="360" height="140" rx="8" fill="#16A34A"/>
+        <rect x="60" y="160" width="360" height="8" fill="#15803D"/>
+        <!-- 處理器 -->
+        <rect x="200" y="200" width="80" height="60" rx="3" fill="#1e293b"/>
+        <text x="240" y="225" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="700" font-family="Inter">ATmega328P</text>
+        <text x="240" y="245" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="Inter">8-bit MCU</text>
+        <!-- 引腳 -->
+        <g fill="#94a3b8">
+          <rect x="70" y="170" width="160" height="5"/>
+          <rect x="250" y="170" width="160" height="5"/>
+          <rect x="70" y="285" width="340" height="5"/>
+        </g>
+        <!-- LED -->
+        <circle cx="100" cy="225" r="6" fill="#fbbf24"><animate attributeName="fill" values="#fbbf24;#fb923c;#fbbf24" dur="1s" repeatCount="indefinite"/></circle>
+        <text x="100" y="255" text-anchor="middle" fill="#fff" font-size="8">LED</text>
+        <!-- USB -->
+        <rect x="50" y="195" width="20" height="30" fill="#94a3b8"/>
+        <!-- 電源 -->
+        <rect x="50" y="240" width="20" height="20" fill="#1e293b"/>
+        <text x="240" y="180" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">ARDUINO UNO</text>
+        <text x="240" y="50" text-anchor="middle" font-size="14" font-weight="800" fill="#4338CA" font-family="Inter">MICROCONTROLLER ・ 微型大腦</text>
+      </svg>
+    </div>
+  </section>
+  <section id="modules" class="modules">
+    <h3 class="section-title">五大學習模組</h3>
+    <p class="section-sub">從硬體認識到程式控制創作</p>
+    <div class="module-grid">
+      <a class="card card-1" href="pages/module1.html"><div class="card-num">01</div><div class="card-icon">🔍</div><h4>3 大微控制器</h4><p>Arduino / micro:bit / ESP32——規格、用途、選用建議。</p><span class="card-tag">15 分鐘</span></a>
+      <a class="card card-2" href="pages/module2.html"><div class="card-num">02</div><div class="card-icon">📡</div><h4>感測器 + 數位/類比</h4><p>常見 8 種感測器（光/距離/溫度/超音波/PIR...）與訊號形式。</p><span class="card-tag">必修・15 分鐘</span></a>
+      <a class="card card-3" href="pages/module3.html"><div class="card-num">03</div><div class="card-icon">💻</div><h4>程式邏輯基礎</h4><p>setup/loop、if/else、while、digitalRead/Write、analogRead——8 個範例程式。</p><span class="card-tag">15 分鐘</span></a>
+      <a class="card card-4" href="pages/module4.html"><div class="card-num">04</div><div class="card-icon">🎮</div><h4>虛擬電路模擬器</h4><p>接電路 + 寫程式 + 看結果——3 個情境：LED 閃爍、按鈕切換、距離避障。</p><span class="card-tag">核心・25 分鐘</span></a>
+      <a class="card card-5" href="pages/module5.html"><div class="card-num">05</div><div class="card-icon">🏆</div><h4>創意作品案例</h4><p>創意公仔燈 + 自動清掃機器人 + 6 種真實學生作品。</p><span class="card-tag">15 分鐘</span></a>
+      <div class="card card-locked"><div class="card-num">👨‍🏫</div><div class="card-icon">📊</div><h4>教師後台</h4><p>班級進度（共用平台）。</p><span class="card-tag">教師專用</span></div>
+    </div>
+  </section>
+  <section class="about">
+    <h3 class="section-title">為什麼微控制器要先在數位環境練？</h3>
+    <div class="reason-grid">
+      <div class="reason"><span>💸</span><h4>硬體燒掉很貴</h4><p>接線錯誤或電壓不對會燒板。先在模擬器試對才接實體。</p></div>
+      <div class="reason"><span>💡</span><h4>看見電流流向</h4><p>實體電路看不到「電」，模擬器可以動態顯示電流路徑與邏輯。</p></div>
+      <div class="reason"><span>🐛</span><h4>除錯先在腦中</h4><p>程式錯誤類型先在虛擬環境跑過——學生才會建立 debug 思維。</p></div>
+      <div class="reason"><span>🎯</span><h4>對接統整專題</h4><p>3 下「創意清掃機器人」整合所有電子知識，需要先學微控制器基礎。</p></div>
+    </div>
+  </section>
+</main>
+<script src="../js/main.js"></script><script src="../js/audio.js"></script>
+</body></html>
