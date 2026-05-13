@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 4：系統整體設計</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/design-process.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎯%3C/text%3E%3C/svg%3E">
+<style>
+  .matrix { width:100%; border-collapse:collapse; font-size:13px }
+  .matrix th, .matrix td { border:1px solid var(--border); padding:8px; text-align:center }
+  .matrix th { background:#F3E8FF; color:#6B21A8 }
+  .matrix .best { background:#dcfce7; font-weight:700 }
+  .matrix input { width:60px; padding:4px; border:1px solid var(--border); border-radius:4px; text-align:center; font-family:var(--font-mono) }
+</style>
+</head><body class="dp-theme">
+<header class="topbar"><div class="brand"><span class="logo">🎯</span><div><h1>產品設計流程</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<main class="module-page">
+  <div class="module-header"><div><span class="module-step" style="background:var(--success-light);color:#1b6e3a">MODULE 04 ・ 核心</span><h2>系統整體設計 + 決策矩陣</h2><p class="muted">對應 3 上「家電設計構想選擇」。</p></div></div>
+
+  <section class="panel">
+    <h3>📊 Pugh 決策矩陣（範例：智慧書包設計）</h3>
+    <p class="muted" style="margin-bottom:14px">把 3 個概念用「使用者重視的評估標準」逐項打分（1-5），加權後選出最佳方案。</p>
+    <div style="overflow-x:auto">
+      <table class="matrix">
+        <thead>
+          <tr><th>評估標準</th><th>權重</th><th>方案 A<br>傳統升級</th><th>方案 B<br>智慧電子</th><th>方案 C<br>輕量人體工學</th></tr>
+        </thead>
+        <tbody id="rows"></tbody>
+        <tfoot>
+          <tr style="background:#F3E8FF;font-weight:800"><td>加權總分</td><td>—</td><td id="ta">—</td><td id="tb">—</td><td id="tc">—</td></tr>
+        </tfoot>
+      </table>
+    </div>
+    <div id="verdict" class="verdict warn" style="margin-top:14px">調整分數看結果變化</div>
+  </section>
+
+  <section class="panel"><h3>🧩 系統功能分解</h3>
+    <p class="muted" style="margin-bottom:14px">把產品拆成「子系統」——每個都可獨立設計。</p>
+    <div style="background:#F3E8FF;padding:18px;border-radius:14px;font-size:14px;line-height:1.9">
+      <strong style="color:#6B21A8">範例：電動家用清潔機器人</strong>
+      <div style="margin-top:10px;padding-left:18px">
+        🎯 <strong>主系統</strong>：清潔功能<br>
+        ├─ <strong>動力系統</strong>：馬達、電池、輪子<br>
+        ├─ <strong>感測系統</strong>：超音波避障、紅外線、灰塵感測<br>
+        ├─ <strong>清潔系統</strong>：刷子、吸塵、抹布<br>
+        ├─ <strong>控制系統</strong>：MCU、App 連線、路徑演算法<br>
+        └─ <strong>使用者介面</strong>：按鈕、LED、APP
+      </div>
+    </div>
+  </section>
+
+  <div class="module-nav-bottom"><a href="module3.html" class="btn btn-ghost">← 上一關</a><a href="module5.html" class="btn btn-primary">下一關 →</a></div>
+</main>
+<script src="../../js/main.js"></script><script src="../../js/audio.js"></script><script src="../js/module4.js"></script>
+</body></html>
