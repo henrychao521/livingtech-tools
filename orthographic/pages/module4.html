@@ -1,18 +1,62 @@
 <!DOCTYPE html>
 <html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>模組 4：3D ↔ 三視圖模擬</title>
+<title>模組 4：3D ↔ 三視圖（Three.js 互動）</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/orthographic.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📐%3C/text%3E%3C/svg%3E">
-<style>.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:14px}.tab{padding:10px;text-align:center;font-size:12px;border-radius:6px;background:#f1f5f9;cursor:pointer;font-weight:700}.tab.active{background:#4F46E5;color:#fff}</style>
+<style>
+  .tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:14px}
+  .tab{padding:10px;text-align:center;font-size:12px;border-radius:6px;background:#f1f5f9;cursor:pointer;font-weight:700}
+  .tab.active{background:#4F46E5;color:#fff}
+  .ort3d-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:10px;height:560px;background:#0F172A;padding:10px;border-radius:14px}
+  .vp{position:relative;border-radius:8px;background:#1E293B;overflow:hidden}
+  .vp-label{position:absolute;top:6px;left:8px;font-size:11px;color:#FBBF24;font-family:Inter;font-weight:700;letter-spacing:.05em;background:rgba(0,0,0,.35);padding:2px 8px;border-radius:4px;z-index:2}
+  .vp-axes{position:absolute;bottom:6px;left:8px;font-size:10px;color:#94A3B8;font-family:Inter;z-index:2}
+  .vp-hint{position:absolute;bottom:6px;right:8px;font-size:10px;color:#64748B;font-family:Inter;z-index:2}
+  .vp-grid{display:grid;grid-template-rows:1fr 1fr 1fr;gap:8px}
+  #vp-main{cursor:grab}
+  #vp-main:active{cursor:grabbing}
+  .reset-btn{position:absolute;top:6px;right:8px;font-size:11px;background:rgba(99,102,241,.85);color:#fff;border:none;padding:4px 10px;border-radius:6px;cursor:pointer;z-index:3}
+  .reset-btn:hover{background:#6366F1}
+</style>
 </head><body data-tool="orthographic" class="ort-theme">
 <header class="topbar"><div class="brand"><span class="logo">📐</span><div><h1>三視圖</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
 <main class="module-page">
-  <div class="module-header"><div><span class="module-step" style="background:var(--success-light);color:#1b6e3a">MODULE 04 ・ 核心</span><h2>3D 物件 → 三視圖</h2><p class="muted">選擇物件看正視 / 側視 / 俯視即時對應。</p></div></div>
-  <div class="practice-layout">
-    <div class="ort-canvas-wrap">
-      <canvas id="ort-canvas" width="760" height="560"></canvas>
+  <div class="module-header">
+    <div>
+      <span class="module-step" style="background:var(--success-light);color:#1b6e3a">MODULE 04 ・ 核心</span>
+      <h2>3D ↔ 三視圖（互動投影器）</h2>
+      <p class="muted">左：可拖曳旋轉的 3D 物件・右：依 CNS 3 第三角投影法即時呈現正視 / 側視 / 俯視。</p>
     </div>
+  </div>
+
+  <div class="practice-layout">
+    <div class="ort-canvas-wrap" style="padding:0">
+      <div class="ort3d-grid">
+        <!-- 主 3D 視窗（可旋轉）-->
+        <div id="vp-main" class="vp">
+          <span class="vp-label">🖱 3D 物件（拖曳旋轉、滾輪縮放）</span>
+          <button class="reset-btn" id="btn-reset">↺ 重置視角</button>
+          <span class="vp-axes" id="vp-main-axes">X 紅・Y 綠・Z 藍</span>
+        </div>
+        <!-- 三視圖（固定方向）-->
+        <div class="vp-grid">
+          <div id="vp-front" class="vp">
+            <span class="vp-label" style="color:#60A5FA">正視 FRONT</span>
+            <span class="vp-axes">從 +Z 方向看（觀者前方）</span>
+          </div>
+          <div id="vp-side" class="vp">
+            <span class="vp-label" style="color:#34D399">側視 SIDE</span>
+            <span class="vp-axes">從 −X 方向看（左視）</span>
+          </div>
+          <div id="vp-top" class="vp">
+            <span class="vp-label" style="color:#FBBF24">俯視 TOP</span>
+            <span class="vp-axes">從 +Y 方向看（往下）</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="sim-side">
       <div style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px">
         <h4 style="font-size:13px;color:var(--text-muted);text-transform:uppercase;margin-bottom:10px">選擇物件</h4>
@@ -26,20 +70,40 @@
           <div class="tab" data-s="hole">孔板</div>
           <div class="tab" data-s="cone">圓錐</div>
         </div>
-        <div style="margin-top:14px;background:#E0E7FF;padding:12px;border-radius:8px;font-size:13px;color:#3730A3" id="info">立方體：6 個面都一樣 = 三視圖都是正方形</div>
+        <div class="tabs" style="margin-top:6px">
+          <div class="tab" data-s="tslot">T 槽塊</div>
+          <div class="tab" data-s="wedge">楔形塊</div>
+          <div class="tab" data-s="bracket">L 角架</div>
+        </div>
+        <div style="margin-top:14px;background:#E0E7FF;padding:12px;border-radius:8px;font-size:13px;color:#3730A3" id="info">立方體：6 個面都一樣 = 三視圖都是相同的正方形。</div>
       </div>
+
       <div class="help-card">
-        <strong>💡 觀察重點</strong>
+        <strong>💡 觀察重點（CNS 3 第三角投影法）</strong>
         <ul>
-          <li>對齊：正視寬 = 俯視寬</li>
-          <li>高平齊：正視高 = 側視高</li>
-          <li>圓變方？或方變圓？</li>
-          <li>是否有虛線（內部結構）</li>
+          <li><strong>對齊規則</strong>：正視寬 = 俯視寬</li>
+          <li><strong>高平齊</strong>：正視高 = 側視高</li>
+          <li><strong>圓→方</strong>：曲面物體某方向投影會變直線</li>
+          <li><strong>虛線</strong>：物體內部 / 背後不可見輪廓</li>
+          <li><strong>體會立體</strong>：先看 3D 物件，再驗證三個固定方向的投影</li>
         </ul>
       </div>
     </div>
   </div>
+
   <div class="module-nav-bottom"><a href="module3.html" class="btn btn-ghost">← 上一關</a><a href="module5.html" class="btn btn-primary">下一關 →</a></div>
 </main>
-<script src="../../js/main.js"></script><script src="../../js/sources.js"></script><script src="../../js/audio.js"></script><script src="../js/module4.js"></script>
+
+<!-- Three.js via importmap（CDN）-->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+
+<script src="../../js/main.js"></script><script src="../../js/sources.js"></script><script src="../../js/audio.js"></script>
+<script type="module" src="../js/module4.js"></script>
 </body></html>
