@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 4：粒度與表面模擬</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/sander.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E✨%3C/text%3E%3C/svg%3E">
+<style>
+  .s-controls { background:#fff; border:1px solid var(--border); border-radius:14px; padding:16px; margin-bottom:12px; }
+  .slider-row { margin-bottom:14px; }
+  .slider-row label { display:flex; justify-content:space-between; font-size:13px; margin-bottom:4px; }
+  .slider-row label .v { font-family:var(--font-mono); font-weight:700; color:var(--primary-dark); }
+  .slider-row input[type="range"] { width:100%; }
+  .s-controls h4 { font-size:13px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.1em; margin-bottom:10px; }
+  .estimates { background:var(--primary-light); border-radius:10px; padding:12px; margin-top:8px; }
+  .estimates .row { display:flex; justify-content:space-between; padding:4px 0; font-size:13px; }
+  .estimates .row strong { color:var(--primary-dark); font-family:var(--font-mono); }
+</style>
+</head>
+<body class="sander-theme">
+<header class="topbar"><div class="brand"><span class="logo">✨</span><div><h1>數位砂磨機</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<main class="module-page">
+  <div class="module-header"><div><span class="module-step" style="background:var(--success-light);color:#1b6e3a">MODULE 04 ・ 核心</span><h2>粒度與表面模擬</h2><p class="muted">調整材料、粒度、進料速度、接觸時間，看表面粗糙度（Ra）與燒焦風險。</p></div></div>
+
+  <div class="practice-layout">
+    <div class="sander-canvas-wrap">
+      <canvas id="sander-canvas" width="760" height="500"></canvas>
+      <div class="sim-controls">
+        <button class="btn btn-primary" id="btn-sand">▶ 開始砂磨</button>
+        <button class="btn btn-ghost" id="btn-reset">↺ 重置</button>
+      </div>
+    </div>
+
+    <div class="sim-side">
+      <div class="s-controls">
+        <h4>砂磨參數</h4>
+        <div class="slider-row">
+          <label>工件材料 <select id="material" style="font-family:var(--font-sans);font-size:13px;padding:2px 6px;border-radius:4px"><option value="softwood" selected>軟木</option><option value="hardwood">硬木</option><option value="plastic">塑膠</option><option value="aluminum">鋁</option></select></label>
+        </div>
+        <div class="slider-row">
+          <label>砂帶粒度 <span class="v" id="v-grit">120 號</span></label>
+          <input type="range" id="s-grit" min="0" max="5" step="1" value="2">
+          <div class="grit-grid">
+            <div class="grit-cell" data-g="0">60<span class="lbl">粗</span></div>
+            <div class="grit-cell" data-g="1">80<span class="lbl">粗</span></div>
+            <div class="grit-cell active" data-g="2">120<span class="lbl">中</span></div>
+            <div class="grit-cell" data-g="3">180<span class="lbl">細</span></div>
+            <div class="grit-cell" data-g="4">240<span class="lbl">細</span></div>
+            <div class="grit-cell" data-g="5">320<span class="lbl">精</span></div>
+          </div>
+        </div>
+        <div class="slider-row">
+          <label>進料速度 <span class="v" id="v-feed">中</span></label>
+          <input type="range" id="s-feed" min="1" max="5" step="1" value="3">
+        </div>
+        <div class="slider-row">
+          <label>接觸時間 <span class="v" id="v-time">3 秒</span></label>
+          <input type="range" id="s-time" min="1" max="10" step="1" value="3">
+        </div>
+        <div class="estimates">
+          <div class="row"><span>去料量</span><strong id="e-remove">—</strong></div>
+          <div class="row"><span>表面 Ra</span><strong id="e-ra">—</strong></div>
+          <div class="row"><span>過熱風險</span><strong id="e-heat">—</strong></div>
+          <div class="row"><span>後續粒度建議</span><strong id="e-next">—</strong></div>
+        </div>
+        <div id="verdict" class="verdict warn">點「開始砂磨」看結果</div>
+      </div>
+
+      <div class="help-card">
+        <strong>💡 粒度選擇參考</strong>
+        <ul>
+          <li>60–80 號：粗料快速去除（不平、油漆）</li>
+          <li>120 號：一般木工中磨</li>
+          <li>180–240 號：上漆前精修</li>
+          <li>320 號以上：拋光、上漆後再磨</li>
+          <li>循序漸進，不能跳級</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-nav-bottom"><a href="module3.html" class="btn btn-ghost">← 上一關</a><a href="module5.html" class="btn btn-primary">下一關：故障圖鑑 →</a></div>
+</main>
+<script src="../../js/main.js"></script><script src="../../js/audio.js"></script><script src="../js/module4.js"></script>
+</body></html>
