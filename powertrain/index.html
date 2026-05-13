@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>動力與運輸 ｜ 生活科技互動教學平台</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/svg-effects.css"><link rel="stylesheet" href="css/powertrain.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🚗%3C/text%3E%3C/svg%3E">
+</head><body class="home pt-theme">
+<header class="topbar">
+  <div class="brand"><span class="logo">🚗</span><div><h1>動力與運輸</h1><p class="subtitle">生活科技互動教學平台</p></div></div>
+  <nav class="topnav"><a href="#modules">學習模組</a><a href="../" style="color:var(--primary-dark);font-weight:600">← 平台首頁</a></nav>
+</header>
+<main>
+  <section class="hero">
+    <div class="hero-text">
+      <span class="badge">108 課綱・2下 K4 動力與運輸 + K6 運輸社會環境</span>
+      <h2>從內燃機到電動車，<br>運輸科技的過去現在未來</h2>
+      <p>本平台涵蓋 4 種動力系統（內燃機 / 電動機 / 燃料電池 / 液壓）、運輸載具分類、太陽能動力車製作流程、動力效率模擬器與運輸對社會環境的影響。對應 2 下「動力與運輸」整章。</p>
+      <div class="hero-cta"><a href="pages/module1.html" class="btn btn-primary">開始學習 →</a><a href="#modules" class="btn btn-ghost">看模組地圖</a></div>
+    </div>
+    <div class="hero-visual">
+      <svg viewBox="0 0 480 360" class="hero-pt svg-shadow-med">
+        <ellipse cx="240" cy="290" rx="200" ry="14" fill="rgba(0,0,0,.15)"/>
+        <!-- 車身 -->
+        <path d="M 80 240 Q 80 200 130 195 L 200 175 Q 280 165 360 195 L 400 220 Q 410 240 405 260 L 80 260 Z" fill="#EA580C" stroke="#9A3412" stroke-width="2"/>
+        <!-- 車窗 -->
+        <path d="M 150 195 L 200 175 Q 260 168 320 185 L 340 200 Z" fill="#0EA5E9" opacity=".7" stroke="#9A3412" stroke-width="1"/>
+        <!-- 太陽能板 -->
+        <rect x="160" y="160" width="160" height="14" fill="#1E40AF" transform="skewX(-8)"/>
+        <g stroke="#3B82F6" stroke-width=".8" transform="skewX(-8)">
+          <line x1="180" y1="160" x2="180" y2="174"/>
+          <line x1="220" y1="160" x2="220" y2="174"/>
+          <line x1="260" y1="160" x2="260" y2="174"/>
+          <line x1="300" y1="160" x2="300" y2="174"/>
+        </g>
+        <!-- 車輪 -->
+        <circle cx="140" cy="265" r="32" fill="#1e293b"/>
+        <circle cx="140" cy="265" r="20" fill="#475569"/>
+        <circle cx="140" cy="265" r="8" fill="#EA580C"/>
+        <circle cx="340" cy="265" r="32" fill="#1e293b"/>
+        <circle cx="340" cy="265" r="20" fill="#475569"/>
+        <circle cx="340" cy="265" r="8" fill="#EA580C"/>
+        <!-- 太陽 -->
+        <circle cx="100" cy="80" r="28" fill="#FEF9C3" stroke="#CA8A04" stroke-width="2"/>
+        <g stroke="#CA8A04" stroke-width="2"><line x1="100" y1="40" x2="100" y2="50"/><line x1="100" y1="110" x2="100" y2="120"/><line x1="60" y1="80" x2="70" y2="80"/><line x1="130" y1="80" x2="140" y2="80"/></g>
+        <text x="240" y="40" text-anchor="middle" font-size="14" font-weight="800" fill="#9A3412" font-family="Inter">SOLAR POWERED CAR ・ 太陽能動力車</text>
+      </svg>
+    </div>
+  </section>
+
+  <section id="modules" class="modules">
+    <h3 class="section-title">五大學習模組</h3>
+    <p class="section-sub">從動力原理到運輸的社會影響</p>
+    <div class="module-grid">
+      <a class="card card-1" href="pages/module1.html"><div class="card-num">01</div><div class="card-icon">🔍</div><h4>4 種動力系統</h4><p>內燃機、電動機、燃料電池、液壓——各自原理、效率、用途。</p><span class="card-tag">15 分鐘</span></a>
+      <a class="card card-2" href="pages/module2.html"><div class="card-num">02</div><div class="card-icon">🚢</div><h4>運輸科技分類</h4><p>陸上（車/火車）/ 海上（船/潛艇）/ 空中（飛機/直升機/無人機）載具特性比較。</p><span class="card-tag">必修・15 分鐘</span></a>
+      <a class="card card-3" href="pages/module3.html"><div class="card-num">03</div><div class="card-icon">📖</div><h4>太陽能動力車製作</h4><p>對應 2 下闖關任務，8 步驟製作流程含選馬達、太陽能板、傳動。</p><span class="card-tag">15 分鐘</span></a>
+      <a class="card card-4" href="pages/module4.html"><div class="card-num">04</div><div class="card-icon">🎮</div><h4>動力效率模擬器</h4><p>選車輛類型，調整動力源、變速齒比、行駛條件，看油耗 / 續航 / 碳排。</p><span class="card-tag">核心・20 分鐘</span></a>
+      <a class="card card-5" href="pages/module5.html"><div class="card-num">05</div><div class="card-icon">🏆</div><h4>運輸對社會與環境</h4><p>都市規劃、塞車成本、空汙、運輸碳排——10 個議題分析。</p><span class="card-tag">15 分鐘</span></a>
+      <div class="card card-locked"><div class="card-num">👨‍🏫</div><div class="card-icon">📊</div><h4>教師後台</h4><p>班級進度（共用平台）。</p><span class="card-tag">教師專用</span></div>
+    </div>
+  </section>
+
+  <section class="about">
+    <h3 class="section-title">為什麼運輸科技要先在數位環境練？</h3>
+    <div class="reason-grid">
+      <div class="reason"><span>🔄</span><h4>動力革命進行中</h4><p>2035 年歐盟禁售燃油車。未來車一定是電動——學生要先理解動力轉型。</p></div>
+      <div class="reason"><span>📊</span><h4>數字才有感</h4><p>「電動車比汽油車省 70% 能量成本」「飛機比火車排碳 5 倍」用數據比較才直觀。</p></div>
+      <div class="reason"><span>🛠</span><h4>動手前要計算</h4><p>太陽能動力車選馬達、齒比、輪徑都要算過——先在模擬器試比剪了才發現錯有效率。</p></div>
+      <div class="reason"><span>🌍</span><h4>環境議題複雜</h4><p>電動車真的環保嗎？關鍵在電從哪來——學生要建立完整的「電→車→排放」思考。</p></div>
+    </div>
+  </section>
+</main>
+<script src="../js/main.js"></script><script src="../js/audio.js"></script>
+</body></html>

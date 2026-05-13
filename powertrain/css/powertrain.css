@@ -1,0 +1,17 @@
+/* 動力與運輸主題色 — 機械橘 */
+.pt-theme {
+  --primary: #EA580C;
+  --primary-dark: #9A3412;
+  --primary-light: #FFEDD5;
+  --primary-glow: rgba(234,88,12,.3);
+  --accent: #0EA5E9;
+  --accent-light: #E0F2FE;
+}
+.pt-theme .brand .logo { filter: drop-shadow(0 2px 4px rgba(234,88,12,.4)); }
+.pt-theme .hero h2 { background: linear-gradient(135deg, #1a1a1a 30%, #9A3412 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.hero-pt { width: 100%; max-width: 480px; filter: drop-shadow(0 20px 40px rgba(0,0,0,.12)); animation: slow-float 6s ease-in-out infinite; }
+.pt-canvas-wrap { background: #0f172a; border-radius: var(--radius-lg); padding: 18px; border: 1px solid #1e293b; }
+#pt-canvas { width: 100%; max-width: 760px; height: auto; display: block; background: #1e293b; border-radius: var(--radius); }
+.verdict { padding:14px; border-radius:10px; margin-top:10px; font-size:14px; font-weight:700; }
+.verdict.good { background:#dcfce7; color:#15803d; border-left:4px solid #22c55e; }
+.verdict.warn { background:#fef9c3; color:#a16207; border-left:4px solid #eab308; }
