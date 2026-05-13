@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>數位鑽床 ｜ 生活科技互動教學平台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/svg-effects.css">
+<link rel="stylesheet" href="css/drill-press.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛠%3C/text%3E%3C/svg%3E">
+</head>
+<body class="home dpress-theme">
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">🛠</span>
+    <div>
+      <h1>數位鑽床</h1>
+      <p class="subtitle">生活科技互動教學平台</p>
+    </div>
+  </div>
+  <nav class="topnav">
+    <a href="#modules">學習模組</a>
+    <a href="../" style="color:var(--primary-dark);font-weight:600">← 平台首頁</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-text">
+      <span class="badge">108 課綱・2上 關卡 0 電動機具</span>
+      <h2>固定式精準鑽孔，<br>從皮帶輪變速到工作檯校準</h2>
+      <p>鑽床（drill press / pillar drill）是生活科技教室的固定式鑽孔機。和手電鑽不同之處在於：垂直保證好、可控進刀深度、靠皮帶輪變速。本平台帶你認識主軸、夾頭、工作檯、進刀手柄，學會選對轉速、夾緊工件，並對照 8 種常見鑽床事故。</p>
+      <div class="hero-cta">
+        <a href="pages/module1.html" class="btn btn-primary">開始學習 →</a>
+        <a href="#modules" class="btn btn-ghost">看模組地圖</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <svg viewBox="0 0 380 480" class="hero-dpress svg-shadow-med">
+        <defs>
+          <linearGradient id="dpFrame" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="#22c55e"/>
+            <stop offset=".5" stop-color="#15803D"/>
+            <stop offset="1" stop-color="#14532D"/>
+          </linearGradient>
+          <linearGradient id="dpMetal" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="#e5e7eb"/>
+            <stop offset=".5" stop-color="#9ca3af"/>
+            <stop offset="1" stop-color="#4b5563"/>
+          </linearGradient>
+          <filter id="dpShadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="5"/>
+            <feOffset dx="0" dy="6"/>
+            <feComponentTransfer><feFuncA type="linear" slope="0.25"/></feComponentTransfer>
+            <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <ellipse cx="190" cy="455" rx="160" ry="14" fill="rgba(0,0,0,.18)"/>
+
+        <!-- 基座 -->
+        <g filter="url(#dpShadow)">
+          <rect x="60" y="410" width="260" height="40" rx="4" fill="url(#dpFrame)"/>
+          <rect x="60" y="408" width="260" height="6" fill="#14532D"/>
+          <!-- 螺絲 -->
+          <circle cx="80" cy="435" r="4" fill="#1e293b"/>
+          <circle cx="300" cy="435" r="4" fill="#1e293b"/>
+        </g>
+
+        <!-- 立柱 -->
+        <g filter="url(#dpShadow)">
+          <rect x="170" y="80" width="40" height="335" rx="4" fill="url(#dpMetal)"/>
+          <line x1="190" y1="80" x2="190" y2="415" stroke="#475569" stroke-width="1"/>
+        </g>
+
+        <!-- 工作檯 -->
+        <g filter="url(#dpShadow)">
+          <rect x="100" y="300" width="180" height="22" rx="3" fill="#14532D"/>
+          <rect x="100" y="298" width="180" height="6" fill="#22c55e"/>
+          <!-- T 槽 -->
+          <line x1="120" y1="305" x2="260" y2="305" stroke="#0f172a" stroke-width="2"/>
+          <line x1="120" y1="315" x2="260" y2="315" stroke="#0f172a" stroke-width="2"/>
+          <!-- 高度調整鎖 -->
+          <rect x="155" y="322" width="70" height="14" rx="2" fill="#1e293b"/>
+        </g>
+
+        <!-- 頭部（馬達 + 皮帶箱） -->
+        <g filter="url(#dpShadow)">
+          <rect x="80" y="60" width="220" height="100" rx="8" fill="url(#dpFrame)"/>
+          <!-- 商標條 -->
+          <rect x="100" y="70" width="180" height="14" fill="#1e293b"/>
+          <text x="190" y="80" text-anchor="middle" fill="#22c55e" font-size="10" font-weight="800" font-family="Inter">BENCH DRILL PRESS 5-SPEED</text>
+          <!-- 皮帶箱蓋（透視可見皮帶） -->
+          <rect x="100" y="92" width="180" height="60" rx="4" fill="#1e293b" stroke="#0f172a"/>
+          <!-- 上方皮帶輪 -->
+          <g transform="translate(140,122)">
+            <ellipse rx="20" ry="20" fill="url(#dpMetal)"/>
+            <circle r="6" fill="#0f172a"/>
+            <ellipse rx="14" ry="20" fill="none" stroke="#374151" stroke-width="1"/>
+          </g>
+          <!-- 下方皮帶輪 -->
+          <g transform="translate(240,122)">
+            <ellipse rx="16" ry="20" fill="url(#dpMetal)"/>
+            <circle r="5" fill="#0f172a"/>
+          </g>
+          <!-- 皮帶 -->
+          <path d="M 124 105 L 224 105 M 124 139 L 224 139" stroke="#1e293b" stroke-width="4" opacity=".8"/>
+        </g>
+
+        <!-- 進刀手柄（3 個轉臂） -->
+        <g filter="url(#dpShadow)">
+          <circle cx="190" cy="190" r="10" fill="#14532D"/>
+          <rect x="186" y="170" width="8" height="40" fill="#14532D"/>
+          <!-- 3 支手柄 -->
+          <line x1="190" y1="190" x2="230" y2="170" stroke="#14532D" stroke-width="4" stroke-linecap="round"/>
+          <line x1="190" y1="190" x2="225" y2="220" stroke="#14532D" stroke-width="4" stroke-linecap="round"/>
+          <line x1="190" y1="190" x2="155" y2="195" stroke="#14532D" stroke-width="4" stroke-linecap="round"/>
+          <!-- 握球 -->
+          <circle cx="230" cy="170" r="6" fill="#1e293b"/>
+          <circle cx="225" cy="220" r="6" fill="#1e293b"/>
+          <circle cx="155" cy="195" r="6" fill="#1e293b"/>
+        </g>
+
+        <!-- 主軸 + 夾頭 -->
+        <g filter="url(#dpShadow)">
+          <rect x="184" y="200" width="12" height="50" fill="url(#dpMetal)"/>
+          <rect x="178" y="244" width="24" height="40" rx="2" fill="url(#dpMetal)"/>
+          <g stroke="#4b5563" stroke-width="1" opacity=".6">
+            <line x1="180" y1="252" x2="200" y2="252"/>
+            <line x1="180" y1="262" x2="200" y2="262"/>
+            <line x1="180" y1="272" x2="200" y2="272"/>
+          </g>
+          <polygon points="178,283 202,283 197,295 183,295" fill="#9ca3af"/>
+        </g>
+
+        <!-- 鑽頭 -->
+        <rect x="186" y="293" width="8" height="20" fill="#6b7280"/>
+        <polygon points="186,313 194,313 190,322" fill="#374151"/>
+
+        <!-- 緊急停止 -->
+        <g filter="url(#dpShadow)">
+          <circle cx="100" cy="180" r="12" fill="#dc2626"/>
+          <circle cx="100" cy="180" r="8" fill="#fff"/>
+          <text x="100" y="183" text-anchor="middle" font-size="6" font-weight="800" fill="#dc2626">STOP</text>
+        </g>
+
+        <!-- 電源開關 -->
+        <g filter="url(#dpShadow)">
+          <rect x="280" y="170" width="14" height="22" rx="2" fill="#1e293b"/>
+          <rect x="283" y="180" width="8" height="6" fill="#22c55e"/>
+          <text x="287" y="200" text-anchor="middle" font-size="6" fill="#22c55e">ON</text>
+        </g>
+
+        <!-- 工件示意 -->
+        <rect x="155" y="288" width="60" height="10" fill="#a16207"/>
+      </svg>
+    </div>
+  </section>
+
+  <section id="modules" class="modules">
+    <h3 class="section-title">五大學習模組</h3>
+    <p class="section-sub">從機台結構到精準鑽孔，學會固定式鑽床操作</p>
+    <div class="module-grid">
+      <a class="card card-1" href="pages/module1.html"><div class="card-num">01</div><div class="card-icon">🔍</div><h4>認識鑽床</h4><p>主軸、夾頭、工作檯、進刀手柄、馬達皮帶、變速段、緊急停止、立柱 8 大部件。</p><span class="card-tag">15 分鐘</span></a>
+      <a class="card card-2" href="pages/module2.html"><div class="card-num">02</div><div class="card-icon">🛡️</div><h4>鑽床安全規範</h4><p>工件夾緊、鑽頭鎖固、轉速選擇、護具配戴、緊急應變。</p><span class="card-tag">必修・10 分鐘</span></a>
+      <a class="card card-3" href="pages/module3.html"><div class="card-num">03</div><div class="card-icon">📖</div><h4>鑽床操作流程</h4><p>8 步驟：護具 → 選鑽頭 → 拔鑰匙 → 設轉速 → 夾工件 → 調工作檯 → 進刀鑽孔 → 退鑽收工。</p><span class="card-tag">15 分鐘</span></a>
+      <a class="card card-4" href="pages/module4.html"><div class="card-num">04</div><div class="card-icon">🎮</div><h4>轉速選配模擬</h4><p>調整鑽頭直徑、材料、皮帶段位，看切削速度與過熱風險即時變化。</p><span class="card-tag">核心・20 分鐘</span></a>
+      <a class="card card-5" href="pages/module5.html"><div class="card-num">05</div><div class="card-icon">🔬</div><h4>鑽床故障圖鑑</h4><p>工件飛起、鑽頭飛出、偏鑽、過熱、鑽穿桌面等 8 種常見事故。</p><span class="card-tag">15 分鐘</span></a>
+      <div class="card card-locked"><div class="card-num">👨‍🏫</div><div class="card-icon">📊</div><h4>教師後台</h4><p>班級進度、成績匯出（共用平台教師後台）。</p><span class="card-tag">教師專用</span></div>
+    </div>
+  </section>
+
+  <section class="about">
+    <h3 class="section-title">鑽床和手電鑽，差在哪？</h3>
+    <div class="reason-grid">
+      <div class="reason"><span>📐</span><h4>垂直保證</h4><p>主軸由立柱固定，鑽孔絕對 90° 垂直。手電鑽靠手感、鑽床靠機台。</p></div>
+      <div class="reason"><span>⚙</span><h4>皮帶變速</h4><p>5 段變速透過開蓋換皮帶位置設定。鑽鋼用低速、鑽木用高速。</p></div>
+      <div class="reason"><span>🪛</span><h4>夾頭鑰匙</h4><p>鑽床多為鑰匙式夾頭，可鎖到更緊但要記得「鑰匙拔下」才能開機。</p></div>
+      <div class="reason"><span>🦺</span><h4>工件必固定</h4><p>主軸轉速高、扭力大，工件沒夾緊一定被甩飛——這是鑽床最常見事故。</p></div>
+    </div>
+  </section>
+</main>
+
+<script src="../js/main.js"></script>
+<script src="../js/audio.js"></script>
+</body>
+</html>

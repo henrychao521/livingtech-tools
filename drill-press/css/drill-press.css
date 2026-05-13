@@ -1,0 +1,35 @@
+/* 鑽床平台主題色 — 工業綠（Powermatic / Jet 機台經典綠）*/
+.dpress-theme {
+  --primary: #15803D;
+  --primary-dark: #14532D;
+  --primary-light: #D1FAE5;
+  --primary-glow: rgba(21,128,61,.3);
+  --accent: #B45309;
+  --accent-light: #FEF3C7;
+}
+.dpress-theme .brand .logo { filter: drop-shadow(0 2px 4px rgba(21,128,61,.4)); }
+.dpress-theme .hero h2 {
+  background: linear-gradient(135deg, #1a1a1a 30%, #14532D 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero-dpress { width: 100%; max-width: 460px; filter: drop-shadow(0 20px 40px rgba(0,0,0,.12)); animation: slow-float 6s ease-in-out infinite; }
+
+.dpress-canvas-wrap {
+  background: #0f172a;
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  position: relative;
+  border: 1px solid #1e293b;
+}
+#dpress-canvas {
+  width: 100%; max-width: 760px; height: auto; display: block;
+  background: #1e293b; border-radius: var(--radius);
+}
+.verdict {
+  padding:14px; border-radius:10px; margin-top:10px; font-size:14px; font-weight:700;
+}
+.verdict.good { background:#dcfce7; color:#15803d; border-left:4px solid #22c55e; }
+.verdict.warn { background:#fef9c3; color:#a16207; border-left:4px solid #eab308; }
+.verdict.bad { background:#fee2e2; color:#991b1b; border-left:4px solid #dc2626; }

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 1：認識鑽床</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/svg-effects.css">
+<link rel="stylesheet" href="../css/drill-press.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛠%3C/text%3E%3C/svg%3E">
+</head>
+<body class="dpress-theme">
+<header class="topbar">
+  <div class="brand"><span class="logo">🛠</span><div><h1>數位鑽床</h1><p class="subtitle">生活科技互動教學平台</p></div></div>
+  <a href="../index.html" class="module-back">← 回首頁</a>
+</header>
+<main class="module-page">
+  <div class="module-header">
+    <div><span class="module-step">MODULE 01</span><h2>認識鑽床</h2><p class="muted">點擊圖中綠色標記，認識每個部件的功能。</p></div>
+    <div class="muted" id="progress-text">已認識 0 / 8 個部件</div>
+  </div>
+  <div class="parts-layout">
+    <div class="saw-stage">
+      <svg viewBox="0 0 600 600" class="saw-svg svg-shadow-soft">
+        <defs>
+          <linearGradient id="m1dpFrame" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#22c55e"/><stop offset=".5" stop-color="#15803D"/><stop offset="1" stop-color="#14532D"/></linearGradient>
+          <linearGradient id="m1dpMetal" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#e5e7eb"/><stop offset=".5" stop-color="#9ca3af"/><stop offset="1" stop-color="#4b5563"/></linearGradient>
+          <filter id="m1dpShadow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur in="SourceAlpha" stdDeviation="3"/><feOffset dx="0" dy="4"/><feComponentTransfer><feFuncA type="linear" slope="0.3"/></feComponentTransfer><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+
+        <ellipse cx="300" cy="565" rx="200" ry="14" fill="rgba(0,0,0,.18)"/>
+
+        <!-- 基座 -->
+        <g filter="url(#m1dpShadow)">
+          <rect x="140" y="510" width="320" height="50" rx="4" fill="url(#m1dpFrame)"/>
+          <rect x="140" y="508" width="320" height="6" fill="#14532D"/>
+          <circle cx="170" cy="540" r="5" fill="#1e293b"/>
+          <circle cx="430" cy="540" r="5" fill="#1e293b"/>
+        </g>
+
+        <!-- 立柱 -->
+        <g filter="url(#m1dpShadow)">
+          <rect x="278" y="80" width="44" height="430" rx="4" fill="url(#m1dpMetal)"/>
+          <line x1="300" y1="80" x2="300" y2="510" stroke="#475569" stroke-width="1"/>
+        </g>
+
+        <!-- 工作檯 -->
+        <g filter="url(#m1dpShadow)">
+          <rect x="180" y="380" width="240" height="28" rx="3" fill="#14532D"/>
+          <rect x="180" y="378" width="240" height="6" fill="#22c55e"/>
+          <line x1="210" y1="390" x2="390" y2="390" stroke="#0f172a" stroke-width="2"/>
+          <line x1="210" y1="398" x2="390" y2="398" stroke="#0f172a" stroke-width="2"/>
+          <!-- 工作檯傾斜鎖 -->
+          <rect x="260" y="408" width="80" height="20" rx="3" fill="#1e293b"/>
+          <circle cx="275" cy="418" r="6" fill="#475569"/>
+        </g>
+
+        <!-- 頭部 + 皮帶箱 -->
+        <g filter="url(#m1dpShadow)">
+          <rect x="140" y="60" width="320" height="130" rx="10" fill="url(#m1dpFrame)"/>
+          <rect x="170" y="74" width="260" height="18" fill="#1e293b"/>
+          <text x="300" y="87" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="800" font-family="Inter">BENCH DRILL PRESS · 5-SPEED · 250W</text>
+          <rect x="170" y="100" width="260" height="80" rx="6" fill="#1e293b"/>
+          <!-- 皮帶輪上下對 -->
+          <g transform="translate(220,140)">
+            <circle r="26" fill="url(#m1dpMetal)"/>
+            <circle r="8" fill="#0f172a"/>
+            <text y="3" text-anchor="middle" font-size="7" fill="#fff" font-weight="700">MOTOR</text>
+          </g>
+          <g transform="translate(340,140)">
+            <circle r="22" fill="url(#m1dpMetal)"/>
+            <circle r="6" fill="#0f172a"/>
+            <text y="3" text-anchor="middle" font-size="7" fill="#fff" font-weight="700">SPDL</text>
+          </g>
+          <!-- 皮帶 -->
+          <path d="M 195 117 L 318 117 M 195 163 L 318 163" stroke="#0f172a" stroke-width="5" opacity=".8"/>
+          <!-- 變速指示 -->
+          <g font-size="7" fill="#22c55e" font-weight="700">
+            <text x="380" y="115" font-family="Inter">SPEED 1</text>
+            <text x="380" y="130" font-family="Inter">SPEED 2</text>
+            <text x="380" y="145" font-family="Inter">SPEED 3</text>
+            <text x="380" y="160" font-family="Inter">SPEED 4</text>
+            <text x="380" y="175" font-family="Inter">SPEED 5</text>
+          </g>
+        </g>
+
+        <!-- 進刀手柄（3 支） -->
+        <g filter="url(#m1dpShadow)">
+          <circle cx="300" cy="240" r="14" fill="#14532D"/>
+          <rect x="294" y="200" width="12" height="55" fill="#14532D"/>
+          <line x1="300" y1="240" x2="360" y2="208" stroke="#14532D" stroke-width="6" stroke-linecap="round"/>
+          <line x1="300" y1="240" x2="355" y2="280" stroke="#14532D" stroke-width="6" stroke-linecap="round"/>
+          <line x1="300" y1="240" x2="240" y2="248" stroke="#14532D" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="360" cy="208" r="8" fill="#1e293b"/>
+          <circle cx="355" cy="280" r="8" fill="#1e293b"/>
+          <circle cx="240" cy="248" r="8" fill="#1e293b"/>
+        </g>
+
+        <!-- 主軸 + 夾頭 -->
+        <g filter="url(#m1dpShadow)">
+          <rect x="293" y="255" width="14" height="60" fill="url(#m1dpMetal)"/>
+          <rect x="282" y="310" width="36" height="50" rx="3" fill="url(#m1dpMetal)"/>
+          <g stroke="#4b5563" stroke-width="1" opacity=".6"><line x1="285" y1="320" x2="315" y2="320"/><line x1="285" y1="330" x2="315" y2="330"/><line x1="285" y1="340" x2="315" y2="340"/><line x1="285" y1="350" x2="315" y2="350"/></g>
+          <polygon points="282,360 318,360 312,378 288,378" fill="#9ca3af"/>
+          <!-- 夾頭鑰匙孔 -->
+          <circle cx="320" cy="335" r="3" fill="#0f172a"/>
+        </g>
+
+        <!-- 鑽頭 -->
+        <rect x="293" y="376" width="14" height="22" fill="#6b7280"/>
+        <polygon points="293,398 307,398 300,408" fill="#374151"/>
+
+        <!-- 緊急停止按鈕 -->
+        <g filter="url(#m1dpShadow)">
+          <circle cx="155" cy="210" r="18" fill="#dc2626"/>
+          <circle cx="155" cy="210" r="13" fill="#fff"/>
+          <text x="155" y="214" text-anchor="middle" font-size="9" font-weight="800" fill="#dc2626">STOP</text>
+        </g>
+
+        <!-- 工件 -->
+        <rect x="240" y="370" width="80" height="10" fill="#a16207"/>
+
+        <!-- 互動熱點 -->
+        <g id="hotspots">
+          <g class="hotspot-group" data-id="spindle"><circle class="hotspot-pulse" cx="300" cy="290" r="14"><animate attributeName="r" values="14;22;14" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0;1" dur="2s" repeatCount="indefinite"/></circle><circle class="hotspot" cx="300" cy="290" r="14"/><text class="hotspot-label" x="300" y="294">1</text></g>
+          <g class="hotspot-group" data-id="chuck"><circle class="hotspot" cx="300" cy="345" r="14"/><text class="hotspot-label" x="300" y="349">2</text></g>
+          <g class="hotspot-group" data-id="table"><circle class="hotspot" cx="220" cy="395" r="14"/><text class="hotspot-label" x="220" y="399">3</text></g>
+          <g class="hotspot-group" data-id="feed"><circle class="hotspot" cx="355" cy="208" r="14"/><text class="hotspot-label" x="355" y="212">4</text></g>
+          <g class="hotspot-group" data-id="motor"><circle class="hotspot" cx="220" cy="140" r="14"/><text class="hotspot-label" x="220" y="144">5</text></g>
+          <g class="hotspot-group" data-id="belt"><circle class="hotspot" cx="280" cy="140" r="14"/><text class="hotspot-label" x="280" y="144">6</text></g>
+          <g class="hotspot-group" data-id="stop"><circle class="hotspot" cx="155" cy="210" r="14"/><text class="hotspot-label" x="155" y="214">7</text></g>
+          <g class="hotspot-group" data-id="column"><circle class="hotspot" cx="300" cy="450" r="14"/><text class="hotspot-label" x="300" y="454">8</text></g>
+        </g>
+      </svg>
+    </div>
+    <div class="parts-info" id="parts-info">
+      <div class="empty"><div class="empty-icon">👆</div><p style="font-size:16px;font-weight:600">點擊綠色數字</p><p style="font-size:13px;opacity:.7">8 個部件都認完才能進下一關</p></div>
+    </div>
+  </div>
+  <div class="parts-checklist" id="parts-checklist"></div>
+
+  <div class="module-nav-bottom"><a href="../index.html" class="btn btn-ghost">← 回首頁</a><a href="module2.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關：安全規範 →</a></div>
+</main>
+<script src="../../js/main.js"></script>
+<script src="../../js/audio.js"></script>
+<script src="../js/module1.js"></script>
+</body>
+</html>
