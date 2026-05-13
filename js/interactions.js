@@ -1,5 +1,7 @@
 // 通用互動引擎 — 給所有平台共用
 // 使用方式：Interactions.SequencePuzzle({...}), Interactions.HotspotHunt({...}), etc.
+// 也接受舊參數別名：mountId（自動加 #）/ onPass（等同 onComplete）/ items[i] 為 {id,label} 物件
+// 並把 SequencePuzzle / HotspotHunt / DiagnosisQuiz 暴露到 window 全域以便相容既有呼叫
 
 window.Interactions = (function() {
 
@@ -7,7 +9,14 @@ window.Interactions = (function() {
   // 1. 步驟排序拼圖
   //    用法：把步驟陣列打亂，使用者拖曳排回正確順序
   // ============================================================
-  function SequencePuzzle({ container, items, title = '把下方步驟排回正確順序', onComplete }) {
+  function SequencePuzzle(opts = {}) {
+    // 參數別名相容：mountId → container='#'+mountId；onPass → onComplete；items[i] 物件取 label
+    const container = opts.container != null ? opts.container : (opts.mountId ? '#' + opts.mountId : null);
+    const onComplete = opts.onComplete || opts.onPass;
+    const title = opts.title || '把下方步驟排回正確順序';
+    const items = (opts.items || []).map(it =>
+      typeof it === 'string' ? it : (it && (it.label != null ? it.label : (it.text != null ? it.text : String(it.id)))));
+
     const root = typeof container === 'string' ? document.querySelector(container) : container;
     if (!root) return;
 
@@ -236,6 +245,11 @@ window.Interactions = (function() {
 
   return { SequencePuzzle, HotspotHunt, DiagnosisQuiz };
 })();
+
+// 全域別名（修復既有以 typeof SequencePuzzle === 'function' 偵測的呼叫端：hand-tools / drill / mechanism 等 M3）
+window.SequencePuzzle = window.Interactions.SequencePuzzle;
+window.HotspotHunt = window.Interactions.HotspotHunt;
+window.DiagnosisQuiz = window.Interactions.DiagnosisQuiz;
 
 // 共用樣式
 if (!document.getElementById('interactions-style')) {

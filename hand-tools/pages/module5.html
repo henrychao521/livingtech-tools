@@ -7,10 +7,38 @@
 </head><body class="ht-theme">
 <header class="topbar"><div class="brand"><span class="logo">🔨</span><div><h1>基本手工具</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
 <main class="module-page">
-  <div class="module-header"><div><span class="module-step" style="background:var(--purple-light);color:#6f3aa6">MODULE 05</span><h2>手工具保養與維護</h2><p class="muted">工具能用一輩子的關鍵知識。</p></div></div>
+  <div class="module-header"><div><span class="module-step" style="background:var(--purple-light);color:#6f3aa6">MODULE 05</span><h2>手工具保養與維護</h2><p class="muted">工具能用很久的關鍵知識 + 收工工作流程模擬。</p></div></div>
+
   <section class="panel"><h3>8 大保養項目</h3><div id="maint" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px"></div></section>
-  <section class="panel"><h3>🔍 報廢判斷測驗</h3><p class="muted" style="margin-bottom:14px">5 個情境，判斷工具是否該報廢或可維修。</p><div id="quiz"></div></section>
+
+  <section class="panel">
+    <h3>🧪 收工保養工作流程（拖曳模擬）</h3>
+    <p class="muted" style="margin-bottom:10px">把 4 張保養動作卡用滑鼠／手指拖到時間軸的正確順序——先清潔再檢查再上油，最後歸位影子板。</p>
+    <canvas id="workflow-canvas" style="width:100%;max-width:720px;height:280px;border:1px solid var(--border);border-radius:12px;background:#fff;touch-action:none"></canvas>
+    <p style="font-size:12px;color:#94a3b8;margin-top:6px">📚 工作流程依據：<a href="../#src-8" style="color:#0EA5E9">勞動部職安署《校園實習工場安全管理手冊》</a>「收工 5 步」與 Stanley Hand Tool Care Guide。</p>
+  </section>
+
+  <section class="panel"><h3>🔍 報廢判斷測驗</h3><p class="muted" style="margin-bottom:14px">5 個情境，判斷工具是否該報廢或可維修。依 OSHA 1910.244 與職安署「破損工具立即停用」原則。</p><div id="quiz"></div></section>
+
   <div class="module-nav-bottom"><a href="module4.html" class="btn btn-ghost">← 上一關</a><a href="../index.html" class="btn btn-primary">完成全部模組 ✓</a></div>
+
+  <!-- 📚 共用：資料來源 / 延伸閱讀 footer -->
+  <section class="sources-section" style="background:#0F172A;color:#CBD5E1;padding:28px 22px;margin-top:36px;border-radius:14px;font-size:13px;line-height:1.8">
+    <details>
+      <summary style="cursor:pointer;font-size:15px;font-weight:700;color:#FBBF24;list-style:none">📚 資料來源（本模組引用之參考文獻）— 點此展開</summary>
+      <ol style="padding-left:22px;margin-top:12px">
+        <li>勞動部職業安全衛生署《手工具作業安全衛生指引》</li>
+        <li>教育部《十二年國教課綱・科技領域》生 J-A2、生 J-B3</li>
+        <li>U.S. OSHA《eTool: Woodworking Hand Tools》、29 CFR 1910.244</li>
+        <li>翰林版《國中生活科技 1 上》K3 設計與製作的基礎</li>
+        <li>Stanley Black &amp; Decker《Hand Tool Care &amp; Maintenance Guide》</li>
+        <li>Lee Valley Tools《Files &amp; Rasps Care》</li>
+        <li>ANSI/ASME B107 系列扳手規範與北星牌《手工具圖鑑》</li>
+        <li>勞動部職業安全衛生研究所 ILOSH《校園實習工場安全管理手冊》</li>
+      </ol>
+      <p style="margin-top:14px;font-size:12px;color:#64748B">完整可點擊版本請見 <a href="../index.html#src-1" style="color:#93C5FD">手工具首頁頁尾</a>。</p>
+    </details>
+  </section>
 </main>
 <script src="../../js/main.js"></script><script src="../../js/audio.js"></script><script src="../js/module5.js"></script>
 </body></html>
