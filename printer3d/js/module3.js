@@ -321,6 +321,164 @@ function markDone(i) {
 selectStep(0);
 window.selectStep = selectStep; window.markDone = markDone;
 
+// ========================
+// 層厚 × 填充率 互動預覽（模組 3 延伸互動）
+// ========================
+(function() {
+  const sec = document.createElement('section');
+  sec.className = 'panel';
+  sec.id = 'slice-params';
+  sec.innerHTML = `
+    <h3>🎛️ 切片參數互動預覽</h3>
+    <p class="muted" style="margin-bottom:18px">調整「層厚」與「填充率」，即時看到截面效果與列印時間估算變化。</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:18px">
+      <div>
+        <label style="font-weight:700;font-size:13px;display:block;margin-bottom:8px">
+          層厚（Layer Height）：<span id="lh-val" style="color:var(--accent,#7c3aed);font-family:Inter,monospace">0.20</span> mm
+        </label>
+        <input type="range" id="lh-slider" min="1" max="3" step="1" value="2"
+          style="width:100%;accent-color:var(--accent,#7c3aed);cursor:pointer">
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:#94a3b8;margin-top:4px">
+          <span>0.10 精緻</span><span>0.20 標準</span><span>0.30 快速</span>
+        </div>
+      </div>
+      <div>
+        <label style="font-weight:700;font-size:13px;display:block;margin-bottom:8px">
+          填充率（Infill）：<span id="inf-val" style="color:var(--accent,#7c3aed);font-family:Inter,monospace">20</span>%
+        </label>
+        <input type="range" id="inf-slider" min="1" max="3" step="1" value="1"
+          style="width:100%;accent-color:var(--accent,#7c3aed);cursor:pointer">
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:#94a3b8;margin-top:4px">
+          <span>20% 一般</span><span>50% 結構</span><span>80% 高強</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start">
+      <canvas id="slice-canvas" width="220" height="180" style="border-radius:10px;border:1px solid #e2e8f0;flex-shrink:0"></canvas>
+      <div id="slice-info" style="flex:1;min-width:180px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px"></div>
+    </div>`;
+
+  const nav = document.querySelector('.module-nav-bottom');
+  if (nav) nav.parentNode.insertBefore(sec, nav);
+
+  const cv = document.getElementById('slice-canvas');
+  const ctx = cv.getContext('2d');
+  const lhSlider = document.getElementById('lh-slider');
+  const infSlider = document.getElementById('inf-slider');
+
+  const LH_MAP = { 1: { mm: '0.10', label: '精緻', factor: 1.8 }, 2: { mm: '0.20', label: '標準', factor: 1.0 }, 3: { mm: '0.30', label: '快速', factor: 0.65 } };
+  const INF_MAP = { 1: { pct: '20', label: '一般（省料）', factor: 1.0, pattern: 'grid' }, 2: { pct: '50', label: '結構件', factor: 1.4, pattern: 'dense' }, 3: { pct: '80', label: '高強度', factor: 1.9, pattern: 'solid' } };
+
+  function drawSlice() {
+    const lh = LH_MAP[lhSlider.value];
+    const inf = INF_MAP[infSlider.value];
+    ctx.clearRect(0, 0, 220, 180);
+
+    // Board bg
+    ctx.fillStyle = '#1e293b';
+    ctx.fillRect(0, 0, 220, 180);
+
+    // Draw layers (cross-section of a simple rectangular object)
+    const objW = 140, objH = 120, objX = 40, objY = 50;
+    const layerPx = lh.mm === '0.10' ? 8 : lh.mm === '0.20' ? 14 : 20;
+    const numLayers = Math.floor(objH / layerPx);
+
+    for (let i = 0; i < numLayers; i++) {
+      const y = objY + objH - (i + 1) * layerPx;
+      const h = layerPx - 1;
+
+      // Outer shell (always)
+      ctx.fillStyle = '#a78bfa';
+      ctx.fillRect(objX, y, 8, h);
+      ctx.fillRect(objX + objW - 8, y, 8, h);
+
+      // Infill
+      const innerX = objX + 8, innerW = objW - 16;
+      if (inf.pattern === 'solid') {
+        ctx.fillStyle = '#7c3aed';
+        ctx.fillRect(innerX, y, innerW, h);
+      } else if (inf.pattern === 'dense') {
+        ctx.fillStyle = '#1e293b';
+        ctx.fillRect(innerX, y, innerW, h);
+        const spacing = 8;
+        ctx.strokeStyle = '#7c3aed';
+        ctx.lineWidth = 1.5;
+        for (let x = innerX; x < innerX + innerW; x += spacing) {
+          ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y + h); ctx.stroke();
+        }
+        if (i % 2 === 0) {
+          ctx.beginPath(); ctx.moveTo(innerX, y + h / 2); ctx.lineTo(innerX + innerW, y + h / 2); ctx.stroke();
+        }
+      } else {
+        ctx.fillStyle = '#1e293b';
+        ctx.fillRect(innerX, y, innerW, h);
+        if (i % 3 === 0) {
+          ctx.strokeStyle = '#7c3aed';
+          ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(innerX, y + 1); ctx.lineTo(innerX + innerW, y + 1); ctx.stroke();
+        } else if (i % 3 === 1) {
+          ctx.strokeStyle = '#7c3aed';
+          ctx.lineWidth = 1;
+          for (let x = innerX; x < innerX + innerW; x += 20) {
+            ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y + h); ctx.stroke();
+          }
+        }
+      }
+
+      // Layer line
+      ctx.strokeStyle = 'rgba(255,255,255,.15)';
+      ctx.lineWidth = 0.5;
+      ctx.beginPath(); ctx.moveTo(objX, y + h); ctx.lineTo(objX + objW, y + h); ctx.stroke();
+    }
+
+    // Top and bottom solid layers
+    ctx.fillStyle = '#c4b5fd';
+    ctx.fillRect(objX, objY, objW, layerPx - 1);
+    ctx.fillRect(objX, objY + objH - layerPx, objW, layerPx - 1);
+
+    // Labels
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = 'bold 9px Inter, sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText(`${numLayers} 層`, 215, 20);
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#e2e8f0';
+    ctx.font = 'bold 10px Inter, sans-serif';
+    ctx.fillText('截面示意圖', 110, 170);
+  }
+
+  function updateInfo() {
+    const lh = LH_MAP[lhSlider.value];
+    const inf = INF_MAP[infSlider.value];
+    document.getElementById('lh-val').textContent = lh.mm;
+    document.getElementById('inf-val').textContent = inf.pct;
+    const baseMins = 45;
+    const timeFactor = lh.factor * inf.factor;
+    const estMins = Math.round(baseMins * timeFactor);
+    const hours = Math.floor(estMins / 60);
+    const mins = estMins % 60;
+    const timeStr = hours > 0 ? `${hours} 小時 ${mins} 分` : `${mins} 分鐘`;
+    const strength = inf.pct === '80' ? '高強度 ★★★' : inf.pct === '50' ? '中強度 ★★' : '輕量 ★';
+    const quality = lh.mm === '0.10' ? '精緻 ★★★' : lh.mm === '0.20' ? '標準 ★★' : '快速 ★';
+    document.getElementById('slice-info').innerHTML = `
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:13px">
+        <span style="color:#64748b">層厚</span><strong>${lh.mm} mm（${lh.label}）</strong>
+        <span style="color:#64748b">填充率</span><strong>${inf.pct}%（${inf.label}）</strong>
+        <span style="color:#64748b">表面品質</span><strong>${quality}</strong>
+        <span style="color:#64748b">結構強度</span><strong>${strength}</strong>
+        <span style="color:#64748b">估算時間</span><strong style="color:var(--accent,#7c3aed)">${timeStr}</strong>
+      </div>
+      <div style="margin-top:12px;background:#ede9fe;border-radius:8px;padding:10px;font-size:12px;color:#5b21b6">
+        💡 ${lh.mm === '0.10' ? '精細層厚表面最光滑，但耗時最長。用於展示品或需要精緻外觀的零件。' : lh.mm === '0.30' ? '快速列印省時間，層紋較明顯。適合結構測試版本或不需要精緻表面的零件。' : '0.2mm 是最常見的標準設定，平衡品質與速度。大多數情況下使用此設定。'}
+      </div>`;
+    drawSlice();
+  }
+
+  lhSlider.addEventListener('input', updateInfo);
+  infSlider.addEventListener('input', updateInfo);
+  updateInfo();
+})();
+
 // === 步驟排序拼圖 ===
 if (typeof Interactions !== 'undefined') {
   Interactions.SequencePuzzle({

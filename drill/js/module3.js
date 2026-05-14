@@ -213,6 +213,108 @@ window.selectStep = selectStep;
 selectStep(0);
 stepProgressEl.textContent = `已學習 ${seenSteps.size} / ${STEPS.length} 步`;
 
+// ========================
+// 扭力環計算機（模組 3 延伸互動）
+// ========================
+(function() {
+  const MATERIALS = [
+    { id: 'drywall', name: '石膏板', icon: '🧱', range: [1, 3], note: '最輕扭力，避免螺絲穿頭損壞板材' },
+    { id: 'thin',    name: '薄夾板 ≤12mm', icon: '🪵', range: [4, 7], note: '中低扭力，到位後離合器自動跳脫' },
+    { id: 'hard',    name: '硬木 / 厚板', icon: '🌲', range: [10, 16], note: '中高扭力，硬材阻力大需要更多轉矩' },
+    { id: 'concrete',name: '混凝土壁釘', icon: '🪨', range: [18, 20], note: '最高扭力，螺絲要先敲入導孔' },
+    { id: 'drill',   name: '純鑽孔模式', icon: '⚙️', range: [21, 21], note: '轉到「⊕ 鑽頭符號」鎖死離合器，專用於鑽孔' },
+  ];
+  const SCREWS = [
+    { id: 'small', name: 'M3 / 細螺絲', mod: -1 },
+    { id: 'mid',   name: 'M4–M5 / 標準', mod: 0 },
+    { id: 'large', name: 'M6+ / 粗牙', mod: 2 },
+  ];
+
+  let selMat = null, selScrew = null;
+
+  const sec = document.createElement('section');
+  sec.className = 'panel';
+  sec.id = 'torque-calc';
+  sec.innerHTML = `
+    <h3>⚙️ 扭力環計算機</h3>
+    <p class="muted" style="margin-bottom:18px">依材料與螺絲大小，找到適合的扭力環刻度，避免崩牙或螺絲斷頭。</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+      <div>
+        <p style="font-weight:700;margin:0 0 10px;font-size:13px">① 選擇材料</p>
+        <div style="display:flex;flex-direction:column;gap:6px" id="torq-mat-btns">
+          ${MATERIALS.map(m => `<button data-mat="${m.id}" style="padding:9px 12px;border:2px solid #e2e8f0;border-radius:8px;cursor:pointer;background:#fff;font-size:13px;text-align:left;font-family:inherit;transition:all .2s">${m.icon} ${m.name}</button>`).join('')}
+        </div>
+      </div>
+      <div>
+        <p style="font-weight:700;margin:0 0 10px;font-size:13px">② 選擇螺絲規格</p>
+        <div style="display:flex;flex-direction:column;gap:6px" id="torq-screw-btns">
+          ${SCREWS.map(s => `<button data-screw="${s.id}" style="padding:9px 12px;border:2px solid #e2e8f0;border-radius:8px;cursor:pointer;background:#fff;font-size:13px;text-align:left;font-family:inherit;transition:all .2s">${s.name}</button>`).join('')}
+        </div>
+      </div>
+    </div>
+    <div id="torque-result" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:22px;text-align:center;min-height:90px">
+      <p style="color:#94a3b8;margin:8px 0">👆 選擇材料與螺絲後即可看到建議刻度</p>
+    </div>`;
+
+  const seqSec = document.querySelector('#seq-puzzle')?.closest('section') || document.querySelector('.module-nav-bottom');
+  if (seqSec && seqSec.parentNode) seqSec.parentNode.insertBefore(sec, seqSec);
+
+  function calcTorque() {
+    if (!selMat || !selScrew) return;
+    const mat = MATERIALS.find(m => m.id === selMat);
+    const screw = SCREWS.find(s => s.id === selScrew);
+    const isDrill = mat.id === 'drill';
+    let low = isDrill ? 21 : Math.max(1, mat.range[0] + screw.mod);
+    let high = isDrill ? 21 : Math.min(20, mat.range[1] + screw.mod);
+    const rangeLabel = isDrill ? '⊕ 鑽頭符號' : `${low}–${high}`;
+    // Needle angle: map 1-21 to -130° to +130°
+    const mid = isDrill ? 20 : (low + high) / 2;
+    const angle = -130 + (mid / 21) * 260;
+    const rad = angle * Math.PI / 180;
+    const nx = (60 + 28 * Math.sin(rad)).toFixed(1);
+    const ny = (60 - 28 * Math.cos(rad)).toFixed(1);
+    document.getElementById('torque-result').innerHTML = `
+      <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap;justify-content:center">
+        <svg viewBox="0 0 120 90" style="width:110px;height:85px;flex-shrink:0">
+          <circle cx="60" cy="60" r="52" fill="#1e293b"/>
+          <circle cx="60" cy="60" r="45" fill="#fef3c7" stroke="#F59E0B" stroke-width="2"/>
+          <circle cx="60" cy="60" r="28" fill="#1e293b"/>
+          <g font-size="8" font-weight="700" fill="#92400e" font-family="Inter">
+            <text x="60" y="20" text-anchor="middle">10</text>
+            <text x="100" y="64" text-anchor="middle">5</text>
+            <text x="20" y="64" text-anchor="middle">15</text>
+            <text x="60" y="105" text-anchor="middle">1</text>
+            <text x="108" y="64" text-anchor="middle" fill="#fff">⊕</text>
+          </g>
+          <line x1="60" y1="60" x2="${nx}" y2="${ny}" stroke="#dc2626" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="60" cy="60" r="5" fill="#dc2626"/>
+        </svg>
+        <div style="text-align:left;max-width:220px">
+          <p style="margin:0 0 4px;font-size:12px;color:#64748b">建議扭力環刻度</p>
+          <p style="margin:0 0 10px;font-size:${isDrill?'18':'26'}px;font-weight:900;color:var(--accent,#7C3AED)">${rangeLabel}</p>
+          <p style="margin:0 0 4px;font-size:12px;color:#64748b">${mat.icon} ${mat.name} × ${screw.name}</p>
+          <p style="margin:0;font-size:13px;color:#374151;line-height:1.5">${mat.note}</p>
+        </div>
+      </div>`;
+    if (typeof SoundFX !== 'undefined') SoundFX.pop();
+  }
+
+  document.getElementById('torq-mat-btns').querySelectorAll('[data-mat]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.getElementById('torq-mat-btns').querySelectorAll('[data-mat]').forEach(b => { b.style.background='#fff'; b.style.borderColor='#e2e8f0'; });
+      btn.style.background = 'var(--accent-light,#ede9fe)'; btn.style.borderColor = 'var(--accent,#7C3AED)';
+      selMat = btn.dataset.mat; calcTorque();
+    });
+  });
+  document.getElementById('torq-screw-btns').querySelectorAll('[data-screw]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.getElementById('torq-screw-btns').querySelectorAll('[data-screw]').forEach(b => { b.style.background='#fff'; b.style.borderColor='#e2e8f0'; });
+      btn.style.background = 'var(--accent-light,#ede9fe)'; btn.style.borderColor = 'var(--accent,#7C3AED)';
+      selScrew = btn.dataset.screw; calcTorque();
+    });
+  });
+})();
+
 // 排序拼圖
 if (typeof SequencePuzzle === 'function') {
   SequencePuzzle({

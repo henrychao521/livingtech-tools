@@ -62,3 +62,101 @@ function render(id) {
 }
 document.querySelectorAll('.hotspot-group').forEach(g => g.addEventListener('click', () => render(g.dataset.id)));
 document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click', () => render(c.dataset.id)));
+
+// ========================
+// 列印失敗圖鑑（模組 1 延伸互動）
+// ========================
+(function() {
+  const FAILS = [
+    {
+      id: 'warp', name: '翹曲（Warping）', icon: '↗', color: '#dc2626',
+      svg: `<rect x="30" y="128" width="240" height="45" fill="#16a34a"/>
+        <path d="M 30 128 Q 80 108 140 124 Q 200 136 270 110" stroke="#dc2626" stroke-width="3.5" fill="none" stroke-dasharray="6 3"/>
+        <path d="M 30 128 L 30 152 L 95 152 Q 78 128 30 128 Z" fill="#86efac" opacity=".6"/>
+        <text x="150" y="96" text-anchor="middle" font-size="12" fill="#dc2626" font-weight="700">角落翹起脫離熱床</text>
+        <line x1="150" y1="100" x2="200" y2="115" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3 2"/>`,
+      cause: '熱床溫度不足 / 材料冷卻過快收縮 / 首層沒壓實。ABS 收縮率約 0.8%，翹曲最嚴重；PLA 約 0.3%，較輕微。',
+      fix: '① 熱床升溫（PLA: 60°C, ABS: 100°C） ② 塗固體膠棒或噴 ABS 汁 ③ 切片加 Brim（裙邊） ④ 降低散熱風扇轉速 ⑤ 使用封閉式機箱印 ABS'
+    },
+    {
+      id: 'string', name: '拉絲（Stringing）', icon: '〰', color: '#d97706',
+      svg: `<rect x="80" y="75" width="38" height="100" fill="#64748b"/>
+        <rect x="182" y="55" width="38" height="120" fill="#64748b"/>
+        <path d="M 118 128 Q 160 118 182 113" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="3 2"/>
+        <path d="M 118 140 Q 163 127 182 122" stroke="#fbbf24" stroke-width="1" stroke-dasharray="2 3"/>
+        <path d="M 118 114 Q 155 106 182 103" stroke="#fbbf24" stroke-width="0.8" stroke-dasharray="2 4"/>
+        <path d="M 118 152 Q 165 140 182 135" stroke="#fde68a" stroke-width="0.6" stroke-dasharray="2 5"/>
+        <text x="150" y="45" text-anchor="middle" font-size="12" fill="#d97706" font-weight="700">空中牽出細絲</text>`,
+      cause: '噴頭移動時絲料從噴嘴漏出，在空中拉出細絲。通常是列印溫度過高或「回抽（retraction）」設定不足。',
+      fix: '① 降低列印溫度 5–10°C ② 增大回抽距離（Bowden 管: 4–7mm；直接式: 1–2mm） ③ 增加回抽速度（40–60 mm/s） ④ 增加移頭速度'
+    },
+    {
+      id: 'shift', name: '層位移（Layer Shift）', icon: '↔', color: '#7c3aed',
+      svg: `<rect x="80" y="148" width="130" height="28" fill="#475569"/>
+        <rect x="80" y="118" width="130" height="28" fill="#64748b"/>
+        <rect x="126" y="88" width="130" height="28" fill="#94a3b8"/>
+        <rect x="126" y="58" width="130" height="28" fill="#cbd5e1"/>
+        <line x1="80" y1="148" x2="126" y2="88" stroke="#dc2626" stroke-width="2" stroke-dasharray="5 3"/>
+        <line x1="210" y1="148" x2="256" y2="88" stroke="#dc2626" stroke-width="2" stroke-dasharray="5 3"/>
+        <text x="155" y="45" text-anchor="middle" font-size="12" fill="#7c3aed" font-weight="700">每層偏移一段距離</text>`,
+      cause: '步進馬達「失步」— 皮帶過鬆 / 加速度太高 / 列印中撞到物件 / 馬達電流不足。',
+      fix: '① 鎖緊或更換 X/Y 皮帶 ② 降低加速度（Acceleration: 2000→1000 mm/s²） ③ 降低列印速度 ④ 確認運動軸沒有異物阻礙'
+    },
+    {
+      id: 'firstlayer', name: '首層不附著', icon: '✕', color: '#0891b2',
+      svg: `<rect x="30" y="148" width="240" height="25" fill="#16a34a"/>
+        <g stroke="#0891b2" stroke-width="2" fill="#bfdbfe" fill-opacity=".5">
+          <ellipse cx="75" cy="147" rx="20" ry="7"/>
+          <ellipse cx="125" cy="145" rx="18" ry="6"/>
+          <ellipse cx="178" cy="148" rx="22" ry="8"/>
+          <ellipse cx="232" cy="146" rx="17" ry="6"/>
+        </g>
+        <text x="150" y="130" text-anchor="middle" font-size="12" fill="#0891b2" font-weight="700">絲料浮起、未壓實</text>`,
+      cause: 'Z 軸原點偏高，噴頭離熱床太遠，首層沒被壓入表面。熱床不平整 / Baby Step 未調整 / 首層速度過快。',
+      fix: '① 重新 Auto Level 或手動校正床平 ② Baby Step Z 微調 −0.05mm 直到首層壓扁如紙 ③ 首層速度降到 15–20 mm/s ④ 確認熱床溫度到位'
+    }
+  ];
+
+  const sec = document.createElement('section');
+  sec.className = 'panel';
+  sec.id = 'print-fail-gallery';
+  sec.innerHTML = `
+    <h3>📋 列印失敗圖鑑</h3>
+    <p class="muted" style="margin-bottom:16px">點擊每種失敗模式，查看成因分析與修復步驟。識別缺陷是提升列印成功率的關鍵能力。</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:18px">
+      ${FAILS.map(f => `<button data-fail="${f.id}" style="padding:14px 8px;border:2px solid #e2e8f0;border-radius:12px;cursor:pointer;background:#fff;text-align:center;font-size:12px;font-weight:700;font-family:inherit;transition:all .2s;color:#374151">
+        <div style="font-size:22px;margin-bottom:6px">${f.icon}</div>
+        <div>${f.name}</div>
+      </button>`).join('')}
+    </div>
+    <div id="fail-detail" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px;min-height:120px">
+      <p style="text-align:center;color:#94a3b8;margin:20px 0">👆 點選失敗類型查看成因與修復</p>
+    </div>`;
+
+  const nav = document.querySelector('.module-nav-bottom');
+  if (nav) nav.parentNode.insertBefore(sec, nav);
+
+  sec.querySelectorAll('[data-fail]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      sec.querySelectorAll('[data-fail]').forEach(b => { b.style.background='#fff'; b.style.borderColor='#e2e8f0'; b.style.color='#374151'; });
+      const f = FAILS.find(x => x.id === btn.dataset.fail);
+      btn.style.background = f.color; btn.style.borderColor = f.color; btn.style.color = '#fff';
+      if (typeof SoundFX !== 'undefined') SoundFX.pop();
+      document.getElementById('fail-detail').innerHTML = `
+        <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start">
+          <svg viewBox="0 0 300 180" style="width:220px;height:132px;flex-shrink:0;background:#0f172a;border-radius:8px">${f.svg}</svg>
+          <div style="flex:1;min-width:200px">
+            <h4 style="margin:0 0 10px;font-size:15px;color:${f.color}">${f.name}</h4>
+            <div style="margin-bottom:12px">
+              <p style="margin:0 0 4px;font-size:12px;font-weight:700;color:#64748b">🔍 成因</p>
+              <p style="margin:0;font-size:13px;line-height:1.6;color:#374151">${f.cause}</p>
+            </div>
+            <div style="background:#f0fdf4;border-left:3px solid #16a34a;border-radius:0 8px 8px 0;padding:10px 12px">
+              <p style="margin:0 0 4px;font-size:12px;font-weight:700;color:#16a34a">🔧 修復步驟</p>
+              <p style="margin:0;font-size:13px;line-height:1.6;color:#374151">${f.fix}</p>
+            </div>
+          </div>
+        </div>`;
+    });
+  });
+})();
