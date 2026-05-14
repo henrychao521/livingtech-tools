@@ -5,8 +5,8 @@ let progress; try { progress = JSON.parse(localStorage.getItem(OS_PROGRESS_KEY))
 const QUIZ = [
   {
     q: '在教室畫好一個 3D 模型，回家想用手機繼續調整尺寸，可行嗎？',
-    opts: ['不行，必須回學校用桌面版', '可以，Onshape App 同步同一個 doc', '需要先匯出 STL 才能在 App 看', '只能用 iPad，不能用手機'],
-    correct: 1,
+    opts: ['可以，Onshape App 同步同一個 doc', '不行，必須回學校用桌面版', '需要先匯出 STL 才能在 App 看', '只能用 iPad，不能用手機'],
+    correct: 0,
     hint: 'Onshape 是全雲端架構，App 和桌面瀏覽器存取同一份 doc，任何裝置修改都即時同步。',
   },
   {
@@ -17,14 +17,14 @@ const QUIZ = [
   },
   {
     q: '兩個齒輪能嚙合的「關鍵共同參數」是？',
-    opts: ['齒數要相同', '模數（m）要相同', '直徑要相同', '材料要相同'],
-    correct: 1,
+    opts: ['齒數要相同', '直徑要相同', '模數（m）要相同', '材料要相同'],
+    correct: 2,
     hint: '模數 m 是齒輪的「尺度單位」。同 m 的齒輪才能嚙合，齒數不同只是傳動比不同。',
   },
   {
     q: '兩齒輪 m = 1，z₁ = 20、z₂ = 40，組裝時兩軸心距離應該是？',
-    opts: ['20mm', '30mm', '40mm', '60mm'],
-    correct: 1,
+    opts: ['30mm', '20mm', '40mm', '60mm'],
+    correct: 0,
     hint: '中心距 a = m × (z₁ + z₂) / 2 = 1 × 60 / 2 = 30mm。',
   },
   {

@@ -3,10 +3,10 @@ const OS_PROGRESS_KEY = 'onshape_progress_v1';
 let progress; try { progress = JSON.parse(localStorage.getItem(OS_PROGRESS_KEY)) || {}; } catch { progress = {}; }
 
 const QUIZ = [
-  { q: '改造 Arduino 三輪車為四輪時，遇到「前輪被抬起就空轉」的問題，書中建議的解法？', opts: ['改用更大的輪子', '前後車體之間加 625ZZ 軸承形成可旋轉機構', '增加車體重量', '改用履帶'], correct: 1, hint: '書 Ch 8-1 明確解法：前後車體加軸承，讓車體有「扭轉自由度」，遇地形落差時四輪能持續貼地。' },
+  { q: '改造 Arduino 三輪車為四輪時，遇到「前輪被抬起就空轉」的問題，書中建議的解法？', opts: ['前後車體之間加 625ZZ 軸承形成可旋轉機構', '改用更大的輪子', '增加車體重量', '改用履帶'], correct: 0, hint: '書 Ch 8-1 明確解法：前後車體加軸承，讓車體有「扭轉自由度」，遇地形落差時四輪能持續貼地。' },
   { q: '3D 列印自走車車體時，最該注意什麼？', opts: ['列印速度', '受力方向（層方向 vs 應力方向）', '顏色搭配', 'STL 大小'], correct: 1, hint: '書中強調「3D 列印件最脆弱處是層與層的相連處」。鏡架轉 90° 列印會斷，車體承受扭力的方向也需配合層的堆積方向。' },
   { q: '指尖陀螺中央的軸承（608ZZ）外徑是？', opts: ['8mm', '15mm', '22mm', '30mm'], correct: 2, hint: '608ZZ 標準規格：外徑 22mm、內徑 8mm、厚度 7mm。內徑 8mm 是用 M8 軸或螺絲穿過用。' },
-  { q: '指尖陀螺要做三軸對稱（每軸 120°），最快的 Onshape 操作？', opts: ['手動畫三次再對齊', '畫一個軸後用「環狀複製排列」設 3 份', '用 Loft 拉伸', '用 Revolve 旋轉'], correct: 1, hint: '環狀複製排列（Circular Pattern）一鍵生 3 份，比手動畫快十倍。書中也示範可以改 5 份做五瓣陀螺。' },
+  { q: '指尖陀螺要做三軸對稱（每軸 120°），最快的 Onshape 操作？', opts: ['畫一個軸後用「環狀複製排列」設 3 份', '手動畫三次再對齊', '用 Loft 拉伸', '用 Revolve 旋轉'], correct: 0, hint: '環狀複製排列（Circular Pattern）一鍵生 3 份，比手動畫快十倍。書中也示範可以改 5 份做五瓣陀螺。' },
 ];
 
 const quizDiv = document.getElementById('mech-quiz');

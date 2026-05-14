@@ -3,17 +3,17 @@ const OS_PROGRESS_KEY = 'onshape_progress_v1';
 let progress; try { progress = JSON.parse(localStorage.getItem(OS_PROGRESS_KEY)) || {}; } catch { progress = {}; }
 
 const MEASURE_Q = [
-  { q: '要測量 TT 馬達輸出軸的直徑（約 5.4mm），最適合的工具是？', opts: ['直尺', '游標卡尺', '量角器', '螺旋測微器'], correct: 1, hint: '游標卡尺可測外徑、內徑、深度，精度 0.02mm，最適合此情境。直尺精度不足。' },
+  { q: '要測量 TT 馬達輸出軸的直徑（約 5.4mm），最適合的工具是？', opts: ['游標卡尺', '直尺', '量角器', '螺旋測微器'], correct: 0, hint: '游標卡尺可測外徑、內徑、深度，精度 0.02mm，最適合此情境。直尺精度不足。' },
   { q: '要量馬達固定孔的「孔徑」（內徑 3mm），最適合的工具是？', opts: ['直尺', '游標卡尺', '量角器', '螺旋測微器'], correct: 1, hint: '游標卡尺的內測爪可直接伸進孔測內徑。直尺無法測內徑。' },
   { q: '要量機構零件之間的「夾角」（如指尖陀螺的 120°），最適合的工具是？', opts: ['直尺', '游標卡尺', '量角器', '螺旋測微器'], correct: 2, hint: '量角器是角度測量的標準工具。' },
-  { q: '要測量馬達中央軸到上表面的「深度」（7.9mm），最適合的工具是？', opts: ['直尺', '游標卡尺', '量角器', '螺旋測微器'], correct: 1, hint: '游標卡尺尾端的深度尺可伸入測量階差深度。' },
+  { q: '要測量馬達中央軸到上表面的「深度」（7.9mm），最適合的工具是？', opts: ['直尺', '量角器', '螺旋測微器', '游標卡尺'], correct: 3, hint: '游標卡尺尾端的深度尺可伸入測量階差深度。' },
 ];
 
 const MATE_Q = [
   { q: '凸輪玩具的「把手」要與「軸」永久固定，旋轉時一起轉動。應用哪種 Mate？', opts: ['緊固結合 Fastened', '旋轉結合 Revolute', '滑動結合 Slider', '相切結合 Tangent'], correct: 0, hint: '兩零件無相對運動 → 緊固結合（像強力膠黏住）。' },
   { q: '輪子要能繞著輪軸自由旋轉。應用哪種 Mate？', opts: ['緊固結合 Fastened', '旋轉結合 Revolute', '滑動結合 Slider', '球體結合 Ball'], correct: 1, hint: '繞同軸旋轉 → 旋轉結合。書 Ch 5 凸輪玩具的把手裝到傳動軸用緊固，但軸與基座之間是旋轉結合。' },
   { q: '從動件需要沿直線上下移動（凸輪頂起來、放下去）。應用哪種 Mate？', opts: ['緊固結合 Fastened', '旋轉結合 Revolute', '滑動結合 Slider', '齒輪結合 Gear'], correct: 2, hint: '沿單一直線方向移動 → 滑動結合（Slider）。' },
-  { q: '基座是整個機構的「不動的參考點」。應該用什麼操作？', opts: ['緊固結合到地板', '右鍵 → 固定 Fix', '滑動結合到原點', '不需設定'], correct: 1, hint: '對基座按右鍵 → 固定（Fix），它就不會在 Assembly 中移動。書 Ch 5-3 範例第一步就是固定基座。' },
+  { q: '基座是整個機構的「不動的參考點」。應該用什麼操作？', opts: ['緊固結合到地板', '滑動結合到原點', '不需設定', '右鍵 → 固定 Fix'], correct: 3, hint: '對基座按右鍵 → 固定（Fix），它就不會在 Assembly 中移動。書 Ch 5-3 範例第一步就是固定基座。' },
 ];
 
 function renderQuiz(containerId, questions, progressField, requireCorrect, onDone) {
