@@ -34,13 +34,13 @@ ITEMS.forEach(it => {
 
 const QUIZ = [
   { name: '螺絲', icon: '🔩', options: ['螺旋', '楔形', '槓桿'], correct: 0, explain: '螺絲是「斜面捲在圓柱上」——典型的螺旋。' },
-  { name: '滑梯', icon: '🛝', options: ['斜面', '楔形', '滑輪'], correct: 0, explain: '滑梯是斜面，把高度轉成水平距離。' },
-  { name: '釣魚竿', icon: '🎣', options: ['槓桿（第三類）', '槓桿（第一類）', '滑輪'], correct: 0, explain: '雙手握的釣魚竿：左手是支點、右手施力、魚是抗力——施力在中是第三類。' },
+  { name: '滑梯', icon: '🛝', options: ['楔形', '斜面', '滑輪'], correct: 1, explain: '滑梯是斜面，把高度轉成水平距離。' },
+  { name: '釣魚竿', icon: '🎣', options: ['槓桿（第一類）', '滑輪', '槓桿（第三類）'], correct: 2, explain: '雙手握的釣魚竿：左手是支點、右手施力、魚是抗力——施力在中是第三類。' },
   { name: '電動工具的鑽頭', icon: '🔩', options: ['螺旋', '楔形', '輪軸'], correct: 0, explain: '鑽頭的螺旋槽是螺旋原理——把鑽頭尖端的旋轉轉成「鑽進」的縱向動作。' },
-  { name: '拉門的把手', icon: '🚪', options: ['輪軸', '槓桿', '滑輪'], correct: 0, explain: '門把是輪軸——外圈大、內軸小，用大半徑省力轉動門栓。' },
-  { name: '門擋', icon: '🪨', options: ['楔形', '槓桿', '斜面'], correct: 0, explain: '門擋是楔形——把門縫間距插滿，靠摩擦力鎖死。' },
+  { name: '拉門的把手', icon: '🚪', options: ['槓桿', '輪軸', '滑輪'], correct: 1, explain: '門把是輪軸——外圈大、內軸小，用大半徑省力轉動門栓。' },
+  { name: '門擋', icon: '🪨', options: ['斜面', '槓桿', '楔形'], correct: 2, explain: '門擋是楔形——把門縫間距插滿，靠摩擦力鎖死。' },
   { name: '帆船的桅杆繩索', icon: '⛵', options: ['滑輪', '槓桿', '輪軸'], correct: 0, explain: '升降帆都用滑輪——改變力方向（往下拉繩 = 帆往上升）。' },
-  { name: '鋸子的鋸齒', icon: '🪚', options: ['楔形', '螺旋', '輪軸'], correct: 0, explain: '每一個鋸齒都是楔形——切入材料把它剝開。' },
+  { name: '鋸子的鋸齒', icon: '🪚', options: ['螺旋', '楔形', '輪軸'], correct: 1, explain: '每一個鋸齒都是楔形——切入材料把它剝開。' },
 ];
 
 const quizEl = document.getElementById('quiz');
