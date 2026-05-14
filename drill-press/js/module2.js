@@ -48,3 +48,39 @@ list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', ()
     }
   }
 }));
+
+/* ── 真實事故案例參考面板 ──────────────────────────────── */
+;(function () {
+  const CARD_ACCIDENT = 'background:#fff7ed;border-left:4px solid #f97316;border-radius:8px;padding:14px 16px;margin-bottom:10px';
+  const CARD_GOV     = 'background:#f0fdf4;border-left:4px solid #22c55e;border-radius:8px;padding:14px 16px;margin-bottom:10px';
+  const TL = 'font-size:12px;color:#1d4ed8;text-decoration:underline;word-break:break-all';
+
+  const sec = document.createElement('section');
+  sec.className = 'panel';
+  sec.innerHTML = `
+    <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:6px">⚠️ 真實事故案例參考</h3>
+    <p style="color:#64748b;font-size:14px;margin-bottom:16px">以下為美國 OSHA 官方記錄的鑽床事故資料，作為安全規範的具體佐證。</p>
+
+    <div style="${CARD_ACCIDENT}">
+      <div style="font-weight:700;color:#c2410c;margin-bottom:6px">🔑 夾頭鑰匙甩飛致傷｜OSHA 官方文件明確記載</div>
+      <p style="margin:0 0 8px;font-size:14px;color:#374151">美國職業安全衛生署（OSHA）在其鑽床操作訓練腳本中明確指出：「若夾頭鑰匙未在開機前取出，鑽床啟動時主軸轉速瞬間將鑰匙以高速甩飛，成為危險飛射物，可能擊中眼部或臉部造成重傷。」這是全球技術教育中被反覆強調的<strong>鑽床第一守則</strong>。</p>
+      <a href="https://www.osha.gov/sites/default/files/2021-04/Drill%20Press%20-%20Trainer%20Script.pdf" target="_blank" rel="noopener noreferrer" style="${TL}">📄 原文來源：OSHA Drill Press Trainer Script（英文 PDF）</a>
+    </div>
+
+    <div style="${CARD_GOV}">
+      <div style="font-weight:700;color:#15803d;margin-bottom:6px">🏛️ OSHA 鑽床安全 eTool｜典型傷害模式資料庫</div>
+      <p style="margin:0 0 8px;font-size:14px;color:#374151">OSHA 木工機械 eTool 完整記錄了鑽床常見傷害模式：包括布手套被夾頭捲入（Entanglement）、未固定工件被甩飛（Workpiece ejection）、長頭髮捲入（Hair entanglement），以及未墊犧牲板造成的鑽床台面損傷。所有模式均附有實際事故案例摘要與預防措施。</p>
+      <a href="https://www.osha.gov/etools/woodworking/production/machines-tools/drill-press" target="_blank" rel="noopener noreferrer" style="${TL}">📄 原文來源：OSHA eTool — Drill Press（英文）</a>
+    </div>
+
+    <div style="${CARD_GOV}">
+      <div style="font-weight:700;color:#15803d;margin-bottom:6px">📊 美國統計：機械工具每年造成逾 1.8 萬人住院</div>
+      <p style="margin:0 0 8px;font-size:14px;color:#374151">根據美國勞工統計局（Bureau of Labor Statistics）職業傷害統計資料，各類機械工具（含鑽床、車床、銑床）每年約造成 18,090 名工人需要住院治療，其中鑽孔相關傷害佔金屬加工事故的相當大比例。此數據說明了嚴格遵守操作規範的重要性。</p>
+      <a href="https://www.bls.gov/iif/home.htm" target="_blank" rel="noopener noreferrer" style="${TL}">📄 資料來源：Bureau of Labor Statistics — Injuries, Illnesses and Fatalities（英文）</a>
+    </div>
+
+    <p style="font-size:12px;color:#94a3b8;margin-top:4px">※ 以上連結均為美國政府官方文件，引用於教學安全佐證之用。</p>
+  `;
+  const nav = document.querySelector('.module-nav-bottom');
+  if (nav) nav.parentNode.insertBefore(sec, nav);
+})();

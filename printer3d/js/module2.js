@@ -48,3 +48,40 @@ list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', ()
     }
   }
 }));
+
+/* ── 真實事故案例參考面板 ──────────────────────────────── */
+;(function () {
+  const CARD_ACCIDENT = 'background:#fff7ed;border-left:4px solid #f97316;border-radius:8px;padding:14px 16px;margin-bottom:10px';
+  const CARD_RESEARCH = 'background:#eff6ff;border-left:4px solid #3b82f6;border-radius:8px;padding:14px 16px;margin-bottom:10px';
+  const CARD_GOV     = 'background:#f0fdf4;border-left:4px solid #22c55e;border-radius:8px;padding:14px 16px;margin-bottom:10px';
+  const TL = 'font-size:12px;color:#1d4ed8;text-decoration:underline;word-break:break-all';
+
+  const sec = document.createElement('section');
+  sec.className = 'panel';
+  sec.innerHTML = `
+    <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:6px">⚠️ 真實事故案例參考</h3>
+    <p style="color:#64748b;font-size:14px;margin-bottom:16px">以下為國內外真實發生的 3D 列印相關事故，作為模組安全規範的具體佐證。</p>
+
+    <div style="${CARD_ACCIDENT}">
+      <div style="font-weight:700;color:#c2410c;margin-bottom:6px">🔥 青少年死亡事故｜美國舊金山，2020 年</div>
+      <p style="margin:0 0 8px;font-size:14px;color:#374151">17 歲的 Calvin Yu 在家中使用 Tronxy X5SA 3D 印表機，因依照網路教學關閉了「Thermal Runaway（過熱自動斷電）」保護機制，導致加熱頭持續過熱起火，引發住宅火災，造成其死亡。其家人對阿里巴巴與 Tronxy 提出訴訟，此案引發全球對消費型 3D 印表機安全設計的重新審視。</p>
+      <a href="https://www.3dnatives.com/en/alibaba-and-tronxy-3d-sued-140620225/" target="_blank" rel="noopener noreferrer" style="${TL}">📄 原文報導：3DNatives — Alibaba and Tronxy 3D Sued（英文）</a>
+    </div>
+
+    <div style="${CARD_ACCIDENT}">
+      <div style="font-weight:700;color:#c2410c;margin-bottom:6px">🔥 Bambu Lab A1 起火召回｜全球，2024 年</div>
+      <p style="margin:0 0 8px;font-size:14px;color:#374151">Bambu Lab A1 Mini 印表機因電源板與線束設計缺陷，導致通電時產生電弧（arcing）並起火。事件在全球 3D 列印社群引發廣泛討論，Bambu Lab 最終宣布免費升級套件召回計畫。這再度說明「長時間無人監控列印」的潛在火災風險不可忽視。</p>
+      <a href="https://www.tomshardware.com/3d-printing/reports-of-the-bambu-lab-3d-printer-being-a-fire-hazard-resurface-after-recall-bambu-lab-confirms-theres-an-upgrade-kit-for-fire-risk" target="_blank" rel="noopener noreferrer" style="${TL}">📄 原文報導：Tom's Hardware — Bambu Lab A1 Fire Hazard（英文）</a>
+    </div>
+
+    <div style="${CARD_RESEARCH}">
+      <div style="font-weight:700;color:#1e40af;margin-bottom:6px">🔬 研究：ABS 列印釋放 177 種揮發性有機物（VOCs）</div>
+      <p style="margin:0 0 8px;font-size:14px;color:#374151">2021 年刊登於 PubMed Central（PMC）的研究測量了多種 FDM 3D 印表機在列印 ABS 材料時的空氣品質，偵測到超過 177 種揮發性有機物，包含苯乙烯（Styrene），已被 IARC 列為第 2A 級致癌物。研究建議：使用 ABS 或其他工程塑料列印時必須保持充分通風。</p>
+      <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7673646/" target="_blank" rel="noopener noreferrer" style="${TL}">📄 原文研究：PMC / Indoor Air — Emissions from desktop 3D printers（英文）</a>
+    </div>
+
+    <p style="font-size:12px;color:#94a3b8;margin-top:4px">※ 以上連結為公開新聞報導或學術論文，引用於教學安全佐證之用。</p>
+  `;
+  const nav = document.querySelector('.module-nav-bottom');
+  if (nav) nav.parentNode.insertBefore(sec, nav);
+})();

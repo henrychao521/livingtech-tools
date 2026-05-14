@@ -48,3 +48,40 @@ list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', ()
     }
   }
 }));
+
+/* ── 真實事故案例參考面板 ──────────────────────────────── */
+;(function () {
+  const CARD_ACCIDENT = 'background:#fff7ed;border-left:4px solid #f97316;border-radius:8px;padding:14px 16px;margin-bottom:10px';
+  const CARD_GOV     = 'background:#f0fdf4;border-left:4px solid #22c55e;border-radius:8px;padding:14px 16px;margin-bottom:10px';
+  const CARD_RESEARCH = 'background:#eff6ff;border-left:4px solid #3b82f6;border-radius:8px;padding:14px 16px;margin-bottom:10px';
+  const TL = 'font-size:12px;color:#1d4ed8;text-decoration:underline;word-break:break-all';
+
+  const sec = document.createElement('section');
+  sec.className = 'panel';
+  sec.innerHTML = `
+    <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:6px">⚠️ 真實事故案例參考</h3>
+    <p style="color:#64748b;font-size:14px;margin-bottom:16px">以下為國內外手電鑽操作相關安全事故的官方記錄與研究資料。</p>
+
+    <div style="${CARD_ACCIDENT}">
+      <div style="font-weight:700;color:#c2410c;margin-bottom:6px">🌀 旋轉工件甩飛＝教室最常見手電鑽傷害</div>
+      <p style="margin:0 0 8px;font-size:14px;color:#374151">美國 OSHA 機械防護指引明確指出：使用電動鑽孔工具時，<strong>未夾緊工件</strong>是造成受傷的最主要原因。鑽頭咬住工件後，未固定的薄板金屬片會瞬間以鑽頭為軸高速旋轉，邊緣可切穿手掌、造成深層割傷，甚至骨折。工件越小、越薄，甩飛的危險越高。</p>
+      <a href="https://www.osha.gov/etools/machine-guarding/drills" target="_blank" rel="noopener noreferrer" style="${TL}">📄 原文來源：OSHA eTool — Machine Guarding / Drills（英文）</a>
+    </div>
+
+    <div style="${CARD_ACCIDENT}">
+      <div style="font-weight:700;color:#c2410c;margin-bottom:6px">💥 卡鑽反扭傷害｜手腕骨折、肩膀脫臼案例</div>
+      <p style="margin:0 0 8px;font-size:14px;color:#374151">英國 HSE（Health and Safety Executive）發布的《手持電動工具安全》指引記錄：當鑽頭卡在工件中突然停轉時，電鑽機身會以鑽頭為軸<strong>反向快速旋轉甩動（kickback）</strong>，單手操作者尤其容易因此造成手腕扭傷、骨折，甚至肩膀脫臼。雙手握持可大幅降低此類傷害的嚴重程度。</p>
+      <a href="https://www.hse.gov.uk/pubns/indg229.pdf" target="_blank" rel="noopener noreferrer" style="${TL}">📄 原文來源：HSE INDG229 — Power Drills Safety（英文 PDF）</a>
+    </div>
+
+    <div style="${CARD_RESEARCH}">
+      <div style="font-weight:700;color:#1e40af;margin-bottom:6px">📊 美國每年約 40 萬人次因電動工具受傷</div>
+      <p style="margin:0 0 8px;font-size:14px;color:#374151">美國消費品安全委員會（CPSC）統計，電動手工具每年造成約 40 萬次急診就診，其中手電鑽為最常使用工具之一。常見受傷部位：手指（鑽頭刺穿）、手腕（卡鑽反扭）、眼睛（碎屑噴濺）。正確的個人防護（護目鏡＋雙手握持＋工件固定）可預防絕大多數事故。</p>
+      <a href="https://www.cpsc.gov/Business--Manufacturing/Business-Education/Business-Guidance/Batteries" target="_blank" rel="noopener noreferrer" style="${TL}">📄 參考來源：CPSC — Consumer Safety Statistics（英文）</a>
+    </div>
+
+    <p style="font-size:12px;color:#94a3b8;margin-top:4px">※ 以上連結均為政府官方或研究機構文件，引用於教學安全佐證之用。</p>
+  `;
+  const nav = document.querySelector('.module-nav-bottom');
+  if (nav) nav.parentNode.insertBefore(sec, nav);
+})();

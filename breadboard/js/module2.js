@@ -138,3 +138,40 @@ function answer(btn) {
   }
 }
 renderScenarios();
+
+/* ── 真實事故案例參考面板 ──────────────────────────────── */
+;(function () {
+  const CARD_ACCIDENT = 'background:#fff7ed;border-left:4px solid #f97316;border-radius:8px;padding:14px 16px;margin-bottom:10px';
+  const CARD_RESEARCH = 'background:#eff6ff;border-left:4px solid #3b82f6;border-radius:8px;padding:14px 16px;margin-bottom:10px';
+  const CARD_GOV     = 'background:#f0fdf4;border-left:4px solid #22c55e;border-radius:8px;padding:14px 16px;margin-bottom:10px';
+  const TL = 'font-size:12px;color:#1d4ed8;text-decoration:underline;word-break:break-all';
+
+  const sec = document.createElement('section');
+  sec.className = 'panel';
+  sec.innerHTML = `
+    <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:6px">⚠️ 真實事故案例參考</h3>
+    <p style="color:#64748b;font-size:14px;margin-bottom:16px">以下為麵包板與電子實驗相關的安全事故案例與研究資料。</p>
+
+    <div style="${CARD_ACCIDENT}">
+      <div style="font-weight:700;color:#c2410c;margin-bottom:6px">💥 電解電容接反爆炸｜大學物理實驗室案例</div>
+      <p style="margin:0 0 8px;font-size:14px;color:#374151">電解電容（Electrolytic Capacitor）若極性接反，內部化學反應失控後會造成電容外殼鼓脹、碎裂，甚至爆炸並飛射金屬碎片。美國多所大學實驗室安全報告記錄過因電容極性接錯而造成學生眼部受傷的案例。這正是焊接與實驗課嚴格要求戴護目鏡的原因之一。電解電容外殼上的「−」標記與短腳必須辨別清楚。</p>
+      <a href="https://www.nsc.org/home-safety/tools-we-use/laboratory-safety" target="_blank" rel="noopener noreferrer" style="${TL}">📄 參考來源：NSC（National Safety Council）— Laboratory Safety（英文）</a>
+    </div>
+
+    <div style="${CARD_ACCIDENT}">
+      <div style="font-weight:700;color:#c2410c;margin-bottom:6px">🔋 9V 電池短路起火｜金屬接觸兩極即可引燃</div>
+      <p style="margin:0 0 8px;font-size:14px;color:#374151">9V 電池的「頂帽式」正負極相距僅數毫米，一枚硬幣、髮夾或導線同時接觸兩極便能形成低阻抗短路，電池在數秒內開始發熱並可能引燃接觸物。美國消費品安全委員會（CPSC）有記錄多起因 9V 電池存放不當（與金屬物混放在抽屜或口袋中）引發的居家火災。在電子實驗中，連接電路前務必先完成佈線再接電源。</p>
+      <a href="https://www.cpsc.gov/Business--Manufacturing/Business-Education/Business-Guidance/Batteries" target="_blank" rel="noopener noreferrer" style="${TL}">📄 參考來源：CPSC — Battery Safety（英文）</a>
+    </div>
+
+    <div style="${CARD_RESEARCH}">
+      <div style="font-weight:700;color:#1e40af;margin-bottom:6px">✈️ FAA 追蹤：鋰電池短路——2006–2024 年 780+ 起航班事件</div>
+      <p style="margin:0 0 8px;font-size:14px;color:#374151">美國聯邦航空管理局（FAA）長期追蹤商業航班上的鋰電池過熱與起火事件。自 2006 至 2024 年，記錄在案的鋰電池（行動電源、筆電、相機電池）火情超過 780 起，<strong>短路</strong>是最常見的觸發原因。鋰電池的熱失控（Thermal Runaway）一旦發生，在數秒內即無法控制。電子實驗課中即便是小型 CR2032 鈕扣電池，短路後也能在 30 秒內燙傷人體組織。</p>
+      <a href="https://www.faa.gov/hazmat/resources/lithium_batteries/incidents" target="_blank" rel="noopener noreferrer" style="${TL}">📄 原文來源：FAA — Lithium Battery Incident Chart（英文）</a>
+    </div>
+
+    <p style="font-size:12px;color:#94a3b8;margin-top:4px">※ 以上連結均為政府官方或研究機構文件，引用於教學安全佐證之用。</p>
+  `;
+  const nav = document.querySelector('.module-nav-bottom');
+  if (nav) nav.parentNode.insertBefore(sec, nav);
+})();

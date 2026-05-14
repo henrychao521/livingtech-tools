@@ -322,3 +322,40 @@ function updateScore() {
   document.getElementById('score-display').textContent = total;
   document.getElementById('progress-bar').style.width = total + '%';
 }
+
+/* ── 真實事故案例參考面板 ──────────────────────────────── */
+;(function () {
+  const CARD_ACCIDENT = 'background:#fff7ed;border-left:4px solid #f97316;border-radius:8px;padding:14px 16px;margin-bottom:10px';
+  const CARD_RESEARCH = 'background:#eff6ff;border-left:4px solid #3b82f6;border-radius:8px;padding:14px 16px;margin-bottom:10px';
+  const CARD_GOV     = 'background:#f0fdf4;border-left:4px solid #22c55e;border-radius:8px;padding:14px 16px;margin-bottom:10px';
+  const TL = 'font-size:12px;color:#1d4ed8;text-decoration:underline;word-break:break-all';
+
+  const sec = document.createElement('section');
+  sec.className = 'panel';
+  sec.innerHTML = `
+    <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:6px">⚠️ 真實事故案例參考</h3>
+    <p style="color:#64748b;font-size:14px;margin-bottom:16px">以下為焊接安全的官方資料與職業傷害記錄，作為各項安全規範的具體佐證。</p>
+
+    <div style="${CARD_ACCIDENT}">
+      <div style="font-weight:700;color:#c2410c;margin-bottom:6px">🔥 烙鐵頭溫度實測：接觸 1 秒即三度燙傷</div>
+      <p style="margin:0 0 8px;font-size:14px;color:#374151">美國賓州大學環境健康與放射安全處（EHRS）焊接安全規範指出：電烙鐵工作溫度為 <strong>149–482°C（300–900°F）</strong>，人體皮膚在接觸 482°C 表面<strong>不到 1 秒</strong>即可造成三度燙傷。即使拔掉電源，烙鐵頭的餘溫仍可維持 5–15 分鐘的危險溫度。這正是「放回烙鐵架」與「等 10 分鐘再徒手摸」規則的根本原因。</p>
+      <a href="https://ehrs.upenn.edu/health-safety/lab-safety/standard-lab-procedures-slps/soldering-safety" target="_blank" rel="noopener noreferrer" style="${TL}">📄 原文來源：UPenn EHRS — Soldering Safety Procedures（英文）</a>
+    </div>
+
+    <div style="${CARD_RESEARCH}">
+      <div style="font-weight:700;color:#1e40af;margin-bottom:6px">🫁 焊接煙霧致職業性哮喘｜OSHA 職業健康研究</div>
+      <p style="margin:0 0 8px;font-size:14px;color:#374151">助焊劑（Flux）加熱揮發產生的煙霧中含有多種刺激性化合物，長期吸入可引發<strong>職業性哮喘（Occupational Asthma）</strong>。美國 OSHA 將焊接煙霧列為工作場所有害物，要求焊接站必須配備局部抽排煙（LEV）系統。史丹佛大學 EHS 安全規範同樣明確：「Flux fumes can cause occupational asthma in sensitive individuals」。</p>
+      <a href="https://ehs.stanford.edu/reference/soldering-safety" target="_blank" rel="noopener noreferrer" style="${TL}">📄 原文來源：Stanford EHS — Soldering Safety（英文）</a>
+    </div>
+
+    <div style="${CARD_GOV}">
+      <div style="font-weight:700;color:#15803d;margin-bottom:6px">🏛️ 衛福部「燙傷急救黃金原則」｜沖 20 分鐘冷水</div>
+      <p style="margin:0 0 8px;font-size:14px;color:#374151">台灣衛生福利部與台北市消防局均公告：燙傷後正確處置步驟為「沖、脫、泡、蓋、送」。其中<strong>冷水沖至少 20 分鐘</strong>（ILCOR 2019 共識建議 15–30 分鐘），可有效降低餘熱、減少組織損傷深度。牙膏、醬油、白酒等民俗療法反而會加重感染與傷口損傷。焊接教室應張貼此急救流程供師生參考。</p>
+      <a href="https://www.hpa.gov.tw/Pages/Detail.aspx?nodeid=367&pid=5884" target="_blank" rel="noopener noreferrer" style="${TL}">📄 參考來源：衛生福利部國民健康署（中文）</a>
+    </div>
+
+    <p style="font-size:12px;color:#94a3b8;margin-top:4px">※ 以上連結均為政府、大學或研究機構官方文件，引用於教學安全佐證之用。</p>
+  `;
+  const nav = document.querySelector('.module-nav-bottom');
+  if (nav) nav.parentNode.insertBefore(sec, nav);
+})();
