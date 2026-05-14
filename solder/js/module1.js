@@ -136,6 +136,7 @@ document.querySelectorAll('.part-chip').forEach(c => {
   const JOINTS = [
     {
       id: 'good', name: '好焊點（理想）', badge: '✓', color: '#16a34a',
+      photo: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Soldering-PCB-good.jpg/280px-Soldering-PCB-good.jpg', caption: 'PCB 上的標準好焊點：表面光亮、錐形飽滿', page: 'https://commons.wikimedia.org/wiki/File:Soldering-PCB-good.jpg', license: 'CC BY-SA · Wikimedia Commons' },
       svg: `<rect x="55" y="94" width="190" height="12" fill="#16a34a"/>
         <ellipse cx="150" cy="92" rx="44" ry="14" fill="#fbbf24" stroke="#b45309" stroke-width="1.5"/>
         <ellipse cx="150" cy="85" rx="32" ry="9" fill="#e5e7eb" stroke="#6b7280" stroke-width="1"/>
@@ -147,6 +148,7 @@ document.querySelectorAll('.part-chip').forEach(c => {
     },
     {
       id: 'cold', name: '冷焊（虛焊）', badge: '△', color: '#d97706',
+      photo: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Cold_solder_joint.jpg/280px-Cold_solder_joint.jpg', caption: '冷焊實物照：表面顆粒粗糙、無金屬光澤', page: 'https://commons.wikimedia.org/wiki/File:Cold_solder_joint.jpg', license: 'CC BY-SA 3.0 · Coronium / Wikimedia Commons' },
       svg: `<rect x="55" y="94" width="190" height="12" fill="#16a34a"/>
         <ellipse cx="150" cy="92" rx="38" ry="10" fill="#fbbf24" stroke="#b45309" stroke-width="1.5"/>
         <ellipse cx="150" cy="84" rx="28" ry="8" fill="#888" stroke="#666" stroke-width="1"/>
@@ -161,6 +163,7 @@ document.querySelectorAll('.part-chip').forEach(c => {
     },
     {
       id: 'over', name: '過焊（錫球）', badge: '●', color: '#7c3aed',
+      photo: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Soldering-bad.jpg/280px-Soldering-bad.jpg', caption: '過量焊錫示例：錫料堆積過多、形態不規則', page: 'https://commons.wikimedia.org/wiki/File:Soldering-bad.jpg', license: 'CC BY-SA · Wikimedia Commons' },
       svg: `<rect x="55" y="94" width="190" height="12" fill="#16a34a"/>
         <ellipse cx="150" cy="95" rx="50" ry="14" fill="#fbbf24" stroke="#b45309" stroke-width="1.5"/>
         <circle cx="150" cy="70" r="28" fill="#d0d0d0" stroke="#606060" stroke-width="1.5"/>
@@ -171,6 +174,7 @@ document.querySelectorAll('.part-chip').forEach(c => {
     },
     {
       id: 'bridge', name: '橋接連錫', badge: '✗', color: '#dc2626',
+      photo: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/L%C3%B6tbr%C3%BCcke.jpg/280px-L%C3%B6tbr%C3%BCcke.jpg', caption: '橋接連錫（Lötbrücke）實物：兩個接腳被錫料短路', page: 'https://commons.wikimedia.org/wiki/File:L%C3%B6tbr%C3%BCcke.jpg', license: 'CC BY-SA · Wikimedia Commons' },
       svg: `<rect x="55" y="94" width="190" height="12" fill="#16a34a"/>
         <ellipse cx="110" cy="92" rx="25" ry="11" fill="#fbbf24" stroke="#b45309" stroke-width="1.5"/>
         <ellipse cx="190" cy="92" rx="25" ry="11" fill="#fbbf24" stroke="#b45309" stroke-width="1.5"/>
@@ -215,6 +219,14 @@ document.querySelectorAll('.part-chip').forEach(c => {
           <div style="flex:1;min-width:180px">
             <h4 style="margin:0 0 8px;font-size:15px;color:${j.color}">${j.name}</h4>
             <p style="font-size:13px;line-height:1.7;margin:0;color:#374151">${j.desc}</p>
+          </div>
+        </div>
+        <div style="margin-top:14px;display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;background:#f1f5f9;border-radius:10px;padding:12px">
+          <img src="${j.photo.url}" alt="${j.photo.caption}" style="width:140px;height:auto;border-radius:6px;object-fit:cover;flex-shrink:0" onerror="this.style.display='none'">
+          <div style="flex:1;min-width:120px">
+            <p style="margin:0 0 4px;font-size:12px;font-weight:700;color:#374151">📷 實物對照</p>
+            <p style="margin:0 0 6px;font-size:12px;color:#64748b">${j.photo.caption}</p>
+            <a href="${j.photo.page}" target="_blank" rel="noopener" style="font-size:11px;color:#6366f1">🔗 ${j.photo.license}</a>
           </div>
         </div>`;
     });

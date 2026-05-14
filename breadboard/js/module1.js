@@ -165,6 +165,17 @@ document.querySelectorAll('.part-chip').forEach(c => {
       <span style="display:flex;align-items:center;gap:5px"><span style="width:11px;height:11px;border-radius:3px;background:#fde68a;display:inline-block"></span>相連的洞</span>
       <span style="display:flex;align-items:center;gap:5px"><span style="width:11px;height:11px;border-radius:3px;background:#fca5a5;display:inline-block"></span>正電源軌</span>
       <span style="display:flex;align-items:center;gap:5px"><span style="width:11px;height:11px;border-radius:3px;background:#93c5fd;display:inline-block"></span>接地軌</span>
+    </div>
+    <div style="margin-top:18px;display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;background:#f1f5f9;border-radius:10px;padding:14px">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Metal_contacts_within_a_breadboard.jpg/340px-Metal_contacts_within_a_breadboard.jpg"
+           alt="麵包板內部金屬條實物照片"
+           style="width:180px;height:auto;border-radius:8px;flex-shrink:0;object-fit:cover"
+           onerror="this.style.display='none'">
+      <div style="flex:1;min-width:160px">
+        <p style="margin:0 0 6px;font-size:13px;font-weight:700;color:#374151">📷 真實內部構造</p>
+        <p style="margin:0 0 8px;font-size:13px;color:#64748b;line-height:1.6">上圖為麵包板背面翻開後的實物照，清楚可見每直行（column）內部的金屬彈片條。正是這些金屬條讓同一行的 5 個洞相通，而電源軌則是整排橫向連通。</p>
+        <a href="https://commons.wikimedia.org/wiki/File:Metal_contacts_within_a_breadboard.jpg" target="_blank" rel="noopener" style="font-size:11px;color:#6366f1">🔗 CC BY 4.0 · Zeroping / Wikimedia Commons</a>
+      </div>
     </div>`;
 
   const nav = document.querySelector('.module-nav-bottom');

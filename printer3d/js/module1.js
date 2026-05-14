@@ -70,6 +70,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
   const FAILS = [
     {
       id: 'warp', name: '翹曲（Warping）', icon: '↗', color: '#dc2626',
+      ref: { name: 'Prusa Knowledge Base — Warping', url: 'https://help.prusa3d.com/article/warping_2011' },
       svg: `<rect x="30" y="128" width="240" height="45" fill="#16a34a"/>
         <path d="M 30 128 Q 80 108 140 124 Q 200 136 270 110" stroke="#dc2626" stroke-width="3.5" fill="none" stroke-dasharray="6 3"/>
         <path d="M 30 128 L 30 152 L 95 152 Q 78 128 30 128 Z" fill="#86efac" opacity=".6"/>
@@ -80,6 +81,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
     },
     {
       id: 'string', name: '拉絲（Stringing）', icon: '〰', color: '#d97706',
+      ref: { name: 'Prusa Knowledge Base — Stringing and oozing', url: 'https://help.prusa3d.com/article/stringing-and-oozing_1805' },
       svg: `<rect x="80" y="75" width="38" height="100" fill="#64748b"/>
         <rect x="182" y="55" width="38" height="120" fill="#64748b"/>
         <path d="M 118 128 Q 160 118 182 113" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="3 2"/>
@@ -92,6 +94,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
     },
     {
       id: 'shift', name: '層位移（Layer Shift）', icon: '↔', color: '#7c3aed',
+      ref: { name: 'Prusa Knowledge Base — Layer shifting', url: 'https://help.prusa3d.com/article/layer-shifting_2020' },
       svg: `<rect x="80" y="148" width="130" height="28" fill="#475569"/>
         <rect x="80" y="118" width="130" height="28" fill="#64748b"/>
         <rect x="126" y="88" width="130" height="28" fill="#94a3b8"/>
@@ -104,6 +107,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
     },
     {
       id: 'firstlayer', name: '首層不附著', icon: '✕', color: '#0891b2',
+      ref: { name: 'Prusa Knowledge Base — First layer issues', url: 'https://help.prusa3d.com/article/first-layer-issues_1804' },
       svg: `<rect x="30" y="148" width="240" height="25" fill="#16a34a"/>
         <g stroke="#0891b2" stroke-width="2" fill="#bfdbfe" fill-opacity=".5">
           <ellipse cx="75" cy="147" rx="20" ry="7"/>
@@ -151,9 +155,13 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
               <p style="margin:0 0 4px;font-size:12px;font-weight:700;color:#64748b">🔍 成因</p>
               <p style="margin:0;font-size:13px;line-height:1.6;color:#374151">${f.cause}</p>
             </div>
-            <div style="background:#f0fdf4;border-left:3px solid #16a34a;border-radius:0 8px 8px 0;padding:10px 12px">
+            <div style="background:#f0fdf4;border-left:3px solid #16a34a;border-radius:0 8px 8px 0;padding:10px 12px;margin-bottom:10px">
               <p style="margin:0 0 4px;font-size:12px;font-weight:700;color:#16a34a">🔧 修復步驟</p>
               <p style="margin:0;font-size:13px;line-height:1.6;color:#374151">${f.fix}</p>
+            </div>
+            <div style="background:#f0f4ff;border-radius:8px;padding:8px 12px">
+              <p style="margin:0 0 2px;font-size:11px;font-weight:700;color:#4f46e5">📖 延伸閱讀（附實物照片）</p>
+              <a href="${f.ref.url}" target="_blank" rel="noopener" style="font-size:12px;color:#6366f1;text-decoration:underline">${f.ref.name}</a>
             </div>
           </div>
         </div>`;

@@ -116,6 +116,14 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
         <line id="belt-line2" x1="95" y1="115" x2="128" y2="115" stroke="#b45309" stroke-width="5" stroke-linecap="round"/>
       </svg>
     </div>
+    <!-- 實物參考 -->
+    <div style="margin-top:14px;display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;background:#f1f5f9;border-radius:10px;padding:12px">
+      <div style="flex:1;min-width:200px">
+        <p style="margin:0 0 4px;font-size:12px;font-weight:700;color:#374151">📖 皮帶換位操作參考</p>
+        <p style="margin:0 0 6px;font-size:12px;color:#64748b">實際換位步驟：斷電 → 開皮帶箱蓋 → 鬆緊輪 → 移帶 → 重新上緊 → 蓋好箱蓋。換位前後一定要確認電源在 OFF。</p>
+        <a href="https://www.instructables.com/How-to-Change-the-Speed-of-a-Drill-Press/" target="_blank" rel="noopener" style="font-size:11px;color:#6366f1">🔗 Instructables — How to Change the Speed of a Drill Press（附圖說明）</a>
+      </div>
+    </div>
     <!-- 材料×RPM 速查表 -->
     <h4 style="margin:22px 0 10px;font-size:14px;font-weight:700">📊 材料 × 轉速速查表</h4>
     <div style="overflow-x:auto;border-radius:10px;border:1px solid #e2e8f0">

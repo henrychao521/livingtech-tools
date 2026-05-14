@@ -73,6 +73,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
       material: '金屬 · 塑膠 · 木材（應急）',
       rpm: '高速（≤ 2000 RPM）', tip: '118° 磨尖',
       desc: '最通用的鑽頭。尖端 118° 切削角，鑽鋼鐵、鋁、銅、塑膠都適合。鑽木材不如木工鑽頭精確，但能應急。刀刃呈螺旋排屑槽。',
+      photo: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/HSS_Twist_Drill_into_Aluminium_with_Lubricant.jpg/320px-HSS_Twist_Drill_into_Aluminium_with_Lubricant.jpg', caption: 'HSS 鑽頭正在鑽削鋁板（施加切削液）', page: 'https://commons.wikimedia.org/wiki/File:HSS_Twist_Drill_into_Aluminium_with_Lubricant.jpg', license: 'CC BY-SA 3.0 · Wikimedia Commons' },
       svg: `<rect x="10" y="42" width="140" height="16" rx="2" fill="#9ca3af"/>
         <g stroke="#4b5563" stroke-width="1" opacity=".7">
           <line x1="18" y1="42" x2="23" y2="58"/><line x1="30" y1="42" x2="35" y2="58"/>
@@ -91,6 +92,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
       material: '木材 · 夾板 · MDF',
       rpm: '中低速（500–1500 RPM）', tip: '中心尖（定位針）',
       desc: '最前端有細長定位尖，起鑽零偏移。螺旋刀翼設計，快速切削木纖維並把木屑往外排。深孔木材鑽孔首選。鑽金屬會馬上崩刃。',
+      photo: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Group_of_drill_bits.jpg/320px-Group_of_drill_bits.jpg', caption: '各式鑽頭組合：左側螺旋型即為木工用鑽頭', page: 'https://commons.wikimedia.org/wiki/File:Group_of_drill_bits.jpg', license: 'CC BY-SA 3.0 · Mo7amedsalim / Wikimedia Commons' },
       svg: `<rect x="10" y="44" width="130" height="12" rx="2" fill="#a16207"/>
         <path d="M 10 44 Q 28 37 46 44 Q 64 51 82 44 Q 100 37 118 44 Q 130 48 130 50" stroke="#78350f" stroke-width="2" fill="none"/>
         <path d="M 10 56 Q 28 49 46 56 Q 64 63 82 56 Q 100 49 118 56 Q 130 52 130 50" stroke="#78350f" stroke-width="2" fill="none"/>
@@ -105,6 +107,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
       material: '磚牆 · 混凝土 · 磁磚',
       rpm: '低速（300–600 RPM）', tip: '壓製碳化鎢硬頭',
       desc: '前端為壓製燒結碳化鎢（YG8），硬度極高。配電鎚模式（旋轉＋衝擊）才能有效打磚牆。鑽木材或金屬完全無效，且尖頭會快速崩裂。',
+      photo: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Schlagbohrer_f%C3%BCr_Mauerwerk_18mm_Durchmesser%2C_Masonry_bit_1671.JPG/200px-Schlagbohrer_f%C3%BCr_Mauerwerk_18mm_Durchmesser%2C_Masonry_bit_1671.JPG', caption: '18mm 磚石鑽頭：注意前端壓製碳化鎢硬頭（淡黃色）', page: 'https://commons.wikimedia.org/wiki/File:Schlagbohrer_f%C3%BCr_Mauerwerk_18mm_Durchmesser,_Masonry_bit_1671.JPG', license: 'CC BY-SA 3.0 · Hedwig Storch / Wikimedia Commons' },
       svg: `<rect x="10" y="44" width="120" height="12" rx="2" fill="#78716c"/>
         <polygon points="130,41 150,44 150,56 130,59" fill="#a8a29e"/>
         <rect x="132" y="44" width="16" height="12" fill="#d4d4aa"/>
@@ -178,6 +181,14 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
               <span style="color:#64748b">尖端特徵</span><strong>${bit.tip}</strong>
             </div>
             <p style="font-size:13px;color:#64748b;margin:0;line-height:1.6">${bit.desc}</p>
+          </div>
+        </div>
+        <div style="margin-top:14px;display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;background:#f1f5f9;border-radius:10px;padding:12px">
+          <img src="${bit.photo.url}" alt="${bit.photo.caption}" style="width:160px;height:auto;border-radius:6px;object-fit:cover;flex-shrink:0" onerror="this.style.display='none'">
+          <div style="flex:1;min-width:120px">
+            <p style="margin:0 0 4px;font-size:12px;font-weight:700;color:#374151">📷 實物照片</p>
+            <p style="margin:0 0 6px;font-size:12px;color:#64748b">${bit.photo.caption}</p>
+            <a href="${bit.photo.page}" target="_blank" rel="noopener" style="font-size:11px;color:#6366f1">🔗 ${bit.photo.license}</a>
           </div>
         </div>`;
     });
