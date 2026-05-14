@@ -9,9 +9,9 @@ const SCENARIOS = [
   },
   {
     q: '在 Onshape 看到一個 fork 過來的設計，覺得很棒想當作自己的作品交，可以嗎？',
-    a: '可以，但要在文件說明欄註明原作者，並做出顯著的修改',
-    b: '直接改成自己的名字，反正是 fork',
-    correct: 'a',
+    a: '直接改成自己的名字，反正是 fork',
+    b: '可以，但要在文件說明欄註明原作者，並做出顯著的修改',
+    correct: 'b',
     explain: 'Onshape 的開源精神鼓勵 fork，但學術倫理要求注明來源。沒做出有意義的修改而當作自己的作品是抄襲。',
   },
   {
@@ -23,9 +23,9 @@ const SCENARIOS = [
   },
   {
     q: '在 Onshape doc 的設計樹（feature tree）中，看到陌生人加入並開始改你的草圖，該怎麼做？',
-    a: '檢查 doc 的 share 設定、把不認識的人移除，並改為 link-only access',
-    b: '先觀察他在改什麼，反正可以還原',
-    correct: 'a',
+    a: '先觀察他在改什麼，反正可以還原',
+    b: '檢查 doc 的 share 設定、把不認識的人移除，並改為 link-only access',
+    correct: 'b',
     explain: '雲端協作的副作用：分享設定不嚴格會被陌生人加入。應立刻檢查 share 權限。Onshape 有「版本」可還原，但即時編輯時對方可能看到敏感內容。',
   },
 ];
