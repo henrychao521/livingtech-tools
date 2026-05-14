@@ -25,7 +25,10 @@ const nextBtn = document.getElementById('next-btn');
 CONCEPTS.forEach(c => {
   const card = document.createElement('div');
   card.style.cssText = `background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px;cursor:pointer;border-left:5px solid #0284C7;${seen.has(c.id) ? 'background:#E0F2FE' : ''}`;
-  card.innerHTML = `<h4 style="margin:0 0 8px;color:#075985">${c.name}</h4>
+  card.innerHTML = `<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+    <img src="../../models/hydraulic-arm/syringe-iso.png" alt="針筒" style="width:56px;height:56px;object-fit:contain;background:#1E293B;border-radius:6px;flex-shrink:0" loading="lazy">
+    <h4 style="margin:0;color:#075985">${c.name}</h4>
+  </div>
     <p style="font-family:var(--font-mono);color:#0284C7;font-weight:700;background:#E0F2FE;padding:6px 10px;border-radius:5px;margin:6px 0">${c.formula}</p>
     <p style="font-size:13px;color:#444">${c.desc.replace(/\n/g, '<br>')}</p>
     <p style="font-size:12.5px;color:#666;margin-top:8px"><strong>範例：</strong>${c.example}</p>`;
