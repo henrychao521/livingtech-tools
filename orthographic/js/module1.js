@@ -15,7 +15,7 @@ const CONCEPTS = [
   {
     name: '第三角投影法', icon: '📐',
     desc: '物體放在「觀察者與投影面」之間——觀察方向先穿過物體再到投影面。是中華民國國家標準（CNS）與美國 ANSI 採用的方式。',
-    detail: '對應：正視在前、俯視在下、左側視在左。日本 JIS 與歐洲 ISO 用第一角投影（順序相反）。',
+    detail: '第三角法配置：俯視在正視「上方」、右側視在正視「右方」。第一角法（JIS/ISO）剛好相反：俯視在下、右側視在左。台灣 CNS 採用第三角投影法。',
     visual: `<svg viewBox="0 0 240 90" width="100%" style="background:#F1F5F9;border-radius:6px;display:block">
       <defs><marker id="arr1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4F46E5"/></marker></defs>
       <!-- 觀察者 -->
@@ -79,39 +79,43 @@ const CONCEPTS = [
   },
   {
     name: '投影對齊', icon: '📏',
-    desc: '正視在中、俯視在下、側視在右（第三角法）。三視圖之間有「投影對齊關係」——正視寬 = 俯視寬、正視高 = 側視高。',
-    detail: '這個對齊是判讀的關鍵：依長對正、寬對等、高平齊。',
-    visual: `<svg viewBox="0 0 240 130" width="100%" style="background:#F1F5F9;border-radius:6px;display:block">
-      <!-- 正視（左上） -->
-      <g transform="translate(50,18)">
+    desc: '第三角法排列：俯視在正視「上方」、側視在正視「右方」。三視圖之間有投影對齊關係——正視寬 = 俯視寬（長對正）、正視高 = 側視高（高平齊）。',
+    detail: '這個對齊是判讀的關鍵：長對正、高平齊。俯視在正視上方是 CNS 第三角投影法的標準排列，與第一角法（俯視在下）剛好相反。',
+    visual: `<svg viewBox="0 0 240 148" width="100%" style="background:#F1F5F9;border-radius:6px;display:block">
+      <!-- 俯視（第三角法：正視上方）-->
+      <g transform="translate(50,10)">
+        <rect x="0" y="0" width="80" height="30" fill="#fff" stroke="#3730A3" stroke-width="1.2"/>
+        <polygon points="10,22 70,22 70,6 35,6 35,14 10,14" fill="#E0E7FF" stroke="#3730A3" stroke-width="1.2"/>
+        <text x="40" y="-2" text-anchor="middle" font-size="9" fill="#3730A3" font-weight="700">俯視 TOP</text>
+      </g>
+      <!-- 正視（居中）-->
+      <g transform="translate(50,50)">
         <rect x="0" y="0" width="80" height="50" fill="#fff" stroke="#3730A3" stroke-width="1.2"/>
         <polygon points="10,40 35,40 35,20 25,20 25,10 10,10" fill="#E0E7FF" stroke="#3730A3" stroke-width="1.2"/>
-        <text x="40" y="-2" text-anchor="middle" font-size="9" fill="#3730A3" font-weight="700">正視 FRONT</text>
+        <text x="40" y="63" text-anchor="middle" font-size="9" fill="#3730A3" font-weight="700">正視 FRONT</text>
       </g>
-      <!-- 側視（右上） -->
-      <g transform="translate(150,18)">
+      <!-- 側視（正視右方）-->
+      <g transform="translate(142,50)">
         <rect x="0" y="0" width="40" height="50" fill="#fff" stroke="#3730A3" stroke-width="1.2"/>
         <rect x="10" y="10" width="20" height="30" fill="#E0E7FF" stroke="#3730A3" stroke-width="1.2"/>
         <text x="20" y="-2" text-anchor="middle" font-size="9" fill="#3730A3" font-weight="700">側視 SIDE</text>
       </g>
-      <!-- 俯視（左下） -->
-      <g transform="translate(50,82)">
-        <rect x="0" y="0" width="80" height="40" fill="#fff" stroke="#3730A3" stroke-width="1.2"/>
-        <polygon points="10,30 70,30 70,10 35,10 35,20 10,20" fill="#E0E7FF" stroke="#3730A3" stroke-width="1.2"/>
-        <text x="40" y="125" text-anchor="middle" font-size="9" fill="#3730A3" font-weight="700">俯視 TOP</text>
-      </g>
-      <!-- 對齊輔助線 -->
+      <!-- 對齊輔助線（黃色虛線）-->
       <g stroke="#FBBF24" stroke-width="1" stroke-dasharray="3 2" fill="none">
-        <!-- 寬對正：正視左右邊 = 俯視左右邊 -->
-        <line x1="50" y1="68" x2="50" y2="82"/>
-        <line x1="130" y1="68" x2="130" y2="82"/>
-        <!-- 高平齊：正視 上下 = 側視 上下 -->
-        <line x1="130" y1="18" x2="150" y2="18"/>
-        <line x1="130" y1="68" x2="150" y2="68"/>
+        <!-- 長對正：俯視左邊 = 正視左邊 -->
+        <line x1="50" y1="40" x2="50" y2="50"/>
+        <!-- 長對正：俯視右邊 = 正視右邊 -->
+        <line x1="130" y1="40" x2="130" y2="50"/>
+        <!-- 高平齊：正視上邊 = 側視上邊 -->
+        <line x1="130" y1="50" x2="142" y2="50"/>
+        <!-- 高平齊：正視下邊 = 側視下邊 -->
+        <line x1="130" y1="100" x2="142" y2="100"/>
       </g>
       <!-- 規則文字 -->
-      <text x="195" y="50" font-size="9" fill="#92400E" font-weight="700" font-style="italic">高平齊</text>
-      <text x="80" y="79" font-size="9" fill="#92400E" font-weight="700" font-style="italic">寬對正</text>
+      <text x="196" y="78" font-size="9" fill="#92400E" font-weight="700" font-style="italic">高平齊</text>
+      <text x="82" y="47" font-size="9" fill="#92400E" font-weight="700" font-style="italic">長對正</text>
+      <!-- 第三角法標示 -->
+      <text x="10" y="136" font-size="8.5" fill="#4F46E5" font-style="italic" font-weight="600">▲ CNS 第三角法：俯視在上・正視居中・側視在右</text>
     </svg>`
   },
   {

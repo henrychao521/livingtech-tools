@@ -22,7 +22,7 @@ const SHAPES = {
   cone:      { label: '圓錐',   front: 'triangle', side: 'triangle', top: 'circle-dot', iso: 'cone' },
   sphere:    { label: '球體',   front: 'circle', side: 'circle', top: 'circle', iso: 'sphere' },
   lblock:    { label: 'L 型塊', front: 'l-shape', side: 'rect-tall', top: 'rect', iso: 'lblock' },
-  step:      { label: '階梯塊', front: 'l-rev',  side: 'rect-tall',  top: 'rect-step', iso: 'step' },
+  step:      { label: '階梯塊', front: 'rect',   side: 'rect-tall',  top: 'rect-step', iso: 'step' },
   hole:      { label: '帶圓孔板', front: 'rect-circle-hole', side: 'rect-dash-vert', top: 'rect-dash-vert', iso: 'hole' },
   tslot:     { label: 'T 槽塊', front: 't-shape', side: 'rect', top: 't-rev', iso: 'tslot' },
   bracket:   { label: 'L 角架', front: 'l-shape', side: 'rect-tall', top: 'l-shape', iso: 'bracket' },
