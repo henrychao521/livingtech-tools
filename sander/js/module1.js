@@ -184,7 +184,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
   const TYPES = [
     {
       id: 'belt', name: '帶式砂磨機', en: 'Belt Sander', color: '#7C3AED',
-      photo: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Linisher_sander.jpg/320px-Linisher_sander.jpg', credit: 'Wikimedia Commons CC BY-SA' },
+      photo: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Bandslijpmachine_hobbykwaliteit_%28Westfalia%29.jpg/320px-Bandslijpmachine_hobbykwaliteit_%28Westfalia%29.jpg', credit: 'CC0 · Arp，Wikimedia Commons', link: 'https://commons.wikimedia.org/wiki/File:Bandslijpmachine_hobbykwaliteit_(Westfalia).jpg' },
       desc: '使用環形砂帶套在前後兩個滾輪上，砂帶持續單向移動。去料速度最快，適合大面積平面磨削、去漆、整平。',
       specs: '砂帶規格：75×457mm 或 100×610mm；轉速：600–1800 m/min',
       safety: [
@@ -196,7 +196,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
     },
     {
       id: 'disc', name: '盤式砂磨機', en: 'Disc Sander', color: '#dc2626',
-      photo: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Disc_sander.jpg/320px-Disc_sander.jpg', credit: 'Wikimedia Commons CC BY-SA' },
+      photo: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Disc_sander.JPG/320px-Disc_sander.JPG', credit: 'CC BY-SA 3.0 · Vishwin60，Wikimedia Commons', link: 'https://commons.wikimedia.org/wiki/File:Disc_sander.JPG' },
       desc: '圓盤狀砂紙貼在金屬轉盤上高速旋轉。切削力比帶式大，最適合工件端面整平、倒角、快速去料。常與帶式組合成「帶盤式砂磨機」。',
       specs: '砂盤直徑：200–300mm；轉速：1400–3600 RPM',
       safety: [
@@ -208,7 +208,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
     },
     {
       id: 'orbital', name: '隨機軌道式砂磨機', en: 'Random Orbital Sander', color: '#059669',
-      photo: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Random_orbital_sander.jpg/320px-Random_orbital_sander.jpg', credit: 'Wikimedia Commons CC BY-SA' },
+      photo: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Makita_BO5041_Random_Orbit_Sander_%286169160923%29.jpg/320px-Makita_BO5041_Random_Orbit_Sander_%286169160923%29.jpg', credit: 'CC BY 2.0 · Mark Hunter，Wikimedia Commons', link: 'https://commons.wikimedia.org/wiki/File:Makita_BO5041_Random_Orbit_Sander_(6169160923).jpg' },
       desc: '圓形砂盤同時進行自轉與公轉（橢圓軌跡），雙軌跡使每次接觸路徑不同，避免留下規律性刮痕。適合最終精修、上漆前處理，也是最適合初學者的砂磨機。',
       specs: '砂盤直徑：125mm 或 150mm；轉速：4000–12000 OPM（軌道/分）',
       safety: [
@@ -220,7 +220,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
     },
     {
       id: 'spindle', name: '主軸式（鼓式）砂磨機', en: 'Spindle / Drum Sander', color: '#b45309',
-      photo: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Oscillating_Spindle_Sander.jpg/320px-Oscillating_Spindle_Sander.jpg', credit: 'Wikimedia Commons CC BY-SA' },
+      photo: { url: null, credit: '主軸式示意圖（Wikimedia Commons 無授權近代照片）', link: null },
       desc: '垂直立式砂鼓（drum）高速旋轉，可額外加上「震盪」（oscillating）上下往返運動以均勻分散磨損。專門用於磨削工件的「內弧面」（圓形孔、曲線內側），是其他砂磨機無法替代的機型。',
       specs: '砂鼓直徑：13–76mm（多組可換）；轉速：1700–2000 RPM',
       safety: [
@@ -273,19 +273,35 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
     const card = document.createElement('div');
     card.dataset.mtype = t.id;
     card.style.cssText = `background:#fff;border:2px solid #e2e8f0;border-radius:10px;overflow:hidden;cursor:pointer;transition:border-color .15s,box-shadow .15s`;
+    const photoHtml = t.photo.url
+      ? `<img src="${t.photo.url}" alt="${t.name}" style="width:100%;height:140px;object-fit:cover" onerror="this.style.display='none'">`
+      : `<svg viewBox="0 0 200 130" style="width:200px;height:130px">
+          <rect x="20" y="82" width="160" height="8" rx="2" fill="#94a3b8"/>
+          <rect x="82" y="18" width="36" height="64" rx="10" fill="${t.color}" opacity=".85"/>
+          <line x1="89" y1="20" x2="89" y2="80" stroke="rgba(0,0,0,.2)" stroke-width="1.5"/>
+          <line x1="96" y1="20" x2="96" y2="80" stroke="rgba(0,0,0,.2)" stroke-width="1.5"/>
+          <line x1="103" y1="20" x2="103" y2="80" stroke="rgba(0,0,0,.2)" stroke-width="1.5"/>
+          <line x1="110" y1="20" x2="110" y2="80" stroke="rgba(0,0,0,.2)" stroke-width="1.5"/>
+          <path d="M 40 62 Q 82 42 82 62 L 82 78 Q 82 92 40 80 Z" fill="#fde68a" stroke="#d97706" stroke-width="1.5"/>
+          <text x="128" y="52" font-size="20" fill="${t.color}">↕</text>
+          <text x="122" y="66" font-size="9" fill="${t.color}" font-weight="700" font-family="Noto Sans TC,sans-serif">震盪旋轉</text>
+          <text x="100" y="116" text-anchor="middle" font-size="10" fill="#94a3b8" font-family="Noto Sans TC,sans-serif">主軸式示意圖</text>
+        </svg>`;
+    const creditHtml = t.photo.link
+      ? `<a href="${t.photo.link}" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="display:block;font-size:10px;color:#94a3b8;padding:2px 8px;text-decoration:none;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">📷 ${t.photo.credit}</a>`
+      : `<div style="font-size:10px;color:#94a3b8;padding:2px 8px">🎨 ${t.photo.credit}</div>`;
     card.innerHTML = `
       <div style="height:140px;overflow:hidden;background:#f1f5f9;display:flex;align-items:center;justify-content:center">
-        <img src="${t.photo.url}" alt="${t.name}" style="width:100%;height:140px;object-fit:cover" onerror="this.parentElement.innerHTML='<div style=\\'font-size:48px;padding:20px\\'>🔧</div>'">
+        ${photoHtml}
       </div>
+      ${creditHtml}
       <div style="padding:12px 14px">
         <div style="font-weight:700;color:${t.color};font-size:15px;margin-bottom:3px">${t.name}</div>
         <div style="font-size:11px;color:#94a3b8;margin-bottom:6px">${t.en}</div>
         <p style="font-size:12px;color:#64748b;line-height:1.5;margin:0 0 10px">${t.desc.substring(0, 60)}…</p>
-        <button onclick="document.querySelector('[data-mtype=\\'${t.id}\\']').click()" style="display:none"></button>
         <div style="display:flex;gap:6px">
           <span style="flex:1;text-align:center;padding:5px 0;background:${t.color};color:#fff;border-radius:6px;font-size:12px;font-weight:700">查看詳情 →</span>
-          <span onclick="event.stopPropagation();const a=document.getElementById('machine-sim-anchor');if(a)a.scrollIntoView({behavior:'smooth'})"
-            style="padding:5px 10px;border:1px solid ${t.color};color:${t.color};border-radius:6px;font-size:12px;cursor:pointer">操作模擬 ↓</span>
+          <a href="module3.html#machine-sim-anchor" onclick="event.stopPropagation()" style="padding:5px 10px;border:1px solid ${t.color};color:${t.color};border-radius:6px;font-size:12px;cursor:pointer;text-decoration:none;display:flex;align-items:center">操作模擬 →</a>
         </div>
       </div>`;
     card.addEventListener('click', () => showType(t.id));

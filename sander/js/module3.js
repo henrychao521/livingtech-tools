@@ -201,6 +201,11 @@ if (typeof SequencePuzzle === 'function') {
   const nav = document.querySelector('.module-nav-bottom');
   if (nav) nav.parentNode.insertBefore(sec, nav);
 
+  // 從 module1 機型圖鑑點「操作模擬 →」跳轉時，自動滾動到本區塊
+  if (window.location.hash === '#machine-sim-anchor') {
+    setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 200);
+  }
+
   const tabColors = { belt:'#7C3AED', disc:'#dc2626', orbital:'#059669', spindle:'#b45309' };
   const tabs = document.querySelectorAll('.msim-tab');
   let activeTab = 'belt';
