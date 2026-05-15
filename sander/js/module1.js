@@ -184,7 +184,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
   const TYPES = [
     {
       id: 'belt', name: '帶式砂磨機', en: 'Belt Sander', color: '#7C3AED',
-      photo: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Bandslijpmachine_hobbykwaliteit_%28Westfalia%29.jpg/320px-Bandslijpmachine_hobbykwaliteit_%28Westfalia%29.jpg', credit: 'CC0 · Arp，Wikimedia Commons', link: 'https://commons.wikimedia.org/wiki/File:Bandslijpmachine_hobbykwaliteit_(Westfalia).jpg' },
+      photo: { url: '../assets/img/belt-sander.jpg', credit: 'CC0 · Arp，Wikimedia Commons', link: 'https://commons.wikimedia.org/wiki/File:Bandslijpmachine_hobbykwaliteit_(Westfalia).jpg' },
       desc: '使用環形砂帶套在前後兩個滾輪上，砂帶持續單向移動。去料速度最快，適合大面積平面磨削、去漆、整平。',
       specs: '砂帶規格：75×457mm 或 100×610mm；轉速：600–1800 m/min',
       safety: [
@@ -196,7 +196,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
     },
     {
       id: 'disc', name: '盤式砂磨機', en: 'Disc Sander', color: '#dc2626',
-      photo: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Disc_sander.JPG/320px-Disc_sander.JPG', credit: 'CC BY-SA 3.0 · Vishwin60，Wikimedia Commons', link: 'https://commons.wikimedia.org/wiki/File:Disc_sander.JPG' },
+      photo: { url: '../assets/img/disc-sander.jpg', credit: 'CC BY-SA 3.0 · Vishwin60，Wikimedia Commons', link: 'https://commons.wikimedia.org/wiki/File:Disc_sander.JPG' },
       desc: '圓盤狀砂紙貼在金屬轉盤上高速旋轉。切削力比帶式大，最適合工件端面整平、倒角、快速去料。常與帶式組合成「帶盤式砂磨機」。',
       specs: '砂盤直徑：200–300mm；轉速：1400–3600 RPM',
       safety: [
@@ -208,7 +208,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
     },
     {
       id: 'orbital', name: '隨機軌道式砂磨機', en: 'Random Orbital Sander', color: '#059669',
-      photo: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Makita_BO5041_Random_Orbit_Sander_%286169160923%29.jpg/320px-Makita_BO5041_Random_Orbit_Sander_%286169160923%29.jpg', credit: 'CC BY 2.0 · Mark Hunter，Wikimedia Commons', link: 'https://commons.wikimedia.org/wiki/File:Makita_BO5041_Random_Orbit_Sander_(6169160923).jpg' },
+      photo: { url: '../assets/img/orbital-sander.jpg', credit: 'CC BY 2.0 · Mark Hunter，Wikimedia Commons', link: 'https://commons.wikimedia.org/wiki/File:Makita_BO5041_Random_Orbit_Sander_(6169160923).jpg' },
       desc: '圓形砂盤同時進行自轉與公轉（橢圓軌跡），雙軌跡使每次接觸路徑不同，避免留下規律性刮痕。適合最終精修、上漆前處理，也是最適合初學者的砂磨機。',
       specs: '砂盤直徑：125mm 或 150mm；轉速：4000–12000 OPM（軌道/分）',
       safety: [
