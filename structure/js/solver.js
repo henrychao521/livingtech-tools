@@ -247,19 +247,33 @@ function generateBridge(type, span, height, material = 'steel') {
       else      members.push({ id: `D${i}`, n1Id: `L${i}`, n2Id: `U${i+1}`, E, A, yieldStress: y });
     }
   } else if (type === 'warren') {
-    // 無豎桿，等腰三角形斜桿
-    for (let i = 0; i < panels - 1; i++) {
-      if (i % 2 === 0) members.push({ id: `D${i}`, n1Id: `L${i+1}`, n2Id: `U${i+1}`, E, A, yieldStress: y });
-      else             members.push({ id: `D${i}`, n1Id: `U${i}`,   n2Id: `L${i+1}`, E, A, yieldStress: y });
+    // Warren 桁架：無豎桿，等腰三角形
+    // 上弦節點移至下弦節點中點位置（正確幾何，才能形成真正的三角形）
+    for (let i = 1; i < panels; i++) {
+      const uNode = nodes.find(n => n.id === `U${i}`);
+      if (uNode) uNode.x = (i - 0.5) * panelW;
+    }
+    // 9 根內部斜桿（zigzag）：Ui→Li（上→下） + Li→U(i+1)（下→上）
+    // 與兩端斜桿 E0(L0→U1) 和 E1(Ln→U(n-1)) 合計 11 根斜桿，共 21 根桿件
+    for (let i = 1; i < panels; i++) {
+      members.push({ id: `DA${i}`, n1Id: `U${i}`, n2Id: `L${i}`, E, A, yieldStress: y });
+      if (i < panels - 1) {
+        members.push({ id: `DB${i}`, n1Id: `L${i}`, n2Id: `U${i+1}`, E, A, yieldStress: y });
+      }
     }
   } else if (type === 'k') {
     // K型桁架：豎桿 + K形斜桿（深桁架）
+    // 豎桿
     for (let i = 1; i < panels; i++) {
       members.push({ id: `V${i}`, n1Id: `L${i}`, n2Id: `U${i}`, E, A, yieldStress: y });
     }
-    for (let i = 1; i < panels; i++) {
-      if (i < panels) members.push({ id: `DL${i}`, n1Id: `L${i}`, n2Id: `U${i <= 1 ? 1 : i-1}`, E, A: A*0.8, yieldStress: y });
-      if (i < panels - 1) members.push({ id: `DR${i}`, n1Id: `L${i}`, n2Id: `U${i+1}`, E, A: A*0.8, yieldStress: y });
+    // 左斜桿：Li→U(i-1)，i 從 2 開始避免引用不存在的 U0
+    for (let i = 2; i < panels; i++) {
+      members.push({ id: `DL${i}`, n1Id: `L${i}`, n2Id: `U${i-1}`, E, A: A * 0.8, yieldStress: y });
+    }
+    // 右斜桿：Li→U(i+1)，i 到 panels-2 避免引用不存在的 U(panels)
+    for (let i = 1; i < panels - 1; i++) {
+      members.push({ id: `DR${i}`, n1Id: `L${i}`, n2Id: `U${i+1}`, E, A: A * 0.8, yieldStress: y });
     }
   }
 
