@@ -1,4 +1,5 @@
 // 砂磨機 模組 2：安全闖關
+let ppeScore = 0;
 const SCENARIOS = [
   { q: '砂磨木材時沒接集塵器，可以繼續用嗎？', a: '反正粉塵不多，繼續用', b: '不行！木屑粉達一定濃度會引發塵爆，要先接集塵器', correct: 'b', explain: '木屑粉達 40g/m³ 遇火源（甚至馬達電刷的火花、靜電）就會引發粉塵爆炸。集塵口連接是基本安全配備，不是可選項。OSHA 把木工集塵列為強制要求。' },
   { q: '想砂磨工件，可以戴布手套讓手不會痛嗎？', a: '禁止！手套容易被砂帶捲入', b: '可以，會比較舒服', correct: 'a', explain: '砂磨機與所有旋轉機具相同——禁戴布手套。布料一被砂帶咬住會把整隻手扯進去。如果擔心摩擦發熱，戴防護「皮手套」前先諮詢老師。' },
@@ -33,18 +34,143 @@ list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', ()
   parent.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${correct ? 'success' : 'error'}">${correct ? '✓' : '✗'} ${s.explain}</div>`;
   if (correct) { score += 10; if (typeof SoundFX !== 'undefined') SoundFX.success(); } else if (typeof SoundFX !== 'undefined') SoundFX.error();
   answered.add(i);
-  document.getElementById('score-display').textContent = score;
-  document.getElementById('progress-bar').style.width = score + '%';
+  const total = ppeScore + score;
+  document.getElementById('score-display').textContent = total;
+  document.getElementById('progress-bar').style.width = Math.min(100, total / 1.3) + '%';
   if (answered.size === SCENARIOS.length) {
-    if (score >= 90) {
-      document.getElementById('scenario-result').innerHTML = `<div class="feedback success" style="margin-top:20px"><strong>🏆 ${score} 分通過！</strong></div>`;
+    if (total >= 100) {
+      document.getElementById('scenario-result').innerHTML = `<div class="feedback success" style="margin-top:20px"><strong>🏆 ${total} 分通過！</strong></div>`;
       document.getElementById('unlock').classList.remove('hidden');
       document.getElementById('next-btn').style.opacity = 1;
       document.getElementById('next-btn').style.pointerEvents = 'auto';
       if (typeof SoundFX !== 'undefined') SoundFX.win();
       const p = loadP(); p.module2 = true; p.safetyPassed = true; saveP(p);
     } else {
-      document.getElementById('scenario-result').innerHTML = `<div class="feedback error" style="margin-top:20px">${score} 分，未達 90 分，請重新挑戰。</div>`;
+      document.getElementById('scenario-result').innerHTML = `<div class="feedback error" style="margin-top:20px">${total} 分，未達 100 分，請重新整理再挑戰。</div>`;
     }
   }
 }));
+
+/* ── PPE 護具配置遊戲 ──────────────────────────────────── */
+;(function () {
+  const PPE_WRONG = {
+    'sd-glove':    '⚠ 布手套被砂帶咬住後會把整隻手扯入滾輪！砂磨機絕對禁戴布手套。',
+    'sd-earphone': '⚠ 戴耳機會遮蔽機台異音（皮帶異響、砂帶快斷的聲音），無法即時判斷危險！',
+    'sd-bracelet': '⚠ 金屬手環可能被砂帶掛住或在高速下造成靜電，嚴重者捲入機台。',
+  };
+  const PPE_VISUALS = {
+    'sd-goggles': () => {
+      const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+      g.setAttribute('id','sv-goggles');
+      g.innerHTML = `
+        <g transform="translate(46,72)">
+          <ellipse cx="22" cy="18" rx="20" ry="12" fill="#1a1a1a" opacity=".85"/>
+          <ellipse cx="66" cy="18" rx="20" ry="12" fill="#1a1a1a" opacity=".85"/>
+          <line x1="42" y1="18" x2="46" y2="18" stroke="#1a1a1a" stroke-width="4"/>
+          <ellipse cx="22" cy="18" rx="16" ry="9" fill="rgba(135,206,250,.6)"/>
+          <ellipse cx="66" cy="18" rx="16" ry="9" fill="rgba(135,206,250,.6)"/>
+          <ellipse cx="17" cy="14" rx="4" ry="2" fill="rgba(255,255,255,.6)"/>
+          <ellipse cx="61" cy="14" rx="4" ry="2" fill="rgba(255,255,255,.6)"/>
+        </g>`;
+      return g;
+    },
+    'sd-mask': () => {
+      const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+      g.setAttribute('id','sv-mask');
+      g.innerHTML = `
+        <g transform="translate(50,124)">
+          <path d="M0 0 Q44 18 88 0 L84 24 Q44 30 4 24 Z" fill="#fff" stroke="#7C3AED" stroke-width="2"/>
+          <text x="44" y="18" text-anchor="middle" font-size="9" fill="#7C3AED" font-weight="800" font-family="Inter,sans-serif">N95</text>
+          <line x1="0" y1="8" x2="-8" y2="6" stroke="#94a3b8" stroke-width="1.5"/>
+          <line x1="88" y1="8" x2="96" y2="6" stroke="#94a3b8" stroke-width="1.5"/>
+        </g>`;
+      return g;
+    },
+    'sd-sleeves': () => {
+      const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+      g.setAttribute('id','sv-sleeves');
+      g.innerHTML = `
+        <g transform="translate(30,195)">
+          <rect x="0" y="0" width="18" height="26" rx="6" fill="#f97316" opacity=".9"/>
+          <rect x="112" y="0" width="18" height="26" rx="6" fill="#f97316" opacity=".9"/>
+          <text x="9" y="38" text-anchor="middle" font-size="8" fill="#ea580c" font-weight="700" font-family="Noto Sans TC,sans-serif">束緊</text>
+          <text x="121" y="38" text-anchor="middle" font-size="8" fill="#ea580c" font-weight="700" font-family="Noto Sans TC,sans-serif">束緊</text>
+        </g>`;
+      return g;
+    },
+  };
+
+  const ppeSvg = document.getElementById('ppe-svg');
+  const items = document.querySelectorAll('#ppe-items .draggable');
+  const zones = document.querySelectorAll('#ppe-scene .svg-dropzone');
+  let dragged = null;
+  let ppeDone = 0;
+
+  zones.forEach(z => {
+    z.addEventListener('mouseenter', () => { if (!z.classList.contains('filled')) z.setAttribute('stroke','#7C3AED'); });
+    z.addEventListener('mouseleave', () => { if (!z.classList.contains('filled')) z.setAttribute('stroke','#cbd5e1'); });
+  });
+
+  items.forEach(item => {
+    item.addEventListener('dragstart', e => { dragged = item; e.dataTransfer.effectAllowed = 'move'; if (typeof SoundFX !== 'undefined') SoundFX.click(); });
+    item.addEventListener('click', () => {
+      if (item.classList.contains('placed')) return;
+      items.forEach(i => i.style.outline = '');
+      item.style.outline = '3px solid #7C3AED';
+      dragged = item;
+      if (typeof SoundFX !== 'undefined') SoundFX.click();
+    });
+  });
+
+  zones.forEach(zone => {
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.setAttribute('stroke','#7C3AED'); zone.setAttribute('stroke-width','3'); zone.setAttribute('fill','rgba(124,58,237,.1)'); });
+    zone.addEventListener('dragleave', () => { if (!zone.classList.contains('filled')) { zone.setAttribute('stroke','#cbd5e1'); zone.setAttribute('stroke-width','1.5'); zone.setAttribute('fill','transparent'); } });
+    zone.addEventListener('drop', e => { e.preventDefault(); handlePpeDrop(zone); });
+    zone.addEventListener('click', () => { if (dragged) handlePpeDrop(zone); });
+  });
+
+  function handlePpeDrop(zone) {
+    if (!dragged) return;
+    const accept = zone.dataset.accept;
+    const id = dragged.dataset.id;
+    const correct = dragged.dataset.correct === '1';
+    if (id === accept && correct) {
+      zone.classList.add('filled');
+      zone.setAttribute('stroke','#16a34a'); zone.setAttribute('stroke-width','2'); zone.setAttribute('fill','rgba(22,163,74,.1)');
+      dragged.classList.add('placed'); dragged.style.outline = '';
+      ppeScore += 10;
+      const vFn = PPE_VISUALS[id];
+      if (vFn) ppeSvg.appendChild(vFn());
+      if (typeof SoundFX !== 'undefined') SoundFX.success();
+      ppeDone++;
+      showPpeFeedback('✓ 正確！','success');
+      const total2 = ppeScore + score;
+      document.getElementById('score-display').textContent = total2;
+      document.getElementById('progress-bar').style.width = Math.min(100, total2 / 1.3) + '%';
+      if (ppeDone >= 3) {
+        if (typeof SoundFX !== 'undefined') SoundFX.unlock();
+        document.getElementById('ppe-feedback').innerHTML = `<div class="feedback success">🎉 護具配置完成！解鎖情境判斷關卡。</div>`;
+        const overlay = document.getElementById('scenario-lock-overlay');
+        if (overlay) overlay.remove();
+        document.getElementById('part-scenario').scrollIntoView({ behavior:'smooth', block:'start' });
+      }
+    } else if (correct) {
+      if (typeof SoundFX !== 'undefined') SoundFX.warn();
+      dragged.classList.add('wrong-shake');
+      setTimeout(() => dragged?.classList.remove('wrong-shake'), 400);
+      showPpeFeedback(`位置不對，請拖到「${zone.dataset.label}」區域`, 'error');
+    } else {
+      if (typeof SoundFX !== 'undefined') SoundFX.error();
+      dragged.classList.add('wrong-shake');
+      setTimeout(() => dragged?.classList.remove('wrong-shake'), 400);
+      showPpeFeedback(PPE_WRONG[id] || '這個物品不適合帶入操作！', 'error');
+    }
+    dragged = null;
+  }
+
+  function showPpeFeedback(msg, type) {
+    const fb = document.getElementById('ppe-feedback');
+    fb.innerHTML = `<div class="feedback ${type}" style="margin-top:8px">${msg}</div>`;
+    setTimeout(() => { if (fb.innerHTML.includes(msg)) fb.innerHTML = ''; }, 5000);
+  }
+})();

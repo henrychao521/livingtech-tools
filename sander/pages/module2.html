@@ -12,9 +12,89 @@
 <body data-tool="sander" class="sander-theme">
 <header class="topbar"><div class="brand"><span class="logo">✨</span><div><h1>數位砂磨機</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
 <main class="module-page">
-  <div class="module-header"><div><span class="module-step" style="background:var(--danger-light);color:#B83333">MODULE 02 ・ 必修</span><h2>砂磨機安全規範</h2><p class="muted">10 題情境，滿分通關。</p></div><div class="muted" style="font-size:16px">總分：<span id="score-display" style="color:var(--primary-dark);font-weight:800;font-size:22px;font-family:Inter">0</span> / 100</div></div>
+  <div class="module-header"><div><span class="module-step" style="background:var(--danger-light);color:#B83333">MODULE 02 ・ 必修</span><h2>砂磨機安全規範</h2><p class="muted">護具配置（30 分）＋ 10 題情境（100 分），達 100 分通關。</p></div><div class="muted" style="font-size:16px">總分：<span id="score-display" style="color:var(--primary-dark);font-weight:800;font-size:22px;font-family:Inter">0</span> / 130</div></div>
   <div class="safety-progress"><div class="safety-progress-bar" id="progress-bar" style="width:0%"></div></div>
-  <section class="panel"><h3>🎯 情境判斷</h3><div id="scenario-list"></div><div id="scenario-result"></div></section>
+
+  <!-- 關卡 1：PPE 護具配置 -->
+  <section class="panel" id="part-ppe">
+    <h3>🎯 關卡 1 ／ 護具配置 <span style="color:var(--text-muted);font-weight:500;font-size:14px;margin-left:8px">30 分</span></h3>
+    <p class="muted" style="margin-bottom:18px">把右側「正確護具」拖曳到左側操作員對應的保護部位。危險物品請不要拖。</p>
+    <div class="dressup">
+      <div class="dressup-character" id="ppe-scene" style="min-height:420px">
+        <svg id="ppe-svg" viewBox="0 0 300 420" class="character-svg" preserveAspectRatio="xMidYMid meet">
+          <!-- 背景牆 + 地板 -->
+          <rect x="0" y="0" width="300" height="280" fill="#f8fafc"/>
+          <rect x="0" y="280" width="300" height="140" fill="#e2e8f0"/>
+          <line x1="0" y1="280" x2="300" y2="280" stroke="#cbd5e1" stroke-width="1.5"/>
+          <!-- 帶式砂磨機（右側）-->
+          <g transform="translate(170,180)">
+            <rect x="0" y="0" width="90" height="60" rx="4" fill="#374151"/>
+            <rect x="5" y="5" width="80" height="50" rx="2" fill="#1f2937"/>
+            <ellipse cx="15" cy="30" rx="14" ry="14" fill="#6b7280"/>
+            <ellipse cx="75" cy="30" rx="14" ry="14" fill="#6b7280"/>
+            <rect x="15" y="17" width="60" height="5" fill="#92400e"/>
+            <rect x="15" y="38" width="60" height="5" fill="#92400e"/>
+            <rect x="0" y="62" width="90" height="20" rx="2" fill="#4b5563"/>
+            <text x="45" y="100" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Noto Sans TC,sans-serif">帶式砂磨機</text>
+          </g>
+          <!-- 操作員人形 -->
+          <g transform="translate(80,60)">
+            <!-- 頭 -->
+            <circle cx="30" cy="0" r="28" fill="#fde68a"/>
+            <path d="M4 -14 Q4 -36 30 -40 Q56 -36 56 -14 Q56 -28 46 -32 Q30 -40 14 -32 Q4 -28 4 -14Z" fill="#3a2618"/>
+            <circle cx="20" cy="-2" r="3" fill="#1a1a1a"/>
+            <circle cx="40" cy="-2" r="3" fill="#1a1a1a"/>
+            <path d="M22 12 Q30 17 38 12" fill="none" stroke="#9b3a3a" stroke-width="1.5"/>
+            <!-- 身體 -->
+            <rect x="4" y="30" width="52" height="90" rx="8" fill="#60a5fa" stroke="#3b82f6"/>
+            <!-- 手臂 -->
+            <rect x="-14" y="34" width="18" height="50" rx="6" fill="#60a5fa" stroke="#3b82f6"/>
+            <rect x="56" y="34" width="18" height="50" rx="6" fill="#60a5fa" stroke="#3b82f6"/>
+            <!-- 腳 -->
+            <rect x="10" y="122" width="16" height="40" rx="4" fill="#1f2937"/>
+            <rect x="34" y="122" width="16" height="40" rx="4" fill="#1f2937"/>
+          </g>
+          <!-- 標籤提示 -->
+          <text x="50" y="68" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Noto Sans TC,sans-serif">① 眼睛</text>
+          <text x="50" y="118" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Noto Sans TC,sans-serif">② 口鼻</text>
+          <text x="50" y="188" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Noto Sans TC,sans-serif">③ 袖口</text>
+          <!-- SVG dropzones -->
+          <rect class="svg-dropzone" data-accept="sd-goggles" data-label="眼睛保護"
+            x="46" y="72" width="88" height="36" rx="6"
+            fill="transparent" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="5 4" style="pointer-events:all"/>
+          <rect class="svg-dropzone" data-accept="sd-mask" data-label="口鼻保護"
+            x="46" y="120" width="88" height="32" rx="6"
+            fill="transparent" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="5 4" style="pointer-events:all"/>
+          <rect class="svg-dropzone" data-accept="sd-sleeves" data-label="袖口束緊"
+            x="30" y="190" width="130" height="38" rx="6"
+            fill="transparent" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="5 4" style="pointer-events:all"/>
+        </svg>
+      </div>
+      <div class="dressup-items" id="ppe-items">
+        <div class="draggable" draggable="true" data-id="sd-goggles" data-correct="1"><span class="icon">🥽</span><div><div style="font-weight:700">護目鏡</div><div style="font-size:12px;color:#888">放到「眼睛保護」位置</div></div></div>
+        <div class="draggable" draggable="true" data-id="sd-mask" data-correct="1"><span class="icon">😷</span><div><div style="font-weight:700">N95 防塵口罩</div><div style="font-size:12px;color:#888">放到「口鼻保護」位置</div></div></div>
+        <div class="draggable" draggable="true" data-id="sd-sleeves" data-correct="1"><span class="icon">👕</span><div><div style="font-weight:700">束緊袖口</div><div style="font-size:12px;color:#888">放到「袖口束緊」位置</div></div></div>
+        <div class="draggable" draggable="true" data-id="sd-glove" data-correct="0"><span class="icon">🧤</span><div><div style="font-weight:700">布手套</div><div style="font-size:12px;color:#a72d2d">⚠ 危險！</div></div></div>
+        <div class="draggable" draggable="true" data-id="sd-earphone" data-correct="0"><span class="icon">🎧</span><div><div style="font-weight:700">戴耳機</div><div style="font-size:12px;color:#a72d2d">⚠ 危險！</div></div></div>
+        <div class="draggable" draggable="true" data-id="sd-bracelet" data-correct="0"><span class="icon">📿</span><div><div style="font-weight:700">金屬手環</div><div style="font-size:12px;color:#a72d2d">⚠ 危險！</div></div></div>
+      </div>
+    </div>
+    <div id="ppe-feedback"></div>
+  </section>
+
+  <!-- 關卡 2：情境判斷（PPE 完成前鎖定）-->
+  <section class="panel" id="part-scenario" style="position:relative">
+    <div id="scenario-lock-overlay" style="position:absolute;inset:0;background:rgba(248,250,252,.92);z-index:10;display:flex;align-items:center;justify-content:center;border-radius:12px;backdrop-filter:blur(2px)">
+      <div style="text-align:center;color:#64748b">
+        <div style="font-size:48px;margin-bottom:8px">🔒</div>
+        <p style="font-size:15px;font-weight:600">請先完成關卡 1 護具配置，才能解鎖情境判斷</p>
+      </div>
+    </div>
+    <h3>🎯 關卡 2 ／ 情境判斷 <span style="color:var(--text-muted);font-weight:500;font-size:14px;margin-left:8px">每題 10 分</span></h3>
+    <div id="scenario-list"></div>
+    <div id="scenario-result"></div>
+  </section>
+
   <div class="unlock-banner hidden" id="unlock"><h3>🏆 通關！</h3><a href="module3.html" class="btn" style="background:#fff;color:#1e9450;margin-top:18px;font-weight:700">進入模組 3 →</a></div>
   <div class="module-nav-bottom"><a href="module1.html" class="btn btn-ghost">← 上一關</a><a href="module3.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a></div>
 </main>
