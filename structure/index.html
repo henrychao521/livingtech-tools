@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>橋樑工程師實驗室 ｜ 生活科技互動教學平台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/svg-effects.css">
+<link rel="stylesheet" href="css/structure.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🏗️%3C/text%3E%3C/svg%3E">
+</head>
+<body data-tool="structure" class="home structure-theme">
+
+<!-- 年級選擇 Modal -->
+<div class="grade-modal-overlay" id="grade-modal" style="display:none">
+  <div class="grade-modal">
+    <div style="font-size:48px;margin-bottom:10px">🏗️</div>
+    <h2>選擇你的年級</h2>
+    <p class="sub">系統將依年級調整說明深度與功能開放範圍，之後可在頁面頂部隨時切換。</p>
+    <div class="grade-grid">
+      <button class="grade-btn" data-grade="7">
+        <span class="grade-emoji">📘</span>
+        <span class="grade-label">七年級</span>
+        <span class="grade-hint">基礎模式・圖解說明</span>
+      </button>
+      <button class="grade-btn" data-grade="8">
+        <span class="grade-emoji">📗</span>
+        <span class="grade-label">八年級</span>
+        <span class="grade-hint">基本力學・兩種模式</span>
+      </button>
+      <button class="grade-btn" data-grade="9">
+        <span class="grade-emoji">📙</span>
+        <span class="grade-label">九年級</span>
+        <span class="grade-hint">完整 FBD・安全係數</span>
+      </button>
+      <button class="grade-btn" data-grade="T">
+        <span class="grade-emoji">👨‍🏫</span>
+        <span class="grade-label">教師</span>
+        <span class="grade-hint">全功能 + 答案提示</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">🏗️</span>
+    <div>
+      <h1>橋樑工程師實驗室</h1>
+      <p class="subtitle">生活科技互動教學平台</p>
+    </div>
+  </div>
+  <nav class="topnav">
+    <span class="grade-badge" id="grade-badge-top" style="display:none" onclick="document.getElementById('grade-modal').style.display='flex'">
+      <span id="grade-badge-text">七年級</span> ▾
+    </span>
+    <a href="#modules">學習模組</a>
+    <a href="../" style="color:var(--primary-dark);font-weight:600">← 平台首頁</a>
+  </nav>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-text">
+      <span class="badge">108 課綱・結構與力學 ｜ 國中生活科技</span>
+      <h2>用真實 FEM 力學，<br>看懂每根橋桿的故事</h2>
+      <p>從認識桁架橋、選材料、算安全係數，到動手設計自己的橋——每根桿件有數學根據可查，<br>每次崩塌都有物理原因可學。</p>
+      <div class="hero-cta">
+        <a href="pages/module1.html" class="btn btn-primary">開始學習 →</a>
+        <a href="#modules" class="btn btn-ghost">看模組地圖</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <!-- 桁架橋 SVG 英雄圖 -->
+      <svg viewBox="0 0 480 320" class="hero-bridge svg-shadow-med">
+        <defs>
+          <linearGradient id="bgSky2" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="#ccfbf1"/>
+            <stop offset="1" stop-color="#99f6e4"/>
+          </linearGradient>
+          <marker id="arr2" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="7" markerHeight="7" orient="auto">
+            <path d="M0 0 L12 6 L0 12z" fill="#dc2626"/>
+          </marker>
+        </defs>
+
+        <rect x="0" y="0" width="480" height="240" fill="url(#bgSky2)" rx="14"/>
+        <rect x="0" y="240" width="480" height="80" fill="#0f766e" rx="0"/>
+
+        <!-- Pratt Truss 橋 -->
+        <!-- 下弦 -->
+        <line x1="50" y1="220" x2="430" y2="220" stroke="#0f766e" stroke-width="5"/>
+        <!-- 上弦 -->
+        <line x1="110" y1="150" x2="370" y2="150" stroke="#0f766e" stroke-width="5"/>
+        <!-- 端斜桿 -->
+        <line x1="50" y1="220" x2="110" y2="150" stroke="#0d9488" stroke-width="3.5"/>
+        <line x1="430" y1="220" x2="370" y2="150" stroke="#0d9488" stroke-width="3.5"/>
+        <!-- 豎桿（紅=壓力，Pratt 桁架豎桿受壓） -->
+        <line x1="175" y1="150" x2="175" y2="220" stroke="#dc2626" stroke-width="3"/>
+        <line x1="240" y1="150" x2="240" y2="220" stroke="#dc2626" stroke-width="3"/>
+        <line x1="305" y1="150" x2="305" y2="220" stroke="#dc2626" stroke-width="3"/>
+        <!-- 斜桿（藍=張力） -->
+        <line x1="110" y1="220" x2="175" y2="150" stroke="#2563eb" stroke-width="2.5" opacity=".8"/>
+        <line x1="175" y1="220" x2="240" y2="150" stroke="#2563eb" stroke-width="2.5" opacity=".8"/>
+        <!-- 斜桿（藍=張力，Pratt 桁架右半段斜桿亦受拉） -->
+        <line x1="305" y1="220" x2="240" y2="150" stroke="#2563eb" stroke-width="2.5" opacity=".8"/>
+        <line x1="370" y1="220" x2="305" y2="150" stroke="#2563eb" stroke-width="2.5" opacity=".8"/>
+        <!-- 節點 -->
+        <g fill="#fff" stroke="#0f766e" stroke-width="2">
+          <circle cx="50" cy="220" r="5"/><circle cx="110" cy="220" r="5"/><circle cx="175" cy="220" r="5"/>
+          <circle cx="240" cy="220" r="5"/><circle cx="305" cy="220" r="5"/><circle cx="370" cy="220" r="5"/>
+          <circle cx="430" cy="220" r="5"/>
+          <circle cx="110" cy="150" r="5"/><circle cx="175" cy="150" r="5"/><circle cx="240" cy="150" r="5"/>
+          <circle cx="305" cy="150" r="5"/><circle cx="370" cy="150" r="5"/>
+        </g>
+        <!-- 支承 -->
+        <polygon points="50,220 38,236 62,236" fill="#0f766e"/>
+        <polygon points="430,220 418,236 442,236" fill="#0d9488"/>
+        <line x1="36" y1="238" x2="64" y2="238" stroke="#0f766e" stroke-width="2"/>
+        <line x1="418" y1="238" x2="442" y2="238" stroke="#0d9488" stroke-width="2"/>
+        <!-- 載重箭頭 -->
+        <line x1="175" y1="100" x2="175" y2="142" stroke="#dc2626" stroke-width="3" marker-end="url(#arr2)"/>
+        <line x1="240" y1="100" x2="240" y2="142" stroke="#dc2626" stroke-width="3" marker-end="url(#arr2)"/>
+        <line x1="305" y1="100" x2="305" y2="142" stroke="#dc2626" stroke-width="3" marker-end="url(#arr2)"/>
+        <!-- 圖例 -->
+        <g font-size="11" font-family="Inter,sans-serif" font-weight="700">
+          <line x1="14" y1="30" x2="34" y2="30" stroke="#2563eb" stroke-width="2.5"/>
+          <text x="38" y="34" fill="#2563eb">張力</text>
+          <line x1="80" y1="30" x2="100" y2="30" stroke="#dc2626" stroke-width="2.5"/>
+          <text x="104" y="34" fill="#dc2626">壓力</text>
+          <text x="240" y="95" text-anchor="middle" fill="#dc2626" font-size="12">荷重</text>
+        </g>
+        <text x="240" y="264" text-anchor="middle" font-size="13" fill="#ccfbf1" font-weight="800" font-family="Inter,sans-serif">PRATT TRUSS — 橋樑工程師實驗室</text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- 模組地圖 -->
+  <section id="modules" class="modules">
+    <h3 class="section-title">五大學習模組</h3>
+    <p class="section-sub">從認識橋樑到動手設計，理解力學的因果</p>
+    <div class="module-grid">
+      <a class="card card-1" href="pages/module1.html">
+        <div class="card-num">01</div>
+        <div class="card-icon">🔍</div>
+        <h4>認識橋樑結構</h4>
+        <p>8 個熱點：弦桿、斜桿、節點、支承…認識各元件的力學角色；4 種橋型圖鑑。</p>
+        <span class="card-tag">15 分鐘</span>
+      </a>
+      <a class="card card-2" href="pages/module2.html">
+        <div class="card-num">02</div>
+        <div class="card-icon">🧱</div>
+        <h4>材料與安全係數</h4>
+        <p>鋼・木・竹・混凝土四種材料對比；SF 闖關 + 工地 PPE 配置。</p>
+        <span class="card-tag">必修・15 分鐘</span>
+      </a>
+      <a class="card card-3" href="pages/module3.html">
+        <div class="card-num">03</div>
+        <div class="card-icon">🏗️</div>
+        <h4>橋樑設計實驗室 ★</h4>
+        <p>基礎模式：5 種橋型 FEM 三色桿件＋崩塌動畫；進階挑戰：自由畫節點桿件。</p>
+        <span class="card-tag">核心・30 分鐘</span>
+      </a>
+      <a class="card card-4" href="pages/module4.html">
+        <div class="card-num">04</div>
+        <div class="card-icon">⚖️</div>
+        <h4>負載情境挑戰</h4>
+        <p>6 道真實工況：行人橋、公路卡車、颱風、地震、鐵路、輕量競賽，⭐ 評分。</p>
+        <span class="card-tag">20 分鐘</span>
+      </a>
+      <a class="card card-5" href="pages/module5.html">
+        <div class="card-num">05</div>
+        <div class="card-icon">📚</div>
+        <h4>歷史案例圖鑑</h4>
+        <p>8 件真實橋樑失敗案例（塔科馬吊橋・魁北克橋・I-35W…）+ 診斷測驗。</p>
+        <span class="card-tag">15 分鐘</span>
+      </a>
+      <div class="card card-locked">
+        <div class="card-num">👨‍🏫</div>
+        <div class="card-icon">📊</div>
+        <h4>教師後台</h4>
+        <p>班級進度、成績匯出（共用平台教師後台）。</p>
+        <span class="card-tag">教師專用</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 為何要學橋樑 -->
+  <section class="about">
+    <h3 class="section-title">橋樑為什麼是學結構的最佳教材？</h3>
+    <div class="reason-grid">
+      <div class="reason"><span>📐</span><h4>力可視化</h4><p>FEM 計算讓每根桿件的張力（藍）或壓力（紅）直接顯示，學生看到就懂。</p></div>
+      <div class="reason"><span>💥</span><h4>失效有視覺</h4><p>Matter.js 崩塌動畫：超出安全係數的桿件「斷開」，橋段落入水中，衝擊感超強。</p></div>
+      <div class="reason"><span>🧑‍💻</span><h4>真實工程計算</h4><p>直接剛度法（DSM）求解器，每個數字都有工程根據，不是「玩遊戲」。</p></div>
+      <div class="reason"><span>🏆</span><h4>競賽前模擬</h4><p>紙橋負重賽前先在電腦測試設計，找到最輕量又最強的桁架型態。</p></div>
+    </div>
+  </section>
+</main>
+
+<script src="../js/main.js"></script>
+<script src="../js/sources.js"></script>
+<script src="../js/audio.js"></script>
+<script>
+// 年級系統
+const PK = 'structure_progress_v1';
+function loadP() { try { return JSON.parse(localStorage.getItem(PK)) || {}; } catch { return {}; } }
+function saveP(p) { localStorage.setItem(PK, JSON.stringify(p)); }
+
+const GRADE_LABELS = { '7': '七年級', '8': '八年級', '9': '九年級', 'T': '教師' };
+
+function applyGrade(g) {
+  const badge = document.getElementById('grade-badge-top');
+  const badgeText = document.getElementById('grade-badge-text');
+  badge.style.display = 'inline-flex';
+  badgeText.textContent = GRADE_LABELS[g] || '七年級';
+  document.getElementById('grade-modal').style.display = 'none';
+  const p = loadP(); p.grade = g; saveP(p);
+}
+
+// 初始化
+const p = loadP();
+if (!p.grade) {
+  document.getElementById('grade-modal').style.display = 'flex';
+} else {
+  applyGrade(p.grade);
+}
+
+document.querySelectorAll('.grade-btn').forEach(btn => {
+  btn.addEventListener('click', () => applyGrade(btn.dataset.grade));
+});
+</script>
+</body>
+</html>

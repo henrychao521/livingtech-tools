@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 1：認識橋樑結構</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/svg-effects.css">
+<link rel="stylesheet" href="../css/structure.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🏗️%3C/text%3E%3C/svg%3E">
+</head>
+<body data-tool="structure" class="structure-theme">
+<header class="topbar">
+  <div class="brand"><span class="logo">🏗️</span><div><h1>橋樑工程師實驗室</h1><p class="subtitle">生活科技互動教學平台</p></div></div>
+  <a href="../index.html" class="module-back">← 回首頁</a>
+</header>
+
+<main class="module-page">
+  <div class="module-header">
+    <div>
+      <span class="module-step" style="background:var(--primary-light);color:var(--primary-dark)">MODULE 01 ・ 認識結構</span>
+      <h2>認識橋樑結構</h2>
+      <p class="muted">點擊桁架橋各部位了解力學角色，再看 4 種橋型圖鑑。完成 8 個熱點 + 4 種橋型即可通關。</p>
+    </div>
+    <div style="text-align:right">
+      <div style="font-size:13px;color:var(--text-muted)">進度</div>
+      <div id="progress-text" style="font-size:20px;font-weight:800;color:var(--primary-dark);font-family:Inter">0 / 12</div>
+    </div>
+  </div>
+
+  <div class="safety-progress"><div class="safety-progress-bar" id="progress-bar" style="width:0%"></div></div>
+
+  <!-- 關卡 1：SVG 熱點圖 -->
+  <section class="panel">
+    <h3>🔍 關卡 1 ／ 桁架橋熱點圖 <span style="color:var(--text-muted);font-weight:500;font-size:14px;margin-left:8px">8 個元件</span></h3>
+    <p class="muted" style="margin-bottom:16px">點擊橋上各個 <strong style="color:var(--primary)">● 熱點</strong> 認識每個元件的力學功能。</p>
+
+    <!-- 桁架橋 SVG 熱點圖 -->
+    <div class="hotspot-wrap">
+      <svg viewBox="0 0 780 300" id="bridge-svg">
+        <defs>
+          <linearGradient id="sky1" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="#f0fdf4"/>
+            <stop offset="1" stop-color="#dcfce7"/>
+          </linearGradient>
+        </defs>
+        <!-- 背景 -->
+        <rect x="0" y="0" width="780" height="220" fill="url(#sky1)" rx="12"/>
+        <rect x="0" y="220" width="780" height="80" fill="#e2e8f0"/>
+        <line x1="0" y1="220" x2="780" y2="220" stroke="#cbd5e1" stroke-width="1.5"/>
+
+        <!-- ─── 普拉特桁架橋 ─── -->
+        <!-- 下弦桿 (受拉，藍) -->
+        <line id="hs-bot" x1="80" y1="190" x2="700" y2="190" stroke="#2563eb" stroke-width="5" stroke-linecap="round"/>
+        <!-- 上弦桿 (受壓，紅) -->
+        <line id="hs-top" x1="165" y1="120" x2="615" y2="120" stroke="#dc2626" stroke-width="5" stroke-linecap="round"/>
+        <!-- 斜桿 (受拉，藍) -->
+        <line x1="80" y1="190" x2="165" y2="120" stroke="#2563eb" stroke-width="3.5"/>
+        <line id="hs-diag" x1="165" y1="190" x2="250" y2="120" stroke="#2563eb" stroke-width="3.5"/>
+        <line x1="280" y1="190" x2="165" y2="120" stroke="#dc2626" stroke-width="3.5" opacity=".6"/>
+        <line x1="390" y1="190" x2="530" y2="120" stroke="#2563eb" stroke-width="3.5" opacity=".8"/>
+        <line x1="530" y1="190" x2="615" y2="120" stroke="#2563eb" stroke-width="3.5"/>
+        <line x1="615" y1="120" x2="700" y2="190" stroke="#2563eb" stroke-width="3.5"/>
+        <!-- 豎桿 (受壓) -->
+        <line id="hs-vert" x1="250" y1="120" x2="250" y2="190" stroke="#dc2626" stroke-width="3" opacity=".8"/>
+        <line x1="390" y1="120" x2="390" y2="190" stroke="#dc2626" stroke-width="3" opacity=".8"/>
+        <line x1="530" y1="120" x2="530" y2="190" stroke="#dc2626" stroke-width="3" opacity=".8"/>
+        <!-- 節點圓 -->
+        <g id="hs-joint" fill="#1e293b" stroke="#fff" stroke-width="2">
+          <circle cx="80" cy="190" r="7"/>
+          <circle cx="165" cy="190" r="7"/>
+          <circle cx="250" cy="190" r="7"/>
+          <circle cx="390" cy="190" r="7"/>
+          <circle cx="530" cy="190" r="7"/>
+          <circle cx="615" cy="190" r="7"/>
+          <circle cx="700" cy="190" r="7"/>
+          <circle cx="165" cy="120" r="7"/>
+          <circle cx="250" cy="120" r="7"/>
+          <circle cx="390" cy="120" r="7"/>
+          <circle cx="530" cy="120" r="7"/>
+          <circle cx="615" cy="120" r="7"/>
+        </g>
+        <!-- 鉸支承 -->
+        <g id="hs-pin">
+          <polygon points="80,196 68,216 92,216" fill="#0f766e"/>
+          <line x1="60" y1="218" x2="100" y2="218" stroke="#0f766e" stroke-width="2.5"/>
+          <line x1="64" y1="224" x2="70" y2="218" stroke="#0f766e" stroke-width="1.5"/>
+          <line x1="74" y1="224" x2="80" y2="218" stroke="#0f766e" stroke-width="1.5"/>
+          <line x1="84" y1="224" x2="90" y2="218" stroke="#0f766e" stroke-width="1.5"/>
+        </g>
+        <!-- 滾支承 -->
+        <g id="hs-roller">
+          <polygon points="700,196 688,214 712,214" fill="#0d9488"/>
+          <circle cx="692" cy="218" r="4" fill="#0d9488"/>
+          <circle cx="700" cy="218" r="4" fill="#0d9488"/>
+          <circle cx="708" cy="218" r="4" fill="#0d9488"/>
+        </g>
+        <!-- 集中載重箭頭 -->
+        <g id="hs-load">
+          <line x1="250" y1="70" x2="250" y2="112" stroke="#dc2626" stroke-width="3" marker-end="url(#loadArrBridge)"/>
+          <line x1="390" y1="70" x2="390" y2="112" stroke="#dc2626" stroke-width="3" marker-end="url(#loadArrBridge)"/>
+          <line x1="530" y1="70" x2="530" y2="112" stroke="#dc2626" stroke-width="3" marker-end="url(#loadArrBridge)"/>
+          <text x="390" y="58" text-anchor="middle" font-size="12" fill="#dc2626" font-weight="800" font-family="Inter">集中載重 P</text>
+          <defs><marker id="loadArrBridge" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L12 6 L0 12z" fill="#dc2626"/></marker></defs>
+        </g>
+
+        <!-- ── 熱點按鈕（黃色高亮圓） ── -->
+        <!-- 1. 上弦桿 -->
+        <g class="hotspot-group" data-id="top-chord" style="cursor:pointer">
+          <circle class="hotspot-circle" cx="392" cy="120" r="14" fill="#f59e0b" opacity=".9"/>
+          <text x="392" y="125" text-anchor="middle" font-size="12" fill="#fff" font-weight="800" font-family="Inter">1</text>
+        </g>
+        <!-- 2. 下弦桿 -->
+        <g class="hotspot-group" data-id="bot-chord" style="cursor:pointer">
+          <circle class="hotspot-circle" cx="160" cy="190" r="14" fill="#f59e0b" opacity=".9"/>
+          <text x="160" y="195" text-anchor="middle" font-size="12" fill="#fff" font-weight="800" font-family="Inter">2</text>
+        </g>
+        <!-- 3. 斜桿 -->
+        <g class="hotspot-group" data-id="diagonal" style="cursor:pointer">
+          <circle class="hotspot-circle" cx="318" cy="155" r="14" fill="#f59e0b" opacity=".9"/>
+          <text x="318" y="160" text-anchor="middle" font-size="12" fill="#fff" font-weight="800" font-family="Inter">3</text>
+        </g>
+        <!-- 4. 豎桿 -->
+        <g class="hotspot-group" data-id="vertical" style="cursor:pointer">
+          <circle class="hotspot-circle" cx="530" cy="155" r="14" fill="#f59e0b" opacity=".9"/>
+          <text x="530" y="160" text-anchor="middle" font-size="12" fill="#fff" font-weight="800" font-family="Inter">4</text>
+        </g>
+        <!-- 5. 鉸支承 -->
+        <g class="hotspot-group" data-id="pin-support" style="cursor:pointer">
+          <circle class="hotspot-circle" cx="80" cy="214" r="14" fill="#f59e0b" opacity=".9"/>
+          <text x="80" y="219" text-anchor="middle" font-size="12" fill="#fff" font-weight="800" font-family="Inter">5</text>
+        </g>
+        <!-- 6. 滾支承 -->
+        <g class="hotspot-group" data-id="roller-support" style="cursor:pointer">
+          <circle class="hotspot-circle" cx="700" cy="218" r="14" fill="#f59e0b" opacity=".9"/>
+          <text x="700" y="223" text-anchor="middle" font-size="12" fill="#fff" font-weight="800" font-family="Inter">6</text>
+        </g>
+        <!-- 7. 節點 -->
+        <g class="hotspot-group" data-id="joint" style="cursor:pointer">
+          <circle class="hotspot-circle" cx="250" cy="190" r="14" fill="#f59e0b" opacity=".9"/>
+          <text x="250" y="195" text-anchor="middle" font-size="12" fill="#fff" font-weight="800" font-family="Inter">7</text>
+        </g>
+        <!-- 8. 集中載重 -->
+        <g class="hotspot-group" data-id="load" style="cursor:pointer">
+          <circle class="hotspot-circle" cx="392" cy="68" r="14" fill="#f59e0b" opacity=".9"/>
+          <text x="392" y="73" text-anchor="middle" font-size="12" fill="#fff" font-weight="800" font-family="Inter">8</text>
+        </g>
+      </svg>
+    </div>
+
+    <!-- 熱點說明顯示框 -->
+    <div class="hotspot-info" id="hotspot-info">
+      <p style="color:var(--text-muted);text-align:center;padding:20px 0">👆 點擊橋上的黃色熱點編號，了解各部件的力學角色</p>
+    </div>
+
+    <!-- 進度標籤 -->
+    <div id="hotspot-checklist" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px"></div>
+  </section>
+
+  <!-- 關卡 2：4 種橋型圖鑑 -->
+  <section class="panel" id="part-bridge-types">
+    <h3>🌉 關卡 2 ／ 橋型圖鑑 <span style="color:var(--text-muted);font-weight:500;font-size:14px;margin-left:8px">4 種橋型</span></h3>
+    <p class="muted" style="margin-bottom:16px">點擊各橋型卡片了解力學原理。</p>
+    <div class="bridge-type-grid" id="bridge-type-grid"></div>
+    <div class="hotspot-info" id="bridge-type-info" style="display:none"></div>
+  </section>
+
+  <div class="unlock-banner hidden" id="unlock">
+    <h3>🏆 完成認識橋樑結構！</h3>
+    <p style="margin-bottom:16px;opacity:.9">你已了解 8 個結構元件與 4 種橋型，前往下一關學習材料特性。</p>
+    <a href="module2.html" class="btn" style="background:#fff;color:var(--primary-dark);font-weight:700">進入模組 2 →</a>
+  </div>
+  <div class="module-nav-bottom">
+    <a href="../index.html" class="btn btn-ghost">← 首頁</a>
+    <a href="module2.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a>
+  </div>
+</main>
+
+<script src="../../js/main.js"></script>
+<script src="../../js/sources.js"></script>
+<script src="../../js/audio.js"></script>
+<script src="../js/module1.js"></script>
+</body>
+</html>

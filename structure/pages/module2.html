@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 2：材料與安全係數</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/svg-effects.css">
+<link rel="stylesheet" href="../css/structure.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🏗️%3C/text%3E%3C/svg%3E">
+</head>
+<body data-tool="structure" class="structure-theme">
+<header class="topbar">
+  <div class="brand"><span class="logo">🏗️</span><div><h1>橋樑工程師實驗室</h1><p class="subtitle">生活科技互動教學平台</p></div></div>
+  <a href="../index.html" class="module-back">← 回首頁</a>
+</header>
+
+<main class="module-page">
+  <div class="module-header">
+    <div>
+      <span class="module-step" style="background:#fee2e2;color:#991b1b">MODULE 02 ・ 必修</span>
+      <h2>材料與安全係數</h2>
+      <p class="muted">材料對比（10 分）＋ SF 安全係數情境（100 分）＋ 工地 PPE（30 分），達 100 分通關。</p>
+    </div>
+    <div class="score-box">
+      總分：<span class="score-num" id="score-display">0</span> / 140
+    </div>
+  </div>
+  <div class="safety-progress"><div class="safety-progress-bar" id="progress-bar" style="width:0%"></div></div>
+
+  <!-- 關卡 1：材料對比表 -->
+  <section class="panel" id="part-material">
+    <h3>🧱 關卡 1 ／ 材料特性對比 <span style="color:var(--text-muted);font-weight:500;font-size:14px;margin-left:8px">10 分</span></h3>
+    <p class="muted" style="margin-bottom:14px">點擊各材料列，了解其在橋樑工程的用途與限制。</p>
+    <table class="material-table" id="material-table">
+      <thead>
+        <tr>
+          <th>材料</th>
+          <th>E 彈性模數</th>
+          <th>降伏強度</th>
+          <th>拉 / 壓</th>
+          <th>適合場合</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-id="steel" style="cursor:pointer">
+          <td><strong>🔩 鋼 Steel</strong></td>
+          <td><span style="font-family:Inter;font-weight:700;color:#1e293b">200 GPa</span></td>
+          <td><span style="font-family:Inter;font-weight:700;color:#1e293b">250 MPa</span></td>
+          <td>✅✅</td>
+          <td>現代橋樑主材</td>
+        </tr>
+        <tr data-id="wood" style="cursor:pointer">
+          <td><strong>🪵 木材 Wood</strong></td>
+          <td><span style="font-family:Inter;font-weight:700;color:#1e293b">12 GPa</span></td>
+          <td><span style="font-family:Inter;font-weight:700;color:#1e293b">30 MPa</span></td>
+          <td>✅拉 ⚠壓</td>
+          <td>小橋・臨時工程</td>
+        </tr>
+        <tr data-id="bamboo" style="cursor:pointer">
+          <td><strong>🎋 竹子 Bamboo</strong></td>
+          <td><span style="font-family:Inter;font-weight:700;color:#1e293b">17 GPa</span></td>
+          <td><span style="font-family:Inter;font-weight:700;color:#1e293b">80 MPa</span></td>
+          <td>✅拉 ⚠壓</td>
+          <td>台灣傳統・輕量</td>
+        </tr>
+        <tr data-id="concrete" style="cursor:pointer">
+          <td><strong>🧱 混凝土 Concrete</strong></td>
+          <td><span style="font-family:Inter;font-weight:700;color:#1e293b">30 GPa</span></td>
+          <td><span style="font-family:Inter;font-weight:700;color:#1e293b">25 MPa（壓）</span></td>
+          <td>❌拉 ✅壓</td>
+          <td>配合鋼筋使用</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="hotspot-info" id="material-info" style="margin-top:12px;display:none"></div>
+    <div id="material-feedback"></div>
+  </section>
+
+  <!-- 關卡 2：安全係數闖關 -->
+  <section class="panel" id="part-sf">
+    <h3>⚖️ 關卡 2 ／ 安全係數情境判斷 <span style="color:var(--text-muted);font-weight:500;font-size:14px;margin-left:8px">每題 10 分</span></h3>
+    <p class="muted" style="margin-bottom:4px">安全係數 SF = 失效載重 / 設計載重，橋樑基本規定 SF ≥ 2.0。</p>
+    <div class="grade-note" id="sf-grade-note"></div>
+    <div id="sf-list" style="margin-top:16px"></div>
+    <div id="sf-result"></div>
+  </section>
+
+  <!-- 關卡 3：工地 PPE 配置 -->
+  <section class="panel" id="part-ppe">
+    <h3>🦺 關卡 3 ／ 工地 PPE 配置 <span style="color:var(--text-muted);font-weight:500;font-size:14px;margin-left:8px">30 分</span></h3>
+    <p class="muted" style="margin-bottom:18px">把右側「正確護具」拖曳到左側工人對應的保護部位。危險物品請勿拖入。</p>
+    <div class="dressup">
+      <div class="dressup-character" id="ppe-scene" style="min-height:420px">
+        <svg id="ppe-svg" viewBox="0 0 300 420" class="character-svg" preserveAspectRatio="xMidYMid meet">
+          <!-- 工地背景 -->
+          <rect x="0" y="0" width="300" height="280" fill="#fafaf9"/>
+          <rect x="0" y="280" width="300" height="140" fill="#d6d3d1"/>
+          <line x1="0" y1="280" x2="300" y2="280" stroke="#a8a29e" stroke-width="1.5"/>
+          <!-- 工地場景（混凝土柱） -->
+          <rect x="200" y="180" width="70" height="100" rx="3" fill="#78716c"/>
+          <rect x="200" y="140" width="70" height="42" rx="3" fill="#a8a29e"/>
+          <text x="235" y="225" text-anchor="middle" font-size="8" fill="#d6d3d1" font-family="Noto Sans TC,sans-serif">橋墩施工</text>
+          <!-- 工人人形 -->
+          <g transform="translate(80,60)">
+            <circle cx="30" cy="0" r="28" fill="#fde68a"/>
+            <path d="M4 -14 Q4 -36 30 -40 Q56 -36 56 -14 Q56 -28 46 -32 Q30 -40 14 -32 Q4 -28 4 -14Z" fill="#78350f"/>
+            <circle cx="20" cy="-2" r="3" fill="#1a1a1a"/>
+            <circle cx="40" cy="-2" r="3" fill="#1a1a1a"/>
+            <path d="M22 12 Q30 17 38 12" fill="none" stroke="#9b3a3a" stroke-width="1.5"/>
+            <rect x="4" y="30" width="52" height="90" rx="8" fill="#f97316" stroke="#ea580c"/>
+            <rect x="-14" y="34" width="18" height="50" rx="6" fill="#f97316" stroke="#ea580c"/>
+            <rect x="56" y="34" width="18" height="50" rx="6" fill="#f97316" stroke="#ea580c"/>
+            <rect x="10" y="122" width="16" height="40" rx="4" fill="#1c1917"/>
+            <rect x="34" y="122" width="16" height="40" rx="4" fill="#1c1917"/>
+          </g>
+          <!-- 標籤 -->
+          <text x="50" y="68" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Noto Sans TC,sans-serif">① 頭部</text>
+          <text x="50" y="118" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Noto Sans TC,sans-serif">② 眼睛</text>
+          <text x="50" y="190" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Noto Sans TC,sans-serif">③ 安全帶</text>
+          <!-- Dropzones -->
+          <rect class="svg-dropzone" data-accept="st-helmet" data-label="頭部保護"
+            x="46" y="42" width="88" height="36" rx="6"
+            fill="transparent" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="5 4" style="pointer-events:all"/>
+          <rect class="svg-dropzone" data-accept="st-goggles" data-label="眼睛保護"
+            x="46" y="90" width="88" height="36" rx="6"
+            fill="transparent" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="5 4" style="pointer-events:all"/>
+          <rect class="svg-dropzone" data-accept="st-harness" data-label="安全帶（高處）"
+            x="30" y="160" width="130" height="50" rx="6"
+            fill="transparent" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="5 4" style="pointer-events:all"/>
+        </svg>
+      </div>
+      <div class="dressup-items" id="ppe-items">
+        <div class="draggable" draggable="true" data-id="st-helmet" data-correct="1"><span class="icon">⛑️</span><div><div style="font-weight:700">安全帽</div><div style="font-size:12px;color:#888">放到「頭部保護」位置</div></div></div>
+        <div class="draggable" draggable="true" data-id="st-goggles" data-correct="1"><span class="icon">🥽</span><div><div style="font-weight:700">護目鏡</div><div style="font-size:12px;color:#888">放到「眼睛保護」位置</div></div></div>
+        <div class="draggable" draggable="true" data-id="st-harness" data-correct="1"><span class="icon">🔒</span><div><div style="font-weight:700">安全帶</div><div style="font-size:12px;color:#888">高處作業必備</div></div></div>
+        <div class="draggable" draggable="true" data-id="st-slippers" data-correct="0"><span class="icon">🩴</span><div><div style="font-weight:700">拖鞋</div><div style="font-size:12px;color:#a72d2d">⚠ 危險！</div></div></div>
+        <div class="draggable" draggable="true" data-id="st-earphone" data-correct="0"><span class="icon">🎧</span><div><div style="font-weight:700">耳機</div><div style="font-size:12px;color:#a72d2d">⚠ 危險！</div></div></div>
+        <div class="draggable" draggable="true" data-id="st-scarf" data-correct="0"><span class="icon">🧣</span><div><div style="font-weight:700">寬圍巾</div><div style="font-size:12px;color:#a72d2d">⚠ 危險！</div></div></div>
+      </div>
+    </div>
+    <div id="ppe-feedback"></div>
+  </section>
+
+  <div class="unlock-banner hidden" id="unlock">
+    <h3>🏆 通關！</h3>
+    <p style="margin-bottom:16px;opacity:.9">材料知識與安全係數掌握完成，前往橋樑設計實驗室！</p>
+    <a href="module3.html" class="btn" style="background:#fff;color:var(--primary-dark);font-weight:700">進入模組 3 →</a>
+  </div>
+  <div class="module-nav-bottom">
+    <a href="module1.html" class="btn btn-ghost">← 上一關</a>
+    <a href="module3.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a>
+  </div>
+</main>
+
+<script src="../../js/main.js"></script>
+<script src="../../js/sources.js"></script>
+<script src="../../js/audio.js"></script>
+<script src="../js/module2.js"></script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 3：橋樑設計實驗室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/svg-effects.css">
+<link rel="stylesheet" href="../css/structure.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🏗️%3C/text%3E%3C/svg%3E">
+</head>
+<body data-tool="structure" class="structure-theme">
+<header class="topbar">
+  <div class="brand"><span class="logo">🏗️</span><div><h1>橋樑工程師實驗室</h1><p class="subtitle">生活科技互動教學平台</p></div></div>
+  <a href="../index.html" class="module-back">← 回首頁</a>
+</header>
+
+<main class="module-page">
+  <div class="module-header">
+    <div>
+      <span class="module-step" style="background:var(--primary-light);color:var(--primary-dark)">MODULE 03 ★ 核心</span>
+      <h2>橋樑設計實驗室</h2>
+      <p class="muted">基礎模式：5 種橋型 FEM 三色分析 + Matter.js 崩塌動畫；進階挑戰：自由畫節點桿件設計。</p>
+    </div>
+  </div>
+
+  <!-- 模式切換 -->
+  <div class="mode-tabs">
+    <button class="mode-tab active" data-tab="guided" id="tab-guided">🏗 基礎模式（引導）</button>
+    <button class="mode-tab" data-tab="advanced" id="tab-advanced">🚀 進階挑戰（自由設計）</button>
+  </div>
+
+  <!-- ===== 基礎模式 ===== -->
+  <div id="panel-guided">
+    <div class="panel">
+      <h3>🔧 選擇橋型與材料</h3>
+      <!-- 橋型選擇 -->
+      <div style="margin-bottom:14px">
+        <div style="font-size:13px;font-weight:700;color:var(--text-soft);margin-bottom:8px">橋型選擇</div>
+        <div class="bridge-tabs" id="bridge-type-tabs">
+          <button class="bridge-tab active" data-type="pratt">普拉特桁架</button>
+          <button class="bridge-tab" data-type="howe">豪氏桁架</button>
+          <button class="bridge-tab" data-type="warren">華倫桁架</button>
+          <button class="bridge-tab" data-type="k">K 型桁架</button>
+          <button class="bridge-tab" data-type="simply">簡支梁橋</button>
+        </div>
+      </div>
+      <!-- 材料選擇 -->
+      <div class="material-select-row">
+        <label>桿件材料</label>
+        <select id="g-material">
+          <option value="steel">🔩 鋼 Steel（E=200GPa，250MPa）</option>
+          <option value="wood">🪵 木材 Wood（E=12GPa，30MPa）</option>
+          <option value="bamboo">🎋 竹子 Bamboo（E=17GPa，80MPa）</option>
+          <option value="concrete">🧱 混凝土 Concrete（E=30GPa，25MPa）</option>
+        </select>
+      </div>
+      <!-- 載重設定 -->
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:8px">
+        <div class="material-select-row">
+          <label>橋跨（m）</label>
+          <input id="g-span" type="number" value="12" min="6" max="30" step="2"
+            style="width:80px;padding:6px 10px;border-radius:8px;border:1.5px solid var(--border);font-size:13px">
+        </div>
+        <div class="material-select-row">
+          <label>桁高（m）</label>
+          <input id="g-height" type="number" value="3" min="1" max="8" step="0.5"
+            style="width:80px;padding:6px 10px;border-radius:8px;border:1.5px solid var(--border);font-size:13px">
+        </div>
+        <div class="material-select-row">
+          <label>總荷重（kN）</label>
+          <input id="g-load" type="number" value="100" min="10" max="500" step="10"
+            style="width:90px;padding:6px 10px;border-radius:8px;border:1.5px solid var(--border);font-size:13px">
+        </div>
+        <button class="btn btn-primary" id="g-solve-btn" style="margin-top:0;padding:8px 18px;font-size:14px">▶ 求解 FEM</button>
+      </div>
+
+      <!-- FEM Canvas + Panel -->
+      <div class="fem-wrap" style="margin-top:18px">
+        <div class="fem-canvas-box" style="position:relative">
+          <canvas id="guided-canvas" width="600" height="360"></canvas>
+          <div class="collapse-overlay" id="guided-collapse-overlay"></div>
+          <div id="guided-canvas-hint" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#94a3b8;font-size:14px;font-weight:600;pointer-events:none">
+            點擊「求解 FEM」顯示桁架
+          </div>
+        </div>
+        <div class="fem-panel">
+          <h4>📊 FEM 分析結果</h4>
+          <div id="fem-results" style="color:var(--text-muted);font-size:13px">求解後顯示</div>
+          <div class="fem-legend" style="margin-top:14px">
+            <span><span class="dot" style="background:#2563eb"></span>張力</span>
+            <span><span class="dot" style="background:#dc2626"></span>壓力</span>
+            <span><span class="dot" style="background:#94a3b8"></span>零力</span>
+            <span><span class="dot" style="background:#f97316"></span>危險(SF&lt;1.5)</span>
+          </div>
+          <div style="margin-top:16px">
+            <button class="btn" id="g-collapse-btn" style="width:100%;background:#dc2626;color:#fff;opacity:.4;pointer-events:none;font-size:13px">
+              💥 測試崩塌動畫
+            </button>
+          </div>
+          <div class="grade-note" id="g-grade-note" style="margin-top:12px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 進階挑戰 ===== -->
+  <div id="panel-advanced" style="display:none">
+    <!-- 挑戰目標選擇 -->
+    <div class="panel">
+      <h3>🎯 選擇挑戰目標</h3>
+      <div class="challenge-grid" id="challenge-grid"></div>
+    </div>
+
+    <div class="panel">
+      <h3>✏️ 自由設計畫板</h3>
+      <p class="muted" style="margin-bottom:12px">點擊空白處新增節點，點選兩個節點連桿件。按 Delete 移除選取元件。</p>
+
+      <!-- 工具列 -->
+      <div class="fem-toolbar">
+        <button class="tool-btn active" data-tool="node" id="tool-node">N 新增節點</button>
+        <button class="tool-btn" data-tool="member" id="tool-member">M 新增桿件</button>
+        <button class="tool-btn" data-tool="move" id="tool-move">S 移動節點</button>
+        <button class="tool-btn" data-tool="delete" id="tool-delete">✕ 刪除</button>
+        <button class="btn" id="adv-clear-btn" style="background:#f1f5f9;color:#475569;font-size:13px;padding:8px 14px;margin-left:8px">清除畫板</button>
+        <select id="adv-material" style="padding:7px 10px;border-radius:8px;border:1.5px solid var(--border);font-size:13px;margin-left:4px">
+          <option value="steel">鋼</option>
+          <option value="wood">木材</option>
+          <option value="bamboo">竹子</option>
+        </select>
+        <button class="btn btn-primary" id="adv-solve-btn" style="font-size:13px;padding:8px 18px;margin-left:4px">▶ FEM 求解</button>
+      </div>
+
+      <!-- Canvas -->
+      <div class="fem-wrap">
+        <div class="fem-canvas-box" style="position:relative;cursor:crosshair">
+          <canvas id="adv-canvas" width="600" height="400"></canvas>
+        </div>
+        <div class="fem-panel">
+          <h4>📐 設計統計</h4>
+          <div id="adv-stats">
+            <div class="fem-stat"><span class="label">節點數</span><span class="value" id="adv-nodes">0</span></div>
+            <div class="fem-stat"><span class="label">桿件數</span><span class="value" id="adv-members">0</span></div>
+            <div class="fem-stat"><span class="label">總重量</span><span class="value" id="adv-weight">— kg</span></div>
+            <div class="fem-stat"><span class="label">最小 SF</span><span class="value" id="adv-sf">—</span></div>
+            <div class="fem-stat"><span class="label">最大張力</span><span class="value tension" id="adv-max-tens">— kN</span></div>
+            <div class="fem-stat"><span class="label">最大壓力</span><span class="value compression" id="adv-max-comp">— kN</span></div>
+          </div>
+          <div id="adv-verdict" style="margin-top:12px"></div>
+          <div class="fem-legend" style="margin-top:14px">
+            <span><span class="dot" style="background:#2563eb"></span>張力</span>
+            <span><span class="dot" style="background:#dc2626"></span>壓力</span>
+            <span><span class="dot" style="background:#f97316"></span>危險</span>
+          </div>
+          <div style="margin-top:14px;padding:12px;background:#f8fafc;border-radius:10px;font-size:12px;color:var(--text-muted);line-height:1.6">
+            <strong>操作提示：</strong><br>
+            • N：點空白處放節點<br>
+            • M：依序點兩個節點畫桿<br>
+            • S：拖曳移動節點位置<br>
+            • Delete：點擊後再點元件
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-nav-bottom">
+    <a href="module2.html" class="btn btn-ghost">← 上一關</a>
+    <a href="module4.html" class="btn btn-primary">下一關 →</a>
+  </div>
+</main>
+
+<!-- Matter.js CDN（崩塌動畫） -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.20.0/matter.min.js"></script>
+<script src="../../js/main.js"></script>
+<script src="../../js/sources.js"></script>
+<script src="../../js/audio.js"></script>
+<script src="../js/solver.js"></script>
+<script src="../js/module3.js"></script>
+</body>
+</html>

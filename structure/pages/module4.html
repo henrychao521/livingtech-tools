@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 4：負載情境挑戰</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/svg-effects.css">
+<link rel="stylesheet" href="../css/structure.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🏗️%3C/text%3E%3C/svg%3E">
+</head>
+<body data-tool="structure" class="structure-theme">
+<header class="topbar">
+  <div class="brand"><span class="logo">🏗️</span><div><h1>橋樑工程師實驗室</h1><p class="subtitle">生活科技互動教學平台</p></div></div>
+  <a href="../index.html" class="module-back">← 回首頁</a>
+</header>
+
+<main class="module-page">
+  <div class="module-header">
+    <div>
+      <span class="module-step" style="background:var(--accent-light);color:#92400e">MODULE 04 ・ 挑戰</span>
+      <h2>負載情境挑戰</h2>
+      <p class="muted">6 道真實工況，用 FEM 求解器分析每個情境的安全性。⭐ 通過 ⭐⭐ SF≥2.5 ⭐⭐⭐ SF≥3 且最輕量</p>
+    </div>
+    <div style="font-size:20px;font-weight:800;color:var(--primary-dark);font-family:Inter" id="total-stars-display">⭐ × 0 / 18</div>
+  </div>
+
+  <!-- 情境卡片 -->
+  <div class="scenario-grid" id="scenario-grid" style="margin-bottom:24px"></div>
+
+  <!-- 情境詳細分析區 -->
+  <div class="panel" id="scenario-detail" style="display:none">
+    <h3 id="sc-title">情境詳細</h3>
+    <p class="muted" id="sc-desc"></p>
+
+    <!-- FEM 控制 -->
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 0">
+      <div class="material-select-row">
+        <label>桿件材料</label>
+        <select id="sc-material">
+          <option value="steel">🔩 鋼（200GPa，250MPa）</option>
+          <option value="wood">🪵 木材（12GPa，30MPa）</option>
+          <option value="bamboo">🎋 竹子（17GPa，80MPa）</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" id="sc-solve-btn" style="padding:8px 18px;font-size:14px">▶ 計算 FEM</button>
+    </div>
+
+    <!-- Canvas -->
+    <div class="fem-wrap">
+      <div class="fem-canvas-box">
+        <canvas id="sc-canvas" width="580" height="320"></canvas>
+      </div>
+      <div class="fem-panel">
+        <h4>📊 分析結果</h4>
+        <div id="sc-results" style="color:var(--text-muted);font-size:13px">點擊「計算 FEM」</div>
+        <div id="sc-verdict" style="margin-top:12px"></div>
+        <div id="sc-star-display" style="font-size:28px;margin-top:10px"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-nav-bottom">
+    <a href="module3.html" class="btn btn-ghost">← 上一關</a>
+    <a href="module5.html" class="btn btn-primary">下一關 →</a>
+  </div>
+</main>
+
+<!-- Matter.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.20.0/matter.min.js"></script>
+<script src="../../js/main.js"></script>
+<script src="../../js/sources.js"></script>
+<script src="../../js/audio.js"></script>
+<script src="../js/solver.js"></script>
+<script src="../js/module4.js"></script>
+</body>
+</html>
