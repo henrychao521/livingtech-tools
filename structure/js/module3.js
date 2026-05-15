@@ -19,6 +19,182 @@ document.querySelectorAll('.mode-tab').forEach(tab => {
 });
 
 /* ════════════════════════════════════════════════════
+   橋型說明資料（含 SVG 示意圖）
+   座標系：viewBox="0 0 360 96"，4 格桁架，格寬 80px
+   Bottom y=78，Top y=18，左邊距 10px
+   底弦節點：L0(10),L1(90),L2(170),L3(250),L4(330)
+   上弦節點（Pratt/Howe/K）：U1(90),U2(170),U3(250)
+   上弦節點（Warren）：U1(50),U2(130),U3(210),U4(290)
+════════════════════════════════════════════════════ */
+const _SVG_NODES_STD = `<g fill="#fff" stroke="#0f766e" stroke-width="1.5">
+  <circle cx="10" cy="78" r="4"/><circle cx="90" cy="78" r="4"/><circle cx="170" cy="78" r="4"/>
+  <circle cx="250" cy="78" r="4"/><circle cx="330" cy="78" r="4"/>
+  <circle cx="90" cy="18" r="4"/><circle cx="170" cy="18" r="4"/><circle cx="250" cy="18" r="4"/>
+</g>`;
+const _SVG_NODES_WRN = `<g fill="#fff" stroke="#0f766e" stroke-width="1.5">
+  <circle cx="10" cy="78" r="4"/><circle cx="90" cy="78" r="4"/><circle cx="170" cy="78" r="4"/>
+  <circle cx="250" cy="78" r="4"/><circle cx="330" cy="78" r="4"/>
+  <circle cx="50" cy="18" r="4"/><circle cx="130" cy="18" r="4"/><circle cx="210" cy="18" r="4"/><circle cx="290" cy="18" r="4"/>
+</g>`;
+const _SVG_SUP = `<polygon points="10,78 2,93 18,93" fill="#0f766e"/>
+<polygon points="330,78 322,93 338,93" fill="#0d9488"/>
+<line x1="2" y1="94" x2="18" y2="94" stroke="#0f766e" stroke-width="2"/>
+<line x1="322" y1="94" x2="338" y2="94" stroke="#0d9488" stroke-width="2"/>`;
+const _SVG_CHORD_STD = `<line x1="10" y1="78" x2="330" y2="78" stroke="#0f766e" stroke-width="4"/>
+<line x1="90" y1="18" x2="250" y2="18" stroke="#0f766e" stroke-width="4"/>
+<line x1="10" y1="78" x2="90" y2="18" stroke="#0f766e" stroke-width="3"/>
+<line x1="330" y1="78" x2="250" y2="18" stroke="#0f766e" stroke-width="3"/>`;
+
+const BRIDGE_INFO = {
+  pratt: {
+    title: '普拉特桁架 Pratt Truss',
+    year: '1844 年 Thomas Pratt 發明 ／ 適合跨度 15–75m',
+    features: [
+      '豎桿受<b style="color:#dc2626">壓力</b>（紅），斜桿受<b style="color:#2563eb">張力</b>（藍）',
+      '斜桿只受拉力，可做得又細又長，不怕挫曲',
+      '左半斜桿向右上傾 ↗，右半向左上傾 ↖',
+      '台灣鐵路橋、早期公路橋最常見的形式',
+    ],
+    svg: `<svg viewBox="0 0 360 96" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+${_SVG_CHORD_STD}
+<!-- 豎桿（紅=壓力） -->
+<line x1="90" y1="18" x2="90" y2="78" stroke="#dc2626" stroke-width="3"/>
+<line x1="170" y1="18" x2="170" y2="78" stroke="#dc2626" stroke-width="3"/>
+<line x1="250" y1="18" x2="250" y2="78" stroke="#dc2626" stroke-width="3"/>
+<!-- 斜桿（藍=張力，左↗右↖） -->
+<line x1="90" y1="78" x2="170" y2="18" stroke="#2563eb" stroke-width="2.5"/>
+<line x1="250" y1="78" x2="170" y2="18" stroke="#2563eb" stroke-width="2.5"/>
+<!-- 標籤 -->
+<text x="129" y="13" text-anchor="middle" font-size="9.5" fill="#dc2626" font-family="Inter,sans-serif" font-weight="700">豎桿＝壓</text>
+<text x="88" y="60" text-anchor="middle" font-size="9.5" fill="#2563eb" font-family="Inter,sans-serif" font-weight="700">斜桿＝拉</text>
+${_SVG_NODES_STD}${_SVG_SUP}</svg>`,
+  },
+  howe: {
+    title: '豪氏桁架 Howe Truss',
+    year: '1840 年 William Howe 設計 ／ 早期鐵路橋主流',
+    features: [
+      '豎桿受<b style="color:#2563eb">張力</b>（藍），斜桿受<b style="color:#dc2626">壓力</b>（紅）',
+      '歷史上組合鐵製豎桿（耐拉）+ 木製斜桿（耐壓）',
+      '左半斜桿向左上傾 ↖，右半向右上傾 ↗（與 Pratt 相反）',
+      '壓力斜桿需較大截面積以防挫曲，現今較少使用',
+    ],
+    svg: `<svg viewBox="0 0 360 96" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+${_SVG_CHORD_STD}
+<!-- 豎桿（藍=張力） -->
+<line x1="90" y1="18" x2="90" y2="78" stroke="#2563eb" stroke-width="3"/>
+<line x1="170" y1="18" x2="170" y2="78" stroke="#2563eb" stroke-width="3"/>
+<line x1="250" y1="18" x2="250" y2="78" stroke="#2563eb" stroke-width="3"/>
+<!-- 斜桿（紅=壓力，左↖右↗，方向與 Pratt 相反） -->
+<line x1="170" y1="78" x2="90" y2="18" stroke="#dc2626" stroke-width="2.5"/>
+<line x1="170" y1="78" x2="250" y2="18" stroke="#dc2626" stroke-width="2.5"/>
+<!-- 標籤 -->
+<text x="129" y="13" text-anchor="middle" font-size="9.5" fill="#2563eb" font-family="Inter,sans-serif" font-weight="700">豎桿＝拉</text>
+<text x="130" y="60" text-anchor="middle" font-size="9.5" fill="#dc2626" font-family="Inter,sans-serif" font-weight="700">斜桿＝壓</text>
+${_SVG_NODES_STD}${_SVG_SUP}</svg>`,
+  },
+  warren: {
+    title: '華倫桁架 Warren Truss',
+    year: '1848 年 James Warren 發明 ／ 現代公路橋主流',
+    features: [
+      '<b>無豎桿</b>，上弦節點位於下弦節點<b>中點</b>位置',
+      '斜桿交替受<b style="color:#2563eb">拉</b>（藍）/<b style="color:#dc2626">壓</b>（紅）',
+      '桿件數量少，結構輕盈、外觀通透簡潔',
+      '台灣省道橋、人行陸橋廣泛採用',
+    ],
+    svg: `<svg viewBox="0 0 360 96" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+<!-- 下弦 -->
+<line x1="10" y1="78" x2="330" y2="78" stroke="#0f766e" stroke-width="4"/>
+<!-- 上弦（上弦節點在下弦節點中點） -->
+<line x1="50" y1="18" x2="290" y2="18" stroke="#0f766e" stroke-width="4"/>
+<!-- 端斜桿 -->
+<line x1="10" y1="78" x2="50" y2="18" stroke="#0f766e" stroke-width="3"/>
+<line x1="330" y1="78" x2="290" y2="18" stroke="#0f766e" stroke-width="3"/>
+<!-- zigzag 斜桿：壓(紅)↘ 和 拉(藍)↗ 交替 -->
+<line x1="50" y1="18" x2="90" y2="78" stroke="#dc2626" stroke-width="2.5"/>
+<line x1="90" y1="78" x2="130" y2="18" stroke="#2563eb" stroke-width="2.5"/>
+<line x1="130" y1="18" x2="170" y2="78" stroke="#dc2626" stroke-width="2.5"/>
+<line x1="170" y1="78" x2="210" y2="18" stroke="#2563eb" stroke-width="2.5"/>
+<line x1="210" y1="18" x2="250" y2="78" stroke="#dc2626" stroke-width="2.5"/>
+<line x1="250" y1="78" x2="290" y2="18" stroke="#2563eb" stroke-width="2.5"/>
+<!-- 標籤 -->
+<text x="180" y="54" text-anchor="middle" font-size="9.5" fill="#555" font-family="Inter,sans-serif" font-weight="700">無豎桿</text>
+${_SVG_NODES_WRN}${_SVG_SUP}</svg>`,
+  },
+  k: {
+    title: 'K 型桁架 K-Truss',
+    year: '適合大跨度（50m+）深桁架橋樑',
+    features: [
+      '每個底弦節點 Lᵢ 向<b>左右兩側</b>各伸出一根斜桿',
+      '豎桿加上雙向斜桿在面板上形成 K 字形',
+      '有效縮短壓力桿件的挫曲長度，適合重荷重',
+      '桿件多、節點計算複雜，現代以電腦輔助設計',
+    ],
+    svg: `<svg viewBox="0 0 360 96" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+${_SVG_CHORD_STD}
+<!-- 豎桿（teal=中性） -->
+<line x1="90" y1="18" x2="90" y2="78" stroke="#0d9488" stroke-width="3"/>
+<line x1="170" y1="18" x2="170" y2="78" stroke="#0d9488" stroke-width="3"/>
+<line x1="250" y1="18" x2="250" y2="78" stroke="#0d9488" stroke-width="3"/>
+<!-- 右斜桿 DRᵢ：Lᵢ→U(i+1)（藍=拉） -->
+<line x1="90" y1="78" x2="170" y2="18" stroke="#2563eb" stroke-width="2.5"/>
+<line x1="170" y1="78" x2="250" y2="18" stroke="#2563eb" stroke-width="2.5"/>
+<!-- 左斜桿 DLᵢ：Lᵢ→U(i-1)（紅=壓，虛線區別） -->
+<line x1="170" y1="78" x2="90" y2="18" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="5,3"/>
+<line x1="250" y1="78" x2="170" y2="18" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="5,3"/>
+<!-- K 標示 -->
+<text x="130" y="54" text-anchor="middle" font-size="13" fill="#7c3aed" font-family="Inter,sans-serif" font-weight="900">K</text>
+<text x="214" y="54" text-anchor="middle" font-size="13" fill="#7c3aed" font-family="Inter,sans-serif" font-weight="900">K</text>
+${_SVG_NODES_STD}${_SVG_SUP}</svg>`,
+  },
+  simply: {
+    title: '簡支梁橋 Simply Supported Beam',
+    year: '最基本橋型 ／ 短跨度（< 15m）首選',
+    features: [
+      '上緣受<b style="color:#dc2626">壓力</b>，下緣受<b style="color:#2563eb">張力</b>（彎矩效應）',
+      '結構最簡單，施工快速，成本最低',
+      '跨度受限於梁深比（span/depth ≤ 20）',
+      '跨度越大需越深的梁，效率不如桁架橋',
+    ],
+    svg: `<svg viewBox="0 0 360 96" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+<!-- 梁體 -->
+<rect x="15" y="26" width="330" height="42" rx="5" fill="#e0f2fe" stroke="#0f766e" stroke-width="2"/>
+<!-- 上緣壓力 -->
+<rect x="15" y="26" width="330" height="11" rx="5" fill="#dc2626" opacity=".22"/>
+<text x="180" y="36" text-anchor="middle" font-size="9.5" fill="#dc2626" font-family="Inter,sans-serif" font-weight="700">上緣 ＝ 壓力</text>
+<!-- 下緣張力 -->
+<rect x="15" y="57" width="330" height="11" rx="5" fill="#2563eb" opacity=".22"/>
+<text x="180" y="67" text-anchor="middle" font-size="9.5" fill="#2563eb" font-family="Inter,sans-serif" font-weight="700">下緣 ＝ 張力</text>
+<!-- 中性軸 -->
+<line x1="15" y1="47" x2="345" y2="47" stroke="#94a3b8" stroke-width="1" stroke-dasharray="6,3"/>
+<text x="349" y="50" font-size="8" fill="#94a3b8" font-family="Inter,sans-serif">N.A.</text>
+<!-- 彎矩圖（拋物線） -->
+<path d="M15,80 Q180,93 345,80" stroke="#f59e0b" stroke-width="2" fill="none" stroke-dasharray="4,2"/>
+<text x="180" y="95" text-anchor="middle" font-size="8.5" fill="#b45309" font-family="Inter,sans-serif" font-weight="600">彎矩圖（跨中最大）</text>
+<!-- 集中荷重箭頭 -->
+<line x1="180" y1="10" x2="180" y2="24" stroke="#dc2626" stroke-width="2.5"/>
+<polygon points="180,26 174,16 186,16" fill="#dc2626"/>
+<text x="180" y="8" text-anchor="middle" font-size="9" fill="#dc2626" font-family="Inter,sans-serif" font-weight="700">P</text>
+<!-- 支承 -->
+<polygon points="15,68 7,82 23,82" fill="#0f766e"/>
+<polygon points="345,68 337,82 353,82" fill="#0d9488"/>
+<line x1="7" y1="83" x2="23" y2="83" stroke="#0f766e" stroke-width="2"/>
+<line x1="337" y1="83" x2="353" y2="83" stroke="#0d9488" stroke-width="2"/>
+</svg>`,
+  },
+};
+
+function showBridgeInfo(type) {
+  const info = BRIDGE_INFO[type];
+  const card = document.getElementById('bridge-info-card');
+  if (!info) { card.style.display = 'none'; return; }
+  document.getElementById('bic-title').textContent = info.title;
+  document.getElementById('bic-year').textContent = info.year;
+  document.getElementById('bic-features').innerHTML = info.features.map(f => `<li>${f}</li>`).join('');
+  document.getElementById('bic-svg').innerHTML = info.svg;
+  card.style.display = '';
+}
+
+/* ════════════════════════════════════════════════════
    基礎模式（Guided）
 ════════════════════════════════════════════════════ */
 const guidedCanvas = document.getElementById('guided-canvas');
@@ -39,8 +215,11 @@ document.querySelectorAll('#bridge-type-tabs .bridge-tab').forEach(btn => {
     document.getElementById('g-collapse-btn').style.pointerEvents = 'none';
     document.getElementById('guided-canvas-hint').style.display = '';
     guidedCtx.clearRect(0, 0, guidedCanvas.width, guidedCanvas.height);
+    showBridgeInfo(currentBridgeType);
   });
 });
+// 頁面載入時顯示預設橋型說明
+showBridgeInfo('pratt');
 
 // 求解按鈕
 document.getElementById('g-solve-btn').addEventListener('click', guidedSolve);

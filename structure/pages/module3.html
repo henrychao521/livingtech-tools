@@ -46,6 +46,27 @@
           <button class="bridge-tab" data-type="simply">簡支梁橋</button>
         </div>
       </div>
+      <!-- 橋型說明卡 -->
+      <div id="bridge-info-card" style="background:var(--primary-light);border-left:4px solid var(--primary);border-radius:10px;padding:14px 16px;margin:10px 0 14px;display:none">
+        <div style="display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap">
+          <div style="flex:1;min-width:180px">
+            <div id="bic-title" style="font-weight:800;font-size:15px;color:var(--primary-dark);margin-bottom:2px"></div>
+            <div id="bic-year" style="font-size:11px;color:var(--text-muted);margin-bottom:8px"></div>
+            <ul id="bic-features" style="margin:0;padding-left:15px;font-size:12.5px;color:var(--text-soft);line-height:1.85"></ul>
+          </div>
+          <div style="flex:0 0 auto;width:min(340px,100%)">
+            <div style="background:#fff;border-radius:8px;border:1px solid var(--border);padding:8px 10px 4px">
+              <div id="bic-svg" style="line-height:0"></div>
+              <div style="display:flex;gap:10px;margin-top:4px;font-size:10px;font-weight:700;font-family:Inter,sans-serif">
+                <span style="color:#2563eb">● 張力</span>
+                <span style="color:#dc2626">● 壓力</span>
+                <span style="color:#0f766e">● 弦桿/端桿</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- 材料選擇 -->
       <div class="material-select-row">
         <label>桿件材料</label>
@@ -177,6 +198,6 @@
 <script src="../../js/sources.js"></script>
 <script src="../../js/audio.js"></script>
 <script src="../js/solver.js?v=2"></script>
-<script src="../js/module3.js?v=2"></script>
+<script src="../js/module3.js?v=3"></script>
 </body>
 </html>
