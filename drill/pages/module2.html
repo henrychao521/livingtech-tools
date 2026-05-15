@@ -12,9 +12,97 @@
 <body data-tool="drill" class="drill-theme">
 <header class="topbar"><div class="brand"><span class="logo">🔩</span><div><h1>數位手電鑽</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
 <main class="module-page">
-  <div class="module-header"><div><span class="module-step" style="background:var(--danger-light);color:#B83333">MODULE 02 ・ 必修</span><h2>手電鑽安全規範</h2><p class="muted">10 題情境，滿分通關。</p></div><div class="muted" style="font-size:16px">總分：<span id="score-display" style="color:var(--primary-dark);font-weight:800;font-size:22px;font-family:Inter">0</span> / 100</div></div>
+  <div class="module-header"><div><span class="module-step" style="background:var(--danger-light);color:#B83333">MODULE 02 ・ 必修</span><h2>手電鑽安全規範</h2><p class="muted">裝備檢查 + 15 題情境，達 120 分通關。</p></div><div class="muted" style="font-size:16px">總分：<span id="score-display" style="color:var(--primary-dark);font-weight:800;font-size:22px;font-family:Inter">0</span> / 130</div></div>
   <div class="safety-progress"><div class="safety-progress-bar" id="progress-bar" style="width:0%"></div></div>
-  <section class="panel"><h3>🎯 情境判斷</h3><div id="scenario-list"></div><div id="scenario-result"></div></section>
+
+  <!-- 關卡 1：裝備安全檢查 -->
+  <section class="panel" id="part-ppe">
+    <h3>🦺 關卡 1 ／ 裝備安全檢查 <span style="color:#64748b;font-weight:500;font-size:14px;margin-left:8px">30 分</span></h3>
+    <p class="muted" style="margin-bottom:18px">把右側「正確裝備」拖到左側操作員對應位置。錯誤物品的理由同樣重要！</p>
+    <div class="dressup">
+      <div class="dressup-character" id="ppe-character">
+        <svg viewBox="0 0 240 420" id="ppe-svg" style="width:100%;display:block">
+          <!-- 陰影 -->
+          <ellipse cx="120" cy="412" rx="68" ry="8" fill="rgba(0,0,0,.12)"/>
+          <!-- 頭 -->
+          <circle cx="120" cy="60" r="42" fill="#fde68a"/>
+          <!-- 眼睛 -->
+          <ellipse cx="104" cy="56" rx="5" ry="6" fill="#fff"/><circle cx="105" cy="57" r="3" fill="#1a1a1a"/>
+          <ellipse cx="136" cy="56" rx="5" ry="6" fill="#fff"/><circle cx="137" cy="57" r="3" fill="#1a1a1a"/>
+          <!-- 嘴 -->
+          <path d="M108 74 Q120 82 132 74" fill="none" stroke="#c97a3a" stroke-width="2" stroke-linecap="round"/>
+          <!-- 頸 -->
+          <rect x="108" y="98" width="24" height="16" fill="#fde68a"/>
+          <!-- 身體 -->
+          <rect x="72" y="113" width="96" height="138" rx="12" fill="#bfdbfe"/>
+          <!-- 左袖 -->
+          <rect x="38" y="122" width="36" height="82" rx="10" fill="#bfdbfe"/>
+          <!-- 右袖 -->
+          <rect x="166" y="122" width="36" height="82" rx="10" fill="#bfdbfe"/>
+          <!-- 左手 -->
+          <circle cx="56" cy="212" r="16" fill="#fde68a"/>
+          <!-- 右手（握鑽） -->
+          <circle cx="184" cy="212" r="16" fill="#fde68a"/>
+          <!-- 電鑽輪廓 -->
+          <rect x="188" y="198" width="48" height="24" rx="6" fill="#F59E0B" opacity=".9"/>
+          <rect x="192" y="222" width="12" height="22" rx="4" fill="#92400e"/>
+          <!-- 褲子 -->
+          <path d="M76 250 Q72 310 68 390 L100 390 L108 252 Z" fill="#374151"/>
+          <path d="M132 252 L140 390 L172 390 Q168 310 164 250 Z" fill="#374151"/>
+          <!-- 預設鞋子（被換掉） -->
+          <g id="ppe-default-shoes">
+            <ellipse cx="84" cy="394" rx="18" ry="7" fill="#fde68a"/>
+            <ellipse cx="156" cy="394" rx="18" ry="7" fill="#fde68a"/>
+          </g>
+          <!-- PPE 疊加群組（JS 注入） -->
+        </svg>
+        <!-- 拖放區 -->
+        <div class="dropzone" data-accept="drill-goggles" data-label="眼睛（護目鏡）" style="position:absolute;left:22%;top:3%;width:56%;height:17%;border:2px dashed #cbd5e1;border-radius:8px;cursor:pointer;transition:all .2s"></div>
+        <div class="dropzone" data-accept="drill-sleeves" data-label="袖口（束緊袖口）" style="position:absolute;left:2%;top:31%;width:16%;height:22%;border:2px dashed #cbd5e1;border-radius:8px;cursor:pointer;transition:all .2s"></div>
+        <div class="dropzone" data-accept="drill-shoes" data-label="腳（封閉式鞋子）" style="position:absolute;left:18%;top:88%;width:64%;height:10%;border:2px dashed #cbd5e1;border-radius:8px;cursor:pointer;transition:all .2s"></div>
+      </div>
+      <div class="dressup-items" id="ppe-items">
+        <!-- 正確裝備 -->
+        <div class="draggable" draggable="true" data-id="drill-goggles" data-correct="1">
+          <span class="icon">🥽</span>
+          <div><div style="font-weight:700">護目鏡</div><div style="font-size:12px;color:#888">防鑽屑噴入眼睛</div></div>
+        </div>
+        <div class="draggable" draggable="true" data-id="drill-sleeves" data-correct="1">
+          <span class="icon">👔</span>
+          <div><div style="font-weight:700">束緊袖口</div><div style="font-size:12px;color:#888">防布料捲入夾頭</div></div>
+        </div>
+        <div class="draggable" draggable="true" data-id="drill-shoes" data-correct="1">
+          <span class="icon">👟</span>
+          <div><div style="font-weight:700">封閉式鞋子</div><div style="font-size:12px;color:#888">防鑽頭掉落砸傷</div></div>
+        </div>
+        <!-- 錯誤物品 -->
+        <div class="draggable" draggable="true" data-id="drill-glove" data-correct="0">
+          <span class="icon">🧤</span>
+          <div><div style="font-weight:700">布手套（持鑽手）</div><div style="font-size:12px;color:#a72d2d">⚠ 危險！</div></div>
+        </div>
+        <div class="draggable" draggable="true" data-id="drill-bracelet" data-correct="0">
+          <span class="icon">📿</span>
+          <div><div style="font-weight:700">金屬手環 / 戒指</div><div style="font-size:12px;color:#a72d2d">⚠ 危險！</div></div>
+        </div>
+        <div class="draggable" draggable="true" data-id="drill-loose" data-correct="0">
+          <span class="icon">🥼</span>
+          <div><div style="font-weight:700">寬鬆長袖</div><div style="font-size:12px;color:#a72d2d">⚠ 危險！</div></div>
+        </div>
+      </div>
+    </div>
+    <div id="ppe-feedback" style="margin-top:10px"></div>
+  </section>
+
+  <!-- 關卡 2：情境判斷（預設鎖定） -->
+  <section class="panel" id="part-scenario" style="position:relative">
+    <h3>🎯 關卡 2 ／ 情境判斷 <span style="color:#64748b;font-weight:500;font-size:14px;margin-left:8px">每題 10 分</span></h3>
+    <div id="scenario-list"></div>
+    <div id="scenario-result"></div>
+    <div id="scenario-lock-overlay" style="position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(248,250,252,.9);border-radius:inherit;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;pointer-events:auto">
+      <span style="font-size:32px">🔒</span>
+      <span style="font-size:15px;font-weight:700;color:#64748b">請先完成上方裝備安全檢查</span>
+    </div>
+  </section>
   <div class="unlock-banner hidden" id="unlock"><h3>🏆 通關！</h3><a href="module3.html" class="btn" style="background:#fff;color:#1e9450;margin-top:18px;font-weight:700">進入模組 3 →</a></div>
   <div class="module-nav-bottom"><a href="module1.html" class="btn btn-ghost">← 上一關</a><a href="module3.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a></div>
 </main>

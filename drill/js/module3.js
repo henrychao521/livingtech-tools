@@ -326,3 +326,260 @@ if (typeof SequencePuzzle === 'function') {
     }
   });
 }
+
+/* ── 卡鑽反扭體驗模擬器 ──────────────────────────────── */
+;(function () {
+  const sec = document.createElement('section');
+  sec.className = 'panel';
+  sec.innerHTML = `
+    <h3 style="margin-bottom:6px">⚠️ 卡鑽反扭體驗模擬器</h3>
+    <p class="muted" style="margin-bottom:14px">親身體驗卡鑽發生時，錯誤應對與正確應對的天壤之別。</p>
+    <div style="background:#0f172a;border-radius:14px;padding:16px">
+      <canvas id="kickback-cv" width="500" height="300" style="width:100%;max-width:500px;border-radius:8px;display:block;margin:0 auto;cursor:default"></canvas>
+      <div id="kb-label" style="color:#fbbf24;font-weight:700;margin-top:10px;font-size:14px;text-align:center">點擊「開始鑽孔」體驗卡鑽情境</div>
+      <div id="kb-start-wrap" style="display:flex;justify-content:center;margin-top:12px">
+        <button id="kb-start" class="btn btn-primary" style="min-width:130px">▶ 開始鑽孔</button>
+      </div>
+      <div id="kb-decision" style="display:none;justify-content:center;gap:12px;margin-top:12px;flex-wrap:wrap">
+        <button id="kb-wrong" class="btn" style="background:#dc2626;color:#fff;border:none;min-width:130px">💪 繼續施力硬鑽</button>
+        <button id="kb-correct" class="btn btn-primary" style="background:#16a34a;min-width:130px">✋ 立刻放開板機</button>
+      </div>
+      <div id="kb-result" style="margin-top:14px"></div>
+    </div>
+    <div style="margin-top:16px;padding:14px 16px;background:#fef3c7;border-radius:10px;border-left:4px solid #F59E0B">
+      <strong style="color:#b45309">💡 關鍵教學：</strong>
+      <span style="font-size:14px;color:#374151">雙手握持（主手握把＋輔手扶機身前段）能讓身體吸收反作用力，大幅降低卡鑽傷害。單手操作時卡鑽幾乎必然造成手腕扭傷或骨折。</span>
+    </div>
+  `;
+  const nav = document.querySelector('.module-nav-bottom');
+  if (nav) nav.parentNode.insertBefore(sec, nav);
+
+  const cv = document.getElementById('kickback-cv');
+  if (!cv) return;
+  const ctx = cv.getContext('2d');
+  const W = 500, H = 300;
+
+  /* ── roundRect polyfill ── */
+  function rr(x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    ctx.lineTo(x + r, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.closePath();
+  }
+
+  let stage = 'idle'; // idle | normal | jamming | wrong | correct
+  let drillY = 68;    // tip Y position (descends toward wood)
+  let rotAngle = 0;   // bit rotation
+  let kickAngle = 0;  // drill body kickback angle
+  let vibX = 0;       // wood vibration offset
+  let chips = [];
+  let animId = null;
+
+  const WOOD_Y = 190, WOOD_H = 72;
+  const DRILL_CX = W / 2, DRILL_TOP = 40;
+
+  function spawnChip() {
+    chips.push({
+      x: DRILL_CX + (Math.random() - .5) * 20,
+      y: Math.min(drillY + 68, WOOD_Y),
+      vx: (Math.random() - .5) * 3,
+      vy: -(1 + Math.random() * 2),
+      r: 1.5 + Math.random() * 2,
+      life: 35 + Math.random() * 20,
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    /* bg */
+    ctx.fillStyle = '#1e293b'; ctx.fillRect(0, 0, W, H);
+
+    /* table */
+    ctx.fillStyle = '#334155';
+    rr(40, WOOD_Y + WOOD_H, W - 80, 22, 4); ctx.fill();
+
+    /* wood block (vibrates during jamming) */
+    ctx.save();
+    ctx.translate(vibX, 0);
+    ctx.fillStyle = '#a16207';
+    rr(60, WOOD_Y, W - 120, WOOD_H, 4); ctx.fill();
+    ctx.strokeStyle = 'rgba(0,0,0,.18)'; ctx.lineWidth = 1;
+    for (let g = 1; g < 7; g++) {
+      ctx.beginPath(); ctx.moveTo(60, WOOD_Y + g * 10); ctx.lineTo(W - 60, WOOD_Y + g * 10); ctx.stroke();
+    }
+    /* surface highlight */
+    ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(60, WOOD_Y); ctx.lineTo(W - 60, WOOD_Y); ctx.stroke();
+    ctx.restore();
+
+    /* drill hole (when bit is in wood) */
+    if (stage !== 'idle' && drillY > WOOD_Y - 20) {
+      const hDepth = Math.min(drillY - WOOD_Y + 20, WOOD_H - 4);
+      ctx.fillStyle = '#5c3407';
+      rr(DRILL_CX - 5, WOOD_Y, 10, hDepth, 2); ctx.fill();
+      ctx.fillStyle = '#000';
+      rr(DRILL_CX - 3, WOOD_Y, 6, hDepth, 1); ctx.fill();
+    }
+
+    /* chips */
+    chips.forEach(c => {
+      ctx.fillStyle = `rgba(161,98,7,${c.life / 55})`;
+      ctx.beginPath(); ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2); ctx.fill();
+    });
+
+    /* drill body (rotates on kickback) */
+    ctx.save();
+    ctx.translate(DRILL_CX, drillY);
+    if (stage === 'wrong') ctx.rotate(kickAngle);
+
+    /* hands */
+    const hColor = stage === 'wrong' ? '#dc2626' : '#475569';
+    ctx.fillStyle = hColor;
+    ctx.beginPath(); ctx.ellipse(-54, -10, 14, 22, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(54, -10, 14, 22, 0, 0, Math.PI * 2); ctx.fill();
+
+    /* body */
+    ctx.fillStyle = '#F59E0B';
+    rr(-60, -DRILL_TOP + 10, 120, 50, 10); ctx.fill();
+    /* grip label */
+    ctx.fillStyle = '#b45309'; ctx.font = 'bold 9px Inter,sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText('DRILL', 0, -DRILL_TOP + 40);
+
+    /* chuck */
+    ctx.fillStyle = '#9ca3af';
+    rr(-10, -10, 20, 28, 3); ctx.fill();
+
+    /* bit */
+    ctx.fillStyle = '#4b5563';
+    rr(-3, 18, 6, Math.max(0, Math.min(WOOD_Y - drillY + 20, 60)), 1); ctx.fill();
+
+    /* rotation indicator (cross) */
+    if (stage === 'normal') {
+      ctx.save();
+      ctx.translate(0, 28);
+      ctx.rotate(rotAngle);
+      ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(-8, 0); ctx.lineTo(8, 0); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(0, -8); ctx.lineTo(0, 8); ctx.stroke();
+      ctx.restore();
+    }
+
+    /* kickback warning flash */
+    if (stage === 'jamming') {
+      ctx.fillStyle = 'rgba(220,38,38,.25)';
+      ctx.beginPath(); ctx.arc(0, 30, 35, 0, Math.PI * 2); ctx.fill();
+    }
+
+    ctx.restore();
+
+    /* stage overlays */
+    ctx.textAlign = 'center';
+    if (stage === 'jamming') {
+      ctx.fillStyle = '#ef4444'; ctx.font = 'bold 13px Noto Sans TC,sans-serif';
+      ctx.fillText('⚠ 鑽頭卡住了！', W / 2, H - 18);
+    }
+    if (stage === 'wrong') {
+      ctx.fillStyle = '#fef2f2'; ctx.font = 'bold 14px Noto Sans TC,sans-serif';
+      ctx.fillText('💥 電鑽失控反轉！', W / 2, H - 18);
+    }
+    if (stage === 'correct') {
+      ctx.fillStyle = '#dcfce7'; ctx.font = 'bold 14px Noto Sans TC,sans-serif';
+      ctx.fillText('✓ 安全停止！', W / 2, H - 18);
+    }
+    ctx.textAlign = 'left';
+  }
+
+  function tick() {
+    if (stage === 'normal') {
+      rotAngle += 0.35;
+      if (drillY < WOOD_Y + 20) drillY += 0.6;
+      if (Math.random() < 0.28 && drillY > WOOD_Y - 5) spawnChip();
+    }
+    if (stage === 'jamming') {
+      vibX = (Math.random() - .5) * 5;
+    }
+    if (stage === 'wrong') {
+      kickAngle += 0.20;
+    }
+    chips = chips.filter(c => { c.x += c.vx; c.y += c.vy; c.vy += 0.09; c.life--; return c.life > 0; });
+    draw();
+    animId = requestAnimationFrame(tick);
+  }
+
+  function resetSim() {
+    cancelAnimationFrame(animId);
+    stage = 'idle'; drillY = 68; rotAngle = 0; kickAngle = 0; vibX = 0; chips = [];
+    document.getElementById('kb-decision').style.display = 'none';
+    document.getElementById('kb-start-wrap').style.display = 'flex';
+    document.getElementById('kb-label').textContent = '點擊「開始鑽孔」體驗卡鑽情境';
+    draw();
+  }
+
+  document.getElementById('kb-start')?.addEventListener('click', () => {
+    document.getElementById('kb-result').innerHTML = '';
+    document.getElementById('kb-start-wrap').style.display = 'none';
+    stage = 'normal'; drillY = 68; rotAngle = 0; kickAngle = 0; chips = [];
+    document.getElementById('kb-label').textContent = '🔩 STAGE 1 — 正常鑽孔中…';
+    if (animId) cancelAnimationFrame(animId);
+    tick();
+    if (typeof SoundFX !== 'undefined') SoundFX.pop();
+
+    setTimeout(() => {
+      if (stage !== 'normal') return;
+      stage = 'jamming'; vibX = 0;
+      document.getElementById('kb-label').textContent = '⚠ STAGE 2 — 鑽頭卡住！你會怎麼做？';
+      setTimeout(() => {
+        if (stage !== 'jamming') return;
+        cancelAnimationFrame(animId); vibX = 0; draw();
+        document.getElementById('kb-decision').style.display = 'flex';
+      }, 900);
+    }, 2800);
+  });
+
+  document.getElementById('kb-wrong')?.addEventListener('click', () => {
+    document.getElementById('kb-decision').style.display = 'none';
+    stage = 'wrong'; kickAngle = 0; tick();
+    document.getElementById('kb-label').textContent = '💥 錯誤！電鑽失控旋轉！';
+    if (typeof SoundFX !== 'undefined') SoundFX.error();
+    setTimeout(() => {
+      cancelAnimationFrame(animId); draw();
+      document.getElementById('kb-result').innerHTML = `
+        <div class="feedback error" style="margin-top:8px">
+          <strong>✗ 錯誤應對：繼續施力</strong><br>
+          鑽頭卡住後繼續推力，電鑽以鑽頭為軸高速反扭甩動，造成手腕扭傷或骨折，機器也可能甩飛傷人。
+          <br><br><strong>正確做法：立刻鬆開扳機 → 切反轉 → 低速慢慢退出。</strong>
+        </div>`;
+      document.getElementById('kb-start-wrap').style.display = 'flex';
+      document.getElementById('kb-label').textContent = '再試一次？';
+      stage = 'idle';
+    }, 2000);
+  });
+
+  document.getElementById('kb-correct')?.addEventListener('click', () => {
+    document.getElementById('kb-decision').style.display = 'none';
+    cancelAnimationFrame(animId);
+    stage = 'correct'; draw();
+    document.getElementById('kb-label').textContent = '✓ 正確！立刻放開板機';
+    if (typeof SoundFX !== 'undefined') SoundFX.success();
+    document.getElementById('kb-result').innerHTML = `
+      <div class="feedback success" style="margin-top:8px">
+        <strong>✓ 正確應對：立刻放開板機</strong><br>
+        鬆開扳機後馬達停止輸出，鑽頭緩慢停轉。雙手穩住機身，切換反轉後低速退出。工件完好，操作者安全。
+        <br><br>預防卡鑽：下次遇到類似材料，每鑽 5–10mm 退屑一次（pecking），讓切屑順利排出。
+      </div>`;
+    const p = loadP(); p.module3_kickback = true; saveP(p);
+    if (typeof showToast === 'function') showToast('💪 卡鑽處置正確！', 'good');
+    document.getElementById('kb-start-wrap').style.display = 'flex';
+    document.getElementById('kb-label').textContent = '再試一次？';
+    stage = 'idle';
+  });
+
+  draw();
+})();
