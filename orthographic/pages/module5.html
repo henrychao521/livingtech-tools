@@ -72,6 +72,66 @@
     <div id="round-3" class="round-content" style="display:none"></div>
   </section>
 
+  <!-- ===== 延伸工具推薦 ===== -->
+  <div class="panel" style="margin-top:20px;border:2px solid #4F46E5;padding:20px">
+    <h3 style="margin-bottom:4px">🔗 延伸工具推薦</h3>
+    <p class="muted" style="margin-bottom:16px">完成所有模組後，可以用以下工具繼續深化三視圖理解。</p>
+    <div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;background:#F8FAFC;border-radius:10px;padding:16px;border:1px solid var(--border)">
+      <div style="font-size:40px;flex-shrink:0;line-height:1">🎲</div>
+      <div style="flex:1;min-width:200px">
+        <div style="font-weight:800;font-size:15px;color:#1E1B4B;margin-bottom:2px">立体ぐりぐり iPad TW（中文化版）</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px">日本技術科教師開發・1996 DOS 原作・2024 重製網頁版・許仁傑中文化</div>
+        <p style="font-size:13px;color:var(--text-soft);margin:0 0 12px;line-height:1.8">
+          同步顯示 <strong>正視 / 側視 / 俯視 + 等角 3D</strong> 四視窗，可拖曳旋轉 360° 任意角度觀察，並切換隱藏線模式。<br>
+          支援 <strong>STL 格式匯入</strong>——可將 OpenSCAD 匯出的模型直接載入探索。
+        </p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <a href="https://dotes-tw.github.io/rittai-guriguri-ipad-tw/" target="_blank" rel="noopener"
+             style="display:inline-flex;align-items:center;gap:6px;background:#4F46E5;color:#fff;padding:8px 18px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">
+            🚀 開啟工具
+          </a>
+          <a href="https://github.com/dotes-tw/rittai-guriguri-ipad-tw" target="_blank" rel="noopener"
+             style="display:inline-flex;align-items:center;gap:6px;background:#f1f5f9;color:#475569;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;border:1.5px solid var(--border)">
+            📁 GitHub 專案
+          </a>
+        </div>
+      </div>
+      <!-- 四視圖示意 mini-SVG -->
+      <div style="flex-shrink:0;background:#1E293B;border-radius:10px;padding:12px;width:min(200px,100%)">
+        <div style="color:#FBBF24;font-size:10.5px;font-weight:700;font-family:Inter;letter-spacing:.04em;margin-bottom:8px">四視圖同步顯示</div>
+        <svg viewBox="0 0 180 120" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+          <rect x="2"  y="2"  width="84" height="54" fill="#0F172A" rx="4" stroke="#334155" stroke-width="1"/>
+          <rect x="94" y="2"  width="84" height="54" fill="#0F172A" rx="4" stroke="#334155" stroke-width="1"/>
+          <rect x="2"  y="64" width="84" height="54" fill="#0F172A" rx="4" stroke="#334155" stroke-width="1"/>
+          <rect x="94" y="64" width="84" height="54" fill="#1E3A5F" rx="4" stroke="#4F46E5" stroke-width="1.5"/>
+          <text x="44"  y="12" text-anchor="middle" font-size="8" fill="#FBBF24" font-family="Inter" font-weight="700">正視 FRONT</text>
+          <text x="136" y="12" text-anchor="middle" font-size="8" fill="#FBBF24" font-family="Inter" font-weight="700">側視 SIDE</text>
+          <text x="44"  y="74" text-anchor="middle" font-size="8" fill="#FBBF24" font-family="Inter" font-weight="700">俯視 TOP</text>
+          <text x="136" y="74" text-anchor="middle" font-size="8" fill="#93C5FD" font-family="Inter" font-weight="700">3D 互動旋轉</text>
+          <!-- 正視：L形 -->
+          <polygon points="20,20 44,20 44,32 32,32 32,40 20,40" fill="none" stroke="#6366F1" stroke-width="1.5"/>
+          <!-- 側視：矩形 -->
+          <rect x="110" y="20" width="28" height="28" fill="none" stroke="#6366F1" stroke-width="1.5"/>
+          <!-- 俯視：L形 -->
+          <polygon points="20,82 52,82 52,90 32,90 32,100 20,100" fill="none" stroke="#6366F1" stroke-width="1.5"/>
+          <!-- 3D 等角塊 -->
+          <g transform="translate(136,93)" stroke="#93C5FD" stroke-width="1.2" fill="none">
+            <polygon points="0,-13 11,-7 11,7 0,13 -11,7 -11,-7"/>
+            <line x1="0" y1="-13" x2="0" y2="0"/>
+            <line x1="11" y1="-7" x2="0" y2="0"/>
+            <line x1="-11" y1="-7" x2="0" y2="0"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <!-- 搭配使用提示 -->
+    <div style="margin-top:12px;padding:10px 14px;background:#EEF2FF;border-radius:8px;font-size:12.5px;color:#4338CA;line-height:1.8">
+      💡 <strong>三步驟搭配法：</strong>模組 4 模擬器理解投影原理
+      → 用 rittai-guriguri 匯入 STL 自由旋轉探索
+      → 回來挑戰模組 5 闖關
+    </div>
+  </div>
+
   <div class="module-nav-bottom"><a href="module4.html" class="btn btn-ghost">← 上一關</a><a href="../index.html" class="btn btn-primary">完成全部模組 ✓</a></div>
 </main>
 
