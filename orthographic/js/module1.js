@@ -44,10 +44,11 @@ const CONCEPTS = [
       <!-- 中央立體（step） -->
       <g transform="translate(120,68)">${STEP_ISO_MINI}</g>
       <!-- 6 個方向標籤 + 視圖縮圖 -->
-      <!-- 俯視（上） -->
+      <!-- 俯視（上）— 矩形 + 分隔線（階梯塊俯視 = 全寬×全深，中線顯示高低分界）-->
       <g transform="translate(120,10)">
         <rect x="-14" y="0" width="28" height="14" fill="#E0E7FF" stroke="#3730A3" stroke-width="1"/>
-        <polygon points="-10,2 10,2 10,12 0,12 0,6 -10,6" fill="#A5B4FC" stroke="#3730A3" stroke-width="0.8"/>
+        <rect x="-10" y="2" width="20" height="10" fill="#A5B4FC" stroke="#3730A3" stroke-width="0.8"/>
+        <line x1="0" y1="2" x2="0" y2="12" stroke="#3730A3" stroke-width="0.8"/>
         <text x="0" y="-2" text-anchor="middle" font-size="8" fill="#3730A3" font-weight="700">俯視 TOP</text>
       </g>
       <!-- 仰視（下） -->
@@ -82,10 +83,11 @@ const CONCEPTS = [
     desc: '第三角法排列：俯視在正視「上方」、側視在正視「右方」。三視圖之間有投影對齊關係——正視寬 = 俯視寬（長對正）、正視高 = 側視高（高平齊）。',
     detail: '這個對齊是判讀的關鍵：長對正、高平齊。俯視在正視上方是 CNS 第三角投影法的標準排列，與第一角法（俯視在下）剛好相反。',
     visual: `<svg viewBox="0 0 240 148" width="100%" style="background:#F1F5F9;border-radius:6px;display:block">
-      <!-- 俯視（第三角法：正視上方）-->
+      <!-- 俯視（第三角法：正視上方）— 矩形（同寬於正視 x=10..35）+ 分隔線示意高低分界 -->
       <g transform="translate(50,10)">
         <rect x="0" y="0" width="80" height="30" fill="#fff" stroke="#3730A3" stroke-width="1.2"/>
-        <polygon points="10,22 70,22 70,6 35,6 35,14 10,14" fill="#E0E7FF" stroke="#3730A3" stroke-width="1.2"/>
+        <rect x="10" y="5" width="25" height="20" fill="#E0E7FF" stroke="#3730A3" stroke-width="1.2"/>
+        <line x1="25" y1="5" x2="25" y2="25" stroke="#3730A3" stroke-width="1"/>
         <text x="40" y="-2" text-anchor="middle" font-size="9" fill="#3730A3" font-weight="700">俯視 TOP</text>
       </g>
       <!-- 正視（居中）-->

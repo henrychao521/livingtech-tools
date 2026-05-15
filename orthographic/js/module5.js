@@ -23,7 +23,7 @@ const SHAPES = {
   sphere:    { label: '球體',   front: 'circle', side: 'circle', top: 'circle', iso: 'sphere' },
   lblock:    { label: 'L 型塊', front: 'l-shape', side: 'rect-tall', top: 'rect', iso: 'lblock' },
   step:      { label: '階梯塊', front: 'rect',   side: 'rect-tall',  top: 'rect-step', iso: 'step' },
-  hole:      { label: '帶圓孔板', front: 'rect-circle-hole', side: 'rect-dash-vert', top: 'rect-dash-vert', iso: 'hole' },
+  hole:      { label: '帶圓孔板', front: 'rect-circle-hole', side: 'rect-dash-horiz', top: 'rect-dash-vert', iso: 'hole' },
   tslot:     { label: 'T 槽塊', front: 't-shape', side: 'rect', top: 't-rev', iso: 'tslot' },
   bracket:   { label: 'L 角架', front: 'l-shape', side: 'rect-tall', top: 'l-shape', iso: 'bracket' },
   pyramid:   { label: '金字塔', front: 'triangle', side: 'triangle', top: 'square-diag', iso: 'pyramid' },
@@ -65,7 +65,11 @@ function svgView(type, size = 80) {
       case 'rect-circle-hole':
         return `<rect x="${pad}" y="${pad * 1.8}" width="${s - pad * 2}" height="${s - pad * 3.6}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/><circle cx="${c}" cy="${c}" r="${(s - pad * 2) * 0.18}" fill="${VIEW_BG}" stroke="${stroke}" stroke-width="1.5"/>`;
       case 'rect-dash-vert':
+        // 兩條垂直虛線（孔軸沿 X/Z 方向，從俯視看）
         return `<rect x="${pad}" y="${pad * 1.8}" width="${s - pad * 2}" height="${s - pad * 3.6}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/><line x1="${c - 8}" y1="${pad * 1.8}" x2="${c - 8}" y2="${s - pad * 1.8}" stroke="${stroke}" stroke-width="1.2" stroke-dasharray="3 2"/><line x1="${c + 8}" y1="${pad * 1.8}" x2="${c + 8}" y2="${s - pad * 1.8}" stroke="${stroke}" stroke-width="1.2" stroke-dasharray="3 2"/>`;
+      case 'rect-dash-horiz':
+        // 兩條水平虛線（孔軸沿 Z 方向，從側視看到孔上下邊界）
+        return `<rect x="${pad}" y="${pad * 1.8}" width="${s - pad * 2}" height="${s - pad * 3.6}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/><line x1="${pad}" y1="${c - 8}" x2="${s - pad}" y2="${c - 8}" stroke="${stroke}" stroke-width="1.2" stroke-dasharray="3 2"/><line x1="${pad}" y1="${c + 8}" x2="${s - pad}" y2="${c + 8}" stroke="${stroke}" stroke-width="1.2" stroke-dasharray="3 2"/>`;
       case 'square-diag':
         return `<rect x="${pad}" y="${pad}" width="${s - pad * 2}" height="${s - pad * 2}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/><line x1="${pad}" y1="${pad}" x2="${s - pad}" y2="${s - pad}" stroke="${stroke}" stroke-width="1"/><line x1="${pad}" y1="${s - pad}" x2="${s - pad}" y2="${pad}" stroke="${stroke}" stroke-width="1"/><circle cx="${c}" cy="${c}" r="2.5" fill="${stroke}"/>`;
       default:
@@ -121,7 +125,7 @@ const ROUND1 = [
   { ans: 'cylinder', views: ['rect','rect','circle'],             options: ['cylinder','cube','cone','sphere'],     expl: '俯視 = 圓 + 正視 / 側視 = 矩形 → 圓柱。' },
   { ans: 'cone',     views: ['triangle','triangle','circle-dot'], options: ['cone','pyramid','cylinder','sphere'],  expl: '俯視帶中心點（圓錐尖）+ 正視 / 側視為三角形 → 圓錐。' },
   { ans: 'lblock',   views: ['l-shape','rect-tall','rect'],       options: ['lblock','step','bracket','cube'],      expl: '正視 = L 形 + 俯視 = 矩形 → L 型塊（兩個方塊相連）。' },
-  { ans: 'hole',     views: ['rect-circle-hole','rect-dash-vert','rect-dash-vert'], options: ['hole','tslot','step','cylinder'], expl: '正視 = 矩形含實線圓（孔口）+ 側視 / 俯視兩條平行虛線（孔的內壁不可見）→ 帶圓孔板。' },
+  { ans: 'hole',     views: ['rect-circle-hole','rect-dash-horiz','rect-dash-vert'], options: ['hole','tslot','step','cylinder'], expl: '正視 = 矩形含實線圓（孔口）+ 側視 = 兩條水平虛線（孔上下邊界）+ 俯視 = 兩條垂直虛線（孔左右邊界）→ 帶圓孔板。' },
 ];
 
 function buildRound1() {
