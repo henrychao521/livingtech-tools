@@ -127,6 +127,42 @@ const SCENARIOS = [
     correct: 'a',
     explain: '燙傷處理黃金原則「沖、脫、泡、蓋、送」。依衛福部、臺北市消防局與 ILCOR 2019 共識，冷水沖至少 20 分鐘（15–30 分鐘範圍）。塗牙膏、醬油等是錯誤民俗療法，會加重傷害。'
   },
+  // ── Q8–Q12 新增（共 12 題） ────────────────────────────────────
+  {
+    q: '要加快焊接速度，可以先把焊錫在烙鐵頭上熔成錫球再滴到接點上嗎？',
+    a: '不行！助焊劑會在烙鐵頭上提前燃盡，形成氧化錫球掉落，可能短路',
+    b: '可以，只要注意溫度就沒問題',
+    correct: 'a',
+    explain: '焊錫必須送到「接點」讓接點的熱融化，不是在烙鐵頭上融化再滴。在頭上融化會讓助焊劑提前揮發殆盡，產生氧化錫球，焊點品質極差且可能滾落造成短路。'
+  },
+  {
+    q: '「上錫養護（Tinning）」只有拿到全新烙鐵頭時才需要做一次嗎？',
+    a: '不對，每次開機預熱後、每次換頭後、以及烙鐵頭變黑時都應該做一次',
+    b: '對，新烙鐵頭做過一次就夠了',
+    correct: 'a',
+    explain: '烙鐵頭每次加熱都會有些氧化，因此每次使用前後都應做 Tinning 保護。看到黑色氧化層時先用海綿清潔再上錫，才能維持良好的傳熱效果與焊點品質。'
+  },
+  {
+    q: '使用含鉛焊錫（Sn63Pb37）後，最重要的衛生動作是？',
+    a: '沒關係，少量的鉛不會對身體造成影響',
+    b: '焊接後立刻洗手，不摸臉不飲食，教室保持通風',
+    correct: 'b',
+    explain: 'WHO 明確指出「鉛沒有安全劑量」。含鉛焊錫的鉛殘留在手上後，可能透過手口接觸進入體內。焊接後務必洗手再進食，教室要保持良好通風。'
+  },
+  {
+    q: '下課要離開教室，電烙鐵應該怎麼處理？',
+    a: '按下電源開關關閉就好，不需要額外確認',
+    b: '拔掉電源插頭，等烙鐵頭冷卻後再收拾，確認周圍無易燃物',
+    correct: 'b',
+    explain: '開關可能故障（接觸不良），拔插頭才真正斷電。拔電後烙鐵頭仍有 5–15 分鐘高溫，必須確認冷卻後再收拾，並確認周圍沒有紙張等易燃物，以防火災。'
+  },
+  {
+    q: '焊點完成後表面呈現「霧白粗糙」而非光亮錐形，這是什麼問題？',
+    a: '過量焊錫，應減少送錫量',
+    b: '虛焊（Cold Joint），通常因焊點未凝固就移動，或加熱時間不足',
+    correct: 'b',
+    explain: '虛焊（Cold Joint）特徵是焊點表面霧白粗糙、電阻偏高、連接強度差。常見原因：(1) 焊錫凝固前移動了板子或元件；(2) 加熱時間不足，焊錫未充分潤濕接點；(3) 接點氧化或有污染。發現虛焊必須重新加熱補焊。'
+  },
 ];
 
 const items = document.querySelectorAll('.draggable');
@@ -302,7 +338,7 @@ function checkAllDone() {
   if (answered.size === SCENARIOS.length) {
     const result = document.getElementById('scenario-result');
     const total = dressupScore + scenarioScore;
-    if (total >= 95) {
+    if (total >= 120) {
       result.innerHTML = `<div class="feedback success" style="font-size:16px;margin-top:20px"><strong>🏆 你以 ${Math.round(total)} 分通過了焊接安全規範闖關！</strong></div>`;
       document.getElementById('unlock').classList.remove('hidden');
       document.getElementById('next-btn').style.opacity = 1;
@@ -312,7 +348,7 @@ function checkAllDone() {
       prog.module2 = true; prog.safetyPassed = true;
       saveSolderProgress(prog);
     } else {
-      result.innerHTML = `<div class="feedback error" style="font-size:15px;margin-top:20px">目前 ${Math.round(total)} 分，未達 95 分。請重新整理頁面再挑戰一次。</div>`;
+      result.innerHTML = `<div class="feedback error" style="font-size:15px;margin-top:20px">目前 ${Math.round(total)} 分，未達 120 分。請重新整理頁面再挑戰一次。</div>`;
     }
   }
 }
@@ -320,7 +356,7 @@ function checkAllDone() {
 function updateScore() {
   const total = Math.round(dressupScore + scenarioScore);
   document.getElementById('score-display').textContent = total;
-  document.getElementById('progress-bar').style.width = total + '%';
+  document.getElementById('progress-bar').style.width = Math.min(100, total / 1.5) + '%';
 }
 
 /* ── 真實事故案例參考面板 ──────────────────────────────── */
@@ -356,6 +392,72 @@ function updateScore() {
 
     <p style="font-size:12px;color:#94a3b8;margin-top:4px">※ 以上連結均為政府、大學或研究機構官方文件，引用於教學安全佐證之用。</p>
   `;
+  const nav = document.querySelector('.module-nav-bottom');
+  if (nav) nav.parentNode.insertBefore(sec, nav);
+})();
+
+/* ── Layer C：360° 環場實景預覽（Pannellum.js）────────────── */
+;(function () {
+  const panoramaPath = 'solder/assets/360/workstation-360.jpg';
+  const hasAsset = false; // ← 拍攝 360° 照片並上傳後改為 true
+
+  const sec = document.createElement('section');
+  sec.className = 'panel';
+
+  if (!hasAsset) {
+    sec.innerHTML = `
+      <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:6px">🌐 360° 焊接工作站環場實景</h3>
+      <div style="border:2px dashed #cbd5e1;border-radius:12px;padding:32px 24px;text-align:center;color:#94a3b8;background:#f8fafc">
+        <div style="font-size:48px;margin-bottom:12px">📷</div>
+        <h4 style="color:#64748b;margin:0 0 8px">等待 360° 素材上傳</h4>
+        <p style="font-size:14px;line-height:1.8;max-width:460px;margin:0 auto">
+          請用 360° 相機或手機全景模式拍攝焊接教室工作站，<br>
+          儲存為 JPEG <strong>等距柱狀投影格式（equirectangular）</strong>，<br>
+          上傳至 <code style="background:#e2e8f0;padding:2px 6px;border-radius:4px;font-size:13px">solder/assets/360/workstation-360.jpg</code><br>
+          然後將本 IIFE 中 <code style="background:#e2e8f0;padding:2px 6px;border-radius:4px;font-size:13px">hasAsset = false</code>
+          改為 <code style="background:#e2e8f0;padding:2px 6px;border-radius:4px;font-size:13px">true</code>
+        </p>
+        <div style="margin:20px auto 0;padding:14px 18px;background:#fff;border-radius:8px;border:1px solid #e2e8f0;font-size:13px;text-align:left;max-width:480px">
+          <strong style="color:#374151">📋 拍攝建議：</strong>
+          <ul style="margin:8px 0 0;padding-left:18px;color:#6b7280;line-height:2.1">
+            <li>使用 Insta360 / GoPro Max / iPhone 全景模式</li>
+            <li>相機放在工作站正中央，高度約 120 cm</li>
+            <li>確認烙鐵架、PCB、助焊劑、海綿、排煙器都在場景中</li>
+            <li>輸出解析度建議 4096×2048 以上（等距柱狀投影）</li>
+          </ul>
+        </div>
+      </div>
+    `;
+  } else {
+    sec.innerHTML = `
+      <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:6px">🌐 360° 焊接工作站環場實景</h3>
+      <p style="color:#64748b;font-size:14px;margin-bottom:12px">拖曳或點擊環場畫面，自由探索焊接工作站的每個角落。</p>
+      <div id="panorama-viewer" style="width:100%;height:420px;border-radius:12px;overflow:hidden;border:1px solid #e2e8f0"></div>
+    `;
+    if (!document.getElementById('pannellum-css')) {
+      const link = document.createElement('link');
+      link.id = 'pannellum-css';
+      link.rel = 'stylesheet';
+      link.href = 'https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css';
+      document.head.appendChild(link);
+    }
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js';
+    script.onload = () => {
+      pannellum.viewer('panorama-viewer', {
+        type: 'equirectangular',
+        panorama: '../../' + panoramaPath,
+        autoLoad: true,
+        autoRotate: -2,
+        compass: false,
+        showControls: true,
+        title: '焊接工作站 360° 實景',
+        hotSpots: []
+      });
+    };
+    document.body.appendChild(script);
+  }
+
   const nav = document.querySelector('.module-nav-bottom');
   if (nav) nav.parentNode.insertBefore(sec, nav);
 })();

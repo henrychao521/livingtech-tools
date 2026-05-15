@@ -304,3 +304,137 @@ if (typeof Interactions !== 'undefined') {
     }
   });
 }
+
+/* ── 溫度感知與焊點判讀測驗 ──────────────────────────────── */
+;(function () {
+  const TQ = [
+    {
+      situation: '烙鐵設定 250°C，焊接含鉛錫（Sn63Pb37，熔點 183°C）時焊錫依然無法流動，你認為原因是？',
+      options: [
+        '溫度超過熔點，焊錫應該會流動，可能是焊錫有問題',
+        '250°C 雖超熔點，但接觸冷接點後溫度快速下降，熱容量不足以充分潤濕接點',
+        '焊錫成分比例不正確，換一種牌子就好'
+      ],
+      correct: 1,
+      explain: '正確！烙鐵頭接觸冷接點後溫度會驟降，250°C 的熱容量不足以快速加熱接點。建議使用 320–360°C，才能讓接點快速升溫、焊錫充分潤濕，避免焊錫在流動前就重新凝固造成虛焊。'
+    },
+    {
+      situation: '焊接 0402 SMD 超小元件時，你把烙鐵調到 430°C，認為高溫縮短接觸時間、元件更安全。這個做法正確嗎？',
+      options: [
+        '正確，高溫縮短焊接時間，元件受熱更少、更安全',
+        '錯誤，430°C 瞬間過熱反而更容易燒損 SMD 元件和 PCB 焊盤覆銅',
+        '溫度不影響焊接品質，重點是進錫速度'
+      ],
+      correct: 1,
+      explain: '錯誤做法！對小型 SMD 元件，高溫非常危險。430°C 接觸瞬間就能讓電容、二極體等元件過熱失效，或使 PCB 銅箔脫落（Delamination）。正確做法：維持 320–360°C + 快速手法（1–2 秒完成焊接）。'
+    },
+    {
+      situation: '焊接後烙鐵頭表面出現深褐色氧化層，你拿砂紙把氧化層磨掉，覺得這樣比海綿更徹底。對嗎？',
+      options: [
+        '對，砂紙比海綿更能徹底清除氧化，效果更好',
+        '不對，砂紙會磨掉烙鐵頭的保護鍍層，使其更快氧化，應用濕海綿擦後立刻上錫',
+        '可以，只要磨輕一點、不磨太深就沒問題'
+      ],
+      correct: 1,
+      explain: '千萬不可用砂紙！烙鐵頭有特殊保護鍍層（通常是鍍鐵），磨掉後銅芯直接暴露，氧化速度會更快，最終造成「死頭」。正確做法：濕海綿輕擦 → 立刻上錫（Tinning）隔絕氧氣。'
+    },
+    {
+      situation: '焊完的焊點表面光亮，但呈圓球狀隆起，元件腳周圍沒有錐形 fillet 包覆。這代表什麼問題？',
+      options: [
+        '完美焊點！光亮就是品質好的表現',
+        '過量焊錫（Solder Ball），是相鄰焊點短路的潛在風險，不符合 IPC-A-610 標準',
+        '焊錫成分不對，應換成無鉛焊錫'
+      ],
+      correct: 1,
+      explain: '球狀焊點代表焊錫過量，無法形成凹形 fillet（潤濕角 < 90°）反而堆積成球。這是不良焊點，容易觸碰相鄰焊盤造成短路（Solder Bridge）。應重新加熱讓多餘焊錫流走，或用吸錫線吸除後補焊。'
+    },
+  ];
+
+  const sec = document.createElement('section');
+  sec.className = 'panel';
+  sec.innerHTML = `
+    <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:6px">🌡️ 溫度感知與焊點判讀測驗</h3>
+    <p style="color:#64748b;font-size:14px;margin-bottom:16px">焊接溫度與技術細節密切相關。從以下情境中選出正確判斷，培養溫度直覺與焊點鑑別能力。</p>
+    <div id="temp-quiz-list"></div>
+    <div id="temp-quiz-result" style="margin-top:12px"></div>
+  `;
+  const nav = document.querySelector('.module-nav-bottom');
+  if (nav) nav.parentNode.insertBefore(sec, nav);
+
+  const container = document.getElementById('temp-quiz-list');
+  let tqScore = 0;
+  const tqAnswered = new Set();
+
+  TQ.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.style.cssText = 'background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:16px 18px;margin-bottom:12px';
+    div.innerHTML = `
+      <p style="font-size:14px;color:#1e293b;margin:0 0 12px"><strong>情境 ${i + 1}：</strong>${q.situation}</p>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        ${q.options.map((o, j) => `<button class="tq-btn" data-q="${i}" data-c="${j}"
+          style="text-align:left;padding:10px 14px;border:1px solid #cbd5e1;border-radius:8px;background:#f8fafc;font-size:13px;cursor:pointer;transition:background .15s,border-color .15s;line-height:1.5">
+          <strong style="color:#475569">${String.fromCharCode(65 + j)}.</strong> ${o}
+        </button>`).join('')}
+      </div>
+      <div class="tq-feedback" style="margin-top:10px"></div>
+    `;
+    container.appendChild(div);
+  });
+
+  container.querySelectorAll('.tq-btn').forEach(btn => {
+    btn.addEventListener('mouseenter', () => { if (!btn.disabled) btn.style.background = '#f1f5f9'; });
+    btn.addEventListener('mouseleave', () => { if (!btn.disabled && btn.style.borderColor === 'rgb(203, 213, 225)') btn.style.background = '#f8fafc'; });
+    btn.addEventListener('click', () => {
+      const i = parseInt(btn.dataset.q);
+      const c = parseInt(btn.dataset.c);
+      if (tqAnswered.has(i)) return;
+      tqAnswered.add(i);
+      const correct = c === TQ[i].correct;
+      const parent = btn.closest('div[style]');
+      parent.querySelectorAll('.tq-btn').forEach((b, k) => {
+        b.disabled = true;
+        b.style.cursor = 'default';
+        if (k === TQ[i].correct) {
+          b.style.background = '#dcfce7';
+          b.style.borderColor = '#16a34a';
+          b.style.color = '#15803d';
+        }
+        if (b === btn && !correct) {
+          b.style.background = '#fee2e2';
+          b.style.borderColor = '#dc2626';
+          b.style.color = '#b91c1c';
+        }
+      });
+      const fb = parent.querySelector('.tq-feedback');
+      const style = correct
+        ? 'background:#f0fdf4;border:1px solid #86efac;color:#15803d'
+        : 'background:#fff7ed;border:1px solid #fdba74;color:#9a3412';
+      fb.innerHTML = `<div style="padding:10px 14px;border-radius:8px;font-size:13px;line-height:1.7;${style}">
+        ${correct ? '✓ 正確！' : '✗ 不對。'} ${TQ[i].explain}
+      </div>`;
+      if (correct) { tqScore++; if (typeof SoundFX !== 'undefined') SoundFX.success(); }
+      else if (typeof SoundFX !== 'undefined') SoundFX.error();
+
+      if (tqAnswered.size === TQ.length) {
+        const result = document.getElementById('temp-quiz-result');
+        const pct = Math.round(tqScore / TQ.length * 100);
+        const pass = pct >= 75;
+        result.innerHTML = `<div style="padding:16px 20px;border-radius:12px;text-align:center;font-size:15px;margin-top:4px;${pass
+          ? 'background:#f0fdf4;border:2px solid #22c55e;color:#15803d'
+          : 'background:#fff7ed;border:2px solid #f97316;color:#9a3412'}">
+          ${pass ? '🌡️ 溫度感知測驗通過！' : '📖 再複習一次操作步驟再挑戰！'}&ensp;<strong>${tqScore} / ${TQ.length} 答對（${pct}%）</strong>
+        </div>`;
+        if (pass) {
+          if (typeof SoundFX !== 'undefined') SoundFX.win();
+          try {
+            const k = 'solder_progress_v1';
+            const p = JSON.parse(localStorage.getItem(k)) || {};
+            p.module3_tempquiz = true;
+            localStorage.setItem(k, JSON.stringify(p));
+          } catch (e) {}
+          if (typeof showToast === 'function') showToast('🌡️ 溫度感知測驗通過！', 'good');
+        }
+      }
+    });
+  });
+})();

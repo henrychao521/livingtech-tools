@@ -232,3 +232,384 @@ document.querySelectorAll('.part-chip').forEach(c => {
     });
   });
 })();
+
+/* ── 烙鐵頭形狀圖鑑 ───────────────────────────────────── */
+;(function () {
+  const TIPS = [
+    {
+      id: 'conical', name: '圓錐尖頭', en: 'Conical / Pencil Tip',
+      color: '#dc2626', temp: '300–360°C',
+      best: '精細通孔元件、IC 腳、小型貼片',
+      avoid: '大焊盤、線材接頭（接觸面積太小）',
+      note: '最常見的初學者教學用頭。接觸點集中，適合練習定點加熱。',
+      photo: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Soldering_iron_tip_types.jpg/320px-Soldering_iron_tip_types.jpg', cap: '各種烙鐵頭形狀對比圖', page: 'https://commons.wikimedia.org/wiki/File:Soldering_iron_tip_types.jpg', lic: 'CC BY-SA · Wikimedia Commons' },
+      svg: `<line x1="30" y1="50" x2="130" y2="50" stroke="#9ca3af" stroke-width="12" stroke-linecap="round"/>
+        <polygon points="130,42 160,50 130,58" fill="#dc2626"/>
+        <circle cx="159" cy="50" r="3" fill="#fbbf24"/>`,
+    },
+    {
+      id: 'chisel', name: '扁頭（馬蹄形）', en: 'Chisel / Screwdriver Tip',
+      color: '#ea580c', temp: '320–380°C',
+      best: '通孔焊接、大焊盤、電線接頭、最常用',
+      avoid: '密集 SMD 腳（太寬容易橋接）',
+      note: '接觸面積大，傳熱效率最高。絕大多數初學者課程首選。新手從這裡開始。',
+      photo: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Soldering_iron_tip_types.jpg/320px-Soldering_iron_tip_types.jpg', cap: '扁頭烙鐵頭（最常用）', page: 'https://commons.wikimedia.org/wiki/File:Soldering_iron_tip_types.jpg', lic: 'CC BY-SA · Wikimedia Commons' },
+      svg: `<line x1="30" y1="50" x2="140" y2="50" stroke="#9ca3af" stroke-width="12" stroke-linecap="round"/>
+        <rect x="140" y="38" width="22" height="24" rx="2" fill="#ea580c"/>`,
+    },
+    {
+      id: 'bevel', name: '斜切頭（刀形）', en: 'Bevel / Hoof Tip',
+      color: '#d97706', temp: '320–370°C',
+      best: 'SMD 拖焊（Drag Soldering）、IC 陣腳快速焊',
+      avoid: '通孔單點精細焊',
+      note: '拖焊技術：把大量錫倒在 IC 腳上，再用這個頭一次拖過去帶走多餘錫，速度極快。進階技巧。',
+      photo: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Soldering_iron_tip_types.jpg/320px-Soldering_iron_tip_types.jpg', cap: '斜切頭（拖焊專用）', page: 'https://commons.wikimedia.org/wiki/File:Soldering_iron_tip_types.jpg', lic: 'CC BY-SA · Wikimedia Commons' },
+      svg: `<line x1="30" y1="50" x2="140" y2="50" stroke="#9ca3af" stroke-width="12" stroke-linecap="round"/>
+        <polygon points="140,38 165,50 140,62" fill="#d97706"/>
+        <line x1="148" y1="42" x2="165" y2="58" stroke="#92400e" stroke-width="2"/>`,
+    },
+    {
+      id: 'knife', name: '刀型頭', en: 'Knife Tip',
+      color: '#7c3aed', temp: '340–400°C',
+      best: '切斷橋接連錫、SMD 大型元件拆焊',
+      avoid: '精細通孔、密集排腳',
+      note: '用刃部「刮」過連錫就能切斷。也可用來清除舊錫或拆除損壞的連接器。',
+      photo: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Soldering_iron_tip_types.jpg/320px-Soldering_iron_tip_types.jpg', cap: '刀型烙鐵頭', page: 'https://commons.wikimedia.org/wiki/File:Soldering_iron_tip_types.jpg', lic: 'CC BY-SA · Wikimedia Commons' },
+      svg: `<line x1="30" y1="50" x2="140" y2="50" stroke="#9ca3af" stroke-width="12" stroke-linecap="round"/>
+        <polygon points="140,35 170,48 170,52 140,65" fill="#7c3aed"/>
+        <line x1="140" y1="35" x2="170" y2="65" stroke="#5b21b6" stroke-width="1.5"/>`,
+    },
+    {
+      id: 'micro', name: '微型尖頭（0.2mm）', en: 'Micro / Needle Tip',
+      color: '#0369a1', temp: '280–330°C',
+      best: '0402 以下 SMD、手機主板維修、精密修補',
+      avoid: '一般通孔焊接（太慢）',
+      note: '超細尖端導熱緩慢，需要較長接觸時間。不適合新手，用錯容易冷焊或燒壞元件。',
+      photo: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Soldering_iron_tip_types.jpg/320px-Soldering_iron_tip_types.jpg', cap: '微型針頭（精密維修）', page: 'https://commons.wikimedia.org/wiki/File:Soldering_iron_tip_types.jpg', lic: 'CC BY-SA · Wikimedia Commons' },
+      svg: `<line x1="30" y1="50" x2="145" y2="50" stroke="#9ca3af" stroke-width="12" stroke-linecap="round"/>
+        <polygon points="145,47 175,50 145,53" fill="#0369a1"/>`,
+    },
+  ];
+
+  const sec = document.createElement('section');
+  sec.className = 'panel';
+  sec.innerHTML = `
+    <h3>🔧 烙鐵頭形狀圖鑑 <span style="font-size:13px;font-weight:500;color:#64748b;margin-left:8px">點選查看用途與建議</span></h3>
+    <p class="muted" style="margin-bottom:14px">烙鐵頭形狀決定了傳熱效率與適用場景。課堂新手建議從<strong>扁頭（馬蹄形）</strong>開始。</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px" id="tip-tabs">
+      ${TIPS.map(t => `<button data-tip="${t.id}" style="padding:9px 13px;border:2px solid #e2e8f0;border-radius:8px;cursor:pointer;background:#fff;font-weight:700;font-size:12px;transition:all .2s;color:#374151;line-height:1.3">${t.name}</button>`).join('')}
+    </div>
+    <div id="tip-detail" style="background:#f8fafc;border-radius:12px;padding:18px;min-height:120px">
+      <p style="text-align:center;color:#94a3b8;margin:20px 0">👆 點選烙鐵頭類型查看詳細說明</p>
+    </div>`;
+
+  const nav = document.querySelector('.module-nav-bottom');
+  if (nav) nav.parentNode.insertBefore(sec, nav);
+
+  document.querySelectorAll('#tip-tabs [data-tip]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#tip-tabs [data-tip]').forEach(b => {
+        b.style.background = '#fff'; b.style.borderColor = '#e2e8f0'; b.style.color = '#374151';
+      });
+      const t = TIPS.find(x => x.id === btn.dataset.tip);
+      btn.style.background = t.color; btn.style.borderColor = t.color; btn.style.color = '#fff';
+      if (typeof SoundFX !== 'undefined') SoundFX.pop();
+      document.getElementById('tip-detail').innerHTML = `
+        <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start">
+          <div style="flex:1;min-width:220px">
+            <h4 style="margin:0 0 2px;color:${t.color}">${t.name}</h4>
+            <p style="margin:0 0 10px;font-size:11px;color:#94a3b8;font-style:italic">${t.en}</p>
+            <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+              <span style="background:#0f172a;color:#fff;padding:3px 10px;border-radius:6px;font-size:12px;font-weight:700;font-family:Inter">🌡 ${t.temp}</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+              <div style="background:#dcfce7;border-radius:8px;padding:8px 10px;font-size:12px"><strong style="color:#15803d">✓ 適合</strong><br>${t.best}</div>
+              <div style="background:#fef2f2;border-radius:8px;padding:8px 10px;font-size:12px"><strong style="color:#dc2626">✗ 避免</strong><br>${t.avoid}</div>
+            </div>
+            <div style="background:#eff6ff;border-left:3px solid #3b82f6;border-radius:6px;padding:8px 12px;font-size:12px;color:#1e40af">${t.note}</div>
+          </div>
+          <div style="width:200px;flex-shrink:0">
+            <svg viewBox="0 0 200 100" style="width:100%;background:#1e293b;border-radius:8px">${t.svg}</svg>
+            <img src="${t.photo.url}" alt="${t.photo.cap}" style="width:100%;border-radius:8px;margin-top:8px;max-height:100px;object-fit:cover" onerror="this.style.display='none'">
+            <p style="font-size:10px;color:#94a3b8;margin:4px 0 0"><a href="${t.photo.page}" target="_blank" rel="noopener" style="color:#3b82f6">${t.photo.lic}</a></p>
+          </div>
+        </div>`;
+    });
+  });
+  // Auto-select chisel (recommended for beginners)
+  document.querySelector('#tip-tabs [data-tip="chisel"]')?.click();
+})();
+
+/* ── 焊錫耗材 + 助焊劑圖鑑 ──────────────────────────── */
+;(function () {
+  const nav = document.querySelector('.module-nav-bottom');
+  if (!nav) return;
+
+  const sec = document.createElement('section');
+  sec.className = 'panel';
+  sec.innerHTML = `
+    <h3>🧪 焊接耗材全圖鑑</h3>
+    <p class="muted" style="margin-bottom:16px">焊錫絲、助焊劑、去錫工具——認識耗材才能買對用對。</p>
+
+    <!-- 焊錫種類 -->
+    <h4 style="font-size:14px;font-weight:700;color:#374151;margin:0 0 10px">① 焊錫絲種類</h4>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:20px">
+      ${[
+        { name: '有鉛錫（Sn63Pb37）', badge:'🟡', color:'#d97706',
+          mp:'183°C', temp:'320°C', skill:'⭐ 新手首選',
+          pro:'熔點低、流動性佳、焊點光亮、好學習',
+          con:'含鉛（對人體有毒，學後洗手）',
+          note:'國中課堂標準用錫。焊完務必洗手，不要用手摸口鼻。',
+          photo:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Solder_wire.jpg/320px-Solder_wire.jpg' },
+        { name: '無鉛錫（SAC305）', badge:'🟢', color:'#16a34a',
+          mp:'217°C', temp:'360–380°C', skill:'⭐⭐ 進階',
+          pro:'符合 RoHS 環保法規，無鉛安全',
+          con:'熔點高、流動性差、焊點較霧，新手易冷焊',
+          note:'工廠量產標準。需要較高溫度，操作不熟練容易冷焊。',
+          photo:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Solder_wire.jpg/320px-Solder_wire.jpg' },
+        { name: '錫膏（Solder Paste）', badge:'⬜', color:'#475569',
+          mp:'183–217°C', temp:'回流爐 230°C+', skill:'⭐⭐⭐ 專業',
+          pro:'SMD 表面貼裝必用，自動印刷機友善',
+          con:'需要搭配鋼板印刷 + 回流焊爐或熱風槍',
+          note:'用於 SMD 貼片元件。課堂一般不使用，了解概念即可。',
+          photo:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Solder_paste_stencil.jpg/320px-Solder_paste_stencil.jpg' },
+      ].map(s => `<div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px;border-top:4px solid ${s.color}">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span style="font-size:20px">${s.badge}</span>
+          <div><div style="font-weight:700;font-size:14px">${s.name}</div><div style="font-size:11px;color:#94a3b8">${s.skill}</div></div>
+        </div>
+        <img src="${s.photo}" style="width:100%;height:60px;object-fit:cover;border-radius:6px;margin-bottom:8px" onerror="this.style.display='none'">
+        <div style="display:flex;gap:6px;margin-bottom:8px;font-size:11px">
+          <span style="background:#0f172a;color:#fff;padding:2px 8px;border-radius:4px;font-family:Inter">熔點 ${s.mp}</span>
+          <span style="background:${s.color};color:#fff;padding:2px 8px;border-radius:4px;font-family:Inter">操作 ${s.temp}</span>
+        </div>
+        <div style="font-size:12px;color:#374151;margin-bottom:4px"><span style="color:#16a34a">✓</span> ${s.pro}</div>
+        <div style="font-size:12px;color:#374151;margin-bottom:8px"><span style="color:#dc2626">✗</span> ${s.con}</div>
+        <div style="background:#f1f5f9;border-radius:6px;padding:6px 8px;font-size:11px;color:#64748b">${s.note}</div>
+      </div>`).join('')}
+    </div>
+
+    <!-- 助焊劑 -->
+    <h4 style="font-size:14px;font-weight:700;color:#374151;margin:0 0 10px">② 助焊劑（Flux）</h4>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:20px">
+      ${[
+        { name:'松香助焊劑', en:'Rosin Flux', color:'#b45309', badge:'🍂',
+          use:'焊後有松香殘留，黃褐色，無腐蝕性（可不清除）',
+          best:'通孔元件 / 標準焊接', warn:'電路板外觀較髒，影響美觀' },
+        { name:'免洗助焊劑', en:'No-Clean Flux', color:'#0891b2', badge:'💧',
+          use:'殘留量極少，符合免清洗需求，工廠量產標準',
+          best:'SMD / 大量生產', warn:'仍有微量殘留，高頻電路要清洗' },
+        { name:'水溶性助焊劑', en:'Water-Soluble / OA', color:'#16a34a', badge:'🌊',
+          use:'活性最強、焊點最好，但焊後「必須」用去離子水清洗',
+          best:'銅鋁等難焊金屬', warn:'48 小時內沒清洗會腐蝕銅箔' },
+      ].map(f => `<div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:12px;border-left:4px solid ${f.color}">
+        <div style="font-size:18px;margin-bottom:6px">${f.badge}</div>
+        <div style="font-weight:700;font-size:13px;margin-bottom:2px">${f.name}</div>
+        <div style="font-size:10px;color:#94a3b8;margin-bottom:8px;font-style:italic">${f.en}</div>
+        <div style="font-size:12px;color:#374151;margin-bottom:6px">${f.use}</div>
+        <div style="font-size:11px;color:#16a34a;margin-bottom:3px">✓ 最適合：${f.best}</div>
+        <div style="font-size:11px;color:#dc2626">⚠ 注意：${f.warn}</div>
+      </div>`).join('')}
+    </div>
+
+    <!-- 去錫工具 -->
+    <h4 style="font-size:14px;font-weight:700;color:#374151;margin:0 0 10px">③ 去錫 / 拆焊工具</h4>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px">
+      ${[
+        { name:'吸錫器（Desoldering Pump）', badge:'🔫', color:'#dc2626',
+          how:'按下彈簧 → 烙鐵加熱錫到熔融 → 對準瞬間按下吸嘴 → 錫被吸入',
+          best:'通孔大量吸錫，速度快', warn:'需要雙手協調，一手烙鐵一手吸',
+          photo:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Desoldering_pump.jpg/320px-Desoldering_pump.jpg' },
+        { name:'吸錫線（銅辮子 Desoldering Braid）', badge:'🧵', color:'#7c3aed',
+          how:'把銅辮子壓在焊點上 → 烙鐵加熱辮子 → 毛細管效應把錫吸進辮子',
+          best:'SMD 連錫、細密間距清理，不需吸力', warn:'單次使用段要剪掉，費料較多',
+          photo:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Desoldering_braid.jpg/320px-Desoldering_braid.jpg' },
+      ].map(d => `<div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:12px;border-top:4px solid ${d.color}">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span style="font-size:22px">${d.badge}</span>
+          <div style="font-weight:700;font-size:13px">${d.name}</div>
+        </div>
+        <img src="${d.photo}" style="width:100%;height:70px;object-fit:cover;border-radius:6px;margin-bottom:8px" onerror="this.style.display='none'">
+        <div style="font-size:12px;color:#374151;margin-bottom:6px"><strong>使用方式：</strong>${d.how}</div>
+        <div style="font-size:11px;color:#16a34a;margin-bottom:3px">✓ ${d.best}</div>
+        <div style="font-size:11px;color:#dc2626">⚠ ${d.warn}</div>
+      </div>`).join('')}
+    </div>`;
+
+  nav.parentNode.insertBefore(sec, nav);
+})();
+
+/* ── 烙鐵頭保養四步驟互動 ─────────────────────────────── */
+;(function () {
+  const nav = document.querySelector('.module-nav-bottom');
+  if (!nav) return;
+
+  const STEPS = [
+    {
+      label: '① 發現氧化', color: '#6b7280',
+      svg: `<rect x="60" y="44" width="140" height="12" rx="2" fill="#6b7280"/>
+        <polygon points="200,40 228,50 200,60" fill="#374151"/>
+        <g fill="#1a1a1a" opacity=".8">
+          <circle cx="210" cy="46" r="3"/><circle cx="218" cy="50" r="4"/><circle cx="212" cy="55" r="2.5"/>
+          <circle cx="222" cy="53" r="3"/><circle cx="206" cy="52" r="2"/>
+        </g>
+        <text x="150" y="85" text-anchor="middle" font-size="11" fill="#dc2626" font-weight="700" font-family="Inter,sans-serif">氧化層 = 黑色顆粒，不沾錫</text>`,
+      title: '烙鐵頭氧化了！',
+      desc: '烙鐵頭長時間高溫暴露在空氣中會形成氧化層——外觀呈黑褐色、顆粒狀。這層氧化物幾乎不導熱，會讓焊接困難。每次焊接前後都要確認烙鐵頭狀態。',
+      tip: '判斷方式：把烙鐵頭輕輕點一下焊錫絲，如果錫立刻縮成球不沾，就是氧化了。',
+    },
+    {
+      label: '② 海綿清潔', color: '#0891b2',
+      svg: `<rect x="60" y="44" width="140" height="12" rx="2" fill="#9ca3af"/>
+        <polygon points="200,40 228,50 200,60" fill="#374151"/>
+        <rect x="60" y="70" width="120" height="20" rx="3" fill="#fbbf24"/>
+        <text x="120" y="84" text-anchor="middle" font-size="10" fill="#374151" font-weight="700">濕海綿</text>
+        <path d="M 210 70 Q 200 100 180 85" stroke="#0891b2" stroke-width="2" fill="none" marker-end="url(#arrow-c)"/>
+        <defs><marker id="arrow-c" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0891b2"/></marker></defs>
+        <text x="150" y="108" text-anchor="middle" font-size="11" fill="#0891b2" font-weight="700" font-family="Inter,sans-serif">烙鐵頭在海綿上擦 2–3 次</text>`,
+      title: '海綿擦除氧化物',
+      desc: '沾濕並擰乾的清潔海綿（不能太濕）能用溫差讓氧化物從金屬表面剝離。把烙鐵頭在海綿上快速橫向擦拭 2–3 次。另一種方式是用「黃銅球清潔器」——溫差更小，對烙鐵頭更溫和。',
+      tip: '海綿太濕會讓烙鐵頭因驟冷而熱衝擊裂開；太乾則無法清潔。測試：用手指輕壓，濕潤但不滴水。',
+    },
+    {
+      label: '③ 上錫（Tinning）', color: '#d97706',
+      svg: `<rect x="60" y="44" width="140" height="12" rx="2" fill="#9ca3af"/>
+        <polygon points="200,40 228,50 200,60" fill="#e5e7eb"/>
+        <line x1="270" y1="20" x2="215" y2="50" stroke="#9ca3af" stroke-width="4" stroke-linecap="round"/>
+        <ellipse cx="216" cy="50" rx="0" ry="0" fill="rgba(192,192,192,.9)">
+          <animate attributeName="rx" values="0;10;10;0" dur="2.5s" repeatCount="indefinite"/>
+          <animate attributeName="ry" values="0;7;7;0" dur="2.5s" repeatCount="indefinite"/>
+        </ellipse>
+        <text x="150" y="100" text-anchor="middle" font-size="11" fill="#d97706" font-weight="700" font-family="Inter,sans-serif">焊錫均勻包覆 → 亮銀色！</text>`,
+      title: '上錫（Tinning）',
+      desc: '烙鐵頭清潔後，立刻將焊錫絲點到烙鐵頭各個面，讓薄薄一層錫均勻包覆整個接觸區域。這層「鍍錫」能隔絕空氣、防止再次氧化，同時大幅提升傳熱效率。',
+      tip: '正確的上錫後烙鐵頭應該是「亮銀色」並帶有流動光澤。如果還是偏暗，再重複一次清潔和上錫。',
+    },
+    {
+      label: '④ 保養完成！', color: '#16a34a',
+      svg: `<rect x="60" y="44" width="140" height="12" rx="2" fill="#9ca3af"/>
+        <polygon points="200,40 228,50 200,60" fill="#e5e7eb"/>
+        <ellipse cx="218" cy="50" rx="16" ry="10" fill="rgba(192,192,192,.85)" stroke="#888" stroke-width=".5"/>
+        <ellipse cx="213" cy="46" rx="5" ry="3" fill="rgba(255,255,255,.8)"/>
+        <circle cx="200" cy="8" r="12" fill="#16a34a"/>
+        <text x="200" y="13" text-anchor="middle" font-size="16" fill="#fff">✓</text>
+        <text x="150" y="100" text-anchor="middle" font-size="11" fill="#16a34a" font-weight="700" font-family="Inter,sans-serif">亮銀色 · 傳熱效率 100% · 可以焊接！</text>`,
+      title: '保養完成，可以開始焊接！',
+      desc: '養護好的烙鐵頭呈現亮銀色，錫在接觸點形成良好的橋接層。每次焊接結束後，在存放前也要上錫保護（避免隔夜氧化）。養成習慣：「開機先上錫，收機先上錫」。',
+      tip: '烙鐵頭壽命的長短幾乎完全取決於養護習慣。正確養護的頭可以用 2–3 年，忽視養護的頭可能一個月就「死頭」。',
+    },
+  ];
+
+  const sec = document.createElement('section');
+  sec.className = 'panel';
+  sec.id = 'tinning-practice';
+  let cur = 0;
+
+  function buildUI() {
+    sec.innerHTML = `
+      <h3>🔧 烙鐵頭保養互動教學</h3>
+      <p class="muted" style="margin-bottom:14px">每次開機前後都要做的例行保養。點擊進行每個步驟。</p>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px">
+        ${STEPS.map((s, i) => `<span style="padding:6px 12px;border-radius:20px;font-size:12px;font-weight:700;background:${i <= cur ? s.color : '#e2e8f0'};color:${i <= cur ? '#fff' : '#94a3b8'};transition:all .3s">${s.label}</span>`).join('')}
+      </div>
+      <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start">
+        <svg viewBox="0 0 300 120" style="width:240px;height:96px;flex-shrink:0;background:#1e293b;border-radius:10px">${STEPS[cur].svg}</svg>
+        <div style="flex:1;min-width:200px">
+          <h4 style="margin:0 0 8px;font-size:16px;color:${STEPS[cur].color}">${STEPS[cur].title}</h4>
+          <p style="font-size:13px;line-height:1.7;margin:0 0 10px;color:#374151">${STEPS[cur].desc}</p>
+          <div style="background:#eff6ff;border-left:3px solid #3b82f6;border-radius:6px;padding:8px 12px;font-size:12px;color:#1e40af;margin-bottom:14px">💡 ${STEPS[cur].tip}</div>
+          <div style="display:flex;gap:8px">
+            ${cur > 0 ? `<button onclick="window._tinningPrev()" style="padding:8px 16px;border:2px solid #e2e8f0;border-radius:8px;cursor:pointer;background:#fff;font-weight:600;font-size:13px">← 上一步</button>` : ''}
+            ${cur < STEPS.length - 1
+              ? `<button onclick="window._tinningNext()" style="padding:8px 20px;border:none;border-radius:8px;cursor:pointer;background:${STEPS[cur].color};color:#fff;font-weight:700;font-size:13px">繼續 →</button>`
+              : `<button onclick="window._tinningReset()" style="padding:8px 20px;border:none;border-radius:8px;cursor:pointer;background:#16a34a;color:#fff;font-weight:700;font-size:13px">重新練習 ↺</button>`}
+          </div>
+        </div>
+      </div>`;
+  }
+
+  window._tinningNext = () => { if (cur < STEPS.length - 1) { cur++; if (typeof SoundFX !== 'undefined') SoundFX.success(); buildUI(); } };
+  window._tinningPrev = () => { if (cur > 0) { cur--; buildUI(); } };
+  window._tinningReset = () => { cur = 0; buildUI(); };
+
+  nav.parentNode.insertBefore(sec, nav);
+  buildUI();
+})();
+
+/* ══════════════════════════════════════════════════════════
+   🅱  Layer B — 3D 互動模型平台（素材待上傳）
+   ─────────────────────────────────────────────────────────
+   上傳素材步驟：
+   1. 用 Polycam / Scaniverse 掃描烙鐵，匯出為 .glb
+   2. 將檔案命名為 iron.glb 並放置到：
+      solder/assets/3d/iron.glb
+   3. (選用) 建立封面截圖: solder/assets/3d/iron-poster.jpg
+   4. 調整下方 HOTSPOTS 陣列的座標（點擊模型查看位置）
+   完成後移除「素材準備中」提示，model-viewer 自動生效。
+   ════════════════════════════════════════════════════════ */
+;(function () {
+  const nav = document.querySelector('.module-nav-bottom');
+  if (!nav) return;
+
+  // ── 熱點定義（等候素材後填入 data-position 真實座標） ──
+  const HOTSPOTS = [
+    { id: 'tip',     pos: '0 0.12 0.05', norm: '0 1 0',   label: '烙鐵頭（Tip）',          desc: '直接接觸接點的核心，溫度 300–400°C。形狀決定適用場景。' },
+    { id: 'heating', pos: '0 0.09 0.02', norm: '0 1 0',   label: '加熱元件',               desc: '陶瓷電阻發熱體，30–60W，從冷態加熱到 350°C 約 30–60 秒。' },
+    { id: 'handle',  pos: '0 0.06 -0.04', norm: '0 1 0',  label: '隔熱握柄',               desc: '耐高溫塑膠或軟木，正確握法如握筆，防止燙傷。' },
+    { id: 'display', pos: '0 0.05 -0.08', norm: '0 1 0',  label: '溫控顯示器',             desc: '含鉛錫設定 320°C，無鉛錫設定 360–380°C。閃爍 = 加熱中。' },
+  ];
+
+  // 確認 GLB 檔案是否已上傳
+  const glbPath = '../../solder/assets/3d/iron.glb';
+  const hasAsset = false; // ← 上傳素材後改為 true
+
+  const sec = document.createElement('section');
+  sec.className = 'panel';
+
+  if (hasAsset) {
+    // ── 真實 3D 模型模式 ──
+    if (!customElements.get('model-viewer')) {
+      const s = document.createElement('script');
+      s.type = 'module';
+      s.src = 'https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js';
+      document.head.appendChild(s);
+    }
+    sec.innerHTML = `
+      <h3>🔭 烙鐵 3D 互動模型 <span style="font-size:12px;font-weight:500;color:#64748b;margin-left:6px">旋轉 · 縮放 · 點擊零件</span></h3>
+      <p class="muted" style="margin-bottom:14px">拖曳旋轉模型，點擊橘色標注查看各零件說明。</p>
+      <div style="background:#1e293b;border-radius:14px;overflow:hidden">
+        <model-viewer
+          src="${glbPath}"
+          poster="../../solder/assets/3d/iron-poster.jpg"
+          auto-rotate auto-rotate-delay="0" rotation-per-second="15deg"
+          camera-controls min-camera-orbit="auto auto 5%" max-camera-orbit="auto auto 200%"
+          environment-image="neutral" shadow-intensity="1"
+          style="width:100%;height:360px;--poster-color:#1e293b">
+          ${HOTSPOTS.map(h => `
+            <button class="hotspot" slot="hotspot-${h.id}"
+              data-position="${h.pos}" data-normal="${h.norm}"
+              style="background:#f97316;border:2px solid #fff;border-radius:50%;width:20px;height:20px;cursor:pointer"
+              title="${h.label}">
+              <div class="annotation" style="background:#0f172a;color:#fff;padding:8px 12px;border-radius:8px;width:160px;font-size:12px;position:absolute;bottom:24px;left:50%;transform:translateX(-50%);white-space:normal;text-align:left;pointer-events:none">
+                <strong style="color:#f97316">${h.label}</strong><br>${h.desc}
+              </div>
+            </button>`).join('')}
+          <div slot="progress-bar" style="background:linear-gradient(90deg,#0891b2,#22c55e);height:3px"></div>
+        </model-viewer>
+      </div>`;
+  } else {
+    // ── 佔位模式（素材待上傳）──
+    sec.innerHTML = `
+      <h3>🔭 烙鐵 3D 互動模型 <span style="font-size:12px;padding:2px 8px;background:#fef3c7;color:#92400e;border-radius:4px;margin-left:8px">素材準備中</span></h3>
+      <div style="background:#1e293b;border-radius:14px;padding:36px;text-align:center;border:2px dashed #334155">
+        <div style="font-size:48px;margin-bottom:12px">🔧</div>
+        <p style="color:#94a3b8;font-size:14px;margin:0 0 8px">3D 互動烙鐵模型即將上線</p>
+        <p style="color:#64748b;font-size:12px;margin:0">素材準備好後，將掃描的 <code style="background:#0f172a;padding:2px 6px;border-radius:4px;color:#22c55e">iron.glb</code> 放入 <code style="background:#0f172a;padding:2px 6px;border-radius:4px;color:#22c55e">solder/assets/3d/</code> 即可</p>
+      </div>
+      <div style="margin-top:12px;background:#eff6ff;border-radius:8px;padding:12px 16px;font-size:12px;color:#1e40af">
+        <strong>📱 拍攝提示：</strong>使用 iPhone 12 Pro 以上（含 LiDAR）的 <strong>Polycam</strong> 或 <strong>Scaniverse</strong> App 掃描烙鐵，匯出 .glb 格式後提供給我即可部署。學生將能在網頁上旋轉、放大，並點擊各零件查看說明。
+      </div>`;
+  }
+
+  nav.parentNode.insertBefore(sec, nav);
+})();
