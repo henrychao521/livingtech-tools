@@ -1,22 +1,15 @@
 solid OpenSCAD_Model
   facet normal 0 0 -1
     outer loop
-      vertex 30 -30 -20
       vertex -15 -15 -20
       vertex 30 -15 -20
-    endloop
-  endfacet
-  facet normal 0 0 -1
-    outer loop
-      vertex -30 -30 -20
-      vertex -15 -15 -20
       vertex 30 -30 -20
     endloop
   endfacet
-  facet normal 0 0 -1
+  facet normal 0 -0 -1
     outer loop
-      vertex -30 30 -20
       vertex -15 -15 -20
+      vertex 30 -30 -20
       vertex -30 -30 -20
     endloop
   endfacet
@@ -27,6 +20,27 @@ solid OpenSCAD_Model
       vertex -15 30 -20
     endloop
   endfacet
+  facet normal -0 0 -1
+    outer loop
+      vertex -15 -15 -20
+      vertex -30 -30 -20
+      vertex -30 30 -20
+    endloop
+  endfacet
+  facet normal 0 -0 1
+    outer loop
+      vertex 30 -30 20
+      vertex 30 -15 20
+      vertex -15 -15 20
+    endloop
+  endfacet
+  facet normal 0 0 1
+    outer loop
+      vertex -30 -30 20
+      vertex 30 -30 20
+      vertex -15 -15 20
+    endloop
+  endfacet
   facet normal 0 0 1
     outer loop
       vertex -15 30 20
@@ -34,46 +48,25 @@ solid OpenSCAD_Model
       vertex -15 -15 20
     endloop
   endfacet
-  facet normal -0 0 1
-    outer loop
-      vertex -15 -15 20
-      vertex 30 -30 20
-      vertex 30 -15 20
-    endloop
-  endfacet
   facet normal 0 0 1
     outer loop
-      vertex -15 -15 20
-      vertex -30 -30 20
-      vertex 30 -30 20
-    endloop
-  endfacet
-  facet normal 0 0 1
-    outer loop
-      vertex -30 -30 20
-      vertex -15 -15 20
       vertex -30 30 20
-    endloop
-  endfacet
-  facet normal 0 1 -0
-    outer loop
-      vertex 30 -15 -20
+      vertex -30 -30 20
       vertex -15 -15 20
-      vertex 30 -15 20
     endloop
   endfacet
   facet normal 0 1 0
     outer loop
-      vertex -15 -15 20
-      vertex 30 -15 -20
       vertex -15 -15 -20
+      vertex 30 -15 20
+      vertex 30 -15 -20
     endloop
   endfacet
-  facet normal 1 -0 0
+  facet normal 0 1 0
     outer loop
+      vertex -15 -15 -20
       vertex -15 -15 20
-      vertex -15 30 -20
-      vertex -15 30 20
+      vertex 30 -15 20
     endloop
   endfacet
   facet normal 1 0 0
@@ -83,18 +76,25 @@ solid OpenSCAD_Model
       vertex -15 -15 -20
     endloop
   endfacet
-  facet normal 0 1 -0
+  facet normal 1 0 -0
     outer loop
       vertex -15 30 -20
-      vertex -30 30 20
       vertex -15 30 20
+      vertex -15 -15 20
     endloop
   endfacet
   facet normal 0 1 0
     outer loop
-      vertex -30 30 20
-      vertex -15 30 -20
       vertex -30 30 -20
+      vertex -15 30 20
+      vertex -15 30 -20
+    endloop
+  endfacet
+  facet normal 0 1 0
+    outer loop
+      vertex -30 30 -20
+      vertex -30 30 20
+      vertex -15 30 20
     endloop
   endfacet
   facet normal -1 0 0
@@ -104,32 +104,25 @@ solid OpenSCAD_Model
       vertex -30 30 -20
     endloop
   endfacet
-  facet normal -1 -0 0
+  facet normal -1 0 0
     outer loop
-      vertex -30 30 20
       vertex -30 -30 -20
       vertex -30 -30 20
+      vertex -30 30 20
     endloop
   endfacet
   facet normal 0 -1 0
     outer loop
+      vertex 30 -30 -20
+      vertex -30 -30 20
       vertex -30 -30 -20
+    endloop
+  endfacet
+  facet normal 0 -1 0
+    outer loop
+      vertex 30 -30 -20
       vertex 30 -30 20
       vertex -30 -30 20
-    endloop
-  endfacet
-  facet normal 0 -1 -0
-    outer loop
-      vertex 30 -30 20
-      vertex -30 -30 -20
-      vertex 30 -30 -20
-    endloop
-  endfacet
-  facet normal 1 -0 0
-    outer loop
-      vertex 30 -30 20
-      vertex 30 -15 -20
-      vertex 30 -15 20
     endloop
   endfacet
   facet normal 1 0 0
@@ -137,6 +130,13 @@ solid OpenSCAD_Model
       vertex 30 -15 -20
       vertex 30 -30 20
       vertex 30 -30 -20
+    endloop
+  endfacet
+  facet normal 1 0 -0
+    outer loop
+      vertex 30 -15 -20
+      vertex 30 -15 20
+      vertex 30 -30 20
     endloop
   endfacet
 endsolid OpenSCAD_Model

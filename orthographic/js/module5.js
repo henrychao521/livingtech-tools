@@ -25,7 +25,7 @@ const SHAPES = {
   step:      { label: '階梯塊', front: 'rect',   side: 'rect-tall',  top: 'rect-step', iso: 'step' },
   hole:      { label: '帶圓孔板', front: 'rect-circle-hole', side: 'rect-dash-horiz', top: 'rect-dash-vert', iso: 'hole' },
   tslot:     { label: 'T 槽塊', front: 't-shape', side: 'rect', top: 't-rev', iso: 'tslot' },
-  bracket:   { label: 'L 角架', front: 'l-shape', side: 'rect-tall', top: 'l-shape', iso: 'bracket' },
+  bracket:   { label: 'L 角架', front: 'rect', side: 'rect', top: 'l-shape', iso: 'bracket' },
   pyramid:   { label: '金字塔', front: 'triangle', side: 'triangle', top: 'square-diag', iso: 'pyramid' },
 };
 
