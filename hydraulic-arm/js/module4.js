@@ -139,6 +139,7 @@ function draw() {
 }
 
 function loop() {
+  if (document.hidden) { window.__rafPaused = true; return; }
   draw();
   requestAnimationFrame(loop);
 }
@@ -150,3 +151,7 @@ $('btn-reset').addEventListener('click', () => {
   bottlePos = { x: 120, y: 380 };
 });
 loop();
+// 分頁切到背景時 rAF 自動停止，切回來再續跑（省電，教室平板友善）
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && window.__rafPaused) { window.__rafPaused = false; loop(); }
+});

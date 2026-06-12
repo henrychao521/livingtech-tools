@@ -1,13 +1,28 @@
 // 教師後台 — 進度彙整、匯出匯入
 
 // === 工具設定 ===
+// moduleCount 預設 5；onshape 10、frc 6
 const TOOLS = [
   { id: 'scrollsaw', name: '線鋸機', emoji: '🪚', key: 'scrollsaw_progress_v1', color: '#FF7A00', url: '../scrollsaw/' },
   { id: 'solder', name: '電烙鐵', emoji: '🔥', key: 'solder_progress_v1', color: '#DC2626', url: '../solder/' },
   { id: 'breadboard', name: '麵包板', emoji: '🔌', key: 'breadboard_progress_v1', color: '#16A34A', url: '../breadboard/' },
   { id: 'printer3d', name: '3D 印表機', emoji: '🖨️', key: 'printer3d_progress_v1', color: '#0891B2', url: '../printer3d/' },
-  { id: 'frc', name: 'FRC 機器人', emoji: '🤖', key: 'frc_progress_v1', color: '#0066B3', url: '../frc/' },
-  { id: 'onshape', name: 'Onshape 3D 建模', emoji: '📐', key: 'onshape_progress_v1', color: '#0091BD', url: '../onshape/' },
+  { id: 'drill', name: '手電鑽', emoji: '🔩', key: 'drill_progress_v1', color: '#7C3AED', url: '../drill/' },
+  { id: 'drill-press', name: '鑽床', emoji: '🛠', key: 'dpress_progress_v1', color: '#475569', url: '../drill-press/' },
+  { id: 'sander', name: '砂磨機', emoji: '✨', key: 'sander_progress_v1', color: '#D97706', url: '../sander/' },
+  { id: 'hand-tools', name: '基本手工具', emoji: '🔨', key: 'ht_progress_v1', color: '#92400E', url: '../hand-tools/' },
+  { id: 'structure', name: '橋樑工程師', emoji: '🏗️', key: 'structure_progress_v1', color: '#0E7490', url: '../structure/' },
+  { id: 'structure-sim', name: '結構模擬器', emoji: '🏛', key: 'struct_progress_v1', color: '#334155', url: '../structure-sim/' },
+  { id: 'simple-machines', name: '簡單機械', emoji: '⚙', key: 'sm_progress_v1', color: '#65A30D', url: '../simple-machines/' },
+  { id: 'mechanism', name: '機構運動', emoji: '🎡', key: 'mech_progress_v1', color: '#BE185D', url: '../mechanism/' },
+  { id: 'energy', name: '能源系統', emoji: '⚡', key: 'energy_progress_v1', color: '#CA8A04', url: '../energy/' },
+  { id: 'powertrain', name: '動力與運輸', emoji: '🚗', key: 'pt_progress_v1', color: '#1D4ED8', url: '../powertrain/' },
+  { id: 'hydraulic-arm', name: '液壓手臂', emoji: '💪', key: 'ha_progress_v1', color: '#B91C1C', url: '../hydraulic-arm/' },
+  { id: 'microcontroller', name: '微控制器', emoji: '🧠', key: 'mc_progress_v1', color: '#6D28D9', url: '../microcontroller/' },
+  { id: 'orthographic', name: '三視圖', emoji: '📐', key: 'ort_progress_v1', color: '#0369A1', url: '../orthographic/' },
+  { id: 'design-process', name: '產品設計流程', emoji: '🎯', key: 'dp_progress_v1', color: '#059669', url: '../design-process/' },
+  { id: 'frc', name: 'FRC 機器人', emoji: '🤖', key: 'frc_progress_v1', color: '#0066B3', url: '../frc/', moduleCount: 6 },
+  { id: 'onshape', name: 'Onshape 3D 建模', emoji: '📐', key: 'onshape_progress_v1', color: '#0091BD', url: '../onshape/', moduleCount: 10 },
 ];
 
 // === 分頁切換 ===
@@ -19,20 +34,27 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   });
 });
 
-// === 計算單一工具進度百分比 ===
-function calcToolProgress(toolKey) {
-  let p; try { p = JSON.parse(localStorage.getItem(toolKey)) || {}; } catch { p = {}; }
-  let completed = 0, total = 5; // 5 個模組
-  if (p.module1) completed++;
-  if (p.module2 || p.safetyPassed) completed++;
-  if (p.module3) completed++;
-  if (p.module4_levels) {
-    const stars = Object.values(p.module4_levels).reduce((a, b) => a + b, 0);
-    if (stars > 0) completed++;
-  } else if (p.module4) completed++;
-  if (p.module5) completed++;
+// === 進度計算核心（各工具模組數可變：onshape 10、frc 6、其餘 5） ===
+// 各工具欄位略有差異：M2 可能寫 module2 / safetyPassed / module2_score，
+// M4 可能寫 module4 旗標或 module4_levels 星數
+function computeProgress(p, moduleCount = 5) {
+  const lv = p.module4_levels;
+  const stars = lv ? Object.values(lv).reduce((a, b) => a + (b || 0), 0) : 0;
+  let completed = 0;
+  for (let n = 1; n <= moduleCount; n++) {
+    let done;
+    if (n === 2) done = !!(p.module2 || p.safetyPassed || p.module2_score);
+    else if (n === 4) done = lv ? stars > 0 : !!p.module4;
+    else done = !!p['module' + n];
+    if (done) completed++;
+  }
+  return { completed, total: moduleCount, percent: Math.round(completed / moduleCount * 100), stars };
+}
 
-  const stars = p.module4_levels ? Object.values(p.module4_levels).reduce((a, b) => a + b, 0) : 0;
+// === 計算單一工具進度百分比（本機） ===
+function calcToolProgress(tool) {
+  let p; try { p = JSON.parse(localStorage.getItem(tool.key)) || {}; } catch { p = {}; }
+  const base = computeProgress(p, tool.moduleCount || 5);
   const maxStars = p.module4_levels ? Object.keys(p.module4_levels).length * 3 : 15;
 
   // 補充模組（目前僅 breadboard 有「剝線基本功」3 關）
@@ -42,7 +64,7 @@ function calcToolProgress(toolKey) {
     extras.push({ label: '剝線基本功', done: lvls, total: 3 });
   }
 
-  return { completed, total, percent: Math.round(completed / total * 100), stars, maxStars, extras, raw: p };
+  return { ...base, maxStars, extras, raw: p };
 }
 
 // === 渲染本機進度 ===
@@ -50,7 +72,7 @@ function renderLocalProgress() {
   const container = document.getElementById('local-progress');
   let html = `<div class="student-table"><table><thead><tr><th>工具</th><th>已完成模組</th><th>進度</th><th>★ 總星數</th><th>動作</th></tr></thead><tbody>`;
   TOOLS.forEach(t => {
-    const p = calcToolProgress(t.key);
+    const p = calcToolProgress(t);
     const extras = (p.extras || []).map(e =>
       `<div style="font-size:11px;color:var(--text-muted);margin-top:3px">補充・${e.label} ${e.done}/${e.total}</div>`
     ).join('');
@@ -177,7 +199,7 @@ function renderClassResult() {
     classData.forEach(d => {
       if (d.tools && d.tools[t.id]) {
         counts.count++;
-        const p = computeFromRaw(d.tools[t.id]);
+        const p = computeFromRaw(d.tools[t.id], t.moduleCount || 5);
         counts.totalCompleted += p.completed;
         counts.totalStars += p.stars;
       }
@@ -194,7 +216,7 @@ function renderClassResult() {
     html += `<div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:24px">${s.tool.emoji}</span><strong style="color:${s.tool.color}">${s.tool.name}</strong></div>
       <div style="font-size:12px;color:var(--text-muted)">使用人數：${s.count} / ${classData.length}</div>
-      <div style="font-size:12px;color:var(--text-muted)">平均完成：${avgComplete} / 5 模組</div>
+      <div style="font-size:12px;color:var(--text-muted)">平均完成：${avgComplete} / ${s.tool.moduleCount || 5} 模組</div>
       <div style="font-size:12px;color:var(--text-muted)">平均星數：★${avgStars}</div>
     </div>`;
   });
@@ -212,31 +234,22 @@ function renderClassResult() {
       if (!raw) {
         html += `<td style="color:var(--text-light)">—</td>`;
       } else {
-        const p = computeFromRaw(raw);
+        const p = computeFromRaw(raw, t.moduleCount || 5);
         totalComplete += p.completed;
         totalStars += p.stars;
         html += `<td><span class="progress-cell"><span class="progress-cell-fill" style="width:${p.percent}%"></span></span>${p.completed}/${p.total} ★${p.stars}</td>`;
       }
     });
-    html += `<td><strong>${totalComplete}/20 模組　★${totalStars}</strong></td></tr>`;
+    const grandTotal = TOOLS.reduce((s, t) => s + (t.moduleCount || 5), 0);
+    html += `<td><strong>${totalComplete}/${grandTotal} 模組　★${totalStars}</strong></td></tr>`;
   });
   html += '</tbody></table></div>';
 
   result.innerHTML = html;
 }
 
-function computeFromRaw(p) {
-  let completed = 0;
-  if (p.module1) completed++;
-  if (p.module2 || p.safetyPassed) completed++;
-  if (p.module3) completed++;
-  if (p.module4_levels) {
-    const stars = Object.values(p.module4_levels).reduce((a, b) => a + b, 0);
-    if (stars > 0) completed++;
-  } else if (p.module4) completed++;
-  if (p.module5) completed++;
-  const stars = p.module4_levels ? Object.values(p.module4_levels).reduce((a, b) => a + b, 0) : 0;
-  return { completed, total: 5, percent: Math.round(completed / 5 * 100), stars };
+function computeFromRaw(p, moduleCount = 5) {
+  return computeProgress(p, moduleCount);
 }
 
 // === 匯出班級 CSV ===

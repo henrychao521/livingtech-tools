@@ -309,6 +309,8 @@ function buildRound3() {
         <div class="stack-toolbar">
           <span style="color:#FBBF24;font-weight:700;align-self:center">提示：${q.hint}</span>
           <span style="flex:1"></span>
+          <button class="mode-btn active" data-act="mode-add" data-q="${qi}" title="點擊格子放方塊（桌機也可直接左鍵）">➕ 加方塊</button>
+          <button class="mode-btn" data-act="mode-del" data-q="${qi}" title="點擊方塊移除（桌機也可直接右鍵）">➖ 刪方塊</button>
           <button class="danger" data-act="clear" data-q="${qi}">🗑 清空</button>
           <button data-act="hint" data-q="${qi}">💡 自動完成（放棄）</button>
         </div>
@@ -563,6 +565,7 @@ function initStackGame(qi, q) {
   }
 
   renderer.domElement.addEventListener('mousemove', e => {
+    if (buildMode === 'del') { ghost.visible = false; return; }
     const hit = pickCell(e);
     if (!hit) { ghost.visible = false; return; }
     let x = hit.x, y = hit.y, z = hit.z;
@@ -578,16 +581,25 @@ function initStackGame(qi, q) {
     ghost.position.set(x * cellSize + cellSize / 2, y * cellSize + cellSize / 2, z * cellSize + cellSize / 2);
   });
 
-  renderer.domElement.addEventListener('mousedown', e => {
-    if (e.button !== 0 && e.button !== 2) return;
+  // 指針點擊（滑鼠＋觸控通用）：用位移門檻區分「點一下」與「拖曳旋轉視角」。
+  // 桌機保留左鍵加、右鍵刪；平板用 ➕/➖ 模式鈕切換後點擊。
+  let buildMode = 'add';
+  let downAt = null;
+  renderer.domElement.addEventListener('pointerdown', e => {
+    downAt = { x: e.clientX, y: e.clientY, button: e.button, t: performance.now() };
+  });
+  renderer.domElement.addEventListener('pointerup', e => {
+    if (!downAt) return;
+    const moved = Math.hypot(e.clientX - downAt.x, e.clientY - downAt.y);
+    const isTap = moved < 8 && (performance.now() - downAt.t) < 600;
+    const btn = downAt.button;
+    downAt = null;
+    if (!isTap) return; // 拖曳 → 交給 OrbitControls 旋轉
     const hit = pickCell(e);
     if (!hit) return;
-    if (e.button === 2) {
-      // 右鍵：移除已有方塊
+    if (btn === 2 || buildMode === 'del') {
       if (hit.exist) removeBlock(hit.x, hit.y, hit.z);
-      e.preventDefault();
     } else {
-      // 左鍵：在面外側加方塊
       let x = hit.x, y = hit.y, z = hit.z;
       if (hit.exist) { x += hit.normalX; y += hit.normalY; z += hit.normalZ; }
       if (x < 0 || x >= GRID || y < 0 || y >= GRID || z < 0 || z >= GRID) return;
@@ -599,6 +611,16 @@ function initStackGame(qi, q) {
   // 工具列按鈕
   document.querySelector(`button[data-act="clear"][data-q="${qi}"]`).addEventListener('click', clearAll);
   document.querySelector(`button[data-act="hint"][data-q="${qi}"]`).addEventListener('click', fillTarget);
+  const modeAddBtn = document.querySelector(`button[data-act="mode-add"][data-q="${qi}"]`);
+  const modeDelBtn = document.querySelector(`button[data-act="mode-del"][data-q="${qi}"]`);
+  function setBuildMode(m) {
+    buildMode = m;
+    modeAddBtn.classList.toggle('active', m === 'add');
+    modeDelBtn.classList.toggle('active', m === 'del');
+    if (m === 'del') ghost.visible = false; // 刪除模式不顯示放置預覽
+  }
+  modeAddBtn.addEventListener('click', () => setBuildMode('add'));
+  modeDelBtn.addEventListener('click', () => setBuildMode('del'));
 
   function render() {
     controls.update();

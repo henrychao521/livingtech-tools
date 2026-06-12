@@ -51,7 +51,7 @@ const state = {
   level: LEVELS.L1,
   ironTemp: 25,         // 烙鐵溫度（從 25°C 加熱到 350°C）
   ironTargetTemp: 350,
-  ironHeatRate: 8,      // 每幀升溫
+  ironHeatRate: 75,     // 每秒升溫（°C/s）：約 4 秒就緒，保留「烙鐵要先加熱」的概念但不讓學生乾等
   ironX: 200,
   ironY: 100,
   ironVisible: false,
@@ -100,24 +100,48 @@ function initLevel(lvlId) {
   draw();
 }
 
-// === 鍵盤 / 滑鼠 ===
-canvas.addEventListener('mousemove', e => {
+// === 鍵盤 / 指針（滑鼠＋觸控筆＋手指） ===
+function aimIron(e) {
   const rect = canvas.getBoundingClientRect();
-  mouseX = (e.clientX - rect.left) * (canvas.width / rect.width);
-  mouseY = (e.clientY - rect.top) * (canvas.height / rect.height);
+  mouseX = Math.max(0, Math.min(canvas.width, (e.clientX - rect.left) * (canvas.width / rect.width)));
+  mouseY = Math.max(0, Math.min(canvas.height, (e.clientY - rect.top) * (canvas.height / rect.height)));
+}
+canvas.addEventListener('pointermove', aimIron);
+canvas.addEventListener('pointerdown', e => {
+  e.preventDefault();
+  aimIron(e);
+  // 觸控不在 pointerdown 送錫（手指一碰就餵錫會造成大量誤判冷焊），改用「送錫」鈕
+  if (e.pointerType === 'mouse') state.pressing = true;
+  try { canvas.setPointerCapture(e.pointerId); } catch (_) {}
 });
-canvas.addEventListener('mousedown', () => { state.pressing = true; });
-canvas.addEventListener('mouseup', () => { state.pressing = false; });
-canvas.addEventListener('mouseleave', () => { state.pressing = false; });
+canvas.addEventListener('pointerup', e => { if (e.pointerType === 'mouse') state.pressing = false; });
+canvas.addEventListener('pointercancel', () => { state.pressing = false; });
+canvas.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') state.pressing = false; });
 window.addEventListener('keydown', e => {
   if (e.code === 'Space') { state.pressing = true; e.preventDefault(); }
 });
 window.addEventListener('keyup', e => {
   if (e.code === 'Space') { state.pressing = false; e.preventDefault(); }
 });
+// 「送錫」鈕：平板按住即送錫；桌機也可用（等同按住空白鍵）
+const feedBtn = document.getElementById('btn-feed');
+if (feedBtn) {
+  feedBtn.addEventListener('pointerdown', e => {
+    e.preventDefault();
+    state.pressing = true;
+    feedBtn.classList.add('feeding');
+    try { feedBtn.setPointerCapture(e.pointerId); } catch (_) {}
+  });
+  ['pointerup', 'pointercancel'].forEach(ev => feedBtn.addEventListener(ev, () => {
+    state.pressing = false;
+    feedBtn.classList.remove('feeding');
+  }));
+  feedBtn.addEventListener('contextmenu', e => e.preventDefault());
+}
 
 // === 主迴圈 ===
 function loop() {
+  if (document.hidden) { window.__rafPaused = true; return; }
   update();
   draw();
   requestAnimationFrame(loop);
@@ -126,7 +150,7 @@ function loop() {
 function update() {
   // 烙鐵溫度上升
   if (state.ironTemp < state.ironTargetTemp) {
-    state.ironTemp = Math.min(state.ironTargetTemp, state.ironTemp + state.ironHeatRate * 0.02);
+    state.ironTemp = Math.min(state.ironTargetTemp, state.ironTemp + state.ironHeatRate / 60);
   }
   document.getElementById('temp-display').textContent = Math.round(state.ironTemp) + '°C';
   const tempEl = document.getElementById('temp-display');
@@ -625,3 +649,7 @@ Object.entries(prog.module4_levels || {}).forEach(([k, s]) => {
 
 initLevel('L1');
 loop();
+// 分頁切到背景時 rAF 自動停止，切回來再續跑（省電，教室平板友善）
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && window.__rafPaused) { window.__rafPaused = false; loop(); }
+});

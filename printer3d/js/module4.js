@@ -246,6 +246,7 @@ function drawHUD() {
 }
 
 function loop() {
+  if (document.hidden) { window.__rafPaused = true; return; }
   if (printState.running) {
     // 列印速度依速度參數
     const m = MODELS[params.model];
@@ -282,3 +283,7 @@ document.getElementById('btn-reset').onclick = () => {
 
 recalcEstimates();
 loop();
+// 分頁切到背景時 rAF 自動停止，切回來再續跑（省電，教室平板友善）
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && window.__rafPaused) { window.__rafPaused = false; loop(); }
+});

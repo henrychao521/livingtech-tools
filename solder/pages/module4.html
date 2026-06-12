@@ -37,7 +37,7 @@
     <div>
       <span class="module-step" style="background:var(--success-light);color:#1b6e3a">MODULE 04 ・ 核心</span>
       <h2>模擬焊接練習</h2>
-      <p class="muted">移動烙鐵到接點上，按住空白鍵或滑鼠左鍵送錫。注意停留時間：太短虛焊、太長燒板。</p>
+      <p class="muted">滑鼠或手指拖曳烙鐵到接點上，按住空白鍵、滑鼠左鍵或「送錫」鈕送錫。注意停留時間：太短虛焊、太長燒板。</p>
     </div>
     <div class="muted" style="font-family:Inter,sans-serif">關卡：<span id="level-display" style="font-weight:700">L1</span></div>
   </div>
@@ -45,9 +45,10 @@
   <div class="practice-layout">
     <div class="solder-canvas-wrap">
       <canvas id="solder-canvas" width="760" height="500"></canvas>
-      <div class="sim-overlay" id="sim-overlay">移動烙鐵到接點　|　空白鍵送錫</div>
+      <div class="sim-overlay" id="sim-overlay">移動烙鐵到接點　|　空白鍵或「送錫」鈕送錫</div>
       <div class="sim-controls">
         <button class="btn btn-primary" id="btn-start">▶ 開始焊接</button>
+        <button class="btn btn-feed" id="btn-feed">🧵 按住送錫</button>
         <button class="btn btn-ghost" id="btn-reset">↺ 重置</button>
         <button class="btn btn-ghost" id="btn-finish">✓ 提交評分</button>
       </div>
@@ -88,10 +89,10 @@
       <div class="help-card">
         <strong>📖 操作說明</strong>
         <ul>
-          <li>滑鼠移動：控制烙鐵位置</li>
+          <li>滑鼠移動或手指拖曳：控制烙鐵位置</li>
           <li>烙鐵碰到接點：開始加熱</li>
           <li>加熱 1.5 秒後送錫</li>
-          <li>按住「空白鍵」或滑鼠左鍵送錫</li>
+          <li>按住「空白鍵」、滑鼠左鍵或「🧵 送錫」鈕送錫</li>
           <li>放開後再停 0.5 秒移開</li>
         </ul>
       </div>

@@ -577,5 +577,10 @@ Object.entries(_prog.module4_levels || {}).forEach(([k, s]) => {
 });
 
 initLevel('L1');
-function loop() { draw(); requestAnimationFrame(loop); }
+function loop() {
+  if (document.hidden) { window.__rafPaused = true; return; } draw(); requestAnimationFrame(loop); }
 loop();
+// 分頁切到背景時 rAF 自動停止，切回來再續跑（省電，教室平板友善）
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && window.__rafPaused) { window.__rafPaused = false; loop(); }
+});

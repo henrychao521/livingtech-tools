@@ -219,6 +219,7 @@ document.getElementById('btn-reset').addEventListener('click', () => {
 
 // ========== 渲染迴圈 ==========
 function render() {
+  if (document.hidden) { window.__rafPaused = true; return; }
   controls.update();
   [mainVP, frontVP, sideVP, topVP].forEach(vp => {
     vp.renderer.render(vp.scene, vp.camera);
@@ -250,3 +251,7 @@ window.addEventListener('resize', onResize);
 
 setShape('cube');
 render();
+// 分頁切到背景時 rAF 自動停止，切回來再續跑（省電，教室平板友善）
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && window.__rafPaused) { window.__rafPaused = false; render(); }
+});

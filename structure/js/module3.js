@@ -528,7 +528,8 @@ function findMemberNear(px, py, radius = 8) {
 let nodeIdCounter = 0;
 let memberIdCounter = 0;
 
-advCanvas.addEventListener('mousedown', e => {
+advCanvas.addEventListener('pointerdown', e => {
+  e.preventDefault();
   const rect = advCanvas.getBoundingClientRect();
   const px = (e.clientX - rect.left) * (ADV_W / rect.width);
   const py = (e.clientY - rect.top)  * (ADV_H / rect.height);
@@ -568,7 +569,10 @@ advCanvas.addEventListener('mousedown', e => {
     }
   } else if (activeTool === 'move') {
     const nd = findNodeNear(px, py);
-    if (nd) { moveNode = nd; isDragging = true; }
+    if (nd) {
+      moveNode = nd; isDragging = true;
+      try { advCanvas.setPointerCapture(e.pointerId); } catch (_) {}
+    }
   } else if (activeTool === 'delete') {
     const nd = findNodeNear(px, py);
     if (nd) {
@@ -588,7 +592,7 @@ advCanvas.addEventListener('mousedown', e => {
   redrawAdv();
 });
 
-advCanvas.addEventListener('mousemove', e => {
+advCanvas.addEventListener('pointermove', e => {
   if (activeTool === 'move' && isDragging && moveNode) {
     const rect = advCanvas.getBoundingClientRect();
     const px = (e.clientX - rect.left) * (ADV_W / rect.width);
@@ -602,7 +606,8 @@ advCanvas.addEventListener('mousemove', e => {
   }
 });
 
-advCanvas.addEventListener('mouseup', () => { isDragging = false; moveNode = null; updateAdvStats(); });
+['pointerup', 'pointercancel'].forEach(ev =>
+  advCanvas.addEventListener(ev, () => { isDragging = false; moveNode = null; updateAdvStats(); }));
 
 function redrawAdv() {
   advCtx.clearRect(0, 0, ADV_W, ADV_H);

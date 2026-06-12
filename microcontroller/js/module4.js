@@ -44,6 +44,7 @@ $('btn-toggle').addEventListener('click', () => {
 });
 
 function draw() {
+  if (document.hidden) { window.__rafPaused = true; return; }
   t++;
   ctx.fillStyle = '#1e293b';
   ctx.fillRect(0, 0, W, H);
@@ -171,3 +172,7 @@ function draw() {
 
 setMode('blink');
 draw();
+// 分頁切到背景時 rAF 自動停止，切回來再續跑（省電，教室平板友善）
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && window.__rafPaused) { window.__rafPaused = false; draw(); }
+});

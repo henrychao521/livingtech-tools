@@ -1,5 +1,29 @@
 // 共用：簡易進度儲存（localStorage），給整站用
-const PROGRESS_KEY = 'scrollsaw_progress_v1';
+// key 依 <body data-tool="..."> 對應到各工具自己的進度（與各工具模組 JS 內的 PK 一致）；
+// 沒有 data-tool 的頁面維持線鋸機 key（scrollsaw 各模組直接呼叫本檔的 loadProgress/saveProgress）
+const TOOL_PROGRESS_KEYS = {
+  'scrollsaw': 'scrollsaw_progress_v1',
+  'solder': 'solder_progress_v1',
+  'breadboard': 'breadboard_progress_v1',
+  'printer3d': 'printer3d_progress_v1',
+  'drill': 'drill_progress_v1',
+  'drill-press': 'dpress_progress_v1',
+  'sander': 'sander_progress_v1',
+  'hand-tools': 'ht_progress_v1',
+  'hydraulic-arm': 'ha_progress_v1',
+  'mechanism': 'mech_progress_v1',
+  'microcontroller': 'mc_progress_v1',
+  'simple-machines': 'sm_progress_v1',
+  'structure': 'structure_progress_v1',
+  'structure-sim': 'struct_progress_v1',
+  'orthographic': 'ort_progress_v1',
+  'energy': 'energy_progress_v1',
+  'powertrain': 'pt_progress_v1',
+  'design-process': 'dp_progress_v1',
+  'frc': 'frc_progress_v1',
+  'onshape': 'onshape_progress_v1',
+};
+const PROGRESS_KEY = (document.body && TOOL_PROGRESS_KEYS[document.body.dataset.tool]) || 'scrollsaw_progress_v1';
 
 function loadProgress() {
   try {
@@ -39,11 +63,15 @@ function showToast(msg, type = '') {
 }
 
 // 計算從目前頁面回到 repo 根目錄需要的相對路徑前綴
-// 支援多層子目錄：/scrollsaw/、/solder/、/.../pages/
+// 直接取 main.js 自己的 src 前綴（"js/main.js"→""、"../js/main.js"→"../"、"../../js/main.js"→"../../"），
+// 任何目錄深度、任何工具都正確
 function rootRelativePrefix() {
+  const s = document.querySelector('script[src$="js/main.js"]');
+  const m = s && s.getAttribute('src').match(/^(.*?)js\/main\.js$/);
+  if (m) return m[1];
   let depth = 0;
   if (location.pathname.includes('/pages/')) depth++;
-  if (/\/(scrollsaw|solder)\//.test(location.pathname)) depth++;
+  if (/\/[a-z0-9-]+\/(pages\/)?[^/]*$/.test(location.pathname)) depth++;
   return '../'.repeat(depth);
 }
 
@@ -64,23 +92,45 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+// 服儀檢查等拖放頁的觸控提示：HTML5 拖放在 iPad/手機上不會動，
+// 各工具的 module2 都已內建「點配備 → 點放置區」備援，但畫面沒講——在觸控裝置上主動告知
+document.addEventListener('DOMContentLoaded', () => {
+  if (!window.matchMedia('(pointer: coarse)').matches) return;
+  const firstDraggable = document.querySelector('.draggable');
+  if (!firstDraggable || !document.querySelector('.dropzone')) return;
+  const hint = document.createElement('div');
+  hint.style.cssText = 'background:linear-gradient(135deg,#eff6ff,#fff);border:1px solid #93c5fd;border-left:4px solid #3b82f6;border-radius:10px;padding:10px 14px;margin:0 0 14px;font-size:13.5px;color:#1e3a8a;line-height:1.6';
+  hint.innerHTML = '📱 平板／手機操作方式：先<strong>點一下</strong>要使用的配備，再<strong>點</strong>它該放的位置即可（不需要拖曳）。';
+  const itemsBox = firstDraggable.parentElement;
+  if (itemsBox && itemsBox.parentElement) itemsBox.parentElement.insertBefore(hint, itemsBox);
+});
+
 // 給首頁用：標示已完成模組與顯示進度
 document.addEventListener('DOMContentLoaded', () => {
   if (!document.body.classList.contains('home')) return;
   const p = loadProgress();
-  const flags = [p.module1, p.safetyPassed, p.module3, true, true];
+  const lv = p.module4_levels || {};
+  const stars = Object.values(lv).reduce((s, v) => s + (v || 0), 0);
+
+  // 各工具進度欄位略有差異：M2 可能寫 safetyPassed / module2 / module2_score，
+  // M4 可能寫 module4 或 module4_levels 星數
+  function moduleDone(n) {
+    if (n === 2) return !!(p.safetyPassed || p.module2 || p.module2_score);
+    if (n === 4) return !!(p.module4 || Object.values(lv).some(v => v > 0));
+    return !!p['module' + n];
+  }
+
   document.querySelectorAll('.module-grid .card').forEach((card, i) => {
-    if (flags[i]) {
+    if (moduleDone(i + 1)) {
       const tag = card.querySelector('.card-tag');
       if (tag) tag.textContent = '✓ 已完成';
     }
   });
 
-  // 計算總進度
-  const lv = p.module4_levels || {};
-  const stars = ['L1','L2','L3','L4','L5'].reduce((s, k) => s + (lv[k] || 0), 0);
-  const totalSteps = (p.module1 ? 1 : 0) + (p.safetyPassed ? 1 : 0) + (p.module3 ? 1 : 0);
-  const totalProgress = (totalSteps + Math.min(2, stars / 7.5)) / 5; // 0~1
+  // 計算總進度（M4 以星數計部分進度，滿 15 星=完成）
+  const doneSteps = [1, 2, 3, 5].filter(moduleDone).length;
+  const m4Part = stars > 0 ? Math.min(1, stars / 15) : (moduleDone(4) ? 1 : 0);
+  const totalProgress = (doneSteps + m4Part) / 5; // 0~1
 
   // 在 hero 區下方插入進度儀表板（如果有任何進度）
   if (totalProgress > 0) {
@@ -112,7 +162,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (totalProgress >= 0.95) {
     const banner = document.createElement('div');
     banner.style.cssText = 'position:fixed;top:80px;right:24px;background:linear-gradient(135deg,#FFD700,#FFA500);color:#fff;padding:16px 22px;border-radius:14px;box-shadow:0 12px 32px rgba(255,165,0,.4);z-index:60;animation:popIn .5s';
-    banner.innerHTML = '👑 <strong>線鋸大師</strong>　所有模組完成！';
+    const toolName = (document.querySelector('.brand h1') || {}).textContent || '本工具';
+    banner.innerHTML = `👑 <strong>${toolName}大師</strong>　所有模組完成！`;
     document.body.appendChild(banner);
     setTimeout(() => banner.style.transition = 'opacity .5s', 100);
   }

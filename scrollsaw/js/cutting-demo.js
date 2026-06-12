@@ -40,10 +40,15 @@ class CuttingDemo {
   }
 
   start() {
+    // 分頁切到背景時暫停演示動畫，切回來再續跑
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden && this._paused) { this._paused = false; this.animate(); }
+    });
     this.animate();
   }
 
   animate() {
+    if (document.hidden) { this._paused = true; return; }
     this.t++;
     this.update();
     this.draw();

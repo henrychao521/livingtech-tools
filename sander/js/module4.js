@@ -223,6 +223,7 @@ function showResult() {
 }
 
 function loop() {
+  if (document.hidden) { window.__rafPaused = true; return; }
   tickSim();
   drawScene();
   requestAnimationFrame(loop);
@@ -263,3 +264,7 @@ updateValueDisplays();
 updateEstimates();
 resetSim();
 loop();
+// 分頁切到背景時 rAF 自動停止，切回來再續跑（省電，教室平板友善）
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && window.__rafPaused) { window.__rafPaused = false; loop(); }
+});
