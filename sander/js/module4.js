@@ -110,8 +110,8 @@ function drawScene() {
     ctx.arc(x, beltY - wheelR + 6, gritSize, 0, Math.PI * 2);
     ctx.fill();
   }
-  // 工作面
-  ctx.fillStyle = '#5b21b6';
+  // 工作面（壓板——金屬灰，貼著砂帶背面）
+  ctx.fillStyle = '#334155';
   ctx.fillRect(150, beltY - wheelR - 8, 460, 8);
 
   // 工件

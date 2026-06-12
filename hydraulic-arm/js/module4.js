@@ -11,7 +11,7 @@ const armLen1 = 130; // 大臂
 const armLen2 = 110; // 小臂
 
 let bottleHeld = false;
-let bottlePos = { x: 120, y: 380 };
+let bottlePos = { x: 330, y: 380 };
 const targetPos = { x: 640, y: 380 };
 
 function draw() {
@@ -38,11 +38,11 @@ function draw() {
   ctx.fillStyle = '#0284C7';
   ctx.fillRect(baseX - 40, baseY - 38, 80, 12);
 
-  // 大臂
+  // 大臂——仰角約定：0°=水平向右、正值抬升（原本的 sin/cos 方向顛倒,0° 時手臂會插進地板）
   const sx = baseX, sy = baseY - 32;
-  const a2rad = -a2 * Math.PI / 180;
-  const ex = sx + armLen1 * Math.sin(a2rad);
-  const ey = sy + armLen1 * Math.cos(a2rad);
+  const elev1 = a2 * Math.PI / 180;
+  const ex = sx + armLen1 * Math.cos(elev1);
+  const ey = sy - armLen1 * Math.sin(elev1);
   ctx.strokeStyle = '#0284C7';
   ctx.lineWidth = 16;
   ctx.lineCap = 'round';
@@ -55,10 +55,10 @@ function draw() {
   ctx.arc(sx, sy, 12, 0, Math.PI * 2);
   ctx.fill();
 
-  // 小臂
-  const a3total = a2rad + (a3 - 90) * Math.PI / 180;
-  const fx = ex + armLen2 * Math.sin(a3total);
-  const fy = ey + armLen2 * Math.cos(a3total);
+  // 小臂——相對大臂的彎曲角:90°=順著大臂延伸,小於 90° 往下彎、大於 90° 往上翹
+  const elev2 = elev1 + (a3 - 90) * Math.PI / 180;
+  const fx = ex + armLen2 * Math.cos(elev2);
+  const fy = ey - armLen2 * Math.sin(elev2);
   ctx.strokeStyle = '#38BDF8';
   ctx.lineWidth = 14;
   ctx.beginPath();
@@ -136,6 +136,60 @@ function draw() {
   ctx.textAlign = 'left';
   ctx.fillText(`末端位置：(${fx.toFixed(0)}, ${fy.toFixed(0)})`, 14, 30);
   ctx.fillText(`夾爪狀態：${bottleHeld ? '🟢 抓住' : '⚪ 未抓'}`, 14, 55);
+
+  drawSyringes();
+}
+
+// 對應實體「針筒液壓手臂」教具：每一軸就是一支主針筒，拉滑桿＝推拉活塞。
+// 讓學生把模擬器的 4 個滑桿直接對應到實作時手上的 4 支針筒。
+function drawSyringes() {
+  const axes = [
+    { label: '①基座', el: $('s1'), color: '#f87171' },
+    { label: '②大臂', el: $('s2'), color: '#fb923c' },
+    { label: '③小臂', el: $('s3'), color: '#38bdf8' },
+    { label: '④夾爪', el: $('s4'), color: '#4ade80' },
+  ];
+  const bw = 20, bh = 70, gapX = 50;
+  const x0 = W - 210, y0 = 42;
+  ctx.save();
+  ctx.fillStyle = '#94a3b8';
+  ctx.font = '700 11px "Noto Sans TC"';
+  ctx.textAlign = 'center';
+  ctx.fillText('💉 實體針筒對應（滑桿＝推活塞）', x0 + gapX * 1.5 + bw / 2, y0 + bh + 40);
+  axes.forEach((ax, i) => {
+    const v = parseFloat(ax.el.value), mn = parseFloat(ax.el.min), mx = parseFloat(ax.el.max);
+    const norm = (v - mn) / ((mx - mn) || 1);
+    const x = x0 + i * gapX;
+    // 液體（活塞推入越多，筒內液體越少＝被壓去出口）
+    const inner = bh - 8;
+    const liquidH = (1 - norm) * (inner - 14) + 10;
+    const py = y0 + bh - 3 - liquidH; // 活塞盤位置
+    ctx.fillStyle = ax.color;
+    ctx.globalAlpha = .8;
+    ctx.fillRect(x + 2, py, bw - 4, liquidH);
+    ctx.globalAlpha = 1;
+    // 筒身（半透明）
+    ctx.fillStyle = 'rgba(255,255,255,.07)';
+    ctx.strokeStyle = '#cbd5e1';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.roundRect(x, y0, bw, bh, 4); ctx.fill(); ctx.stroke();
+    // 出口嘴
+    ctx.fillStyle = '#cbd5e1';
+    ctx.fillRect(x + bw / 2 - 2, y0 + bh, 4, 7);
+    // 活塞盤＋推桿＋拇指板（推入越多，拇指板越貼近筒口）
+    const padY = y0 - 8 - (1 - norm) * 30;
+    ctx.fillStyle = '#0f172a';
+    ctx.fillRect(x + 1.5, py - 5, bw - 3, 5);
+    ctx.fillStyle = '#e2e8f0';
+    ctx.fillRect(x + bw / 2 - 2.5, padY + 4, 5, Math.max(4, py - padY - 4));
+    ctx.fillRect(x + bw / 2 - 8, padY, 16, 5);
+    // 標籤
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = '700 10px "Noto Sans TC"';
+    ctx.textAlign = 'center';
+    ctx.fillText(ax.label, x + bw / 2, y0 + bh + 22);
+  });
+  ctx.restore();
 }
 
 function loop() {
@@ -148,7 +202,7 @@ document.querySelectorAll('input').forEach(i => i.addEventListener('input', () =
 $('btn-reset').addEventListener('click', () => {
   $('s1').value = 0; $('s2').value = 45; $('s3').value = 90; $('s4').value = 30;
   bottleHeld = false;
-  bottlePos = { x: 120, y: 380 };
+  bottlePos = { x: 330, y: 380 };
 });
 loop();
 // 分頁切到背景時 rAF 自動停止，切回來再續跑（省電，教室平板友善）

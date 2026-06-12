@@ -150,15 +150,55 @@ function drawScene() {
   // 夾頭
   ctx.fillStyle = '#cbd5e1';
   ctx.fillRect(W/2 - 24, state.bitY - 36, 48, 36);
-  // 手電鑽本體（簡化）
-  ctx.fillStyle = '#F59E0B';
-  ctx.fillRect(W/2 - 60, state.bitY - 90, 120, 60);
+  ctx.fillStyle = '#94a3b8';
+  ctx.fillRect(W/2 - 24, state.bitY - 12, 48, 4); // 夾頭刻紋
+
+  // 手電鑽本體：手槍式造型（直立鑽孔姿勢——馬達殼在夾頭上方、握把向右下斜出、電池在握把端）
+  const cx0 = W / 2, y0 = state.bitY - 36;
+  // 握把（先畫，疊在機身後面）
+  ctx.save();
+  ctx.translate(cx0 + 28, y0 - 38);
+  ctx.rotate(Math.PI / 8);
+  ctx.fillStyle = '#D97706';
+  ctx.beginPath();
+  ctx.roundRect(0, -13, 78, 26, 11);
+  ctx.fill();
+  // 防滑紋
+  ctx.fillStyle = '#92400e';
+  for (let i = 0; i < 3; i++) ctx.fillRect(24 + i * 13, -9, 5, 18);
+  // 扳機（握把前緣下側，食指位置）
   ctx.fillStyle = '#111827';
-  ctx.fillRect(W/2 - 50, state.bitY - 84, 100, 8);
-  ctx.fillStyle = '#fbbf24';
-  ctx.font = '700 9px Inter';
+  ctx.beginPath();
+  ctx.roundRect(2, 12, 11, 16, 5);
+  ctx.fill();
+  // 電池包（握把末端）
+  ctx.fillStyle = '#1F2937';
+  ctx.beginPath();
+  ctx.roundRect(66, -18, 38, 36, 5);
+  ctx.fill();
+  ctx.fillStyle = '#FBBF24';
+  ctx.font = '700 8px Inter';
   ctx.textAlign = 'center';
-  ctx.fillText('CORDLESS DRILL', W/2, state.bitY - 78);
+  ctx.fillText('12V', 85, 3);
+  ctx.restore();
+  // 馬達殼（直立，底部接扭力環）
+  ctx.fillStyle = '#F59E0B';
+  ctx.beginPath();
+  ctx.roundRect(cx0 - 32, y0 - 60, 64, 50, 9);
+  ctx.fill();
+  // 散熱孔
+  ctx.fillStyle = '#b45309';
+  for (let i = 0; i < 2; i++) ctx.fillRect(cx0 - 20, y0 - 50 + i * 11, 26, 5);
+  // 品牌字
+  ctx.fillStyle = '#fff7ed';
+  ctx.font = '700 8px Inter';
+  ctx.textAlign = 'center';
+  ctx.fillText('CORDLESS', cx0, y0 - 16);
+  // 扭力環（夾頭上方一圈）
+  ctx.fillStyle = '#374151';
+  ctx.fillRect(cx0 - 28, y0 - 10, 56, 10);
+  ctx.fillStyle = '#6b7280';
+  for (let i = 0; i < 6; i++) ctx.fillRect(cx0 - 26 + i * 9, y0 - 8, 4, 6);
 
   // 木屑
   state.chips.forEach(c => {

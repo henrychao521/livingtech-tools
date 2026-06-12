@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>教師操作手冊 ｜ 生活科技互動教學平台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📖%3C/text%3E%3C/svg%3E">
+<style>
+  .manual-wrap { max-width: 1080px; margin: 0 auto; padding: 28px 20px 60px; }
+  .mn-hero h2 { font-size: 30px; font-weight: 900; margin: 8px 0 10px; }
+  .mn-hero p { color: var(--text-soft); font-size: 15px; max-width: 820px; }
+  .mn-meta { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:22px 0; }
+  .mn-stat { background:#fff; border:1px solid var(--border); border-radius:12px; padding:14px; text-align:center; }
+  .mn-stat b { display:block; font-size:24px; font-family:Inter,monospace; color:var(--primary); }
+  .mn-stat span { font-size:12px; color:var(--text-muted); font-weight:600; }
+  .quick-box { background:linear-gradient(135deg,#FFF7ED,#fff); border:1px solid #FED7AA; border-left:4px solid var(--primary);
+    border-radius:12px; padding:16px 20px; margin:18px 0 8px; }
+  .quick-box h3 { font-size:15px; font-weight:800; margin-bottom:8px; }
+  .quick-box li { font-size:13.5px; color:var(--text-soft); margin:4px 0 4px 18px; }
+  .toc { display:flex; flex-wrap:wrap; gap:8px; margin:16px 0 8px; }
+  .toc a { font-size:12.5px; font-weight:700; background:#fff; border:1px solid var(--border);
+    border-radius:999px; padding:6px 12px; text-decoration:none; color:var(--text); }
+  .toc a:hover { border-color:var(--primary); color:var(--primary); }
+  .grp-h { font-size:21px; font-weight:900; margin:40px 0 6px; padding-top:14px; border-top:2px solid var(--border); }
+  .tool-band { display:flex; align-items:center; gap:14px; margin:26px 0 12px; background:#fff;
+    border:1px solid var(--border); border-radius:14px; padding:14px 18px; }
+  .tb-emoji { font-size:34px; }
+  .tool-band h3 { font-size:18px; font-weight:900; }
+  .tool-band p { font-size:12.5px; color:var(--text-muted); margin-top:2px; }
+  .tb-open { margin-left:auto; font-size:12.5px; font-weight:700; color:var(--primary); text-decoration:none; white-space:nowrap; }
+  .guide-card { background:#fff; border:1px solid var(--border); border-radius:14px; padding:16px 18px; margin-bottom:14px; }
+  .gc-head { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+  .gc-no { font-family:Inter,monospace; font-size:11px; font-weight:700; background:var(--bg-soft);
+    border:1px solid var(--border); border-radius:6px; padding:3px 8px; color:var(--text-muted); white-space:nowrap; }
+  .gc-head h4 { font-size:16px; font-weight:800; }
+  .gc-link { margin-left:auto; font-size:12px; font-weight:700; color:var(--primary); text-decoration:none; white-space:nowrap; }
+  .gc-shot { display:block; border:1px solid var(--border); border-radius:10px; overflow:hidden; margin:8px 0 10px; }
+  .gc-shot img { display:block; width:100%; height:auto; }
+  .tool-shot { max-width:560px; }
+  .gc-row { display:flex; gap:10px; font-size:13.5px; margin:5px 0; }
+  .gc-k { flex:0 0 92px; font-weight:800; color:var(--text); }
+  .gc-v { color:var(--text-soft); line-height:1.65; }
+  @media (max-width:680px) { .mn-meta { grid-template-columns:repeat(2,1fr); } .gc-row { flex-direction:column; gap:2px; } }
+</style>
+</head>
+<body data-tool="manual">
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">📖</span>
+    <div><h1>教師操作手冊</h1><p class="subtitle">生活科技互動教學平台</p></div>
+  </div>
+  <a href="index.html" class="module-back">← 回平台首頁</a>
+</header>
+
+<main class="manual-wrap">
+  <section class="mn-hero">
+    <h2>每一頁的操作方式與教學特點</h2>
+    <p>本手冊涵蓋平台全部工具與模組頁：每張卡片附當頁截圖、學習重點、學生實際要做的操作，以及課堂使用建議。截圖即連結，點了直接開啟該頁。</p>
+  </section>
+
+  <div class="mn-meta">
+    <div class="mn-stat"><b>20</b><span>教學工具</span></div>
+    <div class="mn-stat"><b>107</b><span>模組頁指引</span></div>
+    <div class="mn-stat"><b>5</b><span>段式闖關設計</span></div>
+    <div class="mn-stat"><b>108</b><span>課綱對應（國中）</span></div>
+  </div>
+
+  <div class="quick-box">
+    <h3>📌 開課前 60 秒須知</h3>
+    <ul>
+      <li><strong>進度儲存</strong>：所有進度存在學生瀏覽器 localStorage——同一台裝置同一瀏覽器才會延續；換電腦進度不會跟著走。</li>
+      <li><strong>闖關制</strong>：每個工具的「模組 2 安全規範」是必修門檻，通過後才解鎖後續；分數會寫入進度。</li>
+      <li><strong>平板支援</strong>：拖曳類互動全面支援觸控——服儀檢查可「點配備→點位置」、排序可拖 ⋮⋮ 或點 ▲▼、模擬器用手指直接拖。</li>
+      <li><strong>教師後台</strong>：<a href="teacher/index.html">teacher/</a> 可看本機進度、請學生匯出 JSON 後做全班彙整與 CSV 下載（支援全部 20 工具）。</li>
+    </ul>
+  </div>
+
+  <nav class="toc"><a href="#t-scrollsaw">🪚 數位線鋸機</a><a href="#t-solder">🔥 數位電烙鐵</a><a href="#t-breadboard">🔌 數位麵包板電路</a><a href="#t-printer3d">🖨️ 數位 3D 印表機</a><a href="#t-drill">🔩 數位手電鑽</a><a href="#t-drill-press">🛠 數位鑽床</a><a href="#t-sander">✨ 數位砂磨機</a><a href="#t-hand-tools">🔨 基本手工具</a><a href="#t-structure">🏗️ 橋樑工程師實驗室</a><a href="#t-structure-sim">🏛 結構模擬器</a><a href="#t-simple-machines">⚙ 簡單機械</a><a href="#t-mechanism">🎡 機構運動</a><a href="#t-hydraulic-arm">💪 液壓手臂</a><a href="#t-orthographic">📐 三視圖</a><a href="#t-energy">⚡ 能源系統</a><a href="#t-powertrain">🚗 動力與運輸</a><a href="#t-microcontroller">🧠 微控制器</a><a href="#t-design-process">🎯 產品設計流程</a><a href="#t-frc">🤖 FRC 機器人教學</a><a href="#t-onshape">📐 Onshape 3D 建模</a></nav>
+
+  <h2 class="grp-h">旗艦工具（五段闖關完整版）</h2>
+  <section class="tool-sec" id="t-scrollsaw">
+    <div class="tool-band"><span class="tb-emoji">🪚</span>
+      <div><h3>數位線鋸機</h3><p>線鋸機完整教學：3D 模型認識、安全闖關、八步驟教學、Canvas 切割模擬五關、創作計畫書。</p></div>
+      <a class="tb-open" href="scrollsaw/index.html">工具首頁 ↗</a></div>
+    <a class="gc-shot tool-shot" href="scrollsaw/index.html" target="_blank" rel="noopener"><img src="assets/manual/m-scrollsaw.jpg" loading="lazy" alt="數位線鋸機 首頁截圖"></a>
+    
+    <div class="guide-card" id="g-scrollsaw-module1">
+      <div class="gc-head"><span class="gc-no">M01</span><h4>認識線鋸機</h4>
+        <a class="gc-link" href="scrollsaw/pages/module1.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="scrollsaw/pages/module1.html" target="_blank" rel="noopener"><img src="assets/manual/m-scrollsaw-module1.jpg" loading="lazy" alt="數位線鋸機－認識線鋸機 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">認識線鋸機——從三種視角認識線鋸機：平面圖解、3D 立體模型、實物照片。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">依頁面指示點擊各標記／卡片，逐一認識名稱與功能；全部看完才會記入完成。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">適合投影同頁、全班輪流點名部位名稱當暖身。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-scrollsaw-module2">
+      <div class="gc-head"><span class="gc-no">M02·必修</span><h4>安全規範闖關</h4>
+        <a class="gc-link" href="scrollsaw/pages/module2.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="scrollsaw/pages/module2.html" target="_blank" rel="noopener"><img src="assets/manual/m-scrollsaw-module2.jpg" loading="lazy" alt="數位線鋸機－安全規範闖關 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">安全規範闖關——請完成所有題目（滿分通關）才能進入操作教學。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">完成裝備／環境配置（拖曳；平板可「先點配備、再點位置」，頁面會自動提示）＋情境判斷題，達標後自動解鎖下一模組。</span></div><div class="gc-row"><span class="gc-k">💡 提醒</span><span class="gc-v">此關為必修門檻，未達標可重新整理再挑戰；通過會寫入進度供教師後台彙整。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-scrollsaw-module3">
+      <div class="gc-head"><span class="gc-no">M03</span><h4>操作步驟教學</h4>
+        <a class="gc-link" href="scrollsaw/pages/module3.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="scrollsaw/pages/module3.html" target="_blank" rel="noopener"><img src="assets/manual/m-scrollsaw-module3.jpg" loading="lazy" alt="數位線鋸機－操作步驟教學 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">操作步驟教學——八個分解步驟。每一步都有動畫示範與重點提醒，看完後可進入模擬練習。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐步播放分解動畫並閱讀重點提醒；部分工具含步驟排序小遊戲（按住 ⋮⋮ 拖曳或點 ▲▼，平板可用）。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">建議搭配實機示範同步講解，動畫可重播。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-scrollsaw-module4">
+      <div class="gc-head"><span class="gc-no">M04·核心</span><h4>模擬切割練習</h4>
+        <a class="gc-link" href="scrollsaw/pages/module4.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="scrollsaw/pages/module4.html" target="_blank" rel="noopener"><img src="assets/manual/m-scrollsaw-module4.jpg" loading="lazy" alt="數位線鋸機－模擬切割練習 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">模擬切割練習——用滑鼠拖曳「木板」通過鋸條來切割。注意速度與切線偏移量。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">按「開始切割」後，用滑鼠或手指拖曳木板讓切割線對準鋸條前進。速度過快偏移會變大、停在原地會燒焦；切完依偏移量與失誤評 1–3 星。五關：直線→轉角→曲線→內挖→綜合圖形。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">先讓全班試 L1 抓「進料速度」手感，再講解為何轉角要放慢——和真實線鋸機的操作節奏一致。</span></div><div class="gc-row"><span class="gc-k">💡 提醒</span><span class="gc-v">觸控裝置可直接用手指拖曳（已支援 Pointer Events）。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-scrollsaw-module5">
+      <div class="gc-head"><span class="gc-no">M05</span><h4>創作挑戰：切割計畫書</h4>
+        <a class="gc-link" href="scrollsaw/pages/module5.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="scrollsaw/pages/module5.html" target="_blank" rel="noopener"><img src="assets/manual/m-scrollsaw-module5.jpg" loading="lazy" alt="數位線鋸機－創作挑戰：切割計畫書 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">創作挑戰：切割計畫書——挑一個圖樣（或上傳自己的設計），系統會分析切割路徑、預估時間、標出難點。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐卡閱讀並完成對應檢核／挑戰（依工具為故障圖鑑、案例分析或創作任務）。</span></div></div>
+    </div>
+  </section>
+  <section class="tool-sec" id="t-solder">
+    <div class="tool-band"><span class="tb-emoji">🔥</span>
+      <div><h3>數位電烙鐵</h3><p>電烙鐵焊接：元件認識、安全闖關、焊接八步驟、雙手技法焊接模擬五關、焊點品質鑑定。</p></div>
+      <a class="tb-open" href="solder/index.html">工具首頁 ↗</a></div>
+    <a class="gc-shot tool-shot" href="solder/index.html" target="_blank" rel="noopener"><img src="assets/manual/m-solder.jpg" loading="lazy" alt="數位電烙鐵 首頁截圖"></a>
+    
+    <div class="guide-card" id="g-solder-module1">
+      <div class="gc-head"><span class="gc-no">M01</span><h4>認識電烙鐵與焊接耗材</h4>
+        <a class="gc-link" href="solder/pages/module1.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="solder/pages/module1.html" target="_blank" rel="noopener"><img src="assets/manual/m-solder-module1.jpg" loading="lazy" alt="數位電烙鐵－認識電烙鐵與焊接耗材 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">認識電烙鐵與焊接耗材——點擊圖中的橘色標記，認識每個部位與耗材的功能。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">依頁面指示點擊各標記／卡片，逐一認識名稱與功能；全部看完才會記入完成。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">適合投影同頁、全班輪流點名部位名稱當暖身。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-solder-module2">
+      <div class="gc-head"><span class="gc-no">M02·必修</span><h4>焊接安全規範闖關</h4>
+        <a class="gc-link" href="solder/pages/module2.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="solder/pages/module2.html" target="_blank" rel="noopener"><img src="assets/manual/m-solder-module2.jpg" loading="lazy" alt="數位電烙鐵－焊接安全規範闖關 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">焊接安全規範闖關——完成環境配置（30 分）+ 12 題情境（120 分），達 120 分通關。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">完成裝備／環境配置（拖曳；平板可「先點配備、再點位置」，頁面會自動提示）＋情境判斷題，達標後自動解鎖下一模組。</span></div><div class="gc-row"><span class="gc-k">💡 提醒</span><span class="gc-v">此關為必修門檻，未達標可重新整理再挑戰；通過會寫入進度供教師後台彙整。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-solder-module3">
+      <div class="gc-head"><span class="gc-no">M03</span><h4>焊接步驟教學</h4>
+        <a class="gc-link" href="solder/pages/module3.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="solder/pages/module3.html" target="_blank" rel="noopener"><img src="assets/manual/m-solder-module3.jpg" loading="lazy" alt="數位電烙鐵－焊接步驟教學 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">焊接步驟教學——八個分解步驟。每一步都有動畫示範與重點提醒。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐步播放分解動畫並閱讀重點提醒；部分工具含步驟排序小遊戲（按住 ⋮⋮ 拖曳或點 ▲▼，平板可用）。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">建議搭配實機示範同步講解，動畫可重播。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-solder-module4">
+      <div class="gc-head"><span class="gc-no">M04·核心</span><h4>模擬焊接練習</h4>
+        <a class="gc-link" href="solder/pages/module4.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="solder/pages/module4.html" target="_blank" rel="noopener"><img src="assets/manual/m-solder-module4.jpg" loading="lazy" alt="數位電烙鐵－模擬焊接練習 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">模擬焊接練習——滑鼠或手指拖曳烙鐵到接點上，按住空白鍵、滑鼠左鍵或「送錫」鈕送錫。注意停留時間：太短虛焊、太長燒板。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">按「開始焊接」等烙鐵約 4 秒到 320°C，拖曳烙鐵（滑鼠或手指）到接點加熱約 1 秒，再按住空白鍵／滑鼠左鍵／「🧵 按住送錫」鈕送錫 0.5–1 秒，放開後停半秒移開定型。畫面中錫絲會從另一側伸入，對應「左手烙鐵、右手錫絲」的雙手技法。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">對照 M3 的「烙鐵先到、錫絲後到」口訣；L5 修正關要先按住送錫吸除不良焊點再重焊。</span></div><div class="gc-row"><span class="gc-k">💡 提醒</span><span class="gc-v">送錫太短＝冷焊、太長＝錫球、停留超過 4 秒＝燒板；三種失敗外觀在 M5 有對照圖。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-solder-module5">
+      <div class="gc-head"><span class="gc-no">M05</span><h4>焊點品質鑑定</h4>
+        <a class="gc-link" href="solder/pages/module5.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="solder/pages/module5.html" target="_blank" rel="noopener"><img src="assets/manual/m-solder-module5.jpg" loading="lazy" alt="數位電烙鐵－焊點品質鑑定 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">焊點品質鑑定——學會判讀焊點好壞 — 對照 9 種典型樣態與修正方法。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐卡閱讀並完成對應檢核／挑戰（依工具為故障圖鑑、案例分析或創作任務）。</span></div></div>
+    </div>
+  </section>
+  <section class="tool-sec" id="t-breadboard">
+    <div class="tool-band"><span class="tb-emoji">🔌</span>
+      <div><h3>數位麵包板電路</h3><p>麵包板電路：連通結構、電路安全、LED 接線教學、找錯修正模擬五關、故障排除圖鑑＋剝線補充模組。</p></div>
+      <a class="tb-open" href="breadboard/index.html">工具首頁 ↗</a></div>
+    <a class="gc-shot tool-shot" href="breadboard/index.html" target="_blank" rel="noopener"><img src="assets/manual/m-breadboard.jpg" loading="lazy" alt="數位麵包板電路 首頁截圖"></a>
+    
+    <div class="guide-card" id="g-breadboard-module1">
+      <div class="gc-head"><span class="gc-no">M01</span><h4>認識麵包板</h4>
+        <a class="gc-link" href="breadboard/pages/module1.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="breadboard/pages/module1.html" target="_blank" rel="noopener"><img src="assets/manual/m-breadboard-module1.jpg" loading="lazy" alt="數位麵包板電路－認識麵包板 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">認識麵包板——點擊圖中的橘色標記，認識麵包板的構造與電子元件。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">依頁面指示點擊各標記／卡片，逐一認識名稱與功能；全部看完才會記入完成。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">適合投影同頁、全班輪流點名部位名稱當暖身。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-breadboard-module2">
+      <div class="gc-head"><span class="gc-no">M02·必修</span><h4>電路安全規範闖關</h4>
+        <a class="gc-link" href="breadboard/pages/module2.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="breadboard/pages/module2.html" target="_blank" rel="noopener"><img src="assets/manual/m-breadboard-module2.jpg" loading="lazy" alt="數位麵包板電路－電路安全規範闖關 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">電路安全規範闖關——10 題情境判斷，滿分通關後可進入接線教學。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">完成裝備／環境配置（拖曳；平板可「先點配備、再點位置」，頁面會自動提示）＋情境判斷題，達標後自動解鎖下一模組。</span></div><div class="gc-row"><span class="gc-k">💡 提醒</span><span class="gc-v">此關為必修門檻，未達標可重新整理再挑戰；通過會寫入進度供教師後台彙整。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-breadboard-module3">
+      <div class="gc-head"><span class="gc-no">M03</span><h4>接線步驟教學</h4>
+        <a class="gc-link" href="breadboard/pages/module3.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="breadboard/pages/module3.html" target="_blank" rel="noopener"><img src="assets/manual/m-breadboard-module3.jpg" loading="lazy" alt="數位麵包板電路－接線步驟教學 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">接線步驟教學——8 步驟組裝最基本的「LED 點亮」電路。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐步播放分解動畫並閱讀重點提醒；部分工具含步驟排序小遊戲（按住 ⋮⋮ 拖曳或點 ▲▼，平板可用）。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">建議搭配實機示範同步講解，動畫可重播。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-breadboard-module4">
+      <div class="gc-head"><span class="gc-no">M04·核心</span><h4>電路找錯與修正</h4>
+        <a class="gc-link" href="breadboard/pages/module4.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="breadboard/pages/module4.html" target="_blank" rel="noopener"><img src="assets/manual/m-breadboard-module4.jpg" loading="lazy" alt="數位麵包板電路－電路找錯與修正 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">電路找錯與修正——每一關有一個故障電路。觀察、診斷、點擊修正讓 LED 亮起。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">每關一個故障電路：觀察 LED 為何不亮，點擊可疑位置診斷（極性、斷路、短路、電阻錯值），修正後按「通電」驗證；五關難度遞增。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">搭配實體麵包板讓學生先在模擬器抓出錯誤類型，再到實物上重現同樣的除錯流程。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-breadboard-module5">
+      <div class="gc-head"><span class="gc-no">M05</span><h4>故障排除圖鑑</h4>
+        <a class="gc-link" href="breadboard/pages/module5.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="breadboard/pages/module5.html" target="_blank" rel="noopener"><img src="assets/manual/m-breadboard-module5.jpg" loading="lazy" alt="數位麵包板電路－故障排除圖鑑 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">故障排除圖鑑——8 種常見電路故障 + 排除方法。電路不會動的時候，先對照這份清單。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐卡閱讀並完成對應檢核／挑戰（依工具為故障圖鑑、案例分析或創作任務）。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-breadboard-wire-stripping">
+      <div class="gc-head"><span class="gc-no">補充模組·EXTRA</span><h4>導線處理：剝線</h4>
+        <a class="gc-link" href="breadboard/pages/wire-stripping.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="breadboard/pages/wire-stripping.html" target="_blank" rel="noopener"><img src="assets/manual/m-breadboard-wire-stripping.jpg" loading="lazy" alt="數位麵包板電路－導線處理：剝線 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">導線處理：剝線</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">三關剝線練習：調整剝線長度與下刀深度，太深會傷芯線、太淺剝不開。</span></div></div>
+    </div>
+  </section>
+  <section class="tool-sec" id="t-printer3d">
+    <div class="tool-band"><span class="tb-emoji">🖨️</span>
+      <div><h3>數位 3D 印表機</h3><p>3D 列印：部件認識、安全規範、列印流程、切片參數模擬（逐層列印動畫）、故障圖鑑。</p></div>
+      <a class="tb-open" href="printer3d/index.html">工具首頁 ↗</a></div>
+    <a class="gc-shot tool-shot" href="printer3d/index.html" target="_blank" rel="noopener"><img src="assets/manual/m-printer3d.jpg" loading="lazy" alt="數位 3D 印表機 首頁截圖"></a>
+    
+    <div class="guide-card" id="g-printer3d-module1">
+      <div class="gc-head"><span class="gc-no">M01</span><h4>認識 3D 印表機</h4>
+        <a class="gc-link" href="printer3d/pages/module1.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="printer3d/pages/module1.html" target="_blank" rel="noopener"><img src="assets/manual/m-printer3d-module1.jpg" loading="lazy" alt="數位 3D 印表機－認識 3D 印表機 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">認識 3D 印表機——點擊圖中橘色標記，認識每個部件的功能。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">依頁面指示點擊各標記／卡片，逐一認識名稱與功能；全部看完才會記入完成。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">適合投影同頁、全班輪流點名部位名稱當暖身。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-printer3d-module2">
+      <div class="gc-head"><span class="gc-no">M02·必修</span><h4>3D 列印安全規範</h4>
+        <a class="gc-link" href="printer3d/pages/module2.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="printer3d/pages/module2.html" target="_blank" rel="noopener"><img src="assets/manual/m-printer3d-module2.jpg" loading="lazy" alt="數位 3D 印表機－3D 列印安全規範 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">3D 列印安全規範——10 題情境，滿分通關。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">完成裝備／環境配置（拖曳；平板可「先點配備、再點位置」，頁面會自動提示）＋情境判斷題，達標後自動解鎖下一模組。</span></div><div class="gc-row"><span class="gc-k">💡 提醒</span><span class="gc-v">此關為必修門檻，未達標可重新整理再挑戰；通過會寫入進度供教師後台彙整。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-printer3d-module3">
+      <div class="gc-head"><span class="gc-no">M03</span><h4>列印流程教學</h4>
+        <a class="gc-link" href="printer3d/pages/module3.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="printer3d/pages/module3.html" target="_blank" rel="noopener"><img src="assets/manual/m-printer3d-module3.jpg" loading="lazy" alt="數位 3D 印表機－列印流程教學 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">列印流程教學——從建模到取件的完整 8 步驟。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐步播放分解動畫並閱讀重點提醒；部分工具含步驟排序小遊戲（按住 ⋮⋮ 拖曳或點 ▲▼，平板可用）。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">建議搭配實機示範同步講解，動畫可重播。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-printer3d-module4">
+      <div class="gc-head"><span class="gc-no">M04·核心</span><h4>切片參數模擬</h4>
+        <a class="gc-link" href="printer3d/pages/module4.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="printer3d/pages/module4.html" target="_blank" rel="noopener"><img src="assets/manual/m-printer3d-module4.jpg" loading="lazy" alt="數位 3D 印表機－切片參數模擬 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">切片參數模擬——調整參數，看 G-code 路徑、預估時間與耗材即時變化。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">選模型（立方體／圓柱／Benchy／花瓶），拉層厚、填充、速度、溫度四支滑桿，右側即時更新層數、預估時間、耗材與品質評分；按「開始列印」看逐層堆疊動畫——噴頭左右移動、當前層高亮。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">讓學生比較 0.1mm 與 0.3mm 層厚的時間差，理解「品質×時間」的取捨。</span></div><div class="gc-row"><span class="gc-k">💡 提醒</span><span class="gc-v">參數極端時品質評分會掉星，對應真實切片軟體的警告。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-printer3d-module5">
+      <div class="gc-head"><span class="gc-no">M05</span><h4>3D 列印故障圖鑑</h4>
+        <a class="gc-link" href="printer3d/pages/module5.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="printer3d/pages/module5.html" target="_blank" rel="noopener"><img src="assets/manual/m-printer3d-module5.jpg" loading="lazy" alt="數位 3D 印表機－3D 列印故障圖鑑 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">3D 列印故障圖鑑——8 種最常見的列印問題與排除方法。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐卡閱讀並完成對應檢核／挑戰（依工具為故障圖鑑、案例分析或創作任務）。</span></div></div>
+    </div>
+  </section><h2 class="grp-h">機具操作系列</h2>
+  <section class="tool-sec" id="t-drill">
+    <div class="tool-band"><span class="tb-emoji">🔩</span>
+      <div><h3>數位手電鑽</h3><p>手電鑽：部件、安全、鑽孔八步驟、參數模擬（轉速×進刀×材料）、故障圖鑑。</p></div>
+      <a class="tb-open" href="drill/index.html">工具首頁 ↗</a></div>
+    <a class="gc-shot tool-shot" href="drill/index.html" target="_blank" rel="noopener"><img src="assets/manual/m-drill.jpg" loading="lazy" alt="數位手電鑽 首頁截圖"></a>
+    
+    <div class="guide-card" id="g-drill-module1">
+      <div class="gc-head"><span class="gc-no">M01</span><h4>認識手電鑽</h4>
+        <a class="gc-link" href="drill/pages/module1.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="drill/pages/module1.html" target="_blank" rel="noopener"><img src="assets/manual/m-drill-module1.jpg" loading="lazy" alt="數位手電鑽－認識手電鑽 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">認識手電鑽——點擊圖中黃色標記，認識每個部件的功能。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">依頁面指示點擊各標記／卡片，逐一認識名稱與功能；全部看完才會記入完成。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">適合投影同頁、全班輪流點名部位名稱當暖身。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-drill-module2">
+      <div class="gc-head"><span class="gc-no">M02·必修</span><h4>手電鑽安全規範</h4>
+        <a class="gc-link" href="drill/pages/module2.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="drill/pages/module2.html" target="_blank" rel="noopener"><img src="assets/manual/m-drill-module2.jpg" loading="lazy" alt="數位手電鑽－手電鑽安全規範 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">手電鑽安全規範——裝備檢查 + 15 題情境，達 120 分通關。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">完成裝備／環境配置（拖曳；平板可「先點配備、再點位置」，頁面會自動提示）＋情境判斷題，達標後自動解鎖下一模組。</span></div><div class="gc-row"><span class="gc-k">💡 提醒</span><span class="gc-v">此關為必修門檻，未達標可重新整理再挑戰；通過會寫入進度供教師後台彙整。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-drill-module3">
+      <div class="gc-head"><span class="gc-no">M03</span><h4>鑽孔流程教學</h4>
+        <a class="gc-link" href="drill/pages/module3.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="drill/pages/module3.html" target="_blank" rel="noopener"><img src="assets/manual/m-drill-module3.jpg" loading="lazy" alt="數位手電鑽－鑽孔流程教學 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">鑽孔流程教學——從穿戴護具到收工的完整 8 步驟。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐步播放分解動畫並閱讀重點提醒；部分工具含步驟排序小遊戲（按住 ⋮⋮ 拖曳或點 ▲▼，平板可用）。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">建議搭配實機示範同步講解，動畫可重播。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-drill-module4">
+      <div class="gc-head"><span class="gc-no">M04·核心</span><h4>鑽孔參數模擬</h4>
+        <a class="gc-link" href="drill/pages/module4.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="drill/pages/module4.html" target="_blank" rel="noopener"><img src="assets/manual/m-drill-module4.jpg" loading="lazy" alt="數位手電鑽－鑽孔參數模擬 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">鑽孔參數模擬——調整材料、鑽頭、轉速、進刀力，看鑽孔結果即時變化。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">選材料與鑽頭類型、調直徑／轉速／進刀力，右側面板即時顯示鑽頭適配、切削速度、過熱與偏鑽風險；按「開始鑽孔」看下刀動畫——木屑噴出、參數不當會冒煙。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">先示範「軟木＋HSS＋800RPM」的理想組合，再故意調到金屬＋木工鑽頭讓全班看風險面板變紅。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-drill-module5">
+      <div class="gc-head"><span class="gc-no">M05</span><h4>鑽孔故障圖鑑</h4>
+        <a class="gc-link" href="drill/pages/module5.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="drill/pages/module5.html" target="_blank" rel="noopener"><img src="assets/manual/m-drill-module5.jpg" loading="lazy" alt="數位手電鑽－鑽孔故障圖鑑 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">鑽孔故障圖鑑——8 種最常見的鑽孔問題與排除方法。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐卡閱讀並完成對應檢核／挑戰（依工具為故障圖鑑、案例分析或創作任務）。</span></div></div>
+    </div>
+  </section>
+  <section class="tool-sec" id="t-drill-press">
+    <div class="tool-band"><span class="tb-emoji">🛠</span>
+      <div><h3>數位鑽床</h3><p>鑽床：部件、安全、操作流程、皮帶段位與切削速度模擬、事故圖鑑。</p></div>
+      <a class="tb-open" href="drill-press/index.html">工具首頁 ↗</a></div>
+    <a class="gc-shot tool-shot" href="drill-press/index.html" target="_blank" rel="noopener"><img src="assets/manual/m-drill-press.jpg" loading="lazy" alt="數位鑽床 首頁截圖"></a>
+    
+    <div class="guide-card" id="g-drill-press-module1">
+      <div class="gc-head"><span class="gc-no">M01</span><h4>認識鑽床</h4>
+        <a class="gc-link" href="drill-press/pages/module1.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="drill-press/pages/module1.html" target="_blank" rel="noopener"><img src="assets/manual/m-drill-press-module1.jpg" loading="lazy" alt="數位鑽床－認識鑽床 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">認識鑽床——點擊圖中綠色標記，認識每個部件的功能。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">依頁面指示點擊各標記／卡片，逐一認識名稱與功能；全部看完才會記入完成。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">適合投影同頁、全班輪流點名部位名稱當暖身。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-drill-press-module2">
+      <div class="gc-head"><span class="gc-no">M02·必修</span><h4>鑽床安全規範</h4>
+        <a class="gc-link" href="drill-press/pages/module2.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="drill-press/pages/module2.html" target="_blank" rel="noopener"><img src="assets/manual/m-drill-press-module2.jpg" loading="lazy" alt="數位鑽床－鑽床安全規範 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">鑽床安全規範——裝備檢查 + 15 題情境，達 120 分通關。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">完成裝備／環境配置（拖曳；平板可「先點配備、再點位置」，頁面會自動提示）＋情境判斷題，達標後自動解鎖下一模組。</span></div><div class="gc-row"><span class="gc-k">💡 提醒</span><span class="gc-v">此關為必修門檻，未達標可重新整理再挑戰；通過會寫入進度供教師後台彙整。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-drill-press-module3">
+      <div class="gc-head"><span class="gc-no">M03</span><h4>鑽床操作流程</h4>
+        <a class="gc-link" href="drill-press/pages/module3.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="drill-press/pages/module3.html" target="_blank" rel="noopener"><img src="assets/manual/m-drill-press-module3.jpg" loading="lazy" alt="數位鑽床－鑽床操作流程 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">鑽床操作流程——8 個步驟完整跑一遍。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐步播放分解動畫並閱讀重點提醒；部分工具含步驟排序小遊戲（按住 ⋮⋮ 拖曳或點 ▲▼，平板可用）。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">建議搭配實機示範同步講解，動畫可重播。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-drill-press-module4">
+      <div class="gc-head"><span class="gc-no">M04·核心</span><h4>轉速選配模擬</h4>
+        <a class="gc-link" href="drill-press/pages/module4.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="drill-press/pages/module4.html" target="_blank" rel="noopener"><img src="assets/manual/m-drill-press-module4.jpg" loading="lazy" alt="數位鑽床－轉速選配模擬 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">轉速選配模擬——依鑽頭直徑與材料選對皮帶段位，看切削速度（SFM）與過熱風險。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">依鑽頭直徑與材料選皮帶段位，看切削速度（SFM）是否落在理想區間與過熱風險；按「開始」看主軸下壓動畫。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">把「直徑越大轉速要越低」的反比關係用兩三組設定演給學生看。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-drill-press-module5">
+      <div class="gc-head"><span class="gc-no">M05</span><h4>鑽床事故圖鑑</h4>
+        <a class="gc-link" href="drill-press/pages/module5.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="drill-press/pages/module5.html" target="_blank" rel="noopener"><img src="assets/manual/m-drill-press-module5.jpg" loading="lazy" alt="數位鑽床－鑽床事故圖鑑 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">鑽床事故圖鑑——8 種最常見的鑽床事故與預防方法。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐卡閱讀並完成對應檢核／挑戰（依工具為故障圖鑑、案例分析或創作任務）。</span></div></div>
+    </div>
+  </section>
+  <section class="tool-sec" id="t-sander">
+    <div class="tool-band"><span class="tb-emoji">✨</span>
+      <div><h3>數位砂磨機</h3><p>砂磨機：部件、安全、操作流程、粒度×表面粗糙度模擬、故障圖鑑。</p></div>
+      <a class="tb-open" href="sander/index.html">工具首頁 ↗</a></div>
+    <a class="gc-shot tool-shot" href="sander/index.html" target="_blank" rel="noopener"><img src="assets/manual/m-sander.jpg" loading="lazy" alt="數位砂磨機 首頁截圖"></a>
+    
+    <div class="guide-card" id="g-sander-module1">
+      <div class="gc-head"><span class="gc-no">M01</span><h4>認識砂磨機</h4>
+        <a class="gc-link" href="sander/pages/module1.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="sander/pages/module1.html" target="_blank" rel="noopener"><img src="assets/manual/m-sander-module1.jpg" loading="lazy" alt="數位砂磨機－認識砂磨機 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">認識砂磨機——點擊圖中紫色標記，認識每個部件的功能。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">依頁面指示點擊各標記／卡片，逐一認識名稱與功能；全部看完才會記入完成。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">適合投影同頁、全班輪流點名部位名稱當暖身。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-sander-module2">
+      <div class="gc-head"><span class="gc-no">M02·必修</span><h4>砂磨機安全規範</h4>
+        <a class="gc-link" href="sander/pages/module2.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="sander/pages/module2.html" target="_blank" rel="noopener"><img src="assets/manual/m-sander-module2.jpg" loading="lazy" alt="數位砂磨機－砂磨機安全規範 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">砂磨機安全規範——護具配置（30 分）＋ 10 題情境（100 分），達 100 分通關。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">完成裝備／環境配置（拖曳；平板可「先點配備、再點位置」，頁面會自動提示）＋情境判斷題，達標後自動解鎖下一模組。</span></div><div class="gc-row"><span class="gc-k">💡 提醒</span><span class="gc-v">此關為必修門檻，未達標可重新整理再挑戰；通過會寫入進度供教師後台彙整。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-sander-module3">
+      <div class="gc-head"><span class="gc-no">M03</span><h4>砂磨操作流程</h4>
+        <a class="gc-link" href="sander/pages/module3.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="sander/pages/module3.html" target="_blank" rel="noopener"><img src="assets/manual/m-sander-module3.jpg" loading="lazy" alt="數位砂磨機－砂磨操作流程 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">砂磨操作流程——8 個步驟完整跑一遍。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐步播放分解動畫並閱讀重點提醒；部分工具含步驟排序小遊戲（按住 ⋮⋮ 拖曳或點 ▲▼，平板可用）。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">建議搭配實機示範同步講解，動畫可重播。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-sander-module4">
+      <div class="gc-head"><span class="gc-no">M04·核心</span><h4>粒度與表面模擬</h4>
+        <a class="gc-link" href="sander/pages/module4.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="sander/pages/module4.html" target="_blank" rel="noopener"><img src="assets/manual/m-sander-module4.jpg" loading="lazy" alt="數位砂磨機－粒度與表面模擬 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">粒度與表面模擬——調整材料、粒度、進料速度、接觸時間，看表面粗糙度（Ra）與燒焦風險。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">選材料、砂帶粒度（60→320）、進料速度、接觸時間，看去料量、表面 Ra 與燒焦風險；按「開始砂磨」看砂帶轉動與工件表面變化。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">用「先粗後細」的建議欄位帶出砂磨的正確順序：60 號塑形、120 號修平、240 以上拋光。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-sander-module5">
+      <div class="gc-head"><span class="gc-no">M05</span><h4>砂磨故障圖鑑</h4>
+        <a class="gc-link" href="sander/pages/module5.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="sander/pages/module5.html" target="_blank" rel="noopener"><img src="assets/manual/m-sander-module5.jpg" loading="lazy" alt="數位砂磨機－砂磨故障圖鑑 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">砂磨故障圖鑑——8 種最常見的砂磨問題與預防方法。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐卡閱讀並完成對應檢核／挑戰（依工具為故障圖鑑、案例分析或創作任務）。</span></div></div>
+    </div>
+  </section>
+  <section class="tool-sec" id="t-hand-tools">
+    <div class="tool-band"><span class="tb-emoji">🔨</span>
+      <div><h3>基本手工具</h3><p>基本手工具：十種工具圖鑑、安全、使用通則、任務選工具測驗、保養與收工流程。</p></div>
+      <a class="tb-open" href="hand-tools/index.html">工具首頁 ↗</a></div>
+    <a class="gc-shot tool-shot" href="hand-tools/index.html" target="_blank" rel="noopener"><img src="assets/manual/m-hand-tools.jpg" loading="lazy" alt="基本手工具 首頁截圖"></a>
+    
+    <div class="guide-card" id="g-hand-tools-module1">
+      <div class="gc-head"><span class="gc-no">M01</span><h4>10 種基本手工具</h4>
+        <a class="gc-link" href="hand-tools/pages/module1.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="hand-tools/pages/module1.html" target="_blank" rel="noopener"><img src="assets/manual/m-hand-tools-module1.jpg" loading="lazy" alt="基本手工具－10 種基本手工具 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">10 種基本手工具——點擊每張卡，認識各種類、用途、選用建議。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">依頁面指示點擊各標記／卡片，逐一認識名稱與功能；全部看完才會記入完成。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">適合投影同頁、全班輪流點名部位名稱當暖身。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-hand-tools-module2">
+      <div class="gc-head"><span class="gc-no">M02·必修</span><h4>手工具安全規範</h4>
+        <a class="gc-link" href="hand-tools/pages/module2.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="hand-tools/pages/module2.html" target="_blank" rel="noopener"><img src="assets/manual/m-hand-tools-module2.jpg" loading="lazy" alt="基本手工具－手工具安全規範 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">手工具安全規範——10 題情境，滿分通關。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">完成裝備／環境配置（拖曳；平板可「先點配備、再點位置」，頁面會自動提示）＋情境判斷題，達標後自動解鎖下一模組。</span></div><div class="gc-row"><span class="gc-k">💡 提醒</span><span class="gc-v">此關為必修門檻，未達標可重新整理再挑戰；通過會寫入進度供教師後台彙整。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-hand-tools-module3">
+      <div class="gc-head"><span class="gc-no">M03</span><h4>使用 8 步驟通則</h4>
+        <a class="gc-link" href="hand-tools/pages/module3.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="hand-tools/pages/module3.html" target="_blank" rel="noopener"><img src="assets/manual/m-hand-tools-module3.jpg" loading="lazy" alt="基本手工具－使用 8 步驟通則 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">使用 8 步驟通則——任何手工具的標準操作流程。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐步播放分解動畫並閱讀重點提醒；部分工具含步驟排序小遊戲（按住 ⋮⋮ 拖曳或點 ▲▼，平板可用）。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">建議搭配實機示範同步講解，動畫可重播。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-hand-tools-module4">
+      <div class="gc-head"><span class="gc-no">M04·核心</span><h4>任務選工具測驗</h4>
+        <a class="gc-link" href="hand-tools/pages/module4.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="hand-tools/pages/module4.html" target="_blank" rel="noopener"><img src="assets/manual/m-hand-tools-module4.jpg" loading="lazy" alt="基本手工具－任務選工具測驗 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">任務選工具測驗——10 個情境，選對工具才能完成任務。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">十個任務情境（鋸、削、量、鎖⋯），從工具庫點選正確工具；選錯會解釋為什麼不合適。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">可改成分組搶答：先唸情境、各組舉牌選工具再對答案。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-hand-tools-module5">
+      <div class="gc-head"><span class="gc-no">M05</span><h4>手工具保養與維護</h4>
+        <a class="gc-link" href="hand-tools/pages/module5.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="hand-tools/pages/module5.html" target="_blank" rel="noopener"><img src="assets/manual/m-hand-tools-module5.jpg" loading="lazy" alt="基本手工具－手工具保養與維護 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">手工具保養與維護——工具能用很久的關鍵知識 + 收工工作流程模擬。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐卡閱讀並完成對應檢核／挑戰（依工具為故障圖鑑、案例分析或創作任務）。</span></div></div>
+    </div>
+  </section><h2 class="grp-h">結構與機構系列</h2>
+  <section class="tool-sec" id="t-structure">
+    <div class="tool-band"><span class="tb-emoji">🏗️</span>
+      <div><h3>橋樑工程師實驗室</h3><p>橋樑工程師：桁架認識、材料與安全係數、FEM 橋樑設計實驗室（核心）、負載挑戰、失敗案例。</p></div>
+      <a class="tb-open" href="structure/index.html">工具首頁 ↗</a></div>
+    <a class="gc-shot tool-shot" href="structure/index.html" target="_blank" rel="noopener"><img src="assets/manual/m-structure.jpg" loading="lazy" alt="橋樑工程師實驗室 首頁截圖"></a>
+    
+    <div class="guide-card" id="g-structure-module1">
+      <div class="gc-head"><span class="gc-no">M01·認識結構</span><h4>認識橋樑結構</h4>
+        <a class="gc-link" href="structure/pages/module1.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="structure/pages/module1.html" target="_blank" rel="noopener"><img src="assets/manual/m-structure-module1.jpg" loading="lazy" alt="橋樑工程師實驗室－認識橋樑結構 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">認識橋樑結構——點擊桁架橋各部位了解力學角色，再看 4 種橋型圖鑑。完成 8 個熱點 + 4 種橋型即可通關。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">依頁面指示點擊各標記／卡片，逐一認識名稱與功能；全部看完才會記入完成。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">適合投影同頁、全班輪流點名部位名稱當暖身。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-structure-module2">
+      <div class="gc-head"><span class="gc-no">M02·必修</span><h4>材料與安全係數</h4>
+        <a class="gc-link" href="structure/pages/module2.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="structure/pages/module2.html" target="_blank" rel="noopener"><img src="assets/manual/m-structure-module2.jpg" loading="lazy" alt="橋樑工程師實驗室－材料與安全係數 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">材料與安全係數——材料對比（10 分）＋ SF 安全係數情境（100 分）＋ 工地 PPE（30 分），達 100 分通關。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">完成裝備／環境配置（拖曳；平板可「先點配備、再點位置」，頁面會自動提示）＋情境判斷題，達標後自動解鎖下一模組。</span></div><div class="gc-row"><span class="gc-k">💡 提醒</span><span class="gc-v">此關為必修門檻，未達標可重新整理再挑戰；通過會寫入進度供教師後台彙整。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-structure-module3">
+      <div class="gc-head"><span class="gc-no">M03 ★ 核心</span><h4>橋樑設計實驗室</h4>
+        <a class="gc-link" href="structure/pages/module3.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="structure/pages/module3.html" target="_blank" rel="noopener"><img src="assets/manual/m-structure-module3.jpg" loading="lazy" alt="橋樑工程師實驗室－橋樑設計實驗室 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">橋樑設計實驗室——基礎模式：5 種橋型 FEM 三色分析 + Matter.js 崩塌動畫；進階挑戰：自由畫節點桿件設計。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">基礎模式：選五種橋型按「▶ 求解 FEM」，看紅（張力）藍（壓力）三色受力圖與 Matter.js 崩塌動畫。進階挑戰：用節點／桿件／移動／刪除四工具自由建橋（觸控可直接拖節點），挑戰目標跨距與安全係數。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">先用普拉特桁架講「豎桿受壓、斜桿受拉」，再讓學生自由設計挑戰最輕量過關。</span></div><div class="gc-row"><span class="gc-k">💡 提醒</span><span class="gc-v">進階模式的 FEM 求解採剛度法，桿件超過降伏應力會標紅。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-structure-module4">
+      <div class="gc-head"><span class="gc-no">M04·挑戰</span><h4>負載情境挑戰</h4>
+        <a class="gc-link" href="structure/pages/module4.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="structure/pages/module4.html" target="_blank" rel="noopener"><img src="assets/manual/m-structure-module4.jpg" loading="lazy" alt="橋樑工程師實驗室－負載情境挑戰 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">負載情境挑戰——6 道真實工況，用 FEM 求解器分析每個情境的安全性。⭐ 通過 ⭐⭐ SF≥2.5 ⭐⭐⭐ SF≥3 且最輕量</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">依頁面互動指示操作並完成檢核。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-structure-module5">
+      <div class="gc-head"><span class="gc-no">M05·案例圖鑑</span><h4>歷史橋樑失敗案例</h4>
+        <a class="gc-link" href="structure/pages/module5.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="structure/pages/module5.html" target="_blank" rel="noopener"><img src="assets/manual/m-structure-module5.jpg" loading="lazy" alt="橋樑工程師實驗室－歷史橋樑失敗案例 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">歷史橋樑失敗案例——8 件真實橋樑失敗案例，理解每種失效模式。閱讀後完成診斷測驗。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐卡閱讀並完成對應檢核／挑戰（依工具為故障圖鑑、案例分析或創作任務）。</span></div></div>
+    </div>
+  </section>
+  <section class="tool-sec" id="t-structure-sim">
+    <div class="tool-band"><span class="tb-emoji">🏛</span>
+      <div><h3>結構模擬器</h3><p>結構模擬器：結構三元素、六種結構、設計流程、桁架受力模擬、失效圖鑑。</p></div>
+      <a class="tb-open" href="structure-sim/index.html">工具首頁 ↗</a></div>
+    <a class="gc-shot tool-shot" href="structure-sim/index.html" target="_blank" rel="noopener"><img src="assets/manual/m-structure-sim.jpg" loading="lazy" alt="結構模擬器 首頁截圖"></a>
+    
+    <div class="guide-card" id="g-structure-sim-module1">
+      <div class="gc-head"><span class="gc-no">M01</span><h4>認識結構三元素 + 五種內力</h4>
+        <a class="gc-link" href="structure-sim/pages/module1.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="structure-sim/pages/module1.html" target="_blank" rel="noopener"><img src="assets/manual/m-structure-sim-module1.jpg" loading="lazy" alt="結構模擬器－認識結構三元素 + 五種內力 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">認識結構三元素 + 五種內力——點擊圖中藍色標記，認識結構的基本語彙。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">依頁面指示點擊各標記／卡片，逐一認識名稱與功能；全部看完才會記入完成。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">適合投影同頁、全班輪流點名部位名稱當暖身。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-structure-sim-module2">
+      <div class="gc-head"><span class="gc-no">M02</span><h4>6 種結構類型</h4>
+        <a class="gc-link" href="structure-sim/pages/module2.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="structure-sim/pages/module2.html" target="_blank" rel="noopener"><img src="assets/manual/m-structure-sim-module2.jpg" loading="lazy" alt="結構模擬器－6 種結構類型 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">6 種結構類型——每種結構有獨特的力學原理與最佳用途。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">完成裝備／環境配置（拖曳；平板可「先點配備、再點位置」，頁面會自動提示）＋情境判斷題，達標後自動解鎖下一模組。</span></div><div class="gc-row"><span class="gc-k">💡 提醒</span><span class="gc-v">此關為必修門檻，未達標可重新整理再挑戰；通過會寫入進度供教師後台彙整。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-structure-sim-module3">
+      <div class="gc-head"><span class="gc-no">M03</span><h4>結構設計流程</h4>
+        <a class="gc-link" href="structure-sim/pages/module3.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="structure-sim/pages/module3.html" target="_blank" rel="noopener"><img src="assets/manual/m-structure-sim-module3.jpg" loading="lazy" alt="結構模擬器－結構設計流程 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">結構設計流程——從定義功能到測試改良的 8 步驟。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐步播放分解動畫並閱讀重點提醒；部分工具含步驟排序小遊戲（按住 ⋮⋮ 拖曳或點 ▲▼，平板可用）。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">建議搭配實機示範同步講解，動畫可重播。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-structure-sim-module4">
+      <div class="gc-head"><span class="gc-no">M04·核心</span><h4>桁架受力模擬器</h4>
+        <a class="gc-link" href="structure-sim/pages/module4.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="structure-sim/pages/module4.html" target="_blank" rel="noopener"><img src="assets/manual/m-structure-sim-module4.jpg" loading="lazy" alt="結構模擬器－桁架受力模擬器 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">桁架受力模擬器——選一個桁架型式，施加荷重，看每根桿的受力（紅張藍壓）與節點變形。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">選桁架型式、點節點施加載重、拉滑桿調大小，即時看每根桿件紅張藍壓與節點變形。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">與橋樑工程師實驗室互補：這裡專注「單一桁架的受力直覺」。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-structure-sim-module5">
+      <div class="gc-head"><span class="gc-no">M05</span><h4>結構挑戰 + 失效圖鑑</h4>
+        <a class="gc-link" href="structure-sim/pages/module5.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="structure-sim/pages/module5.html" target="_blank" rel="noopener"><img src="assets/manual/m-structure-sim-module5.jpg" loading="lazy" alt="結構模擬器－結構挑戰 + 失效圖鑑 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">結構挑戰 + 失效圖鑑——三大經典挑戰指南 + 8 種結構失效模式。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐卡閱讀並完成對應檢核／挑戰（依工具為故障圖鑑、案例分析或創作任務）。</span></div></div>
+    </div>
+  </section>
+  <section class="tool-sec" id="t-simple-machines">
+    <div class="tool-band"><span class="tb-emoji">⚙</span>
+      <div><h3>簡單機械</h3><p>簡單機械：六種機械、槓桿分類、機械利益計算、互動模擬器、生活找找看。</p></div>
+      <a class="tb-open" href="simple-machines/index.html">工具首頁 ↗</a></div>
+    <a class="gc-shot tool-shot" href="simple-machines/index.html" target="_blank" rel="noopener"><img src="assets/manual/m-simple-machines.jpg" loading="lazy" alt="簡單機械 首頁截圖"></a>
+    
+    <div class="guide-card" id="g-simple-machines-module1">
+      <div class="gc-head"><span class="gc-no">M01</span><h4>6 種簡單機械</h4>
+        <a class="gc-link" href="simple-machines/pages/module1.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="simple-machines/pages/module1.html" target="_blank" rel="noopener"><img src="assets/manual/m-simple-machines-module1.jpg" loading="lazy" alt="簡單機械－6 種簡單機械 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">6 種簡單機械——點擊機械圖看原理、機械利益公式與生活範例。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">依頁面指示點擊各標記／卡片，逐一認識名稱與功能；全部看完才會記入完成。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">適合投影同頁、全班輪流點名部位名稱當暖身。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-simple-machines-module2">
+      <div class="gc-head"><span class="gc-no">M02</span><h4>槓桿三類分類</h4>
+        <a class="gc-link" href="simple-machines/pages/module2.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="simple-machines/pages/module2.html" target="_blank" rel="noopener"><img src="assets/manual/m-simple-machines-module2.jpg" loading="lazy" alt="簡單機械－槓桿三類分類 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">槓桿三類分類——依施力點、抗力點、支點位置區分。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">完成裝備／環境配置（拖曳；平板可「先點配備、再點位置」，頁面會自動提示）＋情境判斷題，達標後自動解鎖下一模組。</span></div><div class="gc-row"><span class="gc-k">💡 提醒</span><span class="gc-v">此關為必修門檻，未達標可重新整理再挑戰；通過會寫入進度供教師後台彙整。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-simple-machines-module3">
+      <div class="gc-head"><span class="gc-no">M03</span><h4>機械利益計算</h4>
+        <a class="gc-link" href="simple-machines/pages/module3.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="simple-machines/pages/module3.html" target="_blank" rel="noopener"><img src="assets/manual/m-simple-machines-module3.jpg" loading="lazy" alt="簡單機械－機械利益計算 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">機械利益計算——用公式算出每種簡單機械的省力倍數。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐步播放分解動畫並閱讀重點提醒；部分工具含步驟排序小遊戲（按住 ⋮⋮ 拖曳或點 ▲▼，平板可用）。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">建議搭配實機示範同步講解，動畫可重播。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-simple-machines-module4">
+      <div class="gc-head"><span class="gc-no">M04·核心</span><h4>簡單機械模擬器</h4>
+        <a class="gc-link" href="simple-machines/pages/module4.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="simple-machines/pages/module4.html" target="_blank" rel="noopener"><img src="assets/manual/m-simple-machines-module4.jpg" loading="lazy" alt="簡單機械－簡單機械模擬器 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">簡單機械模擬器——選擇機械，調整參數，看力的變化。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">選六種簡單機械之一，拉動參數滑桿（力臂、半徑、齒數⋯），看省力倍數與力圖即時變化。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">讓學生先猜「動滑輪省幾倍力」再用模擬器驗證。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-simple-machines-module5">
+      <div class="gc-head"><span class="gc-no">M05</span><h4>找找看生活中的簡單機械</h4>
+        <a class="gc-link" href="simple-machines/pages/module5.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="simple-machines/pages/module5.html" target="_blank" rel="noopener"><img src="assets/manual/m-simple-machines-module5.jpg" loading="lazy" alt="簡單機械－找找看生活中的簡單機械 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">找找看生活中的簡單機械——12 件日常物品，每件都藏著簡單機械原理。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐卡閱讀並完成對應檢核／挑戰（依工具為故障圖鑑、案例分析或創作任務）。</span></div></div>
+    </div>
+  </section>
+  <section class="tool-sec" id="t-mechanism">
+    <div class="tool-band"><span class="tb-emoji">🎡</span>
+      <div><h3>機構運動</h3><p>機構運動：六種機構動畫、運動類型、創意機構卡、運動模擬器、生活應用。</p></div>
+      <a class="tb-open" href="mechanism/index.html">工具首頁 ↗</a></div>
+    <a class="gc-shot tool-shot" href="mechanism/index.html" target="_blank" rel="noopener"><img src="assets/manual/m-mechanism.jpg" loading="lazy" alt="機構運動 首頁截圖"></a>
+    
+    <div class="guide-card" id="g-mechanism-module1">
+      <div class="gc-head"><span class="gc-no">M01</span><h4>6 種常見機構</h4>
+        <a class="gc-link" href="mechanism/pages/module1.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="mechanism/pages/module1.html" target="_blank" rel="noopener"><img src="assets/manual/m-mechanism-module1.jpg" loading="lazy" alt="機構運動－6 種常見機構 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">6 種常見機構——每種機構都附 SVG 動畫——看著動就會了解原理。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">依頁面指示點擊各標記／卡片，逐一認識名稱與功能；全部看完才會記入完成。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">適合投影同頁、全班輪流點名部位名稱當暖身。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-mechanism-module2">
+      <div class="gc-head"><span class="gc-no">M02</span><h4>4 種運動類型</h4>
+        <a class="gc-link" href="mechanism/pages/module2.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="mechanism/pages/module2.html" target="_blank" rel="noopener"><img src="assets/manual/m-mechanism-module2.jpg" loading="lazy" alt="機構運動－4 種運動類型 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">4 種運動類型——機構就是「運動的轉換器」——把一種運動變成另一種。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">完成裝備／環境配置（拖曳；平板可「先點配備、再點位置」，頁面會自動提示）＋情境判斷題，達標後自動解鎖下一模組。</span></div><div class="gc-row"><span class="gc-k">💡 提醒</span><span class="gc-v">此關為必修門檻，未達標可重新整理再挑戰；通過會寫入進度供教師後台彙整。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-mechanism-module3">
+      <div class="gc-head"><span class="gc-no">M03</span><h4>創意機構卡片製作</h4>
+        <a class="gc-link" href="mechanism/pages/module3.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="mechanism/pages/module3.html" target="_blank" rel="noopener"><img src="assets/manual/m-mechanism-module3.jpg" loading="lazy" alt="機構運動－創意機構卡片製作 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">創意機構卡片製作——對應翰林 1 下 K4 闖關任務 + 附件 3-5 紙模。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐步播放分解動畫並閱讀重點提醒；部分工具含步驟排序小遊戲（按住 ⋮⋮ 拖曳或點 ▲▼，平板可用）。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">建議搭配實機示範同步講解，動畫可重播。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-mechanism-module4">
+      <div class="gc-head"><span class="gc-no">M04·核心</span><h4>機構運動模擬器</h4>
+        <a class="gc-link" href="mechanism/pages/module4.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="mechanism/pages/module4.html" target="_blank" rel="noopener"><img src="assets/manual/m-mechanism-module4.jpg" loading="lazy" alt="機構運動－機構運動模擬器 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">機構運動模擬器——調整機構參數，看實時運動曲線。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">切換曲柄滑塊／凸輪／齒輪組三種機構，調整半徑 R、連桿長 L、轉速，畫面即時顯示運動方程式與行程。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">帶學生觀察「R 變大行程變大、L 太短會卡死」的幾何限制。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-mechanism-module5">
+      <div class="gc-head"><span class="gc-no">M05</span><h4>機構玩具與生活應用</h4>
+        <a class="gc-link" href="mechanism/pages/module5.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="mechanism/pages/module5.html" target="_blank" rel="noopener"><img src="assets/manual/m-mechanism-module5.jpg" loading="lazy" alt="機構運動－機構玩具與生活應用 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">機構玩具與生活應用——10 種生活機構分析 + 8 題情境判斷。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐卡閱讀並完成對應檢核／挑戰（依工具為故障圖鑑、案例分析或創作任務）。</span></div></div>
+    </div>
+  </section>
+  <section class="tool-sec" id="t-hydraulic-arm">
+    <div class="tool-band"><span class="tb-emoji">💪</span>
+      <div><h3>液壓手臂</h3><p>液壓手臂：帕斯卡原理、4 軸結構、紙模製作、4 軸模擬器（對應實體針筒教具）、工業應用。</p></div>
+      <a class="tb-open" href="hydraulic-arm/index.html">工具首頁 ↗</a></div>
+    <a class="gc-shot tool-shot" href="hydraulic-arm/index.html" target="_blank" rel="noopener"><img src="assets/manual/m-hydraulic-arm.jpg" loading="lazy" alt="液壓手臂 首頁截圖"></a>
+    
+    <div class="guide-card" id="g-hydraulic-arm-module1">
+      <div class="gc-head"><span class="gc-no">M01</span><h4>液壓原理 4 核心概念</h4>
+        <a class="gc-link" href="hydraulic-arm/pages/module1.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="hydraulic-arm/pages/module1.html" target="_blank" rel="noopener"><img src="assets/manual/m-hydraulic-arm-module1.jpg" loading="lazy" alt="液壓手臂－液壓原理 4 核心概念 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">液壓原理 4 核心概念——理解液壓力量的來源與計算。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">依頁面指示點擊各標記／卡片，逐一認識名稱與功能；全部看完才會記入完成。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">適合投影同頁、全班輪流點名部位名稱當暖身。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-hydraulic-arm-module2">
+      <div class="gc-head"><span class="gc-no">M02</span><h4>4 軸手臂結構</h4>
+        <a class="gc-link" href="hydraulic-arm/pages/module2.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="hydraulic-arm/pages/module2.html" target="_blank" rel="noopener"><img src="assets/manual/m-hydraulic-arm-module2.jpg" loading="lazy" alt="液壓手臂－4 軸手臂結構 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">4 軸手臂結構——4 個自由度（DoF）= 4 對針筒控制。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">完成裝備／環境配置（拖曳；平板可「先點配備、再點位置」，頁面會自動提示）＋情境判斷題，達標後自動解鎖下一模組。</span></div><div class="gc-row"><span class="gc-k">💡 提醒</span><span class="gc-v">此關為必修門檻，未達標可重新整理再挑戰；通過會寫入進度供教師後台彙整。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-hydraulic-arm-module3">
+      <div class="gc-head"><span class="gc-no">M03</span><h4>液壓手臂製作 8 步驟</h4>
+        <a class="gc-link" href="hydraulic-arm/pages/module3.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="hydraulic-arm/pages/module3.html" target="_blank" rel="noopener"><img src="assets/manual/m-hydraulic-arm-module3.jpg" loading="lazy" alt="液壓手臂－液壓手臂製作 8 步驟 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">液壓手臂製作 8 步驟——對應翰林附件 3 紙模製作流程。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐步播放分解動畫並閱讀重點提醒；部分工具含步驟排序小遊戲（按住 ⋮⋮ 拖曳或點 ▲▼，平板可用）。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">建議搭配實機示範同步講解，動畫可重播。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-hydraulic-arm-module4">
+      <div class="gc-head"><span class="gc-no">M04·核心</span><h4>4 軸液壓手臂模擬器</h4>
+        <a class="gc-link" href="hydraulic-arm/pages/module4.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="hydraulic-arm/pages/module4.html" target="_blank" rel="noopener"><img src="assets/manual/m-hydraulic-arm-module4.jpg" loading="lazy" alt="液壓手臂－4 軸液壓手臂模擬器 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">4 軸液壓手臂模擬器——用 4 個滑桿控制手臂——把瓶子從 A 點搬到 B 點。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">拉 4 支滑桿（＝推 4 支針筒活塞）控制基座移動、大臂、小臂、夾爪，把綠色瓶子夾起、搬到目標圈放下。畫面右上的四支針筒會同步顯示活塞位置——和實體針筒液壓教具一一對應。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">先在模擬器上練「張爪→對位→夾緊→抬升→平移→放下」的順序，再做紙模實作會順很多。</span></div><div class="gc-row"><span class="gc-k">💡 提醒</span><span class="gc-v">夾爪開度 ≤35mm 且對準瓶子才抓得住；放下時開度 &gt;40mm 鬆開。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-hydraulic-arm-module5">
+      <div class="gc-head"><span class="gc-no">M05</span><h4>液壓的工業應用</h4>
+        <a class="gc-link" href="hydraulic-arm/pages/module5.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="hydraulic-arm/pages/module5.html" target="_blank" rel="noopener"><img src="assets/manual/m-hydraulic-arm-module5.jpg" loading="lazy" alt="液壓手臂－液壓的工業應用 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">液壓的工業應用——8 個液壓系統實際範例。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐卡閱讀並完成對應檢核／挑戰（依工具為故障圖鑑、案例分析或創作任務）。</span></div></div>
+    </div>
+  </section>
+  <section class="tool-sec" id="t-orthographic">
+    <div class="tool-band"><span class="tb-emoji">📐</span>
+      <div><h3>三視圖</h3><p>三視圖：投影原理、視圖類型、繪製步驟、3D↔三視圖互動投影器、Projection Game 三輪闖關。</p></div>
+      <a class="tb-open" href="orthographic/index.html">工具首頁 ↗</a></div>
+    <a class="gc-shot tool-shot" href="orthographic/index.html" target="_blank" rel="noopener"><img src="assets/manual/m-orthographic.jpg" loading="lazy" alt="三視圖 首頁截圖"></a>
+    
+    <div class="guide-card" id="g-orthographic-module1">
+      <div class="gc-head"><span class="gc-no">M01</span><h4>三視圖核心概念</h4>
+        <a class="gc-link" href="orthographic/pages/module1.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="orthographic/pages/module1.html" target="_blank" rel="noopener"><img src="assets/manual/m-orthographic-module1.jpg" loading="lazy" alt="三視圖－三視圖核心概念 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">三視圖核心概念——投影原理 + 6 個面 + 線型規範。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">依頁面指示點擊各標記／卡片，逐一認識名稱與功能；全部看完才會記入完成。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">適合投影同頁、全班輪流點名部位名稱當暖身。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-orthographic-module2">
+      <div class="gc-head"><span class="gc-no">M02</span><h4>4 種視圖類型比較</h4>
+        <a class="gc-link" href="orthographic/pages/module2.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="orthographic/pages/module2.html" target="_blank" rel="noopener"><img src="assets/manual/m-orthographic-module2.jpg" loading="lazy" alt="三視圖－4 種視圖類型比較 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">4 種視圖類型比較——不同用途用不同視圖——選對才能傳達資訊。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">完成裝備／環境配置（拖曳；平板可「先點配備、再點位置」，頁面會自動提示）＋情境判斷題，達標後自動解鎖下一模組。</span></div><div class="gc-row"><span class="gc-k">💡 提醒</span><span class="gc-v">此關為必修門檻，未達標可重新整理再挑戰；通過會寫入進度供教師後台彙整。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-orthographic-module3">
+      <div class="gc-head"><span class="gc-no">M03</span><h4>8 步驟視圖繪製</h4>
+        <a class="gc-link" href="orthographic/pages/module3.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="orthographic/pages/module3.html" target="_blank" rel="noopener"><img src="assets/manual/m-orthographic-module3.jpg" loading="lazy" alt="三視圖－8 步驟視圖繪製 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">8 步驟視圖繪製——從 3D 物件到完整三視圖。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐步播放分解動畫並閱讀重點提醒；部分工具含步驟排序小遊戲（按住 ⋮⋮ 拖曳或點 ▲▼，平板可用）。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">建議搭配實機示範同步講解，動畫可重播。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-orthographic-module4">
+      <div class="gc-head"><span class="gc-no">M04·核心</span><h4>3D ↔ 三視圖（互動投影器）</h4>
+        <a class="gc-link" href="orthographic/pages/module4.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="orthographic/pages/module4.html" target="_blank" rel="noopener"><img src="assets/manual/m-orthographic-module4.jpg" loading="lazy" alt="三視圖－3D ↔ 三視圖（互動投影器） 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">3D ↔ 三視圖（互動投影器）——左：可拖曳旋轉的 3D 物件・右：依 CNS 3 第三角投影法即時呈現正視 / 側視 / 俯視。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">左側用滑鼠或手指拖曳旋轉 3D 物件（雙指縮放），右側依 CNS3 第三角法即時投影正視／側視／俯視；換模型觀察三視圖變化。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">先把 3D 轉到「和三視圖對齊」的角度，讓學生看懂投影方向。</span></div><div class="gc-row"><span class="gc-k">💡 提醒</span><span class="gc-v">M5 是三輪闖關：配對→補完→照目標視圖堆方塊（➕加／➖刪模式鈕，平板可玩；桌機也可左鍵加右鍵刪）。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-orthographic-module5">
+      <div class="gc-head"><span class="gc-no">M05·挑戰</span><h4>Projection Game — 視圖闖關</h4>
+        <a class="gc-link" href="orthographic/pages/module5.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="orthographic/pages/module5.html" target="_blank" rel="noopener"><img src="assets/manual/m-orthographic-module5.jpg" loading="lazy" alt="三視圖－Projection Game — 視圖闖關 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">Projection Game — 視圖闖關——三輪遞進挑戰：視圖配對 → 缺失補完 → 方塊堆疊。培養 2D ↔ 3D 雙向轉換能力。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐卡閱讀並完成對應檢核／挑戰（依工具為故障圖鑑、案例分析或創作任務）。</span></div></div>
+    </div>
+  </section><h2 class="grp-h">系統與專題系列</h2>
+  <section class="tool-sec" id="t-energy">
+    <div class="tool-band"><span class="tb-emoji">⚡</span>
+      <div><h3>能源系統</h3><p>能源系統：能源類型、能量轉換、發電八步驟、發電方式比較、家庭用電試算。</p></div>
+      <a class="tb-open" href="energy/index.html">工具首頁 ↗</a></div>
+    <a class="gc-shot tool-shot" href="energy/index.html" target="_blank" rel="noopener"><img src="assets/manual/m-energy.jpg" loading="lazy" alt="能源系統 首頁截圖"></a>
+    
+    <div class="guide-card" id="g-energy-module1">
+      <div class="gc-head"><span class="gc-no">M01</span><h4>5 種能源類型</h4>
+        <a class="gc-link" href="energy/pages/module1.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="energy/pages/module1.html" target="_blank" rel="noopener"><img src="assets/manual/m-energy-module1.jpg" loading="lazy" alt="能源系統－5 種能源類型 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">5 種能源類型——點擊每張卡認識能源特性。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">依頁面指示點擊各標記／卡片，逐一認識名稱與功能；全部看完才會記入完成。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">適合投影同頁、全班輪流點名部位名稱當暖身。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-energy-module2">
+      <div class="gc-head"><span class="gc-no">M02</span><h4>6 種能量形式 + 轉換</h4>
+        <a class="gc-link" href="energy/pages/module2.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="energy/pages/module2.html" target="_blank" rel="noopener"><img src="assets/manual/m-energy-module2.jpg" loading="lazy" alt="能源系統－6 種能量形式 + 轉換 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">6 種能量形式 + 轉換——能量不會消失，只是換形式。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">完成裝備／環境配置（拖曳；平板可「先點配備、再點位置」，頁面會自動提示）＋情境判斷題，達標後自動解鎖下一模組。</span></div><div class="gc-row"><span class="gc-k">💡 提醒</span><span class="gc-v">此關為必修門檻，未達標可重新整理再挑戰；通過會寫入進度供教師後台彙整。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-energy-module3">
+      <div class="gc-head"><span class="gc-no">M03</span><h4>發電過程 8 步驟</h4>
+        <a class="gc-link" href="energy/pages/module3.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="energy/pages/module3.html" target="_blank" rel="noopener"><img src="assets/manual/m-energy-module3.jpg" loading="lazy" alt="能源系統－發電過程 8 步驟 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">發電過程 8 步驟——從燃料到家中插座的完整能源傳輸鏈。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐步播放分解動畫並閱讀重點提醒；部分工具含步驟排序小遊戲（按住 ⋮⋮ 拖曳或點 ▲▼，平板可用）。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">建議搭配實機示範同步講解，動畫可重播。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-energy-module4">
+      <div class="gc-head"><span class="gc-no">M04·核心</span><h4>5 種發電方式比較</h4>
+        <a class="gc-link" href="energy/pages/module4.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="energy/pages/module4.html" target="_blank" rel="noopener"><img src="assets/manual/m-energy-module4.jpg" loading="lazy" alt="能源系統－5 種發電方式比較 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">5 種發電方式比較——選擇能源類型，比較效率、成本、CO₂ 排放。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">點選五種發電方式卡片，比較效率、成本、CO₂ 排放與優缺點。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">搭配 M5 家庭用電試算，把「發電方式」與「自家電費」連起來。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-energy-module5">
+      <div class="gc-head"><span class="gc-no">M05</span><h4>家庭用電試算 + 節能</h4>
+        <a class="gc-link" href="energy/pages/module5.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="energy/pages/module5.html" target="_blank" rel="noopener"><img src="assets/manual/m-energy-module5.jpg" loading="lazy" alt="能源系統－家庭用電試算 + 節能 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">家庭用電試算 + 節能——輸入每天使用時數，看每月用電量、電費、CO₂ 排放。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐卡閱讀並完成對應檢核／挑戰（依工具為故障圖鑑、案例分析或創作任務）。</span></div></div>
+    </div>
+  </section>
+  <section class="tool-sec" id="t-powertrain">
+    <div class="tool-band"><span class="tb-emoji">🚗</span>
+      <div><h3>動力與運輸</h3><p>動力與運輸：動力系統、運輸分類、太陽能車製作、動力效率模擬、社會環境影響。</p></div>
+      <a class="tb-open" href="powertrain/index.html">工具首頁 ↗</a></div>
+    <a class="gc-shot tool-shot" href="powertrain/index.html" target="_blank" rel="noopener"><img src="assets/manual/m-powertrain.jpg" loading="lazy" alt="動力與運輸 首頁截圖"></a>
+    
+    <div class="guide-card" id="g-powertrain-module1">
+      <div class="gc-head"><span class="gc-no">M01</span><h4>4 種動力系統</h4>
+        <a class="gc-link" href="powertrain/pages/module1.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="powertrain/pages/module1.html" target="_blank" rel="noopener"><img src="assets/manual/m-powertrain-module1.jpg" loading="lazy" alt="動力與運輸－4 種動力系統 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">4 種動力系統——點擊每張卡認識動力原理與應用。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">依頁面指示點擊各標記／卡片，逐一認識名稱與功能；全部看完才會記入完成。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">適合投影同頁、全班輪流點名部位名稱當暖身。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-powertrain-module2">
+      <div class="gc-head"><span class="gc-no">M02</span><h4>運輸科技分類</h4>
+        <a class="gc-link" href="powertrain/pages/module2.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="powertrain/pages/module2.html" target="_blank" rel="noopener"><img src="assets/manual/m-powertrain-module2.jpg" loading="lazy" alt="動力與運輸－運輸科技分類 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">運輸科技分類——陸海空 + 各種載具特性比較。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">完成裝備／環境配置（拖曳；平板可「先點配備、再點位置」，頁面會自動提示）＋情境判斷題，達標後自動解鎖下一模組。</span></div><div class="gc-row"><span class="gc-k">💡 提醒</span><span class="gc-v">此關為必修門檻，未達標可重新整理再挑戰；通過會寫入進度供教師後台彙整。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-powertrain-module3">
+      <div class="gc-head"><span class="gc-no">M03</span><h4>太陽能動力車製作</h4>
+        <a class="gc-link" href="powertrain/pages/module3.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="powertrain/pages/module3.html" target="_blank" rel="noopener"><img src="assets/manual/m-powertrain-module3.jpg" loading="lazy" alt="動力與運輸－太陽能動力車製作 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">太陽能動力車製作——對應 2 下 K4 闖關任務「太陽能發電動力車」。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐步播放分解動畫並閱讀重點提醒；部分工具含步驟排序小遊戲（按住 ⋮⋮ 拖曳或點 ▲▼，平板可用）。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">建議搭配實機示範同步講解，動畫可重播。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-powertrain-module4">
+      <div class="gc-head"><span class="gc-no">M04·核心</span><h4>動力效率模擬器</h4>
+        <a class="gc-link" href="powertrain/pages/module4.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="powertrain/pages/module4.html" target="_blank" rel="noopener"><img src="assets/manual/m-powertrain-module4.jpg" loading="lazy" alt="動力與運輸－動力效率模擬器 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">動力效率模擬器——4 種車輛 × 動力來源 × 行駛條件，看效率與碳排。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">選車輛類型×動力來源×行駛條件，看能源效率與碳排比較。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">討論「同一條路線，電動車與燃油車的能耗差多少」。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-powertrain-module5">
+      <div class="gc-head"><span class="gc-no">M05</span><h4>運輸對社會與環境的影響</h4>
+        <a class="gc-link" href="powertrain/pages/module5.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="powertrain/pages/module5.html" target="_blank" rel="noopener"><img src="assets/manual/m-powertrain-module5.jpg" loading="lazy" alt="動力與運輸－運輸對社會與環境的影響 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">運輸對社會與環境的影響——對應 2 下 K6 整章內容。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐卡閱讀並完成對應檢核／挑戰（依工具為故障圖鑑、案例分析或創作任務）。</span></div></div>
+    </div>
+  </section>
+  <section class="tool-sec" id="t-microcontroller">
+    <div class="tool-band"><span class="tb-emoji">🧠</span>
+      <div><h3>微控制器</h3><p>微控制器：三大板比較、感測器與訊號、Arduino 程式邏輯、虛擬電路模擬、創意案例。</p></div>
+      <a class="tb-open" href="microcontroller/index.html">工具首頁 ↗</a></div>
+    <a class="gc-shot tool-shot" href="microcontroller/index.html" target="_blank" rel="noopener"><img src="assets/manual/m-microcontroller.jpg" loading="lazy" alt="微控制器 首頁截圖"></a>
+    
+    <div class="guide-card" id="g-microcontroller-module1">
+      <div class="gc-head"><span class="gc-no">M01</span><h4>3 大微控制器比較</h4>
+        <a class="gc-link" href="microcontroller/pages/module1.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="microcontroller/pages/module1.html" target="_blank" rel="noopener"><img src="assets/manual/m-microcontroller-module1.jpg" loading="lazy" alt="微控制器－3 大微控制器比較 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">3 大微控制器比較——Arduino / micro:bit / ESP32——選對工具事半功倍。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">依頁面指示點擊各標記／卡片，逐一認識名稱與功能；全部看完才會記入完成。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">適合投影同頁、全班輪流點名部位名稱當暖身。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-microcontroller-module2">
+      <div class="gc-head"><span class="gc-no">M02</span><h4>感測器 + 訊號類型</h4>
+        <a class="gc-link" href="microcontroller/pages/module2.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="microcontroller/pages/module2.html" target="_blank" rel="noopener"><img src="assets/manual/m-microcontroller-module2.jpg" loading="lazy" alt="微控制器－感測器 + 訊號類型 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">感測器 + 訊號類型——8 種常見感測器 + 數位/類比訊號差異。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">完成裝備／環境配置（拖曳；平板可「先點配備、再點位置」，頁面會自動提示）＋情境判斷題，達標後自動解鎖下一模組。</span></div><div class="gc-row"><span class="gc-k">💡 提醒</span><span class="gc-v">此關為必修門檻，未達標可重新整理再挑戰；通過會寫入進度供教師後台彙整。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-microcontroller-module3">
+      <div class="gc-head"><span class="gc-no">M03</span><h4>Arduino 程式邏輯</h4>
+        <a class="gc-link" href="microcontroller/pages/module3.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="microcontroller/pages/module3.html" target="_blank" rel="noopener"><img src="assets/manual/m-microcontroller-module3.jpg" loading="lazy" alt="微控制器－Arduino 程式邏輯 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">Arduino 程式邏輯——8 個範例程式涵蓋核心語法。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐步播放分解動畫並閱讀重點提醒；部分工具含步驟排序小遊戲（按住 ⋮⋮ 拖曳或點 ▲▼，平板可用）。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">建議搭配實機示範同步講解，動畫可重播。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-microcontroller-module4">
+      <div class="gc-head"><span class="gc-no">M04·核心</span><h4>虛擬電路模擬器</h4>
+        <a class="gc-link" href="microcontroller/pages/module4.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="microcontroller/pages/module4.html" target="_blank" rel="noopener"><img src="assets/manual/m-microcontroller-module4.jpg" loading="lazy" alt="微控制器－虛擬電路模擬器 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">虛擬電路模擬器——看到電路 + 程式 + 結果的對應。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">切換 LED 閃爍／按鈕切換／超音波避障三個情境，左側電路動畫、右側程式碼與即時狀態欄三者對照；訊號點沿橘線流動。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">先看「電路圖＋程式＋結果」三欄對應，再到 M5 找延伸專題。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-microcontroller-module5">
+      <div class="gc-head"><span class="gc-no">M05</span><h4>創意作品案例</h4>
+        <a class="gc-link" href="microcontroller/pages/module5.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="microcontroller/pages/module5.html" target="_blank" rel="noopener"><img src="assets/manual/m-microcontroller-module5.jpg" loading="lazy" alt="微控制器－創意作品案例 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">創意作品案例——3 下闖關任務 + 統整專題 + 4 種延伸專題。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐卡閱讀並完成對應檢核／挑戰（依工具為故障圖鑑、案例分析或創作任務）。</span></div></div>
+    </div>
+  </section>
+  <section class="tool-sec" id="t-design-process">
+    <div class="tool-band"><span class="tb-emoji">🎯</span>
+      <div><h3>產品設計流程</h3><p>產品設計流程：雙鑽石模型、市場調查、發想工具、Pugh 決策矩陣、經典設計案例。</p></div>
+      <a class="tb-open" href="design-process/index.html">工具首頁 ↗</a></div>
+    <a class="gc-shot tool-shot" href="design-process/index.html" target="_blank" rel="noopener"><img src="assets/manual/m-design-process.jpg" loading="lazy" alt="產品設計流程 首頁截圖"></a>
+    
+    <div class="guide-card" id="g-design-process-module1">
+      <div class="gc-head"><span class="gc-no">M01</span><h4>設計流程 5 階段</h4>
+        <a class="gc-link" href="design-process/pages/module1.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="design-process/pages/module1.html" target="_blank" rel="noopener"><img src="assets/manual/m-design-process-module1.jpg" loading="lazy" alt="產品設計流程－設計流程 5 階段 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">設計流程 5 階段——雙鑽石模型 + Stanford Design Thinking。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">依頁面指示點擊各標記／卡片，逐一認識名稱與功能；全部看完才會記入完成。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">適合投影同頁、全班輪流點名部位名稱當暖身。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-design-process-module2">
+      <div class="gc-head"><span class="gc-no">M02</span><h4>市場調查 6 方法</h4>
+        <a class="gc-link" href="design-process/pages/module2.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="design-process/pages/module2.html" target="_blank" rel="noopener"><img src="assets/manual/m-design-process-module2.jpg" loading="lazy" alt="產品設計流程－市場調查 6 方法 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">市場調查 6 方法——對應 3 上闖關「市場調查小偵探」。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">完成裝備／環境配置（拖曳；平板可「先點配備、再點位置」，頁面會自動提示）＋情境判斷題，達標後自動解鎖下一模組。</span></div><div class="gc-row"><span class="gc-k">💡 提醒</span><span class="gc-v">此關為必修門檻，未達標可重新整理再挑戰；通過會寫入進度供教師後台彙整。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-design-process-module3">
+      <div class="gc-head"><span class="gc-no">M03</span><h4>9 個發想工具</h4>
+        <a class="gc-link" href="design-process/pages/module3.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="design-process/pages/module3.html" target="_blank" rel="noopener"><img src="assets/manual/m-design-process-module3.jpg" loading="lazy" alt="產品設計流程－9 個發想工具 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">9 個發想工具——設計師的腦力激盪武器庫。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐步播放分解動畫並閱讀重點提醒；部分工具含步驟排序小遊戲（按住 ⋮⋮ 拖曳或點 ▲▼，平板可用）。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">建議搭配實機示範同步講解，動畫可重播。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-design-process-module4">
+      <div class="gc-head"><span class="gc-no">M04·核心</span><h4>系統整體設計 + 決策矩陣</h4>
+        <a class="gc-link" href="design-process/pages/module4.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="design-process/pages/module4.html" target="_blank" rel="noopener"><img src="assets/manual/m-design-process-module4.jpg" loading="lazy" alt="產品設計流程－系統整體設計 + 決策矩陣 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">系統整體設計 + 決策矩陣——對應 3 上「家電設計構想選擇」。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">用 Pugh 決策矩陣為三個設計方案逐項評分，系統自動加總並標出最佳方案。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">對應「家電設計構想選擇」闖關：先全班共同訂評估準則再各組評分。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-design-process-module5">
+      <div class="gc-head"><span class="gc-no">M05</span><h4>8 個改變世界的設計</h4>
+        <a class="gc-link" href="design-process/pages/module5.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="design-process/pages/module5.html" target="_blank" rel="noopener"><img src="assets/manual/m-design-process-module5.jpg" loading="lazy" alt="產品設計流程－8 個改變世界的設計 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">8 個改變世界的設計——從這些案例學設計思維。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐卡閱讀並完成對應檢核／挑戰（依工具為故障圖鑑、案例分析或創作任務）。</span></div></div>
+    </div>
+  </section>
+  <section class="tool-sec" id="t-frc">
+    <div class="tool-band"><span class="tb-emoji">🤖</span>
+      <div><h3>FRC 機器人教學</h3><p>FRC 機器人：比賽與隊伍、工坊安全、Build Season 流程、配置策略模擬、工程筆記＋WPILib 程式核心。</p></div>
+      <a class="tb-open" href="frc/index.html">工具首頁 ↗</a></div>
+    <a class="gc-shot tool-shot" href="frc/index.html" target="_blank" rel="noopener"><img src="assets/manual/m-frc.jpg" loading="lazy" alt="FRC 機器人教學 首頁截圖"></a>
+    
+    <div class="guide-card" id="g-frc-module1">
+      <div class="gc-head"><span class="gc-no">M01</span><h4>認識 FRC 與隊伍架構</h4>
+        <a class="gc-link" href="frc/pages/module1.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="frc/pages/module1.html" target="_blank" rel="noopener"><img src="assets/manual/m-frc-module1.jpg" loading="lazy" alt="FRC 機器人教學－認識 FRC 與隊伍架構 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">認識 FRC 與隊伍架構——先了解比賽規則、機器人標準結構、頂尖隊伍如何組織分工。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">依頁面指示點擊各標記／卡片，逐一認識名稱與功能；全部看完才會記入完成。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">適合投影同頁、全班輪流點名部位名稱當暖身。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-frc-module2">
+      <div class="gc-head"><span class="gc-no">M02·必修</span><h4>機械工坊安全規範</h4>
+        <a class="gc-link" href="frc/pages/module2.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="frc/pages/module2.html" target="_blank" rel="noopener"><img src="assets/manual/m-frc-module2.jpg" loading="lazy" alt="FRC 機器人教學－機械工坊安全規範 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">機械工坊安全規範——FRC 機器人製作涉及大量重型機具與電力。10 題情境，滿分通關。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">完成裝備／環境配置（拖曳；平板可「先點配備、再點位置」，頁面會自動提示）＋情境判斷題，達標後自動解鎖下一模組。</span></div><div class="gc-row"><span class="gc-k">💡 提醒</span><span class="gc-v">此關為必修門檻，未達標可重新整理再挑戰；通過會寫入進度供教師後台彙整。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-frc-module3">
+      <div class="gc-head"><span class="gc-no">M03</span><h4>工程設計流程</h4>
+        <a class="gc-link" href="frc/pages/module3.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="frc/pages/module3.html" target="_blank" rel="noopener"><img src="assets/manual/m-frc-module3.jpg" loading="lazy" alt="FRC 機器人教學－工程設計流程 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">工程設計流程——FRC 6 週的瘋狂衝刺 (Build Season) 怎麼運作？7 個關鍵階段。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐步播放分解動畫並閱讀重點提醒；部分工具含步驟排序小遊戲（按住 ⋮⋮ 拖曳或點 ▲▼，平板可用）。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">建議搭配實機示範同步講解，動畫可重播。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-frc-module4">
+      <div class="gc-head"><span class="gc-no">M04·核心</span><h4>機器人配置策略模擬</h4>
+        <a class="gc-link" href="frc/pages/module4.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="frc/pages/module4.html" target="_blank" rel="noopener"><img src="assets/manual/m-frc-module4.jpg" loading="lazy" alt="FRC 機器人教學－機器人配置策略模擬 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">機器人配置策略模擬——選擇 drivetrain、manipulator、自動程式策略，看綜合得分與排名預測。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">選 drivetrain、manipulator、自動程式策略的組合，系統算綜合得分與排名預測；不同策略路線各有取捨。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">讓各組扮演不同隊伍策略，比較「全能型 vs 專精型」的得分結構。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-frc-module5">
+      <div class="gc-head"><span class="gc-no">M05</span><h4>工程筆記範本 + 獎項評鑑</h4>
+        <a class="gc-link" href="frc/pages/module5.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="frc/pages/module5.html" target="_blank" rel="noopener"><img src="assets/manual/m-frc-module5.jpg" loading="lazy" alt="FRC 機器人教學－工程筆記範本 + 獎項評鑑 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">工程筆記範本 + 獎項評鑑——FRC 不只比機器人，更比設計過程的文件化品質。學會寫優秀的工程筆記。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐卡閱讀並完成對應檢核／挑戰（依工具為故障圖鑑、案例分析或創作任務）。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-frc-module6">
+      <div class="gc-head"><span class="gc-no">M06·進階</span><h4>程式設計核心：WPILib Command-based</h4>
+        <a class="gc-link" href="frc/pages/module6.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="frc/pages/module6.html" target="_blank" rel="noopener"><img src="assets/manual/m-frc-module6.jpg" loading="lazy" alt="FRC 機器人教學－程式設計核心：WPILib Command-based 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">程式設計核心：WPILib Command-based——FRC 程式設計的入門票。看完知道：Command-based 是什麼、Subsystem 怎麼寫、PID 與 FeedForward 如何調、PathPlanner / Choreo 差在哪、AdvantageScope 怎麼用。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">依頁面互動指示操作並完成檢核。</span></div></div>
+    </div>
+  </section>
+  <section class="tool-sec" id="t-onshape">
+    <div class="tool-band"><span class="tb-emoji">📐</span>
+      <div><h3>Onshape 3D 建模</h3><p>Onshape 雲端 3D 建模十模組：從帳號規範到動物拼圖、數位加工輸出與機電整合（搭配珩宇老師影片）。</p></div>
+      <a class="tb-open" href="onshape/index.html">工具首頁 ↗</a></div>
+    <a class="gc-shot tool-shot" href="onshape/index.html" target="_blank" rel="noopener"><img src="assets/manual/m-onshape.jpg" loading="lazy" alt="Onshape 3D 建模 首頁截圖"></a>
+    
+    <div class="guide-card" id="g-onshape-module1">
+      <div class="gc-head"><span class="gc-no">M01</span><h4>認識 Onshape</h4>
+        <a class="gc-link" href="onshape/pages/module1.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="onshape/pages/module1.html" target="_blank" rel="noopener"><img src="assets/manual/m-onshape-module1.jpg" loading="lazy" alt="Onshape 3D 建模－認識 Onshape 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">認識 Onshape——看珩宇老師示範 Onshape 是什麼、為什麼選它，並完成小測驗。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">依頁面指示點擊各標記／卡片，逐一認識名稱與功能；全部看完才會記入完成。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">適合投影同頁、全班輪流點名部位名稱當暖身。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-onshape-module10">
+      <div class="gc-head"><span class="gc-no">M10·進階專題</span><h4>行動學習 + 齒輪機構動畫</h4>
+        <a class="gc-link" href="onshape/pages/module10.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="onshape/pages/module10.html" target="_blank" rel="noopener"><img src="assets/manual/m-onshape-module10.jpg" loading="lazy" alt="Onshape 3D 建模－行動學習 + 齒輪機構動畫 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">行動學習 + 齒輪機構動畫——用手機 / 平板就能畫 Onshape，並學會做齒輪動畫——把機構帶到課堂以外的時間繼續學習。對應珩宇老師 YouTube Onshape App 教學系列。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">觀看對應影片段落後完成頁內檢核；建議同步開 Onshape 跟做。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-onshape-module2">
+      <div class="gc-head"><span class="gc-no">M02</span><h4>帳號與使用規範</h4>
+        <a class="gc-link" href="onshape/pages/module2.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="onshape/pages/module2.html" target="_blank" rel="noopener"><img src="assets/manual/m-onshape-module2.jpg" loading="lazy" alt="Onshape 3D 建模－帳號與使用規範 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">帳號與使用規範——選對方案、保護隱私、尊重智財。雲端工具的「使用倫理」與安全一樣重要。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">完成裝備／環境配置（拖曳；平板可「先點配備、再點位置」，頁面會自動提示）＋情境判斷題，達標後自動解鎖下一模組。</span></div><div class="gc-row"><span class="gc-k">💡 提醒</span><span class="gc-v">此關為必修門檻，未達標可重新整理再挑戰；通過會寫入進度供教師後台彙整。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-onshape-module3">
+      <div class="gc-head"><span class="gc-no">M03</span><h4>草圖到特徵：8 步驟</h4>
+        <a class="gc-link" href="onshape/pages/module3.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="onshape/pages/module3.html" target="_blank" rel="noopener"><img src="assets/manual/m-onshape-module3.jpg" loading="lazy" alt="Onshape 3D 建模－草圖到特徵：8 步驟 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">草圖到特徵：8 步驟——Onshape 建模的核心流程：從選平面到拉伸成 3D 物件。對應珩宇老師 L4「方塊繪製」課程。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐步播放分解動畫並閱讀重點提醒；部分工具含步驟排序小遊戲（按住 ⋮⋮ 拖曳或點 ▲▼，平板可用）。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">建議搭配實機示範同步講解，動畫可重播。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-onshape-module4">
+      <div class="gc-head"><span class="gc-no">M04</span><h4>4 種建模方式</h4>
+        <a class="gc-link" href="onshape/pages/module4.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="onshape/pages/module4.html" target="_blank" rel="noopener"><img src="assets/manual/m-onshape-module4.jpg" loading="lazy" alt="Onshape 3D 建模－4 種建模方式 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">4 種建模方式——擠出 / 旋轉 / 薄殼 / 疊層拉伸 — 同一個物件常有多種畫法。對應珩宇老師 L5「馬克杯」課程。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">比較擠出／旋轉／薄殼／疊層拉伸四種建模方式（同一物件多種畫法），完成 5 題檢核。</span></div><div class="gc-row"><span class="gc-k">👩‍🏫 課堂指引</span><span class="gc-v">搭配珩宇老師 L5「馬克杯」影片實作。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-onshape-module5">
+      <div class="gc-head"><span class="gc-no">M05</span><h4>草圖找碴 + 機構應用</h4>
+        <a class="gc-link" href="onshape/pages/module5.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="onshape/pages/module5.html" target="_blank" rel="noopener"><img src="assets/manual/m-onshape-module5.jpg" loading="lazy" alt="Onshape 3D 建模－草圖找碴 + 機構應用 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">草圖找碴 + 機構應用——先學會避免 8 種常見錯誤，再看珩宇老師示範凸輪機構與結構模擬。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">逐卡閱讀並完成對應檢核／挑戰（依工具為故障圖鑑、案例分析或創作任務）。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-onshape-module6">
+      <div class="gc-head"><span class="gc-no">M06·進階專題</span><h4>工程識圖與動態模擬</h4>
+        <a class="gc-link" href="onshape/pages/module6.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="onshape/pages/module6.html" target="_blank" rel="noopener"><img src="assets/manual/m-onshape-module6.jpg" loading="lazy" alt="Onshape 3D 建模－工程識圖與動態模擬 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">工程識圖與動態模擬——從測量真實物件、看懂工程圖到把零件組合起來做動畫模擬。對應珩宇老師《動手入門 Onshape》Ch 5。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">觀看對應影片段落後完成頁內檢核；建議同步開 Onshape 跟做。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-onshape-module7">
+      <div class="gc-head"><span class="gc-no">M07·進階專題</span><h4>動物拼圖設計</h4>
+        <a class="gc-link" href="onshape/pages/module7.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="onshape/pages/module7.html" target="_blank" rel="noopener"><img src="assets/manual/m-onshape-module7.jpg" loading="lazy" alt="Onshape 3D 建模－動物拼圖設計 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">動物拼圖設計——用 Onshape 的「圖片置入 + 不規則曲線描繪 + 多角度組合 + DXF 輸出」做出可雷射切割的拼圖。對應書 Ch 6。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">觀看對應影片段落後完成頁內檢核；建議同步開 Onshape 跟做。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-onshape-module8">
+      <div class="gc-head"><span class="gc-no">M08·進階專題</span><h4>從模型到實體：3D 列印 / 雷射 / CNC</h4>
+        <a class="gc-link" href="onshape/pages/module8.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="onshape/pages/module8.html" target="_blank" rel="noopener"><img src="assets/manual/m-onshape-module8.jpg" loading="lazy" alt="Onshape 3D 建模－從模型到實體：3D 列印 / 雷射 / CNC 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">從模型到實體：3D 列印 / 雷射 / CNC——Onshape 設計好後送到三大數位加工機具的完整工作流。對應書 Ch 7。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">觀看對應影片段落後完成頁內檢核；建議同步開 Onshape 跟做。</span></div></div>
+    </div>
+    <div class="guide-card" id="g-onshape-module9">
+      <div class="gc-head"><span class="gc-no">M09·進階專題</span><h4>機電整合應用</h4>
+        <a class="gc-link" href="onshape/pages/module9.html">開啟頁面 ↗</a></div>
+      <a class="gc-shot" href="onshape/pages/module9.html" target="_blank" rel="noopener"><img src="assets/manual/m-onshape-module9.jpg" loading="lazy" alt="Onshape 3D 建模－機電整合應用 頁面截圖"></a>
+      <div class="gc-body"><div class="gc-row"><span class="gc-k">🎯 學習重點</span><span class="gc-v">機電整合應用——把 Onshape 學到的能力與真實機電結合：兩個書中專題 — iPOE A5 四輪自走車改裝、指尖陀螺製作。對應書 Ch 8。</span></div><div class="gc-row"><span class="gc-k">🖱 學生操作</span><span class="gc-v">觀看對應影片段落後完成頁內檢核；建議同步開 Onshape 跟做。</span></div></div>
+    </div>
+  </section>
+</main>
+
+<script src="js/main.js"></script><script src="js/sources.js"></script>
+<script src="js/audio.js"></script>
+</body>
+</html>

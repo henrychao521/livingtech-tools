@@ -93,6 +93,7 @@ function initLevel(lvlId) {
   state.startedAt = null;
   state.contactStart = null;
   state.contactPad = null;
+  state.readyShown = false;
 
   document.getElementById('level-display').textContent = lvlId;
   document.getElementById('joint-count').textContent = `0 / ${state.level.pads.length}`;
@@ -158,6 +159,12 @@ function update() {
   else { tempEl.classList.add('heating'); tempEl.classList.remove('ready'); }
 
   document.getElementById('iron-state').textContent = state.ironTemp >= 320 ? '已就緒' : '加熱中';
+
+  // 烙鐵到溫的瞬間更新畫面提示（原本停留在「等溫度達 320°C」不會變）
+  if (state.ironTemp >= 320 && state.startedAt && !state.readyShown) {
+    state.readyShown = true;
+    document.getElementById('sim-overlay').textContent = '✓ 烙鐵已就緒｜移到接點加熱 ~1 秒，再按住送錫';
+  }
 
   if (!state.startedAt || state.finished) return;
   if (state.ironTemp < 320) return; // 還沒熱好
@@ -350,8 +357,44 @@ function draw() {
   });
   ctx.globalAlpha = 1;
 
-  // 烙鐵（跟隨滑鼠）
-  if (state.ironVisible) drawIron(mouseX, mouseY);
+  // 烙鐵（跟隨滑鼠）＋ 錫絲（另一手，從右下伸入）
+  if (state.ironVisible) {
+    drawIron(mouseX, mouseY);
+    drawSolderWire(mouseX, mouseY);
+  }
+}
+
+// 錫絲：模擬真實焊接的雙手技法——左手烙鐵、右手送錫。
+// 平時懸在接點旁待命，按住送錫且接點夠熱時才頂上去（對應 M3 教的「烙鐵先到、錫絲後到」）
+function drawSolderWire(tx, ty) {
+  const feeding = state.pressing && state.contactPad && state.ironTemp >= 320;
+  const dirX = 0.82, dirY = 0.57;             // 從右下方 35° 角伸入
+  const gap = feeding ? 1 : 24;               // 送錫時碰到接點，否則保持距離
+  const tipX = tx + dirX * gap;
+  const tipY = ty + dirY * gap;
+  const endX = tipX + dirX * 170;
+  const endY = tipY + dirY * 170;
+
+  // 錫絲本體（銀灰、微高光）
+  ctx.save();
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = '#6b7280';
+  ctx.lineWidth = 5;
+  ctx.beginPath(); ctx.moveTo(tipX, tipY); ctx.lineTo(endX, endY); ctx.stroke();
+  ctx.strokeStyle = '#d1d5db';
+  ctx.lineWidth = 2.2;
+  ctx.beginPath(); ctx.moveTo(tipX - 0.8, tipY - 1.2); ctx.lineTo(endX - 0.8, endY - 1.2); ctx.stroke();
+
+  if (feeding) {
+    // 接觸端熔融的小錫珠
+    const melt = ctx.createRadialGradient(tipX, tipY, 0, tipX, tipY, 7);
+    melt.addColorStop(0, '#f3f4f6');
+    melt.addColorStop(.6, '#9ca3af');
+    melt.addColorStop(1, 'rgba(156,163,175,0)');
+    ctx.fillStyle = melt;
+    ctx.beginPath(); ctx.arc(tipX, tipY, 7, 0, Math.PI * 2); ctx.fill();
+  }
+  ctx.restore();
 }
 
 function drawPad(j) {
