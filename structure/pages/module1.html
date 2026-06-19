@@ -40,7 +40,15 @@
   <div class="safety-progress"><div class="safety-progress-bar" id="progress-bar" style="width:0%"></div></div>
 
   <!-- 關卡 1：SVG 熱點圖 -->
-  <section class="panel">
+    <!-- TRIPO-3D --><section class="panel">
+    <h3>🔭 寫實 3D 模型 <span style="font-size:12px;font-weight:500;color:#64748b;margin-left:6px">旋轉 · 縮放</span></h3>
+    <p class="muted" style="margin-bottom:14px">拖曳可旋轉、滾輪縮放，從各角度認識桁架橋的外觀構造。<span style="font-size:12px;color:#94a3b8">（AI 生成示意模型，僅供認識外形）</span></p>
+    <div style="background:#1e293b;border-radius:14px;overflow:hidden">
+      <model-viewer src="../assets/models/bridge.glb" loading="eager" reveal="auto" camera-controls auto-rotate auto-rotate-delay="0" rotation-per-second="20deg" environment-image="neutral" shadow-intensity="1" style="width:100%;height:360px;--poster-color:#1e293b"></model-viewer>
+    </div>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+  </section>
+<section class="panel">
     <h3>🔍 關卡 1 ／ 桁架橋熱點圖 <span style="color:var(--text-muted);font-weight:500;font-size:14px;margin-left:8px">8 個元件</span></h3>
     <p class="muted" style="margin-bottom:16px">點擊橋上各個 <strong style="color:var(--primary)">● 熱點</strong> 認識每個元件的力學功能。</p>
 
