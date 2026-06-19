@@ -551,17 +551,12 @@ document.querySelectorAll('.part-chip').forEach(c => {
   const nav = document.querySelector('.module-nav-bottom');
   if (!nav) return;
 
-  // ── 熱點定義（等候素材後填入 data-position 真實座標） ──
-  const HOTSPOTS = [
-    { id: 'tip',     pos: '0 0.12 0.05', norm: '0 1 0',   label: '烙鐵頭（Tip）',          desc: '直接接觸接點的核心，溫度 300–400°C。形狀決定適用場景。' },
-    { id: 'heating', pos: '0 0.09 0.02', norm: '0 1 0',   label: '加熱元件',               desc: '陶瓷電阻發熱體，30–60W，從冷態加熱到 350°C 約 30–60 秒。' },
-    { id: 'handle',  pos: '0 0.06 -0.04', norm: '0 1 0',  label: '隔熱握柄',               desc: '耐高溫塑膠或軟木，正確握法如握筆，防止燙傷。' },
-    { id: 'display', pos: '0 0.05 -0.08', norm: '0 1 0',  label: '溫控顯示器',             desc: '含鉛錫設定 320°C，無鉛錫設定 360–380°C。閃爍 = 加熱中。' },
-  ];
+  // ── 熱點定義（AI 生成模型座標與掃描件不同，暫清空；之後可用 model-viewer 點位校正後填回） ──
+  const HOTSPOTS = [];
 
   // 確認 GLB 檔案是否已上傳
   const glbPath = '../../solder/assets/3d/iron.glb';
-  const hasAsset = false; // ← 上傳素材後改為 true
+  const hasAsset = true; // ← 已放入 Tripo 生成的 iron.glb（2MB，已減面+Draco）
 
   const sec = document.createElement('section');
   sec.className = 'panel';
@@ -575,12 +570,11 @@ document.querySelectorAll('.part-chip').forEach(c => {
       document.head.appendChild(s);
     }
     sec.innerHTML = `
-      <h3>🔭 烙鐵 3D 互動模型 <span style="font-size:12px;font-weight:500;color:#64748b;margin-left:6px">旋轉 · 縮放 · 點擊零件</span></h3>
-      <p class="muted" style="margin-bottom:14px">拖曳旋轉模型，點擊橘色標注查看各零件說明。</p>
+      <h3>🔭 烙鐵 3D 互動模型 <span style="font-size:12px;font-weight:500;color:#64748b;margin-left:6px">旋轉 · 縮放</span></h3>
+      <p class="muted" style="margin-bottom:14px">拖曳可旋轉、滾輪縮放，從各角度認識電烙鐵與支架的構造。<span style="font-size:12px;color:#94a3b8">（AI 生成的示意模型）</span></p>
       <div style="background:#1e293b;border-radius:14px;overflow:hidden">
         <model-viewer
           src="${glbPath}"
-          poster="../../solder/assets/3d/iron-poster.jpg"
           auto-rotate auto-rotate-delay="0" rotation-per-second="15deg"
           camera-controls min-camera-orbit="auto auto 5%" max-camera-orbit="auto auto 200%"
           environment-image="neutral" shadow-intensity="1"
