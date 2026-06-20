@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YCXP16QQM1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YCXP16QQM1');
+</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>物理模擬實驗室 ｜ 生活科技互動教學平台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/svg-effects.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🧪%3C/text%3E%3C/svg%3E">
+<style>
+  .sim-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px}
+  .sim-card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:16px;box-shadow:0 2px 10px rgba(15,23,42,.05)}
+  .sim-card h3{margin:0 0 6px}
+  .sim-card video{width:100%;border-radius:12px;background:#1e293b;display:block}
+  .sim-card .muted{font-size:13px;line-height:1.6}
+  .sim-badge{display:inline-block;font-size:12px;font-weight:700;color:#fff;background:#0ea5e9;border-radius:999px;padding:2px 10px;margin-bottom:8px}
+</style>
+</head>
+<body data-tool="physics" class="home">
+<header class="topbar">
+  <div class="brand"><span class="logo">🧪</span><div><h1>物理模擬實驗室</h1><p class="subtitle">生活科技互動教學平台</p></div></div>
+  <nav class="topnav"><a href="../" style="color:var(--primary-dark);font-weight:600">← 平台首頁</a></nav>
+</header>
+<main class="module-page">
+  <div class="module-header">
+    <div>
+      <span class="module-step">PHYSICS LAB</span>
+      <h2>物理模擬動畫</h2>
+      <p class="muted">用 Blender 依物理公式計算、烘焙成動畫的示意模擬。每段自動循環播放,從中體會力學概念。</p>
+    </div>
+  </div>
+
+  <section class="panel">
+    <div class="sim-grid">
+
+      <div class="sim-card">
+        <span class="sim-badge">力學 · 能量</span>
+        <h3>🧪 重力與彈跳(能量損失)</h3>
+        <video src="../assets/videos/physics-bounce.mp4" autoplay loop muted playsinline controls></video>
+        <p class="muted" style="margin-top:8px">五顆球從不同高度落下,每次反彈都比上一次低——因為碰撞會損失能量。示範<b>重力加速度</b>與<b>彈性碰撞的能量耗散</b>。</p>
+      </div>
+
+      <div class="sim-card">
+        <span class="sim-badge">運動學</span>
+        <h3>🎯 拋體運動(角度與射程)</h3>
+        <video src="../assets/videos/physics-projectile.mp4" autoplay loop muted playsinline controls></video>
+        <p class="muted" style="margin-top:8px">同初速、不同發射角(35° / 45° / 55°)。虛線是路徑——可看出 <b>45° 射程最遠</b>。示範<b>水平等速 + 垂直等加速</b>的合成運動。</p>
+      </div>
+
+      <div class="sim-card">
+        <span class="sim-badge">週期運動</span>
+        <h3>🕰️ 單擺(等時性)</h3>
+        <video src="../assets/videos/physics-pendulum.mp4" autoplay loop muted playsinline controls></video>
+        <p class="muted" style="margin-top:8px">擺錘以固定週期左右擺盪(虛線為擺弧)。週期只跟<b>擺長與重力</b>有關、與擺錘質量無關——這就是單擺等時性。</p>
+      </div>
+
+      <div class="sim-card">
+        <span class="sim-badge">圓周運動</span>
+        <h3>🔄 等速圓周運動</h3>
+        <video src="../assets/videos/physics-circular.mp4" autoplay loop muted playsinline controls></video>
+        <p class="muted" style="margin-top:8px">小球沿圓周以等速率運動。速率雖固定,<b>方向時刻在變</b>,所以仍有加速度(向心加速度),需要朝圓心的向心力維持。</p>
+      </div>
+
+    </div>
+    <p class="muted" style="margin-top:14px;font-size:13px;color:#94a3b8">💡 全部由 Blender 依物理公式計算後烘焙匯出(示意用);精確數值請以課本公式為準。</p>
+  </section>
+
+  <div class="module-nav-bottom"><a href="../" class="btn btn-ghost">← 回平台首頁</a></div>
+</main>
+</body></html>
