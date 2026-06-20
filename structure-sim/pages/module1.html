@@ -22,6 +22,34 @@
 <header class="topbar"><div class="brand"><span class="logo">🏛</span><div><h1>結構模擬器</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
 <main class="module-page">
   <div class="module-header"><div><span class="module-step">MODULE 01</span><h2>認識結構三元素 + 五種內力</h2><p class="muted">點擊圖中藍色標記，認識結構的基本語彙。</p></div><div class="muted" id="progress-text">已認識 0 / 8 項</div></div>
+  <!-- OPENSCAD-3D --><section class="panel" style="background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:16px;margin-bottom:18px">
+    <h3 style="margin:0 0 6px">🏛️ 結構形式立體(可旋轉) <span style="font-size:12px;font-weight:500;color:#64748b;margin-left:6px">點名稱切換 · 拖曳旋轉</span></h3>
+    <p class="muted" style="margin-bottom:12px">六種常見結構形式的立體示意,旋轉觀察桿件如何組成。模型由 OpenSCAD 參數化建模(原始檔開源,可改尺寸/3D 列印)。</p>
+    <div id="st3d-tabs" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px">
+      <button type="button" class="st3d-btn" data-src="truss.glb">桁架</button>
+      <button type="button" class="st3d-btn" data-src="arch.glb">拱</button>
+      <button type="button" class="st3d-btn" data-src="frame.glb">剛架</button>
+      <button type="button" class="st3d-btn" data-src="shell.glb">殼</button>
+      <button type="button" class="st3d-btn" data-src="cable.glb">纜索</button>
+      <button type="button" class="st3d-btn" data-src="tensile.glb">張力結構</button>
+    </div>
+    <div style="background:#1e293b;border-radius:14px;overflow:hidden">
+      <model-viewer id="st3d-viewer" src="../assets/models/truss.glb" loading="eager" camera-controls auto-rotate auto-rotate-delay="0" rotation-per-second="22deg" environment-image="neutral" shadow-intensity="1" style="width:100%;height:320px;--poster-color:#1e293b"></model-viewer>
+    </div>
+    <p class="muted" style="margin-top:8px;font-size:13px">💡 OpenSCAD 原始碼與可列印 STL 在 repo 的 <code>models/structure-sim/</code>(見 models/README)。</p>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+    <script>
+    (function(){
+      var v=document.getElementById('st3d-viewer'),tabs=document.querySelectorAll('#st3d-tabs .st3d-btn');
+      function sel(b){tabs.forEach(function(x){x.style.background=(x===b)?'#0ea5e9':'#e2e8f0';x.style.color=(x===b)?'#fff':'#0f172a';});}
+      tabs.forEach(function(b){
+        b.style.cssText='padding:6px 14px;border:none;border-radius:999px;cursor:pointer;font-size:13px;font-weight:600';
+        b.addEventListener('click',function(){v.setAttribute('src','../assets/models/'+b.dataset.src);sel(b);});
+      });
+      sel(tabs[0]);
+    })();
+    </script>
+  </section>
   <div class="parts-layout">
     <div class="saw-stage">
       <svg viewBox="0 0 680 540" class="saw-svg svg-shadow-soft">
