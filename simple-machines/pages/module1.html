@@ -23,6 +23,33 @@
 <main class="module-page">
   <div class="module-header"><div><span class="module-step">MODULE 01</span><h2>6 種簡單機械</h2><p class="muted">點擊機械圖看原理、機械利益公式與生活範例。</p></div><div class="muted" id="progress-text">已認識 0 / 6 種</div></div>
 
+  <!-- TRIPO-3D --><section class="panel">
+    <h3>🔭 寫實 3D 簡單機械(可旋轉) <span style="font-size:12px;font-weight:500;color:#64748b;margin-left:6px">點名稱切換 · 拖曳旋轉 · 滾輪縮放</span></h3>
+    <p class="muted" style="margin-bottom:12px">AI 生成的示意模型,從各角度認識簡單機械的外形。</p>
+    <div id="sm3d-tabs" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px">
+      <button type="button" class="sm3d-btn" data-src="lever.glb">槓桿 Lever</button>
+      <button type="button" class="sm3d-btn" data-src="pulley.glb">滑輪 Pulley</button>
+      <button type="button" class="sm3d-btn" data-src="wheel-axle.glb">輪軸 Wheel &amp; Axle</button>
+      <button type="button" class="sm3d-btn" data-src="wedge.glb">楔形 Wedge</button>
+      <button type="button" class="sm3d-btn" data-src="screw.glb">螺旋 Screw</button>
+    </div>
+    <div style="background:#1e293b;border-radius:14px;overflow:hidden">
+      <model-viewer id="sm3d-viewer" src="../assets/models/lever.glb" loading="eager" camera-controls auto-rotate auto-rotate-delay="0" rotation-per-second="20deg" environment-image="neutral" shadow-intensity="1" style="width:100%;height:340px;--poster-color:#1e293b"></model-viewer>
+    </div>
+    <p class="muted" style="margin-top:8px;font-size:13px">💡 AI 生成的概念示意模型,呈現各簡單機械的典型外形;精確機構與機械利益請以課本與下方說明為準。</p>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+    <script>
+    (function(){
+      var v=document.getElementById('sm3d-viewer'),tabs=document.querySelectorAll('#sm3d-tabs .sm3d-btn');
+      function sel(b){tabs.forEach(function(x){x.style.background=(x===b)?'#0ea5e9':'#e2e8f0';x.style.color=(x===b)?'#fff':'#0f172a';});}
+      tabs.forEach(function(b){
+        b.style.cssText='padding:6px 14px;border:none;border-radius:999px;cursor:pointer;font-size:13px;font-weight:600';
+        b.addEventListener('click',function(){v.setAttribute('src','../assets/models/'+b.dataset.src);sel(b);});
+      });
+      sel(tabs[0]);
+    })();
+    </script>
+  </section>
   <section class="panel"><h3>簡單機械總覽</h3><div id="sm-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px"></div></section>
 
   <div class="module-nav-bottom"><a href="../index.html" class="btn btn-ghost">← 回首頁</a><a href="module2.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a></div>
