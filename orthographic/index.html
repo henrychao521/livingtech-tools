@@ -54,9 +54,9 @@
           <!-- 上層頂面（z=4，最淺色）-->
           <polygon points="0,-40 34.6,-20 0,0 -34.6,-20" fill="#A5B4FC"/>
 
-          <!-- 觀者方向標示 -->
-          <text x="20" y="92" text-anchor="middle" font-size="10" fill="#3730A3" font-weight="700" font-family="Inter">3D OBJECT</text>
-          <text x="20" y="104" text-anchor="middle" font-size="9" fill="#64748B" font-family="Inter">階梯塊 step block</text>
+          <!-- 觀者方向標示（貼近方塊下緣，避免與底部說明標籤擠壓）-->
+          <text x="20" y="76" text-anchor="middle" font-size="10" fill="#3730A3" font-weight="700" font-family="Inter">3D OBJECT</text>
+          <text x="20" y="90" text-anchor="middle" font-size="9" fill="#64748B" font-family="Inter">階梯塊 step block</text>
         </g>
 
         <!-- ============ 俯視 TOP（正視上方）— 矩形 + 分隔線（第三角法）============ -->
@@ -90,15 +90,15 @@
           <line x1="102" y1="155" x2="180" y2="185"/>
           <!-- 側視 → 3D 物件 -->
           <line x1="378" y1="155" x2="272" y2="195"/>
-          <!-- 俯視 → 正視（長對正，垂直線）-->
-          <line x1="70" y1="70" x2="70" y2="123"/>
+          <!-- 俯視 → 正視（長對正，垂直線；從標籤下方起筆，不穿過「俯視 TOP」字樣）-->
+          <line x1="70" y1="84" x2="70" y2="123"/>
         </g>
 
         <!-- ============ 對齊規則標記 ============ -->
         <g font-size="9" fill="#94A3B8" font-family="Inter" font-style="italic">
-          <!-- 高平齊：正視與側視同高 -->
-          <line x1="38" y1="195" x2="378" y2="195" stroke="#FBBF24" stroke-width="0.8" stroke-dasharray="2 3"/>
-          <text x="224" y="191" text-anchor="middle">↔ 高平齊（正視高 = 側視高）</text>
+          <!-- 高平齊：連接正視與側視的垂直中心線，只畫在兩個視圖框之間，不貫穿標籤 -->
+          <line x1="106" y1="155" x2="374" y2="155" stroke="#FBBF24" stroke-width="0.8" stroke-dasharray="2 3"/>
+          <text x="240" y="150" text-anchor="middle">↔ 高平齊（正視高 = 側視高）</text>
           <!-- 長對正：俯視與正視同寬 -->
           <line x1="38" y1="70" x2="38" y2="123" stroke="#FBBF24" stroke-width="0.8" stroke-dasharray="2 3"/>
         </g>
