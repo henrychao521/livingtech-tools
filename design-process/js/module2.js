@@ -41,6 +41,7 @@ const nextBtn = document.getElementById('next-btn');
 let answered = new Set(); let correct = 0;
 QUIZ.forEach((q, i) => {
   const div = document.createElement('div');
+  div.className = 'quiz-item';
   div.style.cssText = 'background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px';
   div.innerHTML = `<p style="font-size:14px;margin-bottom:6px"><strong>題 ${i + 1}：</strong>${q.q}</p>
     <div class="choice-grid" style="grid-template-columns:repeat(6,1fr)">${METHODS.map(m => `<button class="choice" data-q="${i}" data-c="${m.id}" style="font-size:11px;padding:6px 4px">${m.name}</button>`).join('')}</div>
@@ -52,7 +53,7 @@ quizEl.querySelectorAll('.choice').forEach(b => b.addEventListener('click', () =
   const i = parseInt(b.dataset.q);
   if (answered.has(i)) return;
   const ok = b.dataset.c === QUIZ[i].ans;
-  const parent = b.closest('div');
+  const parent = b.closest('.quiz-item');
   parent.querySelectorAll('.choice').forEach(x => { x.disabled = true; if (x.dataset.c === QUIZ[i].ans) x.classList.add('correct'); if (x === b && !ok) x.classList.add('wrong'); });
   parent.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${ok?'success':'error'}" style="margin-top:6px">${ok?'✓':'✗'} ${QUIZ[i].explain}</div>`;
   if (ok) { correct++; if (typeof SoundFX !== 'undefined') SoundFX.success(); } else if (typeof SoundFX !== 'undefined') SoundFX.error();

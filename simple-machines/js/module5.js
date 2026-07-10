@@ -48,6 +48,7 @@ let answered = new Set();
 let quizCorrect = 0;
 QUIZ.forEach((q, i) => {
   const div = document.createElement('div');
+  div.className = 'quiz-item';
   div.style.cssText = 'background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px';
   div.innerHTML = `
     <p style="font-size:14px;margin-bottom:6px"><strong>${q.icon} 題 ${i + 1}：</strong>${q.name} 主要使用哪種簡單機械？</p>
@@ -60,7 +61,7 @@ quizEl.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', 
   const i = parseInt(btn.dataset.q);
   if (answered.has(i)) return;
   const correct = parseInt(btn.dataset.c) === QUIZ[i].correct;
-  const parent = btn.closest('div');
+  const parent = btn.closest('.quiz-item');
   parent.querySelectorAll('.choice').forEach((b, k) => {
     b.disabled = true;
     if (k === QUIZ[i].correct) b.classList.add('correct');

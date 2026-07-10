@@ -48,6 +48,7 @@ let quizScore = 0;
 let answered = new Set();
 QUIZ_CASES.forEach((c, i) => {
   const div = document.createElement('div');
+  div.className = 'quiz-item';
   div.style.cssText = 'background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px';
   div.innerHTML = `
     <p style="font-size:14px;color:#444;margin-bottom:6px"><strong>情境 ${i + 1}：</strong>${c.situation}</p>
@@ -61,7 +62,7 @@ quizEl.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', 
   const c = parseInt(btn.dataset.c);
   if (answered.has(i)) return;
   const correct = c === QUIZ_CASES[i].correct;
-  const parent = btn.closest('div');
+  const parent = btn.closest('.quiz-item');
   parent.querySelectorAll('.choice').forEach((b, k) => {
     b.disabled = true;
     if (k === QUIZ_CASES[i].correct) b.classList.add('correct');

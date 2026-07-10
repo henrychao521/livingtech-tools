@@ -40,6 +40,7 @@ let correct = 0;
 QUIZ.forEach((q, i) => {
   const choices = [q.chain, ...allChoices.filter(c => c !== q.chain).slice(0, 3)].sort(() => Math.random() - 0.5);
   const div = document.createElement('div');
+  div.className = 'quiz-item';
   div.style.cssText = 'background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px';
   div.innerHTML = `<p style="font-size:14px;margin-bottom:6px"><strong>題 ${i + 1}：</strong>${q.q} 的能量轉換是？</p>
     <div class="choice-grid" style="grid-template-columns:1fr 1fr">${choices.map(c => `<button class="choice" data-q="${i}" data-c="${c}" style="text-align:left;padding:8px 12px;font-size:12.5px">${c}</button>`).join('')}</div>
@@ -51,7 +52,7 @@ quizEl.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', 
   const i = parseInt(btn.dataset.q);
   if (answered.has(i)) return;
   const ok = btn.dataset.c === QUIZ[i].chain;
-  const parent = btn.closest('div');
+  const parent = btn.closest('.quiz-item');
   parent.querySelectorAll('.choice').forEach(b => {
     b.disabled = true;
     if (b.dataset.c === QUIZ[i].chain) b.classList.add('correct');
