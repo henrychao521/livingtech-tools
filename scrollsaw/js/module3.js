@@ -50,6 +50,13 @@ const STEPS = [
     warn: '感覺木板「卡住」要立刻減速或停止，可能是鋸條斷了或夾住。',
   },
   {
+    title: '內挖切割（先鑽孔再穿鋸條）',
+    anim: 'pierce',
+    desc: '想在木板「中間」挖出鏤空圖形，不能從邊緣切進去，要用內挖手法：① 在要挖除的廢料區內鑽一個 ≥6mm 的導孔 → ② 鬆開上夾頭，在關機狀態下把鋸條穿過導孔 → ③ 重新夾緊鋸條並調整張力 → ④ 沿內輪廓切割 → ⑤ 完成後再次鬆開上夾頭，取出工件。模組 4 的 L4 關卡就是內挖切割挑戰，先把手順記熟再去闖關！',
+    tip: '導孔要鑽在廢料區內、離切割線約 3–5mm，起鋸時比較好對線；挖除的廢料掉下來才算完整成功。',
+    warn: '穿鋸條全程必須關機！確認電源關閉、鋸條完全靜止，才能鬆開上夾頭。',
+  },
+  {
     title: '完工關機',
     anim: 'shutdown',
     desc: '切割完畢 → 關閉電源 → 等鋸條完全停止 → 把木板與木屑清理乾淨 → 把壓料桿升起。',
@@ -86,7 +93,7 @@ function selectStep(i) {
   });
   const s = STEPS[i];
   stepDetailEl.innerHTML = `
-    <div class="step-num">STEP ${String(i + 1).padStart(2, '0')} / 08</div>
+    <div class="step-num">STEP ${String(i + 1).padStart(2, '0')} / ${String(STEPS.length).padStart(2, '0')}</div>
     <h3>${s.title}</h3>
     <div class="step-anim">${renderAnim(s.anim)}</div>
     <p>${s.desc}</p>
@@ -105,7 +112,7 @@ function markDone(i) {
     if (typeof SoundFX !== 'undefined') SoundFX.success();
   }
   document.querySelectorAll('.step-item')[i].classList.add('done');
-  stepProgressEl.textContent = `已學習 ${seenSteps.size} / 8 步`;
+  stepProgressEl.textContent = `已學習 ${seenSteps.size} / ${STEPS.length} 步`;
   const prog = loadProgress();
   prog.module3_seen = Array.from(seenSteps);
   saveProgress(prog);
@@ -113,7 +120,7 @@ function markDone(i) {
     document.getElementById('next-btn').style.opacity = 1;
     document.getElementById('next-btn').style.pointerEvents = 'auto';
     if (typeof SoundFX !== 'undefined') SoundFX.unlock();
-    showToast('🎉 八個步驟都看完了，準備好進入模擬練習！', 'good');
+    showToast('🎉 九個步驟都看完了，準備好進入模擬練習！', 'good');
     prog.module3 = true;
     saveProgress(prog);
   }
@@ -368,6 +375,36 @@ function renderAnim(type) {
           <rect x="0" y="0" width="80" height="22" rx="4" fill="#2EBD66"/>
           <text x="40" y="15" text-anchor="middle" font-size="11" fill="#fff" font-weight="700">理想速度</text>
         </g>
+      </svg>`,
+
+    pierce: `
+      <svg viewBox="0 0 400 240" style="width:90%;max-width:380px">
+        <!-- 工作台 -->
+        <rect x="20" y="195" width="360" height="30" rx="3" fill="#cfcfcf"/>
+        <!-- 木板 -->
+        <rect x="70" y="75" width="260" height="120" fill="#d4a574"/>
+        <path d="M70 115 Q200 110 330 120" fill="none" stroke="rgba(80,40,10,.2)"/>
+        <path d="M70 155 Q200 150 330 158" fill="none" stroke="rgba(80,40,10,.15)"/>
+        <!-- 內輪廓切割線（要挖除的區域）-->
+        <rect x="145" y="100" width="115" height="70" fill="none" stroke="#222" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <text x="265" y="94" text-anchor="end" font-family="Noto Sans TC,sans-serif" font-size="11" fill="#555">內輪廓切割線</text>
+        <!-- 導孔 -->
+        <circle cx="170" cy="135" r="7" fill="#3a2410"/>
+        <circle cx="170" cy="135" r="7" fill="none" stroke="#FF7A00" stroke-width="2">
+          <animate attributeName="r" values="7;16;7" dur="1.6s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="1;0;1" dur="1.6s" repeatCount="indefinite"/>
+        </circle>
+        <!-- 鋸條穿過導孔 -->
+        <rect x="167" y="46" width="6" height="149" fill="#1a1a1a"/>
+        <!-- 上夾頭（先鬆開）-->
+        <rect x="150" y="28" width="40" height="16" rx="2" fill="#1a1a1a"/>
+        <text x="196" y="41" font-family="Noto Sans TC,sans-serif" font-size="11" fill="#444">上夾頭：先鬆開再穿鋸條</text>
+        <!-- 導孔標示 -->
+        <line x1="166" y1="142" x2="112" y2="212" stroke="#E14A4A" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <text x="20" y="228" font-family="Noto Sans TC,sans-serif" font-size="11" fill="#E14A4A" font-weight="700">導孔 ≥ 6mm（鑽在廢料區內）</text>
+        <!-- 關機徽章 -->
+        <rect x="292" y="16" width="92" height="26" rx="6" fill="#E14A4A"/>
+        <text x="338" y="34" text-anchor="middle" fill="#fff" font-size="12" font-weight="700" font-family="Noto Sans TC,sans-serif">穿鋸條＝關機</text>
       </svg>`,
 
     shutdown: `

@@ -110,3 +110,111 @@ if (typeof Interactions !== 'undefined') {
     }
   });
 }
+
+/* ============================================================
+ * 看懂電路圖：符號 ↔ 麵包板實體 對應練習
+ * （對應上方接線步驟的同一顆電路:電池 → 220Ω → LED → 地）
+ * ============================================================ */
+(function schematicMatch() {
+  const nav = document.querySelector('.module-nav-bottom');
+  if (!nav) return;
+
+  const SYM_QUIZ = [
+    { q: '電路圖裡「一長一短的兩條平行線」,對應麵包板上的哪個實體?',
+      opts: ['電池盒(長線那端=紅色正極線)', '220Ω 電阻', 'LED', '跳線'],
+      ans: 0, explain: '長線=正極、短線=負極。接麵包板時就是電池盒的紅(+)黑(−)線。' },
+    { q: '鋸齒狀(或長方形)的符號,在這顆電路的實體是?',
+      opts: ['LED', '220Ω 色環電阻(紅紅棕)', '開關', '電池'],
+      ans: 1, explain: '鋸齒符號是電阻。本電路用 220Ω 限流,色環讀作紅紅棕。電阻沒有方向性。' },
+    { q: '三角形加上兩個小箭頭的符號是?',
+      opts: ['蜂鳴器', '馬達', 'LED(箭頭代表發光,三角形尖端指向電流方向)', '電容'],
+      ans: 2, explain: '二極體符號加發光箭頭=LED。三角形尖端指的方向就是電流方向:陽極(長腳)→陰極(短腳)。' },
+    { q: '電路圖上兩條線交叉處「打一個實心點」,代表什麼?',
+      opts: ['兩條線互相絕緣、只是畫圖經過', '兩條線在這裡相連(像插在麵包板同一直行)', '這裡要焊接', '這裡有開關'],
+      ans: 1, explain: '打點=相連。就像麵包板同一直行的五個孔內部金屬條相連;沒打點的交叉只是畫面上經過,實際不相連。' },
+  ];
+
+  const sec = document.createElement('section');
+  sec.style.cssText = 'background:#fff;border:1px solid var(--border);border-radius:14px;padding:24px;margin-top:24px';
+  sec.innerHTML = `
+    <h3 style="margin-bottom:4px">🗺️ 看懂電路圖:符號 ↔ 麵包板實體</h3>
+    <p class="muted" style="font-size:14px;margin-bottom:12px">
+      工程師溝通用的是「電路圖」,不是麵包板照片。下圖就是你剛接好的那顆電路——
+      對照四個符號,回答下面的判讀題。
+    </p>
+    <svg viewBox="0 0 460 170" style="width:100%;max-width:460px;display:block;margin:0 auto 14px;background:#F8FAFC;border:1px solid var(--border);border-radius:10px">
+      <!-- 迴路外框 -->
+      <path d="M60 40 H400 V130 H60 Z" fill="none" stroke="#1F2937" stroke-width="2"/>
+      <!-- ① 電池(左邊,長短線) -->
+      <g>
+        <rect x="48" y="70" width="24" height="30" fill="#F8FAFC"/>
+        <line x1="52" y1="72" x2="68" y2="72" stroke="#1F2937" stroke-width="3"/>
+        <line x1="56" y1="82" x2="64" y2="82" stroke="#1F2937" stroke-width="2"/>
+        <line x1="60" y1="40" x2="60" y2="72" stroke="#1F2937" stroke-width="2"/>
+        <line x1="60" y1="82" x2="60" y2="130" stroke="#1F2937" stroke-width="2"/>
+        <text x="30" y="66" font-size="12" font-weight="700" fill="#DC2626">+</text>
+        <text x="30" y="96" font-size="12" font-weight="700" fill="#6B7280">−</text>
+        <text x="60" y="152" text-anchor="middle" font-size="11" fill="#6B7280">① 電池 3V</text>
+      </g>
+      <!-- ② 電阻(上邊,鋸齒) -->
+      <g>
+        <path d="M170 40 l6 -8 l8 16 l8 -16 l8 16 l8 -16 l8 16 l6 -8" fill="none" stroke="#1F2937" stroke-width="2"/>
+        <text x="205" y="22" text-anchor="middle" font-size="11" fill="#6B7280">② 220Ω</text>
+      </g>
+      <!-- ③ LED(右邊,二極體+箭頭) -->
+      <g>
+        <polygon points="390,75 410,85 390,95" fill="#DC2626" stroke="#1F2937" stroke-width="1.5"/>
+        <line x1="410" y1="75" x2="410" y2="95" stroke="#1F2937" stroke-width="2.5"/>
+        <line x1="400" y1="40" x2="400" y2="75" stroke="#1F2937" stroke-width="2" transform="translate(0,0)"/>
+        <path d="M398 64 l8 -8 M404 68 l8 -8" stroke="#F59E0B" stroke-width="2" fill="none"/>
+        <path d="M404 58 l2 -2 l-3 0 z M410 62 l2 -2 l-3 0 z" fill="#F59E0B"/>
+        <text x="432" y="90" font-size="11" fill="#6B7280">③ LED</text>
+      </g>
+      <!-- ④ 節點(下邊,打點) -->
+      <g>
+        <circle cx="230" cy="130" r="4" fill="#1F2937"/>
+        <line x1="230" y1="130" x2="230" y2="112" stroke="#1F2937" stroke-width="2"/>
+        <text x="230" y="106" text-anchor="middle" font-size="10" fill="#6B7280">(接量測點)</text>
+        <text x="262" y="152" text-anchor="middle" font-size="11" fill="#6B7280">④ 打點=相連</text>
+      </g>
+    </svg>
+    <div id="sym-quiz"></div>`;
+  nav.parentNode.insertBefore(sec, nav);
+
+  const wrap = sec.querySelector('#sym-quiz');
+  const done = new Set();
+  SYM_QUIZ.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.classList.add('quiz-item');
+    div.style.cssText = 'background:#F8FAFC;border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px';
+    div.innerHTML = `
+      <p style="font-size:14px;margin-bottom:6px"><strong>判讀 ${i + 1}:</strong>${q.q}</p>
+      <div class="choice-grid" style="grid-template-columns:1fr 1fr">${q.opts.map((o, j) =>
+        `<button class="choice" data-q="${i}" data-c="${j}">${o}</button>`).join('')}</div>
+      <div class="feedback-slot"></div>`;
+    wrap.appendChild(div);
+  });
+  wrap.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', () => {
+    const i = parseInt(btn.dataset.q);
+    if (done.has(i)) return;
+    const correct = parseInt(btn.dataset.c) === SYM_QUIZ[i].ans;
+    if (!correct) {
+      if (typeof SoundFX !== 'undefined') SoundFX.error();
+      btn.classList.add('wrong');
+      btn.closest('.quiz-item').querySelector('.feedback-slot').innerHTML =
+        `<div class="feedback error" style="margin-top:8px">再想想:對照上圖的符號位置。</div>`;
+      setTimeout(() => {
+        btn.classList.remove('wrong');
+        btn.closest('.quiz-item').querySelector('.feedback-slot').innerHTML = '';
+      }, 2200);
+      return;
+    }
+    done.add(i);
+    if (typeof SoundFX !== 'undefined') SoundFX.success();
+    const item = btn.closest('.quiz-item');
+    item.querySelectorAll('.choice').forEach(b => { b.disabled = true; if (b === btn) b.classList.add('correct'); });
+    item.querySelector('.feedback-slot').innerHTML =
+      `<div class="feedback success" style="margin-top:8px">✓ ${SYM_QUIZ[i].explain}</div>`;
+    if (done.size === SYM_QUIZ.length && typeof SoundFX !== 'undefined') SoundFX.unlock();
+  }));
+})();

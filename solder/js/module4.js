@@ -36,7 +36,7 @@ const LEVELS = {
   },
   L5: {
     name: 'L5 修正錯誤焊',
-    desc: '3 個焊點：先吸掉預設的虛焊，再重新焊好',
+    desc: '3 個焊點：先吸掉預設的虛焊，再重新焊好（拆焊手法見模組 3）',
     pads: [
       { x: 280, y: 250, defective: 'cold' },
       { x: 380, y: 250, defective: 'bridge' },

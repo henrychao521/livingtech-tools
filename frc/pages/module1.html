@@ -19,6 +19,12 @@
 <link rel="stylesheet" href="../../css/svg-effects.css">
 <link rel="stylesheet" href="../css/frc.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🤖%3C/text%3E%3C/svg%3E">
+<style>
+  .compare-table { width:100%; border-collapse:collapse; font-size:14px; }
+  .compare-table th, .compare-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align:left; }
+  .compare-table th { background: var(--bg-soft); }
+  .compare-table td .eng { font-family: Inter, sans-serif; font-weight: 700; color: var(--primary-dark); }
+</style>
 </head>
 <body data-tool="frc" class="frc-theme">
 <header class="topbar">
@@ -450,7 +456,35 @@
         <a href="https://docs.wpilib.org/" target="_blank" rel="noopener" style="color:var(--primary);font-weight:600;font-size:13px">docs.wpilib.org →</a>
       </div>
     </div>
-  </section>  <section class="panel">
+  </section>
+
+  <section class="panel">
+    <h3>📖 ⑤ FRC 中英術語對照表</h3>
+    <p class="muted" style="margin-bottom:14px">FRC 圈子的溝通幾乎都用英文術語——看規則手冊、逛 Chief Delphi 論壇、跟外隊交流都用得到。先把這 14 個關鍵詞記起來。</p>
+    <div style="overflow-x:auto">
+      <table class="compare-table">
+        <thead><tr><th style="width:180px">英文術語</th><th style="width:140px">中文</th><th>說明</th></tr></thead>
+        <tbody>
+          <tr><td><span class="eng">Alliance</span></td><td>聯盟</td><td>每場比賽由 3 隊臨時組成紅、藍聯盟對抗,合作得分。</td></tr>
+          <tr><td><span class="eng">Kickoff</span></td><td>開賽發布日</td><td>每年 1 月初全球同步公布當季遊戲規則,賽季正式開始。</td></tr>
+          <tr><td><span class="eng">Autonomous</span></td><td>自動階段</td><td>比賽前 15 秒,機器人完全靠預先寫好的程式自主行動。</td></tr>
+          <tr><td><span class="eng">Teleop</span></td><td>手動操作階段</td><td>Teleoperated 的縮寫,2 分 15 秒由駕駛員遙控機器人得分。</td></tr>
+          <tr><td><span class="eng">Endgame</span></td><td>終局</td><td>比賽最後約 30 秒,通常有攀爬、停泊等高分任務。</td></tr>
+          <tr><td><span class="eng">Chassis</span></td><td>底盤</td><td>機器人的結構骨架,承載所有機構與電控元件。</td></tr>
+          <tr><td><span class="eng">Drivetrain</span></td><td>底盤傳動</td><td>讓機器人移動的整套系統：馬達、齒輪箱、輪組（如 Tank、Mecanum、Swerve）。</td></tr>
+          <tr><td><span class="eng">Bumper</span></td><td>防撞緩衝墊</td><td>包覆底盤四周的布面泡棉緩衝條,規則強制安裝,標示聯盟顏色與隊號。</td></tr>
+          <tr><td><span class="eng">Intake</span></td><td>進料機構</td><td>把場上遊戲元件（球、環等）「吃」進機器人的機構。</td></tr>
+          <tr><td><span class="eng">Shooter</span></td><td>射出機構</td><td>把遊戲元件投射到得分目標的機構,常用飛輪（flywheel）加速。</td></tr>
+          <tr><td><span class="eng">Climber</span></td><td>攀爬機構</td><td>終局階段讓機器人吊掛或攀上高處的機構,常用伸縮桿或鉤爪。</td></tr>
+          <tr><td><span class="eng">Scouting</span></td><td>賽況偵察</td><td>觀察記錄各隊表現、分析數據,作為選隊友與擬定戰術的依據。</td></tr>
+          <tr><td><span class="eng">Pit</span></td><td>維修區</td><td>比賽場邊各隊的工作攤位,進行維修、調整,也是展示隊伍形象的門面。</td></tr>
+          <tr><td><span class="eng">Mentor</span></td><td>導師</td><td>指導學生的成人志工——工程師、教師、校友,是 FRC 隊伍的靈魂人物。</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel">
     <h3>🖥️ 3D 機器人模型</h3>
     <p class="muted" style="margin-bottom:14px">OpenSCAD 繪製的 FRC 競賽機器人示意模型，展示鋁型材底盤、六輪驅動、升降臂與夾爪、RoboRIO 控制器與電池配置。</p>
     <div style="display:flex;align-items:center;justify-content:center;background:#1E293B;border-radius:12px;padding:24px;border:1px solid var(--border)">

@@ -438,3 +438,41 @@ if (typeof Interactions !== 'undefined') {
     });
   });
 })();
+
+/* ── 拆焊：焊錯了怎麼救 ──────────────────────────────── */
+;(function () {
+  const sec = document.createElement('section');
+  sec.className = 'panel';
+  sec.id = 'desolder-guide';
+  sec.innerHTML = `
+    <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:6px">🧯 拆焊：焊錯了怎麼救</h3>
+    <p style="color:#64748b;font-size:14px;margin-bottom:16px">焊錯位置、錫橋短路、虛焊要重焊——都不用慌。把錫「請」下來的工具有兩種：吸錫器與吸錫帶。模組 4 的 L5 關卡（修正錯誤焊）就是在練這件事。</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px">
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:16px 18px">
+        <h4 style="margin:0 0 10px;font-size:15px;color:#1e293b">💉 吸錫器（四步）</h4>
+        <ol style="margin:0;padding-left:20px;font-size:13px;color:#374151;line-height:1.9">
+          <li><strong>加熱焊點至錫熔</strong>：烙鐵頭貼住要拆的焊點，等焊錫完全熔成亮液態。</li>
+          <li><strong>吸嘴貼上</strong>：先把吸錫器活塞壓下卡住，吸嘴貼緊熔化的焊點旁。</li>
+          <li><strong>按下釋放鈕吸走</strong>：「啵」一聲，熔錫瞬間被吸進管內。</li>
+          <li><strong>檢查孔位</strong>：孔位應乾淨透光、元件腳能鬆動。沒吸乾淨就補一點新錫再吸一次。</li>
+        </ol>
+      </div>
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:16px 18px">
+        <h4 style="margin:0 0 10px;font-size:15px;color:#1e293b">🎗️ 吸錫帶（三步）</h4>
+        <ol style="margin:0;padding-left:20px;font-size:13px;color:#374151;line-height:1.9">
+          <li><strong>帶壓在焊點上</strong>：把吸錫帶（銅編織帶）平放蓋住要拆的焊點。</li>
+          <li><strong>烙鐵隔帶加熱</strong>：烙鐵頭壓在帶子上，熱量穿過帶子熔化下方焊錫。</li>
+          <li><strong>錫被吸入編織帶</strong>：毛細作用讓熔錫「爬」進帶子，帶子變銀色就成功了。用過的段落剪掉。</li>
+        </ol>
+      </div>
+    </div>
+    <div style="margin-top:12px;padding:10px 14px;background:#fff7ed;border-left:3px solid #f97316;border-radius:6px;font-size:13px;color:#9a3412;line-height:1.7">
+      <strong>⚠ RoHS 無鉛焊錫提醒：</strong>學校常用的無鉛焊錫（RoHS）熔點比含鉛錫高，拆焊時需要略高的溫度（約 360°C）與更久的加熱時間，別以為「加熱兩秒還沒熔」是工具壞了。
+    </div>
+    <div style="margin-top:10px;padding:10px 14px;background:#f0fdf4;border-left:3px solid #22c55e;border-radius:6px;font-size:13px;color:#15803d;line-height:1.7">
+      <strong>💡 拆完之後：</strong>孔位清乾淨、銅環沒受損，就可以照前面八個步驟重新焊一次。拆焊不是失敗，是每個焊接高手都會的「後悔藥」。
+    </div>
+  `;
+  const nav = document.querySelector('.module-nav-bottom');
+  if (nav) nav.parentNode.insertBefore(sec, nav);
+})();

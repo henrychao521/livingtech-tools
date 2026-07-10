@@ -18,6 +18,45 @@
   <div class="module-header"><div><span class="module-step" style="background:var(--accent-light);color:#5b21b6">MODULE 03</span><h2>8 步驟視圖繪製</h2><p class="muted">從 3D 物件到完整三視圖。</p></div><div class="muted" id="step-progress">已學習 0 / 8 步</div></div>
   <div class="steps-layout"><div class="step-list" id="step-list"></div><div class="step-detail" id="step-detail"></div></div>
   <section style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:24px;margin-top:24px"><h3 style="font-size:19px;margin-bottom:8px">🧩 排序測驗</h3><div id="seq-puzzle"></div></section>
+  <section style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:24px;margin-top:24px">
+    <h3 style="font-size:19px;margin-bottom:8px">📐 尺寸標註判斷練習</h3>
+    <p class="muted" style="margin-bottom:14px">下面是一張已標註尺寸的 L 形前視圖。判斷右側 4 條敘述是「正確」的標註原則,還是「錯誤」的做法。</p>
+    <div style="display:grid;grid-template-columns:minmax(260px,340px) 1fr;gap:20px;align-items:start">
+      <div style="background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:10px">
+        <svg viewBox="0 0 320 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+          <!-- L 形輪廓（粗實線） -->
+          <polygon points="70,50 150,50 150,130 250,130 250,210 70,210" fill="#e0e7ff" stroke="#1e293b" stroke-width="3" stroke-linejoin="round"/>
+          <defs>
+            <marker id="dimArrS" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M10 0 L0 5 L10 10z" fill="#2563eb"/></marker>
+            <marker id="dimArrE" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#2563eb"/></marker>
+          </defs>
+          <g stroke="#2563eb" stroke-width="1.2" fill="none">
+            <!-- 延伸線 -->
+            <line x1="70" y1="213" x2="70" y2="242"/><line x1="250" y1="213" x2="250" y2="242"/>
+            <line x1="67" y1="50" x2="38" y2="50"/><line x1="67" y1="210" x2="38" y2="210"/>
+            <line x1="70" y1="47" x2="70" y2="18"/><line x1="150" y1="47" x2="150" y2="18"/>
+            <line x1="253" y1="130" x2="282" y2="130"/><line x1="253" y1="210" x2="282" y2="210"/>
+            <!-- 尺寸線（與輪廓保持距離） -->
+            <line x1="70" y1="238" x2="250" y2="238" marker-start="url(#dimArrS)" marker-end="url(#dimArrE)"/>
+            <line x1="42" y1="50" x2="42" y2="210" marker-start="url(#dimArrS)" marker-end="url(#dimArrE)"/>
+            <line x1="70" y1="22" x2="150" y2="22" marker-start="url(#dimArrS)" marker-end="url(#dimArrE)"/>
+            <line x1="278" y1="130" x2="278" y2="210" marker-start="url(#dimArrS)" marker-end="url(#dimArrE)"/>
+          </g>
+          <g font-family="Inter" font-size="13" font-weight="700" fill="#2563eb">
+            <text x="160" y="233" text-anchor="middle">90</text>
+            <text x="36" y="134" text-anchor="middle" transform="rotate(-90 36 134)">80</text>
+            <text x="110" y="17" text-anchor="middle">40</text>
+            <text x="292" y="174" text-anchor="middle" transform="rotate(-90 292 174)">40</text>
+          </g>
+          <text x="160" y="256" text-anchor="middle" font-size="11" fill="#64748b">L 形前視圖（單位 mm）</text>
+        </svg>
+      </div>
+      <div>
+        <div id="dim-quiz"></div>
+        <div id="dim-quiz-summary"></div>
+      </div>
+    </div>
+  </section>
   <div class="module-nav-bottom"><a href="module2.html" class="btn btn-ghost">← 上一關</a><a href="module4.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a></div>
 </main>
 <script src="../../js/main.js"></script><script src="../../js/sources.js"></script><script src="../../js/audio.js"></script><script src="../../js/interactions.js"></script><script src="../js/module3.js"></script>

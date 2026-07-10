@@ -22,4 +22,46 @@ APPS.forEach(a => {
     <p style="font-size:13px;color:#444">${a.desc}</p>`;
   grid.appendChild(c);
 });
-const p = loadP(); p.module5 = true; saveP(p);
+// === 帕斯卡定律計算測驗（三題都作答才標記 module5 完成） ===
+const QUIZ = [
+  { q: '【計算】小活塞面積 2 cm²，施力 10 N。液體壓力是多少？大活塞面積 20 cm²，輸出力是多少？', options: ['壓力 5 N/cm²，輸出力 100 N', '壓力 20 N/cm²，輸出力 400 N', '壓力 5 N/cm²，輸出力 10 N'], correct: 0, explain: '壓力 = 力 ÷ 面積 = 10 N ÷ 2 cm² = 5 N/cm²。帕斯卡定律：壓力處處相等，所以大活塞輸出力 = 5 N/cm² × 20 cm² = 100 N。面積放大 10 倍，力也放大 10 倍。' },
+  { q: '【計算】要用大活塞（面積 30 cm²）抬起 300 N 的重物，小活塞面積 3 cm²，最少要在小活塞上施力多少？', options: ['3 N', '30 N', '3000 N'], correct: 1, explain: '需要的壓力 = 300 N ÷ 30 cm² = 10 N/cm²。小活塞施力 = 10 N/cm² × 3 cm² = 30 N。面積比 30:3 = 10 倍，所以施力只要重物的 1/10。' },
+  { q: '【觀念】液壓系統把力放大 10 倍，那小活塞移動的距離要是大活塞的幾倍？', options: ['1/10 倍（小活塞動得比較少）', '1 倍（兩邊一樣）', '10 倍（小活塞要多推 10 倍距離）'], correct: 2, explain: '功守恆：小活塞的功 = 大活塞的功（F×d 相等）。力放大 10 倍，距離就要付出 10 倍——液壓「省力不省功」。這也是千斤頂要反覆壓很多下的原因。' },
+];
+
+const quizEl = document.getElementById('quiz');
+let answered = new Set();
+let quizCorrect = 0;
+QUIZ.forEach((q, i) => {
+  const div = document.createElement('div');
+  div.className = 'quiz-item';
+  div.style.cssText = 'background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px';
+  div.innerHTML = `
+    <p style="font-size:14px;margin-bottom:6px"><strong>題 ${i + 1}：</strong>${q.q}</p>
+    <div class="choice-grid">${q.options.map((o, j) => `<button class="choice" data-q="${i}" data-c="${j}">${o}</button>`).join('')}</div>
+    <div class="feedback-slot"></div>`;
+  quizEl.appendChild(div);
+});
+
+quizEl.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', () => {
+  const i = parseInt(btn.dataset.q);
+  if (answered.has(i)) return;
+  const correct = parseInt(btn.dataset.c) === QUIZ[i].correct;
+  const parent = btn.closest('.quiz-item');
+  parent.querySelectorAll('.choice').forEach((b, k) => {
+    b.disabled = true;
+    if (k === QUIZ[i].correct) b.classList.add('correct');
+    if (b === btn && !correct) b.classList.add('wrong');
+  });
+  parent.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${correct ? 'success' : 'error'}" style="margin-top:8px">${correct ? '✓' : '✗'} ${QUIZ[i].explain}</div>`;
+  if (correct) { quizCorrect++; if (typeof SoundFX !== 'undefined') SoundFX.success(); } else if (typeof SoundFX !== 'undefined') SoundFX.error();
+  answered.add(i);
+  if (answered.size === QUIZ.length) {
+    const p = loadP();
+    p.module5 = true;
+    p.module5_quiz_score = quizCorrect;
+    saveP(p);
+    if (typeof SoundFX !== 'undefined') SoundFX.win();
+    showToast(`🎓 完成！${quizCorrect} / ${QUIZ.length} 答對`, 'good');
+  }
+}));

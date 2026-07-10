@@ -53,3 +53,43 @@ MCUS.forEach(m => {
 });
 progEl.textContent = `已認識 ${seen.size} / 3 種`;
 if (seen.size === 3) { nextBtn.style.opacity = 1; nextBtn.style.pointerEvents = 'auto'; }
+
+/* ── 用電安全專區：情境測驗 ────────────────────────────── */
+const SAFETY_QUIZ = [
+  { q: '同學想把 Arduino UNO（5V 邏輯）的輸出訊號線直接接到 ESP32 的腳位上,會發生什麼事？',
+    opts: ['沒問題,兩塊板子都能用', 'ESP32 腳位可能被 5V 燒毀,必須經過電平轉換', '只會跑得比較慢', 'Arduino 會自動降壓成 3.3V'],
+    ans: 1, explain: 'ESP32 是 3.3V 邏輯,腳位不耐 5V。兩塊板子的訊號線要互接,必須加電平轉換模組（Level Shifter）。' },
+  { q: '麵包板電路剛接好,要通電之前該做什麼？',
+    opts: ['直接插 USB 看看會不會動', '先寫好程式再說', '對照電路圖從電源到 GND 檢查兩遍,確認極性與腳位無誤再插 USB', '用手摸每個元件確認位置'],
+    ans: 2, explain: '「檢查兩遍再通電」是麵包板實驗鐵律——檢查電源極性、腳位號碼、有無短路,確認無誤才通電。' },
+  { q: '通電後 LED 沒亮,第一步該怎麼做？',
+    opts: ['把電壓調高一點看會不會亮', '先拔掉 USB 斷電,再檢查 LED 極性（長腳接正）與接線', '直接換一顆 LED', '用手摸元件看哪個在發燙'],
+    ans: 1, explain: '除錯第一步永遠是「先斷電」,再檢查 LED 極性與接線。帶電亂動線材或用手摸發燙元件都很危險。' },
+];
+const sQuizEl = document.getElementById('safety-quiz');
+if (sQuizEl) {
+  const sAnswered = new Set(); let sCorrect = 0;
+  SAFETY_QUIZ.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.style.cssText = 'background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px';
+    div.innerHTML = `<p style="font-size:14px;margin-bottom:6px"><strong>題 ${i + 1}：</strong>${q.q}</p>
+      <div class="choice-grid" style="grid-template-columns:1fr">${q.opts.map((o, k) => `<button class="choice" data-q="${i}" data-k="${k}" style="text-align:left">${o}</button>`).join('')}</div>
+      <div class="feedback-slot"></div>`;
+    sQuizEl.appendChild(div);
+  });
+  sQuizEl.querySelectorAll('.choice').forEach(b => b.addEventListener('click', () => {
+    const i = parseInt(b.dataset.q);
+    if (sAnswered.has(i)) return;
+    const ok = parseInt(b.dataset.k) === SAFETY_QUIZ[i].ans;
+    const parent = b.closest('div[style*="border-radius"]') || b.closest('div');
+    parent.querySelectorAll('.choice').forEach(x => { x.disabled = true; if (parseInt(x.dataset.k) === SAFETY_QUIZ[i].ans) x.classList.add('correct'); if (x === b && !ok) x.classList.add('wrong'); });
+    parent.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${ok ? 'success' : 'error'}" style="margin-top:6px">${ok ? '✓' : '✗'} ${SAFETY_QUIZ[i].explain}</div>`;
+    if (ok) { sCorrect++; if (typeof SoundFX !== 'undefined') SoundFX.success(); } else if (typeof SoundFX !== 'undefined') SoundFX.error();
+    sAnswered.add(i);
+    if (sAnswered.size === SAFETY_QUIZ.length) {
+      const pp = loadP(); pp.module1_safety = true; pp.module1_safety_score = sCorrect; saveP(pp);
+      if (typeof SoundFX !== 'undefined') SoundFX.win();
+      showToast(`🧯 用電安全測驗 ${sCorrect}/${SAFETY_QUIZ.length} 答對`, sCorrect === SAFETY_QUIZ.length ? 'good' : 'info');
+    }
+  }));
+}

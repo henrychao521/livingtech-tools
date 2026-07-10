@@ -979,3 +979,64 @@ if (typeof SequencePuzzle === 'function') {
   // 初始顯示帶式
   renderTab('belt');
 })();
+
+/* ── 順木紋打磨原則 ──────────────────────────────── */
+;(function () {
+  const sec = document.createElement('section');
+  sec.className = 'panel';
+  sec.id = 'grain-direction';
+  sec.innerHTML = `
+    <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:6px">🪵 順木紋打磨 vs 逆紋刮痕</h3>
+    <p style="color:#64748b;font-size:14px;margin-bottom:14px">木材表面有一條條的「木紋」。<strong>順著木紋方向磨</strong>，砂紙留下的細刮痕會藏進紋理裡，看不出來；<strong>逆著木紋磨</strong>（垂直木紋）會留下橫向刮痕，平常不明顯，一上漆或上油就全部浮出來，特別難看。</p>
+    <div style="text-align:center">
+      <svg viewBox="0 0 460 210" style="width:100%;max-width:460px">
+        <!-- 左：順紋 -->
+        <g>
+          <rect x="20" y="40" width="190" height="110" rx="4" fill="#a16207"/>
+          <g stroke="rgba(60,30,5,.35)" stroke-width="1.5" fill="none">
+            <path d="M 28 60 Q 115 55 202 62"/>
+            <path d="M 28 85 Q 115 80 202 86"/>
+            <path d="M 28 110 Q 115 106 202 112"/>
+            <path d="M 28 135 Q 115 130 202 136"/>
+          </g>
+          <!-- 打磨方向箭頭（平行紋理）-->
+          <line x1="55" y1="97" x2="165" y2="97" stroke="#22c55e" stroke-width="4" stroke-linecap="round" marker-end="url(#grainArrG)"/>
+          <text x="115" y="30" text-anchor="middle" font-size="13" fill="#15803d" font-weight="800" font-family="Noto Sans TC,sans-serif">✓ 順紋磨</text>
+          <text x="115" y="172" text-anchor="middle" font-size="11" fill="#15803d" font-family="Noto Sans TC,sans-serif">刮痕藏進紋理 → 平滑</text>
+        </g>
+        <!-- 右：逆紋 -->
+        <g>
+          <rect x="250" y="40" width="190" height="110" rx="4" fill="#a16207"/>
+          <g stroke="rgba(60,30,5,.35)" stroke-width="1.5" fill="none">
+            <path d="M 258 60 Q 345 55 432 62"/>
+            <path d="M 258 85 Q 345 80 432 86"/>
+            <path d="M 258 110 Q 345 106 432 112"/>
+            <path d="M 258 135 Q 345 130 432 136"/>
+          </g>
+          <!-- 橫向刮痕（垂直紋理的細白線）-->
+          <g stroke="rgba(255,240,220,.85)" stroke-width="1">
+            <line x1="300" y1="50" x2="298" y2="140"/>
+            <line x1="325" y1="48" x2="324" y2="142"/>
+            <line x1="352" y1="50" x2="350" y2="140"/>
+            <line x1="378" y1="47" x2="377" y2="142"/>
+            <line x1="402" y1="50" x2="400" y2="139"/>
+          </g>
+          <!-- 打磨方向箭頭（垂直紋理）-->
+          <line x1="345" y1="130" x2="345" y2="62" stroke="#dc2626" stroke-width="4" stroke-linecap="round" marker-end="url(#grainArrR)"/>
+          <text x="345" y="30" text-anchor="middle" font-size="13" fill="#b91c1c" font-weight="800" font-family="Noto Sans TC,sans-serif">✗ 逆紋磨</text>
+          <text x="345" y="172" text-anchor="middle" font-size="11" fill="#b91c1c" font-family="Noto Sans TC,sans-serif">橫向刮痕 → 上漆後特別明顯</text>
+        </g>
+        <defs>
+          <marker id="grainArrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#22c55e"/></marker>
+          <marker id="grainArrR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#dc2626"/></marker>
+        </defs>
+        <text x="230" y="200" text-anchor="middle" font-size="11" fill="#444" font-family="Noto Sans TC,sans-serif">同一塊木板：打磨方向平行 vs 垂直木紋的差別</text>
+      </svg>
+    </div>
+    <div style="margin-top:12px;padding:10px 14px;background:#f0fdf4;border-left:3px solid #22c55e;border-radius:6px;font-size:13px;color:#15803d;line-height:1.7">
+      <strong>💡 收尾訣竅：</strong>機器砂磨（尤其隨機軌道式）方向影響較小，但<strong>機磨後的最後一道，一定用手拿砂紙「順紋」細磨</strong>幾下，把機磨留下的細小旋渦痕抹掉，上漆才會漂亮。
+    </div>
+  `;
+  const nav = document.querySelector('.module-nav-bottom');
+  if (nav) nav.parentNode.insertBefore(sec, nav);
+})();

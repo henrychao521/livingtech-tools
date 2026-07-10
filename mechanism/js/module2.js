@@ -66,7 +66,7 @@ let answered = new Set();
 let quizCorrect = 0;
 QUIZ.forEach((q, i) => {
   const div = document.createElement('div');
-  div.className = 'quiz-item';
+  div.classList.add('quiz-item');
   div.style.cssText = 'background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px';
   div.innerHTML = `
     <p style="font-size:14px;margin-bottom:6px"><strong>題 ${i + 1}：</strong>${q.q} 屬於</p>

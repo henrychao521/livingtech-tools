@@ -42,3 +42,47 @@ window.selectStep = selectStep;
 selectStep(0);
 stepProgressEl.textContent = `已學習 ${seenSteps.size} / ${STEPS.length} 步`;
 if (typeof SequencePuzzle === 'function') SequencePuzzle({ mountId: 'seq-puzzle', items: STEPS.map((s, i) => ({ id: i, label: `${i + 1}. ${s.title}` })), onPass: () => { const p = loadP(); p.module3_puzzle = true; saveP(p); showToast('🧩 通過！', 'good'); } });
+
+/* ── 尺寸標註判斷練習 ─────────────────────────────────── */
+const DIM_STATEMENTS = [
+  { text: '尺寸線要與輪廓線保持距離,不疊在圖形輪廓上。', ans: true,
+    explain: '正確。尺寸線離輪廓約 10mm、各尺寸線間隔約 8mm,圖面才清晰不混淆。' },
+  { text: '同一個尺寸在三個視圖各標一次,看起來比較保險。', ans: false,
+    explain: '錯誤。這是「重複標註」——同一尺寸只標一次,重複標註反而容易在修改時互相矛盾。' },
+  { text: '尺寸應標註在最能表達該特徵形狀的視圖上。', ans: true,
+    explain: '正確。例如孔的位置標在能看到圓的視圖、厚度標在側視圖,讀圖的人一眼就懂。' },
+  { text: '尺寸數字寫在尺寸線的中斷處或尺寸線上方。', ans: true,
+    explain: '正確。CNS 標準允許數字置於尺寸線中斷處或上方,且不可被任何線條穿過。' },
+];
+const dimQuizEl = document.getElementById('dim-quiz');
+if (dimQuizEl) {
+  const dAnswered = new Set(); let dCorrect = 0;
+  DIM_STATEMENTS.forEach((s, i) => {
+    const div = document.createElement('div');
+    div.style.cssText = 'background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:10px';
+    div.innerHTML = `<p style="font-size:14px;margin-bottom:8px;line-height:1.6"><strong>敘述 ${i + 1}：</strong>${s.text}</p>
+      <div class="choice-grid" style="grid-template-columns:repeat(2,minmax(0,120px))">
+        <button class="choice" data-q="${i}" data-v="true">⭕ 正確</button>
+        <button class="choice" data-q="${i}" data-v="false">❌ 錯誤</button>
+      </div>
+      <div class="feedback-slot"></div>`;
+    dimQuizEl.appendChild(div);
+  });
+  dimQuizEl.querySelectorAll('.choice').forEach(b => b.addEventListener('click', () => {
+    const i = parseInt(b.dataset.q);
+    if (dAnswered.has(i)) return;
+    const s = DIM_STATEMENTS[i];
+    const ok = (b.dataset.v === 'true') === s.ans;
+    const card = b.closest('div[style*="border-radius"]');
+    card.querySelectorAll('.choice').forEach(x => { x.disabled = true; if ((x.dataset.v === 'true') === s.ans) x.classList.add('correct'); if (x === b && !ok) x.classList.add('wrong'); });
+    card.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${ok ? 'success' : 'error'}" style="margin-top:6px">${ok ? '✓ 答對！' : '✗ 答錯。'} ${s.explain}</div>`;
+    if (ok) { dCorrect++; if (typeof SoundFX !== 'undefined') SoundFX.success(); } else if (typeof SoundFX !== 'undefined') SoundFX.error();
+    dAnswered.add(i);
+    if (dAnswered.size === DIM_STATEMENTS.length) {
+      const pp = loadP(); pp.module3_dims = true; pp.module3_dims_score = dCorrect; saveP(pp);
+      document.getElementById('dim-quiz-summary').innerHTML = `<div class="feedback ${dCorrect === DIM_STATEMENTS.length ? 'success' : 'info'}" style="margin-top:4px"><strong>📐 判斷完成：${dCorrect} / ${DIM_STATEMENTS.length} 答對。</strong>記住三原則——不重複標註、標在最能表達特徵的視圖、線與數字擺放位置照標準。</div>`;
+      if (typeof SoundFX !== 'undefined') SoundFX.win();
+      showToast(`📐 尺寸標註練習 ${dCorrect}/${DIM_STATEMENTS.length} 答對`, dCorrect === DIM_STATEMENTS.length ? 'good' : 'info');
+    }
+  }));
+}

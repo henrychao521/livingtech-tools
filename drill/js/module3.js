@@ -583,3 +583,41 @@ if (typeof SequencePuzzle === 'function') {
 
   draw();
 })();
+
+/* ── 螺絲導孔對照表 ──────────────────────────────── */
+;(function () {
+  const PILOT = [
+    { screw: '#6',  dia: '3.5mm', soft: '2.0mm', hard: '2.5mm' },
+    { screw: '#8',  dia: '4.0mm', soft: '2.5mm', hard: '3.0mm' },
+    { screw: '#10', dia: '4.8mm', soft: '3.0mm', hard: '3.5mm' },
+  ];
+
+  const sec = document.createElement('section');
+  sec.className = 'panel';
+  sec.id = 'pilot-hole-table';
+  sec.innerHTML = `
+    <h3>📏 螺絲導孔對照表</h3>
+    <p class="muted" style="margin-bottom:14px">鎖木螺絲前先鑽「導孔」（pilot hole），螺絲才不會把木料撐裂。導孔大小依螺絲規格與木材軟硬查表：</p>
+    <div style="overflow-x:auto;border-radius:10px;border:1px solid #e2e8f0">
+      <table style="width:100%;border-collapse:collapse;font-size:13px">
+        <thead><tr style="background:var(--accent,#F59E0B);color:#fff">
+          <th style="padding:8px 12px;text-align:left">木螺絲規格</th>
+          <th style="padding:8px 12px;text-align:left">螺絲外徑</th>
+          <th style="padding:8px 12px;text-align:left">軟木導孔（松木、杉木）</th>
+          <th style="padding:8px 12px;text-align:left">硬木導孔（橡木、櫸木）</th>
+        </tr></thead>
+        <tbody>${PILOT.map((r, i) => `<tr style="background:${i % 2 ? '#f8fafc' : '#fff'}">
+          <td style="padding:8px 12px;font-weight:700;font-family:Inter,monospace;border-bottom:1px solid #f1f5f9">${r.screw}</td>
+          <td style="padding:8px 12px;font-family:Inter,monospace;border-bottom:1px solid #f1f5f9">${r.dia}</td>
+          <td style="padding:8px 12px;font-family:Inter,monospace;border-bottom:1px solid #f1f5f9">${r.soft}</td>
+          <td style="padding:8px 12px;font-family:Inter,monospace;border-bottom:1px solid #f1f5f9">${r.hard}</td>
+        </tr>`).join('')}</tbody>
+      </table>
+    </div>
+    <div style="margin-top:12px;padding:12px 16px;background:#fef3c7;border-radius:10px;border-left:4px solid #F59E0B;font-size:13px;color:#374151;line-height:1.7">
+      <strong style="color:#b45309">🗣️ 口訣：</strong>「導孔 ≈ 螺絲芯徑——只讓螺紋咬進木料」。導孔<strong>太小會裂、太大咬不住</strong>；硬木阻力大，導孔要比軟木再大半號。
+    </div>
+  `;
+  const seqSec = document.querySelector('#seq-puzzle')?.closest('section') || document.querySelector('.module-nav-bottom');
+  if (seqSec && seqSec.parentNode) seqSec.parentNode.insertBefore(sec, seqSec);
+})();

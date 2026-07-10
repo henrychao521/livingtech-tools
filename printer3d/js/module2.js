@@ -10,6 +10,8 @@ const SCENARIOS = [
   { q: '看到加熱頭異常冒煙、變色，立刻？', a: '緊急停止 → 拔電源 → 等冷卻後檢查', b: '繼續列印觀察會不會自己好', correct: 'a', explain: '冒煙是內部材料燒毀的訊號，可能是堵料或加熱棒短路。一定要斷電，避免火災。' },
   { q: '長時間列印（如 8 小時以上），可以無人在場嗎？', a: '可以，現代印表機有過熱保護', b: '建議至少要有人定期檢查（至少每 1 小時一次）', correct: 'b', explain: '即使有保護機制，3D 印表機仍是火災風險來源。建議使用「列印監控攝影機」或定期巡檢。' },
   { q: '列印時，可以伸手進去調整熱床嗎？', a: '可以，但要小心', b: '絕對不可以，X 軸會撞到手', correct: 'b', explain: 'X 軸馬達不知道你的手在那，會直接撞過來。要調整必須先暫停列印。' },
+  { q: '密閉小教室長時間列印，最需要注意什麼？', a: '開窗通風或使用有濾網的密閉式印表機', b: '不用管，PLA 是植物做的很安全', correct: 'a', explain: '列印時會釋放超細微粒（UFP）與揮發性有機物（VOC），PLA 也不例外（只是比 ABS 少）。長時間列印要保持通風，密閉腔體+濾網的機種更適合教室。' },
+  { q: '從網路下載別人的模型檔來印，正確的做法是？', a: '看清楚授權條款（如 CC 授權），個人學習可印，公開分享或販售要遵守授權', b: '下載得到就是免費的，想怎麼用都可以', correct: 'a', explain: '模型檔受著作權保護。多數平台（Thingiverse、Printables）用 CC 授權——有的要求署名、有的禁止商用。印來賣或改作再發布前，一定要確認授權允許。' },
 ];
 let score = 0;
 const PK = 'printer3d_progress_v1';
@@ -34,9 +36,9 @@ list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', ()
   if (correct) { score += 10; if (typeof SoundFX !== 'undefined') SoundFX.success(); } else if (typeof SoundFX !== 'undefined') SoundFX.error();
   answered.add(i);
   document.getElementById('score-display').textContent = score;
-  document.getElementById('progress-bar').style.width = score + '%';
+  document.getElementById('progress-bar').style.width = Math.min(100, score / (SCENARIOS.length * 10) * 100) + '%';
   if (answered.size === SCENARIOS.length) {
-    if (score >= 90) {
+    if (score >= 110) {
       document.getElementById('scenario-result').innerHTML = `<div class="feedback success" style="margin-top:20px"><strong>🏆 ${score} 分通過！</strong></div>`;
       document.getElementById('unlock').classList.remove('hidden');
       document.getElementById('next-btn').style.opacity = 1;
@@ -44,7 +46,7 @@ list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', ()
       if (typeof SoundFX !== 'undefined') SoundFX.win();
       const p = loadP(); p.module2 = true; p.safetyPassed = true; saveP(p);
     } else {
-      document.getElementById('scenario-result').innerHTML = `<div class="feedback error" style="margin-top:20px">${score} 分，未達 90 分，請重新挑戰。</div>`;
+      document.getElementById('scenario-result').innerHTML = `<div class="feedback error" style="margin-top:20px">${score} 分，未達 110 分，請重新挑戰。</div>`;
     }
   }
 }));

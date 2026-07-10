@@ -35,49 +35,51 @@
     <div>
       <span class="module-step">PHYSICS LAB</span>
       <h2>物理模擬動畫</h2>
-      <p class="muted">用 Blender 依物理公式計算、烘焙成動畫的示意模擬。每段自動循環播放,從中體會力學概念。</p>
+      <p class="muted">用 Blender 依物理公式計算、烘焙成動畫的示意模擬。每段自動循環播放,從中體會力學概念。看完動畫後回答每支影片下方的 2 題觀念題,全部答完可獲得完成徽章。</p>
     </div>
   </div>
+
+  <div id="quiz-badge"></div>
 
   <section class="panel">
     <div class="sim-grid">
 
-      <div class="sim-card">
+      <div class="sim-card" data-sim="bounce">
         <span class="sim-badge">力學 · 能量</span>
         <h3>🧪 重力與彈跳(能量損失)</h3>
         <video src="../assets/videos/physics-bounce.mp4" autoplay loop muted playsinline controls></video>
         <p class="muted" style="margin-top:8px">五顆球從不同高度落下,每次反彈都比上一次低——因為碰撞會損失能量。示範<b>重力加速度</b>與<b>非彈性碰撞的能量耗散</b>。</p>
       </div>
 
-      <div class="sim-card">
+      <div class="sim-card" data-sim="projectile">
         <span class="sim-badge">運動學</span>
         <h3>🎯 拋體運動(角度與射程)</h3>
         <video src="../assets/videos/physics-projectile.mp4" autoplay loop muted playsinline controls></video>
         <p class="muted" style="margin-top:8px">同初速、不同發射角(35° / 45° / 55°)。虛線是路徑——可看出 <b>45° 射程最遠</b>。示範<b>水平等速 + 垂直等加速</b>的合成運動。</p>
       </div>
 
-      <div class="sim-card">
+      <div class="sim-card" data-sim="pendulum">
         <span class="sim-badge">週期運動</span>
         <h3>🕰️ 單擺(等時性)</h3>
         <video src="../assets/videos/physics-pendulum.mp4" autoplay loop muted playsinline controls></video>
         <p class="muted" style="margin-top:8px">擺錘以固定週期左右擺盪(虛線為擺弧)。週期只跟<b>擺長與重力</b>有關、與擺錘質量無關——這就是單擺等時性。</p>
       </div>
 
-      <div class="sim-card">
+      <div class="sim-card" data-sim="circular">
         <span class="sim-badge">圓周運動</span>
         <h3>🔄 等速圓周運動</h3>
         <video src="../assets/videos/physics-circular.mp4" autoplay loop muted playsinline controls></video>
         <p class="muted" style="margin-top:8px">小球沿圓周以等速率運動。速率雖固定,<b>方向時刻在變</b>,所以仍有加速度(向心加速度),需要朝圓心的向心力維持。</p>
       </div>
 
-      <div class="sim-card">
+      <div class="sim-card" data-sim="freefall">
         <span class="sim-badge">重力</span>
         <h3>🍎 自由落體(輕重同時落地)</h3>
         <video src="../assets/videos/physics-freefall.mp4" autoplay loop muted playsinline controls></video>
         <p class="muted" style="margin-top:8px">大球與小球從同高度同時放開,<b>同時落地</b>。重力加速度 g 與質量無關——忽略空氣阻力時,輕重物體下落一樣快。</p>
       </div>
 
-      <div class="sim-card">
+      <div class="sim-card" data-sim="momentum">
         <span class="sim-badge">動量守恆</span>
         <h3>🎱 彈性碰撞(動量傳遞)</h3>
         <video src="../assets/videos/physics-momentum.mp4" autoplay loop muted playsinline controls></video>
@@ -90,4 +92,5 @@
 
   <div class="module-nav-bottom"><a href="../" class="btn btn-ghost">← 回平台首頁</a></div>
 </main>
+<script src="js/quiz.js"></script>
 </body></html>

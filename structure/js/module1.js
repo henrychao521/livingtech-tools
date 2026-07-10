@@ -253,3 +253,41 @@ BRIDGE_TYPES.forEach(bt => {
 });
 
 syncProgress();
+
+/* ── 補充：單位的量感（直覺快問） ─────────────────────── */
+const UNIT_QUIZ = [
+  { q: '哪個比較重？', opts: ['1 kN 的力', '一袋 50 kg 的水泥'], ans: 0,
+    explain: '1 kN = 1000 N ≈ 100 kg 重（一台重機車）,比 50 kg 水泥袋重了一倍。' },
+  { q: '哪個比較重？', opts: ['500 N 的力', '一台 100 kg 的重型機車'], ans: 1,
+    explain: '100 kg × 9.8 ≈ 980 N,重機車接近 1 kN,比 500 N（約 51 kg 重）重得多。' },
+  { q: '1 MPa 的壓力作用在 1 平方公分上,大約等於在上面放了什麼？',
+    opts: ['一顆蘋果（約 0.1 kg）', '一隻貓（約 4 kg）', '一袋 10 kg 的白米', '一台重機車（約 100 kg）'], ans: 2,
+    explain: '1 MPa = 100 N/cm² ≈ 10.2 kgf/cm²,相當於每平方公分扛一袋 10 kg 白米。' },
+];
+const uQuizEl = document.getElementById('unit-quiz');
+if (uQuizEl) {
+  const uAnswered = new Set(); let uCorrect = 0;
+  UNIT_QUIZ.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.style.cssText = 'background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px';
+    div.innerHTML = `<p style="font-size:14px;margin-bottom:6px"><strong>題 ${i + 1}：</strong>${q.q}</p>
+      <div class="choice-grid" style="grid-template-columns:repeat(${q.opts.length > 2 ? 2 : q.opts.length},1fr)">${q.opts.map((o, k) => `<button class="choice" data-q="${i}" data-k="${k}">${o}</button>`).join('')}</div>
+      <div class="feedback-slot"></div>`;
+    uQuizEl.appendChild(div);
+  });
+  uQuizEl.querySelectorAll('.choice').forEach(b => b.addEventListener('click', () => {
+    const i = parseInt(b.dataset.q);
+    if (uAnswered.has(i)) return;
+    const ok = parseInt(b.dataset.k) === UNIT_QUIZ[i].ans;
+    const card = b.closest('div[style*="border-radius"]');
+    card.querySelectorAll('.choice').forEach(x => { x.disabled = true; if (parseInt(x.dataset.k) === UNIT_QUIZ[i].ans) x.classList.add('correct'); if (x === b && !ok) x.classList.add('wrong'); });
+    card.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${ok ? 'success' : 'error'}" style="margin-top:6px">${ok ? '✓' : '✗'} ${UNIT_QUIZ[i].explain}</div>`;
+    if (ok) { uCorrect++; if (typeof SoundFX !== 'undefined') SoundFX.success(); } else if (typeof SoundFX !== 'undefined') SoundFX.error();
+    uAnswered.add(i);
+    if (uAnswered.size === UNIT_QUIZ.length) {
+      const pp = loadP(); pp.m1_unit_sense = true; pp.m1_unit_score = uCorrect; saveP(pp);
+      if (typeof SoundFX !== 'undefined') SoundFX.win();
+      showToast(`⚖️ 單位量感快問 ${uCorrect}/${UNIT_QUIZ.length} 答對`, uCorrect === UNIT_QUIZ.length ? 'good' : 'info');
+    }
+  }));
+}

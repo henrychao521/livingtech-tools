@@ -25,6 +25,29 @@
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
   </section>
 <section class="panel"><h3>主流微控制器</h3><div id="grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px"></div></section>
+  <section class="panel"><h3>⚡ 用電安全專區</h3>
+    <p class="muted" style="margin-bottom:14px">微控制器電壓不高,但接錯線一樣會燒元件、傷電腦。動手前先記住 4 條鐵律。</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px">
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;border-left:5px solid #dc2626">
+        <h4 style="color:#b91c1c;margin-bottom:6px">🔌 ① 3.3V 與 5V 不可混接</h4>
+        <p style="font-size:13px;color:#444;line-height:1.7">ESP32 與多數感測器是 <strong>3.3V 邏輯</strong>,腳位誤接 5V 會直接燒毀;Arduino UNO 則是 <strong>5V 邏輯</strong>。兩者的<strong>訊號線不可直接互接</strong>,必須經過電平轉換模組（Level Shifter）。</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;border-left:5px solid #f59e0b">
+        <h4 style="color:#b45309;margin-bottom:6px">🔋 ② 接線前一律先斷電</h4>
+        <p style="font-size:13px;color:#444;line-height:1.7">插線、拔線、改電路之前,<strong>先拔掉 USB / 切斷電源</strong>。帶電操作時,一根跳線滑掉碰到別的腳位就可能瞬間短路。</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;border-left:5px solid #7c3aed">
+        <h4 style="color:#6d28d9;margin-bottom:6px">💥 ③ 反接與短路的後果</h4>
+        <p style="font-size:13px;color:#444;line-height:1.7">正負極反接或正負極直接相碰（短路）,輕則元件<strong>冒煙、發燙</strong>,重則電腦 <strong>USB 埠保護性斷電</strong>,甚至永久損壞主機板供電電路。</p>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;border-left:5px solid #16a34a">
+        <h4 style="color:#15803d;margin-bottom:6px">✅ ④ 檢查兩遍再通電</h4>
+        <p style="font-size:13px;color:#444;line-height:1.7">麵包板接完線,對照電路圖<strong>從電源腳到 GND 檢查兩遍</strong>——電源極性、腳位號碼、有無跨接短路——確認無誤才插上 USB。</p>
+      </div>
+    </div>
+    <h4 style="margin:18px 0 8px;color:#4338CA">🧯 安全情境測驗</h4>
+    <div id="safety-quiz"></div>
+  </section>
   <div class="module-nav-bottom"><a href="../index.html" class="btn btn-ghost">← 回首頁</a><a href="module2.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a></div>
 </main>
 <script src="../../js/main.js"></script><script src="../../js/sources.js"></script><script src="../../js/audio.js"></script><script src="../js/module1.js"></script>
