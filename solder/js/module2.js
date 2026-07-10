@@ -80,10 +80,10 @@ const EQUIP_VISUALS = {
 const SCENARIOS = [
   {
     q: '剛使用完的電烙鐵，過多久才能直接用手摸？',
-    a: '至少 10 分鐘以上，且摸前先測試（用手背靠近確認）',
+    a: '等待冷卻約 10–15 分鐘，摸前先用手背靠近測試溫度',
     b: '拔電後 2 分鐘',
     correct: 'a',
-    explain: '烙鐵頭從 350°C 冷卻到能徒手摸的溫度需要 5–15 分鐘，依環境而定。徒手摸前一定要先用手背靠近感受溫度。'
+    explain: '烙鐵頭從 350°C 冷卻到能徒手摸的溫度約需 10–15 分鐘（依環境而定）。徒手摸前一定要先用手背靠近感受溫度。'
   },
   {
     q: '焊接時聞到刺鼻味怎麼辦？',
@@ -396,39 +396,22 @@ function updateScore() {
   if (nav) nav.parentNode.insertBefore(sec, nav);
 })();
 
-/* ── Layer C：360° 環場實景預覽（Pannellum.js）────────────── */
+/* ── Layer C：360° 環場實景預覽（Pannellum.js）────────────────
+ * 素材未就緒（hasAsset=false）時整個區塊不渲染，學生不會看到佔位符。
+ * 拍攝流程：360° 相機（Insta360 / GoPro Max / iPhone 全景）置於工作站
+ * 正中央、高度約 120cm，確認烙鐵架/PCB/助焊劑/海綿/排煙器入鏡，
+ * 輸出 4096×2048 以上等距柱狀投影 JPEG，存至
+ * solder/assets/360/workstation-360.jpg 後把 hasAsset 改為 true。 */
 ;(function () {
   const panoramaPath = 'solder/assets/360/workstation-360.jpg';
   const hasAsset = false; // ← 拍攝 360° 照片並上傳後改為 true
 
+  if (!hasAsset) return; // 素材未就緒：不顯示本區塊
+
   const sec = document.createElement('section');
   sec.className = 'panel';
 
-  if (!hasAsset) {
-    sec.innerHTML = `
-      <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:6px">🌐 360° 焊接工作站環場實景</h3>
-      <div style="border:2px dashed #cbd5e1;border-radius:12px;padding:32px 24px;text-align:center;color:#94a3b8;background:#f8fafc">
-        <div style="font-size:48px;margin-bottom:12px">📷</div>
-        <h4 style="color:#64748b;margin:0 0 8px">等待 360° 素材上傳</h4>
-        <p style="font-size:14px;line-height:1.8;max-width:460px;margin:0 auto">
-          請用 360° 相機或手機全景模式拍攝焊接教室工作站，<br>
-          儲存為 JPEG <strong>等距柱狀投影格式（equirectangular）</strong>，<br>
-          上傳至 <code style="background:#e2e8f0;padding:2px 6px;border-radius:4px;font-size:13px">solder/assets/360/workstation-360.jpg</code><br>
-          然後將本 IIFE 中 <code style="background:#e2e8f0;padding:2px 6px;border-radius:4px;font-size:13px">hasAsset = false</code>
-          改為 <code style="background:#e2e8f0;padding:2px 6px;border-radius:4px;font-size:13px">true</code>
-        </p>
-        <div style="margin:20px auto 0;padding:14px 18px;background:#fff;border-radius:8px;border:1px solid #e2e8f0;font-size:13px;text-align:left;max-width:480px">
-          <strong style="color:#374151">📋 拍攝建議：</strong>
-          <ul style="margin:8px 0 0;padding-left:18px;color:#6b7280;line-height:2.1">
-            <li>使用 Insta360 / GoPro Max / iPhone 全景模式</li>
-            <li>相機放在工作站正中央，高度約 120 cm</li>
-            <li>確認烙鐵架、PCB、助焊劑、海綿、排煙器都在場景中</li>
-            <li>輸出解析度建議 4096×2048 以上（等距柱狀投影）</li>
-          </ul>
-        </div>
-      </div>
-    `;
-  } else {
+  {
     sec.innerHTML = `
       <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:6px">🌐 360° 焊接工作站環場實景</h3>
       <p style="color:#64748b;font-size:14px;margin-bottom:12px">拖曳或點擊環場畫面，自由探索焊接工作站的每個角落。</p>

@@ -14,26 +14,26 @@ const STEP_ISO_MINI = `<g transform="translate(0,0)" stroke="#1E1B4B" stroke-wid
 const CONCEPTS = [
   {
     name: '第三角投影法', icon: '📐',
-    desc: '物體放在「觀察者與投影面」之間——觀察方向先穿過物體再到投影面。是中華民國國家標準（CNS）與美國 ANSI 採用的方式。',
-    detail: '第三角法配置：俯視在正視「上方」、右側視在正視「右方」。第一角法（JIS/ISO）剛好相反：俯視在下、右側視在左。台灣 CNS 採用第三角投影法。',
+    desc: '投影面放在「觀察者與物體」之間——像隔著玻璃描圖，視線先穿過投影面才到物體。是中華民國國家標準（CNS）與美國 ANSI 採用的方式。',
+    detail: '第三角法配置：俯視在正視「上方」、右側視在正視「右方」，台灣 CNS、美國、日本 JIS 都採用。第一角法（ISO／歐洲慣用）剛好相反：物體在觀察者與投影面之間，俯視在下、右側視在左。',
     visual: `<svg viewBox="0 0 240 90" width="100%" style="background:#F1F5F9;border-radius:6px;display:block">
       <defs><marker id="arr1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4F46E5"/></marker></defs>
       <!-- 觀察者 -->
       <circle cx="22" cy="45" r="8" fill="#FBBF24" stroke="#92400E" stroke-width="1"/>
       <circle cx="20" cy="44" r="2" fill="#1E1B4B"/>
       <text x="22" y="70" text-anchor="middle" font-size="9" fill="#1E1B4B" font-weight="700">觀察者</text>
-      <!-- 物體（中間，立方體 isometric mini）-->
-      <g transform="translate(110,42)">${STEP_ISO_MINI}</g>
-      <text x="110" y="80" text-anchor="middle" font-size="9" fill="#1E1B4B" font-weight="700">物體</text>
-      <!-- 投影面 -->
-      <rect x="180" y="22" width="50" height="46" fill="#fff" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 2"/>
-      <rect x="192" y="34" width="26" height="22" fill="#E0E7FF" stroke="#3730A3" stroke-width="1.2"/>
-      <text x="205" y="80" text-anchor="middle" font-size="9" fill="#1E1B4B" font-weight="700">投影面</text>
+      <!-- 投影面（中間，像玻璃）-->
+      <rect x="85" y="22" width="50" height="46" fill="#fff" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 2"/>
+      <rect x="97" y="34" width="26" height="22" fill="#E0E7FF" stroke="#3730A3" stroke-width="1.2"/>
+      <text x="110" y="80" text-anchor="middle" font-size="9" fill="#1E1B4B" font-weight="700">投影面</text>
+      <!-- 物體（右側，立方體 isometric mini）-->
+      <g transform="translate(195,42)">${STEP_ISO_MINI}</g>
+      <text x="195" y="80" text-anchor="middle" font-size="9" fill="#1E1B4B" font-weight="700">物體</text>
       <!-- 投影方向箭頭 -->
-      <line x1="32" y1="45" x2="95" y2="45" stroke="#4F46E5" stroke-width="1.4" marker-end="url(#arr1)"/>
-      <line x1="125" y1="45" x2="175" y2="45" stroke="#4F46E5" stroke-width="1.4" marker-end="url(#arr1)" stroke-dasharray="4 3"/>
-      <text x="65" y="38" font-size="8" fill="#4F46E5" font-style="italic">視線</text>
-      <text x="148" y="38" font-size="8" fill="#4F46E5" font-style="italic">穿過物體</text>
+      <line x1="32" y1="45" x2="80" y2="45" stroke="#4F46E5" stroke-width="1.4" marker-end="url(#arr1)"/>
+      <line x1="140" y1="45" x2="180" y2="45" stroke="#4F46E5" stroke-width="1.4" marker-end="url(#arr1)" stroke-dasharray="4 3"/>
+      <text x="52" y="38" font-size="8" fill="#4F46E5" font-style="italic">視線</text>
+      <text x="158" y="38" font-size="8" fill="#4F46E5" font-style="italic">穿過投影面</text>
     </svg>`
   },
   {

@@ -31,7 +31,7 @@ const HOTSPOTS = {
     desc: '連接上下弦桿的傾斜桿件。受張力還是壓力，取決於桁架型態：Pratt 桁架的斜桿<strong>受拉</strong>（更輕量），Howe 桁架的斜桿<strong>受壓</strong>。',
     formula: gradeText({ '7': '', '8': '力向量分解：Fdiag = P / sin(θ)', '9': '節點法：ΣFx=0，ΣFy=0' }),
     color: '#7c3aed', tag: '張或壓',
-    fact: 'Pratt 桁架讓斜桿受張力（可以用更細的桿）、豎桿受壓，1844 年以前是鐵路橋的標準設計。'
+    fact: 'Pratt 桁架讓斜桿受張力（可以用更細的桿）、豎桿受壓，1844 年取得專利後，成為鐵路橋的標準設計。'
   },
   'vertical': {
     name: '豎桿（Vertical Post）',

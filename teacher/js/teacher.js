@@ -264,7 +264,7 @@ window.exportClassCSV = function() {
     TOOLS.forEach(t => {
       const raw = d.tools && d.tools[t.id];
       if (!raw) { row.push('—', '—'); return; }
-      const p = computeFromRaw(raw);
+      const p = computeFromRaw(raw, t.moduleCount || 5);
       row.push(p.completed, p.stars);
     });
     rows.push(row);

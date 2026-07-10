@@ -25,7 +25,7 @@ const MOTIONS = [
     id: 'intermittent',
     name: '間歇運動 Intermittent',
     desc: '運動與停頓交替——動 → 停 → 動 → 停。電影膠片過格、自動鎖、計數器都用這種運動。',
-    examples: '電影膠片、機械錶秒針、棘輪扳手、計數器',
+    examples: '電影膠片、石英鐘秒針、棘輪扳手、計數器',
     viz: `<svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="25" fill="none" stroke="#14B8A6" stroke-width="3" stroke-dasharray="3 2"/><circle cx="40" cy="15" r="5" fill="#DC2626"><animateTransform attributeName="transform" type="rotate" values="0;60;60;120;120;180;180;240;240;300;300;360" dur="3s" repeatCount="indefinite" keyTimes="0;.1;.25;.35;.5;.6;.75;.85;1;1;1;1"/></circle><circle cx="40" cy="40" r="3" fill="#0F766E"/></svg>`,
   },
 ];
@@ -52,7 +52,7 @@ const QUIZ = [
   { q: '電風扇葉片', ans: 'rotation', explain: '葉片繞馬達軸做圓周運動 = 旋轉。' },
   { q: '時鐘的鐘擺', ans: 'oscillating', explain: '左右擺動但不轉一圈 = 擺動。' },
   { q: '縫紉機的針上下動', ans: 'reciprocating', explain: '針沿直線上下來回 = 往復。' },
-  { q: '機械錶秒針一秒跳一格', ans: 'intermittent', explain: '動一下停一下 = 間歇。' },
+  { q: '石英鐘錶秒針一秒跳一格', ans: 'intermittent', explain: '動一下停一下 = 間歇。' },
   { q: '汽車輪子轉動', ans: 'rotation', explain: '繞軸做圓周運動 = 旋轉。' },
   { q: '汽車雨刷擺動', ans: 'oscillating', explain: '在角度範圍內左右擺 = 擺動。' },
   { q: '引擎活塞', ans: 'reciprocating', explain: '在氣缸內上下直線運動 = 往復。' },

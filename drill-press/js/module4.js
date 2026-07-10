@@ -84,7 +84,7 @@ function drawScene() {
   // 立柱
   ctx.fillStyle = '#9ca3af';
   ctx.fillRect(W/2 + 80, 50, 24, H - 100);
-  // 工作檯
+  // 工作台
   ctx.fillStyle = '#14532D';
   ctx.fillRect(W/2 - 180, H - 200, 360, 28);
   ctx.fillStyle = '#22c55e';

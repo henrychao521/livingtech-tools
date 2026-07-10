@@ -2,7 +2,7 @@
 const PARTS = {
   trigger: { name: '扳機（Trigger / Variable Speed）', role: 'SPEED CONTROL', desc: '控制鑽頭轉速的關鍵元件。輕扣慢轉、深扣全速。多數型號為「無段變速」（0–2000 RPM）：可從零開始穩定加速，方便起鑽不打滑。', fact: '起鑽一定要「輕扣」慢速定位後再加速，直接全速會打滑、偏鑽、傷工件。' },
   reverse: { name: '正反轉開關（Forward / Reverse）', role: 'DIRECTION SWITCH', desc: '位於扳機正上方的撥桿。FWD（正轉）= 鎖緊、鑽孔；REV（反轉）= 退鑽、拆螺絲。中間位置為「鎖定」可防止誤觸扳機。', fact: '反轉除了退鑽，也能在鑽頭卡住時「微抖」鬆開——但要先停機、雙手扶穩再切換。' },
-  torque: { name: '扭力環 / 離合器（Torque Collar）', role: 'CLUTCH SELECTOR', desc: '位於夾頭後方，可旋轉的環圈。刻度 1–20+ 段代表離合器跳脫的扭力大小：數字越大，鎖入越深。最後的「鑽頭符號」表示鎖死不跳脫（純鑽孔用）。', fact: '鎖石膏板 2–4、薄板 6–10、實木 12–18、鑽孔模式關閉離合器。鎖螺絲時設對扭力可避免崩牙或斷頭。' },
+  torque: { name: '扭力環 / 離合器（Torque Collar）', role: 'CLUTCH SELECTOR', desc: '位於夾頭後方，可旋轉的環圈。刻度 1–20+ 段代表離合器跳脫的扭力大小：數字越大，鎖入越深。最後的「鑽頭符號」表示鎖死不跳脫（純鑽孔用）。', fact: '鎖石膏板 1–3、薄板 6–10、實木 12–18、鑽孔模式關閉離合器。鎖螺絲時設對扭力可避免崩牙或斷頭。' },
   chuck: { name: '夾頭（Keyless Chuck）', role: 'BIT HOLDER', desc: '夾持鑽頭的金屬機構。新型多為「免鑰匙夾頭」：手轉前環即可鬆緊三爪。常見規格 10mm / 13mm（可夾的最大鑽頭直徑）。', fact: '夾頭要轉到「咔咔咔」聽到聲音才算真正夾緊。沒夾緊鑽頭會在工件裡甩動造成偏鑽或飛出。' },
   bit: { name: '鑽頭（Drill Bit）', role: 'CUTTING EDGE', desc: '實際切削材料的部分。常見三類：高速鋼（HSS）鑽金屬與塑料、木工螺旋鑽頭（含中心尖）鑽木材、磚石鑽頭（碳化鎢頭）鑽磚牆。直徑通常 1.5–13mm。', fact: '鑽頭鈍了會「燒黑」、出粉變少。木工鑽鑽金屬會立刻崩刃；磚石鑽鑽木材會很慢且燒焦。選錯鑽頭比沒戴護目鏡危險。' },
   battery: { name: '電池組（Battery Pack）', role: 'POWER SOURCE', desc: '可拆式鋰電池，常見規格 18V 5Ah（亦有 12V/20V/40V）。電量指示燈顯示剩餘電量。連續鑽硬材或大孔時電池會發燙——要讓它休息。', fact: '鋰電池儲存時請放在 40–60% 電量（不要充滿也不要放光），可延長壽命到 800+ 次充放電循環。' },
@@ -284,10 +284,10 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
       </div>
 
       <div style="${CS}">
-        <div style="font-weight:700;font-size:14px">② 速度板機（無段變速）</div>
+        <div style="font-weight:700;font-size:14px">② 速度扳機（無段變速）</div>
         <div style="display:flex;gap:8px">
-          <button id="speed-press" style="${BS};flex:1">👇 按住板機</button>
-          <button id="speed-release" style="${BS};flex:1">✋ 放開板機</button>
+          <button id="speed-press" style="${BS};flex:1">👇 按住扳機</button>
+          <button id="speed-release" style="${BS};flex:1">✋ 放開扳機</button>
         </div>
         <svg viewBox="0 0 180 112" style="width:100%;background:#1e293b;border-radius:8px">
           <path d="M 25 82 A 65 65 0 0 1 155 82" fill="none" stroke="#334155" stroke-width="18" stroke-linecap="round"/>
@@ -301,7 +301,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
           <line id="chuck-line" x1="90" y1="68" x2="90" y2="82" stroke="#fbbf24" stroke-width="2"/>
           <text id="speed-rpm" x="90" y="108" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Inter">0 RPM</text>
         </svg>
-        <p id="speed-note" style="font-size:12px;color:#64748b;min-height:30px">← 按住板機可無段加速至 2000 RPM</p>
+        <p id="speed-note" style="font-size:12px;color:#64748b;min-height:30px">← 按住扳機可無段加速至 2000 RPM</p>
       </div>
 
       <div style="${CS}">
@@ -370,7 +370,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
     });
   });
 
-  /* ② 速度板機 */
+  /* ② 速度扳機 */
   let rpm = 0, speedTimer = null, chkAng = 0;
   function updateSpeed() {
     const r = rpm / 2000;
@@ -388,14 +388,14 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
     if (speedTimer) return;
     speedTimer = setInterval(() => { rpm = Math.min(2000, rpm + 120); updateSpeed(); if (rpm >= 2000) clearInterval(speedTimer); }, 50);
     const n = document.getElementById('speed-note');
-    if (n) n.textContent = '板機扣得越深，轉速越高；到底全速 2000 RPM。';
+    if (n) n.textContent = '扳機扣得越深，轉速越高；到底全速 2000 RPM。';
     if (typeof SoundFX !== 'undefined') SoundFX.pop();
   });
   sec.querySelector('#speed-release')?.addEventListener('click', () => {
     clearInterval(speedTimer); speedTimer = null;
     const d = setInterval(() => { rpm = Math.max(0, rpm - 160); updateSpeed(); if (rpm <= 0) clearInterval(d); }, 40);
     const n = document.getElementById('speed-note');
-    if (n) n.textContent = '放開板機後馬達立即減速停轉（無段變速優勢：隨時精準控制）。';
+    if (n) n.textContent = '放開扳機後馬達立即減速停轉（無段變速優勢：隨時精準控制）。';
     if (typeof SoundFX !== 'undefined') SoundFX.pop();
   });
 

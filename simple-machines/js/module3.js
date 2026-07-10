@@ -23,7 +23,7 @@ const PROBLEMS = [
   },
   {
     title: '題 4：方向盤輪軸',
-    desc: '方向盤半徑 20 cm，轉向柱半徑 2 cm。轉方向盤施力 5 kg，輪上力多少？',
+    desc: '方向盤半徑 20 cm，轉向柱半徑 2 cm。轉方向盤施力 5 kg，轉向柱（軸）上的力多少？',
     formula: 'MA = 輪半徑 ÷ 軸半徑 = 20 ÷ 2 = 10 倍\n軸上力 = 5 × 10 = 50 kg',
     inputs: [{ label: 'MA', name: 'ma', ans: 10, unit: '倍' }, { label: '軸上力', name: 'f', ans: 50, unit: 'kg' }],
     tolerance: 0.5,

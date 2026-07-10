@@ -3,7 +3,7 @@
 //        [3] Stanley Hand Tool Care Guide；[4] Lee Valley《Files & Rasps Care》
 const TOOLS = [
   { id: 'hammer', name: '鎚類 Hammers', icon: '🔨',
-    types: '羊角錘 claw hammer（敲釘＋拔釘）、橡膠槌 mallet（不傷工件）、銅頭錘 copper（金屬整形）、釘頭錘 nail hammer（小釘）',
+    types: '羊角錘 claw hammer（敲釘＋拔釘）、橡膠槌 mallet（不傷工件）、銅頭錘 copper（金屬整形）、小釘鎚 tack hammer（小釘）',
     use: '釘釘子、敲打、輕度整形',
     tip: '握握把末端揮動，靠手腕力（不是手臂）。釘前可用尖嘴鉗或定釘器夾住釘子定位，避免敲到手指。',
     risk: '敲到手指——握工件的手要遠離釘點。釘子彈飛——戴護目鏡。',

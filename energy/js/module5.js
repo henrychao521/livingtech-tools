@@ -46,13 +46,13 @@ function calc() {
     kwhDay += (a.w * v) / 1000;
   });
   const kwhMonth = kwhDay * 30;
-  // 夏季電價簡化：120 度 1.63、330 度 2.38、500 度 3.52、超過 4.8
+  // 夏季電價簡化：120 度 1.68、330 度 2.45、500 度 3.70、超過 5.04 起（以台電當年公告為準）
   let cost = 0;
   let r = kwhMonth;
-  if (r > 0) { const t = Math.min(r, 120); cost += t * 1.63; r -= t; }
-  if (r > 0) { const t = Math.min(r, 210); cost += t * 2.38; r -= t; }
-  if (r > 0) { const t = Math.min(r, 170); cost += t * 3.52; r -= t; }
-  if (r > 0) cost += r * 4.8;
+  if (r > 0) { const t = Math.min(r, 120); cost += t * 1.68; r -= t; }
+  if (r > 0) { const t = Math.min(r, 210); cost += t * 2.45; r -= t; }
+  if (r > 0) { const t = Math.min(r, 170); cost += t * 3.70; r -= t; }
+  if (r > 0) cost += r * 5.04;
   // CO₂ 排放係數（台灣 2023 約 495 g/kWh）
   const co2Kg = (kwhMonth * 495) / 1000;
   const trees = co2Kg / 22; // 一棵樹年吸 22kg CO₂

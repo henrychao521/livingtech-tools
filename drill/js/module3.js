@@ -3,11 +3,11 @@ const STEPS = [
   { title: '穿戴護具', desc: '護目鏡（防鐵屑/木屑彈飛）、口罩（防 MDF/塑料粉塵）、不戴手套（手套容易被夾頭捲入更危險）。長髮綁起、寬鬆袖口塞好、項鍊摘下。', tip: '護目鏡要選包覆型，普通眼鏡擋不住側面飛屑。', warn: '戴布手套是手電鑽操作的禁忌——比沒戴更危險。', anim: 'ppe' },
   { title: '選對鑽頭', desc: '木材 → 木工螺旋鑽頭（含中心尖）\n金屬 → 高速鋼（HSS）鑽頭\n磚石 → 碳化鎢磚石鑽頭\n大孔（>10mm）→ 階梯鑽或開孔器\n小心：鑽頭直徑不能超過夾頭規格（10/13mm）。', tip: '不確定材料時，用磁鐵測：吸住＝鐵製金屬、不吸＝鋁/銅/塑膠。', warn: null, anim: 'bit' },
   { title: '裝鑽頭、鎖緊夾頭', desc: '先確認電池拆下或保險開關鎖定。把鑽頭插入夾頭三爪中心 → 一手握機身、另一手轉緊夾頭環，直到聽見連續「咔咔咔」棘輪聲——表示鎖到最緊。', tip: '裝完搖一搖鑽頭確認不會晃動。', warn: '沒鎖到「咔咔」聲不算夾緊，鑽頭會在工件內甩飛。', anim: 'chuck' },
-  { title: '設定扭力與模式', desc: '鑽孔 → 把扭力環轉到「鑽頭符號」（離合器鎖死）\n鎖螺絲 → 中低段（4–10），讓離合器在到位時自動跳脫\n正反轉開關確認在「FWD（正轉）」位置。', tip: '鎖石膏板 2–4、實木 12–18、混凝土壁釘 18+。', warn: null, anim: 'torque' },
+  { title: '設定扭力與模式', desc: '鑽孔 → 把扭力環轉到「鑽頭符號」（離合器鎖死）\n鎖螺絲 → 中低段（4–10），讓離合器在到位時自動跳脫\n正反轉開關確認在「FWD（正轉）」位置。', tip: '鎖石膏板 1–3、實木 12–18、混凝土壁釘 18+。', warn: null, anim: 'torque' },
   { title: '標位置、固定工件', desc: '用鉛筆在鑽孔位置畫「十字」。金屬鑽孔可用中心衝（central punch）敲一個小凹點，防止偏鑽。工件必須用 C 型夾或老虎鉗固定在工作台上，下方墊廢板防止鑽穿桌面。', tip: '雙手鑽孔時，工件絕對不能用手或膝蓋壓——一定要夾。', warn: '工件不固定是最常見的傷害來源。', anim: 'mark' },
   { title: '起鑽：點壓 + 慢速', desc: '雙手握姿勢就位（主手扳機、輔手扶機身前段）。鑽頭垂直對準鉛筆十字、輕輕點下開機（10–20% 扭力）讓鑽頭咬入材料。咬入後再逐漸加深扣扳機加速。', tip: '鑽頭必須與工件「90°垂直」——歪斜會偏鑽或斷頭。', warn: null, anim: 'start' },
   { title: '鑽孔：穩定進刀、定時退屑', desc: '保持垂直、穩定進刀（不要太用力推，讓鑽頭自己切）。每鑽 5–10mm 退鑽一次清理鐵屑（pecking）。深孔或硬材料更頻繁退屑。聽到「轉速突然下降」就是進刀太猛。', tip: '木材鑽出來是「捲花」狀，金屬是「螺旋狀屑」，磚石是「粉末」——順利時的訊號。', warn: '進刀過快會折斷鑽頭、燒馬達。', anim: 'drill' },
-  { title: '退鑽 ＆ 收工', desc: '鑽穿後鬆開扳機 → 等鑽頭完全停止 → 反轉退出（保持垂直）。檢查孔徑是否符合需求，必要時用大一號鑽頭擴孔或用銼刀修毛邊。最後：拆電池 → 拆鑽頭 → 鑽頭歸位 → 清理工作台。', tip: '鑽完馬上把鑽頭從夾頭取下，避免下次別人誤觸扳機。', warn: '剛鑽完的金屬鑽頭很燙（200°C+），冷卻 1–2 分鐘再徒手摸。', anim: 'finish' },
+  { title: '退鑽 ＆ 收工', desc: '鑽穿後鬆開扳機 → 等鑽頭完全停止 → 反轉退出（保持垂直）。檢查孔徑是否符合需求，必要時用大一號鑽頭擴孔或用銼刀修毛邊。最後：拆電池 → 拆鑽頭 → 鑽頭歸位 → 清理工作台。', tip: '鑽完馬上把鑽頭從夾頭取下，避免下次別人誤觸扳機。', warn: '剛鑽完的金屬鑽頭很燙（200°C+），等待數分鐘，先以手背靠近感溫確認不燙再徒手摸，或用鉗子取下。', anim: 'finish' },
 ];
 
 function renderAnim(type) {
@@ -342,7 +342,7 @@ if (typeof SequencePuzzle === 'function') {
       </div>
       <div id="kb-decision" style="display:none;justify-content:center;gap:12px;margin-top:12px;flex-wrap:wrap">
         <button id="kb-wrong" class="btn" style="background:#dc2626;color:#fff;border:none;min-width:130px">💪 繼續施力硬鑽</button>
-        <button id="kb-correct" class="btn btn-primary" style="background:#16a34a;min-width:130px">✋ 立刻放開板機</button>
+        <button id="kb-correct" class="btn btn-primary" style="background:#16a34a;min-width:130px">✋ 立刻放開扳機</button>
       </div>
       <div id="kb-result" style="margin-top:14px"></div>
     </div>
@@ -566,11 +566,11 @@ if (typeof SequencePuzzle === 'function') {
     document.getElementById('kb-decision').style.display = 'none';
     cancelAnimationFrame(animId);
     stage = 'correct'; draw();
-    document.getElementById('kb-label').textContent = '✓ 正確！立刻放開板機';
+    document.getElementById('kb-label').textContent = '✓ 正確！立刻放開扳機';
     if (typeof SoundFX !== 'undefined') SoundFX.success();
     document.getElementById('kb-result').innerHTML = `
       <div class="feedback success" style="margin-top:8px">
-        <strong>✓ 正確應對：立刻放開板機</strong><br>
+        <strong>✓ 正確應對：立刻放開扳機</strong><br>
         鬆開扳機後馬達停止輸出，鑽頭緩慢停轉。雙手穩住機身，切換反轉後低速退出。工件完好，操作者安全。
         <br><br>預防卡鑽：下次遇到類似材料，每鑽 5–10mm 退屑一次（pecking），讓切屑順利排出。
       </div>`;

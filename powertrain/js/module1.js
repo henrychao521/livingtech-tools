@@ -3,7 +3,7 @@ const POWERS = [
   { id: 'ice', iso: 'ice-engine', name: '內燃機 Internal Combustion', icon: '🛢', eff: 25, desc: '燃料（汽油/柴油）在汽缸內燃燒，推動活塞 → 曲軸 → 變速箱 → 車輪。技術成熟 100+ 年。', pros: '加油快、續航長、技術成熟', cons: '效率低（25-30%）、CO₂ 排放、噪音、震動', use: '汽油車、機車、卡車、發電機' },
   { id: 'em', iso: 'ev-motor', name: '電動機 Electric Motor', icon: '⚡', eff: 90, desc: '電池供電給馬達 → 直接驅動車輪（無需變速箱）。BLDC 無刷馬達是主流。', pros: '效率極高（90%+）、零排放、瞬間扭力大', cons: '電池貴、續航短、充電慢、寒冷耗電', use: '電動車、電動機車、電動巴士、高鐵' },
   { id: 'fc', iso: 'fuel-cell', name: '燃料電池 Fuel Cell', icon: '⛽', eff: 60, desc: '氫氣 + 氧氣化學反應 → 直接產生電能（副產物是純水）。加氫 3 分鐘可跑 600 公里。', pros: '加氫快、零排放、續航長', cons: '氫氣製造耗電、儲存運輸難、加氫站少', use: 'Toyota Mirai、燃料電池巴士、未來航空' },
-  { id: 'hyd', iso: 'hydraulic', name: '液壓動力 Hydraulic', icon: '💪', eff: 60, desc: '高壓液壓油推動油壓缸做直線運動。重型機械標配——力大、控制精準。', pros: '力極大（數十噸）、運動穩定、可精確定位', cons: '管路漏油、效率不如電動、需液壓站', use: '挖土機、堆高機、剎車系統、椅子升降' },
+  { id: 'hyd', iso: 'hydraulic', name: '液壓動力 Hydraulic', icon: '💪', eff: 60, desc: '高壓液壓油推動油壓缸做直線運動。重型機械標配——力大、控制精準。', pros: '力極大（數十噸）、運動穩定、可精確定位', cons: '管路漏油、效率不如電動、需液壓站', use: '挖土機、堆高機、煞車系統、椅子升降' },
 ];
 
 const PK = 'pt_progress_v1';

@@ -122,11 +122,11 @@ function aimOrthoCamera(camera, axis) {
   // CNS 3 慣例：
   //   - 正視 = 從觀者前方往後看（一般定義為 -Z 方向看 +Z 面，這裡用 +Z 為正視方向）
   //   - 俯視 = 從上往下看（+Y → -Y）
-  //   - 側視 = 從左方往右看（-X → +X）—— 「左視圖」放右邊（第三角投影）
+  //   - 側視 = 從右方往左看（+X → -X）—— 「右側視圖」放右邊（第三角投影）
   // 但實作上對於 Three.js 預設座標（Y 向上、Z 向觀者）：
   //   - 正視 = camera 在 (0, 0, R)，看 (0, 0, 0)，up = (0, 1, 0)
   //   - 俯視 = camera 在 (0, R, 0)，看 (0, 0, 0)，up = (0, 0, -1)
-  //   - 側視（左視）= camera 在 (-R, 0, 0)，看 (0, 0, 0)，up = (0, 1, 0)
+  //   - 側視（右視）= camera 在 (R, 0, 0)，看 (0, 0, 0)，up = (0, 1, 0)
   const R = 200;
   if (axis === 'front') {
     camera.position.set(0, 0, R);
@@ -135,7 +135,7 @@ function aimOrthoCamera(camera, axis) {
     camera.position.set(0, R, 0);
     camera.up.set(0, 0, -1);
   } else if (axis === 'side') {
-    camera.position.set(-R, 0, 0);
+    camera.position.set(R, 0, 0);
     camera.up.set(0, 1, 0);
   }
   camera.lookAt(0, 0, 0);

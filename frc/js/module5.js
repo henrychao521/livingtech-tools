@@ -1,13 +1,13 @@
 // FRC 模組 5：工程筆記範本 + 獎項
 
 const PAGES = [
-  { type: '策略一頁紙', subtitle: 'Strategy 1-Pager', date: 'Week 1, Day 1', content: '<strong>核心問題：</strong>今年遊戲得分加權最高的是「Note 射 SPEAKER」(5 分) 與「Trap 投 AMP」(2 分) → 主攻 SPEAKER。<br><br><strong>機器人目標：</strong><br>1. Auto: Mobility + 1 Note → 7 分<br>2. Teleop: 12+ Notes 進 SPEAKER → 60+ 分<br>3. Endgame: 爬桿 → 10 分<br>4. 不做 STAGE Trap（投資報酬率低）' },
+  { type: '策略一頁紙', subtitle: 'Strategy 1-Pager', date: 'Week 1, Day 1', content: '<strong>核心問題：</strong>今年（2024 Crescendo）得分：SPEAKER Note 2 分（放大時 5 分）、AMP Note 1 分、TRAP 5 分 → 主攻 SPEAKER。<br><br><strong>機器人目標：</strong><br>1. Auto: Mobility + 1 Note → 7 分<br>2. Teleop: 12+ Notes 進 SPEAKER（放大時 5 分/顆）→ 60 分<br>3. Endgame: ONSTAGE 爬桿 → 3 分<br>4. 不做 STAGE Trap（投資報酬率低）' },
   { type: '腦力激盪', subtitle: 'Brainstorm Session', date: 'Week 1, Day 3', content: '<strong>Intake 機構候選：</strong><br>1. Over-bumper roller（推入）<br>2. Under-bumper（下抓）<br>3. Floor intake（地面收取）<br><br><strong>Pros/Cons 評分（1-5）：</strong><br>1. 速度: 3/5/4　可靠: 4/3/5　成本: 5/3/2<br><br>→ 選 #3 Floor intake' },
   { type: '原型測試', subtitle: 'Prototype Test Log', date: 'Week 2, Day 4', content: '<strong>原型 v1：</strong>木板 + 3D 列印滾輪<br><strong>測試結果（20 次）：</strong><br>• 成功撿取：18 / 20 (90%)<br>• 平均時間：1.2 秒<br>• 失敗原因：滾輪打滑（兩次）<br><br><strong>改進方向：</strong>滾輪換 90A 橡膠 + 增加表面壓力 0.5N' },
   { type: 'CAD 設計', subtitle: 'CAD Design Doc', date: 'Week 3, Day 1', content: '<strong>零件清單：</strong><br>• Frame: 2x1 鋁管 × 8 (1064mm + 762mm)<br>• Side plates: CNC AL 6061 × 2<br>• Roller: 1" × 8" 100A polyurethane<br>• Motors: 2× NEO 550 (with 4:1 reduction)<br><br><strong>力學分析：</strong>馬達扭力 0.9 Nm × 4 (reduction) = 3.6 Nm > 預估荷重 2.5 Nm ✓' },
   { type: '電氣設計', subtitle: 'Electrical Schematic', date: 'Week 3, Day 5', content: '<strong>PDH Channel 配置：</strong><br>• Ch 0-3: 4× Falcon 500 (drivetrain)<br>• Ch 4-5: 2× NEO 550 (intake)<br>• Ch 6: NEO (shooter)<br><br><strong>感測器：</strong><br>• 2× CANcoder（swerve absolute）<br>• 1× Limelight 3<br>• 1× Pigeon 2 IMU<br><br><strong>總電流預估：</strong>120 A peak / 40 A avg ✓ 在電池容量內' },
   { type: '測試與資料', subtitle: 'Testing Data', date: 'Week 5, Day 2', content: '<strong>射擊精度測試（50 次）：</strong><br>• 距離 3m: 命中率 96% (48/50)<br>• 距離 5m: 命中率 80% (40/50)<br>• 距離 7m: 命中率 56% (28/50)<br><br><strong>決策：</strong>策略僅在 < 5m 區域射擊<br><br><strong>速度測試：</strong>Note 從撿到射出平均 2.8 秒（目標 < 3 秒 ✓）' },
-  { type: '比賽復盤', subtitle: 'Match Reflection', date: 'Regional Event, Match 24', content: '<strong>比賽結果：</strong>132 - 145 (Loss)<br><br><strong>檢討：</strong><br>• Auto: 7 分 (目標 12) → autonomous 沒撿到第 2 顆 Note。原因：vision 對 AprilTag 失準。<br>• Teleop: 78 分 (目標 90) → 沒問題。<br>• Endgame: 0 分 (目標 10) → 鏈條卡住爬不起來。<br><br><strong>改進：</strong>明天比賽前重做 chain tensioner。' },
+  { type: '比賽復盤', subtitle: 'Match Reflection', date: 'Regional Event, Match 24', content: '<strong>比賽結果：</strong>132 - 145 (Loss)<br><br><strong>檢討：</strong><br>• Auto: 7 分 (目標 12) → autonomous 沒撿到第 2 顆 Note。原因：vision 對 AprilTag 失準。<br>• Teleop: 78 分 (目標 90) → 沒問題。<br>• Endgame: 0 分 (目標 3) → 鏈條卡住爬不起來。<br><br><strong>改進：</strong>明天比賽前重做 chain tensioner。' },
   { type: '財務與物料', subtitle: 'BOM + Budget', date: '全季彙整', content: '<strong>物料總成本：</strong>$8,420 USD<br><br><strong>分類：</strong><br>• Drivetrain (swerve modules): $6,000<br>• Manipulator parts: $1,200<br>• Electronics: $850<br>• Bumpers/Frame/Misc: $370<br><br><strong>贊助商：</strong>$5,000（GitHub, NVIDIA, 在地廠商）<br><strong>自籌：</strong>$3,420（捐款、義賣）' },
 ];
 
@@ -27,9 +27,9 @@ PAGES.forEach(p => {
 
 // 獎項
 const AWARDS = [
-  { name: 'Impact Award', cn: 'FIRST 影響力獎', desc: 'FRC 最高榮譽。表彰隊伍對社區、教育、STEM 推廣的長遠影響力。獲獎隊伍自動晉級世界錦標賽。', criteria: '• 創隊歷史與影響力<br>• 推廣 FIRST 精神<br>• 對社區的具體貢獻<br>• 視頻 + Essay + 面試', emoji: '🏆' },
+  { name: 'Impact Award', cn: 'FIRST 影響力獎', desc: 'FRC 最高榮譽。表彰隊伍對社區、教育、STEM 推廣的長遠影響力。獲獎隊伍自動晉級世界錦標賽。', criteria: '• 創隊歷史與影響力<br>• 推廣 FIRST 精神<br>• 對社區的具體貢獻<br>• 影片 + Essay + 面試', emoji: '🏆' },
   { name: 'Excellence in Engineering', cn: '工程卓越獎', desc: '表彰機器人「各 subsystem 無縫整合」的優異設計。看的是技術整合與系統工程。', criteria: '• Subsystem 之間配合度<br>• 設計細節與工藝<br>• 創新元素<br>• 維修方便性', emoji: '⚙️' },
-  { name: 'Engineering Inspiration', cn: '工程啟發獎', desc: '表彰隊伍在學校 / 社區「推廣工程」的成就。重點是「啟發他人」。', criteria: '• 社區參與深度<br>• 教育推廣計畫<br>• 學生成長故事<br>• 由 SpaceX 贊助', emoji: '✨' },
+  { name: 'Engineering Inspiration', cn: '工程啟發獎', desc: '表彰隊伍在學校 / 社區「推廣工程」的成就。重點是「啟發他人」。', criteria: '• 社區參與深度<br>• 教育推廣計畫<br>• 學生成長故事<br>• 獲 NASA 支持（補助獲獎隊伍報名費）', emoji: '✨' },
   { name: 'Creativity Award', cn: '創意獎', desc: '由 Xerox 贊助。表彰最有創意的機械設計概念，特別是 unconventional 的解法。', criteria: '• 與眾不同的方法<br>• 解決傳統難題<br>• 設計巧思', emoji: '💡' },
   { name: 'Industrial Design', cn: '工業設計獎', desc: '表彰機器人「兼具形式、功能、美學」。Bumper 工藝、線材整理、視覺整合都加分。', criteria: '• 美學整體性<br>• 工藝精緻度<br>• 形式與功能平衡', emoji: '🎨' },
   { name: 'Innovation in Control', cn: '控制創新獎', desc: '表彰機器人控制系統的獨特應用。可能是自動程式、視覺系統、或感測器整合。', criteria: '• 演算法創新<br>• 感測器運用<br>• 軟硬整合', emoji: '🤖' },

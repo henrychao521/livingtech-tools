@@ -34,7 +34,7 @@ const MACHINES = [
     name: '楔形 Wedge',
     principle: '兩個斜面相對組成（如三角形），把橫向力轉成側向力——劈開、切割、固定。',
     formula: 'MA = 楔形長度 ÷ 楔形厚度',
-    examples: '斧頭、菜刀、釘子、鑿子、滑鼠固定楔',
+    examples: '斧頭、菜刀、釘子、鑿子、門擋',
   },
   {
     id: 'screw',

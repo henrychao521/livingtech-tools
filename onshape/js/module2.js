@@ -16,10 +16,10 @@ const SCENARIOS = [
   },
   {
     q: '老師要把全班的 doc 集中管理，最好的做法是？',
-    a: '建立 Classroom（教育版功能），把學生加入後即可彙整與評分',
+    a: '由老師建立班級共享資料夾，把學生 doc 集中管理',
     b: '請學生把 doc 設成 public 並把連結貼到 LINE',
     correct: 'a',
-    explain: 'Education 方案內建 Classroom 功能，可彙整、評分、不影響學生隱私。把 doc 設 public 並貼到群組會讓全球都看得到，並有外洩個資風險。',
+    explain: '教育版可透過共享資料夾集中管理學生作品、不影響隱私（進階的班級管理與評分分析屬付費的 Education Enterprise）。把 doc 設 public 並貼到群組會讓全球都看得到，並有外洩個資風險。',
   },
   {
     q: '在 Onshape doc 的設計樹（feature tree）中，看到陌生人加入並開始改你的草圖，該怎麼做？',

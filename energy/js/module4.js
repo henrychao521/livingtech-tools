@@ -1,8 +1,8 @@
 // 能源系統 模組 4：發電方式比較
 const DATA = {
-  fossil:  { name: '燃煤發電', icon: '🛢', eff: 38, cost: 2.1, co2: 900, build: 8, share: 43, desc: '台中、林口等大型電廠。穩定但 CO₂ 排放最高。空汙嚴重期會被要求降載。' },
-  gas:     { name: '燃氣發電', icon: '⛽', eff: 55, cost: 3.5, co2: 490, build: 6, share: 38, desc: '大潭、通霄等。LNG 從卡達/澳洲海運來台。可快速啟停，調節負載彈性最高。' },
-  nuclear: { name: '核能發電', icon: '☢', eff: 33, cost: 1.5, co2: 12,  build: 35, share: 5,  desc: '核三 2 號機（2025 將除役）。發電穩定、碳排極低，但核廢料處理是世紀難題。' },
+  fossil:  { name: '燃煤發電', icon: '🛢', eff: 38, cost: 2.1, co2: 900, build: 8, share: 39, desc: '台中、林口等大型電廠。穩定但 CO₂ 排放最高。空汙嚴重期會被要求降載。占比約 39%（2024，經濟部能源署）。' },
+  gas:     { name: '燃氣發電', icon: '⛽', eff: 55, cost: 3.5, co2: 490, build: 6, share: 42, desc: '大潭、通霄等。LNG 從卡達/澳洲海運來台。可快速啟停，調節負載彈性最高。占比約 42%（2024，經濟部能源署）。' },
+  nuclear: { name: '核能發電', icon: '☢', eff: 33, cost: 1.5, co2: 12,  build: 35, share: 5,  desc: '核三 2 號機已於 2025 年 5 月除役，台灣目前無運轉中核電機組。發電穩定、碳排極低，但核廢料處理是世紀難題。' },
   solar:   { name: '太陽能發電', icon: '☀', eff: 22, cost: 4.5, co2: 45, build: 4, share: 5, desc: '裝置量已達 14GW。屋頂型 + 大型地面型。發電量看天氣，需配合儲能系統。' },
   wind:    { name: '風力發電', icon: '🌬', eff: 35, cost: 5.5, co2: 11, build: 15, share: 2, desc: '台灣海峽世界級風場。離岸風電 2024 年起大規模商轉。颱風時要停機。' },
 };
