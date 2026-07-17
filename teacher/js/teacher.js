@@ -2,6 +2,7 @@
 
 // === 工具設定 ===
 // moduleCount 預設 5；onshape 10、frc 6
+// physics（物理模擬實驗室）為純影片示範頁、無 localStorage 進度，刻意不列入彙整
 const TOOLS = [
   { id: 'scrollsaw', name: '線鋸機', emoji: '🪚', key: 'scrollsaw_progress_v1', color: '#FF7A00', url: '../scrollsaw/' },
   { id: 'solder', name: '電烙鐵', emoji: '🔥', key: 'solder_progress_v1', color: '#DC2626', url: '../solder/' },
