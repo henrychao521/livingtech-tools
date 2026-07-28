@@ -197,9 +197,15 @@ function finish() {
     if (typeof SoundFX !== 'undefined') SoundFX.unlock();
   } else if (c.why === '脫線') {
     v.className = 'verdict bad';
-    v.textContent = c.zig > 12
-      ? `❌ 蛇行後脫線（跑到 ${Math.round(c.prog / PERIM * 100)}%）：修正過頭了，加 Kd 或降 Kp。`
-      : `❌ 在彎道脫線（跑到 ${Math.round(c.prog / PERIM * 100)}%）：修正不夠，調高 Kp 或降低速度。`;
+    const pct = Math.round(c.prog / PERIM * 100);
+    if (c.zig > 12) {
+      v.innerHTML = `❌ 蛇行後脫線（跑到 ${pct}%）：修正過頭了，加 Kd 或降 Kp。`;
+    } else if (params.kd < 0.005 && params.v >= 100) {
+      // 已驗證：速度 ≥100 且 Kd=0 時，整個 Kp 範圍都無解 —— 此時叫學生調 Kp 是錯的提示
+      v.innerHTML = `❌ 在彎道脫線（跑到 ${pct}%）：在這個速度下，<strong>光靠 Kp 是穩不住的</strong>——馬達來不及反應。試著加入 Kd，或先把速度降下來。`;
+    } else {
+      v.innerHTML = `❌ 在彎道脫線（跑到 ${pct}%）：修正不夠，調高 Kp 或降低速度。`;
+    }
   } else {
     v.className = 'verdict bad';
     v.textContent = `❌ 逾時未完成（跑到 ${Math.round(c.prog / PERIM * 100)}%）：速度太低或一直在原地修正。`;
