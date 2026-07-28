@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YCXP16QQM1"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YCXP16QQM1');</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 6：群體公平性</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/emerging-tech.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛰️%3C/text%3E%3C/svg%3E">
+</head><body data-tool="emerging-tech" class="et-theme">
+<header class="topbar"><div class="brand"><span class="logo">🛰️</span><div><h1>新興科技</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<main class="module-page">
+  <div class="module-header">
+    <div><span class="module-step">MODULE 06</span><h2>群體公平性：「一視同仁」就等於公平嗎？</h2>
+    <p class="muted">模組 2 我們只看一群人。真實世界有很多群人，而模型對他們的表現並不一樣。</p></div>
+    <div class="muted" id="prog">挑戰完成 0 / 4</div>
+  </div>
+
+  <section class="panel">
+    <h3>👥 兩個群體，同一個模型</h3>
+    <p class="muted" style="margin-bottom:10px">
+      假設一套人臉門禁系統，使用者分成兩群。<strong>A 群</strong>的訓練照片多、拍攝條件好，模型對他們分得很清楚；
+      <strong>B 群</strong>的訓練照片少，模型對他們的判斷比較模糊。此外兩群的<strong>本人比例</strong>也不同
+      （A 群多是常來的人，B 群外來訪客比例高）。
+      <span style="font-size:12.5px;color:#94a3b8">（教學用示意分布，非特定產品實測值）</span>
+    </p>
+    <div class="et-stage"><canvas id="cv" width="720" height="380"></canvas></div>
+
+    <div style="margin-top:16px">
+      <label style="display:flex;gap:9px;align-items:center;font-weight:700;font-size:14px;margin-bottom:12px;cursor:pointer">
+        <input type="checkbox" id="lock" checked style="width:18px;height:18px">
+        對兩群使用<strong>相同門檻</strong>（很多人直覺認為這樣才公平）
+      </label>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px">
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:13.5px;font-weight:600">
+            <span style="color:#2563EB">A 群門檻</span><span id="vA" style="font-family:'JetBrains Mono',monospace;font-weight:700;color:#2563EB">55</span>
+          </div>
+          <input type="range" id="sA" min="10" max="95" value="55" style="width:100%">
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:13.5px;font-weight:600">
+            <span style="color:#DB2777">B 群門檻</span><span id="vB" style="font-family:'JetBrains Mono',monospace;font-weight:700;color:#DB2777">55</span>
+          </div>
+          <input type="range" id="sB" min="10" max="95" value="55" style="width:100%">
+        </div>
+      </div>
+    </div>
+
+    <div style="overflow-x:auto;margin-top:16px">
+      <table style="width:100%;border-collapse:collapse;font-size:14px" id="tbl"></table>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>⚖️ 三種「公平」的定義，同時檢查</h3>
+    <p class="muted" style="margin-bottom:12px">這三種說法聽起來都很合理，但它們要求的事情不一樣。</p>
+    <div id="fairness" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px"></div>
+    <div id="verdict" class="verdict warn">調整門檻，看看能不能讓三個都亮綠燈</div>
+  </section>
+
+  <section class="panel">
+    <h3>🎯 四個挑戰</h3>
+    <ul id="quests" style="list-style:none;padding:0;margin:10px 0 0;display:flex;flex-direction:column;gap:8px"></ul>
+  </section>
+
+  <section class="panel">
+    <h3>🤔 想一想：這不是技術問題，是選擇問題</h3>
+    <div class="ethics">
+      <strong>你會發現一件事：修好一個定義，往往就打破另一個</strong>
+      <p>當你把門檻調到讓兩群<strong>誤拒率相同</strong>時，兩群的<strong>通過率</strong>會差一大截；
+      反過來讓通過率相同時，誤拒率又會拉開。這不是模擬器做得不好，而是當兩群的
+      <strong>資料品質</strong>與<strong>本人比例</strong>本來就不同時，各種公平定義之間存在真實的張力。</p>
+    </div>
+    <p class="muted" style="margin-top:12px">
+      所以「要用哪一種公平」<strong>不是工程師能單獨決定的技術細節，而是價值判斷</strong>——
+      要問的是：在這個場域裡，被誤擋在門外的代價比較大，還是被誤放進來的代價比較大？誰承擔這個代價？
+    </p>
+    <p class="muted" style="margin-top:10px">
+      課堂討論：如果學校用人臉點名，某些同學（戴眼鏡、膚色較深、常換髮型）被誤判的比例明顯較高，
+      學校應該：<strong>(a)</strong> 為他們單獨降低門檻？ <strong>(b)</strong> 維持相同門檻但提供替代點名方式？
+      <strong>(c)</strong> 整套系統不要用？三個選項各自的代價是什麼？
+    </p>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="module5.html" class="btn btn-ghost">← 上一關</a>
+    <a href="../index.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">完成課程 🎉</a>
+  </div>
+</main>
+<script src="../../js/main.js"></script><script src="../../js/sources.js"></script><script src="../../js/resources.js"></script><script src="../../js/audio.js"></script><script src="../js/module6.js"></script>
+</body></html>
