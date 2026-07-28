@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YCXP16QQM1"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YCXP16QQM1');</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 1：二進位與編碼</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/steam.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎨%3C/text%3E%3C/svg%3E">
+</head><body data-tool="steam" class="st-theme">
+<header class="topbar"><div class="brand"><span class="logo">🎨</span><div><h1>跨領域 STEAM</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<main class="module-page">
+  <div class="module-header">
+    <div><span class="module-step">MODULE 01</span><h2>二進位與編碼：為什麼電腦只認得 0 和 1</h2>
+    <p class="muted">因為「有電／沒電」最好分辨。剩下的一切，都是想辦法用這兩種狀態把世界表示出來。</p></div>
+    <div class="muted" id="prog">挑戰完成 0 / 4</div>
+  </div>
+
+  <section class="panel">
+    <h3>🔢 位元翻翻看</h3>
+    <p class="muted" style="margin-bottom:8px">點下面的方格切換 0／1。每個位置代表的值是<strong>前一個的兩倍</strong>，加起來就是這個位元組表示的數。</p>
+    <div class="bit-row" id="bits"></div>
+    <div class="stat-grid">
+      <div class="stat" style="background:#EDE9FE"><div class="stat-label" style="color:#5B21B6">十進位</div><div class="stat-val" id="dec" style="color:#6D28D9">0</div></div>
+      <div class="stat" style="background:#f1f5f9"><div class="stat-label" style="color:#475569">二進位</div><div class="stat-val" id="bin" style="color:#334155;font-size:19px">00000000</div></div>
+      <div class="stat" style="background:#FCE7F3"><div class="stat-label" style="color:#9D174D">十六進位</div><div class="stat-val" id="hex" style="color:#DB2777">0x00</div></div>
+      <div class="stat" style="background:#ECFDF5"><div class="stat-label" style="color:#065F46">對應字元 (ASCII)</div><div class="stat-val" id="asc" style="color:#059669">—</div></div>
+    </div>
+    <div id="bitVerdict" class="verdict warn">試著湊出不同的數字</div>
+    <div class="note">
+      <strong>8 個位元能表示幾種狀態？</strong>
+      <p>每多一個位元，種類就<strong>翻倍</strong>：1 位元 2 種、2 位元 4 種、8 位元 <strong>2⁸ = 256</strong> 種（0～255）。
+      這就是為什麼一個位元組（byte）剛好能存 0–255，也是為什麼舊遊戲的數值上限常常是 255。</p>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>✉️ 文字怎麼變成 0 和 1</h3>
+    <p class="muted" style="margin-bottom:10px">輸入英文字母或符號，看它在電腦裡實際的樣子。</p>
+    <input type="text" id="msg" value="Hi!" maxlength="12"
+      style="width:100%;padding:12px 14px;border:2px solid #cbd5e1;border-radius:10px;font-size:16px;font-family:'JetBrains Mono',monospace">
+    <div id="encoded" style="margin-top:14px"></div>
+  </section>
+
+  <section class="panel">
+    <h3>🛡️ 錯一個位元會怎樣？同位檢查</h3>
+    <p class="muted" style="margin-bottom:10px">
+      資料在傳輸中可能被雜訊翻掉一個位元。最簡單的防護是<strong>同位位元（parity bit）</strong>：
+      額外附加一個位元，讓整串 1 的個數保持<strong>偶數</strong>。收到後數一數，是奇數就代表出錯了。
+    </p>
+    <div class="st-stage" style="background:#0f172a;padding:20px">
+      <div style="text-align:center;color:#94a3b8;font-size:13px;margin-bottom:10px">傳送的資料（點任一位元模擬雜訊翻轉）</div>
+      <div class="bit-row" id="pbits"></div>
+      <div style="text-align:center;margin-top:12px">
+        <span style="color:#94a3b8;font-size:13px">同位位元：</span>
+        <span id="pbit" style="font-family:'JetBrains Mono',monospace;font-weight:900;font-size:20px;color:#8B5CF6">0</span>
+      </div>
+    </div>
+    <div id="parityVerdict" class="verdict good">—</div>
+    <button class="btn btn-ghost" id="pReset" style="margin-top:10px">↺ 重設資料</button>
+    <div class="note">
+      <strong>同位檢查的極限</strong>
+      <p>它只能<strong>偵測</strong>奇數個位元出錯，不能<strong>更正</strong>；如果剛好翻了兩個位元，1 的個數又變回偶數，
+      它就完全查不出來。真實的儲存與網路傳輸因此使用更強的方法（如 CRC、漢明碼），
+      能偵測更多錯誤、甚至自動修好。</p>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>🎯 四個挑戰</h3>
+    <ul id="quests" style="list-style:none;padding:0;margin:10px 0 0;display:flex;flex-direction:column;gap:8px"></ul>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="../index.html" class="btn btn-ghost">← 回首頁</a>
+    <a href="module2.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a>
+  </div>
+</main>
+<script src="../../js/main.js"></script><script src="../../js/sources.js"></script><script src="../../js/audio.js"></script><script src="../js/module1.js"></script>
+</body></html>

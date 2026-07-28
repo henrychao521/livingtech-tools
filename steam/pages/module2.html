@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YCXP16QQM1"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YCXP16QQM1');</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 2：排序演算法（不插電）</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/steam.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎨%3C/text%3E%3C/svg%3E">
+</head><body data-tool="steam" class="st-theme">
+<header class="topbar"><div class="brand"><span class="logo">🎨</span><div><h1>跨領域 STEAM</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<main class="module-page">
+  <div class="module-header">
+    <div><span class="module-step">MODULE 02</span><h2>排序演算法：方法不同，差多少？</h2>
+    <p class="muted">同樣把數字由小排到大，聰明的方法和笨的方法，在資料變多時差距會大到嚇人。</p></div>
+    <div class="muted" id="prog">挑戰完成 0 / 4</div>
+  </div>
+
+  <section class="panel">
+    <h3>🔀 一步一步看它怎麼排</h3>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px" id="algPick"></div>
+    <div class="st-stage" style="padding:22px">
+      <div class="arr" id="arr"></div>
+      <div style="text-align:center;color:#94a3b8;font-size:13px;margin-top:14px" id="stepDesc">按「單步」或「自動播放」開始</div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px">
+      <button class="btn btn-primary" id="step">▶ 單步</button>
+      <button class="btn btn-primary" id="auto">⏩ 自動播放</button>
+      <button class="btn btn-ghost" id="shuffle">🔀 換一組資料</button>
+      <button class="btn btn-ghost" id="reset">↺ 重來</button>
+    </div>
+    <div class="stat-grid">
+      <div class="stat" style="background:#FEF3C7"><div class="stat-label" style="color:#92400E">比較次數</div><div class="stat-val" id="cmpVal" style="color:#D97706">0</div></div>
+      <div class="stat" style="background:#DBEAFE"><div class="stat-label" style="color:#1E40AF">交換次數</div><div class="stat-val" id="swpVal" style="color:#2563EB">0</div></div>
+      <div class="stat" style="background:#EDE9FE"><div class="stat-label" style="color:#5B21B6">進度</div><div class="stat-val" id="stVal" style="color:#6D28D9">0 / 0</div></div>
+    </div>
+    <div id="verdict" class="verdict warn">選一種演算法開始</div>
+  </section>
+
+  <section class="panel">
+    <h3>📈 資料變多會怎樣？</h3>
+    <p class="muted" style="margin-bottom:10px">這三種都是 <strong>O(n²)</strong> 等級：資料量變 10 倍，工作量大約變 <strong>100 倍</strong>。
+      下表是實際跑出來的平均比較次數（各隨機測 200 次）。</p>
+    <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:14px" id="growth"></table></div>
+    <div class="note">
+      <strong>所以真實世界用什麼？</strong>
+      <p>實務上會用 <strong>合併排序</strong>、<strong>快速排序</strong> 這類 <strong>O(n log n)</strong> 的方法。
+      排 100 萬筆資料時，O(n²) 大約要一兆次比較（跑到天荒地老），而 O(n log n) 只要約兩千萬次——
+      這不是「電腦快一點」能彌補的差距，<strong>選對方法才是關鍵</strong>。</p>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>🎯 四個挑戰</h3>
+    <ul id="quests" style="list-style:none;padding:0;margin:10px 0 0;display:flex;flex-direction:column;gap:8px"></ul>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="module1.html" class="btn btn-ghost">← 上一關</a>
+    <a href="module3.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a>
+  </div>
+</main>
+<script src="../../js/main.js"></script><script src="../../js/sources.js"></script><script src="../../js/audio.js"></script><script src="../js/module2.js"></script>
+</body></html>

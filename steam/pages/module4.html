@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YCXP16QQM1"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YCXP16QQM1');</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 4：光與透鏡成像</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/steam.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎨%3C/text%3E%3C/svg%3E">
+</head><body data-tool="steam" class="st-theme">
+<header class="topbar"><div class="brand"><span class="logo">🎨</span><div><h1>跨領域 STEAM</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<main class="module-page">
+  <div class="module-header">
+    <div><span class="module-step">MODULE 04</span><h2>光與透鏡：放大鏡、相機、投影機的共同原理</h2>
+    <p class="muted">三種完全不同的產品，用的是同一條公式。差別只在「物體放在焦距的哪一邊」。</p></div>
+    <div class="muted" id="prog">挑戰完成 0 / 4</div>
+  </div>
+
+  <section class="panel">
+    <h3>🔍 成像模擬器</h3>
+    <p class="muted" style="margin-bottom:12px">拖動滑桿改變物距與焦距，光線路徑與成像會即時重畫。黃線是實際光線，虛線代表「看起來像是從那裡來的」。</p>
+    <div class="st-stage"><canvas id="cv" width="720" height="360"></canvas></div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;margin-top:14px">
+      <div>
+        <div class="param">
+          <div class="param-head"><span>📍 物距 d<sub>o</sub></span><span class="param-val" id="vDo">30 cm</span></div>
+          <input type="range" id="sDo" min="3" max="80" value="30">
+          <div class="param-hint"><span>靠近透鏡</span><span>遠離透鏡</span></div>
+        </div>
+        <div class="param">
+          <div class="param-head"><span>🔵 焦距 f</span><span class="param-val" id="vF">10 cm</span></div>
+          <input type="range" id="sF" min="4" max="30" value="10">
+          <div class="param-hint"><span>厚透鏡</span><span>薄透鏡</span></div>
+        </div>
+        <div class="param">
+          <div class="param-head"><span>📏 物高</span><span class="param-val" id="vH">6 cm</span></div>
+          <input type="range" id="sH" min="2" max="12" value="6">
+        </div>
+      </div>
+      <div>
+        <label style="font-weight:700;font-size:14px;display:block;margin-bottom:6px">快速套用真實情境</label>
+        <div class="pick-grid" id="presetPick"></div>
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat" style="background:#EDE9FE"><div class="stat-label" style="color:#5B21B6">像距 d<sub>i</sub></div><div class="stat-val" id="diVal" style="color:#6D28D9;font-size:20px">—</div></div>
+      <div class="stat" style="background:#FCE7F3"><div class="stat-label" style="color:#9D174D">放大率 m</div><div class="stat-val" id="mVal" style="color:#DB2777;font-size:20px">—</div></div>
+      <div class="stat" style="background:#f1f5f9"><div class="stat-label" style="color:#475569">像的性質</div><div class="stat-val" id="typeVal" style="color:#334155;font-size:17px">—</div></div>
+    </div>
+    <div id="verdict" class="verdict good">—</div>
+  </section>
+
+  <section class="panel">
+    <h3>🧮 薄透鏡公式</h3>
+    <p class="muted" style="text-align:center;font-size:17px;margin:10px 0">
+      <code style="font-size:19px;background:#EDE9FE;padding:8px 14px;border-radius:8px;color:#6D28D9;font-weight:700">1/f = 1/d<sub>o</sub> + 1/d<sub>i</sub></code>
+
+      <code style="font-size:19px;background:#FCE7F3;padding:8px 14px;border-radius:8px;color:#DB2777;font-weight:700">m = −d<sub>i</sub> / d<sub>o</sub></code>
+    </p>
+    <div id="calc" style="background:#f8fafc;border-radius:12px;padding:16px;font-family:'JetBrains Mono',monospace;font-size:14px;line-height:2"></div>
+    <div class="note">
+      <strong>三條好畫的光線</strong>
+      <p>① 平行主軸射入 → 折射後<strong>通過焦點</strong>。
+      ② 通過透鏡<strong>中心</strong> → 方向不變。
+      ③ 先通過前焦點射入 → 折射後<strong>平行主軸</strong>。
+      任兩條的交點就是像的位置——這就是模擬器在畫的東西。</p>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>🎯 四個挑戰</h3>
+    <ul id="quests" style="list-style:none;padding:0;margin:10px 0 0;display:flex;flex-direction:column;gap:8px"></ul>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="module3.html" class="btn btn-ghost">← 上一關</a>
+    <a href="../index.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">完成課程 🎉</a>
+  </div>
+</main>
+<script src="../../js/main.js"></script><script src="../../js/sources.js"></script><script src="../../js/audio.js"></script><script src="../js/module4.js"></script>
+</body></html>

@@ -41,6 +41,16 @@ window.SOURCES = {
     { tag: 'CTRE',  text: 'CTR-Electronics / NI《RoboRIO 2 Datasheet》— 控制器規格與接線。', url: 'https://store.ctr-electronics.com/' },
   ],
 
+  steam: [
+    { tag: 'IEEE', text: 'IEEE 754 與 ASCII (ANSI X3.4) 標準 — 位元組、字元編碼與數值表示的基礎。', url: 'https://www.unicode.org/charts/' },
+    { tag: 'UNI',  text: 'Unicode Consortium《UTF-8 編碼規範》— 中文字為何需要 2–4 個位元組。', url: 'https://www.unicode.org/faq/utf_bom.html' },
+    { tag: 'CS',   text: 'CS Unplugged（University of Canterbury, CC BY-NC-SA）— 不插電運算思維教學法，二進位與排序網路等活動的國際參考。', url: 'https://www.csunplugged.org/' },
+    { tag: 'ALGO', text: 'Cormen et al.《Introduction to Algorithms》— 氣泡／選擇／插入排序的比較次數與 O(n²) 分析。', url: 'https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/' },
+    { tag: 'ISO',  text: 'ISO 16《Acoustics — Standard tuning frequency》— A4 = 440 Hz 標準音高。', url: 'https://www.iso.org/standard/3601.html' },
+    { tag: 'PHYS', text: 'OpenStax《College Physics》— 聲波、傅立葉合成與薄透鏡公式 1/f = 1/dₒ + 1/dᵢ、放大率 m = −dᵢ/dₒ。', url: 'https://openstax.org/details/books/college-physics-2e' },
+    { tag: 'CURR', text: '教育部十二年國教課程綱要 — 資 J-A2 運算思維與問題解決、自然 Ea 波動與光、數學 N 數與量。', url: 'https://cirn.moe.edu.tw/' },
+  ],
+
   mechatronics: [
     { tag: 'ARDU', text: 'Arduino 官方文件《PWM》《analogWrite()》與 Motor Shield 教學 — 馬達調速與驅動器接法。', url: 'https://docs.arduino.cc/learn/microcontrollers/analog-output/' },
     { tag: 'NIST', text: 'NIST／標準大氣模型《Speed of Sound in Air》— 音速隨溫度變化 c ≈ 331.3 + 0.606·T (m/s)，本模組溫度誤差計算依據。', url: 'https://www.nist.gov/' },
