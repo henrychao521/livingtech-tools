@@ -200,6 +200,22 @@
   .fc-n { font-size:11px; opacity:.75; font-weight:800; }
   .fchip.on .fc-n { opacity:.9; }
 
+
+  /* 可展開的分類區 */
+  .cat-sec > summary { cursor:pointer; list-style:none; padding:16px 20px; background:#fff;
+    border:1px solid var(--border); border-radius:14px; transition:all .2s var(--easing);
+    display:flex; align-items:center; justify-content:space-between; gap:16px; }
+  .cat-sec > summary::-webkit-details-marker { display:none; }
+  .cat-sec > summary:hover { border-color:var(--primary); box-shadow:var(--shadow-sm); }
+  .cat-sec > summary::after { content:'展開 ▾'; flex:0 0 auto; font-size:13px; font-weight:700;
+    color:var(--primary-dark); background:var(--bg-soft); padding:6px 12px; border-radius:999px; white-space:nowrap; }
+  .cat-sec[open] > summary::after { content:'收合 ▴'; }
+  .cat-sec[open] > summary { border-radius:14px 14px 0 0; border-bottom-color:transparent; }
+  .cat-sec > summary h4 { margin-bottom:2px; }
+  .cat-sec > summary p { margin-bottom:0; }
+  .cat-sec[open] .hub-tool-grid { border:1px solid var(--border); border-top:none;
+    border-radius:0 0 14px 14px; padding:22px; margin-top:0; background:var(--bg-soft); }
+
   /* ===== 分類區塊 ===== */
   .cat-sec { margin-top:40px; scroll-margin-top:70px; }
   .cat-sec.hide { display:none; }
@@ -439,8 +455,8 @@
     </div>
   </div>
 
-    <section class="cat-sec" id="cat-tools" data-cat="tools">
-      <div class="cat-head"><h4>🪚 機具安全與操作 <span class="cat-n">5</span></h4><p>進實作教室前先在數位環境熟悉結構、安全規範與操作步驟</p></div>
+    <details class="cat-sec" id="cat-tools" data-cat="tools">
+      <summary class="cat-head"><h4>🪚 機具安全與操作 <span class="cat-n">5</span></h4><p>進實作教室前先在數位環境熟悉結構、安全規範與操作步驟</p></summary>
       <div class="hub-tool-grid">
 <a class="hub-tool tool-saw" href="scrollsaw/">
         <div class="tool-head">
@@ -461,7 +477,6 @@
         <span class="tool-cta">進入線鋸機平台 →</span>
       </a>
 <a class="hub-tool tool-saw" href="drill/" style="--bg-tint:#F59E0B">
-        <span class="badge-new" style="background:linear-gradient(135deg,#F59E0B,#B45309)">NEW</span>
         <div class="tool-head">
           <div class="tool-emoji">🔩</div>
           <div>
@@ -480,7 +495,6 @@
         <span class="tool-cta" style="background:#F59E0B;box-shadow:0 4px 12px rgba(245,158,11,.35)">進入手電鑽平台 →</span>
       </a>
 <a class="hub-tool tool-saw" href="drill-press/" style="--bg-tint:#15803D">
-        <span class="badge-new" style="background:linear-gradient(135deg,#15803D,#22C55E)">NEW</span>
         <div class="tool-head">
           <div class="tool-emoji">🛠</div>
           <div>
@@ -499,7 +513,6 @@
         <span class="tool-cta" style="background:#15803D;box-shadow:0 4px 12px rgba(21,128,61,.35)">進入鑽床平台 →</span>
       </a>
 <a class="hub-tool tool-saw" href="sander/" style="--bg-tint:#7C3AED">
-        <span class="badge-new" style="background:linear-gradient(135deg,#7C3AED,#A78BFA)">NEW</span>
         <div class="tool-head">
           <div class="tool-emoji">✨</div>
           <div>
@@ -518,7 +531,6 @@
         <span class="tool-cta" style="background:#7C3AED;box-shadow:0 4px 12px rgba(124,58,237,.35)">進入砂磨機平台 →</span>
       </a>
 <a class="hub-tool tool-saw" href="hand-tools/" style="--bg-tint:#64748B">
-        <span class="badge-new" style="background:linear-gradient(135deg,#64748B,#94A3B8)">NEW</span>
         <div class="tool-head">
           <div class="tool-emoji">🔨</div>
           <div>
@@ -537,13 +549,12 @@
         <span class="tool-cta" style="background:#64748B;box-shadow:0 4px 12px rgba(100,116,139,.35)">進入手工具 →</span>
       </a>
       </div>
-    </section>
+    </details>
 
-    <section class="cat-sec" id="cat-design" data-cat="design">
-      <div class="cat-head"><h4>📐 設計與製造 <span class="cat-n">4</span></h4><p>從畫得出來到做得出來：製圖、建模、數位製造</p></div>
+    <details class="cat-sec" id="cat-design" data-cat="design">
+      <summary class="cat-head"><h4>📐 設計與製造 <span class="cat-n">4</span></h4><p>從畫得出來到做得出來：製圖、建模、數位製造</p></summary>
       <div class="hub-tool-grid">
 <a class="hub-tool tool-saw" href="orthographic/" style="--bg-tint:#4F46E5">
-        <span class="badge-new" style="background:linear-gradient(135deg,#4F46E5,#818CF8)">NEW</span>
         <div class="tool-head">
           <div class="tool-emoji">📐</div>
           <div>
@@ -562,7 +573,6 @@
         <span class="tool-cta" style="background:#4F46E5;box-shadow:0 4px 12px rgba(79,70,229,.35)">進入三視圖 →</span>
       </a>
 <a class="hub-tool tool-saw" href="design-process/" style="--bg-tint:#9333EA">
-        <span class="badge-new" style="background:linear-gradient(135deg,#9333EA,#C084FC)">NEW</span>
         <div class="tool-head">
           <div class="tool-emoji">🎯</div>
           <div>
@@ -581,7 +591,6 @@
         <span class="tool-cta" style="background:#9333EA;box-shadow:0 4px 12px rgba(147,51,234,.35)">進入產品設計 →</span>
       </a>
 <a class="hub-tool tool-saw" href="onshape/" style="--bg-tint:#0091BD">
-        <span class="badge-new" style="background:linear-gradient(135deg,#0091BD,#4FC3DD)">NEW</span>
         <div class="tool-head">
           <div class="tool-emoji">📐</div>
           <div>
@@ -600,7 +609,6 @@
         <span class="tool-cta" style="background:#0091BD;box-shadow:0 4px 12px rgba(0,145,189,.35)">進入 Onshape 平台 →</span>
       </a>
 <a class="hub-tool tool-saw" href="printer3d/" style="--bg-tint:#0891B2">
-        <span class="badge-new" style="background:linear-gradient(135deg,#0891B2,#06B6D4)">NEW</span>
         <div class="tool-head">
           <div class="tool-emoji">🖨️</div>
           <div>
@@ -619,13 +627,12 @@
         <span class="tool-cta" style="background:#0891B2;box-shadow:0 4px 12px rgba(8,145,178,.35)">進入 3D 印表機平台 →</span>
       </a>
       </div>
-    </section>
+    </details>
 
-    <section class="cat-sec" id="cat-mech" data-cat="mech">
-      <div class="cat-head"><h4>⚙️ 機構與結構 <span class="cat-n">5</span></h4><p>力怎麼傳遞、結構為什麼不會垮</p></div>
+    <details class="cat-sec" id="cat-mech" data-cat="mech">
+      <summary class="cat-head"><h4>⚙️ 機構與結構 <span class="cat-n">5</span></h4><p>力怎麼傳遞、結構為什麼不會垮</p></summary>
       <div class="hub-tool-grid">
 <a class="hub-tool tool-saw" href="simple-machines/" style="--bg-tint:#DB2777">
-        <span class="badge-new" style="background:linear-gradient(135deg,#DB2777,#EC4899)">NEW</span>
         <div class="tool-head">
           <div class="tool-emoji">⚙</div>
           <div>
@@ -644,7 +651,6 @@
         <span class="tool-cta" style="background:#DB2777;box-shadow:0 4px 12px rgba(219,39,119,.35)">進入簡單機械 →</span>
       </a>
 <a class="hub-tool tool-saw" href="mechanism/" style="--bg-tint:#14B8A6">
-        <span class="badge-new" style="background:linear-gradient(135deg,#14B8A6,#5EEAD4)">NEW</span>
         <div class="tool-head">
           <div class="tool-emoji">🎡</div>
           <div>
@@ -663,7 +669,6 @@
         <span class="tool-cta" style="background:#14B8A6;box-shadow:0 4px 12px rgba(20,184,166,.35)">進入機構運動 →</span>
       </a>
 <a class="hub-tool tool-saw" href="hydraulic-arm/" style="--bg-tint:#0284C7">
-        <span class="badge-new" style="background:linear-gradient(135deg,#0284C7,#38BDF8)">NEW</span>
         <div class="tool-head">
           <div class="tool-emoji">💪</div>
           <div>
@@ -682,7 +687,6 @@
         <span class="tool-cta" style="background:#0284C7;box-shadow:0 4px 12px rgba(2,132,199,.35)">進入液壓手臂 →</span>
       </a>
 <a class="hub-tool tool-saw" href="structure/" style="--bg-tint:#0d9488">
-        <span class="badge-new" style="background:linear-gradient(135deg,#0d9488,#14b8a6)">NEW</span>
         <div class="tool-head">
           <div class="tool-emoji">🏗️</div>
           <div>
@@ -701,7 +705,6 @@
         <span class="tool-cta" style="background:#0d9488;box-shadow:0 4px 12px rgba(13,148,136,.35)">進入橋樑實驗室 →</span>
       </a>
 <a class="hub-tool tool-saw" href="structure-sim/" style="--bg-tint:#1D4ED8">
-        <span class="badge-new" style="background:linear-gradient(135deg,#1D4ED8,#3B82F6)">NEW</span>
         <div class="tool-head">
           <div class="tool-emoji">🏛</div>
           <div>
@@ -720,13 +723,12 @@
         <span class="tool-cta" style="background:#1D4ED8;box-shadow:0 4px 12px rgba(29,78,216,.35)">進入結構模擬器 →</span>
       </a>
       </div>
-    </section>
+    </details>
 
-    <section class="cat-sec" id="cat-energy" data-cat="energy">
-      <div class="cat-head"><h4>⚡ 能源與動力 <span class="cat-n">2</span></h4><p>能量從哪裡來、如何變成運動</p></div>
+    <details class="cat-sec" id="cat-energy" data-cat="energy">
+      <summary class="cat-head"><h4>⚡ 能源與動力 <span class="cat-n">2</span></h4><p>能量從哪裡來、如何變成運動</p></summary>
       <div class="hub-tool-grid">
 <a class="hub-tool tool-saw" href="energy/" style="--bg-tint:#CA8A04">
-        <span class="badge-new" style="background:linear-gradient(135deg,#CA8A04,#EAB308)">NEW</span>
         <div class="tool-head">
           <div class="tool-emoji">⚡</div>
           <div>
@@ -745,7 +747,6 @@
         <span class="tool-cta" style="background:#CA8A04;box-shadow:0 4px 12px rgba(202,138,4,.35)">進入能源系統 →</span>
       </a>
 <a class="hub-tool tool-saw" href="powertrain/" style="--bg-tint:#EA580C">
-        <span class="badge-new" style="background:linear-gradient(135deg,#EA580C,#FB923C)">NEW</span>
         <div class="tool-head">
           <div class="tool-emoji">🚗</div>
           <div>
@@ -764,13 +765,12 @@
         <span class="tool-cta" style="background:#EA580C;box-shadow:0 4px 12px rgba(234,88,12,.35)">進入動力與運輸 →</span>
       </a>
       </div>
-    </section>
+    </details>
 
-    <section class="cat-sec" id="cat-elec" data-cat="elec">
-      <div class="cat-head"><h4>🔌 電子與控制 <span class="cat-n">3</span></h4><p>接得起來、會思考、能動作</p></div>
+    <details class="cat-sec" id="cat-elec" data-cat="elec">
+      <summary class="cat-head"><h4>🔌 電子與控制 <span class="cat-n">3</span></h4><p>接得起來、會思考、能動作</p></summary>
       <div class="hub-tool-grid">
 <a class="hub-tool tool-solder" href="solder/">
-        <span class="badge-new">NEW</span>
         <div class="tool-head">
           <div class="tool-emoji">🔥</div>
           <div>
@@ -789,7 +789,6 @@
         <span class="tool-cta">進入電烙鐵平台 →</span>
       </a>
 <a class="hub-tool tool-saw" href="breadboard/" style="--bg-tint:#16A34A">
-        <span class="badge-new" style="background:linear-gradient(135deg,#16A34A,#10B981)">NEW</span>
         <div class="tool-head">
           <div class="tool-emoji">🔌</div>
           <div>
@@ -808,7 +807,6 @@
         <span class="tool-cta" style="background:#16A34A;box-shadow:0 4px 12px rgba(22,163,74,.35)">進入麵包板平台 →</span>
       </a>
 <a class="hub-tool tool-saw" href="microcontroller/" style="--bg-tint:#6366F1">
-        <span class="badge-new" style="background:linear-gradient(135deg,#6366F1,#818CF8)">NEW</span>
         <div class="tool-head">
           <div class="tool-emoji">🧠</div>
           <div>
@@ -827,10 +825,10 @@
         <span class="tool-cta" style="background:#6366F1;box-shadow:0 4px 12px rgba(99,102,241,.35)">進入微控制器 →</span>
       </a>
       </div>
-    </section>
+    </details>
 
-    <section class="cat-sec" id="cat-project" data-cat="project">
-      <div class="cat-head"><h4>🤖 專題實作 <span class="cat-n">2</span></h4><p>把零件組成一個會自己動的系統</p></div>
+    <details class="cat-sec" id="cat-project" data-cat="project">
+      <summary class="cat-head"><h4>🤖 專題實作 <span class="cat-n">2</span></h4><p>把零件組成一個會自己動的系統</p></summary>
       <div class="hub-tool-grid">
 <a class="hub-tool tool-saw" href="mechatronics/" style="--bg-tint:#F97316">
         <span class="badge-new" style="background:linear-gradient(135deg,#F97316,#FB923C)">NEW</span>
@@ -852,7 +850,6 @@
         <span class="tool-cta" style="background:#F97316;box-shadow:0 4px 12px rgba(249,115,22,.35)">進入機電整合平台 →</span>
       </a>
 <a class="hub-tool tool-saw" href="frc/" style="--bg-tint:#0066B3">
-        <span class="badge-new" style="background:linear-gradient(135deg,#0066B3,#FF6600)">NEW</span>
         <div class="tool-head">
           <div class="tool-emoji">🤖</div>
           <div>
@@ -871,10 +868,10 @@
         <span class="tool-cta" style="background:#0066B3;box-shadow:0 4px 12px rgba(0,102,179,.35)">進入 FRC 平台 →</span>
       </a>
       </div>
-    </section>
+    </details>
 
-    <section class="cat-sec" id="cat-frontier" data-cat="frontier">
-      <div class="cat-head"><h4>🛰️ 新興科技與跨領域 <span class="cat-n">3</span></h4><p>看得懂新科技，也接得回數學與科學</p></div>
+    <details class="cat-sec" id="cat-frontier" data-cat="frontier">
+      <summary class="cat-head"><h4>🛰️ 新興科技與跨領域 <span class="cat-n">3</span></h4><p>看得懂新科技，也接得回數學與科學</p></summary>
       <div class="hub-tool-grid">
 <a class="hub-tool tool-saw" href="emerging-tech/" style="--bg-tint:#06B6D4">
         <span class="badge-new" style="background:linear-gradient(135deg,#06B6D4,#22D3EE)">NEW</span>
@@ -914,7 +911,6 @@
         <span class="tool-cta" style="background:#8B5CF6;box-shadow:0 4px 12px rgba(139,92,246,.35)">進入 STEAM 平台 →</span>
       </a>
 <a class="hub-tool tool-saw" href="physics/" style="--bg-tint:#7C3AED">
-        <span class="badge-new" style="background:linear-gradient(135deg,#7C3AED,#a855f7)">NEW</span>
         <div class="tool-head">
           <div class="tool-emoji">🧪</div>
           <div>
@@ -932,7 +928,7 @@
         <span class="tool-cta" style="background:#7C3AED;box-shadow:0 4px 12px rgba(124,58,237,.35)">進入物理模擬實驗室 →</span>
       </a>
       </div>
-    </section>
+    </details>
   </section>
 
   <section id="pedagogy" class="pedagogy">
@@ -1086,7 +1082,10 @@
     var b=e.target.closest('.fchip'); if(!b) return;
     var f=b.dataset.f;
     chips.forEach(function(c){c.classList.toggle('on',c===b);});
-    secs.forEach(function(s){s.classList.toggle('hide', f!=='all' && s.dataset.cat!==f);});
+    secs.forEach(function(s){
+      s.classList.toggle('hide', f!=='all' && s.dataset.cat!==f);
+      if(f!=='all' && s.dataset.cat===f) s.open=true;   // 篩到哪一區就自動展開
+    });
     if(f!=='all'){
       var t=document.getElementById('cat-'+f);
       if(t) window.scrollTo({top:t.getBoundingClientRect().top+window.pageYOffset-64,behavior:'smooth'});
@@ -1098,7 +1097,8 @@
     h.addEventListener('click',function(){
       var cid=h.parentElement.dataset.cat;
       var t=document.getElementById('cat-'+cid);
-      if(t) window.scrollTo({top:t.getBoundingClientRect().top+window.pageYOffset-64,behavior:'smooth'});
+      if(t){ t.open=true;
+        window.scrollTo({top:t.getBoundingClientRect().top+window.pageYOffset-64,behavior:'smooth'}); }
     });
   });
 })();
