@@ -224,6 +224,12 @@
   .cat-head p { font-size:14px; color:var(--text-soft); margin-bottom:16px; }
 
   @media (max-width:820px) {
+    /* 收合標題在窄螢幕改直向堆疊:原本 flex 橫排會把標題壓到 58px 寬、瘋狂換行 */
+    .cat-sec > summary { flex-direction:column; align-items:flex-start; gap:6px; padding:14px 16px; }
+    .cat-sec > summary::after { align-self:flex-start; }
+    .cat-sec > summary h4 { font-size:18px; }
+    .cat-sec > summary p { font-size:13px; }
+    .cat-sec[open] .hub-tool-grid { padding:14px; }
     .overview, .pathmap { padding-left:20px; padding-right:20px; }
     .fb-inner { padding:10px 20px; }
     .pm-label { flex:0 0 100%; margin-bottom:4px; }
