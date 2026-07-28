@@ -84,10 +84,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const prefix = rootRelativePrefix();
     const footer = document.createElement('footer');
     footer.innerHTML = `
-      <p>© 珩宇老師製作・生活科技互動教學平台原型</p>
-      <p style="font-size:11px;color:var(--text-muted);margin-top:8px;line-height:1.7;max-width:780px;margin-left:auto;margin-right:auto;padding:0 16px">
-        本平台部分實物照片取自 <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline">Wikimedia Commons</a>，採 <strong>CC BY-SA</strong> 與公有領域授權。
-        依 CC BY-SA「相同方式分享」條款，本平台衍生作品須以相同授權釋出並保留原作者署名。
+      <p style="font-weight:700">趙珩宇（珩宇老師）｜生活科技教師・翰林版教科書作者</p>
+      <p style="font-size:12.5px;color:var(--text-soft);margin-top:6px;line-height:1.9">
+        <a href="https://livingtech.education" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline">livingtech.education</a>
+        ・<a href="https://www.youtube.com/@henrychao521" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline">YouTube 頻道</a>
+        ・<a href="mailto:henrychao521@gmail.com" style="color:var(--accent);text-decoration:underline">henrychao521@gmail.com</a>
+      </p>
+      <p style="font-size:11.5px;color:var(--text-muted);margin-top:12px;line-height:1.8;max-width:820px;margin-left:auto;margin-right:auto;padding:0 16px">
+        <strong>授權</strong>：本平台之互動模組、文字、程式碼與自繪圖形（作者原創部分）採
+        <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh-hant" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline"><strong>創用 CC 姓名標示－非商業性－禁止改作 4.0 國際 (CC BY-NC-ND 4.0)</strong></a> 釋出。
+        歡迎教師於課堂投影、指派學生使用、以連結方式分享；如需改作或商業使用，請來信洽詢。
+      </p>
+      <p style="font-size:11px;color:var(--text-muted);margin-top:8px;line-height:1.7;max-width:820px;margin-left:auto;margin-right:auto;padding:0 16px">
+        <strong>例外</strong>：本平台部分實物照片取自 <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline">Wikimedia Commons</a>，
+        原採 <strong>CC BY-SA</strong> 與公有領域授權，<u>不適用上述 CC BY-NC-ND</u>，仍依其原始授權條款使用與再散布。
         完整圖片授權清單見 <a href="${prefix}LICENSE_IMAGES.md" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline">LICENSE_IMAGES.md</a>。
       </p>
     `;
