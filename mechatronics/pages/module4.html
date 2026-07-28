@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YCXP16QQM1"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YCXP16QQM1');</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 4：超音波避障與盲區</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/mechatronics.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🤖%3C/text%3E%3C/svg%3E">
+</head><body data-tool="mechatronics" class="mx-theme">
+<header class="topbar"><div class="brand"><span class="logo">🤖</span><div><h1>機電整合專題</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<main class="module-page">
+  <div class="module-header">
+    <div><span class="module-step">MODULE 04</span><h2>超音波避障：它量不到的東西比你想的多</h2>
+    <p class="muted">「明明前面有障礙物，車子卻直接撞上去」——多半不是程式壞了，是感測器根本沒看到。</p></div>
+    <div class="muted" id="prog">挑戰完成 0 / 3</div>
+  </div>
+
+  <section class="panel">
+    <h3>📐 用聲音量距離</h3>
+    <div class="flow">
+      <span class="flow-node">Trig 發射<br><small>40 kHz 超音波</small></span><span class="flow-arrow">→</span>
+      <span class="flow-node">碰到物體反射</span><span class="flow-arrow">→</span>
+      <span class="flow-node">Echo 收到回音<br><small>量時間 t</small></span><span class="flow-arrow">→</span>
+      <span class="flow-node">距離 = t × 音速 ÷ 2</span>
+    </div>
+    <p class="muted" style="text-align:center">
+      音速約 <strong>343 m/s</strong>（20°C）。除以 2 是因為聲音<strong>來回跑了兩趟</strong>。
+      常見寫法：<code>距離(cm) = 脈波寬度(µs) / 58</code>
+    </p>
+  </section>
+
+  <section class="panel">
+    <h3>🧪 量測模擬器</h3>
+    <p class="muted" style="margin-bottom:12px">拖動障礙物的距離與角度，換不同材質，看感測器<strong>實際會回報什麼</strong>。
+      <span style="font-size:12.5px;color:#94a3b8">（示意模型：呈現盲區、斜面反射失效等真實現象）</span></p>
+    <div class="mx-stage"><canvas id="cv" width="720" height="340"></canvas></div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;margin-top:14px">
+      <div>
+        <div class="param">
+          <div class="param-head"><span>📏 實際距離</span><span class="param-val" id="vD">40 cm</span></div>
+          <input type="range" id="sD" min="1" max="450" value="40">
+          <div class="param-hint"><span>1 cm</span><span>450 cm</span></div>
+        </div>
+        <div class="param">
+          <div class="param-head"><span>📐 表面傾角</span><span class="param-val" id="vA">0°</span></div>
+          <input type="range" id="sA" min="0" max="80" value="0">
+          <div class="param-hint"><span>正對感測器</span><span>幾乎平行</span></div>
+        </div>
+        <div class="param">
+          <div class="param-head"><span>🌡️ 環境溫度</span><span class="param-val" id="vT">20 °C</span></div>
+          <input type="range" id="sT" min="-5" max="45" value="20">
+          <div class="param-hint"><span>-5 °C</span><span>45 °C</span></div>
+        </div>
+      </div>
+      <div>
+        <label style="font-weight:700;font-size:14px;display:block;margin-bottom:6px">障礙物材質</label>
+        <div class="pick-grid" id="matPick"></div>
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat" style="background:#ecfdf5"><div class="stat-label" style="color:#065f46">實際距離</div><div class="stat-val" id="realVal" style="color:#059669">—</div></div>
+      <div class="stat" style="background:#eff6ff"><div class="stat-label" style="color:#1e40af">感測器回報</div><div class="stat-val" id="measVal" style="color:#2563eb">—</div></div>
+      <div class="stat" style="background:#fef2f2"><div class="stat-label" style="color:#991b1b">誤差</div><div class="stat-val" id="errVal" style="color:#dc2626">—</div></div>
+    </div>
+    <div id="verdict" class="verdict good">—</div>
+  </section>
+
+  <section class="panel">
+    <h3>🎯 三個挑戰</h3>
+    <ul id="quests" style="list-style:none;padding:0;margin:10px 0 0;display:flex;flex-direction:column;gap:8px"></ul>
+  </section>
+
+  <section class="panel">
+    <h3>🛡️ 程式上怎麼防</h3>
+    <ul style="font-size:14px;line-height:2;color:#334155;padding-left:20px">
+      <li><strong>把「量不到」當成一種狀態</strong>：讀到 0 或超出量程時，不要當成「距離 0 公分」直接煞車，也不要當成「前面沒東西」全速前進。</li>
+      <li><strong>連續讀數取中位數</strong>：連讀 3～5 次取中間值，可濾掉偶發的雜訊跳動。</li>
+      <li><strong>設定合理量程</strong>：只信任 3～200 cm 的讀值，超出就視為無效。</li>
+      <li><strong>加裝第二種感測器</strong>：超音波怕斜面與吸音材，紅外線怕深色與陽光——兩者互補。</li>
+    </ul>
+    <div class="safety">
+      <strong>最危險的寫法</strong>
+      <p><code>if (距離 &lt; 20) 停車;</code> 看起來很合理，但當感測器讀到 0（量測失敗）時，
+      <code>0 &lt; 20</code> 成立會讓車子<strong>莫名其妙停住</strong>；
+      反過來寫 <code>if (距離 &gt; 20) 前進;</code> 則會在讀到 0 時<strong>直接撞上去</strong>。
+      務必先排除無效值再做判斷。</p>
+    </div>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="module3.html" class="btn btn-ghost">← 上一關</a>
+    <a href="module5.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a>
+  </div>
+</main>
+<script src="../../js/main.js"></script><script src="../../js/sources.js"></script><script src="../../js/audio.js"></script><script src="../js/module4.js"></script>
+</body></html>

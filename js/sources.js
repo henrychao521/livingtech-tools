@@ -41,6 +41,26 @@ window.SOURCES = {
     { tag: 'CTRE',  text: 'CTR-Electronics / NI《RoboRIO 2 Datasheet》— 控制器規格與接線。', url: 'https://store.ctr-electronics.com/' },
   ],
 
+  mechatronics: [
+    { tag: 'ARDU', text: 'Arduino 官方文件《PWM》《analogWrite()》與 Motor Shield 教學 — 馬達調速與驅動器接法。', url: 'https://docs.arduino.cc/learn/microcontrollers/analog-output/' },
+    { tag: 'NIST', text: 'NIST／標準大氣模型《Speed of Sound in Air》— 音速隨溫度變化 c ≈ 331.3 + 0.606·T (m/s)，本模組溫度誤差計算依據。', url: 'https://www.nist.gov/' },
+    { tag: 'CTRL', text: 'Åström & Murray《Feedback Systems: An Introduction for Scientists and Engineers》(Princeton, 開放取用) — 比例／微分控制與過度增益振盪的理論依據。', url: 'https://www.cds.caltech.edu/~murray/amwiki/' },
+    { tag: 'HCSR', text: 'HC-SR04 超音波模組 Datasheet — 量程約 2–400 cm、波束角約 15°、盲區與時序規格。', url: 'https://www.handsontec.com/dataspecs/HC-SR04-Ultrasonic.pdf' },
+    { tag: 'IPC',  text: 'IPC-A-620《Acceptability of Cable and Wire Harness Assemblies》— 接線與壓接品質，對應除錯章節的接觸不良判讀。', url: 'https://www.ipc.org/' },
+    { tag: 'CURR', text: '教育部十二年國教科技領域課程綱要 — 生 J-B3 設計與製作能力、3 下統整專題「自動化裝置」。', url: 'https://cirn.moe.edu.tw/' },
+  ],
+
+  'emerging-tech': [
+    { tag: 'NIST', text: 'NIST《Face Recognition Vendor Test (FRVT)》與 FpVTE 指紋評測報告 — 生物辨識 FAR／FRR／EER 的標準定義與實測方法。本模組分布為教學示意值，非廠商實測數據。', url: 'https://www.nist.gov/programs-projects/face-technology-evaluations-frvt' },
+    { tag: 'ISO',  text: 'ISO/IEC 19795-1《Biometric performance testing and reporting》— 誤接受率、誤拒絕率與等錯誤率的量測與報告規範。', url: 'https://www.iso.org/standard/73515.html' },
+    { tag: 'PDPA', text: '中華民國《個人資料保護法》— 生物特徵屬個人資料，蒐集處理須符合特定目的與當事人同意等要件。', url: 'https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=I0050021' },
+    { tag: 'AIRMF', text: 'NIST AI 100-1《AI Risk Management Framework》— AI 系統的可靠性、公平性與情境限制（模型只在其訓練分布內可靠）。', url: 'https://www.nist.gov/itl/ai-risk-management-framework' },
+    { tag: 'MILG', text: 'Milgram & Kishino《A Taxonomy of Mixed Reality Visual Displays》(1994) — 虛實連續體（Reality–Virtuality Continuum），VR／AR／MR 分類的原始依據。', url: 'https://search.ieice.org/bin/summary.php?id=e77-d_12_1321' },
+    { tag: 'ASHRAE', text: 'ASHRAE Standard 55《Thermal Environmental Conditions for Human Occupancy》— 室內舒適溫濕度範圍，作為節能控制策略的舒適度底線。', url: 'https://www.ashrae.org/technical-resources/bookstore/standard-55-thermal-environmental-conditions-for-human-occupancy' },
+    { tag: 'EBA',  text: '經濟部能源署《能源統計手冊》與建築節能相關指引 — 空調與照明耗電占比、節能措施效益估算依據。', url: 'https://www.esist.org.tw/' },
+    { tag: 'CURR', text: '教育部十二年國教科技領域課程綱要 — 生 J-C3 新興科技對社會的影響、資 J-A2 運算思維與科技應用。', url: 'https://cirn.moe.edu.tw/' },
+  ],
+
   onshape: [
     { tag: 'OS',   text: 'Onshape Learning Center 官方學習資源（Sketch、Feature、Assembly、Drawings）。', url: 'https://learn.onshape.com/' },
     { tag: 'CAD',  text: '趙珩宇《Onshape 3D 雲端建模教學》（YouTube 播放清單，珩宇老師頻道）。', url: 'https://www.youtube.com/@henrychao521' },

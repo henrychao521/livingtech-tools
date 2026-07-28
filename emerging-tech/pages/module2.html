@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YCXP16QQM1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YCXP16QQM1');
+</script><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 2：生物辨識</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/emerging-tech.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛰️%3C/text%3E%3C/svg%3E">
+</head><body data-tool="emerging-tech" class="et-theme">
+<header class="topbar"><div class="brand"><span class="logo">🛰️</span><div><h1>新興科技</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<main class="module-page">
+  <div class="module-header">
+    <div><span class="module-step">MODULE 02</span><h2>生物辨識：門檻要設在哪裡？</h2>
+    <p class="muted">沒有「零錯誤」的生物辨識，只有「你想錯在哪一邊」。這一關把代價算給你看。</p></div>
+    <div class="muted" id="prog">挑戰完成 0 / 3</div>
+  </div>
+
+  <section class="panel">
+    <h3>🔍 三種生物特徵怎麼比</h3>
+    <div class="pick-grid" id="modPick"></div>
+    <p class="muted" style="margin-top:10px">點選切換，觀察下方分布圖的<strong>重疊區</strong>——重疊越少，越容易分辨本人與他人。</p>
+  </section>
+
+  <section class="panel">
+    <h3>📊 比對分數分布與門檻</h3>
+    <p class="muted" style="margin-bottom:12px">
+      系統把「這次量到的特徵」和「登記的特徵」算出一個<strong>相似度分數</strong>。
+      本人的分數通常較高、他人較低，但兩者<strong>會重疊</strong>。門檻設在哪，決定你放過誰、擋掉誰。
+      <span style="font-size:12.5px;color:#94a3b8">（分布為教學用常態模型，非特定廠商實測值）</span>
+    </p>
+    <div class="et-stage"><canvas id="cv" width="720" height="320"></canvas></div>
+
+    <div style="margin-top:14px">
+      <div style="display:flex;justify-content:space-between;font-size:14px;font-weight:700">
+        <span>🎚️ 判定門檻</span><span id="vTh" style="font-family:'JetBrains Mono',monospace;color:var(--primary-dark)">55</span>
+      </div>
+      <input type="range" id="sTh" min="10" max="95" value="55" style="width:100%">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#64748b">
+        <span>← 寬鬆（好用但不安全）</span><span>嚴格（安全但常被擋）→</span>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:16px">
+      <div style="background:#fef2f2;border-radius:12px;padding:14px;border-left:4px solid #ef4444">
+        <div style="font-size:13px;color:#991b1b;font-weight:700">FAR 誤接受率</div>
+        <div id="far" style="font-size:26px;font-weight:900;color:#dc2626;font-family:'JetBrains Mono',monospace">—</div>
+        <div style="font-size:12px;color:#7f1d1d">把「別人」當成你放進去</div>
+      </div>
+      <div style="background:#fffbeb;border-radius:12px;padding:14px;border-left:4px solid #f59e0b">
+        <div style="font-size:13px;color:#92400e;font-weight:700">FRR 誤拒絕率</div>
+        <div id="frr" style="font-size:26px;font-weight:900;color:#d97706;font-family:'JetBrains Mono',monospace">—</div>
+        <div style="font-size:12px;color:#78350f">把「你本人」擋在門外</div>
+      </div>
+      <div style="background:#eff6ff;border-radius:12px;padding:14px;border-left:4px solid #3b82f6">
+        <div style="font-size:13px;color:#1e40af;font-weight:700">EER 等錯誤率</div>
+        <div id="eer" style="font-size:26px;font-weight:900;color:#2563eb;font-family:'JetBrains Mono',monospace">—</div>
+        <div style="font-size:12px;color:#1e3a8a">兩者相等時的水準（越低越好）</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>🏫 換算成真實情境</h3>
+    <p class="muted">假設全校 <strong>1,000 人</strong>，每人每天刷 <strong>2 次</strong>（早上到校、午餐），另外每天有 <strong>50 次</strong>非本校人員嘗試進入。</p>
+    <div id="scenario" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:12px"></div>
+    <div id="scVerdict" class="verdict good">—</div>
+  </section>
+
+  <section class="panel">
+    <h3>🎯 三個挑戰</h3>
+    <ul id="quests" style="list-style:none;padding:0;margin:10px 0 0;display:flex;flex-direction:column;gap:8px"></ul>
+  </section>
+
+  <section class="panel">
+    <h3>⚖️ 想一想：密碼可以改，指紋不行</h3>
+    <div class="ethics">
+      <strong>生物特徵是「不可撤銷」的身分</strong>
+      <p>密碼外洩可以換一組，但指紋、虹膜、臉一輩子只有一組。一旦特徵資料庫外洩，受害者無法「重設」自己的臉。
+      因此多數規範要求：生物特徵應<strong>轉成不可逆的特徵值</strong>後才儲存、盡量<strong>留在裝置端</strong>不上傳、
+      並且必須取得<strong>明確同意</strong>、提供<strong>替代方案</strong>（例如也能刷卡或輸入密碼）。</p>
+    </div>
+    <p class="muted">課堂討論：學校若要導入人臉點名，你會把門檻設在哪裡？不同意被蒐集臉部特徵的同學，要用什麼方式點名？</p>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="module1.html" class="btn btn-ghost">← 上一關</a>
+    <a href="module3.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a>
+  </div>
+</main>
+<script src="../../js/main.js"></script><script src="../../js/sources.js"></script><script src="../../js/audio.js"></script><script src="../js/module2.js"></script>
+</body></html>

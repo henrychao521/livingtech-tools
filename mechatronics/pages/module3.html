@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YCXP16QQM1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YCXP16QQM1');
+</script><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 3：循跡車 PD 調校</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/mechatronics.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🤖%3C/text%3E%3C/svg%3E">
+</head><body data-tool="mechatronics" class="mx-theme">
+<header class="topbar"><div class="brand"><span class="logo">🤖</span><div><h1>機電整合專題</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<main class="module-page">
+  <div class="module-header">
+    <div><span class="module-step">MODULE 03</span><h2>循跡車 PD 調校：讓它自己跑完一圈</h2>
+    <p class="muted">同一台車、同一條賽道，參數不同，結果天差地別。調到跑完為止。</p></div>
+    <div class="muted" id="prog">挑戰完成 0 / 3</div>
+  </div>
+
+  <section class="panel">
+    <h3>🧠 控制迴路在算什麼</h3>
+    <div class="flow">
+      <span class="flow-node">感測器讀誤差 e<br><small>車偏左還是偏右</small></span><span class="flow-arrow">→</span>
+      <span class="flow-node">P 項 Kp × e<br><small>偏多少就修多少</small></span><span class="flow-arrow">＋</span>
+      <span class="flow-node">D 項 Kd × Δe/Δt<br><small>看偏移「變化多快」提前煞</small></span><span class="flow-arrow">→</span>
+      <span class="flow-node">左右輪差速<br><small>轉彎</small></span>
+    </div>
+    <p class="muted" style="text-align:center;margin-top:4px">
+      <code>ω = Kp·e + Kd·(Δe/Δt)</code>　→　<code>左輪 = 基礎速度 − ω·輪距/2</code>、<code>右輪 = 基礎速度 + ω·輪距/2</code>
+    </p>
+  </section>
+
+  <section class="panel">
+    <h3>🏎️ 模擬器</h3>
+    <p class="muted" style="margin-bottom:12px">
+      模型含<strong>馬達響應延遲</strong>（不會瞬間到達指令轉速）與<strong>轉速上限</strong>，
+      所以「參數越大越好」不成立。感測器共 5 顆，只讀得到黑線的有無。
+    </p>
+    <div class="mx-stage"><canvas id="cv" width="720" height="420"></canvas></div>
+
+    <div class="sensor-row" id="leds"></div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:14px">
+      <div>
+        <div class="param">
+          <div class="param-head"><span>Kp　比例增益</span><span class="param-val" id="vKp">0.10</span></div>
+          <input type="range" id="sKp" min="2" max="50" value="10">
+          <div class="param-hint"><span>0.02 反應遲鈍</span><span>0.50 反應激烈</span></div>
+        </div>
+        <div class="param">
+          <div class="param-head"><span>Kd　微分增益</span><span class="param-val" id="vKd">0.000</span></div>
+          <input type="range" id="sKd" min="0" max="50" value="0">
+          <div class="param-hint"><span>0 無阻尼</span><span>0.050 強阻尼</span></div>
+        </div>
+        <div class="param">
+          <div class="param-head"><span>基礎速度</span><span class="param-val" id="vV">80</span></div>
+          <input type="range" id="sV" min="40" max="160" step="10" value="80">
+          <div class="param-hint"><span>慢而穩</span><span>快而險</span></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <button class="btn btn-primary" id="run" style="flex:1">▶ 開始跑</button>
+          <button class="btn btn-ghost" id="reset">↺ 重置</button>
+        </div>
+      </div>
+      <div>
+        <div class="stat-grid" style="margin-top:0">
+          <div class="stat" style="background:#f1f5f9">
+            <div class="stat-label" style="color:#475569">經過時間</div>
+            <div class="stat-val" id="tVal" style="color:#334155">0.00 s</div>
+          </div>
+          <div class="stat" style="background:#FFEDD5">
+            <div class="stat-label" style="color:#9A3412">完成進度</div>
+            <div class="stat-val" id="pVal" style="color:#C2410C">0 %</div>
+          </div>
+          <div class="stat" style="background:#E0F2FE">
+            <div class="stat-label" style="color:#075985">目前誤差 e</div>
+            <div class="stat-val" id="eVal" style="color:#0284C7">0</div>
+          </div>
+          <div class="stat" style="background:#F5F3FF">
+            <div class="stat-label" style="color:#5B21B6">蛇行次數</div>
+            <div class="stat-val" id="zVal" style="color:#7C3AED">0</div>
+          </div>
+        </div>
+        <div id="verdict" class="verdict warn">按「開始跑」試試看目前的參數</div>
+        <div style="font-size:12.5px;color:#64748b;margin-top:8px">
+          最佳紀錄：<strong id="best">—</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>🎯 三個挑戰</h3>
+    <ul id="quests" style="list-style:none;padding:0;margin:10px 0 0;display:flex;flex-direction:column;gap:8px"></ul>
+  </section>
+
+  <section class="panel">
+    <h3>💡 調校心法（卡住的時候看這裡）</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px">
+      <div style="background:#fef2f2;border-radius:12px;padding:14px;border-left:4px solid #ef4444">
+        <strong style="color:#b91c1c">在彎道衝出去</strong>
+        <p style="font-size:13.5px;color:#7f1d1d;margin:6px 0 0">修正力道不夠 → <strong>調高 Kp</strong>，或先把速度降下來。</p>
+      </div>
+      <div style="background:#fffbeb;border-radius:12px;padding:14px;border-left:4px solid #f59e0b">
+        <strong style="color:#92400e">左右蛇行、抖個不停</strong>
+        <p style="font-size:13.5px;color:#78350f;margin:6px 0 0">修過頭了 → <strong>加一點 Kd</strong>（提前預判、把振盪壓下來），或略降 Kp。</p>
+      </div>
+      <div style="background:#eff6ff;border-radius:12px;padding:14px;border-left:4px solid #3b82f6">
+        <strong style="color:#1e40af">跑得完但太慢</strong>
+        <p style="font-size:13.5px;color:#1e3a8a;margin:6px 0 0">提高基礎速度。但速度越高，光靠 Kp 會越難穩住——<strong>這時候 D 項才是關鍵</strong>。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>🔌 對應到真實的車</h3>
+    <p class="muted">模擬器裡的每個參數，在實體車上都有對應的東西：</p>
+    <ul style="font-size:14px;line-height:2;color:#334155;padding-left:20px">
+      <li><strong>Kp / Kd</strong> → 程式裡的常數，通常寫在 <code>loop()</code> 上方，現場邊跑邊改。</li>
+      <li><strong>基礎速度</strong> → <code>analogWrite()</code> 給馬達驅動器的 PWM 值。</li>
+      <li><strong>馬達延遲</strong> → 馬達的慣性與減速比，換馬達就得重新調參數。</li>
+      <li><strong>感測器誤差 e</strong> → 5 顆紅外線感測器的加權平均，接在類比或數位腳位。</li>
+    </ul>
+    <div class="safety">
+      <strong>實作安全提醒</strong>
+      <p>馬達接上電源前先把車架高（輪子離地），確認轉向正確再放到地面，否則車子會直接衝出桌面。
+      調參數時務必<strong>一次只改一個</strong>，才知道是哪個造成差異。</p>
+    </div>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="module2.html" class="btn btn-ghost">← 上一關</a>
+    <a href="module4.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a>
+  </div>
+</main>
+<script src="../../js/main.js"></script><script src="../../js/sources.js"></script><script src="../../js/audio.js"></script><script src="../js/module3.js"></script>
+</body></html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YCXP16QQM1"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YCXP16QQM1');</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 1：系統組成與馬達選用</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/mechatronics.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🤖%3C/text%3E%3C/svg%3E">
+</head><body data-tool="mechatronics" class="mx-theme">
+<header class="topbar"><div class="brand"><span class="logo">🤖</span><div><h1>機電整合專題</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<main class="module-page">
+  <div class="module-header">
+    <div><span class="module-step">MODULE 01</span><h2>系統組成：一台會自己走的車需要什麼</h2>
+    <p class="muted">拆成四塊看，就不會不知道從哪裡開始做。</p></div>
+    <div class="muted" id="prog">進度 0 / 6</div>
+  </div>
+
+  <section class="panel">
+    <h3>🔗 機電整合系統的四個環節</h3>
+    <div class="flow">
+      <span class="flow-node">① 感測<br><small>紅外線・超音波</small></span><span class="flow-arrow">→</span>
+      <span class="flow-node">② 控制<br><small>微控制器運算</small></span><span class="flow-arrow">→</span>
+      <span class="flow-node">③ 驅動<br><small>驅動器＋馬達</small></span><span class="flow-arrow">→</span>
+      <span class="flow-node">④ 機構<br><small>齒輪・輪子</small></span>
+    </div>
+    <p class="muted" style="text-align:center">④ 動作後改變了環境，① 又量到新的狀態——這個循環叫<strong>回授控制</strong>，是自動化的核心。</p>
+    <div class="safety">
+      <strong>為什麼一定要有驅動器（馬達驅動模組）？</strong>
+      <p>微控制器的腳位通常只能輸出幾十毫安培，而馬達動輒需要數百毫安培以上。
+      直接把馬達接在控制板腳位上會<strong>燒毀控制板</strong>。驅動器的工作是「用小電流的訊號，去控制大電流的通路」，
+      同時讓馬達的電源與控制板的電源分開。</p>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>⚙️ 三種常見馬達</h3>
+    <p class="muted">點卡片認識它們的差別（全部看過才算完成）。</p>
+    <div class="pick-grid" id="motorPick" style="margin-top:12px"></div>
+    <div id="motorDetail" style="margin-top:14px"></div>
+  </section>
+
+  <section class="panel">
+    <h3>🎯 選用挑戰</h3>
+    <p class="muted">三個情境，各選一種最適合的馬達。</p>
+    <div id="quiz" style="margin-top:12px"></div>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="../index.html" class="btn btn-ghost">← 回首頁</a>
+    <a href="module2.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a>
+  </div>
+</main>
+<script src="../../js/main.js"></script><script src="../../js/sources.js"></script><script src="../../js/audio.js"></script><script src="../js/module1.js"></script>
+</body></html>

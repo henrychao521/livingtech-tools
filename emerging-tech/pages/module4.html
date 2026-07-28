@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YCXP16QQM1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YCXP16QQM1');
+</script><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 4：物聯網與綠建築</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/emerging-tech.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛰️%3C/text%3E%3C/svg%3E">
+</head><body data-tool="emerging-tech" class="et-theme">
+<header class="topbar"><div class="brand"><span class="logo">🛰️</span><div><h1>新興科技</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<main class="module-page">
+  <div class="module-header">
+    <div><span class="module-step">MODULE 04</span><h2>物聯網與綠建築：讓教室自己決定</h2>
+    <p class="muted">感測器不會省電，<strong>用感測資料做出的決策</strong>才會。這一關你來設計決策。</p></div>
+    <div class="muted" id="prog">挑戰完成 0 / 3</div>
+  </div>
+
+  <section class="panel">
+    <h3>🔗 物聯網的四層架構</h3>
+    <div class="flow">
+      <span class="flow-node">① 感知層<br><small>感測器取得資料</small></span><span class="flow-arrow">→</span>
+      <span class="flow-node">② 網路層<br><small>Wi-Fi／LoRa 傳輸</small></span><span class="flow-arrow">→</span>
+      <span class="flow-node">③ 平台層<br><small>儲存與運算</small></span><span class="flow-arrow">→</span>
+      <span class="flow-node">④ 應用層<br><small>自動控制・儀表板</small></span>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>🛠️ 第一步：選擇要裝的感測器</h3>
+    <p class="muted" style="margin-bottom:10px">每個感測器都有成本，也各自解鎖一種控制策略。點選加裝或移除。</p>
+    <div class="pick-grid" id="sensorPick"></div>
+    <div style="margin-top:12px;font-size:14px">
+      已裝設 <strong id="sensorCount">0</strong> 個感測器　｜　建置成本 <strong id="sensorCost">NT$ 0</strong>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>⚙️ 第二步：設定控制策略</h3>
+    <p class="muted" style="margin-bottom:10px">只有裝了對應感測器，策略才能啟用。</p>
+    <div id="rules" style="display:flex;flex-direction:column;gap:10px"></div>
+  </section>
+
+  <section class="panel">
+    <h3>📈 第三步：跑一天的模擬（上學日 24 小時）</h3>
+    <div class="et-stage"><canvas id="cv" width="720" height="320"></canvas></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-top:16px">
+      <div style="background:#f1f5f9;border-radius:12px;padding:14px">
+        <div style="font-size:13px;color:#475569;font-weight:700">基準用電（全開）</div>
+        <div id="base" style="font-size:24px;font-weight:900;color:#334155;font-family:'JetBrains Mono',monospace">—</div>
+      </div>
+      <div style="background:#ecfdf5;border-radius:12px;padding:14px;border-left:4px solid #10b981">
+        <div style="font-size:13px;color:#065f46;font-weight:700">你的策略用電</div>
+        <div id="used" style="font-size:24px;font-weight:900;color:#059669;font-family:'JetBrains Mono',monospace">—</div>
+      </div>
+      <div style="background:#eff6ff;border-radius:12px;padding:14px;border-left:4px solid #3b82f6">
+        <div style="font-size:13px;color:#1e40af;font-weight:700">節省比例</div>
+        <div id="save" style="font-size:24px;font-weight:900;color:#2563eb;font-family:'JetBrains Mono',monospace">—</div>
+      </div>
+      <div style="background:#fef2f2;border-radius:12px;padding:14px;border-left:4px solid #ef4444">
+        <div style="font-size:13px;color:#991b1b;font-weight:700">舒適度違規</div>
+        <div id="disc" style="font-size:24px;font-weight:900;color:#dc2626;font-family:'JetBrains Mono',monospace">—</div>
+        <div style="font-size:12px;color:#7f1d1d">有人卻太熱／太暗的時數</div>
+      </div>
+    </div>
+    <div id="verdict" class="verdict good">—</div>
+  </section>
+
+  <section class="panel">
+    <h3>🎯 三個挑戰</h3>
+    <ul id="quests" style="list-style:none;padding:0;margin:10px 0 0;display:flex;flex-direction:column;gap:8px"></ul>
+  </section>
+
+  <section class="panel">
+    <h3>⚖️ 想一想：節能與舒適、隱私的拉扯</h3>
+    <div class="ethics">
+      <strong>「有人感測」也是一種行為紀錄</strong>
+      <p>人體感測器能大幅節能，但同時也記錄了「誰、什麼時候、在哪個空間」。
+      當這些資料被長期保存、跨系統串接，就能還原個人作息。綠建築的設計因此常要求：
+      <strong>只儲存彙總後的數據</strong>（例如「本時段有人／無人」而非「識別到某人」）、
+      設定<strong>保存期限</strong>，並公開告知空間內裝有哪些感測器。</p>
+    </div>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="module3.html" class="btn btn-ghost">← 上一關</a>
+    <a href="module5.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a>
+  </div>
+</main>
+<script src="../../js/main.js"></script><script src="../../js/sources.js"></script><script src="../../js/audio.js"></script><script src="../js/module4.js"></script>
+</body></html>

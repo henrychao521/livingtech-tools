@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YCXP16QQM1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YCXP16QQM1');
+</script><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>機電整合專題 ｜ 生活科技互動教學平台</title>
+<meta name="description" content="從感測、控制到驅動，做出一台會自己走的車。循跡自走車 PD 調校模擬器、超音波避障、馬達選用——對應 108 課綱統整專題。">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/svg-effects.css"><link rel="stylesheet" href="css/mechatronics.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🤖%3C/text%3E%3C/svg%3E">
+</head><body data-tool="mechatronics" class="home mx-theme">
+<header class="topbar">
+  <div class="brand"><span class="logo">🤖</span><div><h1>機電整合專題</h1><p class="subtitle">生活科技互動教學平台</p></div></div>
+  <nav class="topnav"><a href="#modules">學習模組</a><a href="../" style="color:var(--primary-dark);font-weight:600">← 平台首頁</a></nav>
+</header>
+<main>
+  <section class="hero">
+    <div class="hero-text">
+      <span class="badge">108 課綱・生 J-B3 設計製作｜3 下統整專題「自動化裝置」</span>
+      <h2>讓它自己走完一圈<br>感測 · 控制 · 驅動</h2>
+      <p>會亮燈的電路不難，難的是<strong>讓機器自己做決定</strong>。這一站把自走車拆成四個必須同時成立的環節：感測器讀得準、控制邏輯算得對、馬達推得動、整車調得順。核心是一台可以真的跑起來的<strong>循跡車模擬器</strong>——你調參數，它當場跑給你看，跑不完就是跑不完。</p>
+      <div class="hero-cta"><a href="pages/module1.html" class="btn btn-primary">開始學習 →</a><a href="#modules" class="btn btn-ghost">看模組地圖</a></div>
+    </div>
+    <div class="hero-visual">
+      <svg viewBox="0 0 480 360" class="hero-mx svg-shadow-med" role="img" aria-label="循跡自走車示意">
+        <ellipse cx="240" cy="330" rx="180" ry="12" fill="rgba(0,0,0,.13)"/>
+        <!-- 賽道 -->
+        <path d="M90 250 H390" stroke="#0f172a" stroke-width="30" stroke-linecap="round" fill="none"/>
+        <path d="M90 250 H390" stroke="#F8FAFC" stroke-width="6" stroke-dasharray="14 10" fill="none"/>
+        <!-- 車體 -->
+        <g transform="translate(240,205)">
+          <rect x="-62" y="-38" width="124" height="76" rx="10" fill="#1e293b"/>
+          <rect x="-62" y="-38" width="124" height="8" rx="4" fill="#334155"/>
+          <!-- 輪 -->
+          <rect x="-74" y="-30" width="16" height="26" rx="4" fill="#0f172a"/>
+          <rect x="58" y="-30" width="16" height="26" rx="4" fill="#0f172a"/>
+          <rect x="-74" y="6" width="16" height="26" rx="4" fill="#0f172a"/>
+          <rect x="58" y="6" width="16" height="26" rx="4" fill="#0f172a"/>
+          <!-- 控制板 -->
+          <rect x="-30" y="-20" width="60" height="40" rx="4" fill="#16A34A"/>
+          <rect x="-14" y="-8" width="28" height="18" rx="2" fill="#0f172a"/>
+          <text x="0" y="5" text-anchor="middle" fill="#fbbf24" font-size="8" font-weight="700" font-family="Inter">MCU</text>
+          <!-- 感測器陣列 -->
+          <g>
+            <circle cx="-30" cy="44" r="6" fill="#475569"/>
+            <circle cx="-15" cy="44" r="6" fill="#475569"/>
+            <circle cx="0"  cy="44" r="6" fill="#F97316"><animate attributeName="fill" values="#F97316;#FDBA74;#F97316" dur="1.2s" repeatCount="indefinite"/></circle>
+            <circle cx="15" cy="44" r="6" fill="#475569"/>
+            <circle cx="30" cy="44" r="6" fill="#475569"/>
+          </g>
+          <text x="0" y="-46" text-anchor="middle" fill="#F97316" font-size="10" font-weight="700" font-family="Inter">LINE FOLLOWER</text>
+        </g>
+        <!-- 控制迴路箭頭 -->
+        <g stroke="#0EA5E9" stroke-width="2.5" fill="none" marker-end="url(#ar)">
+          <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L7,3 z" fill="#0EA5E9"/></marker></defs>
+          <path d="M150 120 H330"/>
+        </g>
+        <text x="240" y="110" text-anchor="middle" fill="#0EA5E9" font-size="12" font-weight="700" font-family="Inter">感測 → 判斷 → 驅動 → 回授</text>
+        <text x="240" y="46" text-anchor="middle" font-size="14" font-weight="800" fill="#C2410C" font-family="Inter">MECHATRONICS ・ 機電整合</text>
+      </svg>
+    </div>
+  </section>
+
+  <section id="modules" class="modules">
+    <h3 class="section-title">五大學習模組</h3>
+    <p class="section-sub">四個環節缺一不可，最後整車跑一圈</p>
+    <div class="module-grid">
+      <a class="card card-1" href="pages/module1.html">
+        <div class="card-num">01</div><div class="card-icon">🔩</div>
+        <h4>系統組成與馬達選用</h4>
+        <p>感測→控制→驅動的分工，以及直流／伺服／步進馬達該怎麼選。</p>
+        <span class="card-tag">15 分鐘</span>
+      </a>
+      <a class="card card-2" href="pages/module2.html">
+        <div class="card-num">02</div><div class="card-icon">📡</div>
+        <h4>循跡感測與二值化</h4>
+        <p>紅外線反射怎麼分辨黑白線？親手調閾值，看它在什麼情況下讀錯。</p>
+        <span class="card-tag">15 分鐘</span>
+      </a>
+      <a class="card card-3" href="pages/module3.html">
+        <div class="card-num">03</div><div class="card-icon">🎛️</div>
+        <h4>循跡車 PD 調校 ★</h4>
+        <p>本站核心。調 Kp／Kd／速度，車子當場跑一圈——跑太慢、衝出彎道、還是穩穩過關？</p>
+        <span class="card-tag">25 分鐘</span>
+      </a>
+      <a class="card card-4" href="pages/module4.html">
+        <div class="card-num">04</div><div class="card-icon">📏</div>
+        <h4>超音波避障與盲區</h4>
+        <p>用聲音量距離的原理、量不到的情況，以及為什麼會突然衝出去。</p>
+        <span class="card-tag">15 分鐘</span>
+      </a>
+      <a class="card card-5" href="pages/module5.html">
+        <div class="card-num">05</div><div class="card-icon">🏁</div>
+        <h4>整車除錯與競賽調校</h4>
+        <p>車子不動、走歪、亂衝——照著症狀查原因。附完賽檢核表。</p>
+        <span class="card-tag">20 分鐘</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="modules">
+    <h3 class="section-title">這一站接在哪裡</h3>
+    <p class="section-sub">前面模組學的零件，在這裡第一次組成一個會自己動的系統</p>
+    <div class="module-grid">
+      <div class="card"><div class="card-icon">🍞</div><h4>先修：麵包板電路</h4><p>接線與供電的基礎，這裡直接用上。<a href="../breadboard/" style="color:var(--primary-dark);font-weight:700">前往 →</a></p></div>
+      <div class="card"><div class="card-icon">🧠</div><h4>先修：微控制器</h4><p>數位／類比訊號與程式邏輯。<a href="../microcontroller/" style="color:var(--primary-dark);font-weight:700">前往 →</a></p></div>
+      <div class="card"><div class="card-icon">⚙️</div><h4>相關：動力與傳動</h4><p>馬達出力如何變成輪子的轉動。<a href="../powertrain/" style="color:var(--primary-dark);font-weight:700">前往 →</a></p></div>
+    </div>
+  </section>
+</main>
+<script src="../js/main.js"></script><script src="../js/sources.js"></script><script src="../js/audio.js"></script>
+</body></html>

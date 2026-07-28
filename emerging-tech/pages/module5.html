@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YCXP16QQM1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YCXP16QQM1');
+</script><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 5：穿戴式裝置</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/emerging-tech.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛰️%3C/text%3E%3C/svg%3E">
+</head><body data-tool="emerging-tech" class="et-theme">
+<header class="topbar"><div class="brand"><span class="logo">🛰️</span><div><h1>新興科技</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<main class="module-page">
+  <div class="module-header">
+    <div><span class="module-step">MODULE 05</span><h2>穿戴式裝置：它量到什麼、準不準、資料去哪</h2>
+    <p class="muted">手錶上的數字看起來很科學，但它其實是「用光估出來的」。</p></div>
+    <div class="muted" id="prog">挑戰完成 0 / 3</div>
+  </div>
+
+  <section class="panel">
+    <h3>💡 光體積變化描記法（PPG）怎麼量心跳</h3>
+    <div class="flow">
+      <span class="flow-node">① 綠光照進皮膚</span><span class="flow-arrow">→</span>
+      <span class="flow-node">② 血液吸收光</span><span class="flow-arrow">→</span>
+      <span class="flow-node">③ 感光元件收反射</span><span class="flow-arrow">→</span>
+      <span class="flow-node">④ 波峰間隔換算心率</span>
+    </div>
+    <p class="muted" style="text-align:center">心臟每跳一次，血流量變化→反射光量變化。手錶數的是「光的波動」，不是直接量電位（那是心電圖 ECG 做的事）。</p>
+  </section>
+
+  <section class="panel">
+    <h3>🧪 準確度模擬器 <span style="font-size:12px;font-weight:500;color:#64748b;margin-left:6px">與胸帶 ECG 基準比較</span></h3>
+    <p class="muted" style="margin-bottom:12px">改變配戴與運動條件，看手錶讀值和真實心率差多少。
+      <span style="font-size:12.5px;color:#94a3b8">（教學用示意模型：呈現各因素的影響方向與相對大小，非特定產品實測值）</span></p>
+
+    <div class="et-stage"><canvas id="cv" width="720" height="300"></canvas></div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:16px">
+      <div>
+        <label style="font-weight:700;font-size:14px;display:block;margin-bottom:6px">運動強度</label>
+        <div class="pick-grid" id="actPick"></div>
+      </div>
+      <div>
+        <label style="font-weight:700;font-size:14px;display:block;margin-bottom:6px">配戴條件</label>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div><div style="display:flex;justify-content:space-between;font-size:13px"><span>⌚ 錶帶鬆緊</span><span id="vFit" style="font-family:'JetBrains Mono',monospace;font-weight:700">適中</span></div><input type="range" id="sFit" min="0" max="100" value="55" style="width:100%">
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:#94a3b8"><span>太鬆</span><span>太緊</span></div></div>
+          <div><div style="display:flex;justify-content:space-between;font-size:13px"><span>📍 配戴位置</span><span id="vPos" style="font-family:'JetBrains Mono',monospace;font-weight:700">腕骨上方</span></div><input type="range" id="sPos" min="0" max="100" value="70" style="width:100%">
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:#94a3b8"><span>壓在腕骨</span><span>手臂上方</span></div></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <label style="display:flex;gap:6px;align-items:center;font-size:13px"><input type="checkbox" id="cTattoo"> 感測區有刺青</label>
+            <label style="display:flex;gap:6px;align-items:center;font-size:13px"><input type="checkbox" id="cCold"> 手部冰冷（末梢循環差）</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:16px">
+      <div style="background:#ecfdf5;border-radius:12px;padding:14px;border-left:4px solid #10b981">
+        <div style="font-size:13px;color:#065f46;font-weight:700">真實心率（ECG）</div>
+        <div id="truth" style="font-size:26px;font-weight:900;color:#059669;font-family:'JetBrains Mono',monospace">—</div>
+      </div>
+      <div style="background:#eff6ff;border-radius:12px;padding:14px;border-left:4px solid #3b82f6">
+        <div style="font-size:13px;color:#1e40af;font-weight:700">手錶讀值（PPG）</div>
+        <div id="reading" style="font-size:26px;font-weight:900;color:#2563eb;font-family:'JetBrains Mono',monospace">—</div>
+      </div>
+      <div style="background:#fef2f2;border-radius:12px;padding:14px;border-left:4px solid #ef4444">
+        <div style="font-size:13px;color:#991b1b;font-weight:700">誤差</div>
+        <div id="err" style="font-size:26px;font-weight:900;color:#dc2626;font-family:'JetBrains Mono',monospace">—</div>
+      </div>
+    </div>
+    <div id="verdict" class="verdict good">—</div>
+  </section>
+
+  <section class="panel">
+    <h3>🔐 資料要放在哪裡？</h3>
+    <p class="muted" style="margin-bottom:10px">同樣一支手錶，資料流向不同，風險完全不同。點選一種設計，看它的取捨。</p>
+    <div class="xr-grid" id="dataPick"></div>
+    <div id="dataDetail" style="margin-top:14px"></div>
+  </section>
+
+  <section class="panel">
+    <h3>🎯 三個挑戰</h3>
+    <ul id="quests" style="list-style:none;padding:0;margin:10px 0 0;display:flex;flex-direction:column;gap:8px"></ul>
+  </section>
+
+  <section class="panel">
+    <h3>⚖️ 想一想：健康數據不是普通數據</h3>
+    <div class="ethics">
+      <strong>它能推測的，遠比你以為的多</strong>
+      <p>連續的心率與活動資料可以推測睡眠品質、壓力狀態、運動習慣，甚至身體異常。
+      這類資料若與保險、就學或就業決策連結，可能造成差別待遇。
+      如果學校要求學生配戴裝置測體育表現，應該考慮：資料<strong>誰能看</strong>、
+      <strong>保存多久</strong>、<strong>可否不參加</strong>，以及成績是否真的該由它決定。</p>
+    </div>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="module4.html" class="btn btn-ghost">← 上一關</a>
+    <a href="../index.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">完成課程 🎉</a>
+  </div>
+</main>
+<script src="../../js/main.js"></script><script src="../../js/sources.js"></script><script src="../../js/audio.js"></script><script src="../js/module5.js"></script>
+</body></html>

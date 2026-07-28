@@ -22,6 +22,8 @@ const TOOL_PROGRESS_KEYS = {
   'design-process': 'dp_progress_v1',
   'frc': 'frc_progress_v1',
   'onshape': 'onshape_progress_v1',
+  'emerging-tech': 'et_progress_v1',
+  'mechatronics': 'mecha_progress_v1',
 };
 const PROGRESS_KEY = (document.body && TOOL_PROGRESS_KEYS[document.body.dataset.tool]) || 'scrollsaw_progress_v1';
 

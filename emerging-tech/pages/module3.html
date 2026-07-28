@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YCXP16QQM1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YCXP16QQM1');
+</script><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 3：VR / AR / MR / XR</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/emerging-tech.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛰️%3C/text%3E%3C/svg%3E">
+</head><body data-tool="emerging-tech" class="et-theme">
+<header class="topbar"><div class="brand"><span class="logo">🛰️</span><div><h1>新興科技</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<main class="module-page">
+  <div class="module-header">
+    <div><span class="module-step">MODULE 03</span><h2>VR / AR / MR / XR：虛實之間有幾階？</h2>
+    <p class="muted">不是四個並列的名詞，而是「真實 ↔ 虛擬」這條光譜上的不同位置。</p></div>
+    <div class="muted" id="prog">配對 0 / 8</div>
+  </div>
+
+  <section class="panel">
+    <h3>📏 虛實連續體（Reality–Virtuality Continuum）</h3>
+    <p class="muted" style="margin-bottom:12px">1994 年 Milgram 與 Kishino 提出的分類方式：左端是完全真實，右端是完全虛擬，中間都叫「混合實境」。</p>
+    <div class="et-stage" style="background:#0f172a">
+      <svg viewBox="0 0 720 200" role="img" aria-label="虛實連續體光譜圖">
+        <defs><linearGradient id="rv" x1="0" x2="1"><stop offset="0" stop-color="#22c55e"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs>
+        <rect x="50" y="86" width="620" height="16" rx="8" fill="url(#rv)"/>
+        <g font-family="Inter, sans-serif" text-anchor="middle">
+          <text x="50" y="130" fill="#22c55e" font-size="12" font-weight="700">真實環境</text>
+          <text x="670" y="130" fill="#8b5cf6" font-size="12" font-weight="700">虛擬環境</text>
+          <g fill="#e2e8f0" font-size="13" font-weight="800">
+            <circle cx="215" cy="94" r="9" fill="#06B6D4"/><text x="215" y="70">AR</text>
+            <circle cx="430" cy="94" r="9" fill="#F59E0B"/><text x="430" y="70">MR</text>
+            <circle cx="640" cy="94" r="9" fill="#a78bfa"/><text x="640" y="70">VR</text>
+          </g>
+          <text x="360" y="168" fill="#94a3b8" font-size="11">← 混合實境 Mixed Reality 的範圍 →</text>
+          <line x1="140" y1="150" x2="580" y2="150" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+        </g>
+      </svg>
+    </div>
+    <p class="muted" style="margin-top:10px"><strong>XR（延展實境）</strong>不是光譜上的一點，而是<strong>整條光譜的總稱</strong>——用來一次涵蓋 VR/AR/MR 的統稱詞。</p>
+  </section>
+
+  <section class="panel">
+    <h3>🔎 四種實境的判斷關鍵</h3>
+    <div class="xr-grid" id="xrCards"></div>
+  </section>
+
+  <section class="panel">
+    <h3>🎮 情境配對挑戰</h3>
+    <p class="muted">讀情境，判斷它屬於哪一類。答對 8 題解鎖下一關。</p>
+    <div id="quiz" style="margin-top:12px"></div>
+  </section>
+
+  <section class="panel">
+    <h3>⚖️ 想一想：沉浸的代價</h3>
+    <div class="ethics">
+      <strong>越沉浸，越需要注意安全與身心負荷</strong>
+      <p>VR 完全遮蔽視野，使用時要先確認周圍淨空、設定安全邊界；部分使用者會有動暈症（畫面動、身體沒動造成的不適）。
+      多數頭戴裝置建議<strong>年齡下限</strong>與<strong>單次使用時間</strong>限制。此外，這類裝置會持續記錄<strong>頭部與眼球動作</strong>，
+      而視線資料能推測注意力與偏好，屬於敏感資訊。</p>
+    </div>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="module2.html" class="btn btn-ghost">← 上一關</a>
+    <a href="module4.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a>
+  </div>
+</main>
+<script src="../../js/main.js"></script><script src="../../js/sources.js"></script><script src="../../js/audio.js"></script><script src="../js/module3.js"></script>
+</body></html>

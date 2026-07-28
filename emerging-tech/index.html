@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YCXP16QQM1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YCXP16QQM1');
+</script><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>新興科技 ｜ 生活科技互動教學平台</title>
+<meta name="description" content="AI 影像辨識、生物辨識、VR/AR/MR、物聯網與綠建築、穿戴式裝置——五大新興科技互動模組，對應 108 課綱科技領域。">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/svg-effects.css"><link rel="stylesheet" href="css/emerging-tech.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛰️%3C/text%3E%3C/svg%3E">
+</head><body data-tool="emerging-tech" class="home et-theme">
+<header class="topbar">
+  <div class="brand"><span class="logo">🛰️</span><div><h1>新興科技</h1><p class="subtitle">生活科技互動教學平台</p></div></div>
+  <nav class="topnav"><a href="#modules">學習模組</a><a href="../" style="color:var(--primary-dark);font-weight:600">← 平台首頁</a></nav>
+</header>
+<main>
+  <section class="hero">
+    <div class="hero-text">
+      <span class="badge">108 課綱・科技領域 生 J-C3／資 J-A2「新興科技的發展與影響」</span>
+      <h2>看得懂新科技<br>才談得上判斷與選用</h2>
+      <p>AI 會辨識、裝置會感測、資料會上雲——新興科技不是魔法，而是「<strong>感測 → 特徵 → 判斷 → 行動</strong>」這條鏈。本平台用五個可操作的模擬器，帶你親手把這條鏈拆開：AI 為什麼會認錯、生物辨識拿走了什麼、VR/AR/MR 差在哪、感測資料如何變成節能決策、穿戴裝置又量到了你什麼。</p>
+      <div class="hero-cta"><a href="pages/module1.html" class="btn btn-primary">開始學習 →</a><a href="#modules" class="btn btn-ghost">看模組地圖</a></div>
+    </div>
+    <div class="hero-visual">
+      <svg viewBox="0 0 480 360" class="hero-et svg-shadow-med" role="img" aria-label="新興科技示意：影像辨識框與感測節點">
+        <ellipse cx="240" cy="330" rx="190" ry="13" fill="rgba(0,0,0,.13)"/>
+        <!-- 裝置外框 -->
+        <rect x="70" y="60" width="340" height="240" rx="16" fill="#0f172a"/>
+        <rect x="86" y="76" width="308" height="190" rx="8" fill="#1e293b"/>
+        <!-- 掃描線 -->
+        <rect x="86" y="76" width="308" height="4" fill="#06B6D4" opacity=".85">
+          <animate attributeName="y" values="76;262;76" dur="3.2s" repeatCount="indefinite"/>
+        </rect>
+        <!-- 被辨識的物件（原創簡化圖形） -->
+        <circle cx="182" cy="150" r="30" fill="#334155"/>
+        <rect x="152" y="180" width="60" height="52" rx="8" fill="#334155"/>
+        <!-- 辨識框 -->
+        <g fill="none" stroke="#F59E0B" stroke-width="2.5">
+          <rect x="142" y="112" width="80" height="128" rx="4" stroke-dasharray="10 6">
+            <animate attributeName="stroke-opacity" values="1;.35;1" dur="1.6s" repeatCount="indefinite"/>
+          </rect>
+        </g>
+        <rect x="142" y="94" width="86" height="16" rx="3" fill="#F59E0B"/>
+        <text x="185" y="106" text-anchor="middle" fill="#0f172a" font-size="10" font-weight="700" font-family="Inter">person 0.92</text>
+        <!-- 第二個辨識框（信心低） -->
+        <g fill="none" stroke="#64748b" stroke-width="2" stroke-dasharray="6 5">
+          <rect x="280" y="150" width="72" height="72" rx="4"/>
+        </g>
+        <rect x="280" y="132" width="72" height="15" rx="3" fill="#64748b"/>
+        <text x="316" y="143" text-anchor="middle" fill="#e2e8f0" font-size="9" font-weight="700" font-family="Inter">? 0.41</text>
+        <rect x="292" y="164" width="48" height="44" rx="6" fill="#334155"/>
+        <!-- 感測節點 / 上雲 -->
+        <g>
+          <circle cx="120" cy="286" r="6" fill="#06B6D4"><animate attributeName="r" values="6;9;6" dur="2s" repeatCount="indefinite"/></circle>
+          <circle cx="240" cy="286" r="6" fill="#06B6D4"><animate attributeName="r" values="6;9;6" dur="2s" begin=".6s" repeatCount="indefinite"/></circle>
+          <circle cx="360" cy="286" r="6" fill="#06B6D4"><animate attributeName="r" values="6;9;6" dur="2s" begin="1.2s" repeatCount="indefinite"/></circle>
+          <line x1="120" y1="286" x2="360" y2="286" stroke="#06B6D4" stroke-width="1.5" opacity=".5"/>
+        </g>
+        <text x="240" y="40" text-anchor="middle" font-size="14" font-weight="800" fill="#0E7490" font-family="Inter">EMERGING TECH ・ 感測與判斷</text>
+      </svg>
+    </div>
+  </section>
+
+  <section id="modules" class="modules">
+    <h3 class="section-title">五大學習模組</h3>
+    <p class="section-sub">從「機器怎麼看」到「我們該怎麼決定」</p>
+    <div class="module-grid">
+      <a class="card card-1" href="pages/module1.html">
+        <div class="card-num">01</div><div class="card-icon">👁️</div>
+        <h4>AI 影像辨識</h4>
+        <p>親手調整光線、角度、遮擋，看信心分數怎麼掉——理解 AI 為什麼會認錯。</p>
+        <span class="card-tag">15 分鐘</span>
+      </a>
+      <a class="card card-2" href="pages/module2.html">
+        <div class="card-num">02</div><div class="card-icon">🔐</div>
+        <h4>生物辨識</h4>
+        <p>指紋／虹膜／人臉三種特徵比一比，並算算看誤判率代表什麼代價。</p>
+        <span class="card-tag">15 分鐘</span>
+      </a>
+      <a class="card card-3" href="pages/module3.html">
+        <div class="card-num">03</div><div class="card-icon">🥽</div>
+        <h4>VR / AR / MR / XR</h4>
+        <p>四種實境情境配對挑戰，搞懂虛實融合的程度差在哪裡。</p>
+        <span class="card-tag">12 分鐘</span>
+      </a>
+      <a class="card card-4" href="pages/module4.html">
+        <div class="card-num">04</div><div class="card-icon">🏡</div>
+        <h4>物聯網與綠建築</h4>
+        <p>選感測器、設條件、跑一天的模擬，看你的策略省下多少能源。</p>
+        <span class="card-tag">18 分鐘</span>
+      </a>
+      <a class="card card-5" href="pages/module5.html">
+        <div class="card-num">05</div><div class="card-icon">⌚</div>
+        <h4>穿戴式裝置</h4>
+        <p>從感測原理到資料歸屬：它量到什麼、準不準、資料去了哪裡。</p>
+        <span class="card-tag">15 分鐘</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="modules">
+    <h3 class="section-title">這個模組想解決的問題</h3>
+    <p class="section-sub">新興科技最容易變成「名詞背誦」，這裡刻意反過來做</p>
+    <div class="module-grid">
+      <div class="card"><div class="card-icon">🧪</div><h4>可操作，不只可閱讀</h4><p>每個模組都有可以動手改參數的模擬器，讓學生看見「條件改變 → 結果改變」。</p></div>
+      <div class="card"><div class="card-icon">⚖️</div><h4>技術與倫理綁在一起</h4><p>生物辨識與穿戴裝置都直接處理隱私、同意權與資料歸屬，不迴避爭議。</p></div>
+      <div class="card"><div class="card-icon">🔗</div><h4>接得回既有模組</h4><p>感測與控制銜接〈微控制器〉〈麵包板電路〉，製作端銜接〈3D 印表機〉〈Onshape〉。</p></div>
+    </div>
+  </section>
+</main>
+<script src="../js/main.js"></script><script src="../js/sources.js"></script><script src="../js/audio.js"></script>
+</body></html>

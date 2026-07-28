@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YCXP16QQM1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YCXP16QQM1');
+</script><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 1：AI 影像辨識</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/emerging-tech.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛰️%3C/text%3E%3C/svg%3E">
+</head><body data-tool="emerging-tech" class="et-theme">
+<header class="topbar"><div class="brand"><span class="logo">🛰️</span><div><h1>新興科技</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<main class="module-page">
+  <div class="module-header">
+    <div><span class="module-step">MODULE 01</span><h2>AI 影像辨識：它為什麼會認錯？</h2>
+    <p class="muted">AI 不是「看懂」，而是「比對特徵後給出機率」。改變拍攝條件，機率就會改變。</p></div>
+    <div class="muted" id="prog">挑戰完成 0 / 3</div>
+  </div>
+
+  <section class="panel">
+    <h3>🔗 辨識這件事的四個步驟</h3>
+    <div class="flow">
+      <span class="flow-node">① 感測<br><small>攝影機取像</small></span><span class="flow-arrow">→</span>
+      <span class="flow-node">② 特徵<br><small>邊緣・形狀・紋理</small></span><span class="flow-arrow">→</span>
+      <span class="flow-node">③ 判斷<br><small>比對模型給機率</small></span><span class="flow-arrow">→</span>
+      <span class="flow-node">④ 行動<br><small>開門・分類・警示</small></span>
+    </div>
+    <p class="muted" style="text-align:center;margin-top:4px">出錯可能發生在任何一步——最常見的是第 ① 步就給了模型一張它沒學過的畫面。</p>
+  </section>
+
+  <section class="panel">
+    <h3>🧪 辨識模擬器 <span style="font-size:12px;font-weight:500;color:#64748b;margin-left:6px">拖動滑桿，看信心分數怎麼變</span></h3>
+    <p class="muted" style="margin-bottom:12px">
+      這是一個<strong>教學用模擬器</strong>，用規則模擬「條件變差 → 信心下降 → 可能誤判」的現象，
+      並非真正的神經網路。真實模型的行為更複雜，但退化的<em>趨勢</em>與這裡一致。
+    </p>
+
+    <div style="display:grid;grid-template-columns:1fr;gap:16px">
+      <div class="et-stage"><canvas id="cv" width="720" height="380"></canvas></div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
+        <div>
+          <label style="font-weight:700;font-size:14px;display:block;margin-bottom:6px">要辨識的物體</label>
+          <div class="pick-grid" id="objPick"></div>
+        </div>
+        <div>
+          <label style="font-weight:700;font-size:14px;display:block;margin-bottom:6px">拍攝條件</label>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div><div style="display:flex;justify-content:space-between;font-size:13px"><span>💡 亮度</span><span id="vBright" style="font-family:'JetBrains Mono',monospace;font-weight:700">60</span></div><input type="range" id="sBright" min="0" max="100" value="60" style="width:100%"></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:13px"><span>🚧 遮擋</span><span id="vOcc" style="font-family:'JetBrains Mono',monospace;font-weight:700">0%</span></div><input type="range" id="sOcc" min="0" max="70" value="0" style="width:100%"></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:13px"><span>🔄 旋轉</span><span id="vRot" style="font-family:'JetBrains Mono',monospace;font-weight:700">0°</span></div><input type="range" id="sRot" min="0" max="180" value="0" style="width:100%"></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:13px"><span>📺 雜訊</span><span id="vNoise" style="font-family:'JetBrains Mono',monospace;font-weight:700">0</span></div><input type="range" id="sNoise" min="0" max="100" value="0" style="width:100%"></div>
+            <button class="btn btn-ghost" id="reset" style="margin-top:2px">↺ 回到理想條件</button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h4 style="margin:0 0 8px;font-size:15px">模型輸出的信心分數</h4>
+        <div id="bars"></div>
+        <div id="verdict" class="verdict good">辨識正確</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>🎯 三個挑戰</h3>
+    <p class="muted">調整滑桿達成下列狀況，體會「AI 的可靠度是有條件的」。</p>
+    <ul id="quests" style="list-style:none;padding:0;margin:10px 0 0;display:flex;flex-direction:column;gap:8px"></ul>
+  </section>
+
+  <section class="panel">
+    <h3>⚖️ 想一想：模型只認得它學過的世界</h3>
+    <div class="ethics">
+      <strong>訓練資料決定了它的盲點</strong>
+      <p>如果一個模型的訓練照片大多是明亮、正面、無遮擋的，那它在昏暗的走廊、戴口罩的臉、側躺的物品上就會表現變差——這不是「壞掉」，而是它<strong>沒見過</strong>。當這類系統被用來做門禁、篩選或評分時，誰比較容易被誤判，就成了公平性問題。</p>
+    </div>
+    <p class="muted">延伸討論：如果學校用 AI 辨識點名，遇到雙胞胎、換髮型、戴口罩要怎麼處理？門檻要設多高才合理？（下一個模組會實際算給你看）</p>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="../index.html" class="btn btn-ghost">← 回首頁</a>
+    <a href="module2.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a>
+  </div>
+</main>
+<script src="../../js/main.js"></script><script src="../../js/sources.js"></script><script src="../../js/audio.js"></script><script src="../js/module1.js"></script>
+</body></html>

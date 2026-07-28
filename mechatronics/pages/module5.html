@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YCXP16QQM1"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YCXP16QQM1');</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 5：整車除錯與競賽調校</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/mechatronics.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🤖%3C/text%3E%3C/svg%3E">
+</head><body data-tool="mechatronics" class="mx-theme">
+<header class="topbar"><div class="brand"><span class="logo">🤖</span><div><h1>機電整合專題</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<main class="module-page">
+  <div class="module-header">
+    <div><span class="module-step">MODULE 05</span><h2>整車除錯：照著症狀找原因</h2>
+    <p class="muted">「車子不會動」不是一個原因，是十幾個可能。有系統地排除，比亂拔線快得多。</p></div>
+    <div class="muted" id="prog">診斷 0 / 5</div>
+  </div>
+
+  <section class="panel">
+    <h3>🔍 症狀診斷練習</h3>
+    <p class="muted">讀症狀，選出<strong>最該優先檢查</strong>的項目。五題全對即完成。</p>
+    <div id="quiz" style="margin-top:14px"></div>
+  </section>
+
+  <section class="panel">
+    <h3>🧭 通用除錯順序</h3>
+    <p class="muted">不管什麼症狀，都照這個順序走，可以少走很多冤枉路：</p>
+    <div class="flow">
+      <span class="flow-node">① 電<br><small>電池電壓夠嗎</small></span><span class="flow-arrow">→</span>
+      <span class="flow-node">② 線<br><small>接觸・共地</small></span><span class="flow-arrow">→</span>
+      <span class="flow-node">③ 訊號<br><small>印出感測值</small></span><span class="flow-arrow">→</span>
+      <span class="flow-node">④ 邏輯<br><small>判斷式對嗎</small></span><span class="flow-arrow">→</span>
+      <span class="flow-node">⑤ 參數<br><small>再談調校</small></span>
+    </div>
+    <div class="safety">
+      <strong>最容易被忽略的第 ② 步：共地（GND 相接）</strong>
+      <p>當控制板與馬達使用<strong>不同電源</strong>時，兩邊的 GND 必須接在一起，訊號才有共同的參考點。
+      沒共地的典型症狀是「馬達偶爾動一下、或完全不受控」，而且看起來很像程式壞掉——非常難查。</p>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>✅ 完賽檢核表</h3>
+    <p class="muted">下場前逐項確認，勾完再上場。（勾選狀態會自動保存）</p>
+    <div id="checklist" style="margin-top:12px;display:flex;flex-direction:column;gap:8px"></div>
+    <div id="checkStat" class="verdict warn" style="margin-top:12px">已完成 0 / 10 項</div>
+  </section>
+
+  <section class="panel">
+    <h3>🏁 回到模擬器再練一次</h3>
+    <p class="muted">除錯完成後，回到 <a href="module3.html" style="color:var(--primary-dark);font-weight:700">模組 3 循跡調校</a>
+      試著刷新自己的最佳圈速——這次你應該知道每個參數在做什麼了。</p>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="module4.html" class="btn btn-ghost">← 上一關</a>
+    <a href="../index.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">完成課程 🎉</a>
+  </div>
+</main>
+<script src="../../js/main.js"></script><script src="../../js/sources.js"></script><script src="../../js/audio.js"></script><script src="../js/module5.js"></script>
+</body></html>

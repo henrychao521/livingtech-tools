@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YCXP16QQM1"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YCXP16QQM1');</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 2：循跡感測與二值化</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/mechatronics.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🤖%3C/text%3E%3C/svg%3E">
+</head><body data-tool="mechatronics" class="mx-theme">
+<header class="topbar"><div class="brand"><span class="logo">🤖</span><div><h1>機電整合專題</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<main class="module-page">
+  <div class="module-header">
+    <div><span class="module-step">MODULE 02</span><h2>循跡感測：從「反射多少光」到「是不是黑線」</h2>
+    <p class="muted">感測器讀到的是連續的數值，程式要的是 0 或 1。中間那條線怎麼畫，就是二值化。</p></div>
+    <div class="muted" id="prog">挑戰完成 0 / 3</div>
+  </div>
+
+  <section class="panel">
+    <h3>💡 紅外線反射式感測器的原理</h3>
+    <div class="flow">
+      <span class="flow-node">紅外線 LED<br><small>照向地面</small></span><span class="flow-arrow">→</span>
+      <span class="flow-node">表面反射<br><small>白反射多・黑吸收多</small></span><span class="flow-arrow">→</span>
+      <span class="flow-node">光電晶體收光<br><small>類比值 0–1023</small></span><span class="flow-arrow">→</span>
+      <span class="flow-node">比對閾值<br><small>輸出 0 / 1</small></span>
+    </div>
+    <p class="muted" style="text-align:center">黑色膠帶吸收大部分紅外線 → 反射弱 → 讀值低；白色地板反射強 → 讀值高。</p>
+  </section>
+
+  <section class="panel">
+    <h3>🧪 二值化調校器</h3>
+    <p class="muted" style="margin-bottom:12px">改變地面材質與環境光，再調閾值。看什麼時候會判斷錯誤。
+      <span style="font-size:12.5px;color:#94a3b8">（示意模型：呈現各因素的影響方向，非特定感測器實測值）</span></p>
+    <div class="mx-stage"><canvas id="cv" width="720" height="300"></canvas></div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;margin-top:14px">
+      <div>
+        <label style="font-weight:700;font-size:14px;display:block;margin-bottom:6px">地面材質組合</label>
+        <div class="pick-grid" id="surfPick"></div>
+      </div>
+      <div>
+        <div class="param">
+          <div class="param-head"><span>🔆 環境光</span><span class="param-val" id="vAmb">正常</span></div>
+          <input type="range" id="sAmb" min="0" max="100" value="40">
+          <div class="param-hint"><span>昏暗教室</span><span>陽光直射</span></div>
+        </div>
+        <div class="param">
+          <div class="param-head"><span>📏 離地高度</span><span class="param-val" id="vH">5 mm</span></div>
+          <input type="range" id="sH" min="1" max="20" value="5">
+          <div class="param-hint"><span>太近</span><span>太遠</span></div>
+        </div>
+        <div class="param">
+          <div class="param-head"><span>🎚️ 判定閾值</span><span class="param-val" id="vTh">500</span></div>
+          <input type="range" id="sTh" min="50" max="950" step="10" value="500">
+          <div class="param-hint"><span>容易判成黑</span><span>容易判成白</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat" style="background:#1e293b">
+        <div class="stat-label" style="color:#94a3b8">黑線讀值</div>
+        <div class="stat-val" id="blackVal" style="color:#e2e8f0">—</div>
+      </div>
+      <div class="stat" style="background:#f1f5f9">
+        <div class="stat-label" style="color:#475569">白底讀值</div>
+        <div class="stat-val" id="whiteVal" style="color:#334155">—</div>
+      </div>
+      <div class="stat" style="background:#FFEDD5">
+        <div class="stat-label" style="color:#9A3412">分離度</div>
+        <div class="stat-val" id="gapVal" style="color:#C2410C">—</div>
+      </div>
+    </div>
+    <div id="verdict" class="verdict good">—</div>
+  </section>
+
+  <section class="panel">
+    <h3>🎯 三個挑戰</h3>
+    <ul id="quests" style="list-style:none;padding:0;margin:10px 0 0;display:flex;flex-direction:column;gap:8px"></ul>
+  </section>
+
+  <section class="panel">
+    <h3>🔧 實作時該怎麼定閾值</h3>
+    <p class="muted">不要在程式裡寫死數字。標準做法是<strong>開機校正</strong>：</p>
+    <ol style="font-size:14px;line-height:2;color:#334155;padding-left:20px">
+      <li>開機後讓車子在黑線與白底上來回掃過幾秒。</li>
+      <li>記錄每顆感測器各自的<strong>最大值與最小值</strong>。</li>
+      <li>閾值取兩者中間（或依實測微調），<strong>每顆感測器分別算</strong>——它們的個體差異比你想的大。</li>
+      <li>換場地、換光線就重新校正一次。</li>
+    </ol>
+    <div class="safety">
+      <strong>比賽當天最常見的失誤</strong>
+      <p>在家裡調好的閾值，到了比賽場地因為<strong>燈光不同、地板材質不同</strong>而完全失效。
+      所以校正程序要做成開機自動執行，而不是靠賽前手動改程式重燒錄。</p>
+    </div>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="module1.html" class="btn btn-ghost">← 上一關</a>
+    <a href="module3.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a>
+  </div>
+</main>
+<script src="../../js/main.js"></script><script src="../../js/sources.js"></script><script src="../../js/audio.js"></script><script src="../js/module2.js"></script>
+</body></html>
