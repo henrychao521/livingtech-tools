@@ -157,6 +157,64 @@
   .hub-tool:hover .tool-cta {
     transform: translateX(4px);
   }
+
+  /* ===== 主題總覽 ===== */
+  .overview { max-width:1200px; margin:0 auto; padding:32px 36px 8px; }
+  .ov-wrap { display:flex; flex-direction:column; gap:16px; margin-top:18px; }
+  .ov-group { }
+  .ov-h { font-size:14px; font-weight:800; color:var(--text-soft); margin-bottom:8px; display:flex; align-items:center; gap:8px; }
+  .ov-c { background:var(--bg-soft); color:var(--text-muted); font-size:11px; padding:1px 8px; border-radius:999px; font-weight:700; }
+  .ov-row { display:flex; flex-wrap:wrap; gap:8px; }
+  .ov-chip { display:inline-flex; align-items:center; gap:7px; background:#fff; border:1px solid var(--border);
+    border-radius:999px; padding:7px 14px 7px 10px; text-decoration:none; color:inherit; transition:all .2s var(--easing); position:relative; }
+  .ov-chip:hover { border-color:var(--primary); transform:translateY(-2px); box-shadow:var(--shadow-sm); }
+  .ov-e { font-size:18px; line-height:1; }
+  .ov-n { font-size:13.5px; font-weight:700; white-space:nowrap; }
+  .ov-new { font-size:9px; font-weight:800; background:linear-gradient(135deg,#FF7A00,#DC2626); color:#fff;
+    padding:1px 5px; border-radius:999px; letter-spacing:.04em; }
+
+  /* ===== 學習路徑 ===== */
+  .pathmap { max-width:1200px; margin:0 auto; padding:36px 36px 8px; }
+  .pm-wrap { display:flex; flex-direction:column; gap:12px; margin-top:18px; }
+  .pm-lane { display:flex; align-items:center; gap:8px; flex-wrap:wrap; background:#fff;
+    border:1px solid var(--border); border-radius:14px; padding:14px 18px; }
+  .pm-lane.pm-hl { border-color:rgba(255,122,0,.45); background:linear-gradient(90deg,#fffaf5,#fff); }
+  .pm-label { font-size:13px; font-weight:800; color:var(--text-soft); flex:0 0 118px; }
+  .pm-node { display:inline-block; background:var(--bg-soft); border:1px solid var(--border); border-radius:10px;
+    padding:7px 13px; font-size:13.5px; font-weight:700; text-decoration:none; color:inherit; transition:all .2s var(--easing); white-space:nowrap; }
+  .pm-node:hover { border-color:var(--primary); background:#fff; transform:translateY(-2px); }
+  .pm-goal { background:linear-gradient(135deg,#FF7A00,#DC2626); color:#fff; border-color:transparent; }
+  .pm-goal:hover { color:#fff; }
+  .pm-a { color:var(--text-light); font-weight:800; }
+  .pm-note { font-size:12px; color:var(--text-muted); }
+
+  /* ===== 黏性篩選列 ===== */
+  .filterbar { position:sticky; top:0; z-index:30; background:rgba(255,255,255,.92);
+    backdrop-filter:blur(10px); border-bottom:1px solid var(--border); margin:18px 0 0; }
+  .fb-inner { max-width:1200px; margin:0 auto; padding:12px 36px; display:flex; gap:8px; overflow-x:auto; scrollbar-width:thin; }
+  .fchip { flex:0 0 auto; background:#fff; border:1.5px solid var(--border); border-radius:999px;
+    padding:8px 15px; font-size:13.5px; font-weight:700; cursor:pointer; color:var(--text-soft);
+    transition:all .18s var(--easing); display:inline-flex; align-items:center; gap:6px; font-family:inherit; }
+  .fchip:hover { border-color:var(--primary); color:var(--text); }
+  .fchip.on { background:var(--primary); border-color:var(--primary); color:#fff; }
+  .fc-n { font-size:11px; opacity:.75; font-weight:800; }
+  .fchip.on .fc-n { opacity:.9; }
+
+  /* ===== 分類區塊 ===== */
+  .cat-sec { margin-top:40px; scroll-margin-top:70px; }
+  .cat-sec.hide { display:none; }
+  .cat-head h4 { font-size:22px; font-weight:800; display:flex; align-items:center; gap:10px; margin-bottom:4px; }
+  .cat-n { font-size:12px; background:var(--bg-soft); color:var(--text-muted); padding:2px 9px; border-radius:999px; font-weight:700; }
+  .cat-head p { font-size:14px; color:var(--text-soft); margin-bottom:16px; }
+
+  @media (max-width:820px) {
+    .overview, .pathmap { padding-left:20px; padding-right:20px; }
+    .fb-inner { padding:10px 20px; }
+    .pm-label { flex:0 0 100%; margin-bottom:4px; }
+    .pm-lane { padding:12px 14px; }
+    .cat-head h4 { font-size:19px; }
+  }
+
   .badge-new {
     position: absolute;
     top: 18px; right: 18px;
@@ -325,70 +383,66 @@
   </section>
 
   <section id="tools" class="hub-tools">
-    <h3 class="section-title">教學工具列表</h3>
-    <p class="section-sub">點選工具進入該工具的五大模組</p>
-    <div class="hub-tool-grid">
+      <section class="overview" id="overview">
+    <h3 class="section-title">全部 24 個主題一覽</h3>
+    <p class="section-sub">點任一主題直接進入；或用下方分類逐區瀏覽</p>
+    <div class="ov-wrap"><div class="ov-group" data-cat="tools"><div class="ov-h">🪚 機具安全與操作 <span class="ov-c">5</span></div><div class="ov-row"><a class="ov-chip" href="scrollsaw/" data-cat="tools"><span class="ov-e">🪚</span><span class="ov-n">線鋸機</span></a><a class="ov-chip" href="drill/" data-cat="tools"><span class="ov-e">🔩</span><span class="ov-n">手電鑽</span><span class=ov-new>NEW</span></a><a class="ov-chip" href="drill-press/" data-cat="tools"><span class="ov-e">🛠</span><span class="ov-n">鑽床</span><span class=ov-new>NEW</span></a><a class="ov-chip" href="sander/" data-cat="tools"><span class="ov-e">✨</span><span class="ov-n">砂磨機</span><span class=ov-new>NEW</span></a><a class="ov-chip" href="hand-tools/" data-cat="tools"><span class="ov-e">🔨</span><span class="ov-n">基本手工具</span><span class=ov-new>NEW</span></a></div></div><div class="ov-group" data-cat="design"><div class="ov-h">📐 設計與製造 <span class="ov-c">4</span></div><div class="ov-row"><a class="ov-chip" href="orthographic/" data-cat="design"><span class="ov-e">📐</span><span class="ov-n">三視圖</span><span class=ov-new>NEW</span></a><a class="ov-chip" href="design-process/" data-cat="design"><span class="ov-e">🎯</span><span class="ov-n">產品設計流程</span><span class=ov-new>NEW</span></a><a class="ov-chip" href="onshape/" data-cat="design"><span class="ov-e">📐</span><span class="ov-n">Onshape 3D 建模</span><span class=ov-new>NEW</span></a><a class="ov-chip" href="printer3d/" data-cat="design"><span class="ov-e">🖨️</span><span class="ov-n">3D 印表機</span><span class=ov-new>NEW</span></a></div></div><div class="ov-group" data-cat="mech"><div class="ov-h">⚙️ 機構與結構 <span class="ov-c">5</span></div><div class="ov-row"><a class="ov-chip" href="simple-machines/" data-cat="mech"><span class="ov-e">⚙</span><span class="ov-n">簡單機械</span><span class=ov-new>NEW</span></a><a class="ov-chip" href="mechanism/" data-cat="mech"><span class="ov-e">🎡</span><span class="ov-n">機構運動</span><span class=ov-new>NEW</span></a><a class="ov-chip" href="hydraulic-arm/" data-cat="mech"><span class="ov-e">💪</span><span class="ov-n">液壓手臂</span><span class=ov-new>NEW</span></a><a class="ov-chip" href="structure/" data-cat="mech"><span class="ov-e">🏗️</span><span class="ov-n">橋樑工程師實驗室</span><span class=ov-new>NEW</span></a><a class="ov-chip" href="structure-sim/" data-cat="mech"><span class="ov-e">🏛</span><span class="ov-n">結構模擬器</span><span class=ov-new>NEW</span></a></div></div><div class="ov-group" data-cat="energy"><div class="ov-h">⚡ 能源與動力 <span class="ov-c">2</span></div><div class="ov-row"><a class="ov-chip" href="energy/" data-cat="energy"><span class="ov-e">⚡</span><span class="ov-n">能源系統</span><span class=ov-new>NEW</span></a><a class="ov-chip" href="powertrain/" data-cat="energy"><span class="ov-e">🚗</span><span class="ov-n">動力與運輸</span><span class=ov-new>NEW</span></a></div></div><div class="ov-group" data-cat="elec"><div class="ov-h">🔌 電子與控制 <span class="ov-c">3</span></div><div class="ov-row"><a class="ov-chip" href="solder/" data-cat="elec"><span class="ov-e">🔥</span><span class="ov-n">電烙鐵</span><span class=ov-new>NEW</span></a><a class="ov-chip" href="breadboard/" data-cat="elec"><span class="ov-e">🔌</span><span class="ov-n">麵包板電路</span><span class=ov-new>NEW</span></a><a class="ov-chip" href="microcontroller/" data-cat="elec"><span class="ov-e">🧠</span><span class="ov-n">微控制器</span><span class=ov-new>NEW</span></a></div></div><div class="ov-group" data-cat="project"><div class="ov-h">🤖 專題實作 <span class="ov-c">2</span></div><div class="ov-row"><a class="ov-chip" href="mechatronics/" data-cat="project"><span class="ov-e">🤖</span><span class="ov-n">機電整合專題</span><span class=ov-new>NEW</span></a><a class="ov-chip" href="frc/" data-cat="project"><span class="ov-e">🤖</span><span class="ov-n">FRC 機器人</span><span class=ov-new>NEW</span></a></div></div><div class="ov-group" data-cat="frontier"><div class="ov-h">🛰️ 新興科技與跨領域 <span class="ov-c">3</span></div><div class="ov-row"><a class="ov-chip" href="emerging-tech/" data-cat="frontier"><span class="ov-e">🛰️</span><span class="ov-n">新興科技</span><span class=ov-new>NEW</span></a><a class="ov-chip" href="steam/" data-cat="frontier"><span class="ov-e">🎨</span><span class="ov-n">跨領域 STEAM</span><span class=ov-new>NEW</span></a><a class="ov-chip" href="physics/" data-cat="frontier"><span class="ov-e">🧪</span><span class="ov-n">物理模擬實驗室</span><span class=ov-new>NEW</span></a></div></div></div>
+  </section>
 
-      <a class="hub-tool tool-saw" href="steam/" style="--bg-tint:#8B5CF6">
-        <span class="badge-new" style="background:linear-gradient(135deg,#8B5CF6,#A78BFA)">NEW</span>
-        <div class="tool-head">
-          <div class="tool-emoji">🎨</div>
-          <div>
-            <h3>跨領域 STEAM</h3>
-            <div class="tool-tagline">STEAM ・ 原理層</div>
-          </div>
-        </div>
-        <p class="tool-desc">科技一直站在數學與科學上。零硬體、純操作的四個模組：翻位元湊數字並試出同位檢查抓不到的錯誤、單步看三種排序怎麼比怎麼換、調泛音配方聽出音色差異、拖動物距即時畫出透鏡光路——放大鏡、相機、投影機其實是同一條公式。</p>
-        <div class="tool-features">
-          <span class="tool-feature">🔢 二進位與編碼</span>
-          <span class="tool-feature">🔀 排序演算法</span>
-          <span class="tool-feature">🔊 聲音的科學</span>
-          <span class="tool-feature">🔍 透鏡成像</span>
-        </div>
-        <span class="tool-cta" style="background:#8B5CF6;box-shadow:0 4px 12px rgba(139,92,246,.35)">進入 STEAM 平台 →</span>
-      </a>
+  <section class="pathmap" id="pathmap">
+    <h3 class="section-title">學習路徑建議</h3>
+    <p class="section-sub">箭頭代表「先學這個會比較順」，不是硬性規定</p>
+    <div class="pm-wrap">
+      <div class="pm-lane">
+        <div class="pm-label">🔧 動手做</div>
+        <a class="pm-node" href="hand-tools/">🔨 基本手工具</a><span class="pm-a">→</span>
+        <a class="pm-node" href="scrollsaw/">🪚 線鋸機</a><span class="pm-a">→</span>
+        <a class="pm-node" href="drill-press/">🛠 鑽床</a><span class="pm-a">→</span>
+        <a class="pm-node" href="sander/">✨ 砂磨機</a>
+      </div>
+      <div class="pm-lane">
+        <div class="pm-label">📐 設計到製造</div>
+        <a class="pm-node" href="orthographic/">📐 三視圖</a><span class="pm-a">→</span>
+        <a class="pm-node" href="onshape/">📐 Onshape</a><span class="pm-a">→</span>
+        <a class="pm-node" href="printer3d/">🖨️ 3D 印表機</a><span class="pm-a">→</span>
+        <a class="pm-node" href="design-process/">🎯 設計流程</a>
+      </div>
+      <div class="pm-lane">
+        <div class="pm-label">⚙️ 力與運動</div>
+        <a class="pm-node" href="simple-machines/">⚙ 簡單機械</a><span class="pm-a">→</span>
+        <a class="pm-node" href="mechanism/">🎡 機構運動</a><span class="pm-a">→</span>
+        <a class="pm-node" href="structure/">🏗️ 橋樑實驗室</a><span class="pm-a">→</span>
+        <a class="pm-node" href="powertrain/">🚗 動力與運輸</a>
+      </div>
+      <div class="pm-lane pm-hl">
+        <div class="pm-label">🔌 電到自動化</div>
+        <a class="pm-node" href="solder/">🔥 電烙鐵</a><span class="pm-a">→</span>
+        <a class="pm-node" href="breadboard/">🔌 麵包板</a><span class="pm-a">→</span>
+        <a class="pm-node" href="microcontroller/">🧠 微控制器</a><span class="pm-a">→</span>
+        <a class="pm-node pm-goal" href="mechatronics/">🤖 機電整合專題</a>
+      </div>
+      <div class="pm-lane">
+        <div class="pm-label">🛰️ 看懂新科技</div>
+        <a class="pm-node" href="steam/">🎨 跨領域 STEAM</a><span class="pm-a">→</span>
+        <a class="pm-node" href="emerging-tech/">🛰️ 新興科技</a>
+        <span class="pm-note">（可獨立進行，不需先修）</span>
+      </div>
+    </div>
+  </section>
 
-      <a class="hub-tool tool-saw" href="mechatronics/" style="--bg-tint:#F97316">
-        <span class="badge-new" style="background:linear-gradient(135deg,#F97316,#FB923C)">NEW</span>
-        <div class="tool-head">
-          <div class="tool-emoji">🤖</div>
-          <div>
-            <h3>機電整合專題</h3>
-            <div class="tool-tagline">MECHATRONICS ・ 自走車</div>
-          </div>
-        </div>
-        <p class="tool-desc">把麵包板與微控制器學到的零件，第一次組成一個會自己動的系統。核心是可以真的跑起來的<strong>循跡車 PD 調校模擬器</strong>——含馬達響應延遲與轉速上限，所以「參數越大越好」不成立：想跑快就必須自己發現微分項。另有感測器二值化、超音波盲區、整車除錯與完賽檢核表。</p>
-        <div class="tool-features">
-          <span class="tool-feature">🔩 馬達選用</span>
-          <span class="tool-feature">📡 二值化調校</span>
-          <span class="tool-feature">🎛️ 循跡 PD 模擬</span>
-          <span class="tool-feature">📏 超音波盲區</span>
-          <span class="tool-feature">🏁 除錯檢核表</span>
-        </div>
-        <span class="tool-cta" style="background:#F97316;box-shadow:0 4px 12px rgba(249,115,22,.35)">進入機電整合平台 →</span>
-      </a>
+  <h3 class="section-title">教學工具列表</h3>
+    <p class="section-sub">共 24 個主題，依性質分為七類</p>
+  <div class="filterbar" id="filterbar">
+    <div class="fb-inner">
+      <button class="fchip on" data-f="all">全部<span class="fc-n">24</span></button>
+      <button class="fchip" data-f="tools">🪚 機具安全與操作<span class="fc-n">5</span></button><button class="fchip" data-f="design">📐 設計與製造<span class="fc-n">4</span></button><button class="fchip" data-f="mech">⚙️ 機構與結構<span class="fc-n">5</span></button><button class="fchip" data-f="energy">⚡ 能源與動力<span class="fc-n">2</span></button><button class="fchip" data-f="elec">🔌 電子與控制<span class="fc-n">3</span></button><button class="fchip" data-f="project">🤖 專題實作<span class="fc-n">2</span></button><button class="fchip" data-f="frontier">🛰️ 新興科技與跨領域<span class="fc-n">3</span></button>
+    </div>
+  </div>
 
-      <a class="hub-tool tool-saw" href="emerging-tech/" style="--bg-tint:#06B6D4">
-        <span class="badge-new" style="background:linear-gradient(135deg,#06B6D4,#22D3EE)">NEW</span>
-        <div class="tool-head">
-          <div class="tool-emoji">🛰️</div>
-          <div>
-            <h3>新興科技</h3>
-            <div class="tool-tagline">EMERGING TECH ・ 感測與判斷</div>
-          </div>
-        </div>
-        <p class="tool-desc">AI 為什麼會認錯？門檻設在哪裡才合理？新興科技最怕變成名詞背誦，這裡全部做成可以動手改參數的模擬器：調光線與遮擋看信心分數崩掉、拉門檻算出每天誤擋幾人、比較四種實境、跑一天的智慧節能模擬。技術與倫理綁在一起談。</p>
-        <div class="tool-features">
-          <span class="tool-feature">👁️ AI 影像辨識</span>
-          <span class="tool-feature">🔐 生物辨識門檻</span>
-          <span class="tool-feature">🥽 VR/AR/MR/XR</span>
-          <span class="tool-feature">🏡 物聯網綠建築</span>
-          <span class="tool-feature">⌚ 穿戴式裝置</span>
-        </div>
-        <span class="tool-cta" style="background:#06B6D4;box-shadow:0 4px 12px rgba(6,182,212,.35)">進入新興科技平台 →</span>
-      </a>
-
-      <a class="hub-tool tool-saw" href="scrollsaw/">
+    <section class="cat-sec" id="cat-tools" data-cat="tools">
+      <div class="cat-head"><h4>🪚 機具安全與操作 <span class="cat-n">5</span></h4><p>進實作教室前先在數位環境熟悉結構、安全規範與操作步驟</p></div>
+      <div class="hub-tool-grid">
+<a class="hub-tool tool-saw" href="scrollsaw/">
         <div class="tool-head">
           <div class="tool-emoji">🪚</div>
           <div>
@@ -406,8 +460,7 @@
         </div>
         <span class="tool-cta">進入線鋸機平台 →</span>
       </a>
-
-      <a class="hub-tool tool-saw" href="drill/" style="--bg-tint:#F59E0B">
+<a class="hub-tool tool-saw" href="drill/" style="--bg-tint:#F59E0B">
         <span class="badge-new" style="background:linear-gradient(135deg,#F59E0B,#B45309)">NEW</span>
         <div class="tool-head">
           <div class="tool-emoji">🔩</div>
@@ -426,8 +479,7 @@
         </div>
         <span class="tool-cta" style="background:#F59E0B;box-shadow:0 4px 12px rgba(245,158,11,.35)">進入手電鑽平台 →</span>
       </a>
-
-      <a class="hub-tool tool-saw" href="drill-press/" style="--bg-tint:#15803D">
+<a class="hub-tool tool-saw" href="drill-press/" style="--bg-tint:#15803D">
         <span class="badge-new" style="background:linear-gradient(135deg,#15803D,#22C55E)">NEW</span>
         <div class="tool-head">
           <div class="tool-emoji">🛠</div>
@@ -446,8 +498,7 @@
         </div>
         <span class="tool-cta" style="background:#15803D;box-shadow:0 4px 12px rgba(21,128,61,.35)">進入鑽床平台 →</span>
       </a>
-
-      <a class="hub-tool tool-saw" href="sander/" style="--bg-tint:#7C3AED">
+<a class="hub-tool tool-saw" href="sander/" style="--bg-tint:#7C3AED">
         <span class="badge-new" style="background:linear-gradient(135deg,#7C3AED,#A78BFA)">NEW</span>
         <div class="tool-head">
           <div class="tool-emoji">✨</div>
@@ -466,188 +517,7 @@
         </div>
         <span class="tool-cta" style="background:#7C3AED;box-shadow:0 4px 12px rgba(124,58,237,.35)">進入砂磨機平台 →</span>
       </a>
-
-      <a class="hub-tool tool-saw" href="structure-sim/" style="--bg-tint:#1D4ED8">
-        <span class="badge-new" style="background:linear-gradient(135deg,#1D4ED8,#3B82F6)">NEW</span>
-        <div class="tool-head">
-          <div class="tool-emoji">🏛</div>
-          <div>
-            <h3>結構模擬器</h3>
-            <div class="tool-tagline">STRUCTURE SIM ・ 力學可視化</div>
-          </div>
-        </div>
-        <p class="tool-desc">1 下關卡 4「結構與機構」核心。3 種桁架型式（Pratt/Warren/Howe）可選，加荷重看紅張藍壓即時受力。含紙拖鞋承重、紙橋負重、結構塔三大經典挑戰指南 + 8 種失效模式（挫屈/剪切/彎矩/疲勞...）。</p>
-        <div class="tool-features">
-          <span class="tool-feature">🔍 8 元素</span>
-          <span class="tool-feature">🧩 6 結構類型</span>
-          <span class="tool-feature">📖 8 步流程</span>
-          <span class="tool-feature">🎮 力學模擬</span>
-          <span class="tool-feature">🏆 3 大挑戰</span>
-        </div>
-        <span class="tool-cta" style="background:#1D4ED8;box-shadow:0 4px 12px rgba(29,78,216,.35)">進入結構模擬器 →</span>
-      </a>
-
-      <a class="hub-tool tool-saw" href="simple-machines/" style="--bg-tint:#DB2777">
-        <span class="badge-new" style="background:linear-gradient(135deg,#DB2777,#EC4899)">NEW</span>
-        <div class="tool-head">
-          <div class="tool-emoji">⚙</div>
-          <div>
-            <h3>簡單機械</h3>
-            <div class="tool-tagline">SIMPLE MACHINES ・ 省力的原理</div>
-          </div>
-        </div>
-        <p class="tool-desc">1 下關卡 4 機械原理。6 種簡單機械（槓桿/滑輪/輪軸/斜面/楔形/螺旋）+ 槓桿三類分類 + MA 計算 6 題練習 + 三合一模擬器（槓桿/滑輪/斜面）+ 12 件日常物品分析。</p>
-        <div class="tool-features">
-          <span class="tool-feature">🔍 6 種機械</span>
-          <span class="tool-feature">🧩 槓桿 3 類</span>
-          <span class="tool-feature">📖 MA 公式</span>
-          <span class="tool-feature">🎮 力學模擬</span>
-          <span class="tool-feature">🏆 生活應用</span>
-        </div>
-        <span class="tool-cta" style="background:#DB2777;box-shadow:0 4px 12px rgba(219,39,119,.35)">進入簡單機械 →</span>
-      </a>
-
-      <a class="hub-tool tool-saw" href="mechanism/" style="--bg-tint:#14B8A6">
-        <span class="badge-new" style="background:linear-gradient(135deg,#14B8A6,#5EEAD4)">NEW</span>
-        <div class="tool-head">
-          <div class="tool-emoji">🎡</div>
-          <div>
-            <h3>機構運動</h3>
-            <div class="tool-tagline">MECHANISM ・ 運動的轉換器</div>
-          </div>
-        </div>
-        <p class="tool-desc">1 下 K4 挑戰 5 + 課本附件 3-5。6 種機構（曲柄滑塊/凸輪/齒輪/四連桿/棘輪/皮帶）含 SVG 動畫 + 4 種運動類型分類 + 創意機構卡片製作 + 三合一動畫模擬器（曲柄滑塊/凸輪/齒輪即時運動）+ 10 種生活機構分析。</p>
-        <div class="tool-features">
-          <span class="tool-feature">🔍 6 機構</span>
-          <span class="tool-feature">🧩 4 運動</span>
-          <span class="tool-feature">📖 紙卡製作</span>
-          <span class="tool-feature">🎮 動畫模擬</span>
-          <span class="tool-feature">🏆 生活應用</span>
-        </div>
-        <span class="tool-cta" style="background:#14B8A6;box-shadow:0 4px 12px rgba(20,184,166,.35)">進入機構運動 →</span>
-      </a>
-
-      <a class="hub-tool tool-saw" href="energy/" style="--bg-tint:#CA8A04">
-        <span class="badge-new" style="background:linear-gradient(135deg,#CA8A04,#EAB308)">NEW</span>
-        <div class="tool-head">
-          <div class="tool-emoji">⚡</div>
-          <div>
-            <h3>能源系統</h3>
-            <div class="tool-tagline">ENERGY ・ 永續與發電</div>
-          </div>
-        </div>
-        <p class="tool-desc">2 上 K1+K3 認識能源整章。5 種能源（化石/核能/太陽能/風力/水力）+ 6 種能量形式 + 8 步發電鏈 + 5 種發電方式效率比較 + 家庭用電試算（夏季電價級距 + CO₂ + 種樹換算）+ 10 招節能。</p>
-        <div class="tool-features">
-          <span class="tool-feature">🔍 5 能源</span>
-          <span class="tool-feature">🧩 能量轉換</span>
-          <span class="tool-feature">📖 發電流程</span>
-          <span class="tool-feature">🎮 排碳比較</span>
-          <span class="tool-feature">🏆 用電試算</span>
-        </div>
-        <span class="tool-cta" style="background:#CA8A04;box-shadow:0 4px 12px rgba(202,138,4,.35)">進入能源系統 →</span>
-      </a>
-
-      <a class="hub-tool tool-saw" href="powertrain/" style="--bg-tint:#EA580C">
-        <span class="badge-new" style="background:linear-gradient(135deg,#EA580C,#FB923C)">NEW</span>
-        <div class="tool-head">
-          <div class="tool-emoji">🚗</div>
-          <div>
-            <h3>動力與運輸</h3>
-            <div class="tool-tagline">POWERTRAIN ・ 動力科技</div>
-          </div>
-        </div>
-        <p class="tool-desc">2 下 K4+K6 動力運輸整章。4 種動力系統（內燃機/電動機/燃料電池/液壓）+ 陸海空 3 大運輸分類 + 太陽能動力車 8 步製作流程 + 4 種車輛 × 5 動力源效率/碳排模擬器 + 運輸對社會與環境 10 議題分析。</p>
-        <div class="tool-features">
-          <span class="tool-feature">🔍 4 動力</span>
-          <span class="tool-feature">🚢 海陸空</span>
-          <span class="tool-feature">📖 太陽能車</span>
-          <span class="tool-feature">🎮 效率比較</span>
-          <span class="tool-feature">🏆 環境議題</span>
-        </div>
-        <span class="tool-cta" style="background:#EA580C;box-shadow:0 4px 12px rgba(234,88,12,.35)">進入動力與運輸 →</span>
-      </a>
-
-      <a class="hub-tool tool-saw" href="hydraulic-arm/" style="--bg-tint:#0284C7">
-        <span class="badge-new" style="background:linear-gradient(135deg,#0284C7,#38BDF8)">NEW</span>
-        <div class="tool-head">
-          <div class="tool-emoji">💪</div>
-          <div>
-            <h3>液壓手臂</h3>
-            <div class="tool-tagline">HYDRAULIC ARM ・ 帕斯卡定律應用</div>
-          </div>
-        </div>
-        <p class="tool-desc">2 下 K5 統整創作。帕斯卡定律 + 油壓缸 + 機械利益 + 靜壓傳動 4 大原理 + 4 軸液壓手臂（基座/大臂/小臂/夾爪）結構 + 翰林附件 3 紙模製作 8 步 + Canvas 4 軸控制模擬器（搬瓶子任務）+ 8 種工業液壓應用。</p>
-        <div class="tool-features">
-          <span class="tool-feature">🔍 4 原理</span>
-          <span class="tool-feature">🦾 4 軸結構</span>
-          <span class="tool-feature">📖 8 步製作</span>
-          <span class="tool-feature">🎮 4 軸操控</span>
-          <span class="tool-feature">🏆 工業應用</span>
-        </div>
-        <span class="tool-cta" style="background:#0284C7;box-shadow:0 4px 12px rgba(2,132,199,.35)">進入液壓手臂 →</span>
-      </a>
-
-      <a class="hub-tool tool-saw" href="microcontroller/" style="--bg-tint:#6366F1">
-        <span class="badge-new" style="background:linear-gradient(135deg,#6366F1,#818CF8)">NEW</span>
-        <div class="tool-head">
-          <div class="tool-emoji">🧠</div>
-          <div>
-            <h3>微控制器</h3>
-            <div class="tool-tagline">MICROCONTROLLER ・ Arduino / ESP32</div>
-          </div>
-        </div>
-        <p class="tool-desc">3 下 K4 + 統整專題。3 大平台比較（Arduino/micro:bit/ESP32）+ 數位/類比訊號 + 8 種感測器 + Arduino 8 範例程式 + 虛擬電路模擬器（LED/按鈕/避障）+ 創意公仔燈 + 清掃機器人案例。</p>
-        <div class="tool-features">
-          <span class="tool-feature">🔍 3 MCU</span>
-          <span class="tool-feature">📡 8 感測器</span>
-          <span class="tool-feature">💻 8 範例</span>
-          <span class="tool-feature">🎮 虛擬電路</span>
-          <span class="tool-feature">🏆 創意作品</span>
-        </div>
-        <span class="tool-cta" style="background:#6366F1;box-shadow:0 4px 12px rgba(99,102,241,.35)">進入微控制器 →</span>
-      </a>
-
-      <a class="hub-tool tool-saw" href="orthographic/" style="--bg-tint:#4F46E5">
-        <span class="badge-new" style="background:linear-gradient(135deg,#4F46E5,#818CF8)">NEW</span>
-        <div class="tool-head">
-          <div class="tool-emoji">📐</div>
-          <div>
-            <h3>三視圖</h3>
-            <div class="tool-tagline">ORTHOGRAPHIC ・ 工程製圖基礎</div>
-          </div>
-        </div>
-        <p class="tool-desc">1 上 K3 挑戰 1「無所不在的視圖與製圖」。第三角投影法 + 6 個概念 + 4 種視圖類型比較 + 8 步繪製流程 + 6 種 3D 物件 ↔ 三視圖即時模擬器 + 8 題判讀挑戰。Onshape CAD 課程前置技能。</p>
-        <div class="tool-features">
-          <span class="tool-feature">🔍 6 概念</span>
-          <span class="tool-feature">🎨 4 視圖</span>
-          <span class="tool-feature">📖 8 步繪製</span>
-          <span class="tool-feature">🎮 3D↔2D</span>
-          <span class="tool-feature">🏆 判讀挑戰</span>
-        </div>
-        <span class="tool-cta" style="background:#4F46E5;box-shadow:0 4px 12px rgba(79,70,229,.35)">進入三視圖 →</span>
-      </a>
-
-      <a class="hub-tool tool-saw" href="design-process/" style="--bg-tint:#9333EA">
-        <span class="badge-new" style="background:linear-gradient(135deg,#9333EA,#C084FC)">NEW</span>
-        <div class="tool-head">
-          <div class="tool-emoji">🎯</div>
-          <div>
-            <h3>產品設計流程</h3>
-            <div class="tool-tagline">DESIGN PROCESS ・ 設計思考</div>
-          </div>
-        </div>
-        <p class="tool-desc">3 上 K2 產品設計整章。設計思考 5 階段（同理→定義→發想→原型→測試）+ 6 種市場調查方法 + 9 個發想工具（SCAMPER/HMW/6 思考帽）+ Pugh 決策矩陣互動模擬 + iPhone/Tesla/Airbnb 等 8 個改變世界的設計案例。</p>
-        <div class="tool-features">
-          <span class="tool-feature">🔍 5 階段</span>
-          <span class="tool-feature">📊 6 方法</span>
-          <span class="tool-feature">💡 9 工具</span>
-          <span class="tool-feature">🎮 決策矩陣</span>
-          <span class="tool-feature">🏆 經典案例</span>
-        </div>
-        <span class="tool-cta" style="background:#9333EA;box-shadow:0 4px 12px rgba(147,51,234,.35)">進入產品設計 →</span>
-      </a>
-
-      <a class="hub-tool tool-saw" href="hand-tools/" style="--bg-tint:#64748B">
+<a class="hub-tool tool-saw" href="hand-tools/" style="--bg-tint:#64748B">
         <span class="badge-new" style="background:linear-gradient(135deg,#64748B,#94A3B8)">NEW</span>
         <div class="tool-head">
           <div class="tool-emoji">🔨</div>
@@ -666,88 +536,51 @@
         </div>
         <span class="tool-cta" style="background:#64748B;box-shadow:0 4px 12px rgba(100,116,139,.35)">進入手工具 →</span>
       </a>
+      </div>
+    </section>
 
-      <a class="hub-tool tool-solder" href="solder/">
-        <span class="badge-new">NEW</span>
+    <section class="cat-sec" id="cat-design" data-cat="design">
+      <div class="cat-head"><h4>📐 設計與製造 <span class="cat-n">4</span></h4><p>從畫得出來到做得出來：製圖、建模、數位製造</p></div>
+      <div class="hub-tool-grid">
+<a class="hub-tool tool-saw" href="orthographic/" style="--bg-tint:#4F46E5">
+        <span class="badge-new" style="background:linear-gradient(135deg,#4F46E5,#818CF8)">NEW</span>
         <div class="tool-head">
-          <div class="tool-emoji">🔥</div>
+          <div class="tool-emoji">📐</div>
           <div>
-            <h3>電烙鐵</h3>
-            <div class="tool-tagline">SOLDERING IRON ・ 電子焊接</div>
+            <h3>三視圖</h3>
+            <div class="tool-tagline">ORTHOGRAPHIC ・ 工程製圖基礎</div>
           </div>
         </div>
-        <p class="tool-desc">讓學生第一次焊接就焊出飽滿的焊點。從認識烙鐵、安全規範、焊接步驟，到模擬焊接（5 種焊點類型）與焊點品質鑑定（9 種錯誤對照）。</p>
+        <p class="tool-desc">1 上 K3 挑戰 1「無所不在的視圖與製圖」。第三角投影法 + 6 個概念 + 4 種視圖類型比較 + 8 步繪製流程 + 6 種 3D 物件 ↔ 三視圖即時模擬器 + 8 題判讀挑戰。Onshape CAD 課程前置技能。</p>
         <div class="tool-features">
-          <span class="tool-feature">🔍 部位互動</span>
-          <span class="tool-feature">🛡️ 燙傷預防</span>
-          <span class="tool-feature">📖 8 步動畫</span>
-          <span class="tool-feature">🎮 焊接模擬</span>
-          <span class="tool-feature">🔬 9 種錯誤圖鑑</span>
+          <span class="tool-feature">🔍 6 概念</span>
+          <span class="tool-feature">🎨 4 視圖</span>
+          <span class="tool-feature">📖 8 步繪製</span>
+          <span class="tool-feature">🎮 3D↔2D</span>
+          <span class="tool-feature">🏆 判讀挑戰</span>
         </div>
-        <span class="tool-cta">進入電烙鐵平台 →</span>
+        <span class="tool-cta" style="background:#4F46E5;box-shadow:0 4px 12px rgba(79,70,229,.35)">進入三視圖 →</span>
       </a>
-
-      <a class="hub-tool tool-saw" href="breadboard/" style="--bg-tint:#16A34A">
-        <span class="badge-new" style="background:linear-gradient(135deg,#16A34A,#10B981)">NEW</span>
+<a class="hub-tool tool-saw" href="design-process/" style="--bg-tint:#9333EA">
+        <span class="badge-new" style="background:linear-gradient(135deg,#9333EA,#C084FC)">NEW</span>
         <div class="tool-head">
-          <div class="tool-emoji">🔌</div>
+          <div class="tool-emoji">🎯</div>
           <div>
-            <h3>麵包板電路</h3>
-            <div class="tool-tagline">BREADBOARD ・ 電路組裝</div>
+            <h3>產品設計流程</h3>
+            <div class="tool-tagline">DESIGN PROCESS ・ 設計思考</div>
           </div>
         </div>
-        <p class="tool-desc">從一顆 LED 開始讓電流可視化。認識電源軌、行/列、跳線；闖關修正 5 種電路故障（缺電阻、LED 反接、電源軌斷點、並聯、開關）。</p>
+        <p class="tool-desc">3 上 K2 產品設計整章。設計思考 5 階段（同理→定義→發想→原型→測試）+ 6 種市場調查方法 + 9 個發想工具（SCAMPER/HMW/6 思考帽）+ Pugh 決策矩陣互動模擬 + iPhone/Tesla/Airbnb 等 8 個改變世界的設計案例。</p>
         <div class="tool-features">
-          <span class="tool-feature">🔍 8 部位</span>
-          <span class="tool-feature">⚡ 10 安全題</span>
-          <span class="tool-feature">📖 8 步動畫</span>
-          <span class="tool-feature">🎮 找錯修正</span>
-          <span class="tool-feature">🔬 8 故障圖鑑</span>
+          <span class="tool-feature">🔍 5 階段</span>
+          <span class="tool-feature">📊 6 方法</span>
+          <span class="tool-feature">💡 9 工具</span>
+          <span class="tool-feature">🎮 決策矩陣</span>
+          <span class="tool-feature">🏆 經典案例</span>
         </div>
-        <span class="tool-cta" style="background:#16A34A;box-shadow:0 4px 12px rgba(22,163,74,.35)">進入麵包板平台 →</span>
+        <span class="tool-cta" style="background:#9333EA;box-shadow:0 4px 12px rgba(147,51,234,.35)">進入產品設計 →</span>
       </a>
-
-      <a class="hub-tool tool-saw" href="printer3d/" style="--bg-tint:#0891B2">
-        <span class="badge-new" style="background:linear-gradient(135deg,#0891B2,#06B6D4)">NEW</span>
-        <div class="tool-head">
-          <div class="tool-emoji">🖨️</div>
-          <div>
-            <h3>3D 印表機</h3>
-            <div class="tool-tagline">3D PRINTER ・ 數位製造</div>
-          </div>
-        </div>
-        <p class="tool-desc">從 STL 到實體看懂每一層的累積。認識機構、調整切片參數（層厚、密度、速度、溫度），即時預覽列印效果與預估耗時，對照 8 種常見故障。</p>
-        <div class="tool-features">
-          <span class="tool-feature">🔍 8 部件</span>
-          <span class="tool-feature">⚡ 10 安全題</span>
-          <span class="tool-feature">📖 8 步流程</span>
-          <span class="tool-feature">🎮 切片模擬</span>
-          <span class="tool-feature">🔬 8 故障圖鑑</span>
-        </div>
-        <span class="tool-cta" style="background:#0891B2;box-shadow:0 4px 12px rgba(8,145,178,.35)">進入 3D 印表機平台 →</span>
-      </a>
-
-      <a class="hub-tool tool-saw" href="frc/" style="--bg-tint:#0066B3">
-        <span class="badge-new" style="background:linear-gradient(135deg,#0066B3,#FF6600)">NEW</span>
-        <div class="tool-head">
-          <div class="tool-emoji">🤖</div>
-          <div>
-            <h3>FRC 機器人</h3>
-            <div class="tool-tagline">FIRST ROBOTICS ・ 競賽工程</div>
-          </div>
-        </div>
-        <p class="tool-desc">全球最大高中機器人競賽。認識機器人結構（8 子系統）、隊伍分工、工程設計流程（7 階段）、機器人策略配置、工程筆記範本與 FRC 6 大獎項評鑑。參考 Team 254（5 屆世界冠軍）、Citrus Circuits 1678 的公開資源。</p>
-        <div class="tool-features">
-          <span class="tool-feature">🤖 機器人結構</span>
-          <span class="tool-feature">🛡️ 工坊安全</span>
-          <span class="tool-feature">📐 設計流程</span>
-          <span class="tool-feature">🎮 策略配置模擬</span>
-          <span class="tool-feature">📓 工程筆記</span>
-        </div>
-        <span class="tool-cta" style="background:#0066B3;box-shadow:0 4px 12px rgba(0,102,179,.35)">進入 FRC 平台 →</span>
-      </a>
-
-      <a class="hub-tool tool-saw" href="onshape/" style="--bg-tint:#0091BD">
+<a class="hub-tool tool-saw" href="onshape/" style="--bg-tint:#0091BD">
         <span class="badge-new" style="background:linear-gradient(135deg,#0091BD,#4FC3DD)">NEW</span>
         <div class="tool-head">
           <div class="tool-emoji">📐</div>
@@ -766,8 +599,89 @@
         </div>
         <span class="tool-cta" style="background:#0091BD;box-shadow:0 4px 12px rgba(0,145,189,.35)">進入 Onshape 平台 →</span>
       </a>
+<a class="hub-tool tool-saw" href="printer3d/" style="--bg-tint:#0891B2">
+        <span class="badge-new" style="background:linear-gradient(135deg,#0891B2,#06B6D4)">NEW</span>
+        <div class="tool-head">
+          <div class="tool-emoji">🖨️</div>
+          <div>
+            <h3>3D 印表機</h3>
+            <div class="tool-tagline">3D PRINTER ・ 數位製造</div>
+          </div>
+        </div>
+        <p class="tool-desc">從 STL 到實體看懂每一層的累積。認識機構、調整切片參數（層厚、密度、速度、溫度），即時預覽列印效果與預估耗時，對照 8 種常見故障。</p>
+        <div class="tool-features">
+          <span class="tool-feature">🔍 8 部件</span>
+          <span class="tool-feature">⚡ 10 安全題</span>
+          <span class="tool-feature">📖 8 步流程</span>
+          <span class="tool-feature">🎮 切片模擬</span>
+          <span class="tool-feature">🔬 8 故障圖鑑</span>
+        </div>
+        <span class="tool-cta" style="background:#0891B2;box-shadow:0 4px 12px rgba(8,145,178,.35)">進入 3D 印表機平台 →</span>
+      </a>
+      </div>
+    </section>
 
-      <a class="hub-tool tool-saw" href="structure/" style="--bg-tint:#0d9488">
+    <section class="cat-sec" id="cat-mech" data-cat="mech">
+      <div class="cat-head"><h4>⚙️ 機構與結構 <span class="cat-n">5</span></h4><p>力怎麼傳遞、結構為什麼不會垮</p></div>
+      <div class="hub-tool-grid">
+<a class="hub-tool tool-saw" href="simple-machines/" style="--bg-tint:#DB2777">
+        <span class="badge-new" style="background:linear-gradient(135deg,#DB2777,#EC4899)">NEW</span>
+        <div class="tool-head">
+          <div class="tool-emoji">⚙</div>
+          <div>
+            <h3>簡單機械</h3>
+            <div class="tool-tagline">SIMPLE MACHINES ・ 省力的原理</div>
+          </div>
+        </div>
+        <p class="tool-desc">1 下關卡 4 機械原理。6 種簡單機械（槓桿/滑輪/輪軸/斜面/楔形/螺旋）+ 槓桿三類分類 + MA 計算 6 題練習 + 三合一模擬器（槓桿/滑輪/斜面）+ 12 件日常物品分析。</p>
+        <div class="tool-features">
+          <span class="tool-feature">🔍 6 種機械</span>
+          <span class="tool-feature">🧩 槓桿 3 類</span>
+          <span class="tool-feature">📖 MA 公式</span>
+          <span class="tool-feature">🎮 力學模擬</span>
+          <span class="tool-feature">🏆 生活應用</span>
+        </div>
+        <span class="tool-cta" style="background:#DB2777;box-shadow:0 4px 12px rgba(219,39,119,.35)">進入簡單機械 →</span>
+      </a>
+<a class="hub-tool tool-saw" href="mechanism/" style="--bg-tint:#14B8A6">
+        <span class="badge-new" style="background:linear-gradient(135deg,#14B8A6,#5EEAD4)">NEW</span>
+        <div class="tool-head">
+          <div class="tool-emoji">🎡</div>
+          <div>
+            <h3>機構運動</h3>
+            <div class="tool-tagline">MECHANISM ・ 運動的轉換器</div>
+          </div>
+        </div>
+        <p class="tool-desc">1 下 K4 挑戰 5 + 課本附件 3-5。6 種機構（曲柄滑塊/凸輪/齒輪/四連桿/棘輪/皮帶）含 SVG 動畫 + 4 種運動類型分類 + 創意機構卡片製作 + 三合一動畫模擬器（曲柄滑塊/凸輪/齒輪即時運動）+ 10 種生活機構分析。</p>
+        <div class="tool-features">
+          <span class="tool-feature">🔍 6 機構</span>
+          <span class="tool-feature">🧩 4 運動</span>
+          <span class="tool-feature">📖 紙卡製作</span>
+          <span class="tool-feature">🎮 動畫模擬</span>
+          <span class="tool-feature">🏆 生活應用</span>
+        </div>
+        <span class="tool-cta" style="background:#14B8A6;box-shadow:0 4px 12px rgba(20,184,166,.35)">進入機構運動 →</span>
+      </a>
+<a class="hub-tool tool-saw" href="hydraulic-arm/" style="--bg-tint:#0284C7">
+        <span class="badge-new" style="background:linear-gradient(135deg,#0284C7,#38BDF8)">NEW</span>
+        <div class="tool-head">
+          <div class="tool-emoji">💪</div>
+          <div>
+            <h3>液壓手臂</h3>
+            <div class="tool-tagline">HYDRAULIC ARM ・ 帕斯卡定律應用</div>
+          </div>
+        </div>
+        <p class="tool-desc">2 下 K5 統整創作。帕斯卡定律 + 油壓缸 + 機械利益 + 靜壓傳動 4 大原理 + 4 軸液壓手臂（基座/大臂/小臂/夾爪）結構 + 翰林附件 3 紙模製作 8 步 + Canvas 4 軸控制模擬器（搬瓶子任務）+ 8 種工業液壓應用。</p>
+        <div class="tool-features">
+          <span class="tool-feature">🔍 4 原理</span>
+          <span class="tool-feature">🦾 4 軸結構</span>
+          <span class="tool-feature">📖 8 步製作</span>
+          <span class="tool-feature">🎮 4 軸操控</span>
+          <span class="tool-feature">🏆 工業應用</span>
+        </div>
+        <span class="tool-cta" style="background:#0284C7;box-shadow:0 4px 12px rgba(2,132,199,.35)">進入液壓手臂 →</span>
+      </a>
+<a class="hub-tool tool-saw" href="structure/" style="--bg-tint:#0d9488">
         <span class="badge-new" style="background:linear-gradient(135deg,#0d9488,#14b8a6)">NEW</span>
         <div class="tool-head">
           <div class="tool-emoji">🏗️</div>
@@ -786,8 +700,220 @@
         </div>
         <span class="tool-cta" style="background:#0d9488;box-shadow:0 4px 12px rgba(13,148,136,.35)">進入橋樑實驗室 →</span>
       </a>
+<a class="hub-tool tool-saw" href="structure-sim/" style="--bg-tint:#1D4ED8">
+        <span class="badge-new" style="background:linear-gradient(135deg,#1D4ED8,#3B82F6)">NEW</span>
+        <div class="tool-head">
+          <div class="tool-emoji">🏛</div>
+          <div>
+            <h3>結構模擬器</h3>
+            <div class="tool-tagline">STRUCTURE SIM ・ 力學可視化</div>
+          </div>
+        </div>
+        <p class="tool-desc">1 下關卡 4「結構與機構」核心。3 種桁架型式（Pratt/Warren/Howe）可選，加荷重看紅張藍壓即時受力。含紙拖鞋承重、紙橋負重、結構塔三大經典挑戰指南 + 8 種失效模式（挫屈/剪切/彎矩/疲勞...）。</p>
+        <div class="tool-features">
+          <span class="tool-feature">🔍 8 元素</span>
+          <span class="tool-feature">🧩 6 結構類型</span>
+          <span class="tool-feature">📖 8 步流程</span>
+          <span class="tool-feature">🎮 力學模擬</span>
+          <span class="tool-feature">🏆 3 大挑戰</span>
+        </div>
+        <span class="tool-cta" style="background:#1D4ED8;box-shadow:0 4px 12px rgba(29,78,216,.35)">進入結構模擬器 →</span>
+      </a>
+      </div>
+    </section>
 
-      <a class="hub-tool tool-saw" href="physics/" style="--bg-tint:#7C3AED">
+    <section class="cat-sec" id="cat-energy" data-cat="energy">
+      <div class="cat-head"><h4>⚡ 能源與動力 <span class="cat-n">2</span></h4><p>能量從哪裡來、如何變成運動</p></div>
+      <div class="hub-tool-grid">
+<a class="hub-tool tool-saw" href="energy/" style="--bg-tint:#CA8A04">
+        <span class="badge-new" style="background:linear-gradient(135deg,#CA8A04,#EAB308)">NEW</span>
+        <div class="tool-head">
+          <div class="tool-emoji">⚡</div>
+          <div>
+            <h3>能源系統</h3>
+            <div class="tool-tagline">ENERGY ・ 永續與發電</div>
+          </div>
+        </div>
+        <p class="tool-desc">2 上 K1+K3 認識能源整章。5 種能源（化石/核能/太陽能/風力/水力）+ 6 種能量形式 + 8 步發電鏈 + 5 種發電方式效率比較 + 家庭用電試算（夏季電價級距 + CO₂ + 種樹換算）+ 10 招節能。</p>
+        <div class="tool-features">
+          <span class="tool-feature">🔍 5 能源</span>
+          <span class="tool-feature">🧩 能量轉換</span>
+          <span class="tool-feature">📖 發電流程</span>
+          <span class="tool-feature">🎮 排碳比較</span>
+          <span class="tool-feature">🏆 用電試算</span>
+        </div>
+        <span class="tool-cta" style="background:#CA8A04;box-shadow:0 4px 12px rgba(202,138,4,.35)">進入能源系統 →</span>
+      </a>
+<a class="hub-tool tool-saw" href="powertrain/" style="--bg-tint:#EA580C">
+        <span class="badge-new" style="background:linear-gradient(135deg,#EA580C,#FB923C)">NEW</span>
+        <div class="tool-head">
+          <div class="tool-emoji">🚗</div>
+          <div>
+            <h3>動力與運輸</h3>
+            <div class="tool-tagline">POWERTRAIN ・ 動力科技</div>
+          </div>
+        </div>
+        <p class="tool-desc">2 下 K4+K6 動力運輸整章。4 種動力系統（內燃機/電動機/燃料電池/液壓）+ 陸海空 3 大運輸分類 + 太陽能動力車 8 步製作流程 + 4 種車輛 × 5 動力源效率/碳排模擬器 + 運輸對社會與環境 10 議題分析。</p>
+        <div class="tool-features">
+          <span class="tool-feature">🔍 4 動力</span>
+          <span class="tool-feature">🚢 海陸空</span>
+          <span class="tool-feature">📖 太陽能車</span>
+          <span class="tool-feature">🎮 效率比較</span>
+          <span class="tool-feature">🏆 環境議題</span>
+        </div>
+        <span class="tool-cta" style="background:#EA580C;box-shadow:0 4px 12px rgba(234,88,12,.35)">進入動力與運輸 →</span>
+      </a>
+      </div>
+    </section>
+
+    <section class="cat-sec" id="cat-elec" data-cat="elec">
+      <div class="cat-head"><h4>🔌 電子與控制 <span class="cat-n">3</span></h4><p>接得起來、會思考、能動作</p></div>
+      <div class="hub-tool-grid">
+<a class="hub-tool tool-solder" href="solder/">
+        <span class="badge-new">NEW</span>
+        <div class="tool-head">
+          <div class="tool-emoji">🔥</div>
+          <div>
+            <h3>電烙鐵</h3>
+            <div class="tool-tagline">SOLDERING IRON ・ 電子焊接</div>
+          </div>
+        </div>
+        <p class="tool-desc">讓學生第一次焊接就焊出飽滿的焊點。從認識烙鐵、安全規範、焊接步驟，到模擬焊接（5 種焊點類型）與焊點品質鑑定（9 種錯誤對照）。</p>
+        <div class="tool-features">
+          <span class="tool-feature">🔍 部位互動</span>
+          <span class="tool-feature">🛡️ 燙傷預防</span>
+          <span class="tool-feature">📖 8 步動畫</span>
+          <span class="tool-feature">🎮 焊接模擬</span>
+          <span class="tool-feature">🔬 9 種錯誤圖鑑</span>
+        </div>
+        <span class="tool-cta">進入電烙鐵平台 →</span>
+      </a>
+<a class="hub-tool tool-saw" href="breadboard/" style="--bg-tint:#16A34A">
+        <span class="badge-new" style="background:linear-gradient(135deg,#16A34A,#10B981)">NEW</span>
+        <div class="tool-head">
+          <div class="tool-emoji">🔌</div>
+          <div>
+            <h3>麵包板電路</h3>
+            <div class="tool-tagline">BREADBOARD ・ 電路組裝</div>
+          </div>
+        </div>
+        <p class="tool-desc">從一顆 LED 開始讓電流可視化。認識電源軌、行/列、跳線；闖關修正 5 種電路故障（缺電阻、LED 反接、電源軌斷點、並聯、開關）。</p>
+        <div class="tool-features">
+          <span class="tool-feature">🔍 8 部位</span>
+          <span class="tool-feature">⚡ 10 安全題</span>
+          <span class="tool-feature">📖 8 步動畫</span>
+          <span class="tool-feature">🎮 找錯修正</span>
+          <span class="tool-feature">🔬 8 故障圖鑑</span>
+        </div>
+        <span class="tool-cta" style="background:#16A34A;box-shadow:0 4px 12px rgba(22,163,74,.35)">進入麵包板平台 →</span>
+      </a>
+<a class="hub-tool tool-saw" href="microcontroller/" style="--bg-tint:#6366F1">
+        <span class="badge-new" style="background:linear-gradient(135deg,#6366F1,#818CF8)">NEW</span>
+        <div class="tool-head">
+          <div class="tool-emoji">🧠</div>
+          <div>
+            <h3>微控制器</h3>
+            <div class="tool-tagline">MICROCONTROLLER ・ Arduino / ESP32</div>
+          </div>
+        </div>
+        <p class="tool-desc">3 下 K4 + 統整專題。3 大平台比較（Arduino/micro:bit/ESP32）+ 數位/類比訊號 + 8 種感測器 + Arduino 8 範例程式 + 虛擬電路模擬器（LED/按鈕/避障）+ 創意公仔燈 + 清掃機器人案例。</p>
+        <div class="tool-features">
+          <span class="tool-feature">🔍 3 MCU</span>
+          <span class="tool-feature">📡 8 感測器</span>
+          <span class="tool-feature">💻 8 範例</span>
+          <span class="tool-feature">🎮 虛擬電路</span>
+          <span class="tool-feature">🏆 創意作品</span>
+        </div>
+        <span class="tool-cta" style="background:#6366F1;box-shadow:0 4px 12px rgba(99,102,241,.35)">進入微控制器 →</span>
+      </a>
+      </div>
+    </section>
+
+    <section class="cat-sec" id="cat-project" data-cat="project">
+      <div class="cat-head"><h4>🤖 專題實作 <span class="cat-n">2</span></h4><p>把零件組成一個會自己動的系統</p></div>
+      <div class="hub-tool-grid">
+<a class="hub-tool tool-saw" href="mechatronics/" style="--bg-tint:#F97316">
+        <span class="badge-new" style="background:linear-gradient(135deg,#F97316,#FB923C)">NEW</span>
+        <div class="tool-head">
+          <div class="tool-emoji">🤖</div>
+          <div>
+            <h3>機電整合專題</h3>
+            <div class="tool-tagline">MECHATRONICS ・ 自走車</div>
+          </div>
+        </div>
+        <p class="tool-desc">把麵包板與微控制器學到的零件，第一次組成一個會自己動的系統。核心是可以真的跑起來的<strong>循跡車 PD 調校模擬器</strong>——含馬達響應延遲與轉速上限，所以「參數越大越好」不成立：想跑快就必須自己發現微分項。另有感測器二值化、超音波盲區、整車除錯與完賽檢核表。</p>
+        <div class="tool-features">
+          <span class="tool-feature">🔩 馬達選用</span>
+          <span class="tool-feature">📡 二值化調校</span>
+          <span class="tool-feature">🎛️ 循跡 PD 模擬</span>
+          <span class="tool-feature">📏 超音波盲區</span>
+          <span class="tool-feature">🏁 除錯檢核表</span>
+        </div>
+        <span class="tool-cta" style="background:#F97316;box-shadow:0 4px 12px rgba(249,115,22,.35)">進入機電整合平台 →</span>
+      </a>
+<a class="hub-tool tool-saw" href="frc/" style="--bg-tint:#0066B3">
+        <span class="badge-new" style="background:linear-gradient(135deg,#0066B3,#FF6600)">NEW</span>
+        <div class="tool-head">
+          <div class="tool-emoji">🤖</div>
+          <div>
+            <h3>FRC 機器人</h3>
+            <div class="tool-tagline">FIRST ROBOTICS ・ 競賽工程</div>
+          </div>
+        </div>
+        <p class="tool-desc">全球最大高中機器人競賽。認識機器人結構（8 子系統）、隊伍分工、工程設計流程（7 階段）、機器人策略配置、工程筆記範本與 FRC 6 大獎項評鑑。參考 Team 254（5 屆世界冠軍）、Citrus Circuits 1678 的公開資源。</p>
+        <div class="tool-features">
+          <span class="tool-feature">🤖 機器人結構</span>
+          <span class="tool-feature">🛡️ 工坊安全</span>
+          <span class="tool-feature">📐 設計流程</span>
+          <span class="tool-feature">🎮 策略配置模擬</span>
+          <span class="tool-feature">📓 工程筆記</span>
+        </div>
+        <span class="tool-cta" style="background:#0066B3;box-shadow:0 4px 12px rgba(0,102,179,.35)">進入 FRC 平台 →</span>
+      </a>
+      </div>
+    </section>
+
+    <section class="cat-sec" id="cat-frontier" data-cat="frontier">
+      <div class="cat-head"><h4>🛰️ 新興科技與跨領域 <span class="cat-n">3</span></h4><p>看得懂新科技，也接得回數學與科學</p></div>
+      <div class="hub-tool-grid">
+<a class="hub-tool tool-saw" href="emerging-tech/" style="--bg-tint:#06B6D4">
+        <span class="badge-new" style="background:linear-gradient(135deg,#06B6D4,#22D3EE)">NEW</span>
+        <div class="tool-head">
+          <div class="tool-emoji">🛰️</div>
+          <div>
+            <h3>新興科技</h3>
+            <div class="tool-tagline">EMERGING TECH ・ 感測與判斷</div>
+          </div>
+        </div>
+        <p class="tool-desc">AI 為什麼會認錯？門檻設在哪裡才合理？新興科技最怕變成名詞背誦，這裡全部做成可以動手改參數的模擬器：調光線與遮擋看信心分數崩掉、拉門檻算出每天誤擋幾人、比較四種實境、跑一天的智慧節能模擬。技術與倫理綁在一起談。</p>
+        <div class="tool-features">
+          <span class="tool-feature">👁️ AI 影像辨識</span>
+          <span class="tool-feature">🔐 生物辨識門檻</span>
+          <span class="tool-feature">🥽 VR/AR/MR/XR</span>
+          <span class="tool-feature">🏡 物聯網綠建築</span>
+          <span class="tool-feature">⌚ 穿戴式裝置</span>
+        </div>
+        <span class="tool-cta" style="background:#06B6D4;box-shadow:0 4px 12px rgba(6,182,212,.35)">進入新興科技平台 →</span>
+      </a>
+<a class="hub-tool tool-saw" href="steam/" style="--bg-tint:#8B5CF6">
+        <span class="badge-new" style="background:linear-gradient(135deg,#8B5CF6,#A78BFA)">NEW</span>
+        <div class="tool-head">
+          <div class="tool-emoji">🎨</div>
+          <div>
+            <h3>跨領域 STEAM</h3>
+            <div class="tool-tagline">STEAM ・ 原理層</div>
+          </div>
+        </div>
+        <p class="tool-desc">科技一直站在數學與科學上。零硬體、純操作的四個模組：翻位元湊數字並試出同位檢查抓不到的錯誤、單步看三種排序怎麼比怎麼換、調泛音配方聽出音色差異、拖動物距即時畫出透鏡光路——放大鏡、相機、投影機其實是同一條公式。</p>
+        <div class="tool-features">
+          <span class="tool-feature">🔢 二進位與編碼</span>
+          <span class="tool-feature">🔀 排序演算法</span>
+          <span class="tool-feature">🔊 聲音的科學</span>
+          <span class="tool-feature">🔍 透鏡成像</span>
+        </div>
+        <span class="tool-cta" style="background:#8B5CF6;box-shadow:0 4px 12px rgba(139,92,246,.35)">進入 STEAM 平台 →</span>
+      </a>
+<a class="hub-tool tool-saw" href="physics/" style="--bg-tint:#7C3AED">
         <span class="badge-new" style="background:linear-gradient(135deg,#7C3AED,#a855f7)">NEW</span>
         <div class="tool-head">
           <div class="tool-emoji">🧪</div>
@@ -805,8 +931,8 @@
         </div>
         <span class="tool-cta" style="background:#7C3AED;box-shadow:0 4px 12px rgba(124,58,237,.35)">進入物理模擬實驗室 →</span>
       </a>
-
-    </div>
+      </div>
+    </section>
   </section>
 
   <section id="pedagogy" class="pedagogy">
@@ -949,5 +1075,33 @@
 
 <script src="js/main.js"></script>
 <script src="js/audio.js"></script>
+
+<script>
+// 分類篩選：點 chip 篩選區塊；「全部」還原
+(function(){
+  var bar=document.getElementById('filterbar'); if(!bar) return;
+  var chips=[].slice.call(bar.querySelectorAll('.fchip'));
+  var secs=[].slice.call(document.querySelectorAll('.cat-sec'));
+  bar.addEventListener('click',function(e){
+    var b=e.target.closest('.fchip'); if(!b) return;
+    var f=b.dataset.f;
+    chips.forEach(function(c){c.classList.toggle('on',c===b);});
+    secs.forEach(function(s){s.classList.toggle('hide', f!=='all' && s.dataset.cat!==f);});
+    if(f!=='all'){
+      var t=document.getElementById('cat-'+f);
+      if(t) window.scrollTo({top:t.getBoundingClientRect().top+window.pageYOffset-64,behavior:'smooth'});
+    }
+  });
+  // 總覽 chip 的分類標題也可當跳轉
+  document.querySelectorAll('.ov-h').forEach(function(h){
+    h.style.cursor='pointer';
+    h.addEventListener('click',function(){
+      var cid=h.parentElement.dataset.cat;
+      var t=document.getElementById('cat-'+cid);
+      if(t) window.scrollTo({top:t.getBoundingClientRect().top+window.pageYOffset-64,behavior:'smooth'});
+    });
+  });
+})();
+</script>
 </body>
 </html>
