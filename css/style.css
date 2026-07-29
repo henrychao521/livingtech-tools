@@ -2070,3 +2070,56 @@ button:focus-visible, a:focus-visible {
 ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 5px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-light); }
 
+
+/* ===== 滑桿：統一樣式並放大觸控目標 =====
+   原本全站使用瀏覽器預設樣式，元素高度僅 16px，在平板／手機上不好抓。
+   WCAG 2.5.8 建議目標至少 24×24 CSS px；此處把把手放大到 24px，
+   並將元素高度加到 38px 提供額外的垂直抓取範圍。
+   顏色使用 var(--primary)，因此各主題站的滑桿會自動套用該站的主色。 */
+input[type=range] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 38px;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--border, #e2e8f0);
+}
+input[type=range]::-moz-range-track {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--border, #e2e8f0);
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--primary, #FF7A00);
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,.28);
+  margin-top: -9px;
+  transition: transform .15s ease;
+}
+input[type=range]::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--primary, #FF7A00);
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,.28);
+}
+input[type=range]:active::-webkit-slider-thumb { transform: scale(1.15); }
+input[type=range]:focus-visible {
+  outline: 2px solid var(--primary, #FF7A00);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+input[type=range]:disabled { opacity: .45; cursor: not-allowed; }
