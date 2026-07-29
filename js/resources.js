@@ -8,6 +8,28 @@
 // lic 欄位標示該資源自身的授權，方便日後判斷可否進一步利用。
 
 window.RESOURCES = {
+  lasercut: {
+    videos: [
+      { id: 'iBp47FV4dGg', ch: '趙珩宇（珩宇老師）', t: '永春高中雷射切割機使用教學',
+        len: '實機示範', lang: '<strong>中文</strong>',
+        why: '開機、放料到開始切割的完整流程。第一次操作機器前先看這支。' },
+      { id: '-J0RtHISlTI', ch: '趙珩宇（珩宇老師）', t: '雷射切割操作 RDworks',
+        len: '實機示範', lang: '<strong>中文</strong>',
+        why: 'RDWorks 軟體端實際操作，搭配模組 2、3 一起看效果最好。' },
+      { id: 'G6x1QGS82aE', ch: '趙珩宇（珩宇老師）', t: '雷切機基本保養與維修',
+        len: '實機示範', lang: '<strong>中文</strong>',
+        why: '鏡片清潔、皮帶與導軌保養。切不斷、切歪時先看這支。' },
+    ],
+    tools: [
+      { url: 'https://livingtech.education/2017/02/07/%E9%9B%B7%E5%B0%84%E5%88%87%E5%89%B2%E8%AA%B2%E7%A8%8B/', name: '雷射切割課程（珩宇老師教學文）', lic: '作者原站',
+        why: '本站作者 2017 年的課堂實作紀錄，含七步驟流程與當時使用的參數，可與模組 4 對照看參數如何隨機器改變。' },
+      { url: 'https://www.thingiverse.com/', name: 'Thingiverse', lic: '各作品授權不一，使用前須逐件確認',
+        why: '大量可下載的雷切作品可作為設計參考。注意每個作品的授權不同，有些禁止商用或改作。' },
+      { url: 'https://inkscape.org/', name: 'Inkscape', lic: 'GPL・免費開源',
+        why: '免費的向量繪圖軟體，可輸出 DXF／SVG 給雷切機使用，適合沒有 AI 授權的學校。' },
+    ],
+  },
+
   mechatronics: {
     videos: [
       { id: '4Y7zG48uHRo', ch: 'MIT AerospaceControlsLab', t: 'Controlling Self Driving Cars',

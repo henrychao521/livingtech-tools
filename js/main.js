@@ -25,6 +25,7 @@ const TOOL_PROGRESS_KEYS = {
   'emerging-tech': 'et_progress_v1',
   'mechatronics': 'mecha_progress_v1',
   'steam': 'steam_progress_v1',
+  'lasercut': 'laser_progress_v1',
 };
 const PROGRESS_KEY = (document.body && TOOL_PROGRESS_KEYS[document.body.dataset.tool]) || 'scrollsaw_progress_v1';
 

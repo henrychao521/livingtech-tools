@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YCXP16QQM1"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YCXP16QQM1');</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>雷射切割機 ｜ 生活科技互動教學平台</title>
+<meta name="description" content="RDWorks 操作流程、圖層與加工方式、參數試切模擬器、保養與故障排除——雷射切割機完整互動教學。">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/svg-effects.css"><link rel="stylesheet" href="css/lasercut.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🔴%3C/text%3E%3C/svg%3E">
+</head><body data-tool="lasercut" class="home lc-theme">
+<header class="topbar">
+  <div class="brand"><span class="logo">🔴</span><div><h1>雷射切割機</h1><p class="subtitle">生活科技互動教學平台</p></div></div>
+  <nav class="topnav"><a href="#modules">學習模組</a><a href="../" style="color:var(--primary-dark);font-weight:600">← 平台首頁</a></nav>
+</header>
+<main>
+  <section class="hero">
+    <div class="hero-text">
+      <span class="badge">108 課綱・生 A-IV-1 材料與加工｜生 P-IV-4 設計與製作</span>
+      <h2>切不斷、燒焦、起火<br>差別只在兩個數字</h2>
+      <p>雷射切割機是<strong>減法製造</strong>的代表：用光把材料燒掉。但同一台機器、同一塊板子，速度與功率調錯就會<strong>切不斷</strong>、<strong>邊緣焦黑</strong>，甚至<strong>起火</strong>。這一站帶你走完 RDWorks 的完整流程，並用可以真的「試切」的模擬器，建立參數與結果之間的直覺——在浪費真材料之前。</p>
+      <div class="hero-cta"><a href="pages/module1.html" class="btn btn-primary">開始學習 →</a><a href="#modules" class="btn btn-ghost">看模組地圖</a></div>
+    </div>
+    <div class="hero-visual">
+      <svg viewBox="0 0 480 360" class="hero-lc svg-shadow-med" role="img" aria-label="雷射切割示意">
+        <ellipse cx="240" cy="332" rx="180" ry="12" fill="rgba(0,0,0,.13)"/>
+        <!-- 機台外殼 -->
+        <rect x="52" y="96" width="376" height="200" rx="12" fill="#1e293b"/>
+        <rect x="52" y="96" width="376" height="12" rx="6" fill="#334155"/>
+        <!-- 蜂巢工作台 -->
+        <rect x="76" y="176" width="328" height="104" rx="4" fill="#0b1220"/>
+        <g fill="#1e293b">
+          <circle cx="100" cy="200" r="5"/><circle cx="124" cy="200" r="5"/><circle cx="148" cy="200" r="5"/>
+          <circle cx="172" cy="200" r="5"/><circle cx="196" cy="200" r="5"/><circle cx="220" cy="200" r="5"/>
+          <circle cx="112" cy="222" r="5"/><circle cx="136" cy="222" r="5"/><circle cx="160" cy="222" r="5"/>
+          <circle cx="184" cy="222" r="5"/><circle cx="208" cy="222" r="5"/><circle cx="232" cy="222" r="5"/>
+        </g>
+        <!-- 板材 -->
+        <rect x="150" y="196" width="180" height="70" rx="3" fill="#B45309"/>
+        <rect x="150" y="196" width="180" height="6" fill="#92400E"/>
+        <!-- 龍門與雷射頭 -->
+        <rect x="76" y="148" width="328" height="10" rx="5" fill="#475569"/>
+        <g>
+          <rect x="228" y="140" width="30" height="34" rx="4" fill="#94a3b8"/>
+          <polygon points="236,174 250,174 245,190 241,190" fill="#64748b"/>
+          <animateTransform attributeName="transform" type="translate"
+            values="0 0; 66 0; 0 0" dur="4s" repeatCount="indefinite"/>
+        </g>
+        <!-- 雷射光束 -->
+        <g>
+          <line x1="243" y1="190" x2="243" y2="232" stroke="#EF4444" stroke-width="3" opacity=".9">
+            <animate attributeName="opacity" values=".95;.35;.95" dur=".7s" repeatCount="indefinite"/>
+            <animateTransform attributeName="transform" type="translate" values="0 0; 66 0; 0 0" dur="4s" repeatCount="indefinite"/>
+          </line>
+          <circle cx="243" cy="232" r="7" fill="#FCA5A5" opacity=".75">
+            <animate attributeName="r" values="6;10;6" dur=".7s" repeatCount="indefinite"/>
+            <animateTransform attributeName="transform" type="translate" values="0 0; 66 0; 0 0" dur="4s" repeatCount="indefinite"/>
+          </circle>
+        </g>
+        <!-- 切縫 -->
+        <line x1="176" y1="232" x2="243" y2="232" stroke="#0b1220" stroke-width="3">
+          <animate attributeName="x2" values="176;242;176" dur="4s" repeatCount="indefinite"/>
+        </line>
+        <!-- 排煙 -->
+        <path d="M400 176 v-40 h-24" stroke="#475569" stroke-width="7" fill="none" stroke-linecap="round"/>
+        <text x="240" y="52" text-anchor="middle" font-size="14" font-weight="800" fill="#9F1239" font-family="Inter">LASER CUTTER ・ 減法製造</text>
+      </svg>
+    </div>
+  </section>
+
+  <section id="modules" class="modules">
+    <h3 class="section-title">五大學習模組</h3>
+    <p class="section-sub">從不敢開機，到知道參數該怎麼調</p>
+    <div class="module-grid">
+      <a class="card card-1" href="pages/module1.html">
+        <div class="card-num">01</div><div class="card-icon">🛡️</div>
+        <h4>認識機器與安全</h4>
+        <p>CO₂ 雷射怎麼切東西、哪些材料絕對不能放進去、火災怎麼防。</p>
+        <span class="card-tag">15 分鐘</span>
+      </a>
+      <a class="card card-2" href="pages/module2.html">
+        <div class="card-num">02</div><div class="card-icon">📋</div>
+        <h4>RDWorks 操作流程</h4>
+        <p>八個步驟的順序不能錯。親手排一次，順序錯了會怎樣也講給你聽。</p>
+        <span class="card-tag">15 分鐘</span>
+      </a>
+      <a class="card card-3" href="pages/module3.html">
+        <div class="card-num">03</div><div class="card-icon">🎨</div>
+        <h4>圖層與加工方式</h4>
+        <p>為什麼要用顏色分圖層？切割、刻線、雕刻三種加工怎麼設定與排序。</p>
+        <span class="card-tag">15 分鐘</span>
+      </a>
+      <a class="card card-4" href="pages/module4.html">
+        <div class="card-num">04</div><div class="card-icon">⚡</div>
+        <h4>參數試切模擬器 ★</h4>
+        <p>本站核心。調速度與功率，看它切不斷、剛剛好、還是燒到冒煙。</p>
+        <span class="card-tag">25 分鐘</span>
+      </a>
+      <a class="card card-5" href="pages/module5.html">
+        <div class="card-num">05</div><div class="card-icon">🔧</div>
+        <h4>保養與故障排除</h4>
+        <p>切不斷怎麼查？焦距、鏡片、皮帶的保養。附三支實機操作影片。</p>
+        <span class="card-tag">20 分鐘</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="modules">
+    <h3 class="section-title">先修與延伸</h3>
+    <p class="section-sub">雷切是「把 2D 圖變成實體」的最後一步，前面要先畫得出圖</p>
+    <div class="module-grid">
+      <div class="card"><div class="card-icon">📐</div><h4>先修：Onshape 建模</h4><p>雷切吃的是 2D 向量圖，先學會把 3D 想法畫成可切的平面件。<a href="../onshape/" style="color:var(--primary-dark);font-weight:700">前往 →</a></p></div>
+      <div class="card"><div class="card-icon">📏</div><h4>先修：三視圖</h4><p>看得懂圖面，才知道哪一面要拿去切。<a href="../orthographic/" style="color:var(--primary-dark);font-weight:700">前往 →</a></p></div>
+      <div class="card"><div class="card-icon">🖨️</div><h4>對照：3D 印表機</h4><p>加法 vs 減法製造，兩種數位製造的取捨。<a href="../printer3d/" style="color:var(--primary-dark);font-weight:700">前往 →</a></p></div>
+    </div>
+  </section>
+</main>
+<script src="../js/main.js"></script><script src="../js/sources.js"></script><script src="../js/resources.js"></script><script src="../js/audio.js"></script>
+</body></html>

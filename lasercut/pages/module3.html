@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YCXP16QQM1"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YCXP16QQM1');</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 3：圖層與加工方式</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/lasercut.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🔴%3C/text%3E%3C/svg%3E">
+</head><body data-tool="lasercut" class="lc-theme">
+<header class="topbar"><div class="brand"><span class="logo">🔴</span><div><h1>雷射切割機</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<main class="module-page">
+  <div class="module-header">
+    <div><span class="module-step">MODULE 03</span><h2>圖層：用顏色告訴機器「這條線要怎麼處理」</h2>
+    <p class="muted">同一張圖上，有些線要切斷、有些只要刻痕、有些區域要填滿。</p></div>
+    <div class="muted" id="prog">進度 0 / 2</div>
+  </div>
+
+  <section class="panel">
+    <h3>🎨 三種加工方式</h3>
+    <div class="pick-grid" id="opPick" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))"></div>
+    <div id="opDetail" style="margin-top:14px"></div>
+  </section>
+
+  <section class="panel">
+    <h3>🖼️ 試著配置一個鑰匙圈</h3>
+    <p class="muted" style="margin-bottom:12px">
+      這個鑰匙圈有三種元素：<strong>外框</strong>要切斷、<strong>摺線</strong>只要刻痕、<strong>圖案文字</strong>要雕刻填滿。
+      幫每個元素選對加工方式，右邊會即時預覽結果。
+    </p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px">
+      <div>
+        <div id="assign" style="display:flex;flex-direction:column;gap:10px"></div>
+        <div id="verdict" class="verdict warn" style="margin-top:12px">幫三個元素都選好加工方式</div>
+      </div>
+      <div class="lc-stage"><canvas id="cv" width="420" height="330"></canvas></div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>🔢 加工順序也很重要</h3>
+    <p class="muted">RDWorks 會依圖層順序執行。正確順序是：</p>
+    <div class="flow">
+      <span class="flow-node">① 雕刻<br><small>面積最大、最花時間</small></span><span class="flow-arrow">→</span>
+      <span class="flow-node">② 刻線<br><small>不切斷的線</small></span><span class="flow-arrow">→</span>
+      <span class="flow-node">③ 切割<br><small>最後才切斷</small></span>
+    </div>
+    <div class="danger">
+      <strong>如果先切外框會怎樣</strong>
+      <p>件一旦被切下來就<strong>失去固定</strong>，可能被排煙氣流吹動或稍微翹起。
+      這時再回頭雕刻，圖案就會歪掉、對不準——而且雷射打在翹起的板材上，焦距也跑掉了。
+      所以永遠是「<strong>先在還連著的板子上做完所有加工，最後才切斷</strong>」。</p>
+    </div>
+    <div class="note">
+      <strong>顏色只是代號，不是規定</strong>
+      <p>RDWorks 用顏色區分圖層，但「紅色＝切割」並不是機器規定的，而是<strong>工作室的慣例</strong>。
+      重要的是同一台機器、同一個班級要<strong>統一約定</strong>，否則接手的人會設錯參數。
+      建議把約定表貼在機器旁邊。</p>
+    </div>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="module2.html" class="btn btn-ghost">← 上一關</a>
+    <a href="module4.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a>
+  </div>
+</main>
+<script src="../../js/main.js"></script><script src="../../js/sources.js"></script><script src="../../js/resources.js"></script><script src="../../js/audio.js"></script><script src="../js/module3.js"></script>
+</body></html>

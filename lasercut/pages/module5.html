@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YCXP16QQM1"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YCXP16QQM1');</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 5：保養與故障排除</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/lasercut.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🔴%3C/text%3E%3C/svg%3E">
+</head><body data-tool="lasercut" class="lc-theme">
+<header class="topbar"><div class="brand"><span class="logo">🔴</span><div><h1>雷射切割機</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<main class="module-page">
+  <div class="module-header">
+    <div><span class="module-step">MODULE 05</span><h2>切不斷怎麼查？照順序排除</h2>
+    <p class="muted">「參數明明是對的卻切不斷」——九成不是參數問題。</p></div>
+    <div class="muted" id="prog">診斷 0 / 4</div>
+  </div>
+
+  <section class="panel">
+    <h3>🎬 實機操作影片</h3>
+    <p class="muted" style="margin-bottom:14px">珩宇老師實際拍攝的操作與保養示範，建議搭配前面模組一起看。</p>
+    <div id="videos" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px"></div>
+  </section>
+
+  <section class="panel">
+    <h3>🔍 症狀診斷</h3>
+    <p class="muted">四個常見狀況，選出<strong>最該優先檢查</strong>的項目。</p>
+    <div id="quiz" style="margin-top:14px"></div>
+  </section>
+
+  <section class="panel">
+    <h3>🧭 「切不斷」的排查順序</h3>
+    <p class="muted">照這個順序查，由外而內、由便宜到昂貴：</p>
+    <div class="flow">
+      <span class="flow-node">① 焦距<br><small>最常見</small></span><span class="flow-arrow">→</span>
+      <span class="flow-node">② 鏡片<br><small>髒污衰減</small></span><span class="flow-arrow">→</span>
+      <span class="flow-node">③ 材料<br><small>厚度／批次</small></span><span class="flow-arrow">→</span>
+      <span class="flow-node">④ 參數<br><small>最後才調</small></span><span class="flow-arrow">→</span>
+      <span class="flow-node">⑤ 雷射管<br><small>老化衰退</small></span>
+    </div>
+    <div class="danger">
+      <strong>最糟的處理方式：一開始就把功率拉滿</strong>
+      <p>切不斷就狂加功率，是新手最常犯的錯。如果根因是<strong>焦距沒對</strong>或<strong>鏡片髒了</strong>，
+      加功率只會讓切縫變寬、邊緣焦黑、板材報廢，同時<strong>加速雷射管老化</strong>——
+      雷射管是整台機器最貴的耗材之一。<strong>先查前三項，再動參數。</strong></p>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>🗓️ 保養週期</h3>
+    <div id="maint" style="margin-top:12px"></div>
+    <div class="note">
+      <strong>保養紀錄要寫下來</strong>
+      <p>學校機器通常多人共用，不寫紀錄就沒人知道上次清鏡片是什麼時候。
+      建議在機器旁放一張表，每次保養簽名記日期——這也是最容易被稽核看見的教學管理細節。</p>
+    </div>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="module4.html" class="btn btn-ghost">← 上一關</a>
+    <a href="../index.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">完成課程 🎉</a>
+  </div>
+</main>
+<script src="../../js/main.js"></script><script src="../../js/sources.js"></script><script src="../../js/resources.js"></script><script src="../../js/audio.js"></script><script src="../js/module5.js"></script>
+</body></html>

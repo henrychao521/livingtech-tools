@@ -51,6 +51,15 @@ window.SOURCES = {
     { tag: 'CURR', text: '教育部十二年國教課程綱要 — 資 J-A2 運算思維與問題解決、自然 Ea 波動與光、數學 N 數與量。', url: 'https://cirn.moe.edu.tw/' },
   ],
 
+  lasercut: [
+    { tag: 'OSHA', text: 'U.S. OSHA / ANSI Z136.1《Safe Use of Lasers》— 雷射分級與工程控制（連鎖裝置、外殼、警示標示）。', url: 'https://www.osha.gov/laser-hazards' },
+    { tag: 'CNS',  text: 'CNS 15448 / IEC 60825-1《雷射產品之安全》— 雷射產品分級與防護要求。', url: 'https://www.cnsonline.com.tw/' },
+    { tag: 'NIOSH', text: 'NIOSH《Control of Smoke From Laser/Electric Arc Surgical Procedures》與雷射加工排煙建議 — 加工煙塵（LGAC）之危害與局部排氣需求。', url: 'https://www.cdc.gov/niosh/' },
+    { tag: 'PVC',  text: '美國 EPA / 各國職衛資料：含氯高分子（PVC）熱裂解會產生氯化氫（HCl）與戴奧辛類化合物，為雷切禁用材料之依據。', url: 'https://www.epa.gov/' },
+    { tag: 'HLE',  text: '趙珩宇《雷射切割課程》教學文（livingtech.education, 2017）— 七步驟流程與三種加工方式的課堂實作紀錄。', url: 'https://livingtech.education/2017/02/07/%E9%9B%B7%E5%B0%84%E5%88%87%E5%89%B2%E8%AA%B2%E7%A8%8B/' },
+    { tag: 'CURR', text: '教育部十二年國教科技領域課程綱要 — 生 A-IV-1 材料與加工方法、生 P-IV-4 設計與製作流程。', url: 'https://cirn.moe.edu.tw/' },
+  ],
+
   mechatronics: [
     { tag: 'ARDU', text: 'Arduino 官方文件《PWM》《analogWrite()》與 Motor Shield 教學 — 馬達調速與驅動器接法。', url: 'https://docs.arduino.cc/learn/microcontrollers/analog-output/' },
     { tag: 'NIST', text: 'NIST／標準大氣模型《Speed of Sound in Air》— 音速隨溫度變化 c ≈ 331.3 + 0.606·T (m/s)，本模組溫度誤差計算依據。', url: 'https://www.nist.gov/' },

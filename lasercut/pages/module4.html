@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YCXP16QQM1"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YCXP16QQM1');</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 4：參數試切模擬器</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/lasercut.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🔴%3C/text%3E%3C/svg%3E">
+</head><body data-tool="lasercut" class="lc-theme">
+<header class="topbar"><div class="brand"><span class="logo">🔴</span><div><h1>雷射切割機</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<main class="module-page">
+  <div class="module-header">
+    <div><span class="module-step">MODULE 04</span><h2>參數試切：切不斷與燒焦之間</h2>
+    <p class="muted">同一台機器、同一塊板，速度與功率差一點，結果就完全不同。</p></div>
+    <div class="muted" id="prog">挑戰完成 0 / 4</div>
+  </div>
+
+  <section class="panel">
+    <h3>🔑 只要記住一個關係</h3>
+    <p class="muted" style="text-align:center;font-size:16px;margin:12px 0">
+      <code style="font-size:19px;background:#FFE4E6;padding:10px 16px;border-radius:8px;color:#9F1239;font-weight:700">
+        線能量 = 功率 ÷ 速度</code>
+    </p>
+    <p class="muted" style="text-align:center">
+      雷射走過每一公釐，倒了多少能量進去。<strong>功率越高、速度越慢 → 能量越多 → 切得越深</strong>。<br>
+      能量不夠切不斷；能量太多不只浪費，還會把切縫兩側烤焦。
+    </p>
+  </section>
+
+  <section class="panel">
+    <h3>🔬 試切模擬器</h3>
+    <p class="muted" style="margin-bottom:12px">
+      下圖是<strong>板材的側面剖視圖</strong>——你會看到雷射切進去多深、有沒有切透、邊緣有沒有焦黑。
+      <span style="font-size:12.5px;color:#94a3b8">（教學用示意模型，以 80 W CO₂ 機台的常見建議值校準；實際仍須在廢料上試切。）</span>
+    </p>
+    <div class="lc-stage"><canvas id="cv" width="720" height="300"></canvas></div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;margin-top:16px">
+      <div>
+        <label style="font-weight:700;font-size:14px;display:block;margin-bottom:6px">材料</label>
+        <div class="pick-grid" id="matPick"></div>
+        <div class="param" style="margin-top:14px">
+          <div class="param-head"><span>📏 板厚</span><span class="param-val" id="vT">3 mm</span></div>
+          <input type="range" id="sT" min="2" max="8" step="1" value="3">
+          <div class="param-hint"><span>2 mm</span><span>8 mm</span></div>
+        </div>
+      </div>
+      <div>
+        <label style="font-weight:700;font-size:14px;display:block;margin-bottom:6px">加工方式</label>
+        <div style="display:flex;gap:8px;margin-bottom:14px" id="modePick">
+          <button class="btn btn-primary" data-m="cut" style="flex:1">✂️ 切割</button>
+          <button class="btn btn-ghost" data-m="engrave" style="flex:1">🖌️ 雕刻</button>
+        </div>
+        <div class="param">
+          <div class="param-head"><span>🏃 速度</span><span class="param-val" id="vV">20 mm/s</span></div>
+          <input type="range" id="sV" min="5" max="60" step="1" value="20">
+          <div class="param-hint" id="hV"><span>慢（能量多）</span><span>快（能量少）</span></div>
+        </div>
+        <div class="param">
+          <div class="param-head"><span>⚡ 功率</span><span class="param-val" id="vP">65 %</span></div>
+          <input type="range" id="sP" min="5" max="100" step="1" value="65">
+          <div class="param-hint"><span>5%</span><span>100%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat" style="background:#FFE4E6"><div class="stat-label" style="color:#9F1239">線能量</div><div class="stat-val" id="eVal" style="color:#E11D48;font-size:19px">—</div></div>
+      <div class="stat" style="background:#f1f5f9"><div class="stat-label" style="color:#475569">切透所需</div><div class="stat-val" id="thVal" style="color:#334155;font-size:19px">—</div></div>
+      <div class="stat" style="background:#E0F2FE"><div class="stat-label" style="color:#075985">能量比</div><div class="stat-val" id="rVal" style="color:#0284C7;font-size:19px">—</div></div>
+    </div>
+    <div id="verdict" class="verdict warn">—</div>
+  </section>
+
+  <section class="panel">
+    <h3>🎯 四個挑戰</h3>
+    <ul id="quests" style="list-style:none;padding:0;margin:10px 0 0;display:flex;flex-direction:column;gap:8px"></ul>
+  </section>
+
+  <section class="panel">
+    <h3>🗂️ 真正該做的事：做一張「試切卡」</h3>
+    <p class="muted">模擬器給你直覺，但實體機器有太多變數——鏡片乾不乾淨、焦距準不準、板材含水量、甚至今天的溫度。所以正式切之前：</p>
+    <ol style="font-size:14px;line-height:2;color:#334155;padding-left:20px">
+      <li>拿一塊<strong>同批次的廢料</strong>（不同批的板材密度會不一樣）。</li>
+      <li>畫一排小方格，每格用<strong>不同的速度／功率組合</strong>。</li>
+      <li>切完後用手折折看，記錄哪一組「剛好切透、邊緣最乾淨」。</li>
+      <li>把結果<strong>寫在機器旁邊的表上</strong>——下次同材料同厚度直接查。</li>
+    </ol>
+    <div class="note">
+      <strong>為什麼參數不能照抄網路上的數字</strong>
+      <p>同樣寫「3 mm 木板」，80 W 的機器和 60 W 的機器要用的速度差很多；
+      同一台機器，鏡片髒了之後實際到達板材的功率也會下降。
+      網路上的參數只能當<strong>起點</strong>，最後一定要用自己的機器、自己的板材試出來。</p>
+    </div>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="module3.html" class="btn btn-ghost">← 上一關</a>
+    <a href="module5.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a>
+  </div>
+</main>
+<script src="../../js/main.js"></script><script src="../../js/sources.js"></script><script src="../../js/resources.js"></script><script src="../../js/audio.js"></script><script src="../js/module4.js"></script>
+</body></html>

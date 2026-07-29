@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YCXP16QQM1"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YCXP16QQM1');</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 1：認識機器與安全</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/lasercut.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🔴%3C/text%3E%3C/svg%3E">
+</head><body data-tool="lasercut" class="lc-theme">
+<header class="topbar"><div class="brand"><span class="logo">🔴</span><div><h1>雷射切割機</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<main class="module-page">
+  <div class="module-header">
+    <div><span class="module-step">MODULE 01</span><h2>它怎麼切東西，以及什麼絕對不能放進去</h2>
+    <p class="muted">雷射不是「切」，是<strong>燒</strong>——理解這件事，安全規範就不用死背。</p></div>
+    <div class="muted" id="prog">進度 0 / 3</div>
+  </div>
+
+  <section class="panel">
+    <h3>💡 CO₂ 雷射怎麼把材料變不見</h3>
+    <div class="flow">
+      <span class="flow-node">雷射管放電<br><small>CO₂ 氣體受激發</small></span><span class="flow-arrow">→</span>
+      <span class="flow-node">反射鏡導引<br><small>三面鏡轉折光路</small></span><span class="flow-arrow">→</span>
+      <span class="flow-node">聚焦鏡集中<br><small>光點縮到約 0.1 mm</small></span><span class="flow-arrow">→</span>
+      <span class="flow-node">材料汽化<br><small>瞬間燒穿</small></span>
+    </div>
+    <p class="muted" style="text-align:center">
+      光被聚焦成極小的點，能量密度高到讓材料<strong>直接汽化</strong>，所以切縫（kerf）很窄，約 0.1～0.3 mm。
+      也因為是「燒」，所以會產生煙與氣體——<strong>排煙系統不開就不能切</strong>。
+    </p>
+    <div class="note">
+      <strong>切縫寬度會吃掉尺寸</strong>
+      <p>雷射本身有寬度，切下來的件會比圖面小約半條切縫。做卡榫、齒輪這種需要密合的件時，
+      畫圖就要把切縫補償進去（本平台的 <a href="../onshape/" style="color:#0369A1;font-weight:700">Onshape 模組</a>有詳細做法）。</p>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>☠️ 絕對不能放進雷切機的材料</h3>
+    <p class="muted" style="margin-bottom:10px">點卡片看原因。<strong>三種都看過</strong>才算完成——這是本站唯一強制的部分。</p>
+    <div class="pick-grid" id="banPick"></div>
+    <div id="banDetail" style="margin-top:14px"></div>
+    <div class="danger">
+      <strong>不確定材質，就不要切</strong>
+      <p>來路不明的板材、印刷品、有塗層或貼皮的材料，都可能含有你看不出來的成分。
+      學生帶來的「不知道是什麼的板子」一律不切——<strong>問不出材質就當作禁用</strong>。</p>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>🛡️ 開機前的安全檢查</h3>
+    <p class="muted">每一項都有它防的事故，不是形式。全部勾完才算完成。</p>
+    <div id="checklist" style="margin-top:12px;display:flex;flex-direction:column;gap:8px"></div>
+    <div id="checkStat" class="verdict bad">已完成 0 / 8 項</div>
+  </section>
+
+  <section class="panel">
+    <h3>🎯 判斷題</h3>
+    <p class="muted">三題全對才算通過。</p>
+    <div id="quiz" style="margin-top:12px"></div>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="../index.html" class="btn btn-ghost">← 回首頁</a>
+    <a href="module2.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a>
+  </div>
+</main>
+<script src="../../js/main.js"></script><script src="../../js/sources.js"></script><script src="../../js/resources.js"></script><script src="../../js/audio.js"></script><script src="../js/module1.js"></script>
+</body></html>

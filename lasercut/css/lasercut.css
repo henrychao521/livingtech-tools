@@ -1,0 +1,80 @@
+/* 雷射切割主題色 — 雷射紅 */
+.lc-theme {
+  --primary: #E11D48;
+  --primary-dark: #9F1239;
+  --primary-light: #FFE4E6;
+  --primary-glow: rgba(225,29,72,.3);
+  --accent: #0EA5E9;
+  --accent-light: #E0F2FE;
+}
+.lc-theme .brand .logo { filter: drop-shadow(0 2px 4px rgba(225,29,72,.4)); }
+.lc-theme .hero h2 {
+  background: linear-gradient(135deg, #1a1a1a 30%, #9F1239 100%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero-lc { width:100%; max-width:480px; filter:drop-shadow(0 20px 40px rgba(0,0,0,.12)); animation:slow-float 6s ease-in-out infinite; }
+
+.lc-stage { background:#0f172a; border-radius:var(--radius-lg); padding:18px; border:1px solid #1e293b; }
+.lc-stage canvas, .lc-stage svg { width:100%; height:auto; display:block; background:#1e293b; border-radius:var(--radius); }
+
+.verdict { padding:14px; border-radius:10px; margin-top:10px; font-size:14px; font-weight:700; }
+.verdict.good { background:#dcfce7; color:#15803d; border-left:4px solid #22c55e; }
+.verdict.warn { background:#fef9c3; color:#a16207; border-left:4px solid #eab308; }
+.verdict.bad  { background:#fee2e2; color:#b91c1c; border-left:4px solid #ef4444; }
+
+.pick-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:10px; }
+.pick { border:2px solid #e2e8f0; border-radius:12px; padding:12px; cursor:pointer; transition:all .18s; background:#fff; text-align:center; }
+.pick:hover { border-color:var(--primary); transform:translateY(-2px); }
+.pick.on { border-color:var(--accent); background:var(--accent-light); }
+.pick .pick-ico { font-size:24px; display:block; margin-bottom:5px; }
+.pick .pick-name { font-weight:700; font-size:13.5px; color:#1e293b; }
+.pick .pick-meta { font-size:11.5px; color:#64748b; margin-top:3px; }
+
+.param { margin-bottom:12px; }
+.param-head { display:flex; justify-content:space-between; font-size:13.5px; font-weight:600; margin-bottom:3px; }
+.param-val { font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--primary-dark); }
+.param input[type=range] { width:100%; }
+.param-hint { font-size:11.5px; color:#94a3b8; display:flex; justify-content:space-between; }
+
+.flow { display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:center; margin:16px 0; }
+.flow-node { background:#fff; border:2px solid var(--primary); color:var(--primary-dark); border-radius:10px; padding:10px 14px; font-weight:700; font-size:13px; text-align:center; }
+.flow-arrow { color:var(--primary); font-weight:900; font-size:18px; }
+
+.stat-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-top:14px; }
+.stat { border-radius:12px; padding:13px; }
+.stat-label { font-size:12.5px; font-weight:700; }
+.stat-val { font-size:22px; font-weight:900; font-family:'JetBrains Mono',monospace; }
+
+/* 安全警告 */
+.danger { border-left:4px solid #DC2626; background:#FEF2F2; padding:14px 16px; border-radius:0 10px 10px 0; margin:14px 0; }
+.danger strong { color:#991B1B; }
+.danger p { margin:6px 0 0; font-size:14px; color:#7F1D1D; line-height:1.75; }
+.note { border-left:4px solid #0EA5E9; background:#F0F9FF; padding:14px 16px; border-radius:0 10px 10px 0; margin:14px 0; }
+.note strong { color:#0369A1; }
+.note p { margin:6px 0 0; font-size:14px; color:#0C4A6E; line-height:1.75; }
+
+/* 圖層色卡 */
+.layer-row { display:flex; gap:10px; flex-wrap:wrap; margin:12px 0; }
+.layer-chip { display:flex; align-items:center; gap:8px; border:2px solid #e2e8f0; border-radius:10px;
+  padding:9px 14px; cursor:pointer; background:#fff; transition:all .18s; font-size:13.5px; font-weight:700; }
+.layer-chip:hover { transform:translateY(-2px); }
+.layer-chip.on { border-color:#0f172a; box-shadow:0 0 0 2px rgba(15,23,42,.12); }
+.layer-sw { width:18px; height:18px; border-radius:4px; border:1px solid rgba(0,0,0,.2); }
+
+/* 步驟排序 */
+.step-list { list-style:none; padding:0; margin:12px 0 0; display:flex; flex-direction:column; gap:8px; }
+.step-item { display:flex; align-items:center; gap:12px; background:#fff; border:2px solid #e2e8f0;
+  border-radius:10px; padding:12px 14px; cursor:grab; transition:all .18s; }
+.step-item:hover { border-color:var(--primary); }
+.step-item.dragging { opacity:.45; }
+.step-item.ok { border-color:#22c55e; background:#f0fdf4; }
+.step-item.no { border-color:#ef4444; background:#fef2f2; }
+.step-num { flex:0 0 28px; height:28px; border-radius:50%; background:var(--bg-soft); color:var(--text-muted);
+  display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px; font-family:'JetBrains Mono',monospace; }
+.step-item.ok .step-num { background:#22c55e; color:#fff; }
+.step-txt { font-size:14px; font-weight:600; }
+.step-sub { font-size:12px; color:#64748b; }
+
+/* 影片嵌入 */
+.vid-wrap { position:relative; padding-bottom:56.25%; height:0; border-radius:12px; overflow:hidden; background:#0f172a; }
+.vid-wrap iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:0; }

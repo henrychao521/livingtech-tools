@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YCXP16QQM1"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YCXP16QQM1');</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模組 2：RDWorks 操作流程</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/lasercut.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🔴%3C/text%3E%3C/svg%3E">
+</head><body data-tool="lasercut" class="lc-theme">
+<header class="topbar"><div class="brand"><span class="logo">🔴</span><div><h1>雷射切割機</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
+<main class="module-page">
+  <div class="module-header">
+    <div><span class="module-step">MODULE 02</span><h2>RDWorks 操作流程：順序不能錯</h2>
+    <p class="muted">每一步都在防一種失敗。跳過任一步，都有對應的災難在等你。</p></div>
+    <div class="muted" id="prog">排序 未完成</div>
+  </div>
+
+  <section class="panel">
+    <h3>🧩 把八個步驟排出正確順序</h3>
+    <p class="muted" style="margin-bottom:10px">
+      下面的步驟被打亂了。用<strong>拖曳</strong>（手機／平板可用右側的 ▲▼ 按鈕）排出正確順序，再按檢查。
+    </p>
+    <ul class="step-list" id="steps"></ul>
+    <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+      <button class="btn btn-primary" id="checkBtn">✓ 檢查順序</button>
+      <button class="btn btn-ghost" id="shuffleBtn">🔀 重新打亂</button>
+    </div>
+    <div id="verdict" class="verdict warn">排好之後按「檢查順序」</div>
+  </section>
+
+  <section class="panel">
+    <h3>📖 每一步在防什麼</h3>
+    <p class="muted">排對之後，這裡會解鎖每個步驟的說明。</p>
+    <div id="explain" style="margin-top:12px"></div>
+  </section>
+
+  <section class="panel">
+    <h3>⚠️ 最常被跳過的兩步</h3>
+    <div class="danger">
+      <strong>跳過 Frame 掃框</strong>
+      <p>直接按開始，結果圖形超出板材範圍——雷射在蜂巢台上空燒，不只白費一塊板，
+      還可能點燃台面下累積的木屑。<strong>掃框只要三秒</strong>。</p>
+    </div>
+    <div class="danger">
+      <strong>忘記確認焦距</strong>
+      <p>焦點沒對在材料表面，能量就散掉了。症狀是「參數明明對卻切不斷」，
+      很多人這時會誤把功率一路調高，結果切縫變寬、邊緣焦黑，材料也毀了。</p>
+    </div>
+  </section>
+
+  <div class="module-nav-bottom">
+    <a href="module1.html" class="btn btn-ghost">← 上一關</a>
+    <a href="module3.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a>
+  </div>
+</main>
+<script src="../../js/main.js"></script><script src="../../js/sources.js"></script><script src="../../js/resources.js"></script><script src="../../js/audio.js"></script><script src="../js/module2.js"></script>
+</body></html>
