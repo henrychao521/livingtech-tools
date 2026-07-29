@@ -48,10 +48,72 @@
   </section>
 
   <section class="panel">
+    <h3>📊 研究實測：雷切時教室裡的 PM2.5 有多高</h3>
+    <p class="muted" style="margin-bottom:12px">
+      數位加工機看起來比傳統機具「乾淨」——沒有滿天木屑。但這只是因為<strong>顆粒小到看不見</strong>。
+      本站作者以臺北市兩所學校的雷射切割機實測，用光學懸浮微粒檢測儀量測加工時的細懸浮微粒濃度，
+      結果如下：
+    </p>
+
+    <div class="lc-stage" style="background:#0f172a;padding:22px">
+      <svg viewBox="0 0 700 260" role="img" aria-label="雷切 PM2.5 濃度與環保署標準比較長條圖">
+        <!-- 基準線 -->
+        <line x1="150" y1="215" x2="680" y2="215" stroke="#475569" stroke-width="1.5"/>
+        <!-- 標準線 35 -->
+        <line x1="150" y1="207" x2="680" y2="207" stroke="#22c55e" stroke-width="2" stroke-dasharray="7 5"/>
+        <text x="146" y="211" text-anchor="end" fill="#22c55e" font-size="12" font-weight="700" font-family="Inter">35</text>
+        <text x="688" y="211" text-anchor="end" fill="#22c55e" font-size="11" font-family="Inter" opacity="0">.</text>
+
+        <!-- 密集板 856.95 -->
+        <rect x="200" y="43.6" width="110" height="171.4" rx="3" fill="#DC2626"/>
+        <text x="255" y="36" text-anchor="middle" fill="#FCA5A5" font-size="17" font-weight="900" font-family="Inter">856.95</text>
+        <text x="255" y="234" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="700">密集板・雕刻</text>
+        <text x="255" y="250" text-anchor="middle" fill="#94a3b8" font-size="11.5">標準的 24.5 倍</text>
+
+        <!-- 壓克力 210.45 -->
+        <rect x="390" y="172.9" width="110" height="42.1" rx="3" fill="#F59E0B"/>
+        <text x="445" y="165" text-anchor="middle" fill="#FCD34D" font-size="17" font-weight="900" font-family="Inter">210.45</text>
+        <text x="445" y="234" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="700">壓克力</text>
+        <text x="445" y="250" text-anchor="middle" fill="#94a3b8" font-size="11.5">標準的 6 倍</text>
+
+        <!-- 標準 35 -->
+        <rect x="580" y="208" width="110" height="7" rx="2" fill="#22c55e"/>
+        <text x="635" y="200" text-anchor="middle" fill="#86EFAC" font-size="15" font-weight="900" font-family="Inter">35</text>
+        <text x="635" y="234" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="700">環保署標準</text>
+        <text x="635" y="250" text-anchor="middle" fill="#94a3b8" font-size="11.5">24 小時值上限</text>
+
+        <text x="20" y="120" fill="#94a3b8" font-size="12" font-weight="700" font-family="Inter" transform="rotate(-90 20 120)" text-anchor="middle">PM2.5 (μg/m³)</text>
+      </svg>
+    </div>
+
+    <div class="danger">
+      <strong>最關鍵的一個發現：關機不等於可以馬上開蓋</strong>
+      <p>研究同時量測了<strong>加工結束後濃度的下降速度</strong>，結果顯示細懸浮微粒
+      <strong>要超過一分鐘才會降回安全範圍</strong>。也就是說，切完立刻掀蓋拿件，
+      等於把最濃的那一口直接吸進去。<br><br>
+      <strong>操作規則：切完後排煙繼續運轉至少一分鐘，再開蓋取件。</strong></p>
+    </div>
+
+    <div class="note">
+      <strong>國際上後來的研究也指向同一件事</strong>
+      <p>Munoz 等人（2023，<em>Journal of Chemical Health &amp; Safety</em>）以 60 W CO₂ 雷射切壓克力，
+      量到大量 10–420 nm 的奈米級顆粒（最密集落在約 27–36 nm）。
+      他們特別指出：排煙機能有效抽走<strong>氣體</strong>，卻<strong>擋不住開蓋瞬間逸散的顆粒</strong>，
+      因此建議「切割完成後讓排煙機多運轉一段時間再開蓋」——與上述實測結論一致。</p>
+    </div>
+
+    <p class="muted" style="font-size:13px">
+      📄 資料來源：趙珩宇（2019）《科技╱自造教室的雷射切割機之細懸浮微粒研究》，
+      國立臺灣師範大學科技應用與人力資源發展學系碩士論文（指導教授：林坤誼）。
+      完整書目與摘要見本頁下方「資料來源」區塊。
+    </p>
+  </section>
+
+  <section class="panel">
     <h3>🛡️ 開機前的安全檢查</h3>
     <p class="muted">每一項都有它防的事故，不是形式。全部勾完才算完成。</p>
     <div id="checklist" style="margin-top:12px;display:flex;flex-direction:column;gap:8px"></div>
-    <div id="checkStat" class="verdict bad">已完成 0 / 8 項</div>
+    <div id="checkStat" class="verdict bad">已完成 0 / 9 項</div>
   </section>
 
   <section class="panel">

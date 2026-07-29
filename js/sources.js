@@ -52,6 +52,9 @@ window.SOURCES = {
   ],
 
   lasercut: [
+    { tag: 'THESIS', text: '趙珩宇（2019）《科技╱自造教室的雷射切割機之細懸浮微粒研究》，國立臺灣師範大學科技應用與人力資源發展學系碩士論文（指導教授：林坤誼）。實測臺北市兩所學校雷切機：密集板雕刻 PM2.5 平均 856.95 μg/m³、壓克力 210.45 μg/m³，皆遠高於環保署 35 μg/m³ 標準；加工後需超過一分鐘才降回安全值。', url: 'https://ndltd.ncl.edu.tw/cgi-bin/gs32/gsweb.cgi/login?o=dnclcdr&s=id=%22107NTNU5036036%22.&searchmode=basic' },
+    { tag: 'CHAS', text: 'Munoz, A., Schmidt, J., Suffet, I.H.M., & Tsai, C.S.-J. (2023)《Characterization of Emissions from Carbon Dioxide Laser Cutting Acrylic Plastics》, Journal of Chemical Health & Safety — 60 W CO₂ 切壓克力逸散 10–420 nm 奈米顆粒；排煙可抽走氣體但擋不住開蓋瞬間的顆粒，建議切完後延長排煙時間再開蓋。', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC10369487/' },
+    { tag: 'AAQR', text: 'Aerosol and Air Quality Research (2024)《Respirable Particles and Gas Contaminants Emissions from a Desktop Laser Cutter and Engraver》— 桌上型雷切機的可呼吸性顆粒與氣態污染物排放，並評估通風控制成效。', url: 'https://aaqr.org/articles/aaqr-24-02-oa-0032' },
     { tag: 'OSHA', text: 'U.S. OSHA / ANSI Z136.1《Safe Use of Lasers》— 雷射分級與工程控制（連鎖裝置、外殼、警示標示）。', url: 'https://www.osha.gov/laser-hazards' },
     { tag: 'CNS',  text: 'CNS 15448 / IEC 60825-1《雷射產品之安全》— 雷射產品分級與防護要求。', url: 'https://www.cnsonline.com.tw/' },
     { tag: 'NIOSH', text: 'NIOSH《Control of Smoke From Laser/Electric Arc Surgical Procedures》與雷射加工排煙建議 — 加工煙塵（LGAC）之危害與局部排氣需求。', url: 'https://www.cdc.gov/niosh/' },
