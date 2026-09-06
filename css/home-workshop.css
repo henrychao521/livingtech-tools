@@ -327,16 +327,9 @@ body.hub .hub-tool {
 }
 /* Non-uniform column spanning */
 @media (min-width: 641px) and (max-width: 1023px) {
-  body.hub .hub-tool:nth-child(even) { grid-column: span 6; }
-  body.hub .hub-tool:nth-child(odd) { grid-column: span 6; }
-  body.hub .hub-tool:nth-child(3n) { grid-column: span 12; }
-}
+      }
 @media (min-width: 1024px) {
-  body.hub .hub-tool:nth-child(odd) { grid-column: span 5; }
-  body.hub .hub-tool:nth-child(even) { grid-column: span 7; }
-  body.hub .hub-tool:nth-child(3n) { grid-column: span 4; }
-  body.hub .hub-tool:nth-child(5n) { grid-column: span 8; }
-}
+        }
 
 .tool-photo {
   border: 3px solid #1c1917;
@@ -470,3 +463,10 @@ body.hub .tool-caption .tool-feats { font-size: 12.5px; color: #57534e; margin-t
 body.hub .tool-caption .tool-feats span::after { content: " · "; }
 body.hub .tool-caption .tool-feats span:last-child::after { content: ""; }
 body.hub .tool-text-only.tool-caption { border: 3px solid #1c1917; background: #fff8e8; padding: 18px 20px; justify-content: flex-end; min-height: 200px; }
+
+/* 統一主題格尺寸（2026-09-07 使用者要求）：每列 3 格，照片框固定高度 */
+body.hub .hub-tool { grid-column: span 4; }
+body.hub .tool-photo { height: 220px; }
+body.hub .tool-text-only.tool-caption { min-height: 220px; box-sizing: border-box; }
+@media (max-width: 900px) { body.hub .hub-tool { grid-column: span 6; } }
+@media (max-width: 640px) { body.hub .hub-tool { grid-column: span 1 !important; } }
