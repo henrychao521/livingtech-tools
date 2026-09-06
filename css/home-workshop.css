@@ -1,0 +1,472 @@
+/* =========================================================================
+   DIRECTION B: REAL WORKSHOP
+   Overrides for original style.css and svg-effects.css
+   ========================================================================= */
+
+body.hub {
+  background: #efe6d6 !important;
+  color: #1c1917 !important;
+  font-family: 'Noto Sans TC', sans-serif !important;
+  margin: 0;
+  padding: 0;
+}
+body.hub a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Base Typographic Overrides */
+h1, h2, h3, h4, h5, h6, strong {
+  font-weight: 900 !important;
+  color: #1c1917 !important;
+}
+
+/* Strip original component styles (cards, badges, rounded corners, shadows) */
+body.hub .hub-tool,
+body.hub .hub-tool:hover,
+body.hub .card,
+body.hub .card:hover,
+body.hub .btn,
+body.hub .badge,
+body.hub .fchip,
+body.hub .ov-chip,
+body.hub .ov-chip:hover,
+body.hub .pm-lane,
+body.hub .pm-node,
+body.hub .pm-node:hover {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  border: none !important;
+  transform: none !important;
+}
+
+/* Strip decorative pseudo-elements */
+body.hub .hub-tool::before,
+body.hub .hub-tool::after,
+body.hub .card::before,
+body.hub .card::after,
+body.hub .pm-lane::before,
+body.hub .pm-lane::after,
+body.hub .ped-step::after {
+  display: none !important;
+}
+
+/* Global Button Styles */
+body.hub .btn {
+  border: 2px solid #1c1917 !important;
+  background: #efe6d6 !important;
+  color: #1c1917 !important;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+body.hub .btn.btn-primary {
+  background: #1c1917 !important;
+  color: #efe6d6 !important;
+}
+
+/* Header Overrides */
+body.hub .topbar {
+  background: #efe6d6 !important;
+  border-bottom: 2px solid #1c1917;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+body.hub .brand h1 {
+  font-size: 24px;
+  margin: 0;
+}
+body.hub .subtitle {
+  font-size: 14px;
+  margin: 0;
+}
+body.hub .topnav {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+body.hub .topnav a {
+  font-weight: 700;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Hero Section */
+.hero-workshop {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+@media (min-width: 768px) {
+  .hero-workshop {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+.hero-text {
+  flex: 1;
+}
+.hero-text h1 {
+  font-size: clamp(48px, 6vw, 64px);
+  line-height: 1.1;
+  margin-bottom: 24px;
+  letter-spacing: -0.02em;
+}
+.hero-text p {
+  font-size: 18px;
+  line-height: 1.6;
+  font-weight: 400;
+  margin-bottom: 32px;
+  max-width: 500px;
+}
+.hero-img-box {
+  flex: 1;
+  border: 3px solid #1c1917;
+  height: 480px;
+  background: #2a2a2a;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Only allowed scrim per rules */
+.hero-img-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(0,0,0,0.6), transparent);
+  pointer-events: none;
+}
+.hero-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  position: relative;
+  z-index: 1;
+}
+.sticky-note {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  background: #ffe36a;
+  color: #1c1917;
+  padding: 16px 24px;
+  font-weight: 900;
+  font-size: 18px;
+  transform: rotate(3deg);
+  box-shadow: 4px 6px 0 rgba(0,0,0,.35);
+  border: 1px solid #1c1917;
+  z-index: 10;
+}
+
+/* Overview & Pathmap Sections */
+body.hub .overview, 
+body.hub .pathmap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  border-bottom: 2px solid #1c1917;
+}
+body.hub .section-title {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+body.hub .section-sub {
+  font-size: 16px;
+  margin-bottom: 24px;
+  font-weight: 400;
+}
+body.hub .ov-wrap, 
+body.hub .pm-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+body.hub .ov-group, 
+body.hub .pm-lane {
+  border: 2px solid #1c1917 !important;
+  padding: 16px !important;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+@media (min-width: 768px) {
+  body.hub .pm-lane {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+body.hub .ov-h, 
+body.hub .pm-label {
+  font-size: 18px;
+  border-bottom: 2px solid #1c1917;
+  padding-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+body.hub .ov-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+body.hub .ov-chip, 
+body.hub .pm-node {
+  border: 2px solid #1c1917 !important;
+  padding: 8px 16px !important;
+  font-weight: 700;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+body.hub .pm-a {
+  font-weight: 900;
+  margin: 0 8px;
+}
+
+/* Sticky Filterbar */
+body.hub .filterbar {
+  border-bottom: 2px solid #1c1917;
+  border-top: none;
+  background: #efe6d6 !important;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  padding: 12px 0;
+}
+body.hub .fb-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+body.hub .fchip {
+  border: 2px solid #1c1917 !important;
+  padding: 8px 16px !important;
+  font-weight: 700;
+  min-height: 44px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+body.hub .fchip.on {
+  background: #1c1917 !important;
+  color: #efe6d6 !important;
+}
+
+/* Master Grid for Hub Tools */
+.master-grid {
+  display: block;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+@media (max-width: 640px) {
+  .master-grid {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* Unroll <details> and inner grid to place items directly into .master-grid */
+body.hub .cat-sec { display: block; grid-column: span 12; }
+body.hub .hub-tool-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 24px;
+  margin: 20px 0 8px;
+}
+@media (max-width: 640px) { body.hub .hub-tool-grid { grid-template-columns: 1fr; } body.hub .hub-tool { grid-column: span 1 !important; } }
+body.hub .cat-sec.hide {
+  display: none !important;
+}
+body.hub .cat-sec > summary::-webkit-details-marker {
+  display: none;
+}
+body.hub .cat-sec > summary {
+  list-style: none;
+}
+body.hub .cat-head {
+  grid-column: span 12;
+  border-bottom: 2px solid #1c1917;
+  padding: 16px 0 8px;
+  margin-top: 24px;
+  cursor: pointer;
+  display: block;
+}
+body.hub .cat-head h4 {
+  font-size: 24px;
+  margin: 0 0 4px;
+}
+body.hub .cat-head p {
+  font-size: 16px;
+  margin: 0;
+}
+
+/* Tool Grid Items */
+body.hub .hub-tool {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  padding: 0 !important;
+}
+/* Non-uniform column spanning */
+@media (min-width: 641px) and (max-width: 1023px) {
+  body.hub .hub-tool:nth-child(even) { grid-column: span 6; }
+  body.hub .hub-tool:nth-child(odd) { grid-column: span 6; }
+  body.hub .hub-tool:nth-child(3n) { grid-column: span 12; }
+}
+@media (min-width: 1024px) {
+  body.hub .hub-tool:nth-child(odd) { grid-column: span 5; }
+  body.hub .hub-tool:nth-child(even) { grid-column: span 7; }
+  body.hub .hub-tool:nth-child(3n) { grid-column: span 4; }
+  body.hub .hub-tool:nth-child(5n) { grid-column: span 8; }
+}
+
+.tool-photo {
+  border: 3px solid #1c1917;
+  background: #fff;
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.tool-photo img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.tool-caption {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+.tool-caption strong {
+  font-size: 18px;
+  margin-right: 8px;
+  display: inline;
+}
+
+/* Tools without photos */
+.tool-text-only {
+  border: 3px solid #1c1917;
+  padding: 24px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+}
+.tool-text-only strong {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+.tool-text-only span {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* Pedagogy & Why Sections */
+body.hub .pedagogy, 
+body.hub .why, 
+body.hub .teacher {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 40px 20px;
+  border-top: 2px solid #1c1917;
+  background: #efe6d6 !important;
+}
+body.hub .pedagogy-grid, 
+body.hub .why-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-top: 24px;
+}
+@media (min-width: 640px) {
+  body.hub .pedagogy-grid,
+  body.hub .why-grid { 
+    grid-template-columns: repeat(2, 1fr); 
+  }
+}
+@media (min-width: 1024px) {
+  body.hub .pedagogy-grid { 
+    grid-template-columns: repeat(5, 1fr); 
+  }
+  body.hub .why-grid { 
+    grid-template-columns: repeat(4, 1fr); 
+  }
+}
+body.hub .ped-step, 
+body.hub .why-item {
+  border: 2px solid #1c1917;
+  padding: 24px;
+}
+body.hub .ped-num {
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+body.hub .ped-step p, 
+body.hub .why-item p {
+  font-size: 16px;
+  font-weight: 400;
+  margin-top: 8px;
+}
+body.hub .ped-step strong, 
+body.hub .why-item strong {
+  font-size: 18px;
+}
+
+/* Teacher Dashboard Links */
+.teacher-links {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 24px;
+}
+@media (min-width: 640px) {
+  .teacher-links { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) {
+  .teacher-links { grid-template-columns: repeat(4, 1fr); }
+}
+.teacher-links a {
+  border: 2px solid #1c1917;
+  padding: 24px;
+  display: block;
+  min-height: 44px;
+}
+.teacher-links strong {
+  font-size: 18px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* 主題說明：補回原本的副標、說明與特色（2026-09 人工修補） */
+body.hub .tool-caption { display: flex; flex-direction: column; gap: 4px; }
+body.hub .tool-caption strong { font-size: 18px; font-weight: 900; color: #1c1917; }
+body.hub .tool-caption .tool-tag { font-family: "IBM Plex Mono", Menlo, monospace; font-size: 12px; color: #57534e; }
+body.hub .tool-caption p { margin: 2px 0 0; font-size: 14px; line-height: 1.6; color: #44403c; }
+body.hub .tool-caption .tool-feats { font-size: 12.5px; color: #57534e; margin-top: 4px; }
+body.hub .tool-caption .tool-feats span::after { content: " · "; }
+body.hub .tool-caption .tool-feats span:last-child::after { content: ""; }
+body.hub .tool-text-only.tool-caption { border: 3px solid #1c1917; background: #fff8e8; padding: 18px 20px; justify-content: flex-end; min-height: 200px; }
