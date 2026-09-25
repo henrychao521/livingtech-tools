@@ -45,7 +45,7 @@ const STEPS = [
   {
     title: '緩推前進',
     anim: 'feed',
-    desc: '開啟電源後，木板向前推進，速度約「鋸條每往復 5–10 次推進 1 公分」。讓鋸條自己切，而不是「推鋸條」。',
+    desc: '開啟電源後，用很輕的力把木板往前送：讓鋸條自己切，而不是「推鋸條」。合適的速度因木材種類與厚度而不同，以「鋸條保持直、切口不焦黑、聽得到穩定的切削聲」為準。',
     tip: '推太快 → 鋸條彎曲、燒焦、易斷；推太慢 → 摩擦生熱、切口焦黑。',
     warn: '感覺木板「卡住」要立刻減速或停止，可能是鋸條斷了或夾住。',
   },
@@ -369,7 +369,7 @@ function renderAnim(type) {
         <!-- 切割軌跡 -->
         <line x1="60" y1="130" x2="200" y2="130" stroke="#222" stroke-width="2" stroke-dasharray="3 2"/>
         <!-- 速度提示 -->
-        <text x="200" y="225" text-anchor="middle" font-family="Noto Sans TC,sans-serif" font-size="12" fill="#444">每往復 5–10 次推進 1 公分（讓鋸條自己切）</text>
+        <text x="200" y="225" text-anchor="middle" font-family="Noto Sans TC,sans-serif" font-size="12" fill="#444">輕推慢送，讓鋸條自己切</text>
         <!-- 速度標 -->
         <g transform="translate(310,30)">
           <rect x="0" y="0" width="80" height="22" rx="4" fill="#2EBD66"/>

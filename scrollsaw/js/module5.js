@@ -221,6 +221,7 @@ function analyzeTemplate(t) {
   const len = pathLength(t.path);
   const sharpAngles = countSharpAngles(t.path);
   const lenCM = (len / 25).toFixed(1);
+  // 粗估：以初學者每分鐘約 1 公分計；實際依木材、厚度與機台差很多，介面上標為「粗估」
   const timeSec = Math.round(len / 25 * 60);
   document.getElementById('stat-len').textContent = `${lenCM} cm`;
   document.getElementById('stat-time').textContent = formatTime(timeSec);
