@@ -34,8 +34,19 @@ const TOOLS = [
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const tab = btn.dataset.tab;
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b === btn));
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      b.classList.toggle('active', b === btn);
+      b.setAttribute('aria-selected', b === btn ? 'true' : 'false');
+      b.tabIndex = b === btn ? 0 : -1;
+    });
     document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('active', p.dataset.tab === tab));
+  });
+  // ARIA 分頁：左右方向鍵切換
+  btn.addEventListener('keydown', e => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    const all = [...document.querySelectorAll('.tab-btn')];
+    const next = all[(all.indexOf(btn) + (e.key === 'ArrowRight' ? 1 : all.length - 1)) % all.length];
+    next.focus(); next.click();
   });
 });
 
@@ -94,11 +105,11 @@ function renderLocalProgress() {
       `<div style="font-size:11px;color:var(--text-muted);margin-top:3px">補充・${e.label} ${e.done}/${e.total}</div>`
     ).join('');
     html += `<tr>
-      <td><span class="tool-cell" style="color:${t.color}">${t.emoji} ${t.name}</span></td>
+      <td><span class="tool-cell" style="color:${esc(t.color)}">${t.emoji} ${esc(t.name)}</span></td>
       <td>${p.completed} / ${p.total}${extras}</td>
       <td><span class="progress-cell"><span class="progress-cell-fill" style="width:${p.percent}%"></span></span>${p.percent}%</td>
       <td><span class="stars-cell">★</span> ${p.stars} / ${p.maxStars}</td>
-      <td><a href="${t.url}" style="color:var(--primary);font-weight:600">前往 →</a></td>
+      <td><a href="${esc(t.url)}" style="color:var(--primary);font-weight:600">前往 →</a></td>
     </tr>`;
   });
   html += '</tbody></table></div>';
@@ -166,7 +177,7 @@ const uploadZone = document.getElementById('upload-zone');
 const uploadInput = document.getElementById('upload-input');
 const classData = []; // { studentName, tools: {scrollsaw: {...}, ...} }
 
-uploadZone.addEventListener('click', () => uploadInput.click());
+// 點擊交給 <label> 原生行為（input 在 label 裡），不再另外呼叫 click()，鍵盤操作時才不會開兩次對話框
 uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('over'); });
 uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('over'));
 uploadZone.addEventListener('drop', e => {
@@ -176,29 +187,52 @@ uploadZone.addEventListener('drop', e => {
 });
 uploadInput.addEventListener('change', e => handleFiles(e.target.files));
 
+// 2026-09-25 三模型審查：以前用 files.length 當終點，混入非 .json 檔、或最後讀完的那份解析失敗時，
+// 計數永遠湊不滿，表格就不會出現。改成只數 .json，且成功、失敗都算讀完，最後一併列出失敗的檔名。
 function handleFiles(files) {
-  let processed = 0;
-  Array.from(files).forEach(file => {
-    if (!file.name.endsWith('.json')) return;
+  const jsonFiles = Array.from(files).filter(f => f.name.toLowerCase().endsWith('.json'));
+  const skipped = files.length - jsonFiles.length;
+  const failed = [];
+  let pending = jsonFiles.length;
+  if (pending === 0) {
+    showUploadNotice([], skipped);
+    return;
+  }
+  const finish = () => {
+    if (--pending > 0) return;
+    renderClassResult();
+    showUploadNotice(failed, skipped);
+  };
+  jsonFiles.forEach(file => {
     const reader = new FileReader();
     reader.onload = e => {
       try {
         const data = JSON.parse(e.target.result);
-        // 從檔名取出學生資訊（如果 JSON 沒有）
-        if (!data.studentName) data.studentName = file.name.replace('.json', '');
+        if (!data || typeof data !== 'object' || Array.isArray(data)) throw new Error('不是進度檔');
+        // 從檔名取出學生資訊（如果 JSON 沒有）；姓名可能被填成數字，一律轉字串
+        data.studentName = String(data.studentName || file.name.replace(/\.json$/i, ''));
         // 替換重複的學生
         const existingIdx = classData.findIndex(d => d.studentName === data.studentName);
         if (existingIdx >= 0) classData[existingIdx] = data;
         else classData.push(data);
-        processed++;
-        if (processed === files.length) renderClassResult();
       } catch (err) {
         console.error('Parse failed:', file.name, err);
-        processed++;
+        failed.push(file.name);
       }
+      finish();
     };
+    reader.onerror = () => { failed.push(file.name); finish(); };
     reader.readAsText(file);
   });
+}
+
+function showUploadNotice(failed, skipped) {
+  const box = document.getElementById('upload-notice');
+  if (!box) return;
+  const msgs = [];
+  if (failed.length) msgs.push(`${failed.length} 個檔案無法讀取（${failed.map(esc).join('、')}），請確認是從「匯出進度」取得的 JSON。`);
+  if (skipped) msgs.push(`略過 ${skipped} 個不是 .json 的檔案。`);
+  box.innerHTML = msgs.map(m => `<div class="feedback error" style="margin-top:10px">${m}</div>`).join('');
 }
 
 function renderClassResult() {
@@ -208,7 +242,7 @@ function renderClassResult() {
     return;
   }
   // 排序：按學生名（如果是 班_座_名 格式會自動排序）
-  classData.sort((a, b) => a.studentName.localeCompare(b.studentName));
+  classData.sort((a, b) => String(a.studentName).localeCompare(String(b.studentName)));
 
   // 統計
   const stats = TOOLS.map(t => {
@@ -231,7 +265,7 @@ function renderClassResult() {
     const avgComplete = (s.totalCompleted / s.count).toFixed(1);
     const avgStars = (s.totalStars / s.count).toFixed(1);
     html += `<div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:24px">${s.tool.emoji}</span><strong style="color:${s.tool.color}">${s.tool.name}</strong></div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:24px">${s.tool.emoji}</span><strong style="color:${esc(s.tool.color)}">${esc(s.tool.name)}</strong></div>
       <div style="font-size:12px;color:var(--text-muted)">使用人數：${s.count} / ${classData.length}</div>
       <div style="font-size:12px;color:var(--text-muted)">平均完成：${avgComplete} / ${s.tool.moduleCount || 5} 模組</div>
       <div style="font-size:12px;color:var(--text-muted)">平均星數：★${avgStars}</div>
@@ -290,10 +324,10 @@ window.exportClassCSV = function() {
     rows.push(row);
   });
   // CSV：內層雙引號要成雙，且 = + - @ 開頭的儲存格在 Excel 會被當公式執行，
-  // 學生名稱是自己取的，先加單引號中和。
+  // 學生名稱是自己取的，先加單引號中和。Tab／CR 開頭也要擋（OWASP CSV Injection）。
   const cell = v => {
     let t = String(v == null ? '' : v);
-    if (/^[=+\-@]/.test(t)) t = "'" + t;
+    if (/^[=+\-@\t\r]/.test(t)) t = "'" + t;
     return '"' + t.replace(/"/g, '""') + '"';
   };
   const csv = rows.map(r => r.map(cell).join(',')).join('\n');
@@ -322,9 +356,9 @@ TOOLS.forEach(t => {
   card.className = 'resource-card';
   card.innerHTML = `
     <div class="res-icon">${t.emoji}</div>
-    <h4>${t.name}</h4>
-    <p>${RESOURCE_DESC[t.id] || '5 模組教學資源、課程銜接、學生答題情境分析。'}</p>
-    <a href="${t.url}" style="color:${t.color};font-weight:600;font-size:13px">前往 ${t.name} 平台 →</a>
+    <h4>${esc(t.name)}</h4>
+    <p>${esc(RESOURCE_DESC[t.id] || '5 模組教學資源、課程銜接、學生答題情境分析。')}</p>
+    <a href="${esc(t.url)}" style="color:${esc(t.color)};font-weight:600;font-size:13px">前往 ${esc(t.name)} 平台 →</a>
   `;
   resourceGrid.appendChild(card);
 });

@@ -162,7 +162,7 @@ window.Interactions = (function() {
         <div class="hh-image" style="position:relative;background:#fff;border-radius:10px;padding:8px;border:1px solid var(--border);overflow:hidden">
           ${imageHTML}
         </div>
-        <div class="hh-feedback" style="margin-top:12px;font-size:13px;min-height:32px"></div>
+        <div class="hh-feedback" aria-live="polite" style="margin-top:12px;font-size:13px;min-height:32px"></div>
       </div>
     `;
 
@@ -173,8 +173,11 @@ window.Interactions = (function() {
     // 渲染熱點（透明圓圈疊在圖上）
     hotspots.forEach((h, i) => {
       const dot = document.createElement('button');
+      dot.type = 'button';
       dot.className = 'hh-dot';
       dot.dataset.idx = i;
+      // 報讀軟體要有名稱，但不能直接唸出答案：找到之前只說第幾個位置
+      dot.setAttribute('aria-label', `檢查位置 ${i + 1}`);
       dot.style.cssText = `position:absolute;left:${h.x}%;top:${h.y}%;width:${h.r || 8}%;aspect-ratio:1;border-radius:50%;background:rgba(255,255,255,0);border:2px dashed transparent;cursor:pointer;transform:translate(-50%,-50%);transition:all .2s`;
       dot.addEventListener('mouseenter', () => { if (!found.has(i)) dot.style.background = 'rgba(255,255,255,.15)'; });
       dot.addEventListener('mouseleave', () => { if (!found.has(i)) dot.style.background = 'rgba(255,255,255,0)'; });
@@ -184,6 +187,7 @@ window.Interactions = (function() {
         dot.style.background = 'rgba(34,197,94,.45)';
         dot.style.borderColor = '#16a34a';
         dot.style.borderStyle = 'solid';
+        dot.setAttribute('aria-label', `已找到：${h.label}`);
         progressEl.textContent = `已找到 ${found.size} / ${hotspots.length}`;
         feedbackEl.innerHTML = `<div style="background:var(--success-light);color:#15803d;padding:8px 12px;border-radius:8px;border-left:3px solid var(--success)">✓ <strong>${h.label}</strong> — ${h.explanation || ''}</div>`;
         if (typeof SoundFX !== 'undefined') SoundFX.success();

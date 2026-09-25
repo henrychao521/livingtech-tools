@@ -5,6 +5,10 @@ const ctx = canvas.getContext('2d');
 // 鋸條（固定位置，畫面中央）
 const BLADE_X = 380;
 const BLADE_Y = 250;
+// 比例尺：L1 的 240px 約等於 12cm → 20px = 1cm、2px = 1mm。畫面上顯示 mm 時一律用這個換算
+const PX_PER_MM = 2;
+// 鋸條本身約 1mm 寬：中心離線 2px（1mm）以內都算切在線上
+const toMM = px => Math.max(0, px - 2) / PX_PER_MM;
 
 const LEVELS = {
   L1: {
@@ -35,7 +39,7 @@ const LEVELS = {
   },
   L4: {
     name: 'L4 內挖切割',
-    desc: '從中間點切出方形（先鑽孔再穿鋸條的手順見模組 3）',
+    desc: '沿內輪廓切一圈方形（實機要先鑽導孔、穿鋸條，手順見模組 3；模擬從輪廓上開始）',
     path: [[0, 0], [120, 0], [120, 120], [0, 120], [0, 0]],
     tolerance: 16,
   },
@@ -518,7 +522,7 @@ function updateUI() {
   if (!state) return;
   const blade = getBladeOnBoard();
   const d = distanceToPath(blade.x, blade.y).dist;
-  const offsetMM = Math.max(0, d - 2).toFixed(1);
+  const offsetMM = toMM(d).toFixed(1);
   const offEl = document.getElementById('m-offset');
   offEl.textContent = `${offsetMM} mm`;
   offEl.className = 'v ' + (d < 6 ? 'good' : d < state.level.tolerance ? 'warn' : 'bad');
@@ -557,7 +561,7 @@ function succeed() {
   }
 
   showResult(true, stars, {
-    '最大偏移': state.maxOffset.toFixed(1) + ' px',
+    '最大偏移': toMM(state.maxOffset).toFixed(1) + ' mm',
     '失誤次數': state.errors,
     '超速時間': state.overspeedCount + ' 幀',
     '完成度': Math.round(state.pathProgress * 100) + '%',

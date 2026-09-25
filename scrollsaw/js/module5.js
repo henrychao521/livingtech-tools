@@ -231,7 +231,7 @@ function analyzeTemplate(t) {
   if (sharpAngles > 0) tips.push(`<li>共 <strong>${sharpAngles} 處尖角</strong>，需要「在原地慢慢轉動木板」，不要急著推進。</li>`);
   if (t.diff === 'hard') tips.push(`<li>難度較高，建議先在模組 4 把 L4、L5 練到 3 顆星再嘗試。</li>`);
   if (t.id === 'fish' || t.id === 'cat') tips.push(`<li>這個圖形是「外輪廓」切割，從邊緣開始，沿線回到起點即可分離。</li>`);
-  if (t.id === 'gear') tips.push(`<li>齒輪需先在每齒間鑽穿孔，再把鋸條穿過去做內挖切割。</li>`);
+  if (t.id === 'gear') tips.push(`<li>齒輪是「外輪廓」切割，從邊緣切入即可，不需要穿鋸條。齒根的尖角可以先在廢料側鑽小孔（釋放孔），切到那裡比較好轉向。</li>`);
   if (t.id === 'butterfly' || t.id === 'flower') tips.push(`<li>蝴蝶/花朵的對稱曲線可以先畫好對稱軸，切到一半翻面繼續。</li>`);
   tips.push(`<li>建議先用鉛筆把路徑畫在木板上，並以 <strong>0.5mm 細芯</strong>保持線條清晰。</li>`);
   tips.push(`<li>切完後保留 <strong>1mm</strong> 修整空間，用銼刀修平輪廓。</li>`);

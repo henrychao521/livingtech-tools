@@ -78,7 +78,7 @@ const SCENARIOS = [
     a: '兩手拇指扶在木板邊緣，距離鋸條至少 5 公分',
     b: '一手按住木板靠近鋸條處，另一手推進',
     correct: 'a',
-    explain: '雙手要保持平衡且遠離鋸條（建議「安全三角區」），絕不可單手操作。'
+    explain: '雙手要保持平衡且遠離鋸條，絕不可單手操作。建議用「安全三角區」扶板：雙手拇指放在木板邊緣、距鋸條至少 5 公分（模組 3 有動畫示範）。'
   },
   {
     q: '完成切割要離開機台時，正確順序是？',
@@ -275,7 +275,7 @@ function checkAllDone() {
       prog.safetyPassed = true;
       saveProgress(prog);
     } else {
-      result.innerHTML = `<div class="feedback error" style="font-size:15px;margin-top:20px">目前 ${Math.round(total)} 分，未達 95 分。請重新整理頁面再挑戰一次（安全是最重要的，請務必確實理解每題）。</div>`;
+      result.innerHTML = `<div class="feedback error" style="font-size:15px;margin-top:20px">目前 ${Math.round(total)} 分，未達 95 分——安全闖關需要全部答對才算通過。請先把上面每一題的解說看完，確定懂了再重新挑戰。</div><button type="button" class="btn btn-primary" style="margin-top:12px" onclick="location.reload()">看完解說了，重新挑戰</button>`;
     }
   }
 }

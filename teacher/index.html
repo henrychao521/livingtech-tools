@@ -27,8 +27,12 @@
 .tab-pane { display:none; max-width:1100px; margin:0 auto; padding:30px 36px 60px; }
 .tab-pane.active { display:block; animation:fadeInUp .3s var(--easing); }
 
-.upload-zone { background:#fff; border:2px dashed var(--border-strong); border-radius:18px; padding:40px; text-align:center; transition:all .25s; cursor:pointer; }
+.upload-zone { display:block; background:#fff; border:2px dashed var(--border-strong); border-radius:18px; padding:40px; text-align:center; transition:all .25s; cursor:pointer; }
 .upload-zone.over { border-color:var(--primary); background:var(--primary-light); }
+/* 檔案輸入框視覺上隱藏但保留鍵盤焦點（用 hidden 會讓鍵盤使用者按不到）*/
+.visually-hidden { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+.upload-zone:focus-within, .export-btn:focus-within { outline:3px solid var(--primary); outline-offset:3px; }
+.tab-btn:focus-visible { outline:3px solid var(--primary); outline-offset:2px; }
 .upload-zone .upload-icon { font-size:48px; margin-bottom:10px; }
 .upload-zone h4 { font-size:18px; margin-bottom:6px; }
 .upload-zone p { font-size:13px; color:var(--text-muted); }
@@ -74,33 +78,34 @@
 </header>
 
 <main>
-  <div class="tab-bar">
-    <button class="tab-btn active" data-tab="overview">📊 個人進度（本機）</button>
-    <button class="tab-btn" data-tab="class">👥 班級彙整</button>
-    <button class="tab-btn" data-tab="resources">📚 教學資源</button>
-    <button class="tab-btn" data-tab="export">📤 匯出工具</button>
+  <div class="tab-bar" role="tablist" aria-label="教師後台功能">
+    <button class="tab-btn active" data-tab="overview" role="tab" id="tab-overview" aria-controls="pane-overview" aria-selected="true">📊 個人進度（本機）</button>
+    <button class="tab-btn" data-tab="class" role="tab" id="tab-class" aria-controls="pane-class" aria-selected="false" tabindex="-1">👥 班級彙整</button>
+    <button class="tab-btn" data-tab="resources" role="tab" id="tab-resources" aria-controls="pane-resources" aria-selected="false" tabindex="-1">📚 教學資源</button>
+    <button class="tab-btn" data-tab="export" role="tab" id="tab-export" aria-controls="pane-export" aria-selected="false" tabindex="-1">📤 匯出工具</button>
   </div>
 
-  <div class="tab-pane active" data-tab="overview">
+  <div class="tab-pane active" data-tab="overview" role="tabpanel" id="pane-overview" aria-labelledby="tab-overview">
     <h3 class="section-title" style="text-align:left;font-size:24px">本機學生進度</h3>
     <p class="muted">從這台瀏覽器（學生個人裝置或共用電腦）讀取的當前進度。</p>
     <div id="local-progress"></div>
     <p class="muted" style="font-size:13px;margin-top:20px">💡 教學現場建議流程：學生在自己裝置上完成學習 → 點選工具首頁的「匯出進度」按鈕 → 把 JSON 檔交給老師 → 老師在「班級彙整」分頁上傳所有學生的檔案。</p>
   </div>
 
-  <div class="tab-pane" data-tab="class">
+  <div class="tab-pane" data-tab="class" role="tabpanel" id="pane-class" aria-labelledby="tab-class">
     <h3 class="section-title" style="text-align:left;font-size:24px">班級進度彙整</h3>
     <p class="muted">上傳多名學生的進度 JSON 檔（從學生「匯出進度」取得），系統會合併成班級總表。</p>
     <label class="upload-zone" id="upload-zone">
       <div class="upload-icon">📥</div>
       <h4>拖曳或點擊上傳學生進度 JSON 檔</h4>
       <p>可一次上傳多份。檔名建議格式：「班級_座號_姓名.json」（例：701_15_王小明.json）</p>
-      <input type="file" id="upload-input" accept=".json" multiple hidden>
+      <input type="file" id="upload-input" accept=".json" multiple class="visually-hidden">
     </label>
+    <div id="upload-notice" role="status"></div>
     <div id="class-result"></div>
   </div>
 
-  <div class="tab-pane" data-tab="resources">
+  <div class="tab-pane" data-tab="resources" role="tabpanel" id="pane-resources" aria-labelledby="tab-resources">
     <h3 class="section-title" style="text-align:left;font-size:24px">教學資源</h3>
     <p class="muted">本平台對應 108 課綱、教學排課建議、學習單範本與工具課程銜接。</p>
 
@@ -138,7 +143,7 @@
     </div>
   </div>
 
-  <div class="tab-pane" data-tab="export">
+  <div class="tab-pane" data-tab="export" role="tabpanel" id="pane-export" aria-labelledby="tab-export">
     <h3 class="section-title" style="text-align:left;font-size:24px">匯出工具</h3>
     <p class="muted">把當前瀏覽器的進度匯出成檔案，方便傳給老師或備份。</p>
     <div class="resource-grid" style="margin-top:18px">
@@ -160,7 +165,7 @@
         <p>從之前匯出的 JSON 檔還原進度。可用來在不同電腦間同步。</p>
         <label class="export-btn" style="cursor:pointer">
           選擇檔案
-          <input type="file" accept=".json" hidden onchange="importProgressJSON(event)">
+          <input type="file" accept=".json" class="visually-hidden" onchange="importProgressJSON(event)">
         </label>
       </div>
       <div class="resource-card">
