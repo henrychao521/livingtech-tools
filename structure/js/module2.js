@@ -220,7 +220,7 @@ function checkUnlock() {
   });
 
   items.forEach(item => {
-    item.addEventListener('dragstart', e => { dragged = item; e.dataTransfer.effectAllowed = 'move'; if (typeof SoundFX !== 'undefined') SoundFX.click(); });
+    item.addEventListener('dragstart', e => { if (item.classList.contains('placed')) { e.preventDefault(); return; } dragged = item; e.dataTransfer.effectAllowed = 'move'; if (typeof SoundFX !== 'undefined') SoundFX.click(); });
     item.addEventListener('click', () => {
       if (item.classList.contains('placed')) return;
       items.forEach(i => i.style.outline = '');
@@ -238,13 +238,15 @@ function checkUnlock() {
 
   function handleDrop(zone) {
     if (!dragged) return;
+    if (dragged.classList.contains('placed')) { dragged = null; return; }  // 2026-09-26 審查：避免重複加分
     const accept = zone.dataset.accept;
     const id = dragged.dataset.id;
     const correct = dragged.dataset.correct === '1';
     if (id === accept && correct) {
       zone.classList.add('filled');
       zone.setAttribute('stroke','#16a34a'); zone.setAttribute('stroke-width','2'); zone.setAttribute('fill','rgba(22,163,74,.1)');
-      dragged.classList.add('placed'); dragged.style.outline = '';
+      dragged.classList.add('placed');
+      dragged.draggable = false; dragged.style.outline = '';
       ppeScore += 10;
       const vFn = PPE_VISUALS[id];
       if (vFn) ppeSvg.appendChild(vFn());
@@ -259,13 +261,11 @@ function checkUnlock() {
       }
     } else if (correct) {
       if (typeof SoundFX !== 'undefined') SoundFX.warn();
-      dragged.classList.add('wrong-shake');
-      setTimeout(() => dragged?.classList.remove('wrong-shake'), 400);
+      { const el = dragged; el.classList.add('wrong-shake'); setTimeout(() => el.classList.remove('wrong-shake'), 400); }
       showFb(`位置不對，請拖到「${zone.dataset.label}」區域`, 'error');
     } else {
       if (typeof SoundFX !== 'undefined') SoundFX.error();
-      dragged.classList.add('wrong-shake');
-      setTimeout(() => dragged?.classList.remove('wrong-shake'), 400);
+      { const el = dragged; el.classList.add('wrong-shake'); setTimeout(() => el.classList.remove('wrong-shake'), 400); }
       showFb(PPE_WRONG[id] || '這個物品不適合帶入工地！', 'error');
     }
     dragged = null;

@@ -105,6 +105,7 @@ let dragged = null;
 
 items.forEach(item => {
   item.addEventListener('dragstart', e => {
+    if (item.classList.contains('placed')) { e.preventDefault(); return; }  // 已放好的不能再拖（否則每拖一次重複加分）
     dragged = item;
     e.dataTransfer.effectAllowed = 'move';
     if (typeof SoundFX !== 'undefined') SoundFX.click();
@@ -136,6 +137,7 @@ zones.forEach(zone => {
 
 function handleDrop(zone) {
   if (!dragged) return;
+  if (dragged.classList.contains('placed')) { dragged = null; return; }  // 2026-09-26 審查：避免重複加分
   const accept = zone.dataset.accept;
   const id = dragged.dataset.id;
   const correct = dragged.dataset.correct === '1';
@@ -143,6 +145,7 @@ function handleDrop(zone) {
   if (id === accept && correct) {
     zone.classList.add('filled');
     dragged.classList.add('placed');
+    dragged.draggable = false;
     dragged.style.outline = '';
     dressupScore += 7.5;
     addEquipToCharacter(id);
@@ -150,14 +153,12 @@ function handleDrop(zone) {
     showFeedback(`✓ 正確！${dragged.querySelector('div div:first-child').textContent} 已穿戴`, 'success');
   } else if (correct) {
     if (typeof SoundFX !== 'undefined') SoundFX.warn();
-    dragged.classList.add('wrong-shake');
-    setTimeout(() => dragged?.classList.remove('wrong-shake'), 400);
+    { const el = dragged; el.classList.add('wrong-shake'); setTimeout(() => el.classList.remove('wrong-shake'), 400); }
     showFeedback(`位置不對，請放到「${zone.dataset.label}」對應的部位`, 'error');
   } else {
     dressupErrors++;
     if (typeof SoundFX !== 'undefined') SoundFX.error();
-    dragged.classList.add('wrong-shake');
-    setTimeout(() => dragged?.classList.remove('wrong-shake'), 400);
+    { const el = dragged; el.classList.add('wrong-shake'); setTimeout(() => el.classList.remove('wrong-shake'), 400); }
     const itemName = dragged.querySelector('div div:first-child').textContent;
     showFeedback(`⚠ 「${itemName}」不是正確的安全配備！${getWrongReason(id)}`, 'error');
   }

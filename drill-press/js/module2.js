@@ -169,6 +169,7 @@ list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', ()
 
   items.forEach(item => {
     item.addEventListener('dragstart', e => {
+      if (item.classList.contains('placed')) { e.preventDefault(); return; }  // 已放好的不能再拖（否則每拖一次重複加分）
       dragged = item;
       e.dataTransfer.effectAllowed = 'move';
       if (typeof SoundFX !== 'undefined') SoundFX.pop();
@@ -190,6 +191,7 @@ list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', ()
 
   function handlePpeDrop(zone) {
     if (!dragged) return;
+    if (dragged.classList.contains('placed')) { dragged = null; return; }  // 2026-09-26 審查：避免重複加分
     const accept  = zone.dataset.accept;
     const id      = dragged.dataset.id;
     const correct = dragged.dataset.correct === '1';
@@ -199,6 +201,7 @@ list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', ()
       zone.style.borderColor = '#16a34a';
       zone.style.background  = 'rgba(22,163,74,.08)';
       dragged.classList.add('placed');
+      dragged.draggable = false;
       dragged.style.outline = '';
 
       const vFn = PPE_VISUALS[id];
@@ -225,13 +228,11 @@ list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', ()
       }
     } else if (correct) {
       if (typeof SoundFX !== 'undefined') SoundFX.warn?.() ?? SoundFX.error?.();
-      dragged.classList.add('wrong-shake');
-      setTimeout(() => dragged?.classList.remove('wrong-shake'), 400);
+      { const el = dragged; el.classList.add('wrong-shake'); setTimeout(() => el.classList.remove('wrong-shake'), 400); }
       showPpeFb(`位置不對，請放到「${zone.dataset.label}」對應部位`, 'error');
     } else {
       if (typeof SoundFX !== 'undefined') SoundFX.error();
-      dragged.classList.add('wrong-shake');
-      setTimeout(() => dragged?.classList.remove('wrong-shake'), 400);
+      { const el = dragged; el.classList.add('wrong-shake'); setTimeout(() => el.classList.remove('wrong-shake'), 400); }
       const name = dragged.querySelector('div div:first-child')?.textContent || id;
       showPpeFb(`⚠ 「${name}」不能穿戴！${PPE_WRONG[id] || ''}`, 'error');
     }
