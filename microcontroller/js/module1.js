@@ -58,7 +58,8 @@ progEl.textContent = `已認識 ${seen.size} / 3 種`;
 // 下一關要同時滿足：3 張卡片都看過＋用電安全測驗全對（module1_safety === true）
 function tryUnlock() {
   const p = loadP();
-  if (seen.size === 3 && p.module1_safety === true) {
+  // 或者之前已通過（p.module1 紀錄）→ 重新進入時直接解鎖
+  if ((seen.size === 3 && p.module1_safety === true) || p.module1) {
     if (!p.module1) { p.module1 = true; saveP(p); }
     nextBtn.style.opacity = 1; nextBtn.style.pointerEvents = 'auto';
     return true;

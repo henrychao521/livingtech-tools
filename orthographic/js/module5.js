@@ -21,7 +21,7 @@ const SHAPES = {
   cylinder:  { label: '圓柱',   front: 'rect',   side: 'rect',   top: 'circle', iso: 'cylinder' },
   cone:      { label: '圓錐',   front: 'triangle', side: 'triangle', top: 'circle-dot', iso: 'cone' },
   sphere:    { label: '球體',   front: 'circle', side: 'circle', top: 'circle', iso: 'sphere' },
-  lblock:    { label: 'L 型塊', front: 'l-shape', side: 'rect-tall', top: 'rect', iso: 'lblock' },
+  lblock:    { label: 'L 型塊', front: 'l-shape', side: 'rect-tall', top: 'rect-split', iso: 'lblock' },
   step:      { label: '階梯塊', front: 'l-shape', side: 'rect-tall', top: 'rect', iso: 'step' },
   hole:      { label: '帶圓孔板', front: 'rect-circle-hole', side: 'rect-dash-horiz', top: 'rect-dash-vert', iso: 'hole' },
   tslot:     { label: 'T 槽塊', front: 't-shape', side: 'rect', top: 't-rev', iso: 'tslot' },
@@ -42,6 +42,9 @@ function svgView(type, size = 80) {
         return `<rect x="${pad}" y="${pad}" width="${s - pad * 2}" height="${s - pad * 2}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`;
       case 'rect':
         return `<rect x="${pad}" y="${pad * 1.8}" width="${s - pad * 2}" height="${s - pad * 3.6}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`;
+      case 'rect-split':
+        // 矩形 + 一條垂直分界線：L 型塊從上方看，高段頂面與低段頂面的交界（位置與 l-shape 的 0.4 寬對齊，長對正）
+        return `<rect x="${pad}" y="${pad * 1.8}" width="${s - pad * 2}" height="${s - pad * 3.6}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/><line x1="${pad + (s - pad * 2) * 0.4}" y1="${pad * 1.8}" x2="${pad + (s - pad * 2) * 0.4}" y2="${s - pad * 1.8}" stroke="${stroke}" stroke-width="1.5"/>`;
       case 'rect-tall':
         return `<rect x="${pad * 1.8}" y="${pad}" width="${s - pad * 3.6}" height="${s - pad * 2}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`;
       case 'circle':
@@ -60,8 +63,6 @@ function svgView(type, size = 80) {
         return `<polygon points="${pad},${pad} ${s - pad},${pad} ${s - pad},${pad + (s - pad * 2) * 0.4} ${c + (s - pad * 2) * 0.15},${pad + (s - pad * 2) * 0.4} ${c + (s - pad * 2) * 0.15},${s - pad} ${c - (s - pad * 2) * 0.15},${s - pad} ${c - (s - pad * 2) * 0.15},${pad + (s - pad * 2) * 0.4} ${pad},${pad + (s - pad * 2) * 0.4}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`;
       case 't-rev':
         return `<polygon points="${pad},${s - pad} ${s - pad},${s - pad} ${s - pad},${s - pad - (s - pad * 2) * 0.4} ${c + (s - pad * 2) * 0.15},${s - pad - (s - pad * 2) * 0.4} ${c + (s - pad * 2) * 0.15},${pad} ${c - (s - pad * 2) * 0.15},${pad} ${c - (s - pad * 2) * 0.15},${s - pad - (s - pad * 2) * 0.4} ${pad},${s - pad - (s - pad * 2) * 0.4}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`;
-      case 'rect-step':
-        return `<polygon points="${pad},${pad} ${pad + (s - pad * 2) * 0.4},${pad} ${pad + (s - pad * 2) * 0.4},${pad + (s - pad * 2) * 0.5} ${s - pad},${pad + (s - pad * 2) * 0.5} ${s - pad},${s - pad} ${pad},${s - pad}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`;
       case 'rect-circle-hole':
         return `<rect x="${pad}" y="${pad * 1.8}" width="${s - pad * 2}" height="${s - pad * 3.6}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/><circle cx="${c}" cy="${c}" r="${(s - pad * 2) * 0.18}" fill="${VIEW_BG}" stroke="${stroke}" stroke-width="1.5"/>`;
       case 'rect-dash-vert':
@@ -134,7 +135,7 @@ const ROUND1 = [
   { ans: 'cube',     views: ['square','square','square'],         options: ['cube','cylinder','sphere','pyramid'],  expl: '三個視圖都是正方形 → 立方體（六面相等）。' },
   { ans: 'cylinder', views: ['rect','rect','circle'],             options: ['cylinder','cube','cone','sphere'],     expl: '俯視 = 圓 + 正視 / 側視 = 矩形 → 圓柱。' },
   { ans: 'cone',     views: ['triangle','triangle','circle-dot'], options: ['cone','pyramid','cylinder','sphere'],  expl: '俯視帶中心點（圓錐尖）+ 正視 / 側視為三角形 → 圓錐。' },
-  { ans: 'lblock',   views: ['l-shape','rect-tall','rect'],       options: ['lblock','tslot','bracket','cube'],     expl: '正視 = L 形 + 俯視 = 矩形 → L 型塊（兩個方塊相連）。' },
+  { ans: 'lblock',   views: ['l-shape','rect-tall','rect-split'],       options: ['lblock','tslot','bracket','cube'],     expl: '正視 = L 形 + 俯視 = 矩形加一條分界線（高低兩段的交界）→ L 型塊（兩個方塊相連）。' },
   { ans: 'hole',     views: ['rect-circle-hole','rect-dash-horiz','rect-dash-vert'], options: ['hole','tslot','step','cylinder'], expl: '正視 = 矩形含實線圓（孔口）+ 側視 = 兩條水平虛線（孔上下邊界）+ 俯視 = 兩條垂直虛線（孔左右邊界）→ 帶圓孔板。' },
 ];
 
@@ -184,7 +185,7 @@ function buildRound1() {
 const ROUND2 = [
   { shape: 'cube',     missing: 'side',  known: { front: 'square', top: 'square' }, options: ['square','rect','circle','triangle'], expl: '立方體六面相等 → 三個視圖都是相同正方形。' },
   { shape: 'cylinder', missing: 'top',   known: { front: 'rect',   side: 'rect' },  options: ['circle','square','triangle','rect'],  expl: '圓柱的軸向 = 上下方向 → 俯視 = 圓形。' },
-  { shape: 'lblock',   missing: 'front', known: { side: 'rect-tall', top: 'rect' }, options: ['l-shape','rect','t-shape','triangle'], expl: 'L 型塊的「L」是從正視方向看到的形狀；側視看到完整高度 = 矩形。' },
+  { shape: 'lblock',   missing: 'front', known: { side: 'rect-tall', top: 'rect-split' }, options: ['l-shape','rect','t-shape','triangle'], expl: 'L 型塊的「L」是從正視方向看到的形狀；側視看到完整高度 = 矩形。' },
   { shape: 'cone',     missing: 'top',   known: { front: 'triangle', side: 'triangle' }, options: ['circle-dot','circle','triangle','square'], expl: '圓錐俯視 = 圓 + 中央一個尖點（從正上方看尖端）。' },
 ];
 

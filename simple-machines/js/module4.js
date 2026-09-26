@@ -224,7 +224,14 @@ function drawIncline() {
   ctx.setLineDash([]);
   ctx.fillStyle = '#0891B2';
   ctx.font = '700 12px Inter';
-  ctx.fillText(`高 ${height}m`, baseX + 60, (baseY + apexY) / 2);
+  // 文字轉 90° 貼著高度虛線直寫（x = baseX + 36），不再以畫布右緣 x=760 為中心被切掉一半
+  ctx.save();
+  ctx.translate(baseX + 36, (baseY + apexY) / 2);
+  ctx.rotate(-Math.PI / 2);
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(`高 ${height}m`, 0, 0);
+  ctx.restore();
   ctx.fillStyle = '#9D174D';
   ctx.font = '800 14px Inter';
   ctx.textAlign = 'left';

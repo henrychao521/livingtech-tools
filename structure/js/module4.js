@@ -9,7 +9,7 @@ const SCENARIOS = [
     id: 's1', icon: '🚶', name: '行人天橋',
     desc: '市區人行陸橋，跨越交流道，跨度 12m。假設均布行人荷重換算為每節點 3kN（共 5 個內節點），採 Pratt 桁架。目標 SF ≥ 2.0。',
     bridgeType: 'pratt', span: 12, height: 2.5, loadPerNode: 3000, special: null,
-    tip: '行人荷重：3 kPa × 1m 橋寬 × 節點間距 2m = 6kN/節點（此處簡化為 3kN）',
+    tip: '行人荷重：3 kPa × 1m 橋寬 × 節點間距 2m = 6kN/節點；橋面由左右兩片桁架共同支撐、各分擔一半，所以模擬的這一片桁架每個下弦節點承受 3kN。',
   },
   {
     id: 's2', icon: '🚛', name: '公路橋（卡車）',

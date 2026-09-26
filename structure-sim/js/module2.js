@@ -109,3 +109,8 @@ function updateQuizProg() {
   document.getElementById('quiz-prog').textContent = `類型 ${seenTypes.size}/6 ・ 測驗 ${answered.size}/${QUIZ.length}`;
 }
 updateQuizProg();
+// 已通關過（localStorage 有紀錄）→ 重新整理或重新進入時直接解鎖下一關
+if (loadP().module2) {
+  document.getElementById('next-btn').style.opacity = 1;
+  document.getElementById('next-btn').style.pointerEvents = 'auto';
+}

@@ -7,8 +7,8 @@
  *
  * 年度更新清單（每年 7 月做一次）：
  *   1. 本檔 RATES 夏季電價級距 → 對照台電當年公告
- *   2. module1.js / module4.js 敘述中的發電占比（燃氣/燃煤/太陽能/風力）
- *   3. module4.js 各能源 share 欄位
+ *   2. 本檔 GEN_SHARE 發電占比（模組 1 卡片「台灣佔比」與模組 4 share 欄位自動讀取）
+ *   3. module1.js / module4.js 敘述文字中的占比（燃氣/燃煤/太陽能/風力）要和 GEN_SHARE 對齊
  *   4. 核電機組現況（module1 / module4 desc）
  *   5. DATA_YEAR 改為新年度
  *   6. energy/index.html「台灣能源現況」一句的發電占比（燃氣/燃煤/再生/核能）
@@ -16,6 +16,16 @@
 const ENERGY_DATA = {
   DATA_YEAR: 2024,
   SOURCE: '經濟部能源署《能源統計月報》、台灣電力公司',
+  /* 2024 年發電量占比（%）——模組 1 卡片、模組 4 比較表的占比都從這裡讀，
+   * 首頁 energy/index.html「台灣能源現況」一句要手動對齊（燃氣約 42%、燃煤約 39%、再生約 12%、核能約 4%）。
+   * 出處：台大風險中心《2024 台灣能源情勢回顧》（整理經濟部能源署能源統計）
+   *       https://rsprc.ntu.edu.tw/web/research/research_in.jsp?lang=tw&rp_id=RP1741944880461 */
+  GEN_SHARE: {
+    gas: 42.45, coal: 39.27, oil: 1.45,          // 火力合計 83.16
+    nuclear: 4.22,                               // 核三 2 號機 2025-05 除役後為 0
+    renewable: 11.55, solar: 5.16, wind: 3.58, hydro: 1.46,
+    pumpedHydro: 1.07,
+  },
   /* 夏季電價級距（元/度，非時間電價住宅用）：[度數上限, 單價] */
   RATES_SUMMER: [
     [120, 1.68],

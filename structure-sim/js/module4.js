@@ -17,6 +17,7 @@ const els = {
 let trussType = 'pratt';
 let loaded = false;
 let animProgress = 0;
+const DEFL_SCALE = 2; // 變形畫面放大倍率（示意）
 
 function generateTruss(type, span, height, panels = 6) {
   // Warren 用奇數節間（5 格），上弦才有正中央的節點可以放置中荷重，桿件數也最少
@@ -112,15 +113,34 @@ function solveTruss(nodes, members, loads) {
   return { forces: x.slice(0, m), reactions: { lx: x[m], ly: x[m + 1], ry: x[m + 2] }, rank, needed: 2 * n };
 }
 
-function analyzeForces(truss, loadN, loadPosPercent) {
-  const { nodes, members } = truss;
+// 荷重放在最接近拉桿位置的上弦節點；回傳該節點索引與它在上弦的序號、距左支承的距離
+function findLoadNode(nodes, loadPosPercent) {
   const last = nodes.reduce((k, nd, i) => (nd.fixed ? i : k), 0);
   const span = nodes[last].x - nodes[0].x;
-  // 荷重放在最接近拉桿位置的上弦節點
   const loadX = nodes[0].x + span * (loadPosPercent / 100);
   let loadNode = last + 1;
   let minD = Infinity;
   nodes.forEach((n, i) => { if (i > last && Math.abs(n.x - loadX) < minD) { minD = Math.abs(n.x - loadX); loadNode = i; } });
+  return { loadNode, order: loadNode - last, topCount: nodes.length - last - 1, dist: nodes[loadNode].x - nodes[0].x, span };
+}
+
+// 撓度估算（單位荷重法／虛功原理）：節點 j 在某方向的位移 δ = Σ Nᵢ·nᵢ·Lᵢ ／ EA，
+// Nᵢ 是實際荷重下的桿件軸力、nᵢ 是在節點 j 該方向施加 1N 單位力時的桿件軸力（同樣用 solveTruss 求）。
+// 畫面長度單位是 px，這裡假設每根桿件的 EA 都相同（EA_PX，N），所以數值只是「示意」，
+// 但不同桁架型式、跨度、高度、荷重位置之間的相對大小是由求解器的內力算出來的。
+const EA_PX = 50000;
+function nodeDisplacements(nodes, members, tForces) {
+  const lens = members.map(mb => Math.hypot(nodes[mb.b].x - nodes[mb.a].x, nodes[mb.b].y - nodes[mb.a].y));
+  const unitWork = (node, dir) => {
+    const u = solveTruss(nodes, members, [{ node, fx: dir === 'x' ? 1 : 0, fy: dir === 'y' ? 1 : 0 }]).forces;
+    return members.reduce((acc, _, i) => acc + tForces[i] * u[i] * lens[i] / EA_PX, 0);
+  };
+  return nodes.map((n, k) => ({ dx: n.fixed && k === 0 ? 0 : unitWork(k, 'x'), dy: n.fixed ? 0 : unitWork(k, 'y') }));
+}
+
+function analyzeForces(truss, loadN, loadPosPercent) {
+  const { nodes, members } = truss;
+  const { loadNode } = findLoadNode(nodes, loadPosPercent);
   // 以節點法實際求解（畫布 y 向下，所以向下的荷重是 +y）
   const sol = solveTruss(nodes, members, [{ node: loadNode, fy: loadN }]);
   const result = members.map((m, i) => {
@@ -134,6 +154,10 @@ function analyzeForces(truss, loadN, loadPosPercent) {
   // 支承反力與實際施力節點一併帶出，供數值面板與荷重箭頭使用
   result.reactions = sol.reactions;
   result.loadNode = loadNode;
+  // 由桿件內力估算各節點位移（畫布 y 向下，dy > 0 = 下沉）
+  result.disp = nodeDisplacements(nodes, members, sol.forces);
+  result.deflLoad = result.disp[loadNode].dy;
+  result.deflMax = Math.max(...result.disp.map(d => d.dy));
   return result;
 }
 
@@ -154,14 +178,10 @@ function draw() {
   // 桁架繪製
   if (loaded) {
     forces = analyzeForces(truss, loadN, loadPos);
-    // 變形（簡化視覺：下弦中央下沉）
-    const defl = loadN / 20 * animProgress;
-    const right = truss.nodes.reduce((k, nd, i) => (nd.fixed ? i : k), 0);
-    const cx0 = (truss.nodes[0].x + truss.nodes[right].x) / 2, half0 = (truss.nodes[right].x - truss.nodes[0].x) / 2;
-    truss.nodes.forEach(n => {
-      if (n.fixed) return;
-      const distFromCenter = Math.abs(n.x - cx0) / half0;
-      n.y += defl * (1 - distFromCenter) * 0.4;
+    // 變形：用求解器內力估算出的節點位移畫變形形狀（放大 DEFL_SCALE 倍才看得出來）
+    truss.nodes.forEach((n, k) => {
+      n.x += forces.disp[k].dx * DEFL_SCALE * animProgress;
+      n.y += forces.disp[k].dy * DEFL_SCALE * animProgress;
     });
   }
 
@@ -256,7 +276,8 @@ function updateEstimates(forces) {
   els.eComp.textContent = comp.length ? Math.max(...comp).toFixed(1) + ' N' : '0 N';
   const r = forces.reactions;
   els.eReact.textContent = r ? `左 ${r.ly.toFixed(1)} N／右 ${r.ry.toFixed(1)} N` : '—';
-  els.eDefl.textContent = (loadN / 20).toFixed(1) + ' px';
+  // 撓度：由桿件內力（單位荷重法）估算，假設各桿 EA 相同 → 示意值，適合拿來比較不同設計
+  els.eDefl.textContent = `${forces.deflMax.toFixed(2)} px（示意，畫面放大 ${DEFL_SCALE} 倍）`;
 }
 
 function loop() {
@@ -271,7 +292,12 @@ function updateVals() {
   els.vSpan.textContent = els.span.value + ' px';
   els.vHeight.textContent = els.height.value + ' px';
   els.vLoad.textContent = els.load.value + ' N';
-  els.vPos.textContent = els.pos.value === '50' ? '中央' : (els.pos.value < 50 ? `左側 ${els.pos.value}%` : `右側 ${els.pos.value}%`);
+  // 荷重會吸附到最近的上弦節點 → 標籤顯示實際施力的節點位置，而不是拉桿的百分比
+  const t = generateTruss(trussType, parseInt(els.span.value), parseInt(els.height.value));
+  const ln = findLoadNode(t.nodes, parseInt(els.pos.value));
+  const where = Math.abs(ln.dist - ln.span / 2) < 1e-6 ? '中央' : (ln.dist < ln.span / 2 ? '偏左' : '偏右');
+  els.vPos.textContent = `上弦第 ${ln.order}/${ln.topCount} 節點（${where}）`;
+  els.vPos.title = `距左支承 ${Math.round(ln.dist)} px（跨度 ${Math.round(ln.dist / ln.span * 100)}%）`;
 }
 ['span', 'height', 'load', 'pos'].forEach(k => els[k].addEventListener('input', () => { updateVals(); animProgress = 0; }));
 document.querySelectorAll('.truss-preset').forEach(p => p.addEventListener('click', () => {
@@ -279,6 +305,7 @@ document.querySelectorAll('.truss-preset').forEach(p => p.addEventListener('clic
   p.classList.add('active');
   trussType = p.dataset.type;
   animProgress = 0;
+  updateVals(); // 不同桁架的上弦節點位置不同，荷重位置標籤要跟著更新
 }));
 
 els.start.addEventListener('click', () => {

@@ -56,6 +56,8 @@ function selectStep(i) {
 window.selectStep = selectStep;
 selectStep(0);
 stepProgressEl.textContent = `已學習 ${seenSteps.size} / ${STEPS.length} 步`;
+// 已學完過（localStorage 有紀錄）→ 重新整理或重新進入時直接解鎖下一關
+if (seenSteps.size === STEPS.length || loadP().module3) { nextBtn.style.opacity = 1; nextBtn.style.pointerEvents = 'auto'; }
 if (typeof SequencePuzzle === 'function') {
   SequencePuzzle({ mountId: 'seq-puzzle', items: STEPS.map((s, i) => ({ id: i, label: `${i + 1}. ${s.title}` })), onPass: () => { const p = loadP(); p.module3_puzzle = true; saveP(p); showToast('🧩 排序測驗通過！', 'good'); } });
 }

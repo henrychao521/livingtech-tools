@@ -79,3 +79,6 @@ quizEl.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', 
     showToast(`🎓 完成！${correct} / ${QUIZ.length} 答對`, 'good');
   }
 }));
+
+// 已通關過（localStorage 有紀錄）→ 重新整理或重新進入時直接解鎖下一關
+if (loadP().module2) { nextBtn.style.opacity = 1; nextBtn.style.pointerEvents = 'auto'; }

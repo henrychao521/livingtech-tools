@@ -1,18 +1,21 @@
 // 能源系統 模組 1：5 種能源
+// 發電占比從 energy-data.js 的 ENERGY_DATA.GEN_SHARE 讀（年度更新只改那裡）
+const GS = ENERGY_DATA.GEN_SHARE;
+const twPct = v => (v < 2 ? v.toFixed(1) : Math.round(v)) + '%';
 const ENERGIES = [
-  { id: 'fossil', iso: 'fossil', name: '化石燃料 Fossil', icon: '🛢', renewable: false, tw_share: '81%', co2: '~490（燃氣）～900（燃煤）g/kWh',
-    desc: '煤、石油、天然氣——上億年前生物遺骸經高壓高溫形成。台灣 2024 年仍佔總發電 81%（燃氣約 42% + 燃煤約 39%）（2024，經濟部能源署）。',
+  { id: 'fossil', iso: 'fossil', name: '化石燃料 Fossil', icon: '🛢', renewable: false, tw_share: '約 ' + twPct(GS.gas + GS.coal + GS.oil), co2: '~490（燃氣）～900（燃煤）g/kWh',
+    desc: '煤、石油、天然氣——上億年前生物遺骸經高壓高溫形成。台灣 2024 年仍佔總發電約 83%（燃氣約 42%、燃煤約 39%、燃油約 1.5%）（2024，經濟部能源署）。',
     pros: '能量密度高、技術成熟、發電穩定', cons: '不可再生、高 CO₂ 排放、空汙、價格波動' },
-  { id: 'nuclear', iso: 'nuclear', name: '核能 Nuclear', icon: '☢', renewable: false, tw_share: '5%', co2: '~12 g/kWh',
-    desc: '鈾-235 核分裂釋放熱能→水變蒸汽→推動渦輪發電。核三 2 號機已於 2025 年 5 月除役，台灣目前無運轉中核電機組。',
+  { id: 'nuclear', iso: 'nuclear', name: '核能 Nuclear', icon: '☢', renewable: false, tw_share: '約 ' + twPct(GS.nuclear) + '（2024；2025 年 5 月起為 0）', co2: '~12 g/kWh',
+    desc: '鈾-235 核分裂釋放熱能→水變蒸汽→推動渦輪發電。2024 年占總發電約 4%（2024，經濟部能源署）；核三 2 號機已於 2025 年 5 月除役，台灣目前無運轉中核電機組。',
     pros: '碳排極低、發電穩定、能量密度極高', cons: '核廢料 10 萬年才衰變、災難風險、輿論爭議' },
-  { id: 'solar', iso: 'solar', name: '太陽能 Solar', icon: '☀', renewable: true, tw_share: '~5%', co2: '~45 g/kWh',
+  { id: 'solar', iso: 'solar', name: '太陽能 Solar', icon: '☀', renewable: true, tw_share: '~' + twPct(GS.solar), co2: '~45 g/kWh',
     desc: '光伏（PV）效應—光直接轉電。台灣日照豐沛，2024 年累計裝置量達 14 GW（為再生能源中裝置量最大者）；但實際發電量約佔總發電 5%，受夜間／陰雨影響大，須搭配儲能。資料來源：經濟部能源署《能源統計月報》。',
     pros: '無燃料費、零汙染、可建在屋頂', cons: '模組效率約 20-22%（IEA 2023）、需大面積、發電量受天候影響' },
-  { id: 'wind', iso: 'wind', name: '風力 Wind', icon: '🌬', renewable: true, tw_share: '~3%', co2: '~11 g/kWh',
-    desc: '風能推動風機葉片→帶動發電機。台灣海峽風場世界級，2024 年離岸風電開始大規模商轉，占總發電約 3%（2024，經濟部能源署）。',
+  { id: 'wind', iso: 'wind', name: '風力 Wind', icon: '🌬', renewable: true, tw_share: '~' + GS.wind.toFixed(1) + '%', co2: '~11 g/kWh',
+    desc: '風能推動風機葉片→帶動發電機。台灣海峽風場世界級，2024 年離岸風電開始大規模商轉，占總發電約 3.6%（2024，經濟部能源署）。',
     pros: '台灣海峽風能豐沛、效率較太陽能高', cons: '颱風損壞、低頻噪音、鳥類撞擊' },
-  { id: 'hydro', iso: 'hydro', name: '水力 Hydro', icon: '💧', renewable: true, tw_share: '~1.5%', co2: '~24 g/kWh',
+  { id: 'hydro', iso: 'hydro', name: '水力 Hydro', icon: '💧', renewable: true, tw_share: '~' + twPct(GS.hydro), co2: '~24 g/kWh',
     desc: '水位差勢能→推動水輪機→發電。台灣山多水急，主力是抽蓄水力（儲能用）。',
     pros: '效率最高（>90%）、可作儲能調節', cons: '受降雨影響、生態破壞、可建場地有限' },
 ];

@@ -62,27 +62,28 @@
         <!-- ============ 俯視 TOP（正視上方）— 矩形 + 分隔線（第三角法）============ -->
         <g transform="translate(70,52)">
           <rect x="-32" y="-18" width="64" height="36" fill="#fff" stroke="#3730A3" stroke-width="1.5" rx="4"/>
-          <!-- 俯視 = 矩形（全寬 × 全深）；x=0 處的分隔線 = 左高右低的可見邊（階梯分界）-->
-          <rect x="-22" y="-10" width="44" height="20" fill="#E0E7FF" stroke="#3730A3" stroke-width="1.5"/>
-          <line x1="0" y1="-10" x2="0" y2="10" stroke="#3730A3" stroke-width="1.5"/>
+          <!-- 俯視 = 矩形（全寬 8 × 全深 4）；三視圖一律 1 單位 = 5.5px → 44 × 22。
+               x=0 處的分隔線 = 左高右低的可見邊（階梯分界）-->
+          <rect x="-22" y="-11" width="44" height="22" fill="#E0E7FF" stroke="#3730A3" stroke-width="1.5"/>
+          <line x1="0" y1="-11" x2="0" y2="11" stroke="#3730A3" stroke-width="1.5"/>
           <text x="0" y="26" text-anchor="middle" font-size="11" fill="#3730A3" font-weight="800" font-family="Inter">俯視 TOP</text>
         </g>
 
         <!-- ============ 正視 FRONT（左中）— L 形（階梯側面輪廓，第三角法排列）============ -->
         <g transform="translate(70,155)">
           <rect x="-32" y="-32" width="64" height="64" fill="#fff" stroke="#3730A3" stroke-width="1.5" rx="4"/>
-          <!-- 正視 = 從正前方看，顯示左高右低的階梯 L 形輪廓 -->
-          <polygon points="-22,-20 0,-20 0,0 22,0 22,20 -22,20" fill="#E0E7FF" stroke="#3730A3" stroke-width="1.5"/>
+          <!-- 正視 = 從正前方看，顯示左高右低的階梯 L 形輪廓；全寬 8 × 全高 4 → 44 × 22（與俯視同比例）-->
+          <polygon points="-22,-11 0,-11 0,0 22,0 22,11 -22,11" fill="#E0E7FF" stroke="#3730A3" stroke-width="1.5"/>
           <text x="0" y="46" text-anchor="middle" font-size="11" fill="#3730A3" font-weight="800" font-family="Inter">正視 FRONT</text>
         </g>
 
         <!-- ============ 側視 SIDE（正視右方）— 矩形 ============ -->
         <g transform="translate(410,155)">
           <rect x="-32" y="-32" width="64" height="64" fill="#fff" stroke="#3730A3" stroke-width="1.5" rx="4"/>
-          <!-- 側視 = 從右側（+X）看，全深 × 全高 = 矩形；寬 20 與俯視深度相同。
+          <!-- 側視 = 從右側（+X）看，全深 4 × 全高 4 = 22 × 22；寬與俯視深度相同、高與正視高度相同。
                中間水平線 = 低層右面（下）與上層右面（上）的分界，從右看是可見邊 -->
-          <rect x="-10" y="-20" width="20" height="40" fill="#E0E7FF" stroke="#3730A3" stroke-width="1.5"/>
-          <line x1="-10" y1="0" x2="10" y2="0" stroke="#3730A3" stroke-width="1.5"/>
+          <rect x="-11" y="-11" width="22" height="22" fill="#E0E7FF" stroke="#3730A3" stroke-width="1.5"/>
+          <line x1="-11" y1="0" x2="11" y2="0" stroke="#3730A3" stroke-width="1.5"/>
           <text x="0" y="46" text-anchor="middle" font-size="11" fill="#3730A3" font-weight="800" font-family="Inter">側視 SIDE</text>
         </g>
 
