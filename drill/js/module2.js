@@ -1,6 +1,6 @@
 // 手電鑽 模組 2：安全闖關
 const SCENARIOS = [
-  { q: '準備鑽孔，工件擺在桌上沒固定，可以直接鑽嗎？', a: '只要小心點就可以', b: '不行！必須先用 C 型夾或老虎鉗固定', correct: 'b', explain: '工件沒固定時，鑽頭一旋轉會把工件甩起來變成飛行物——這是手電鑽教室最常見的傷害事故來源。一定要先夾緊。' },
+  { q: '準備鑽孔，工件擺在桌上沒固定，可以直接鑽嗎？', a: '只要小心點就可以', b: '不行！必須先用 C 型夾或桌上虎鉗固定', correct: 'b', explain: '工件沒固定時，鑽頭一旋轉會把工件甩起來變成飛行物——這是手電鑽教室最常見的傷害事故來源。一定要先夾緊。' },
   { q: '長頭髮的同學使用手電鑽，應該怎麼處理？', a: '必須先綁起來、塞進帽子或衣領裡', b: '小心一點就好', correct: 'a', explain: '手電鑽轉速可達 2000 RPM，頭髮一捲入就會被瞬間扯入夾頭，造成頭皮撕裂。長髮、寬鬆袖口、項鍊、圍巾都要先處理。' },
   { q: '同學想單手拿手電鑽鑽孔，這樣對嗎？', a: '對，老師也常常單手用', b: '不對，必須雙手握持（主手握把＋輔手扶機身）', correct: 'b', explain: '單手操作在鑽頭卡住時，手電鑽會以「鑽頭為軸」反向旋轉甩飛，造成手腕扭傷甚至骨折。雙手握能用身體吸收反作用力。' },
   { q: '想鑽金屬板，應該選哪種鑽頭？', a: '高速鋼（HSS）鑽頭', b: '木工螺旋鑽頭', correct: 'a', explain: '木工鑽頭有「中心尖」，鑽金屬會立刻崩刃還會打滑。鑽金屬一定要用 HSS 或鈷鋼鑽頭，並先用中心衝打點防止偏鑽。' },
@@ -41,7 +41,7 @@ list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', ()
   answered.add(i);
   const total = ppeScore + score;
   document.getElementById('score-display').textContent = total;
-  document.getElementById('progress-bar').style.width = Math.min(100, total / 1.3) + '%';
+  document.getElementById('progress-bar').style.width = Math.min(100, total / 1.8) + '%';
   if (answered.size === SCENARIOS.length) {
     if (total >= 120) {
       document.getElementById('scenario-result').innerHTML = `<div class="feedback success" style="margin-top:20px"><strong>🏆 ${total} 分通過！</strong></div>`;
@@ -165,7 +165,7 @@ list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', ()
     const disp = document.getElementById('score-display');
     const bar  = document.getElementById('progress-bar');
     if (disp) disp.textContent = total;
-    if (bar)  bar.style.width = Math.min(100, total / 1.3) + '%';
+    if (bar)  bar.style.width = Math.min(100, total / 1.8) + '%';
   }
 
   /* Drag handlers */

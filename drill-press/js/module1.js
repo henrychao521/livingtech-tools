@@ -1,6 +1,6 @@
 // 鑽床 模組 1：認識部件
 const PARTS = {
-  spindle: { name: '主軸（Spindle）', role: 'ROTATION SHAFT', desc: '由皮帶驅動的垂直旋轉軸，下端鎖夾頭。主軸上下位置由進刀手柄控制，可精準達到 90° 垂直鑽孔——這是鑽床和手電鑽最大差別。', fact: '主軸轉速由皮帶輪位置決定，常見有 5 段（如 500/720/1100/1700/2400 RPM）。鑽鋼用最低、鑽木用最高。' },
+  spindle: { name: '主軸（Spindle）', role: 'ROTATION SHAFT', desc: '由皮帶驅動的垂直旋轉軸，下端鎖夾頭。主軸上下位置由進刀手柄控制，可精準達到 90° 垂直鑽孔——這是鑽床和手電鑽最大差別。', fact: '主軸轉速由皮帶輪位置決定，常見有 5 段（如 500/720/1100/1700/2400 RPM）。鑽鋼用低速（直徑越大越慢，小直徑可稍快）、鑽木用高速。' },
   chuck: { name: '夾頭（Keyed Chuck）', role: 'BIT HOLDER', desc: '鑽床多為「鑰匙式夾頭」（chuck key），用 T 型小工具旋轉鎖緊三爪。可鎖到比免鑰匙式更緊，適合大直徑鑽孔。', fact: '⚠ 開機前一定要把夾頭鑰匙拔下！沒拔的鑰匙會被甩飛——是鑽床最危險的事故之一。' },
   table: { name: '工作台（Table）', role: 'WORK PLATFORM', desc: '放工件的鑄鐵平台。可上下調整高度（鬆開後方鎖具搖動）、也可向左右傾斜做斜角鑽孔。表面有「T 槽」可裝機台老虎鉗或夾具。', fact: '工件下方必須墊木塊（犧牲層），避免鑽穿後把工作台也鑽出洞。' },
   feed: { name: '進刀手柄（Feed Handle）', role: 'DOWNFEED CONTROL', desc: '3 支放射狀手柄，控制主軸下降進行鑽孔。順時針旋轉 = 下降進刀、逆時針 = 上升退鑽。多數鑽床有「進刀深度限位環」可設定鑽孔深度。', fact: '進刀力要均勻，不能突然用力——突然壓會讓鑽頭斷裂或工件彈起。' },
@@ -223,10 +223,10 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
     },
     {
       id: 'masonry', name: '磚石碳化鎢鑽頭', color: '#57534e',
-      material: '磚牆 · 混凝土 · 砂漿',
+      material: '磁磚 · 陶板 · 紅磚小塊（夾得住的試片）',
       belt: 'P1–P2（500–720 RPM）', tip: '壓製碳化鎢箭形頭',
-      desc: '尖端為燒結碳化鎢（YG8），硬度極高，在鑽床上配合手動進刀對磚牆緩慢研磨穿孔。鑽床不具衝擊模式，效率不如電鎚鑽，但孔形更精確。',
-      note: '鑽床無電鎚衝擊功能，磚石鑽頭鑽硬混凝土時效率有限，建議先用電鎚鑽預鑽再精修。',
+      desc: '尖端為燒結碳化鎢（YG8），硬度極高，在鑽床上用來加工夾得上工作台的小件，例如磁磚、陶板試片或切下的紅磚塊，配合低速、手動輕進刀緩慢研磨穿孔。鑽床不具衝擊模式，速度慢，但孔形精確。',
+      note: '鑽床是固定機台，工件必須搬上工作台夾好才能鑽；牆面、地板這類搬不動的地方不是鑽床的用途，要改用手持電鑽。鑽磁磚時低速並滴水降溫。',
       svg: `<rect x="10" y="44" width="140" height="12" rx="2" fill="#78716c"/>
         <polygon points="150,40 170,50 150,60" fill="#44403c"/>
         <polygon points="155,46 168,50 155,54" fill="#a8a29e"/>`,
@@ -262,7 +262,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
       id: 'holesaw', name: '開孔器（Hole Saw）', color: '#b45309',
       material: '木板 · 石膏板 · 薄金屬（大孔 20–150mm）',
       belt: 'P1（500 RPM，最低速）', tip: '圓筒鋸齒 + 中心導鑽',
-      desc: '圓形鋸齒筒切出大孔，中心有導鑽先定位。適合開關盒孔、管道穿牆孔等大直徑場合。鑽床固定了主軸方向，孔形比手持更圓更正。鑽木用雙金屬鋸齒，鑽金屬需加切削油。',
+      desc: '圓形鋸齒筒切出大孔，中心有導鑽先定位。適合在木板上開音箱喇叭孔、桌面穿線孔等大直徑場合。鑽床固定了主軸方向，孔形比手持更圓更正。鑽木用雙金屬鋸齒，鑽金屬需加切削油。',
       note: '開孔器重量大、直徑大，鑽床才能安全操作。手電鑽開大孔容易偏轉傷人，建議在鑽床上進行。鑽完後先停機，再用起子撬出圓木塞。',
       svg: `<line x1="78" y1="50" x2="110" y2="50" stroke="#d97706" stroke-width="2.5" stroke-dasharray="3,2"/>
         <polygon points="110,45 118,50 110,55" fill="#92400e"/>
@@ -281,10 +281,10 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
     { mat: '薄鋼板 ≤3mm',   bit: 'hss',      belt: 'P1–P2', note: '必加切削油' },
     { mat: '厚鋼板 >3mm',   bit: 'hss',      belt: 'P1',    note: '最低速+大量切削油' },
     { mat: '塑膠 / 壓克力', bit: 'hss',      belt: 'P2–P3', note: '慢進刀防破裂' },
-    { mat: '磚牆 / 砂漿',   bit: 'masonry',  belt: 'P1–P2', note: '無衝擊，純研磨' },
+    { mat: '磁磚 / 陶板試片', bit: 'masonry',  belt: 'P1–P2', note: '無衝擊，純研磨' },
     { mat: '鉸鏈槽（盲孔）',bit: 'forstner', belt: 'P1–P2', note: '必須極低速+限位環' },
     { mat: '薄板多孔徑',    bit: 'step',     belt: 'P2–P3', note: '薄板限定（≤5mm）' },
-    { mat: '管道穿牆大孔',  bit: 'holesaw',  belt: 'P1',    note: '最低速，鑽金屬加油' },
+    { mat: '木板大孔（音箱、穿線孔）', bit: 'holesaw',  belt: 'P1',    note: '最低速，鑽金屬加油' },
   ];
 
   const BN = { hss:'高速鋼', wood:'木工', masonry:'磚石', forstner:'平底', step:'階梯', holesaw:'開孔器' };
@@ -425,7 +425,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
     },
     {
       id: 'mortiser',
-      name: '腳鑿機（方鑿機）',
+      name: '角鑿機（方鑿機）',
       en: 'Mortising Machine / Mortiser',
       icon: '⬛',
       color: '#92400e',

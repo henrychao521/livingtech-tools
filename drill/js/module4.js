@@ -4,12 +4,14 @@ function loadP() { try { return JSON.parse(localStorage.getItem(PK)) || {}; } ca
 function saveP(p) { localStorage.setItem(PK, JSON.stringify(p)); }
 
 // 材料屬性
+// vc：這個材料在手電鑽上合適的切削速度區間（m/min，Vc = π × 直徑 × 轉速 ÷ 1000）
+//     數值配合模組 1、2 教的轉速：木材小孔 800–1500 RPM、硬木大孔 300–600 RPM、金屬 400–800 RPM
 const MATERIALS = {
-  wood: { name: '軟木', color: '#a16207', dust: '#92400e', maxRPM: 2000, idealBit: 'wood', hardness: 1, dustType: 'curl' },
-  hardwood: { name: '硬木', color: '#78350f', dust: '#451a03', maxRPM: 1500, idealBit: 'wood', hardness: 2, dustType: 'curl' },
-  plastic: { name: '塑膠', color: '#0891b2', dust: '#67e8f9', maxRPM: 1200, idealBit: 'hss', hardness: 1.5, dustType: 'strip' },
-  aluminum: { name: '鋁', color: '#cbd5e1', dust: '#94a3b8', maxRPM: 1000, idealBit: 'hss', hardness: 2.5, dustType: 'spiral' },
-  steel: { name: '不鏽鋼', color: '#475569', dust: '#94a3b8', maxRPM: 600, idealBit: 'hss', hardness: 4, dustType: 'spiral' },
+  wood: { name: '軟木', color: '#a16207', dust: '#92400e', vc: [10, 45], idealBit: 'wood', hardness: 1, dustType: 'curl' },
+  hardwood: { name: '硬木', color: '#78350f', dust: '#451a03', vc: [8, 30], idealBit: 'wood', hardness: 2, dustType: 'curl' },
+  plastic: { name: '塑膠', color: '#0891b2', dust: '#67e8f9', vc: [8, 25], idealBit: 'hss', hardness: 1.5, dustType: 'strip' },
+  aluminum: { name: '鋁', color: '#cbd5e1', dust: '#94a3b8', vc: [10, 40], idealBit: 'hss', hardness: 2.5, dustType: 'spiral' },
+  steel: { name: '不鏽鋼', color: '#475569', dust: '#94a3b8', vc: [4, 16], idealBit: 'hss', hardness: 4, dustType: 'spiral' },
 };
 const BIT_NAMES = { wood: '木工螺旋', hss: 'HSS 高速鋼', masonry: '磚石碳化鎢' };
 
@@ -53,16 +55,19 @@ function readParams() {
     else if (b === 'masonry' && m.idealBit !== 'masonry') match = '✗ 磚石鑽不適合此材料';
     else match = '⚠ 不理想';
   }
-  // 切削速度（RPM × 直徑）
-  const sfm = rpm * dia * 0.262 / 100;
-  const cutLabel = sfm < 5 ? '太慢' : sfm < 25 ? '理想' : '太快';
+  // 切削速度 Vc（m/min）＝ π × 直徑(mm) × 轉速(RPM) ÷ 1000，依材料各自的合適區間判定
+  const vc = Math.PI * dia * rpm / 1000;
+  const cutLabel = vc < m.vc[0] ? '太慢' : vc <= m.vc[1] ? '理想' : '太快';
   // 過熱：高 RPM × 硬材料 × 大進刀
   const heatScore = (rpm / 2000) * m.hardness * (feed / 3) * (dia / 8);
   const heatLabel = heatScore < 0.8 ? '低' : heatScore < 1.5 ? '中' : heatScore < 2.5 ? '高' : '極高';
-  // 偏鑽：低 RPM + 大直徑 + 重進刀 + 沒鎖緊
-  const biasScore = (1 - rpm / 2000) * (feed / 5) * (dia / 13);
+  // 偏鑽：重進刀 + 大直徑為主；起鑽轉速太快鑽頭容易打滑，轉速越高風險越高
+  const biasScore = (0.5 + 0.5 * rpm / 2000) * (feed / 5) * (dia / 13);
   const biasLabel = biasScore < 0.15 ? '低' : biasScore < 0.4 ? '中' : '高';
-  return { m, b, dia, rpm, feed, torque, match, cutLabel, heatScore, heatLabel, biasScore, biasLabel };
+  // 離合器：扭力環不在 ⊕ 時，段位低於這個材料與直徑所需的扭力就會跳脫
+  const clutchNeed = Math.min(20, Math.ceil(m.hardness * dia / 1.5));
+  const clutchSlip = torque > 0 && torque < clutchNeed;
+  return { m, b, dia, rpm, feed, torque, match, vc, cutLabel, heatScore, heatLabel, biasScore, biasLabel, clutchSlip };
 }
 
 function updateValueDisplays() {
@@ -77,11 +82,11 @@ function updateEstimates() {
   const p = readParams();
   // 鑽頭適配（材質配對）與切削速度（RPM×直徑）為「獨立指標」：
   // - 適配 = 鑽頭硬度／齒形是否對材料；可用但效率差時仍可成功，只是耗時與磨損加倍
-  // - 切削速度 = 轉速×直徑換算 SFM/SMM；過快會過熱、過慢會打滑
+  // - 切削速度 = π×直徑×轉速 換算 m/min，依材料判定；過快會過熱、過慢效率差
   // 兩者可獨立出現任何組合（如「鑽頭非最佳」+「切削速度理想」=轉速對但鑽頭硬度不對）
   els.eMatch.textContent = p.match;
   els.eMatch.style.color = p.match === 'OK' ? '#22c55e' : p.match.includes('✗') ? '#dc2626' : '#eab308';
-  els.eCut.textContent = p.cutLabel;
+  els.eCut.textContent = `${p.cutLabel}（${p.vc.toFixed(0)} m/min）`;
   els.eCut.style.color = p.cutLabel === '理想' ? '#22c55e' : '#eab308';
   els.eHeat.textContent = p.heatLabel;
   els.eHeat.style.color = p.heatLabel === '低' ? '#22c55e' : p.heatLabel === '中' ? '#eab308' : '#dc2626';
@@ -262,6 +267,13 @@ function tickSim() {
   state.chips = state.chips.filter(c => { c.x += c.vx; c.y += c.vy; c.vy += 0.1; c.life--; return c.life > 0; });
   state.smoke = state.smoke.filter(s => { s.y += s.vy; s.r += 0.2; s.alpha -= 0.015; return s.alpha > 0; });
 
+  // 扭力環不在 ⊕ 且段位不夠：鑽頭咬入後離合器跳脫，無法繼續進刀
+  if (p.clutchSlip && state.holeDepth >= 15) {
+    state.drilling = false;
+    showResult();
+    return;
+  }
+
   // 鑽穿後停止
   if (state.holeDepth >= 100) {
     state.drilling = false;
@@ -276,15 +288,19 @@ function showResult() {
   if (p.match.includes('✗')) {
     level = 'bad';
     msg = `❌ 失敗：${p.match}。鑽頭可能崩刃或無法切入。`;
+  } else if (p.clutchSlip) {
+    level = 'bad';
+    msg = `❌ 離合器跳脫：扭力環第 ${p.torque} 段扭力不夠，鑽頭停在孔裡。鑽孔請把扭力環轉到 ⊕（鑽孔模式）。`;
   } else if (p.heatScore > 2 || p.biasScore > 0.5) {
     level = 'bad';
     const reasons = [];
     if (p.heatScore > 2) reasons.push('過熱燒孔');
     if (p.biasScore > 0.5) reasons.push('嚴重偏鑽');
     msg = `❌ 失敗：${reasons.join('、')}。需要調整轉速或進刀力。`;
-  } else if (p.heatScore > 1.2 || p.biasScore > 0.3 || p.match !== 'OK' || p.cutLabel !== '理想') {
+  } else if (p.heatScore > 1.2 || p.biasScore > 0.3 || p.match !== 'OK' || p.cutLabel !== '理想' || p.torque > 0) {
     level = 'warn';
     const issues = [];
+    if (p.torque > 0) issues.push('扭力環沒轉到 ⊕（鑽孔應鎖死離合器）');
     if (p.heatScore > 1.2) issues.push('有點熱');
     if (p.biasScore > 0.3) issues.push('略偏');
     if (p.match !== 'OK') issues.push('鑽頭非最佳');

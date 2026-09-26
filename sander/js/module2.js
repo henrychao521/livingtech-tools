@@ -5,7 +5,7 @@ const SCENARIOS = [
   { q: '想砂磨工件，可以戴手套讓手不會痛嗎？', a: '禁止！手套容易被砂帶捲入', b: '可以，會比較舒服', correct: 'a', explain: '砂磨機與所有旋轉機具相同——操作時一律不戴手套，布、皮、橡膠手套都不行。手套一被砂帶或砂盤咬住，會把整隻手扯進去。工件磨到發熱就暫停讓它冷卻；小工件改用木夾或推板夾持，不要用手套代替。' },
   { q: '在盤式砂磨機上，工件應該放砂盤的哪一側？', a: '隨便都可以', b: '先空轉觀察旋轉方向，只能放在「向下旋轉」那一側', correct: 'b', explain: '盤式砂磨「往下轉那側」工件會被壓向工作台（穩定）；「往上轉那側」工件會被甩起飛出。多數逆時針機型的向下旋轉側為左半邊，但務必依教室機台實際方向為準。這是盤式砂磨的核心安全規則。' },
   { q: '砂磨時可以把工件固定壓在一個點不動嗎？', a: '不行，要持續移動工件', b: '可以，這樣磨得比較深', correct: 'a', explain: '砂帶/砂盤在一點停超過 2 秒，木材立刻焦黑，金屬會退火。要持續以平穩速度移動工件，讓熱量分散。' },
-  { q: '長頭髮的同學要操作砂磨機，怎麼處理？', a: '小心點就好', b: '必須先綁起來，最好加戴髮網或鴨舌帽', correct: 'b', explain: '砂帶轉速 600–1800 RPM，頭髮一捲入會被瞬間扯入滾輪。長髮、寬鬆袖口、項鍊、圍巾、領帶都要先處理。' },
+  { q: '長頭髮的同學要操作砂磨機，怎麼處理？', a: '小心點就好', b: '必須先綁起來，最好加戴髮網或鴨舌帽', correct: 'b', explain: '砂帶線速度每分鐘可達數百公尺以上，頭髮一捲入會被瞬間扯入滾輪。長髮、寬鬆袖口、項鍊、圍巾、領帶都要先處理。' },
   { q: '換砂帶或砂盤，正確程序？', a: '關機 → 等砂帶完全停止 → 拔電源插頭 → 再換', b: '直接拔下舊的、裝新的就好', correct: 'a', explain: '換砂帶時若誤觸開關，瞬間啟動的砂帶會把手指刨到。必須先斷電。慣性轉動的砂帶也很危險，要等完全停止。' },
   { q: '砂磨過程中砂帶突然「斷裂」飛出，怎麼辦？', a: '快速伸手接住', b: '立刻關機、後退、等馬達完全停止', correct: 'b', explain: '飛出的砂帶像鞭子一樣甩動，會打傷臉部與眼睛。要立刻拍下緊急停止鈕、後退、不要試圖接住或抓回。' },
   { q: '砂磨小工件（< 5cm），可以用手指捏著磨嗎？', a: '不行，要用木夾或推板輔助', b: '可以，小心點就好', correct: 'a', explain: '手指距砂帶太近，工件被甩起來瞬間手指可能擦過砂帶——這是砂磨機最常見的擦傷事故。小工件要用木夾或推板（push block）控制。' },
@@ -46,15 +46,30 @@ list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', ()
       if (typeof SoundFX !== 'undefined') SoundFX.win();
       const p = loadP(); p.module2 = true; p.safetyPassed = true; saveP(p);
     } else {
-      document.getElementById('scenario-result').innerHTML = `<div class="feedback error" style="margin-top:20px">${total} 分，未達 100 分，請重新整理再挑戰。</div>`;
+      document.getElementById('scenario-result').innerHTML = `<div class="feedback error" style="margin-top:20px">${total} 分，未達 100 分。護具關已完成不必重做，按下方按鈕重新作答情境題。<br><button type="button" class="btn btn-primary" id="retry-scenario" style="margin-top:12px">🔄 重新挑戰情境題</button></div>`;
+      document.getElementById('retry-scenario').addEventListener('click', resetScenarios);
     }
   }
 }));
 
+// 情境題未達門檻：只清掉情境題作答狀態重新作答，護具關分數保留
+function resetScenarios() {
+  score = 0;
+  answered.clear();
+  list.querySelectorAll('.scenario').forEach(div => {
+    div.querySelectorAll('.choice').forEach(b => { b.disabled = false; b.classList.remove('correct', 'wrong'); });
+    div.querySelector('.feedback-slot').innerHTML = '';
+  });
+  document.getElementById('scenario-result').innerHTML = '';
+  document.getElementById('score-display').textContent = ppeScore;
+  document.getElementById('progress-bar').style.width = Math.min(100, ppeScore / 1.3) + '%';
+  document.getElementById('part-scenario').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 /* ── PPE 護具配置遊戲 ──────────────────────────────────── */
 ;(function () {
   const PPE_WRONG = {
-    'sd-glove':    '⚠ 布手套被砂帶咬住後會把整隻手扯入滾輪！砂磨機絕對禁戴布手套。',
+    'sd-glove':    '⚠ 手套被砂帶咬住後會把整隻手扯入滾輪！砂磨機一律不戴任何手套（布、皮、橡膠都不行）。',
     'sd-earphone': '⚠ 戴耳機會遮蔽機台異音（皮帶異響、砂帶快斷的聲音），無法即時判斷危險！',
     'sd-bracelet': '⚠ 金屬手環可能被砂帶掛住或在高速下造成靜電，嚴重者捲入機台。',
   };

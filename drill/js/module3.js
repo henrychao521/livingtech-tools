@@ -1,13 +1,13 @@
 // 手電鑽 模組 3：鑽孔流程
 const STEPS = [
   { title: '穿戴護具', desc: '護目鏡（防鐵屑/木屑彈飛）、口罩（防 MDF/塑料粉塵）、不戴手套（手套容易被夾頭捲入更危險）。長髮綁起、寬鬆袖口塞好、項鍊摘下。', tip: '護目鏡要選包覆型，普通眼鏡擋不住側面飛屑。', warn: '戴布手套是手電鑽操作的禁忌——比沒戴更危險。', anim: 'ppe' },
-  { title: '選對鑽頭', desc: '木材 → 木工螺旋鑽頭（含中心尖）\n金屬 → 高速鋼（HSS）鑽頭\n磚石 → 碳化鎢磚石鑽頭\n大孔（>10mm）→ 階梯鑽或開孔器\n小心：鑽頭直徑不能超過夾頭規格（10/13mm）。', tip: '不確定材料時，用磁鐵測：吸住＝鐵製金屬、不吸＝鋁/銅/塑膠。', warn: null, anim: 'bit' },
+  { title: '選對鑽頭', desc: '木材 → 木工螺旋鑽頭（含中心尖）\n金屬 → 高速鋼（HSS）鑽頭\n磚石 → 碳化鎢磚石鑽頭\n大孔（>10mm）→ 階梯鑽或開孔器\n小心：鑽頭「柄徑」不能超過夾頭規格（10/13mm）；鏟形鑽、開孔器是細柄，可以鑽比夾頭大的孔。', tip: '不確定材料時，用磁鐵測：吸住＝鐵製金屬、不吸＝鋁/銅/塑膠。', warn: null, anim: 'bit' },
   { title: '裝鑽頭、鎖緊夾頭', desc: '先確認電池拆下或保險開關鎖定。把鑽頭插入夾頭三爪中心 → 一手握機身、另一手轉緊夾頭環，直到聽見連續「咔咔咔」棘輪聲——表示鎖到最緊。', tip: '裝完搖一搖鑽頭確認不會晃動。', warn: '沒鎖到「咔咔」聲不算夾緊，鑽頭會在工件內甩飛。', anim: 'chuck' },
   { title: '設定扭力與模式', desc: '鑽孔 → 把扭力環轉到「鑽頭符號」（離合器鎖死）\n鎖螺絲 → 中低段（4–10），讓離合器在到位時自動跳脫\n正反轉開關確認在「FWD（正轉）」位置。', tip: '鎖石膏板 1–3、實木 12–18、混凝土壁釘 18+。', warn: null, anim: 'torque' },
-  { title: '標位置、固定工件', desc: '用鉛筆在鑽孔位置畫「十字」。金屬鑽孔可用中心衝（central punch）敲一個小凹點，防止偏鑽。工件必須用 C 型夾或老虎鉗固定在工作台上，下方墊廢板防止鑽穿桌面。', tip: '雙手鑽孔時，工件絕對不能用手或膝蓋壓——一定要夾。', warn: '工件不固定是最常見的傷害來源。', anim: 'mark' },
-  { title: '起鑽：點壓 + 慢速', desc: '雙手握姿勢就位（主手扳機、輔手扶機身前段）。鑽頭垂直對準鉛筆十字、輕輕點下開機（10–20% 扭力）讓鑽頭咬入材料。咬入後再逐漸加深扣扳機加速。', tip: '鑽頭必須與工件「90°垂直」——歪斜會偏鑽或斷頭。', warn: null, anim: 'start' },
+  { title: '標位置、固定工件', desc: '用鉛筆在鑽孔位置畫「十字」。金屬鑽孔可用中心衝（central punch）敲一個小凹點，防止偏鑽。工件必須用 C 型夾或桌上虎鉗固定在工作台上，下方墊廢板防止鑽穿桌面。', tip: '雙手鑽孔時，工件絕對不能用手或膝蓋壓——一定要夾。', warn: '工件不固定是最常見的傷害來源。', anim: 'mark' },
+  { title: '起鑽：點壓 + 慢速', desc: '雙手握姿勢就位（主手扳機、輔手扶機身前段）。鑽頭垂直對準鉛筆十字、輕扣扳機，以約 10–20% 的轉速慢速起鑽，讓鑽頭咬入材料。咬入後再逐漸加深扣扳機加速。', tip: '鑽頭必須與工件「90°垂直」——歪斜會偏鑽或斷頭。', warn: null, anim: 'start' },
   { title: '鑽孔：穩定進刀、定時退屑', desc: '保持垂直、穩定進刀（不要太用力推，讓鑽頭自己切）。每鑽 5–10mm 退鑽一次清理鐵屑（pecking）。深孔或硬材料更頻繁退屑。聽到「轉速突然下降」就是進刀太猛。', tip: '木材鑽出來是「捲花」狀，金屬是「螺旋狀屑」，磚石是「粉末」——順利時的訊號。', warn: '進刀過快會折斷鑽頭、燒馬達。', anim: 'drill' },
-  { title: '退鑽 ＆ 收工', desc: '鑽穿後鬆開扳機 → 等鑽頭完全停止 → 反轉退出（保持垂直）。檢查孔徑是否符合需求，必要時用大一號鑽頭擴孔或用銼刀修毛邊。最後：拆電池 → 拆鑽頭 → 鑽頭歸位 → 清理工作台。', tip: '鑽完馬上把鑽頭從夾頭取下，避免下次別人誤觸扳機。', warn: '剛鑽完的金屬鑽頭很燙（200°C+），等待數分鐘，先以手背靠近感溫確認不燙再徒手摸，或用鉗子取下。', anim: 'finish' },
+  { title: '退鑽 ＆ 收工', desc: '鑽穿後維持正轉、低速垂直抽出，離開工件再放開扳機（反轉只在卡鑽時使用）。檢查孔徑是否符合需求，必要時用大一號鑽頭擴孔或用銼刀修毛邊。最後：拆電池 → 拆鑽頭 → 鑽頭歸位 → 清理工作台。', tip: '鑽完馬上把鑽頭從夾頭取下，避免下次別人誤觸扳機。', warn: '剛鑽完的金屬鑽頭很燙（200°C+），等待數分鐘，先以手背靠近感溫確認不燙再徒手摸，或用鉗子取下。', anim: 'finish' },
 ];
 
 function renderAnim(type) {
@@ -146,14 +146,14 @@ function renderAnim(type) {
       <rect x="60" y="100" width="280" height="60" fill="#a16207"/>
       <!-- 完成的乾淨孔 -->
       <ellipse cx="200" cy="130" rx="10" ry="20" fill="#1e293b"/>
-      <!-- 反轉箭頭 -->
+      <!-- 正轉垂直抽出箭頭 -->
       <g transform="translate(140,70)">
-        <path d="M -20 0 Q 0 -20 20 0" stroke="#0891b2" stroke-width="2.5" fill="none"/>
-        <polygon points="20,0 14,-6 22,-2" fill="#0891b2"/>
-        <text x="0" y="20" text-anchor="middle" font-size="9" fill="#0891b2" font-weight="700">REV 反轉</text>
+        <line x1="0" y1="18" x2="0" y2="-14" stroke="#0891b2" stroke-width="2.5"/>
+        <polygon points="0,-20 -6,-10 6,-10" fill="#0891b2"/>
+        <text x="0" y="32" text-anchor="middle" font-size="9" fill="#0891b2" font-weight="700">FWD 正轉抽出</text>
       </g>
       <text x="280" y="40" text-anchor="middle" font-size="22">✓</text>
-      <text x="200" y="200" text-anchor="middle" font-size="11" fill="#444" font-family="Noto Sans TC">反轉退出、拆電池、清工作台</text>
+      <text x="200" y="200" text-anchor="middle" font-size="11" fill="#444" font-family="Noto Sans TC">正轉低速抽出、拆電池、清工作台</text>
     </svg>`,
   };
   return anims[type] || '';
@@ -267,8 +267,8 @@ stepProgressEl.textContent = `已學習 ${seenSteps.size} / ${STEPS.length} 步`
     let low = isDrill ? 21 : Math.max(1, mat.range[0] + screw.mod);
     let high = isDrill ? 21 : Math.min(20, mat.range[1] + screw.mod);
     const rangeLabel = isDrill ? '⊕ 鑽頭符號' : `${low}–${high}`;
-    // Needle angle: map 1-21 to -130° to +130°
-    const mid = isDrill ? 20 : (low + high) / 2;
+    // 指針角度：刻度 v 對應 -130° + v/21 × 260°（10 約在頂端、⊕＝21 在 +130°）；下方刻度標籤用同一公式算座標
+    const mid = isDrill ? 21 : (low + high) / 2;
     const angle = -130 + (mid / 21) * 260;
     const rad = angle * Math.PI / 180;
     const nx = (60 + 28 * Math.sin(rad)).toFixed(1);
@@ -280,11 +280,11 @@ stepProgressEl.textContent = `已學習 ${seenSteps.size} / ${STEPS.length} 步`
           <circle cx="60" cy="60" r="45" fill="#fef3c7" stroke="#F59E0B" stroke-width="2"/>
           <circle cx="60" cy="60" r="28" fill="#1e293b"/>
           <g font-size="8" font-weight="700" fill="#92400e" font-family="Inter">
-            <text x="60" y="20" text-anchor="middle">10</text>
-            <text x="100" y="64" text-anchor="middle">5</text>
-            <text x="20" y="64" text-anchor="middle">15</text>
-            <text x="60" y="105" text-anchor="middle">1</text>
-            <text x="108" y="64" text-anchor="middle" fill="#fff">⊕</text>
+            <text x="27.2" y="80.2" text-anchor="middle">1</text>
+            <text x="25.7" y="49.2" text-anchor="middle">5</text>
+            <text x="56" y="26.2" text-anchor="middle">10</text>
+            <text x="90.6" y="42.2" text-anchor="middle">15</text>
+            <text x="88.3" y="86.8" text-anchor="middle" fill="#dc2626">⊕</text>
           </g>
           <line x1="60" y1="60" x2="${nx}" y2="${ny}" stroke="#dc2626" stroke-width="3" stroke-linecap="round"/>
           <circle cx="60" cy="60" r="5" fill="#dc2626"/>

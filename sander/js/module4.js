@@ -45,8 +45,8 @@ function calc() {
   const time = parseInt(els.time.value);
   const baseRa = GRIT_RA[grit];
   const ra = baseRa.toFixed(1);
-  // 去料量：粗粒度 × 時間 × 進料速度
-  const remove = Math.round((1 / (gi + 1)) * time * feed * 30) / 10;
+  // 去料量（教學模擬值，mm）：粗粒度 × 時間 × 進料速度；砂磨幾秒只去掉零點幾公釐，最大約 1 mm
+  const remove = Math.round((1 / (gi + 1)) * time * feed * 2) / 100;
   // 過熱：時間長 + 進料慢 + 硬材料
   const heatScore = (time / 5) * (1 / (feed / 3)) * m.hardness;
   const heatLabel = heatScore < 0.7 ? '低' : heatScore < 1.3 ? '中' : heatScore < 2.0 ? '高' : '極高';
@@ -64,7 +64,7 @@ function updateValueDisplays() {
 }
 function updateEstimates() {
   const r = calc();
-  els.eRemove.textContent = `${r.remove} mm`;
+  els.eRemove.textContent = `約 ${r.remove.toFixed(2)} mm`;
   els.eRa.textContent = `${r.ra} μm`;
   els.eHeat.textContent = r.heatLabel;
   els.eHeat.style.color = r.heatLabel === '低' ? '#22c55e' : r.heatLabel === '中' ? '#eab308' : '#dc2626';
@@ -204,10 +204,11 @@ function showResult() {
   } else if (r.heatScore > 1.5) {
     level = 'bad';
     msg = `⚠ 過熱嚴重，工件溫度過高。實際操作會燒焦或退火。降低接觸時間或加快進料。`;
-  } else if (r.gi === 0 || r.gi >= 5) {
+  } else if (r.grit < r.m.idealGrit[0] || r.grit > r.m.idealGrit[1]) {
+    // 直接用粒度號數和這個材料的建議範圍比較
     level = 'warn';
-    msg = `⚠ 粒度極端：${r.grit < 80 ? '太粗、表面留深紋' : '太細、磨削效率低'}。建議中間粒度。表面 Ra = ${r.ra}μm。`;
-  } else if (r.gi >= r.m.idealGrit[0]/GRITS[r.gi] && r.heatScore < 1.0) {
+    msg = `⚠ 粒度不在${r.m.name}的建議範圍（${r.m.idealGrit[0]}–${r.m.idealGrit[1]} 號）：${r.grit < r.m.idealGrit[0] ? '太粗、表面留深紋' : '太細、磨削效率低'}。表面 Ra = ${r.ra}μm。`;
+  } else if (r.heatScore < 1.0) {
     level = 'good';
     msg = `✓ 砂磨完美！表面 Ra = ${r.ra}μm，過熱風險${r.heatLabel}。建議下一步：${r.nextGrit}。`;
     const prog = loadP();

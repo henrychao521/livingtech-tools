@@ -1,6 +1,6 @@
 // 砂磨機 模組 3：操作流程
 const STEPS = [
-  { title: '穿戴護具', desc: '護目鏡（防屑彈飛）、N95 等級口罩（防超細粉塵）。長髮綁起、寬鬆袖口塞好。\n⚠ 禁戴布手套——同所有電動機具。', tip: '砂磨粉塵粒徑可達 PM2.5 等級，戴一般紗布口罩擋不住。要用 N95 或工業級防塵口罩。', warn: '木屑粉吸入會引起木工肺（hypersensitivity pneumonitis）。', anim: 'ppe' },
+  { title: '穿戴護具', desc: '護目鏡（防屑彈飛）、N95 等級口罩（防超細粉塵）。長髮綁起、寬鬆袖口塞好。\n⚠ 不戴任何手套（布、皮、橡膠都不行）——同所有電動機具。', tip: '砂磨粉塵粒徑可達 PM2.5 等級，戴一般紗布口罩擋不住。要用 N95 或工業級防塵口罩。', warn: '木屑粉吸入會引起木工肺（hypersensitivity pneumonitis）。', anim: 'ppe' },
   { title: '選擇砂帶 / 砂盤粒度', desc: '依工件狀態選粒度：\n• 60–80 號：粗磨、去料快\n• 120 號：中磨\n• 180–240 號：細磨\n• 320 號以上：精修拋光\n\n通則：循序漸進，不能跳級（80 → 直接 240 號會留下深紋）。', tip: '油漆前磨到 180–240 號表面就足夠；上漆後磨 320 號去毛邊。', warn: null, anim: 'grit' },
   { title: '檢查砂帶 / 砂盤狀態', desc: '裝砂帶前確認：\n• 砂帶內側「箭頭方向」對齊滾輪轉向\n• 砂帶無裂痕、無脫粒\n• 張力適當（按下中央能下壓 5mm）\n• 砂盤平整、無凹陷', tip: '砂帶方向錯誤是新手最常見錯誤——裝完先慢速空轉看會不會偏移。', warn: '砂帶有裂痕一定要換新，繼續用會在運轉中斷裂飛出。', anim: 'belt-check' },
   { title: '接上集塵', desc: '把集塵口連接到工坊吸塵器或集塵桶。確認連接緊密、軟管沒摺彎、集塵桶尚有容量。\n⚠ 這一步不可省略——粉塵爆炸與木工肺都由此防範。', tip: '集塵桶滿 70% 就要清空，太滿會降低吸力。', warn: '沒接集塵不可以使用砂磨機。', anim: 'dust' },
@@ -154,6 +154,11 @@ function selectStep(i) {
 window.selectStep = selectStep;
 selectStep(0);
 stepProgressEl.textContent = `已學習 ${seenSteps.size} / ${STEPS.length} 步`;
+// 重新進入頁面時 8 步都已看過：直接解鎖下一關（解鎖原本只寫在「第一次看到某步」的分支裡）
+if (seenSteps.size === STEPS.length) {
+  nextBtn.style.opacity = 1;
+  nextBtn.style.pointerEvents = 'auto';
+}
 
 if (typeof SequencePuzzle === 'function') {
   SequencePuzzle({
@@ -443,7 +448,7 @@ if (typeof SequencePuzzle === 'function') {
         <span style="background:#f97316;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700">工件後緣必須平貼靠尺</span>
         <span style="background:#0891b2;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700">小工件用推板</span>
       </div>
-      <p style="font-size:13px;color:#374151;margin-bottom:8px">本模擬機型的向下旋轉側為右半邊。點擊砂盤的<strong style="color:#16a34a">右半邊（綠色，向下旋轉）</strong>或<strong style="color:#dc2626">左半邊（紅色，向上旋轉）</strong>放置工件，觀察結果。<br><span style="color:#b91c1c">實際機台的旋轉方向可能不同（多數逆時針機型的向下旋轉側為左半邊）——務必先空轉觀察，依教室機台實際方向為準。</span></p>
+      <p style="font-size:13px;color:#374151;margin-bottom:8px">本模擬機型和首頁、模組 1 的圖一樣是逆時針旋轉，向下旋轉側為左半邊。點擊砂盤的<strong style="color:#16a34a">左半邊（綠色，向下旋轉）</strong>或<strong style="color:#dc2626">右半邊（紅色，向上旋轉）</strong>放置工件，觀察結果。<br><span style="color:#b91c1c">實際機台的旋轉方向可能不同——務必先空轉觀察，依教室機台實際方向為準。</span></p>
       <canvas id="disc-canvas" width="480" height="340" style="max-width:100%;border-radius:8px;border:1px solid #e2e8f0;display:block;cursor:pointer"></canvas>
       <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
         <button id="disc-reset" style="padding:8px 16px;border-radius:8px;border:2px solid #e2e8f0;color:#64748b;background:#fff;font-weight:700;font-size:13px;cursor:pointer">重置再試</button>
@@ -488,17 +493,17 @@ if (typeof SequencePuzzle === 'function') {
       }
       ctx.restore();
 
-      // 半側覆蓋（不旋轉）
+      // 半側覆蓋（不旋轉）：逆時針旋轉 → 左半邊向下（安全，綠）、右半邊向上（危險，紅）
       ctx.save();
       ctx.beginPath(); ctx.arc(CX, CY, R, -Math.PI / 2, Math.PI / 2); ctx.closePath();
-      ctx.fillStyle = 'rgba(22,163,74,.25)'; ctx.fill();
-      ctx.strokeStyle = '#16a34a'; ctx.lineWidth = 2; ctx.stroke();
+      ctx.fillStyle = 'rgba(220,38,38,.25)'; ctx.fill();
+      ctx.strokeStyle = '#dc2626'; ctx.lineWidth = 2; ctx.stroke();
       ctx.restore();
 
       ctx.save();
       ctx.beginPath(); ctx.arc(CX, CY, R, Math.PI / 2, Math.PI * 1.5); ctx.closePath();
-      ctx.fillStyle = 'rgba(220,38,38,.25)'; ctx.fill();
-      ctx.strokeStyle = '#dc2626'; ctx.lineWidth = 2; ctx.stroke();
+      ctx.fillStyle = 'rgba(22,163,74,.25)'; ctx.fill();
+      ctx.strokeStyle = '#16a34a'; ctx.lineWidth = 2; ctx.stroke();
       ctx.restore();
 
       // 中心螺絲
@@ -511,13 +516,13 @@ if (typeof SequencePuzzle === 'function') {
       const arrowFn = (cx, cy, side) => {
         ctx.font = 'bold 11px Noto Sans TC,sans-serif'; ctx.textAlign = 'center';
         if (side === 'left') {
-          ctx.fillStyle = '#dc2626';
-          ctx.fillText('⬆ 向上旋轉', cx - R * 0.55, cy - R * 0.45);
-          ctx.fillText('⚠ 禁止放工件', cx - R * 0.55, cy - R * 0.28);
-        } else {
           ctx.fillStyle = '#16a34a';
-          ctx.fillText('⬇ 向下旋轉', cx + R * 0.55, cy - R * 0.45);
-          ctx.fillText('✓ 安全側', cx + R * 0.55, cy - R * 0.28);
+          ctx.fillText('⬇ 向下旋轉', cx - R * 0.55, cy - R * 0.45);
+          ctx.fillText('✓ 安全側', cx - R * 0.55, cy - R * 0.28);
+        } else {
+          ctx.fillStyle = '#dc2626';
+          ctx.fillText('⬆ 向上旋轉', cx + R * 0.55, cy - R * 0.45);
+          ctx.fillText('⚠ 禁止放工件', cx + R * 0.55, cy - R * 0.28);
         }
       };
       arrowFn(CX, CY, 'left');
@@ -548,10 +553,10 @@ if (typeof SequencePuzzle === 'function') {
     }
 
     function discLoop() {
-      discAngle += 0.04;
+      discAngle -= 0.04; // 逆時針旋轉
       if (discStage === 'correct') {
-        // 火花（正確：往右下噴）
-        if (Math.random() < 0.5) sparkP.push({ x: CX + R * 0.5 + (Math.random() - .5) * 20, y: CY + 20, vx: Math.random() * 2, vy: Math.random() + 0.5, r: 2, a: 0.9 });
+        // 火花（正確：往左下噴）
+        if (Math.random() < 0.5) sparkP.push({ x: CX - R * 0.5 + (Math.random() - .5) * 20, y: CY + 20, vx: -Math.random() * 2, vy: Math.random() + 0.5, r: 2, a: 0.9 });
         if (sparkP.length > 30) sparkP.splice(0, 5);
       }
       if (discStage === 'wrong') {
@@ -579,7 +584,7 @@ if (typeof SequencePuzzle === 'function') {
       workPiece.vy = 0;
       workPiece.side = side;
       const res = document.getElementById('disc-result');
-      if (side === 'right') {
+      if (side === 'left') {
         discStage = 'correct';
         res.innerHTML = `<div style="padding:12px 16px;background:#f0fdf4;border:2px solid #22c55e;border-radius:8px;color:#15803d;font-weight:700">✓ 正確！工件放在向下旋轉側，被砂盤壓住並穩定磨削，火花朝下噴出。</div>`;
         if (typeof SoundFX !== 'undefined') SoundFX.win();
@@ -885,12 +890,17 @@ if (typeof SequencePuzzle === 'function') {
       el.querySelector('#sp-step-num').textContent = `${spStep + 1} / ${spSteps.length}`;
     }
 
+    // 清掉主軸測驗作答狀態，重新出題
+    function resetSpQuiz() {
+      spQuizIdx = 0;
+      spQuizAnswered = 0;
+      spQuizCorrect = 0;
+      spQuizDone = false;
+    }
+
     function renderSpQuiz() {
       const qEl = el.querySelector('#sp-quiz-area');
-      if (spQuizIdx >= spQuiz.length) {
-        qEl.innerHTML = spQuizDone ? '' : '';
-        return;
-      }
+      if (spQuizIdx >= spQuiz.length) resetSpQuiz();  // 已答完再進入測驗：重新出題，不留空白
       const q = spQuiz[spQuizIdx];
       qEl.innerHTML = `
         <p style="font-size:14px;color:#1e293b;font-weight:600;margin-bottom:10px">測驗 ${spQuizIdx + 1}／2：${q.q}</p>
@@ -926,7 +936,10 @@ if (typeof SequencePuzzle === 'function') {
               const pass = spQuizCorrect === spQuiz.length;
               qEl.innerHTML = `<div style="padding:14px 18px;border-radius:10px;text-align:center;${pass ? 'background:#f0fdf4;border:2px solid #22c55e;color:#15803d' : 'background:#fff7ed;border:2px solid #f97316;color:#9a3412'}">
                 ${pass ? '🏆 主軸砂磨測驗通過！' : '📖 再複習一次步驟再挑戰！'} <strong>${spQuizCorrect} / ${spQuiz.length}</strong>
+                ${pass ? '' : '<div style="margin-top:10px"><button type="button" class="sp-retry" style="padding:8px 18px;border-radius:8px;border:none;background:#b45309;color:#fff;font-weight:700;cursor:pointer">🔄 重新挑戰</button></div>'}
               </div>`;
+              const retryBtn = qEl.querySelector('.sp-retry');
+              if (retryBtn) retryBtn.addEventListener('click', () => { resetSpQuiz(); renderSpQuiz(); });
               if (pass) {
                 if (typeof SoundFX !== 'undefined') SoundFX.win();
                 const p = loadP(); p.module3_spindle = true; saveP(p);

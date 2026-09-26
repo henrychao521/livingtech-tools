@@ -8,7 +8,7 @@ const BELT_RPM = { 1: 500, 2: 720, 3: 1100, 4: 1700, 5: 2400 };
 
 // 材料屬性（理想 SFM 範圍）
 const MATERIALS = {
-  wood: { name: '軟木', color: '#a16207', dust: '#92400e', idealSFM: [200, 500], hardness: 1, needOil: false },
+  wood: { name: '軟木', color: '#a16207', dust: '#92400e', idealSFM: [100, 500], hardness: 1, needOil: false },
   hardwood: { name: '硬木', color: '#78350f', dust: '#451a03', idealSFM: [150, 350], hardness: 1.8, needOil: false },
   aluminum: { name: '鋁', color: '#cbd5e1', dust: '#94a3b8', idealSFM: [200, 400], hardness: 2.5, needOil: true },
   steel: { name: '不鏽鋼', color: '#475569', dust: '#94a3b8', idealSFM: [30, 80], hardness: 4, needOil: true },
@@ -52,10 +52,13 @@ function calc() {
   else if (sfm > ideal[1] * 1.4) cutLabel = '太快';
   else if (sfm < ideal[0] || sfm > ideal[1]) cutLabel = '可接受';
   else cutLabel = '理想';
+  // 已在最高速（第 5 段）仍低於理想：小鑽頭的物理限制，不是學生選錯，判「可接受」
+  const atMaxSpeed = belt === 5 && sfm < ideal[0];
+  if (atMaxSpeed) cutLabel = '可接受';
   // 過熱：SFM 過高 + 硬材料
   const heatScore = Math.max(0, (sfm - ideal[1]) / ideal[1]) * m.hardness;
   const heatLabel = heatScore < 0.3 ? '低' : heatScore < 0.8 ? '中' : '高';
-  return { m, dia, belt, rpm, sfm, ideal, cutLabel, heatScore, heatLabel, bestBelt, recRpm };
+  return { m, dia, belt, rpm, sfm, ideal, cutLabel, heatScore, heatLabel, bestBelt, recRpm, atMaxSpeed };
 }
 
 function updateValueDisplays() {
@@ -193,10 +196,14 @@ function showResult() {
     msg = `❌ 轉速太高造成過熱燒孔。${r.m.name} 應該用第 ${r.bestBelt} 段（${BELT_RPM[r.bestBelt]} RPM）。`;
   } else if (r.cutLabel === '太慢') {
     level = 'bad';
-    msg = `❌ 轉速太低，切削效率差、鑽頭容易卡。應該調到第 ${r.bestBelt} 段。`;
+    msg = r.bestBelt === r.belt
+      ? `❌ 轉速太低，切削效率差、鑽頭容易卡。請改用更高一段試試。`
+      : `❌ 轉速太低，切削效率差、鑽頭容易卡。應該調到第 ${r.bestBelt} 段。`;
   } else if (r.cutLabel !== '理想' || (r.m.needOil && !r.m.needOil)) {
     level = 'warn';
-    msg = `⚠ 可接受但不理想（SFM ${r.sfm}，理想 ${r.ideal[0]}–${r.ideal[1]}）。耗時 ${dur} 秒。`;
+    msg = r.atMaxSpeed
+      ? `⚠ 已是最高速（第 5 段），這個直徑在${r.m.name}上可接受（SFM ${r.sfm}，理想 ${r.ideal[0]}–${r.ideal[1]}，小鑽頭達不到是正常的）。耗時 ${dur} 秒。`
+      : `⚠ 可接受但不理想（SFM ${r.sfm}，理想 ${r.ideal[0]}–${r.ideal[1]}）。耗時 ${dur} 秒。`;
   } else {
     level = 'good';
     msg = `✓ 完美鑽孔！SFM ${r.sfm} 在理想範圍。耗時 ${dur} 秒。${r.m.needOil ? '提醒：實際操作金屬鑽孔要加切削油。' : ''}`;
