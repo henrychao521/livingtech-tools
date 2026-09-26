@@ -120,3 +120,13 @@ list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', ()
     }
   }
 }));
+
+// 已通過過安全闖關（localStorage 有紀錄）：回頭複習或重新整理時，下一關維持解鎖
+(function restorePassed() {
+  const p = loadP();
+  if (!(p.module2 || p.safetyPassed)) return;
+  document.getElementById('unlock').classList.remove('hidden');
+  const next = document.getElementById('next-btn');
+  next.style.opacity = 1;
+  next.style.pointerEvents = 'auto';
+})();

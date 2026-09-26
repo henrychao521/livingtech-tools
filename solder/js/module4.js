@@ -194,7 +194,7 @@ function update() {
     state.readyShown = true;
     document.getElementById('sim-overlay').textContent = state.level.desolder
       ? '✓ 烙鐵已就緒｜先加熱不良焊點，按住「吸錫」吸掉舊錫，再重新送錫'
-      : '✓ 烙鐵已就緒｜移到接點加熱 ~1 秒，再按住送錫';
+      : '✓ 烙鐵已就緒｜移到接點加熱約 1 秒，再按住送錫';
   }
 
   if (!state.startedAt || state.finished) return;
@@ -238,8 +238,9 @@ function update() {
 
     // 接觸時按住送錫（吸錫中不送錫）
     if (state.pressing && !state.desoldering) {
-      // 必須先加熱 0.8 秒以上才能送錫（不能直接碰錫絲到冷接點）
-      if (elapsed >= 0.8) {
+      // 必須先加熱 1 秒以上才能送錫（不能直接碰錫絲到冷接點）
+      // 1 秒與模組 1「加熱不足（＜ 1 秒）＝冷焊」、模組 3「加熱 1–2 秒」一致
+      if (elapsed >= 1.0) {
         state.contactPad.solderAmount = Math.min(2, state.contactPad.solderAmount + 0.025);
 
         // 噴橘色火花

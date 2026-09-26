@@ -42,8 +42,13 @@
     <div class="muted" style="font-size:16px">總分：<span id="score-display" style="color:var(--primary-dark);font-weight:800;font-size:22px;font-family:Inter,sans-serif">0</span> / 150</div>
   </div>
 
-  <div class="safety-progress">
-    <div class="safety-progress-bar" id="progress-bar" style="width:0%"></div>
+  <div class="safety-progress-wrap">
+    <div class="safety-progress">
+      <div class="safety-progress-bar" id="progress-bar" style="width:0%"></div>
+    </div>
+    <!-- 通關線：120 / 150 = 80% -->
+    <div class="pass-line" style="left:80%" aria-hidden="true"></div>
+    <span class="pass-line-label" style="left:80%">通關 120</span>
   </div>
 
   <section class="panel">

@@ -70,6 +70,16 @@ function answerScenario(btn) {
 
 renderScenarios();
 
+// 已通過過安全闖關（localStorage 有紀錄）：回頭複習或重新整理時，下一關維持解鎖
+(function restorePassed() {
+  const p = loadP();
+  if (!(p.module2 || p.safetyPassed)) return;
+  document.getElementById('unlock').classList.remove('hidden');
+  const next = document.getElementById('next-btn');
+  next.style.opacity = 1;
+  next.style.pointerEvents = 'auto';
+})();
+
 /* ── 真實事故案例參考面板 ──────────────────────────────── */
 ;(function () {
   const CARD_ACCIDENT = 'background:#fff7ed;border-left:4px solid #f97316;border-radius:8px;padding:14px 16px;margin-bottom:10px';

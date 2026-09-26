@@ -195,3 +195,18 @@
 .error-card .err-fix strong {
   color: #1f4798;
 }
+
+/* 模組 2 進度條通關線（120 / 150 分） */
+.safety-progress-wrap { position: relative; }
+.safety-progress-wrap .pass-line {
+  position: absolute; top: -4px; height: 18px; width: 0;
+  border-left: 2px dashed #B83333;
+  transform: translateX(-1px);
+  pointer-events: none;
+}
+.safety-progress-wrap .pass-line-label {
+  position: absolute; top: 16px;
+  transform: translateX(-50%);
+  font-size: 12px; font-weight: 700; color: #B83333;
+  white-space: nowrap; pointer-events: none;
+}

@@ -348,9 +348,24 @@ function checkAllDone() {
       prog.module2 = true; prog.safetyPassed = true;
       saveSolderProgress(prog);
     } else {
-      result.innerHTML = `<div class="feedback error" style="font-size:15px;margin-top:20px">目前 ${Math.round(total)} 分，未達 120 分。請重新整理頁面再挑戰一次。</div>`;
+      result.innerHTML = `<div class="feedback error" style="font-size:15px;margin-top:20px">目前 ${Math.round(total)} 分，未達 120 分。環境配置已完成不必重做，按下方按鈕重新作答情境題。<br><button type="button" class="btn btn-primary" id="retry-scenario" style="margin-top:12px">🔄 重新挑戰情境題</button></div>`;
+      document.getElementById('retry-scenario').addEventListener('click', resetScenarios);
     }
   }
+}
+
+// 情境題未達門檻：只清掉情境題作答狀態重新作答，環境配置關分數保留
+function resetScenarios() {
+  scenarioScore = 0;
+  answered.clear();
+  const list = document.getElementById('scenario-list');
+  list.querySelectorAll('.scenario').forEach(div => {
+    div.querySelectorAll('.choice').forEach(b => { b.disabled = false; b.classList.remove('correct', 'wrong'); });
+    div.querySelector('.feedback-slot').innerHTML = '';
+  });
+  document.getElementById('scenario-result').innerHTML = '';
+  updateScore();
+  list.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function updateScore() {

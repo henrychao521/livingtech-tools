@@ -51,10 +51,35 @@ list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', ()
       if (typeof SoundFX !== 'undefined') SoundFX.win();
       const p = loadP(); p.module2 = true; p.safetyPassed = true; saveP(p);
     } else {
-      document.getElementById('scenario-result').innerHTML = `<div class="feedback error" style="margin-top:20px">${total} 分，未達 120 分，請重新整理再挑戰。</div>`;
+      document.getElementById('scenario-result').innerHTML = `<div class="feedback error" style="margin-top:20px">${total} 分，未達 120 分。護具關已完成不必重做，按下方按鈕重新作答情境題。<br><button type="button" class="btn btn-primary" id="retry-scenario" style="margin-top:12px">🔄 重新挑戰情境題</button></div>`;
+      document.getElementById('retry-scenario').addEventListener('click', resetScenarios);
     }
   }
 }));
+
+// 情境題未達門檻：只清掉情境題作答狀態重新作答，護具關分數保留
+function resetScenarios() {
+  score = 0;
+  answered.clear();
+  list.querySelectorAll('.scenario').forEach(div => {
+    div.querySelectorAll('.choice').forEach(b => { b.disabled = false; b.classList.remove('correct', 'wrong'); });
+    div.querySelector('.feedback-slot').innerHTML = '';
+  });
+  document.getElementById('scenario-result').innerHTML = '';
+  document.getElementById('score-display').textContent = ppeScore;
+  document.getElementById('progress-bar').style.width = Math.min(100, ppeScore / 1.8) + '%';
+  document.getElementById('part-scenario').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// 已通過過安全闖關（localStorage 有紀錄）：回頭複習或重新整理時，下一關維持解鎖
+(function restorePassed() {
+  const p = loadP();
+  if (!(p.module2 || p.safetyPassed)) return;
+  document.getElementById('unlock').classList.remove('hidden');
+  const next = document.getElementById('next-btn');
+  next.style.opacity = 1;
+  next.style.pointerEvents = 'auto';
+})();
 
 /* ── 真實事故案例參考面板 ──────────────────────────────── */
 ;(function () {
