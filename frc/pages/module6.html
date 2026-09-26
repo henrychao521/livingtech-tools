@@ -136,9 +136,9 @@ drive.<span class="fn">setDefaultCommand</span>(drive.<span class="fn">driveComm
         <div class="slider-block"><label>kP（比例）</label><input type="range" min="0" max="20" step="0.1" value="3" id="pid-p"><strong id="val-p">3.0</strong></div>
         <div class="slider-block"><label>kI（積分）</label><input type="range" min="0" max="5" step="0.1" value="0" id="pid-i"><strong id="val-i">0.0</strong></div>
         <div class="slider-block"><label>kD（微分）</label><input type="range" min="0" max="5" step="0.1" value="0.5" id="pid-d"><strong id="val-d">0.5</strong></div>
-        <div class="slider-block"><label>kV（速度 FF）</label><input type="range" min="0" max="2" step="0.05" value="0" id="pid-v"><strong id="val-v">0.00</strong></div>
+        <div class="slider-block"><label>kV（速度 FF × 目標速度）</label><input type="range" min="0" max="2" step="0.05" value="0" id="pid-v"><strong id="val-v">0.00</strong></div>
       </div>
-      <p style="font-size:12px;color:var(--text-muted);margin-top:10px;line-height:1.6">🎯 <strong>調參流程</strong>：先把 P 加大到看到震盪 → 加 D 抑制震盪 → 如果穩態有誤差再加 I。FeedForward kV / kS / kA 在跑 SysId 後自動算出，比手動調快十倍。</p>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:10px;line-height:1.6">🎯 <strong>調參流程</strong>：先把 P 加大到看到震盪 → 加 D 抑制震盪 → 如果穩態有誤差再加 I。FeedForward kV / kS / kA 在跑 SysId 後自動算出，比手動調快十倍。<br>💡 本模擬的 kV 乘的是「梯形速度規劃給出的目標速度」：把 kP、kD 調小、只拉 kV，會看到前饋自己就把機構推向目標（kV 約 1 時停在 1 附近），再大就會衝過頭；但不管多大都不會發散，因為前饋只看規劃，不看量到的速度。</p>
     </div>
   </section>
 
@@ -237,14 +237,19 @@ drive.<span class="fn">setDefaultCommand</span>(drive.<span class="fn">driveComm
     const target = 1.0;
     let x = 0, v = 0, integral = 0, prevErr = target;
     const dt = 0.02; // 50Hz
+    // 梯形速度規劃：從 0 走到目標，最大速度 1、加速度 2 → 0.5s 加速、0.5s 等速、0.5s 減速
+    // 前饋乘的是「規劃出來的目標速度 vRef」，不是量到的實際速度 v（乘 v 等於正回授，kV 大會發散）
+    const vMax = 1.0, aMax = 2.0, tAcc = vMax / aMax, tEnd = target / vMax + tAcc;
+    const vRefAt = (tt) => tt < tAcc ? aMax * tt : tt < tEnd - tAcc ? vMax : tt < tEnd ? aMax * (tEnd - tt) : 0;
     const points = [];
     for (let t = 0; t < 100; t++) {
+      const vRef = vRefAt(t * dt);
       const err = target - x;
       integral += err * dt;
       const dErr = (err - prevErr) / dt;
       prevErr = err;
       // 控制輸出
-      const u = kP * err + kI * integral + kD * dErr + kV * v;
+      const u = kP * err + kI * integral + kD * dErr + kV * vRef;
       // 動態（簡化）：dv/dt = u - 0.5*v，dx/dt = v
       v += (u - 0.5 * v) * dt;
       x += v * dt;

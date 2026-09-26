@@ -66,3 +66,5 @@ quizEl.querySelectorAll('.choice').forEach(b => b.addEventListener('click', () =
     showToast(`🎓 ${correct}/${QUIZ.length} 答對`, 'good');
   }
 }));
+// 從模組 3 按「上一關」回來複習時，已完成就直接解鎖下一關（不必重答 8 題）
+if (loadP().module2) { nextBtn.style.opacity = 1; nextBtn.style.pointerEvents = 'auto'; }

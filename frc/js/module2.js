@@ -1,6 +1,6 @@
 // FRC 模組 2：機械工坊安全
 const SCENARIOS = [
-  { q: '操作 CNC 銑床切割鋁板前最重要的步驟？', a: '快速戴上耳機聽音樂保持專注', b: '檢查工件夾持是否牢固、清空鋁屑、確認急停按鈕位置', correct: 'b', explain: 'CNC 運行中工件鬆脫會以高速飛出傷人。每次開始前必須用千分尺確認夾持力，並把切削區的鋁屑清乾淨（鋁屑燃點低易燒）。' },
+  { q: '操作 CNC 銑床切割鋁板前最重要的步驟？', a: '快速戴上耳機聽音樂保持專注', b: '檢查工件夾持是否牢固、清空鋁屑、確認急停按鈕位置', correct: 'b', explain: 'CNC 運行中工件鬆脫會以高速飛出傷人。每次開始前確認虎鉗／夾具已鎖緊（必要時用扭力扳手），並清掉切削區的鋁屑，避免纏刀與割傷。' },
   { q: '電池（12V 鉛酸）保管的正確方式？', a: '直立放在通風的電池架上、正負極端子加蓋、編號管理', b: '隨意疊放在工具櫃角落', correct: 'a', explain: '鉛酸電池橫放可能漏液，端子裸露被金屬短路會引發火災。每顆電池都要編號追蹤循環次數。' },
   { q: '機器人測試（test mode）時，誰可以接近機器人？', a: '只有 driver 與 1 名安全觀察員，其他人保持 2m 以上距離', b: '所有隊員都可以圍觀', correct: 'a', explain: 'FRC 機器人馬達瞬間扭力極大（NEO 堵轉扭力約 2.6 Nm，經減速機構放大後更大），失控可造成嚴重夾擊傷害。測試時必須建立「安全圈」。' },
   { q: '焊接電子線材時，工作站應該？', a: '在電池附近方便取電', b: '在通風櫃裡或靠窗處 + 排煙裝置', correct: 'b', explain: '焊接煙含助焊劑揮發物（松香、有機溶劑），長期吸入有害。電池會釋放氫氣，靠近焊接火花極危險。' },
@@ -24,6 +24,17 @@ SCENARIOS.forEach((s, i) => {
   list.appendChild(div);
 });
 const answered = new Set();
+// 未達門檻時重新挑戰：清掉本測驗的作答狀態，不必重新整理網頁
+function resetQuiz() {
+  score = 0;
+  answered.clear();
+  list.querySelectorAll('.choice').forEach(b => { b.disabled = false; b.classList.remove('correct', 'wrong'); });
+  list.querySelectorAll('.feedback-slot').forEach(f => { f.innerHTML = ''; });
+  document.getElementById('scenario-result').innerHTML = '';
+  document.getElementById('score-display').textContent = score;
+  document.getElementById('progress-bar').style.width = '0%';
+  list.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', () => {
   const i = parseInt(btn.dataset.q);
   if (answered.has(i)) return;
@@ -45,7 +56,8 @@ list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', ()
       if (typeof SoundFX !== 'undefined') SoundFX.win();
       const p = loadP(); p.module2 = true; p.safetyPassed = true; saveP(p);
     } else {
-      document.getElementById('scenario-result').innerHTML = `<div class="feedback error" style="margin-top:20px">${score} 分，未達 90 分，請重新挑戰。</div>`;
+      document.getElementById('scenario-result').innerHTML = `<div class="feedback error" style="margin-top:20px">${score} 分，未達 90 分，請重新挑戰。<div style="margin-top:12px"><button type="button" class="btn btn-primary" id="retry-btn">↻ 重新挑戰</button></div></div>`;
+      document.getElementById('retry-btn').addEventListener('click', resetQuiz);
     }
   }
 }));

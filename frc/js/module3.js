@@ -53,7 +53,7 @@ const STEPS = [
     title: 'Iterate：賽季中持續優化',
     desc: '區賽後依比賽表現改機器人。常見：加 bumper 防撞、優化 autonomous、改 manipulator 動作速度。',
     deliverable: '改機 changelog + 每場比賽的後賽檢討',
-    tip: '世界錦標賽前的 1 個月「Off-season」是真正的進化期。頂尖隊伍此時做主要改機。',
+    tip: '區域賽之後到世界錦標賽前的這段時間是真正的進化期，頂尖隊伍此時做主要改機。賽季結束後的 Off-season 則可以練新機構、帶新人。',
     warn: '迭代不是「整台重做」。每次只改一個變因，否則無法判斷有沒有變好。',
   },
 ];

@@ -7,28 +7,28 @@ const SCENARIOS = [
     b: '把刀片伸出 1 格，用內附折斷器（或刀套底部金屬槽）折斷後收進回收盒，或整片更換',
     correct: 'b',
     explain: '鈍刀切要施力大、容易滑掉——「鈍刀比利刀危險」是工坊共識。美工刀刀片每隔一段有「折斷凹槽」，但徒手折斷會被刀片碎片割傷，正確做法是用刀套底部金屬槽或廠商提供的折斷器，並把折下的刀片收進密封回收盒。',
-    cite: '[2][3]' },
+    cite: '[1][3]' },
 
   { q: '螺絲鎖很緊轉不動，下一步？',
     a: '改用粗握柄或 T 形柄起子，或用同尺寸六角鋼柄起子搭配扳手夾轉',
     b: '用力轉看看，或換更大尺寸的螺絲起子',
     correct: 'a',
     explain: '使力過大或換錯尺寸會把刀頭從螺絲頭打滑（崩牙）。旋轉力矩取決於握柄「粗細」而非長度——增力應該用「粗握柄或 T 形柄起子」，或用「六角鋼柄起子＋扳手」夾轉增加力矩，而不是換大一級尺寸。',
-    cite: '[1][7]' },
+    cite: '[4][7]' },
 
   { q: '銼刀握把鬆動／或拿到無柄銼刀，可以用嗎？',
     a: '用毛巾包住莖部代替握把就好',
     b: '不能用，要先裝上或更換木柄／塑膠柄',
     correct: 'b',
     explain: '銼刀尾端的「莖部」是尖銳細釘狀，無柄或毛巾包覆狀態用力推銼，莖部會穿透布料刺穿手掌——這是工坊常見嚴重事故主因之一。',
-    cite: '[2][4]' },
+    cite: '[1][6]' },
 
   { q: '要鋸一塊不規則的小工件，可以怎麼固定？',
     a: '用 C 型夾、F 型夾或檯虎鉗固定到工作台',
     b: '用左手按住工件右手鋸（學會控制就好）',
     correct: 'a',
     explain: '小工件徒手按容易滑動，鋸子會順勢割到按工件的手。所有切削加工都應遵守「工件先固定、再下刀」的順序。',
-    cite: '[2][3]' },
+    cite: '[1][3]' },
 
   { q: '用活動扳手轉螺帽，活動鉗口應該朝哪邊？',
     a: '朝施力的方向（力比較順）',
@@ -42,7 +42,7 @@ const SCENARIOS = [
     b: '甩一甩手繼續做完手上工作',
     correct: 'a',
     explain: '輕傷立刻冰敷可消腫止痛。指甲下淤血嚴重或手指不能彎曲，應送醫評估是否需要放血減壓或骨折處置。繼續硬撐會延誤就醫。',
-    cite: '[1][3]' },
+    cite: '[3][4]' },
 
   { q: '看到同學鋸子滑掉差點割到，下一步？',
     a: '當作沒看到、各自做自己的',
@@ -63,7 +63,7 @@ const SCENARIOS = [
     b: '量兩次以上互相確認，重要尺寸請老師複測',
     correct: 'b',
     explain: '「Measure twice, cut once」（量兩次、切一次）是工藝鐵則。切錯不能還原，多花幾秒量幾次卻可避免整件作品報廢。',
-    cite: '[2]' },
+    cite: '[1]' },
 
   { q: '看到工具明顯破損（鎚柄裂、銼刀崩齒、起子刀頭歪），怎麼辦？',
     a: '不要用，標示「待修」或「報廢」並通報老師',
@@ -84,6 +84,17 @@ SCENARIOS.forEach((s, i) => {
   list.appendChild(div);
 });
 const answered = new Set();
+// 未達門檻時重新挑戰：清掉本測驗的作答狀態，不必重新整理網頁
+function resetQuiz() {
+  score = 0;
+  answered.clear();
+  list.querySelectorAll('.choice').forEach(b => { b.disabled = false; b.classList.remove('correct', 'wrong'); });
+  list.querySelectorAll('.feedback-slot').forEach(f => { f.innerHTML = ''; });
+  document.getElementById('scenario-result').innerHTML = '';
+  document.getElementById('score-display').textContent = score;
+  document.getElementById('progress-bar').style.width = '0%';
+  list.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', () => {
   const i = parseInt(btn.dataset.q);
   if (answered.has(i)) return;
@@ -104,7 +115,8 @@ list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', ()
       if (typeof SoundFX !== 'undefined') SoundFX.win();
       const p = loadP(); p.module2 = true; p.safetyPassed = true; saveP(p);
     } else {
-      document.getElementById('scenario-result').innerHTML = `<div class="feedback error" style="margin-top:20px">${score} 分，未達 90 分，請重新挑戰。</div>`;
+      document.getElementById('scenario-result').innerHTML = `<div class="feedback error" style="margin-top:20px">${score} 分，未達 90 分，請重新挑戰。<div style="margin-top:12px"><button type="button" class="btn btn-primary" id="retry-btn">↻ 重新挑戰</button></div></div>`;
+      document.getElementById('retry-btn').addEventListener('click', resetQuiz);
     }
   }
 }));

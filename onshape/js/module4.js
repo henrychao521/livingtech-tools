@@ -229,6 +229,20 @@ CHALLENGES.forEach((c, i) => {
 });
 
 const answeredSet = new Set();
+// 答完 5 題後的結果區（通過／未通過都要有回饋）
+const quizResult = document.createElement('div');
+quizResult.id = 'model-quiz-result';
+quizDiv.after(quizResult);
+// 未達 4 題時重新作答：清掉本測驗的作答狀態與按鈕樣式
+function resetModelQuiz() {
+  answered = 0; correct = 0;
+  answeredSet.clear();
+  quizDiv.querySelectorAll('.m-opt').forEach(b => { b.style.cursor = 'pointer'; b.style.background = '#fafafa'; b.style.borderColor = ''; });
+  quizDiv.querySelectorAll('.m-fb').forEach(fb => { fb.style.display = 'none'; fb.innerHTML = ''; });
+  quizResult.style.cssText = ''; quizResult.innerHTML = '';
+  document.getElementById('quiz-progress').textContent = `挑戰 0 / ${CHALLENGES.length}`;
+  quizDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 quizDiv.querySelectorAll('.m-opt').forEach(btn => {
   btn.addEventListener('click', () => {
     const qIdx = parseInt(btn.dataset.q);
@@ -263,11 +277,17 @@ quizDiv.querySelectorAll('.m-opt').forEach(btn => {
     document.getElementById('quiz-progress').textContent = `挑戰 ${answered} / 5（答對 ${correct}）`;
 
     if (answered === CHALLENGES.length) {
-      if (correct >= 4) {
+      const passed = correct >= 4;
+      quizResult.style.cssText = `margin-top:14px;padding:16px;border-radius:10px;font-weight:600;text-align:center;background:${passed ? '#dcfce7' : '#fef3c7'};color:${passed ? '#14532d' : '#78350f'}`;
+      if (passed) {
+        quizResult.innerHTML = `🎉 答對 ${correct} / ${CHALLENGES.length} 題，通過模組 4。`;
         progress.module4 = true;
         progress.module4_score = correct;
         localStorage.setItem(OS_PROGRESS_KEY, JSON.stringify(progress));
         if (typeof showToast === 'function') showToast(`🏆 模組 4 通過！答對 ${correct}/5`, 'good');
+      } else {
+        quizResult.innerHTML = `⚠️ 答對 ${correct} / ${CHALLENGES.length} 題，未達 4 題。看完上面每題的說明後再試一次。<div style="margin-top:10px"><button type="button" class="btn btn-primary" id="model-retry-btn">↻ 重新作答</button></div>`;
+        document.getElementById('model-retry-btn').addEventListener('click', resetModelQuiz);
       }
     }
   });

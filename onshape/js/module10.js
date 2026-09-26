@@ -28,10 +28,10 @@ const QUIZ = [
     hint: '中心距 a = m × (z₁ + z₂) / 2 = 1 × 60 / 2 = 30mm。',
   },
   {
-    q: 'Onshape 要讓兩齒輪「按播放就會嚙合轉動」，應該用哪種 Mate？',
-    opts: ['緊固結合 Fastened', '旋轉結合 Revolute（兩個各自旋轉）', '齒輪結合 Gear（連動）', '滑動結合 Slider'],
+    q: 'Onshape 要讓兩齒輪「按播放就會嚙合轉動」，應該怎麼設定？',
+    opts: ['兩個齒輪都用緊固結合 Fastened', '只加兩個旋轉結合 Revolute（各自轉、不會連動）', '兩個旋轉結合 Revolute＋齒輪關係 Gear relation', '一個滑動結合 Slider'],
     correct: 2,
-    hint: 'Gear Mate 是專為齒輪設計的特殊 mate，會依據齒數比自動連動兩齒輪的旋轉速度。書中影片即示範此操作。',
+    hint: '齒輪連動不是一種結合（Mate），而是「結合關係（Mate relations）」：先替兩個齒輪各加一個旋轉結合（Revolute），再選工具列的 Gear relation，把這兩個旋轉結合連起來並設定齒數比。它是數學上的連動，不會檢查齒形有沒有互相穿透。',
   },
 ];
 
@@ -80,7 +80,7 @@ quizDiv.querySelectorAll('.m10-opt').forEach(btn => {
 
     if (typeof SoundFX !== 'undefined') isRight ? SoundFX.success() : SoundFX.error();
 
-    document.getElementById('m10-pill').textContent = `已完成 ${Math.min(4, answered.size)} / 4 項`;
+    document.getElementById('m10-pill').textContent = `已答 ${answered.size} / ${QUIZ.length} 題`;
 
     if (answered.size === QUIZ.length && correct >= 4) {
       progress.module10 = true;

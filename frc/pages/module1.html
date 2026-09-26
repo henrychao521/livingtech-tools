@@ -50,7 +50,7 @@
 
   <section class="panel">
     <h3>① 比賽結構（2 分 30 秒）</h3>
-    <p class="muted" style="margin-bottom:14px">每場比賽分三個階段。每階段機器人能做什麼、得分機制都不同。</p>
+    <p class="muted" style="margin-bottom:14px">每場比賽 = 自動期 15 秒＋操控期 2 分 15 秒；終局是操控期的最後一段（不另外加時間）。每階段機器人能做什麼、得分機制都不同。</p>
     <div class="match-timer" id="match-timer">02:30</div>
     <div class="match-phase">
       <div class="match-phase-cell active" data-phase="auto">
@@ -64,9 +64,9 @@
         <small style="color:#888">Teleop</small>
       </div>
       <div class="match-phase-cell" data-phase="endgame">
-        <span class="duration">30s</span>
+        <span class="duration">20–30s</span>
         <strong>終局</strong><br>
-        <small style="color:#888">Endgame</small>
+        <small style="color:#888">Endgame・操控期末段</small>
       </div>
     </div>
     <div id="phase-detail" style="background:var(--bg-soft);border-radius:12px;padding:16px;margin-top:14px;font-size:14px;line-height:1.7">
@@ -332,6 +332,7 @@
             <circle cx="420" cy="430" r="3" fill="#fbbf24"/>
           </g>
           <!-- 互動熱點 -->
+          <!-- 標記放在零件下緣／旁邊，不蓋住零件上的 12V SLA、roboRIO、PDH、NEO 字樣 -->
           <g id="hotspots">
             <g class="hotspot-group" data-id="drivetrain">
               <circle class="hotspot-pulse" cx="180" cy="430" r="14"><animate attributeName="r" values="14;22;14" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0;1" dur="2s" repeatCount="indefinite"/></circle>
@@ -339,28 +340,29 @@
               <text class="hotspot-label" x="180" y="434">1</text>
             </g>
             <g class="hotspot-group" data-id="bumper">
-              <circle class="hotspot" cx="300" cy="405" r="14"/>
-              <text class="hotspot-label" x="300" y="409">2</text>
+              <circle class="hotspot" cx="245" cy="405" r="14"/>
+              <text class="hotspot-label" x="245" y="409">2</text>
             </g>
             <g class="hotspot-group" data-id="frame">
               <circle class="hotspot" cx="430" cy="280" r="14"/>
               <text class="hotspot-label" x="430" y="284">3</text>
             </g>
             <g class="hotspot-group" data-id="battery">
-              <circle class="hotspot" cx="207" cy="340" r="14"/>
-              <text class="hotspot-label" x="207" y="344">4</text>
+              <circle class="hotspot" cx="207" cy="378" r="14"/>
+              <text class="hotspot-label" x="207" y="382">4</text>
             </g>
             <g class="hotspot-group" data-id="roborio">
-              <circle class="hotspot" cx="280" cy="340" r="14"/>
-              <text class="hotspot-label" x="280" y="344">5</text>
+              <circle class="hotspot" cx="280" cy="378" r="14"/>
+              <text class="hotspot-label" x="280" y="382">5</text>
             </g>
             <g class="hotspot-group" data-id="pdp">
-              <circle class="hotspot" cx="349" cy="340" r="14"/>
-              <text class="hotspot-label" x="349" y="344">6</text>
+              <circle class="hotspot" cx="349" cy="378" r="14"/>
+              <text class="hotspot-label" x="349" y="382">6</text>
             </g>
             <g class="hotspot-group" data-id="manipulator">
-              <circle class="hotspot" cx="360" cy="135" r="14"/>
-              <text class="hotspot-label" x="360" y="139">7</text>
+              <line x1="403" y1="128" x2="416" y2="128" stroke="#f97316" stroke-width="2"/>
+              <circle class="hotspot" cx="430" cy="128" r="14"/>
+              <text class="hotspot-label" x="430" y="132">7</text>
             </g>
             <g class="hotspot-group" data-id="vision">
               <circle class="hotspot" cx="300" cy="255" r="14"/>
@@ -469,7 +471,7 @@
           <tr><td><span class="eng">Kickoff</span></td><td>開賽發布日</td><td>每年 1 月初全球同步公布當季遊戲規則,賽季正式開始。</td></tr>
           <tr><td><span class="eng">Autonomous</span></td><td>自動階段</td><td>比賽前 15 秒,機器人完全靠預先寫好的程式自主行動。</td></tr>
           <tr><td><span class="eng">Teleop</span></td><td>手動操作階段</td><td>Teleoperated 的縮寫,2 分 15 秒由駕駛員遙控機器人得分。</td></tr>
-          <tr><td><span class="eng">Endgame</span></td><td>終局</td><td>比賽最後約 30 秒,通常有攀爬、停泊等高分任務。</td></tr>
+          <tr><td><span class="eng">Endgame</span></td><td>終局</td><td>操控期的最後 20–30 秒（依賽季而定）,通常有攀爬、停泊等高分任務。</td></tr>
           <tr><td><span class="eng">Chassis</span></td><td>底盤</td><td>機器人的結構骨架,承載所有機構與電控元件。</td></tr>
           <tr><td><span class="eng">Drivetrain</span></td><td>底盤傳動</td><td>讓機器人移動的整套系統：馬達、齒輪箱、輪組（如 Tank、Mecanum、Swerve）。</td></tr>
           <tr><td><span class="eng">Bumper</span></td><td>防撞緩衝墊</td><td>包覆底盤四周的布面泡棉緩衝條,規則強制安裝,標示聯盟顏色與隊號。</td></tr>

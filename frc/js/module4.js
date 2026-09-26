@@ -66,8 +66,8 @@ function update() {
 
   // 細項顯示
   document.getElementById('score-breakdown').innerHTML = `
-    <div class="stat-row"><span>${d.emoji} 驅動分數</span><span class="val">${(teleopMatchCount).toFixed(1)} pts</span></div>
-    <div class="stat-row"><span>🎯 Manipulator 得分</span><span class="val">${(m.teleopScore * m.reliability / 5).toFixed(1)} ×場數</span></div>
+    <div class="stat-row"><span>${d.emoji} 操控期得分（機構×底盤速度×可靠度）</span><span class="val">${(teleopMatchCount).toFixed(1)} pts</span></div>
+    <div class="stat-row" style="font-size:12px;color:#888"><span>　└ 機構基準分 ${m.teleopScore} × 速度係數 ${(d.speed / 4).toFixed(2)} × 可靠度 ${(m.reliability / 5).toFixed(2)}</span><span></span></div>
     <div class="stat-row"><span>🤖 自動期</span><span class="val">${autoScore.toFixed(1)} pts</span></div>
     <div class="stat-row"><span>🏁 終局</span><span class="val">${endScore} pts</span></div>
     <div class="stat-row"><span>🛡️ 防守加成</span><span class="val">+${defenseBonus.toFixed(1)} pts</span></div>

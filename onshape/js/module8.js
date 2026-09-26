@@ -55,7 +55,7 @@ quizDiv.querySelectorAll('.c-opt').forEach(btn => {
 
     if (typeof SoundFX !== 'undefined') isRight ? SoundFX.success() : SoundFX.error();
 
-    document.getElementById('m8-pill').textContent = `已完成 ${Math.min(answered.size, 3)} / 3 關`;
+    document.getElementById('m8-pill').textContent = `已答 ${answered.size} / ${QUIZ.length} 題`;
 
     if (answered.size === QUIZ.length && correct >= 4) {
       progress.module8 = true;

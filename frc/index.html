@@ -133,8 +133,8 @@
   </section>
 
   <section id="modules" class="modules">
-    <h3 class="section-title">五大學習模組</h3>
-    <p class="section-sub">從認識 FRC 到撰寫優秀工程筆記</p>
+    <h3 class="section-title">六大學習模組</h3>
+    <p class="section-sub">從認識 FRC、撰寫優秀工程筆記到程式設計</p>
     <div class="module-grid">
       <a class="card card-1" href="pages/module1.html"><div class="card-num">01</div><div class="card-icon">🤖</div><h4>認識 FRC 與隊伍</h4><p>機器人結構、子系統、隊伍 8 大分工、比賽結構（自動 / 手動 / 終局）。</p><span class="card-tag">15 分鐘</span></a>
       <a class="card card-2" href="pages/module2.html"><div class="card-num">02</div><div class="card-icon">🛡️</div><h4>機械工坊安全</h4><p>鑽床、CNC、3D 列印、焊接、電池等多元安全規範。</p><span class="card-tag">必修・10 分鐘</span></a>
@@ -154,16 +154,19 @@
           <span class="duration">15s</span>
           自動期<br><small style="color:#888">Autonomous</small>
         </div>
-        <div class="match-phase-cell">
-          <span class="duration">2:15</span>
-          操控期<br><small style="color:#888">Teleop</small>
-        </div>
-        <div class="match-phase-cell">
-          <span class="duration">30s</span>
-          終局<br><small style="color:#888">Endgame</small>
+        <!-- 終局是操控期的最後一段，不另外加時間：用巢狀色塊標在操控期尾端 -->
+        <div class="match-phase-cell" style="flex:3;display:flex;align-items:stretch;gap:8px;text-align:left">
+          <div style="flex:1;text-align:center;align-self:center">
+            <span class="duration">2:15</span>
+            操控期<br><small style="color:#888">Teleop</small>
+          </div>
+          <div style="flex:0 0 32%;background:#fff7ed;border:1px dashed #f97316;border-radius:6px;padding:6px 4px;text-align:center;color:#9a3412">
+            <span class="duration" style="font-size:14px">20–30s</span>
+            終局<br><small style="color:#888">Endgame・操控期最後一段</small>
+          </div>
         </div>
       </div>
-      <p class="muted" style="text-align:center;margin-top:14px">每場比賽 2 分 30 秒，2 隊聯盟對抗，3 機器人 vs 3 機器人</p>
+      <p class="muted" style="text-align:center;margin-top:14px">每場比賽 2 分 30 秒（自動 15 秒＋操控 2 分 15 秒；終局包含在操控期最後 20–30 秒，長度依賽季而定，2024 為最後 20 秒），2 隊聯盟對抗，3 機器人 vs 3 機器人</p>
     </div>
     <div class="reason-grid">
       <div class="reason"><span>🌍</span><h4>全球規模</h4><p>3,400+ 隊伍、28 國家（2024 賽季），每年超過 86,000 名高中生參賽（FIRST 官方）。</p></div>

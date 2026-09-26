@@ -38,7 +38,7 @@ const PARTS = {
   frame: {
     name: 'Frame（主框架）',
     role: 'CHASSIS',
-    desc: '機器人的「骨架」。常用 2x1 鋁管 (例：80/20 系列) 或自製 CNC 鋁板組合。尺寸限制（含 bumper）：frame perimeter ≤ 120"、起始高度 ≤ 4 ft（2024 起）；伸展超出 frame 不可超過 12"。',
+    desc: '機器人的「骨架」。常用 2x1 鋁管 (例：80/20 系列) 或自製 CNC 鋁板組合。尺寸限制：frame perimeter（不含 bumper，bumper 裝在周長外側）≤ 120"；起始高度與伸展限制以當季手冊為準（2024：起始高度 ≤ 4 ft、伸展超出 frame perimeter 不可超過 12"）。',
     fact: '重量上限：2024 賽季為 ≤ 125.5 lbs（不含 bumper、電池）；2025 起改為 ≤ 115 lbs。比賽前要在 scale 上量測，超重就會被取消資格。',
   },
   battery: {

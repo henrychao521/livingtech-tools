@@ -90,7 +90,8 @@ container.querySelectorAll('.quiz-opt').forEach(btn => {
       const passed = score >= 2;
       result.style.background = passed ? '#dcfce7' : '#fef3c7';
       result.style.color = passed ? '#14532d' : '#78350f';
-      result.innerHTML = `${passed ? '🎉' : '⚠️'} 完成！答對 ${score} / 3 題。${passed ? '通過模組 1。' : '建議再看一次影片後重新挑戰。'}`;
+      result.innerHTML = `${passed ? '🎉' : '⚠️'} 完成！答對 ${score} / 3 題。${passed ? '通過模組 1。' : '建議再看一次影片後重新挑戰。<div style="margin-top:10px"><button type="button" class="btn btn-primary" id="retry-btn">↻ 重新作答</button></div>'}`;
+      if (!passed) document.getElementById('retry-btn').addEventListener('click', resetQuiz);
 
       if (passed) {
         progress.module1 = true;
@@ -102,6 +103,20 @@ container.querySelectorAll('.quiz-opt').forEach(btn => {
     updateProgressText();
   });
 });
+
+// 未通過時重新作答：清掉本測驗的作答狀態與按鈕樣式，不必重新整理網頁
+function resetQuiz() {
+  score = 0;
+  answered.clear();
+  container.querySelectorAll('.quiz-opt').forEach(b => {
+    b.style.cursor = 'pointer'; b.style.background = '#fafafa'; b.style.borderColor = ''; b.style.fontWeight = '';
+  });
+  container.querySelectorAll('.quiz-feedback').forEach(fb => { fb.style.display = 'none'; fb.innerHTML = ''; });
+  const result = document.getElementById('quiz-result');
+  result.style.cssText = ''; result.innerHTML = '';
+  updateProgressText();
+  container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 
 function updateProgressText() {
   document.getElementById('progress-text').textContent = `已完成 ${answered.size} / ${QUIZ.length} 項`;
