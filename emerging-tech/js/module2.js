@@ -123,12 +123,12 @@ function update() {
     <div style="background:#fffbeb;border-radius:12px;padding:14px">
       <div style="font-size:13px;color:#92400e;font-weight:700">本人被擋在門外</div>
       <div style="font-size:24px;font-weight:900;color:#d97706;font-family:'JetBrains Mono',monospace">${rejects.toFixed(1)} 次／天</div>
-      <div style="font-size:12px;color:#78350f">約 ${(rejects * 20).toFixed(0)} 次／學期（20 天估）</div>
+      <div style="font-size:12px;color:#78350f">約 ${(rejects * 100).toFixed(0)} 次／學期（約 100 個上課日估）</div>
     </div>
     <div style="background:#fef2f2;border-radius:12px;padding:14px">
       <div style="font-size:13px;color:#991b1b;font-weight:700">外人被誤放進校</div>
       <div style="font-size:24px;font-weight:900;color:#dc2626;font-family:'JetBrains Mono',monospace">${accepts.toFixed(2)} 次／天</div>
-      <div style="font-size:12px;color:#7f1d1d">約 ${(accepts * 20).toFixed(1)} 次／學期</div>
+      <div style="font-size:12px;color:#7f1d1d">約 ${(accepts * 100).toFixed(1)} 次／學期</div>
     </div>`;
 
   const sv = document.getElementById('scVerdict');

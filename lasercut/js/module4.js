@@ -16,7 +16,7 @@ const MATS = [
   { id: 'card',    ico: '📦', name: '厚紙板',    k: 0.22, burn: 2.6, col: '#D6BC97', char: '#4A3520', meta: '極易燒，功率要小' },
 ];
 
-const state = { mat: 'wood', t: 3, v: 20, p: 65, mode: 'cut' };
+const state = { mat: 'wood', t: 3, v: 40, p: 65, mode: 'cut' };   // 預設只留痕跡（r≈0.50），一進頁面不會自動達成任何挑戰
 const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
 const progEl = document.getElementById('prog'), nextBtn = document.getElementById('next-btn');
 

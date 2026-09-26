@@ -30,7 +30,7 @@ const questsEl = document.getElementById('quests');
 const QUESTS = [
   { id: 'q_low',    text: '讓正確類別的信心掉到 50% 以下', hint: '試著同時調暗亮度並加上遮擋',
     test: (r) => r.trueScore < .50 },
-  { id: 'q_wrong',  text: '造成一次「誤判」（最高分不是正確答案）', hint: '遮擋拉到 50% 以上通常就會翻盤',
+  { id: 'q_wrong',  text: '造成一次「誤判」（最高分不是正確答案）', hint: '光靠遮擋很難翻盤：遮擋拉高之後，再把亮度調暗或加上雜訊',
     test: (r) => r.top !== state.obj },
   { id: 'q_robust', text: '在遮擋 ≥ 30% 的情況下，信心仍守住 65% 以上', hint: '遮擋擋不掉，就把其他條件救回來：亮度調回 60、旋轉與雜訊歸零',
     test: (r) => state.occ >= 30 && r.trueScore >= .65 },

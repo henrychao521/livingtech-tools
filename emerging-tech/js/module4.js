@@ -9,7 +9,8 @@ function saveP(p) { localStorage.setItem(PK, JSON.stringify(p)); }
 // ---------- 環境曲線（典型夏季上學日） ----------
 const HOURS = Array.from({ length: 24 }, (_, h) => h);
 const outdoorT = HOURS.map(h => 24 + 8 * Math.sin((h - 9) / 24 * 2 * Math.PI));      // 約 16–32 °C，14 時最熱
-const daylight = HOURS.map(h => (h < 6 || h > 18) ? 0 : Math.round(100 * Math.sin((h - 6) / 12 * Math.PI)));
+// 室內自然光照度（相對值）；早上 8 時太陽仍低、教室內自然光不足，壓低到 30
+const daylight = HOURS.map(h => (h < 6 || h > 18) ? 0 : h === 8 ? 30 : Math.round(100 * Math.sin((h - 6) / 12 * Math.PI)));
 const occupancy = HOURS.map(h => (h >= 8 && h <= 16) ? (h === 12 ? 0.3 : 1) : 0);    // 午休人少
 
 const AC_ON_HOURS = HOURS.filter(h => h >= 8 && h <= 17);
@@ -26,11 +27,11 @@ const SENSORS = [
 
 // ---------- 控制策略 ----------
 const RULES = [
-  { id: 'r_pir',  need: 'pir',  label: '無人關閉：偵測不到人時，空調與照明全關', desc: '午休與課後自動斷電。安全牌，省最多。' },
+  { id: 'r_pir',  need: 'pir',  label: '無人關閉：偵測不到人時，空調與照明全關', desc: '課後與空教室自動斷電（午休仍有約 3 成的人在，不會關）。安全牌，不影響舒適。' },
   { id: 'r_temp', need: 'temp', label: '溫控空調：室外低於 26°C 才不開空調', desc: '只在涼爽時段關機，不影響舒適。' },
   { id: 'r_eco',  need: 'temp', label: '⚡ 弱冷模式：室外低於 31°C 都不開空調', desc: '積極節能，但最熱的時段可能讓人受不了。啟用時會覆蓋上一條。' },
   { id: 'r_lux',  need: 'lux',  label: '日光調光：自然光充足（照度 ≥ 40）時關電燈', desc: '照度達標才關，看得清楚。' },
-  { id: 'r_dim',  need: 'lux',  label: '⚡ 深度調光：照度 ≥ 25 就關電燈', desc: '省更多，但陰天或早晚可能太暗。啟用時會覆蓋上一條。' },
+  { id: 'r_dim',  need: 'lux',  label: '⚡ 深度調光：照度 ≥ 25 就關電燈', desc: '省更多，但早上自然光還不夠時也會關燈，教室可能太暗。啟用時會覆蓋上一條。' },
 ];
 
 const state = { sensors: new Set(loadP().module4_sensors || []), rules: new Set(loadP().module4_rules || []) };
@@ -72,7 +73,7 @@ function simulate(useRules) {
 
 // ---------- 挑戰 ----------
 const QUESTS = [
-  { id: 'q_save30', text: '讓總用電比基準省下 30% 以上', hint: '無人關閉的效果最大',
+  { id: 'q_save30', text: '讓總用電比基準省下 30% 以上', hint: '日光調光＋無人關閉搭配，再加一條空調策略',
     test: (r) => r.savePct >= 30 },
   { id: 'q_comfort', text: '省下 30% 以上，且舒適度違規為 0', hint: '別在有人又熱的時段關掉空調',
     test: (r) => r.savePct >= 30 && r.discomfort === 0 },

@@ -12,7 +12,7 @@ const SURFACES = [
   { id: 'gray',  ico: '🩶', name: '深灰線 / 淺灰地板', kb: 0.34, kw: 0.62, meta: '最難分辨的組合' },
 ];
 
-const state = { surf: 'ideal', amb: 40, h: 5, th: 500 };
+const state = { surf: 'ideal', amb: 40, h: 5, th: 300 };   // 預設 300：理想組合可用，亮面／深灰需自己往上調
 const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
 const progEl = document.getElementById('prog'), nextBtn = document.getElementById('next-btn');
 

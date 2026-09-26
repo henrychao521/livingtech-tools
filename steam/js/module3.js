@@ -17,7 +17,7 @@ const TIMBRES = [
   { id: 'saw', ico: '🪚', name: '鋸齒波', meta: '全諧波・明亮如弦樂',
     harm: [[1, 1], [2, 1 / 2], [3, 1 / 3], [4, 1 / 4], [5, 1 / 5], [6, 1 / 6], [7, 1 / 7], [8, 1 / 8]] },
   { id: 'tri', ico: '📐', name: '三角波', meta: '奇次衰減快・柔和似笛',
-    harm: [[1, 1], [3, 1 / 9], [5, 1 / 25], [7, 1 / 49], [9, 1 / 81]] },
+    harm: [[1, 1], [3, -1 / 9], [5, 1 / 25], [7, -1 / 49], [9, 1 / 81]] },   // 正負交替才是直線斜邊
 ];
 
 const state = { f: 440, a: 60, timbre: 'sine' };
@@ -39,7 +39,7 @@ function noteName(f) {
 function sample(t) {
   const T = TIMBRES.find(x => x.id === state.timbre);
   let v = 0, norm = 0;
-  T.harm.forEach(([n, amp]) => { v += amp * Math.sin(2 * Math.PI * state.f * n * t); norm += amp; });
+  T.harm.forEach(([n, amp]) => { v += amp * Math.sin(2 * Math.PI * state.f * n * t); norm += Math.abs(amp); });
   return v / norm;
 }
 
@@ -51,9 +51,9 @@ function draw() {
   ctx.strokeStyle = '#334155'; ctx.lineWidth = 1;
   ctx.beginPath(); ctx.moveTo(0, mid); ctx.lineTo(W, mid); ctx.stroke();
 
-  // 顯示固定 3 個週期，讓「頻率變高＝波變密」不會超出畫面
-  const periods = 3, dur = periods / state.f;
-  const amp = (state.a / 100) * (H / 2 - 22);
+  // 固定時間窗 10 ms：頻率變高＝同樣時間內的波變多、變密
+  const dur = 0.010, periods = state.f * dur;
+  const amp = (state.a / 100) * (H / 2 - 36);   // 下方留給時間刻度
 
   ctx.strokeStyle = '#EC4899'; ctx.lineWidth = 2.5; ctx.beginPath();
   for (let x = 0; x <= W; x++) {
@@ -63,15 +63,25 @@ function draw() {
   }
   ctx.stroke();
 
+  // 時間刻度：每 1 ms 一格
+  ctx.strokeStyle = '#475569'; ctx.lineWidth = 1;
+  ctx.fillStyle = '#64748b'; ctx.font = '10px Inter, sans-serif'; ctx.textAlign = 'center';
+  for (let ms = 0; ms <= 10; ms++) {
+    const x = ms / 10 * W;
+    ctx.beginPath(); ctx.moveTo(x, H - 30); ctx.lineTo(x, H - 24); ctx.stroke();
+    if (ms > 0 && ms < 10) ctx.fillText(ms + ' ms', x, H - 14);
+  }
+
   // 一個週期的標示
   const pw = W / periods;
   ctx.strokeStyle = '#8B5CF6'; ctx.setLineDash([6, 5]); ctx.lineWidth = 2;
-  ctx.beginPath(); ctx.moveTo(pw, 14); ctx.lineTo(pw, H - 14); ctx.stroke(); ctx.setLineDash([]);
-  ctx.fillStyle = '#8B5CF6'; ctx.font = '700 12px Inter, sans-serif'; ctx.textAlign = 'center';
-  ctx.fillText('← 一個週期 →', pw / 2, 22);
+  ctx.beginPath(); ctx.moveTo(pw, 14); ctx.lineTo(pw, H - 34); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle = '#8B5CF6'; ctx.font = '700 12px Inter, sans-serif';
+  if (pw >= 110) { ctx.textAlign = 'center'; ctx.fillText('← 一個週期 →', pw / 2, 22); }
+  else { ctx.textAlign = 'left'; ctx.fillText('← 左邊這一段是一個週期', pw + 6, 22); }
 
   ctx.textAlign = 'left'; ctx.fillStyle = '#94a3b8'; ctx.font = '11px Inter, sans-serif';
-  ctx.fillText(`${state.f} Hz ・ 畫面顯示 ${periods} 個週期`, 12, H - 10);
+  ctx.fillText(`${state.f} Hz ・ 畫面寬 10 ms，約 ${periods.toFixed(1)} 個週期`, 12, H - 2);
 }
 
 function update() {
@@ -105,12 +115,12 @@ function play() {
     master.gain.linearRampToValueAtTime(0, now + dur);
     master.connect(audioCtx.destination);
 
-    const norm = T.harm.reduce((s, [, a]) => s + a, 0);
+    const norm = T.harm.reduce((s, [, a]) => s + Math.abs(a), 0);
     T.harm.forEach(([n, a]) => {
       if (state.f * n > 18000) return;           // 超出可聽範圍就不加，避免刺耳
       const osc = audioCtx.createOscillator(), g = audioCtx.createGain();
       osc.type = 'sine'; osc.frequency.value = state.f * n;
-      g.gain.value = a / norm;
+      g.gain.value = a / norm;                    // 負值＝反相（Web Audio 允許負增益）
       osc.connect(g); g.connect(master);
       osc.start(now); osc.stop(now + dur);
     });

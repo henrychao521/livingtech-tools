@@ -51,8 +51,10 @@ function compute() {
   let err = Math.max(0.4, motionTerm + staticTerm);
   const errPct = err / a.hr * 100;
   // 誤差方向：動作偽影常讓 PPG 低估或鎖到步頻，這裡以低估呈現
-  const reading = Math.round(a.hr - err * 0.75);
-  return { truth: a.hr, reading, err: Math.round(err), errPct, act: a };
+  // 讀值＝真實 − 誤差，三張數據卡相減一致，挑戰判定也用同一個誤差值
+  const errR = Math.round(err);
+  const reading = a.hr - errR;
+  return { truth: a.hr, reading, err: errR, errPct, act: a };
 }
 
 // ---------- 波形繪製 ----------
@@ -64,9 +66,9 @@ function render(r) {
 
   // ECG 基準（乾淨）
   ctx.strokeStyle = '#22c55e'; ctx.lineWidth = 2; ctx.beginPath();
-  const beatsE = r.truth / 60 * 4;              // 4 秒視窗
+  // 4 秒視窗；相位＝時間 × 每秒心跳數
   for (let x = 0; x <= W; x++) {
-    const t = x / W * 4, ph = (t * beatsE / 4 * r.truth / 60) % 1;
+    const t = x / W * 4, ph = (t * r.truth / 60) % 1;
     let y = midE;
     if (ph < .06) y = midE - 42 * Math.sin(ph / .06 * Math.PI);
     else if (ph < .12) y = midE + 10 * Math.sin((ph - .06) / .06 * Math.PI);

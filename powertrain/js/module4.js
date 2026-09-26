@@ -16,7 +16,18 @@ const POWERS = {
   diesel: { name: '柴油內燃機', eff: 30, unit: 'L/100km', costPerUnit: 28, co2PerUnit: 2680, fuelMul: 5.1 },
   ev:     { name: '電動 EV',   eff: 90, unit: 'kWh/100km', costPerUnit: 5, co2PerUnit: 495, fuelMul: 15 },
   hybrid: { name: '油電混合',   eff: 40, unit: 'L/100km', costPerUnit: 30, co2PerUnit: 2350, fuelMul: 3.6 },
-  fc:     { name: '燃料電池',   eff: 60, unit: 'kg/100km', costPerUnit: 250, co2PerUnit: 0, fuelMul: 1.0 },
+  fc:     { name: '燃料電池',   eff: 60, unit: 'kg/100km', costPerUnit: 250, co2PerUnit: 10000, fuelMul: 1.0 },
+};
+
+// CO₂ 口徑：汽油／柴油只算排氣管排放；電動車以台灣電力排碳係數（經濟部能源署 112 年度 0.494 kg CO2e/度）計、
+// 燃料電池以灰氫（天然氣重組製氫，IEA《Global Hydrogen Review 2024》10–12 kg CO2-eq/kg H₂，取 10）計，
+// 後兩者都含能源生產端，燃料電池車端雖然零排放，製氫仍有碳排
+const CO2_NOTE = {
+  ice: '只算排氣管排放（不含煉油、運輸）',
+  diesel: '只算排氣管排放（不含煉油、運輸）',
+  hybrid: '只算排氣管排放（不含煉油、運輸）',
+  ev: '車端零排放；此數字是發電端排放（台灣電力排碳係數約 0.49 kg/度）',
+  fc: '車端只排水；此數字是製氫排放（以天然氣製的灰氫約 10 kg CO₂/kg 計）',
 };
 
 const PK = 'pt_progress_v1';
@@ -43,6 +54,20 @@ function calc() {
   $('r-co2').textContent = (totalCO2 / 1000).toFixed(1) + ' kg';
   $('r-trees').textContent = trees.toFixed(2) + ' 棵/年';
   $('r-co2').style.color = totalCO2 > 50000 ? '#dc2626' : totalCO2 > 10000 ? '#eab308' : '#16A34A';
+  $('r-co2-note').textContent = CO2_NOTE[pId];
+  markUsed(pId);
+}
+
+// 完成條件：至少比較過 2 種動力來源，而且調整過行駛距離
+const usedPowers = new Set();
+let distMoved = false;
+function markUsed(pId) {
+  usedPowers.add(pId);
+  if (usedPowers.size < 2 || !distMoved) return;
+  const pr = loadP();
+  if (pr.module4) return;
+  pr.module4 = true; saveP(pr);
+  if (typeof showToast === 'function') showToast('✅ 已比較多種動力來源，模組 4 完成！', 'good');
 }
 
 document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
@@ -52,7 +77,5 @@ document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () =>
   calc();
 }));
 $('s-power').addEventListener('change', calc);
-$('s-dist').addEventListener('input', calc);
+$('s-dist').addEventListener('input', () => { distMoved = true; calc(); });
 calc();
-
-const p = loadP(); p.module4 = true; saveP(p);

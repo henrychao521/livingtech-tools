@@ -25,7 +25,7 @@ const STEPS = [
     title: '調整壓料桿',
     anim: 'holddown',
     desc: '把壓料桿降下，輕貼在木板表面。壓料桿要剛好碰到木板，但不過度壓緊（木板還能順暢滑動）。',
-    tip: '正確的壓料桿能消除 90% 的「鋸條把木板震彈起來」問題。',
+    tip: '壓料桿調好，就能大幅減少「鋸條把木板震彈起來」的問題。',
     warn: '壓料桿沒裝好就開機，鋸條會在木板上下震動時拉扯木板，極危險。',
   },
   {
@@ -143,10 +143,11 @@ function renderAnim(type) {
         <rect x="190" y="100" width="20" height="50" fill="#222"/>
         <rect x="160" y="90" width="80" height="14" fill="#FF9933"/>
         <!-- 環視動畫圓 -->
-        <circle cx="200" cy="155" r="80" fill="none" stroke="#FF7A00" stroke-width="2" stroke-dasharray="6 6">
+        <circle cx="200" cy="155" r="70" fill="none" stroke="#FF7A00" stroke-width="2" stroke-dasharray="6 6">
           <animateTransform attributeName="transform" type="rotate" from="0 200 155" to="360 200 155" dur="6s" repeatCount="indefinite"/>
         </circle>
-        <circle cx="200" cy="155" r="100" fill="none" stroke="#FF7A00" stroke-width="1" stroke-dasharray="3 3" opacity=".5">
+        <!-- 外圈半徑 84：下緣 239 仍在 viewBox 240 內，不會被切掉 -->
+        <circle cx="200" cy="155" r="84" fill="none" stroke="#FF7A00" stroke-width="1" stroke-dasharray="3 3" opacity=".5">
           <animateTransform attributeName="transform" type="rotate" from="360 200 155" to="0 200 155" dur="8s" repeatCount="indefinite"/>
         </circle>
         <!-- 檢查項目（角落白卡片，避開機台與圈圈）-->

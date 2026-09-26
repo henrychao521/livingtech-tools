@@ -91,7 +91,11 @@ function render() {
     v.className = 'verdict good';
     v.textContent = `✅ ${a.name} 完成：共比較 ${f.cmp} 次、交換 ${f.swp} 次。`;
     if (!bestCmp[algo] || f.cmp < bestCmp[algo]) bestCmp[algo] = f.cmp;
-    const p = loadP(); p.module2_best = bestCmp; saveP(p);
+    // 自動播放或單步走到最後一步，都算跑完這個演算法
+    const wasSeen = seenAlgos.has(algo);
+    seenAlgos.add(algo);
+    const p = loadP(); p.module2_best = bestCmp; p.module2_seen = Array.from(seenAlgos); saveP(p);
+    if (!wasSeen) renderAlgos();
     check();
   } else {
     v.className = 'verdict warn';
@@ -236,9 +240,7 @@ document.getElementById('auto').addEventListener('click', () => {
     if (idx >= frames.length - 1) {
       clearInterval(timer); timer = null;
       document.getElementById('auto').textContent = '⏩ 自動播放';
-      seenAlgos.add(algo);
-      const p = loadP(); p.module2_seen = Array.from(seenAlgos); saveP(p);
-      renderAlgos(); check(); return;
+      return;   // 最後一步的 render() 已記錄跑完
     }
     idx++; render();
   }, 160);

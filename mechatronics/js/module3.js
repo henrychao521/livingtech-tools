@@ -130,7 +130,7 @@ function draw() {
     // 感測器
     c.sensors.forEach((on, i) => {
       ctx.fillStyle = on ? '#FDE047' : '#475569';
-      ctx.beginPath(); ctx.arc(FWD, -OFFS[i], 3.2, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(FWD, OFFS[i], 3.2, 0, Math.PI * 2); ctx.fill();   // 與 step() 判讀同一側（+off）
     });
     ctx.restore();
   }

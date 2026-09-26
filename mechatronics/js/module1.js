@@ -6,7 +6,7 @@ function saveP(p) { localStorage.setItem(PK, JSON.stringify(p)); }
 const MOTORS = [
   { id: 'dc', ico: '🔄', name: '直流馬達 (DC)', color: '#F97316',
     ctrl: 'PWM 調速，需搭配 H 橋驅動器（如 L298N、TB6612）才能正反轉',
-    pros: '便宜、扭力大、轉速高、接線簡單',
+    pros: '便宜、轉速高、接線簡單；裸馬達扭力小，加上減速齒輪箱（減速馬達）後扭力足以推動自走車',
     cons: '不知道自己轉到哪裡（無位置回授）、低速不穩',
     use: '自走車的驅動輪、風扇、抽水馬達',
     tip: '想知道走了多遠，要另外加編碼器（encoder）。' },
