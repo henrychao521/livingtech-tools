@@ -84,8 +84,9 @@ function initLevel(lvlId) {
     x: p.x, y: p.y,
     smd: p.smd || false,
     defective: p.defective || null,
-    status: p.defective ? 'defective' : 'empty', // empty / heating / soldered / over / cold / bridge
+    status: p.defective ? 'defective' : 'empty', // empty / heating / soldered / over / cold / insufficient / bridge
     heatTime: 0,
+    early: false,        // 接點還沒熱好就送錫 → 結算成冷焊
     solderAmount: 0,
   }));
   state.ironTemp = 25;
@@ -256,19 +257,26 @@ function update() {
           });
         }
       } else {
-        // 太早送錫 → 標記為冷焊
+        // 太早送錫（接點還沒熱就碰錫絲）→ 記下來，結算時算冷焊；一直按著不放也一樣
         if (state.contactPad.solderAmount === 0) state.contactPad.solderAmount = 0.001;
+        state.contactPad.early = true;
       }
     }
   }
 
   // 評估接點狀態
   state.joints.forEach(j => {
+    // 補救：冷焊或缺錫的焊點重新加熱 1 秒以上，舊錫重新熔化，可再補錫、離開時重新判定
+    if ((j.status === 'cold' || j.status === 'insufficient') && state.contactPad === j && j.heatTime >= 1.0) {
+      j.status = 'empty';
+      j.early = false;
+    }
     if (j.status === 'empty' && j.solderAmount > 0) {
       // 焊接中，未完成
       if (j.heatTime > 0.3 && !state.contactPad) {
-        // 烙鐵離開了，定型
-        if (j.solderAmount < 0.3) j.status = 'cold';
+        // 烙鐵離開了，定型：太早送錫＝冷焊（加熱不足）；錫量太少＝缺錫
+        if (j.early) j.status = 'cold';
+        else if (j.solderAmount < 0.3) j.status = 'insufficient';
         else if (j.solderAmount > 1.5) j.status = 'over';
         else j.status = 'soldered';
         j.heatTime = j.solderAmount > 1.4 ? 4 + (j.solderAmount - 1.4) * 5 : 0;
@@ -306,9 +314,9 @@ function update() {
     return p.life > 0;
   });
 
-  // 完成度判定
+  // 完成度判定（冷焊、缺錫還可以補熱重修，不算結束）
   const allDone = state.joints.every(j =>
-    j.status === 'soldered' || j.status === 'cold' || j.status === 'over' || j.status === 'burnt'
+    j.status === 'soldered' || j.status === 'over' || j.status === 'burnt'
   );
   const goodCount = state.joints.filter(j => j.status === 'soldered').length;
   document.getElementById('joint-count').textContent = `${goodCount} / ${state.level.pads.length}`;
@@ -346,7 +354,7 @@ function draw() {
   });
   ctx.restore();
 
-  // 焊盤（接點）
+  // 焊墊（接點）
   state.joints.forEach(j => drawPad(j));
 
   // 元件腳（一般焊點才有，SMD 沒有）
@@ -478,6 +486,12 @@ function drawJoint(j) {
       break;
     case 'cold': // 冷焊：表面顆粒、暗淡
       drawColdJoint(j.x, j.y, j.smd ? 9 : 12);
+      break;
+    case 'insufficient': // 缺錫：錫只包住腳的一小圈，銅環露出
+      ctx.fillStyle = '#b8b8b8';
+      ctx.beginPath();
+      ctx.arc(j.x, j.y, j.smd ? 4 : 6, 0, Math.PI * 2);
+      ctx.fill();
       break;
     case 'over': // 過量錫：圓球
       drawOverSolder(j.x, j.y, j.smd ? 14 : 18);
@@ -665,6 +679,8 @@ function evaluate() {
   const total = state.joints.length;
   const good = state.joints.filter(j => j.status === 'soldered').length;
   const cold = state.joints.filter(j => j.status === 'cold').length;
+  const insufficient = state.joints.filter(j => j.status === 'insufficient').length;
+  const defective = state.joints.filter(j => j.status === 'defective').length;
   const over = state.joints.filter(j => j.status === 'over').length;
   const burnt = state.joints.filter(j => j.status === 'burnt').length;
   const empty = state.joints.filter(j => j.status === 'empty' && j.solderAmount === 0).length;
@@ -688,6 +704,8 @@ function evaluate() {
     '完美焊點': `${good} / ${total}`,
   };
   if (cold) detail['冷焊（虛焊）'] = cold;
+  if (insufficient) detail['缺錫'] = insufficient;
+  if (defective) detail['未修正（原本的不良焊點）'] = defective;
   if (over) detail['過量錫'] = over;
   if (burnt) detail['燒焦 PCB'] = burnt;
   if (empty) detail['漏焊'] = empty;

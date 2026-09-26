@@ -115,7 +115,6 @@ const LEVELS = {
     },
     fix: 'switch',
     hotspot: { col: 3, row: 'b' },
-    needsButton: true,
   },
 };
 
@@ -560,6 +559,8 @@ canvas.addEventListener('click', e => {
       if (Math.hypot(x - sx, y - sy) < 22) {
         state.switchPressed = !state.switchPressed;
         if (typeof SoundFX !== 'undefined') SoundFX.click();
+        // 已通電時按下開關：LED 亮起就直接結算，不必再按一次「通電測試」
+        if (state.powered && state.switchPressed) powerTest();
       }
     }
     return;
@@ -613,6 +614,10 @@ function applyFix() {
 // === 控制按鈕 ===
 document.getElementById('btn-power').onclick = () => {
   if (typeof SoundFX !== 'undefined') SoundFX.click();
+  powerTest();
+};
+
+function powerTest() {
   state.powered = true;
   const sim = simulate(state.config, state.switchPressed);
   const ledStates = Object.values(sim.leds);
@@ -655,7 +660,7 @@ document.getElementById('btn-power').onclick = () => {
       '建議': '先修正紅圈處再通電',
     });
   }, 1200);
-};
+}
 
 document.getElementById('btn-reset').onclick = () => {
   initLevel(state.levelId);

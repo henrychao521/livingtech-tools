@@ -33,13 +33,13 @@ const STEPS = [
     anim: 'heat-pad',
     desc: '烙鐵頭側面（不是尖端）同時碰到 PCB 銅環與元件腳。讓兩者一起加熱約 1–2 秒。注意是先加熱接點，不是直接加熱焊錫。',
     tip: '正確的接觸方式：烙鐵頭傾斜 45°，碰觸面積最大，傳熱最快。',
-    warn: '只用尖端碰觸接點會接觸面積太小，加熱不均，造成虛焊。',
+    warn: '只用尖端碰觸接點會接觸面積太小，加熱不均，造成冷焊。',
   },
   {
     title: '送焊錫',
     anim: 'feed-solder',
     desc: '接點加熱 1–2 秒後，從另一邊送焊錫絲到「接點」上（注意：不是碰烙鐵頭，是碰接點），讓焊錫被熱熔化並流入接點。',
-    tip: '依 IPC-A-610 標準：焊錫應沿元件腳與焊盤形成「凹形 fillet」、潤濕角 < 90°，貼合銅環表面即可。送太多會變球狀過量錫，太少會虛焊。',
+    tip: '依 IPC-A-610 標準：焊錫應沿元件腳與焊墊形成「凹形 fillet」、潤濕角 < 90°，貼合銅環表面即可。送太多會變球狀過量錫，太少會缺錫。',
     warn: '焊錫直接碰烙鐵頭會在烙鐵頭上累積成錫球，掉落造成短路。',
   },
   {
@@ -137,7 +137,7 @@ function renderAnim(type) {
         <rect x="135" y="95" width="130" height="40" rx="3" fill="#0a2a0a"/>
         <text x="200" y="120" text-anchor="middle" fill="#3aff6a" font-size="20" font-family="monospace" font-weight="700">
           <animate attributeName="opacity" values="1;.3;1" dur="0.6s" repeatCount="indefinite"/>
-          350°C
+          320°C
         </text>
         <circle cx="160" cy="160" r="8" fill="#fbbf24">
           <animate attributeName="opacity" values="1;.3;1" dur="0.6s" repeatCount="indefinite"/>
@@ -183,7 +183,7 @@ function renderAnim(type) {
       <svg viewBox="0 0 400 240" style="width:90%">
         <!-- PCB 板 -->
         <rect x="60" y="100" width="280" height="100" fill="#22c55e" rx="3"/>
-        <!-- 焊盤孔 -->
+        <!-- 焊墊孔 -->
         <circle cx="120" cy="150" r="14" fill="#fbbf24" stroke="#d97706" stroke-width="2"/>
         <circle cx="120" cy="150" r="4" fill="#1f2937"/>
         <circle cx="200" cy="150" r="14" fill="#fbbf24" stroke="#d97706" stroke-width="2"/>
@@ -321,13 +321,13 @@ if (typeof Interactions !== 'undefined') {
         '焊錫成分比例不正確，換一種牌子就好'
       ],
       correct: 1,
-      explain: '正確！烙鐵頭接觸冷接點後溫度會驟降，250°C 的熱容量不足以快速加熱接點。建議使用 320–360°C，才能讓接點快速升溫、焊錫充分潤濕，避免焊錫在流動前就重新凝固造成虛焊。'
+      explain: '正確！烙鐵頭接觸冷接點後溫度會驟降，250°C 的熱容量不足以快速加熱接點。建議使用 320–360°C，才能讓接點快速升溫、焊錫充分潤濕，避免焊錫在流動前就重新凝固造成冷焊。'
     },
     {
       situation: '焊接 0402 SMD 超小元件時，你把烙鐵調到 430°C，認為高溫縮短接觸時間、元件更安全。這個做法正確嗎？',
       options: [
         '正確，高溫縮短焊接時間，元件受熱更少、更安全',
-        '錯誤，430°C 瞬間過熱反而更容易燒損 SMD 元件和 PCB 焊盤覆銅',
+        '錯誤，430°C 瞬間過熱反而更容易燒損 SMD 元件和 PCB 焊墊銅箔',
         '溫度不影響焊接品質，重點是進錫速度'
       ],
       correct: 1,
@@ -351,7 +351,7 @@ if (typeof Interactions !== 'undefined') {
         '焊錫成分不對，應換成無鉛焊錫'
       ],
       correct: 1,
-      explain: '球狀焊點代表焊錫過量，無法形成凹形 fillet（潤濕角 < 90°）反而堆積成球。這是不良焊點，容易觸碰相鄰焊盤造成短路（Solder Bridge）。應重新加熱讓多餘焊錫流走，或用吸錫線吸除後補焊。'
+      explain: '球狀焊點代表焊錫過量，無法形成凹形 fillet（潤濕角 < 90°）反而堆積成球。這是不良焊點，容易觸碰相鄰焊墊造成短路（Solder Bridge）。應重新加熱讓多餘焊錫流走，或用吸錫線吸除後補焊。'
     },
   ];
 
@@ -455,7 +455,7 @@ if (typeof Interactions !== 'undefined') {
   sec.id = 'desolder-guide';
   sec.innerHTML = `
     <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:6px">🧯 拆焊：焊錯了怎麼救</h3>
-    <p style="color:#64748b;font-size:14px;margin-bottom:16px">焊錯位置、錫橋短路、虛焊要重焊——都不用慌。把錫「請」下來的工具有兩種：吸錫器與吸錫帶。模組 4 的 L5 關卡（修正錯誤焊）就是在練這件事。</p>
+    <p style="color:#64748b;font-size:14px;margin-bottom:16px">焊錯位置、錫橋短路、冷焊要重焊——都不用慌。把錫「請」下來的工具有兩種：吸錫器與吸錫帶。模組 4 的 L5 關卡（修正錯誤焊）就是在練這件事。</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px">
       <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:16px 18px">
         <h4 style="margin:0 0 10px;font-size:15px;color:#1e293b">💉 吸錫器（四步）</h4>

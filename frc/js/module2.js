@@ -8,7 +8,7 @@ const SCENARIOS = [
   { q: '比賽期間機器人異常冒煙，立刻？', a: '駕駛員按下急停 → 通知裁判 → 等技術組到場處理', b: '繼續比賽看會不會自己好', correct: 'a', explain: '冒煙通常是馬達控制器（如 Talon SRX）短路。繼續通電可能引發火災，FRC 場上有 CO2 滅火器但更重要的是先斷電。' },
   { q: '3D 列印 PLA 時，安全注意事項？', a: '靠近觀察列印過程確認品質', b: '保持距離、確保通風、不可手伸入加熱區', correct: 'b', explain: '噴頭 200°C 會造成嚴重燙傷。PLA 雖然相對安全但仍有揮發物。ABS 更要嚴格通風（會釋放苯乙烯）。' },
   { q: 'PIT 區整理工具的原則？', a: 'Shadow board（影子板）+ 工具回歸定位，每場比賽前盤點', b: '常用工具放最方便拿的位置', correct: 'a', explain: '頂尖隊伍如 Team 254 用「影子板」每個工具有指定位置。比賽中工具掉進機器人會卡住馬達。比賽前必須清點。' },
-  { q: 'CIM、NEO、Falcon 等 FRC 馬達操作注意？', a: '通電後可用手測試轉動方向', b: '通電前先確保軸上沒有手指/物體；通電後保持 30cm 距離', correct: 'b', explain: 'Falcon 500 堵轉扭力 4.7 Nm，瞬間啟動可夾斷手指。「斷電才動機構」是黃金原則。' },
+  { q: 'CIM、NEO、Falcon 等 FRC 馬達操作注意？', a: '通電後可用手測試轉動方向', b: '通電前先確保軸上沒有手指/物體；通電測試時手離開轉動件，人員退到工坊規定的安全距離外', correct: 'b', explain: 'Falcon 500 堵轉扭力 4.7 Nm，瞬間啟動可夾斷手指。「斷電才動機構」是黃金原則。' },
   { q: '比賽期間 alliance station 駕駛位的安全規範？', a: '可以脫下護目鏡看 dashboard', b: '全程戴護目鏡 + 不可越過 alliance wall', correct: 'b', explain: '比賽中機器人可能撞擊 alliance wall（防護牆），game piece 也可能飛出。FIRST 規定駕駛全程戴護目鏡，違者該場 disqualification。' },
 ];
 

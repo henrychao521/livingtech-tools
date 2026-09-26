@@ -7,7 +7,7 @@ const STEPS = [
   { title: '預熱噴頭與熱床', desc: 'PLA：噴頭 200°C / 熱床 60°C\nPETG：噴頭 240°C / 熱床 85°C\nABS：噴頭 250°C / 熱床 100°C\n預熱完成才進行校正——熱脹冷縮會改變高度。', tip: '可在切片時順便預熱，等到列印開始溫度也達標。', warn: null, anim: 'heat' },
   { title: '熱床校正', desc: '預熱完成後 → 將噴頭手動移到四角 → 用 A4 紙確認摩擦阻力 → 微調螺絲。某些機型有自動調平（auto bed leveling）。', tip: 'A4 紙能略微通過、有阻力是最佳距離（約 0.1mm）。', warn: '校正不準是「首層失敗」最大原因。', anim: 'calibrate' },
   { title: '開始列印 ＆ 觀察首層', desc: '前 3–5 層是關鍵。守在機台旁觀察：絲線有沒有黏熱床？有沒有跑位？有沒有跳針（漏層）？', tip: '首層 OK 後就可以放心離開（但仍要定期巡視）。', warn: null, anim: 'print' },
-  { title: '取件 ＆ 後處理', desc: '等熱床冷卻到 < 40°C → 用鏟刀斜插底部撬起 → 移除支撐結構 → 用銼刀或砂紙修平接縫 → 必要時噴漆/上色。', tip: 'PLA 物件可以用鋁箔紙打磨表面變光亮。', warn: '熱床還燙的時候強拔會傷模型也傷熱床。', anim: 'remove' },
+  { title: '取件 ＆ 後處理', desc: '等熱床冷卻到 < 40°C → 用鏟刀斜插底部撬起 → 移除支撐結構 → 用銼刀或砂紙修平接縫 → 必要時噴漆/上色。', tip: 'PLA 可用 400→1000 號砂紙沾水由粗到細研磨，表面會更平滑。', warn: '熱床還燙的時候強拔會傷模型也傷熱床。', anim: 'remove' },
 ];
 
 function renderAnim(type) {
@@ -184,7 +184,7 @@ function renderAnim(type) {
         <text x="50" y="63" text-anchor="middle" font-size="11" fill="#3aff6a" font-family="monospace" font-weight="700">240°C</text>
         <text x="50" y="80" text-anchor="middle" font-size="7" fill="#666">噴頭</text>
         <rect x="15" y="86" width="70" height="22" rx="3" fill="#7f1d1d"/>
-        <text x="50" y="101" text-anchor="middle" font-size="11" fill="#fde68a" font-family="monospace" font-weight="700">80°C</text>
+        <text x="50" y="101" text-anchor="middle" font-size="11" fill="#fde68a" font-family="monospace" font-weight="700">85°C</text>
         <text x="50" y="118" text-anchor="middle" font-size="7" fill="#666">熱床</text>
       </g>
       <g transform="translate(260,40)">

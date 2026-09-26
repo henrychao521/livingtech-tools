@@ -122,10 +122,10 @@ const SCENARIOS = [
   },
   {
     q: '同學焊接到一半被燙到，正確處理順序？',
-    a: '沖冷水 → 沖至少 20 分鐘 → 通報老師 → 必要時就醫',
+    a: '沖冷水 → 連續沖 15–30 分鐘 → 通報老師 → 必要時就醫',
     b: '拿冰塊直接冰敷 5 分鐘止痛 → 通報老師',
     correct: 'a',
-    explain: '燙傷處理黃金原則「沖、脫、泡、蓋、送」。依衛福部、臺北市消防局與 ILCOR 2019 共識，用流動的冷水沖至少 20 分鐘（15–30 分鐘範圍）。冰塊直接接觸傷口可能凍傷，5 分鐘也不夠把熱帶走；塗牙膏、醬油等則是錯誤民俗療法。'
+    explain: '燙傷處理黃金原則「沖、脫、泡、蓋、送」。第一步用流動的冷水連續沖 15–30 分鐘（兒童燙傷基金會建議），把皮膚裡的餘熱帶走。冰塊直接接觸傷口可能凍傷，5 分鐘也不夠把熱帶走；塗牙膏、醬油等則是錯誤民俗療法。'
   },
   // ── Q8–Q12 新增（共 12 題） ────────────────────────────────────
   {
@@ -159,9 +159,9 @@ const SCENARIOS = [
   {
     q: '焊點完成後表面呈現「霧白粗糙」而非光亮錐形，這是什麼問題？',
     a: '過量焊錫，應減少送錫量',
-    b: '虛焊（Cold Joint），通常因焊點未凝固就移動，或加熱時間不足',
+    b: '冷焊（虛焊，Cold Joint），通常因焊點未凝固就移動，或加熱時間不足',
     correct: 'b',
-    explain: '虛焊（Cold Joint）特徵是焊點表面霧白粗糙、電阻偏高、連接強度差。常見原因：(1) 焊錫凝固前移動了板子或元件；(2) 加熱時間不足，焊錫未充分潤濕接點；(3) 接點氧化或有污染。發現虛焊必須重新加熱補焊。'
+    explain: '冷焊（虛焊，Cold Joint）特徵是焊點表面霧白粗糙、電阻偏高、連接強度差。常見原因：(1) 焊錫凝固前移動了板子或元件；(2) 加熱時間不足，焊錫未充分潤濕接點；(3) 接點氧化或有污染。發現虛焊必須重新加熱補焊。'
   },
 ];
 
@@ -190,6 +190,26 @@ items.forEach(item => {
     dragged = item;
     if (typeof SoundFX !== 'undefined') SoundFX.click();
   });
+});
+
+// 鍵盤操作：配備項目與放置區都可用 Tab 移到、Enter／空白鍵選取（等同點選）
+function activateOnKey(el) {
+  el.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.dispatchEvent(new MouseEvent('click', { bubbles: true })); }
+  });
+}
+items.forEach(item => {
+  item.setAttribute('tabindex', '0');
+  item.setAttribute('role', 'button');
+  const icon = item.querySelector('.icon');
+  if (icon) icon.setAttribute('aria-hidden', 'true');
+  activateOnKey(item);
+});
+zones.forEach(zone => {
+  zone.setAttribute('tabindex', '0');
+  zone.setAttribute('role', 'button');
+  zone.setAttribute('aria-label', `放置區：${zone.dataset.label}`);
+  activateOnKey(zone);
 });
 
 zones.forEach(zone => {
@@ -410,12 +430,13 @@ function updateScore() {
     </div>
 
     <div style="${CARD_GOV}">
-      <div style="font-weight:700;color:#15803d;margin-bottom:6px">🏛️ 衛福部「燙傷急救黃金原則」｜沖 20 分鐘冷水</div>
-      <p style="margin:0 0 8px;font-size:14px;color:#374151">台灣衛生福利部與台北市消防局均公告：燙傷後正確處置步驟為「沖、脫、泡、蓋、送」。其中<strong>冷水沖至少 20 分鐘</strong>（ILCOR 2019 共識建議 15–30 分鐘），可有效降低餘熱、減少組織損傷深度。牙膏、醬油、白酒等民俗療法反而會加重感染與傷口損傷。焊接教室應張貼此急救流程供師生參考。</p>
-      <a href="https://www.hpa.gov.tw/Pages/Detail.aspx?nodeid=367&pid=5884" target="_blank" rel="noopener noreferrer" style="${TL}">📄 參考來源：衛生福利部國民健康署（中文）</a>
+      <div style="font-weight:700;color:#15803d;margin-bottom:6px">🏛️ 燙傷急救五步驟「沖、脫、泡、蓋、送」｜冷水沖 15–30 分鐘</div>
+      <p style="margin:0 0 8px;font-size:14px;color:#374151">中華民國兒童燙傷基金會推廣、臺北市消防局防災教育也採用的燙傷處置步驟為「沖、脫、泡、蓋、送」。其中「沖」是用流動的冷水<strong>連續沖 15–30 分鐘</strong>（臺北市消防局寫 20–30 分鐘），可降低餘熱、減少組織損傷深度；幼童或大面積燙傷則不要沖泡太久，以免體溫過低。牙膏、醬油、白酒等民俗療法反而會加重感染與傷口損傷。焊接教室應張貼此急救流程供師生參考。</p>
+      <a href="https://www.cbf.org.tw/ugC_News_Detail.asp?hidNewsCatID=2&hidNewsID=241" target="_blank" rel="noopener noreferrer" style="${TL}">📄 參考來源：中華民國兒童燙傷基金會 —「沖脫泡蓋送」落實正確急救五步驟（中文）</a><br>
+      <a href="https://www.disasterlearning.gov.taipei/tw/Knowledge/ugC_Knowledge_Detail.aspx?ID=120&TID=6" target="_blank" rel="noopener noreferrer" style="${TL}">📄 參考來源：臺北市政府消防局防災教育雲 — 燒燙傷處置：沖脫泡蓋送（中文）</a>
     </div>
 
-    <p style="font-size:12px;color:#94a3b8;margin-top:4px">※ 以上連結均為政府、大學或研究機構官方文件，引用於教學安全佐證之用。</p>
+    <p style="font-size:12px;color:#94a3b8;margin-top:4px">※ 以上連結均為政府、大學、研究機構或公益團體的官方資料，引用於教學安全佐證之用。</p>
   `;
   const nav = document.querySelector('.module-nav-bottom');
   if (nav) nav.parentNode.insertBefore(sec, nav);

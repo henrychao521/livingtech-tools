@@ -239,8 +239,8 @@ document.querySelectorAll('.part-chip').forEach(c => {
     {
       id: 'conical', name: '圓錐尖頭', en: 'Conical / Pencil Tip',
       color: '#dc2626', temp: '300–360°C',
-      best: '精細通孔元件、IC 腳、小型貼片',
-      avoid: '大焊盤、線材接頭（接觸面積太小）',
+      best: '精細通孔元件、IC 腳、小型表面黏著元件',
+      avoid: '大焊墊、線材接頭（接觸面積太小）',
       note: '最常見的初學者教學用頭。接觸點集中，適合練習定點加熱。',
       svg: `<line x1="30" y1="50" x2="130" y2="50" stroke="#9ca3af" stroke-width="12" stroke-linecap="round"/>
         <polygon points="130,42 160,50 130,58" fill="#dc2626"/>
@@ -249,7 +249,7 @@ document.querySelectorAll('.part-chip').forEach(c => {
     {
       id: 'chisel', name: '一字扁頭（鑿形）', en: 'Chisel / Screwdriver Tip',
       color: '#ea580c', temp: '320–380°C',
-      best: '通孔焊接、大焊盤、電線接頭、最常用',
+      best: '通孔焊接、大焊墊、電線接頭、最常用',
       avoid: '密集 SMD 腳（太寬容易橋接）',
       note: '接觸面積大，傳熱效率最高。絕大多數初學者課程首選。新手從這裡開始。',
       svg: `<line x1="30" y1="50" x2="140" y2="50" stroke="#9ca3af" stroke-width="12" stroke-linecap="round"/>
@@ -278,7 +278,7 @@ document.querySelectorAll('.part-chip').forEach(c => {
     {
       id: 'micro', name: '微型尖頭（0.2mm）', en: 'Micro / Needle Tip',
       color: '#0369a1', temp: '280–330°C',
-      best: '0402 以下 SMD、手機主板維修、精密修補',
+      best: '0402 以下 SMD、手機主機板維修、精密修補',
       avoid: '一般通孔焊接（太慢）',
       note: '超細尖端導熱緩慢，需要較長接觸時間。不適合新手，用錯容易冷焊或燒壞元件。',
       svg: `<line x1="30" y1="50" x2="145" y2="50" stroke="#9ca3af" stroke-width="12" stroke-linecap="round"/>
@@ -356,15 +356,15 @@ document.querySelectorAll('.part-chip').forEach(c => {
           con:'含鉛（對人體有毒，學後洗手）',
           note:'本校課堂使用這一種。焊完務必洗手，不要用手摸口鼻，焊接區不飲食。' },
         { name: '無鉛錫（SAC305）', badge:'🟢', color:'#16a34a',
-          mp:'217°C', temp:'360–380°C', skill:'⭐⭐ 進階',
+          mp:'約 217–221°C', temp:'360–380°C', skill:'⭐⭐ 進階',
           pro:'符合 RoHS 環保法規，無鉛安全',
           con:'熔點高、流動性差、焊點較霧，新手易冷焊',
           note:'工廠量產標準，老師會用這一卷示範比較：同樣溫度下熔得比較慢，需要把烙鐵調高，操作不熟練容易冷焊。' },
         { name: '錫膏（Solder Paste）', badge:'⬜', color:'#475569',
-          mp:'183–217°C', temp:'回流爐 230°C+', skill:'⭐⭐⭐ 專業',
-          pro:'SMD 表面貼裝必用，自動印刷機友善',
-          con:'需要搭配鋼板印刷 + 回流焊爐或熱風槍',
-          note:'用於 SMD 貼片元件。課堂一般不使用，了解概念即可。' },
+          mp:'183–217°C', temp:'迴焊爐 230°C+', skill:'⭐⭐⭐ 專業',
+          pro:'SMD 表面黏著必用，自動印刷機友善',
+          con:'需要搭配鋼板印刷 + 迴焊爐或熱風槍',
+          note:'用於 SMD 表面黏著元件。課堂一般不使用，了解概念即可。' },
       ].map(s => `<div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px;border-top:4px solid ${s.color}">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
           <span style="font-size:20px">${s.badge}</span>
@@ -393,7 +393,7 @@ document.querySelectorAll('.part-chip').forEach(c => {
           best:'SMD / 大量生產', warn:'仍有微量殘留，高頻電路要清洗' },
         { name:'水溶性助焊劑', en:'Water-Soluble / OA', color:'#16a34a', badge:'🌊',
           use:'活性最強、焊點最好，但焊後「必須」用去離子水清洗',
-          best:'銅鋁等難焊金屬', warn:'48 小時內沒清洗會腐蝕銅箔' },
+          best:'氧化較嚴重的銅、黃銅、鍍鎳腳等難潤濕的接點', warn:'48 小時內沒清洗會腐蝕銅箔' },
       ].map(f => `<div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:12px;border-left:4px solid ${f.color}">
         <div style="font-size:18px;margin-bottom:6px">${f.badge}</div>
         <div style="font-weight:700;font-size:13px;margin-bottom:2px">${f.name}</div>
@@ -409,7 +409,7 @@ document.querySelectorAll('.part-chip').forEach(c => {
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px">
       ${[
         { name:'吸錫器（Desoldering Pump）', badge:'🔫', color:'#dc2626',
-          how:'按下彈簧 → 烙鐵加熱錫到熔融 → 對準瞬間按下吸嘴 → 錫被吸入',
+          how:'按下彈簧 → 烙鐵加熱錫到熔融 → 吸嘴貼緊焊點 → 按下釋放鈕 → 錫被吸入',
           best:'通孔大量吸錫，速度快', warn:'需要雙手協調，一手烙鐵一手吸',
           photo:'https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e0/Desoldering_pump.jpg/330px-Desoldering_pump.jpg' },
         { name:'吸錫線（銅辮子 Desoldering Braid）', badge:'🧵', color:'#7c3aed',

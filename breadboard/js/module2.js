@@ -133,9 +133,25 @@ function answer(btn) {
       prog.module2 = true; prog.safetyPassed = true;
       saveBBProgress(prog);
     } else {
-      result.innerHTML = `<div class="feedback error" style="margin-top:20px">${scenarioScore} 分，未達 90 分。請重新整理頁面再挑戰。</div>`;
+      result.innerHTML = `<div class="feedback error" style="margin-top:20px">${scenarioScore} 分，未達 90 分。按下方按鈕重新作答。<br><button type="button" class="btn btn-primary" id="retry-scenario" style="margin-top:12px">🔄 重新挑戰</button></div>`;
+      document.getElementById('retry-scenario').addEventListener('click', resetScenarios);
     }
   }
+}
+
+// 未達 90 分：清掉情境題作答狀態重新作答（不必重新整理頁面）
+function resetScenarios() {
+  scenarioScore = 0;
+  answered.clear();
+  const list = document.getElementById('scenario-list');
+  list.querySelectorAll('.scenario').forEach(div => {
+    div.querySelectorAll('.choice').forEach(b => { b.disabled = false; b.classList.remove('correct', 'wrong'); });
+    div.querySelector('.feedback-slot').innerHTML = '';
+  });
+  document.getElementById('scenario-result').innerHTML = '';
+  document.getElementById('score-display').textContent = 0;
+  document.getElementById('progress-bar').style.width = '0%';
+  list.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 renderScenarios();
 

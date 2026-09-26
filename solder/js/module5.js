@@ -251,8 +251,11 @@ function answerQuiz(btn) {
     if (b === btn && !correct) b.classList.add('wrong');
   });
   const correctName = QUIZ_OPTIONS_MAP[QUIZ[i].id];
+  // 解說：直接用 JOINT_TYPES 的成因與修正方式
+  const jt = JOINT_TYPES.find(t => t.id === QUIZ[i].id);
+  const explain = jt ? `<br><strong>成因：</strong>${jt.cause}<br><strong>修正：</strong>${jt.fix}` : '';
   parent.querySelector('.feedback-slot').innerHTML =
-    `<div class="feedback ${correct ? 'success' : 'error'}">${correct ? '✓ 答對！' : `✗ 不正確，正確答案是「${correctName}」`}</div>`;
+    `<div class="feedback ${correct ? 'success' : 'error'}">${correct ? '✓ 答對！' : `✗ 不正確，正確答案是「${correctName}」`}${explain}</div>`;
   if (correct) {
     quizScore += 10;
     if (typeof SoundFX !== 'undefined') SoundFX.success();
@@ -402,7 +405,7 @@ function shuffle(a) {
     container: root,
     imageHTML: pcbSVG,
     hotspots,
-    instruction: '點出 PCB 上的 4 個焊接錯誤（共 7 個焊點，3 個正確）',
+    instruction: '點出 PCB 上的 4 處焊接錯誤（共 8 個接點；連錫跨 2 個接點算 1 處）',
     onAllFound: () => {
       try {
         const k = 'solder_progress_v1';

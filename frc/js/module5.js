@@ -7,7 +7,7 @@ const PAGES = [
   { type: 'CAD 設計', subtitle: 'CAD Design Doc', date: 'Week 3, Day 1', content: '<strong>零件清單：</strong><br>• Frame: 2x1 鋁管 × 8 (1064mm + 762mm)<br>• Side plates: CNC AL 6061 × 2<br>• Roller: 1" × 8" 100A polyurethane<br>• Motors: 2× NEO 550 (with 4:1 reduction)<br><br><strong>力學分析：</strong>馬達扭力 0.9 Nm × 4 (reduction) = 3.6 Nm > 預估荷重 2.5 Nm ✓' },
   { type: '電氣設計', subtitle: 'Electrical Schematic', date: 'Week 3, Day 5', content: '<strong>PDH Channel 配置：</strong><br>• Ch 0-3: 4× Falcon 500 (drivetrain)<br>• Ch 4-5: 2× NEO 550 (intake)<br>• Ch 6: NEO (shooter)<br><br><strong>感測器：</strong><br>• 2× CANcoder（swerve absolute）<br>• 1× Limelight 3<br>• 1× Pigeon 2 IMU<br><br><strong>總電流預估：</strong>120 A peak / 40 A avg ✓ 在電池容量內' },
   { type: '測試與資料', subtitle: 'Testing Data', date: 'Week 5, Day 2', content: '<strong>射擊精度測試（50 次）：</strong><br>• 距離 3m: 命中率 96% (48/50)<br>• 距離 5m: 命中率 80% (40/50)<br>• 距離 7m: 命中率 56% (28/50)<br><br><strong>決策：</strong>策略僅在 < 5m 區域射擊<br><br><strong>速度測試：</strong>Note 從撿到射出平均 2.8 秒（目標 < 3 秒 ✓）' },
-  { type: '比賽復盤', subtitle: 'Match Reflection', date: 'Regional Event, Match 24', content: '<strong>比賽結果：</strong>132 - 145 (Loss)<br><br><strong>檢討：</strong><br>• Auto: 7 分 (目標 12) → autonomous 沒撿到第 2 顆 Note。原因：vision 對 AprilTag 失準。<br>• Teleop: 78 分 (目標 90) → 沒問題。<br>• Endgame: 0 分 (目標 3) → 鏈條卡住爬不起來。<br><br><strong>改進：</strong>明天比賽前重做 chain tensioner。' },
+  { type: '賽後檢討', subtitle: 'Match Reflection', date: 'Regional Event, Match 24', content: '<strong>比賽結果：</strong>132 - 145 (Loss)<br><br><strong>檢討：</strong><br>• Auto: 7 分 (目標 12) → autonomous 沒撿到第 2 顆 Note。原因：vision 對 AprilTag 失準。<br>• Teleop: 78 分 (目標 90) → 沒問題。<br>• Endgame: 0 分 (目標 3) → 鏈條卡住爬不起來。<br><br><strong>改進：</strong>明天比賽前重做 chain tensioner。' },
   { type: '財務與物料', subtitle: 'BOM + Budget', date: '全季彙整', content: '<strong>物料總成本：</strong>$8,420 USD<br><br><strong>分類：</strong><br>• Drivetrain (swerve modules): $6,000<br>• Manipulator parts: $1,200<br>• Electronics: $850<br>• Bumpers/Frame/Misc: $370<br><br><strong>贊助商：</strong>$5,000（GitHub, NVIDIA, 在地廠商）<br><strong>自籌：</strong>$3,420（捐款、義賣）' },
 ];
 
@@ -97,7 +97,7 @@ function updateChecklistResult() {
     msg = `⚠️ <strong>${checked} / ${total} ・ 還需努力</strong>。工程筆記是 FRC 的核心評鑑項目，建議優先補足量化數據與決策紀錄。`;
     cls = 'warn';
   } else if (checked > 0) {
-    msg = `❌ <strong>${checked} / ${total} ・ 基礎不足</strong>。沒有完整工程筆記就無法參與多數高階獎項評選。`;
+    msg = `❌ <strong>${checked} / ${total} ・ 基礎不足</strong>。工程筆記不是 FRC 規定要交的文件，但能在評審訪談時拿出具體證據，是爭取工程類獎項的重要助力。`;
     cls = 'bad';
   } else {
     msg = `勾選符合的項目，看你的工程筆記準備度。`;

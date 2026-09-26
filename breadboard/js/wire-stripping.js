@@ -59,6 +59,9 @@
   ];
 
   const GAUGE_HOLES = [24, 22, 20, 18];
+  // 滑桿起始值刻意落在三關合格範圍外（長度 [5,9]、壓力窗下限 ≥35），學生必須依線徑自己調整
+  const START_LEN_MM = 3;
+  const START_PRESSURE = 15;
 
   // === 狀態 ===
   let currentMode = 'stripper';
@@ -99,7 +102,7 @@
     const wireStartX = 80;
     const wireEndX = 720;
     const lvl = LEVELS[currentLevel];
-    const lenMm = opts.lenMm ?? 6;
+    const lenMm = opts.lenMm ?? START_LEN_MM;
     const stripPx = lenMm * 8;
     const cutX = wireStartX + stripPx;
 
@@ -206,8 +209,7 @@
     // 4 個刻度孔
     GAUGE_HOLES.forEach((g, i) => {
       const hx = cx - 18 + i * 12;
-      const r = 5 - (i * 0.8);    // 孔越往右越大（24 小 → 18 大），這裡顯示時 24→r=5? 改：24 最小、18 最大
-      // GAUGE_HOLES=[24,22,20,18]，i=0..3，r 應 = 3.0, 3.8, 4.6, 5.4
+      // 孔徑：24 最小、18 最大（r = 3.0, 3.8, 4.6, 5.4）
       const rr = 3 + i * 0.8;
       const isCorrect = (g === lvl.stripperHole);
       const isSel = (g === stripperGauge);
@@ -448,8 +450,8 @@
     const lenSlider = `
       <div class="ws-control-block">
         <h5>① 量距：露出長度 mm</h5>
-        <input type="range" min="2" max="14" value="6" step="0.5" class="ws-slider" id="ws-length-slider">
-        <div class="ws-readout"><span>2mm</span><strong id="ws-length-val">6.0 mm</strong><span>14mm</span></div>
+        <input type="range" min="2" max="14" value="${START_LEN_MM}" step="0.5" class="ws-slider" id="ws-length-slider">
+        <div class="ws-readout"><span>2mm</span><strong id="ws-length-val">${START_LEN_MM.toFixed(1)} mm</strong><span>14mm</span></div>
       </div>`;
     if (currentMode === 'stripper') {
       wrap.innerHTML = lenSlider + `
@@ -464,8 +466,8 @@
       wrap.innerHTML = lenSlider + `
         <div class="ws-control-block">
           <h5>② 咬合壓力（每次咬合）</h5>
-          <input type="range" min="0" max="100" value="50" class="ws-slider" id="ws-pressure-slider">
-          <div class="ws-readout"><span>太輕</span><strong id="ws-pressure-val">50</strong><span>太重</span></div>
+          <input type="range" min="0" max="100" value="${START_PRESSURE}" class="ws-slider" id="ws-pressure-slider">
+          <div class="ws-readout"><span>太輕</span><strong id="ws-pressure-val">${START_PRESSURE}</strong><span>太重</span></div>
           <p style="font-size:11px;color:var(--text-muted);margin-top:6px;line-height:1.5">提示：每次咬合可調整壓力，太輕沒切到外皮、太重會傷到銅芯。</p>
         </div>
         <div class="ws-control-block">
@@ -556,7 +558,7 @@
     document.getElementById('ws-result').className = 'ws-result';
     renderControls();
     renderActions();
-    buildStage({ lenMm: 6 });
+    buildStage({ lenMm: START_LEN_MM });
   }
 
   function switchMode(mode) {
@@ -575,7 +577,7 @@
     document.getElementById('ws-result').className = 'ws-result';
     renderControls();
     renderActions();
-    buildStage({ lenMm: 6 });
+    buildStage({ lenMm: START_LEN_MM });
   }
 
   function switchLevel(level) {
@@ -588,7 +590,7 @@
     document.getElementById('ws-result').className = 'ws-result';
     renderControls();
     renderActions();
-    buildStage({ lenMm: 6 });
+    buildStage({ lenMm: START_LEN_MM });
   }
 
   // === 初始化 ===

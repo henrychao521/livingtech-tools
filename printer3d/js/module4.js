@@ -30,8 +30,19 @@ function recalcEstimates() {
   // 時間估算（分鐘）：時間 ∝ 層數 / 速度（層越薄、層數越多 → 時間越長）
   // 經驗常數 1.8 讓 0.2mm/20%/60mm/s 的 benchy 約 1.5 小時（與 Cura/Prusa 估計相近）
   const time = layers * m.width * m.volumeFactor * (1 + params.infill / 100) / params.speed * 1.8;
-  // 品質評分（綜合層厚 + 速度）
-  const quality = Math.max(0, Math.min(100, 100 - (params.layer - 0.1) * 200 - (params.speed - 50) * 0.5 + (params.infill - 20) * 0.2));
+  // 列印溫度：本模擬以 PLA 計算（重量也用 PLA 密度），PLA 適溫約 190–220°C，偏離就扣品質分
+  const TEMP_OK = [190, 220];
+  const tempDev = params.temp < TEMP_OK[0] ? TEMP_OK[0] - params.temp : params.temp > TEMP_OK[1] ? params.temp - TEMP_OK[1] : 0;
+  const tempPenalty = Math.min(40, tempDev * 2);
+  // 品質評分（綜合層厚 + 速度 + 溫度）
+  const quality = Math.max(0, Math.min(100, 100 - (params.layer - 0.1) * 200 - (params.speed - 50) * 0.5 + (params.infill - 20) * 0.2 - tempPenalty));
+  const tempNote = document.getElementById('e-temp-note');
+  if (tempNote) {
+    tempNote.textContent = params.temp < TEMP_OK[0] ? '⚠️ PLA 溫度過低：容易擠出不足、層間黏不牢'
+      : params.temp > TEMP_OK[1] ? '⚠️ PLA 溫度過高：容易牽絲、表面粗糙、懸空處下垂'
+      : '✓ PLA 適溫（約 190–220°C）';
+    tempNote.style.color = tempDev ? '#b45309' : '#16a34a';
+  }
 
   document.getElementById('e-layers').textContent = layers + ' 層';
   document.getElementById('e-weight').textContent = weight.toFixed(1) + ' g';
@@ -258,6 +269,7 @@ function loop() {
     printState.progress = Math.min(1, elapsed / totalTimeMs);
     if (printState.progress >= 1) {
       printState.running = false;
+      lockSlicing(false);
       if (typeof SoundFX !== 'undefined') SoundFX.win();
       const PK = 'printer3d_progress_v1';
       let p; try { p = JSON.parse(localStorage.getItem(PK)) || {}; } catch { p = {}; }
@@ -272,8 +284,17 @@ function loop() {
   requestAnimationFrame(loop);
 }
 
+// 列印中不能改切片參數（實機也是切片完才列印）；改了總時間會變，進度會跳動
+function lockSlicing(locked) {
+  ['s-layer', 's-infill', 's-speed', 'model'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.disabled = locked;
+  });
+}
+
 document.getElementById('btn-print').onclick = () => {
   if (printState.running) return;
+  lockSlicing(true);
   printState.running = true;
   printState.progress = 0;
   printState.startTime = performance.now();
@@ -281,6 +302,7 @@ document.getElementById('btn-print').onclick = () => {
 };
 document.getElementById('btn-reset').onclick = () => {
   printState.running = false;
+  lockSlicing(false);
   printState.progress = 0;
 };
 

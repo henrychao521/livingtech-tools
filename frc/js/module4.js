@@ -40,7 +40,6 @@ document.querySelectorAll('.config-option').forEach(opt => {
     const cat = opt.dataset.cat;
     const id = opt.dataset.id;
     document.querySelectorAll(`.config-option[data-cat="${cat}"]`).forEach(o => o.classList.toggle('selected', o === opt));
-    CONFIG[cat] === id ? null : (CONFIG[cat] = id);
     CONFIG[cat] = id;
     if (typeof SoundFX !== 'undefined') SoundFX.click();
     update();
