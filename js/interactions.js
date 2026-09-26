@@ -24,7 +24,9 @@ window.Interactions = (function() {
     if (!root) return;
 
     // 打亂步驟
-    const shuffled = [...items.keys()].sort(() => Math.random() - 0.5);
+    // Fisher–Yates：sort(() => Math.random() - 0.5) 的分布不均，某些排列出現機率偏高
+    const fisherYates = arr => { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr; };
+    const shuffled = fisherYates([...items.keys()]);
     const userOrder = shuffled.slice();
     let solved = false;
 
@@ -104,7 +106,7 @@ window.Interactions = (function() {
     renderList();
 
     root.querySelector('.sp-shuffle').addEventListener('click', () => {
-      userOrder.sort(() => Math.random() - 0.5);
+      fisherYates(userOrder);
       renderList();
       feedbackEl.innerHTML = '';
       solved = false;
