@@ -161,16 +161,20 @@
             <text class="hotspot-label" x="395" y="159">1</text>
           </g>
           <g class="hotspot-group" data-id="heating">
-            <circle class="hotspot" cx="310" cy="175" r="14"/>
-            <text class="hotspot-label" x="310" y="179">2</text>
+            <!-- 標記移到加熱元件上方＋短引線，避免蓋住「HEATING」字樣 -->
+            <line x1="299" y1="170" x2="305" y2="182" stroke="rgba(255,122,0,.85)" stroke-width="1.5" pointer-events="none"/>
+            <circle class="hotspot" cx="295" cy="156" r="14"/>
+            <text class="hotspot-label" x="295" y="160">2</text>
           </g>
           <g class="hotspot-group" data-id="handle">
             <circle class="hotspot" cx="155" cy="255" r="14"/>
             <text class="hotspot-label" x="155" y="259">3</text>
           </g>
           <g class="hotspot-group" data-id="display">
-            <circle class="hotspot" cx="218" cy="207" r="14"/>
-            <text class="hotspot-label" x="218" y="211">4</text>
+            <!-- 標記移到握柄上方＋短引線，避免蓋住顯示器的「350°C」 -->
+            <line x1="226" y1="189" x2="233" y2="207" stroke="rgba(255,122,0,.85)" stroke-width="1.5" pointer-events="none"/>
+            <circle class="hotspot" cx="222" cy="175" r="14"/>
+            <text class="hotspot-label" x="222" y="179">4</text>
           </g>
           <g class="hotspot-group" data-id="cord">
             <circle class="hotspot" cx="65" cy="305" r="14"/>

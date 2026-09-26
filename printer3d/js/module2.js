@@ -18,14 +18,26 @@ const PK = 'printer3d_progress_v1';
 function loadP() { try { return JSON.parse(localStorage.getItem(PK)) || {}; } catch { return {}; } }
 function saveP(p) { localStorage.setItem(PK, JSON.stringify(p)); }
 const list = document.getElementById('scenario-list');
-SCENARIOS.forEach((s, i) => {
-  const div = document.createElement('div');
-  div.className = 'scenario';
-  div.innerHTML = `<h4>${s.q}</h4><div class="choice-grid"><button class="choice" data-q="${i}" data-c="a">A. ${s.a}</button><button class="choice" data-q="${i}" data-c="b">B. ${s.b}</button></div><div class="feedback-slot"></div>`;
-  list.appendChild(div);
-});
 const answered = new Set();
-list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', () => {
+
+// 出題（也用於「重新挑戰」：清掉作答狀態、分數與進度條，重新出一次；門檻不變）
+function renderScenarios() {
+  score = 0;
+  answered.clear();
+  list.innerHTML = '';
+  document.getElementById('scenario-result').innerHTML = '';
+  document.getElementById('score-display').textContent = score;
+  document.getElementById('progress-bar').style.width = '0%';
+  SCENARIOS.forEach((s, i) => {
+    const div = document.createElement('div');
+    div.className = 'scenario';
+    div.innerHTML = `<h4>${s.q}</h4><div class="choice-grid"><button class="choice" data-q="${i}" data-c="a">A. ${s.a}</button><button class="choice" data-q="${i}" data-c="b">B. ${s.b}</button></div><div class="feedback-slot"></div>`;
+    list.appendChild(div);
+  });
+  list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', () => answerScenario(btn)));
+}
+
+function answerScenario(btn) {
   const i = parseInt(btn.dataset.q);
   if (answered.has(i)) return;
   const s = SCENARIOS[i];
@@ -46,10 +58,17 @@ list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', ()
       if (typeof SoundFX !== 'undefined') SoundFX.win();
       const p = loadP(); p.module2 = true; p.safetyPassed = true; saveP(p);
     } else {
-      document.getElementById('scenario-result').innerHTML = `<div class="feedback error" style="margin-top:20px">${score} 分，未達 110 分，請重新挑戰。</div>`;
+      document.getElementById('scenario-result').innerHTML = `<div class="feedback error" style="margin-top:20px">${score} 分，未達 110 分，請重新挑戰。</div>
+        <button class="btn btn-primary" id="retry-btn" style="margin-top:12px">↺ 重新挑戰</button>`;
+      document.getElementById('retry-btn').addEventListener('click', () => {
+        renderScenarios();
+        list.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
     }
   }
-}));
+}
+
+renderScenarios();
 
 /* ── 真實事故案例參考面板 ──────────────────────────────── */
 ;(function () {
@@ -71,9 +90,10 @@ list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', ()
     </div>
 
     <div style="${CARD_ACCIDENT}">
-      <div style="font-weight:700;color:#c2410c;margin-bottom:6px">🔥 Bambu Lab A1 起火召回｜全球，2024 年</div>
-      <p style="margin:0 0 8px;font-size:14px;color:#374151">Bambu Lab A1 Mini 印表機因電源板與線束設計缺陷，導致通電時產生電弧（arcing）並起火。事件在全球 3D 列印社群引發廣泛討論，Bambu Lab 最終宣布免費升級套件召回計畫。這再度說明「長時間無人監控列印」的潛在火災風險不可忽視。</p>
-      <a href="https://www.tomshardware.com/3d-printing/reports-of-the-bambu-lab-3d-printer-being-a-fire-hazard-resurface-after-recall-bambu-lab-confirms-theres-an-upgrade-kit-for-fire-risk" target="_blank" rel="noopener noreferrer" style="${TL}">📄 原文報導：Tom's Hardware — Bambu Lab A1 Fire Hazard（英文）</a>
+      <div style="font-weight:700;color:#c2410c;margin-bottom:6px">🔥 Bambu Lab A1 熱床線纜召回（觸電與火災風險）｜全球，2024 年</div>
+      <p style="margin:0 0 8px;font-size:14px;color:#374151">Bambu Lab A1 印表機（較小的 A1 mini 不在召回範圍）的熱床線纜在列印時長期反覆彎折，可能受損而造成溫度讀值異常、過熱，甚至短路冒出火花。Bambu Lab 在 2024 年宣布全球召回，提供免費更換熱床與線纜或全額退款。這再度說明「長時間無人監控列印」的潛在火災風險不可忽視。</p>
+      <a href="https://www.tomshardware.com/3d-printing/reports-of-the-bambu-lab-3d-printer-being-a-fire-hazard-resurface-after-recall-bambu-lab-confirms-theres-an-upgrade-kit-for-fire-risk" target="_blank" rel="noopener noreferrer" style="${TL}">📄 原文報導：Tom's Hardware — Bambu Lab A1 Fire Hazard（英文）</a><br>
+      <a href="https://www.cpsc.gov/Recalls/2024/Bambu-Lab-Recalls-A1-3D-Printers-Due-to-Electric-Shock-and-Fire-Hazards" target="_blank" rel="noopener noreferrer" style="${TL}">📄 官方公告：U.S. CPSC — Bambu Lab Recalls A1 3D Printers（英文）</a>
     </div>
 
     <div style="${CARD_RESEARCH}">

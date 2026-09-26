@@ -1,6 +1,6 @@
 // 3D 印表機 模組 5：故障排除圖鑑
 const ERRORS = [
-  { id: 'warping', name: '翹邊（Warping）', symptom: '物件邊角從熱床翹起', cause: '首層降溫太快收縮、熱床溫度不足、熱床不平、底面太小', fix: '提高熱床溫度 5–10°C、用裙邊（brim）加大底面、加封閉外殼（防風）、使用 PEI 膠帶或膠水增加附著' },
+  { id: 'warping', name: '翹邊（Warping）', symptom: '物件邊角從熱床翹起', cause: '首層降溫太快收縮、熱床溫度不足、熱床不平、底面太小', fix: '提高熱床溫度 5–10°C、用 Brim（邊緣，不是裙邊 Skirt）加大底面、加封閉外殼（防風）、使用 PEI 膠帶或膠水增加附著' },
   { id: 'spaghetti', name: '義大利麵（Spaghetti）', symptom: '列印中物件掉了，噴頭在空中亂噴絲', cause: '首層沒附著好就繼續列印 / 列印中物件被撞掉', fix: '立刻停止列印！清除所有絲線、重新校正熱床、檢查首層附著是否確實' },
   { id: 'splitting', name: '層分離（Layer Splitting）', symptom: '列印物件中間裂開、層與層之間分離', cause: '溫度不夠（層間黏不牢）、列印速度太快、絲線受潮、風扇太強', fix: '提高噴頭溫度 5–10°C、降低速度、絲線烘乾 4 小時、降低風扇強度' },
   { id: 'under', name: '欠擠出（Under-extrusion）', symptom: '物件表面有縫、層不滿、像啃過的餅乾', cause: '噴嘴堵料、絲線打滑、絲線受潮、流量設定太低', fix: '冷拉清噴嘴、檢查擠出機齒輪有沒有打滑磨損、烘乾絲線、流量調至 100% 或微調' },
@@ -448,7 +448,7 @@ if ('IntersectionObserver' in window) {
       cube: 'corner-warp',
       question: '立方體邊角從熱床翹起，主要原因？',
       options: [
-        { text: '熱床溫度不足 + 沒附著輔助', correct: true, explain: '正解！PLA 熱床 60°C、ABS 100°C；可加 brim（裙邊）增加底面、塗一層膠水、或關閉外殼風扇。' },
+        { text: '熱床溫度不足 + 沒附著輔助', correct: true, explain: '正解！PLA 熱床 60°C、ABS 100°C；可加 Brim（邊緣）增加底面、塗一層膠水、或關閉外殼風扇。' },
         { text: '層厚太薄', correct: false },
         { text: '速度太慢', correct: false },
         { text: '絲線受潮', correct: false },
@@ -490,6 +490,16 @@ if ('IntersectionObserver' in window) {
   let answered = 0;
   let correct = 0;
 
+  // 選項顯示時隨機排列（Fisher–Yates）；判分看選項物件的 correct，與顯示位置無關
+  function shuffled(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
   function renderCase() {
     const c = CASES[currentIdx];
     root.innerHTML = `
@@ -509,10 +519,10 @@ if ('IntersectionObserver' in window) {
       container: '#cq-content',
       question: c.question,
       image: cubeSVG(c.cube),
-      options: c.options,
+      options: shuffled(c.options),
       onAnswer: (isCorrect) => {
         answered = Math.max(answered, currentIdx + 1);
-        if (isCorrect) correct = Math.max(correct, currentIdx + 1);
+        if (isCorrect) correct++;   // DiagnosisQuiz 已擋重複作答，每題最多加一次
         document.getElementById('cq-nav').innerHTML = `
           <button class="btn ${currentIdx < CASES.length - 1 ? 'btn-primary' : 'btn-success'}" id="cq-next" style="padding:10px 20px;font-size:14px">
             ${currentIdx < CASES.length - 1 ? '下一案例 →' : '🏆 完成診斷挑戰'}

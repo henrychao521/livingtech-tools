@@ -28,8 +28,8 @@ function recalcEstimates() {
   // 重量 = 有效體積 × PLA 密度 1.24 g/cm³（Prusament TDS）
   const weight = effVolume * 1.24;
   // 時間估算（分鐘）：時間 ∝ 層數 / 速度（層越薄、層數越多 → 時間越長）
-  // 經驗常數讓 0.2mm/60mm/s 的 benchy 約 1.5 小時（與 Cura/Prusa 估計相近）
-  const time = layers * m.width * m.volumeFactor * (1 + params.infill / 100) / params.speed / 2;
+  // 經驗常數 1.8 讓 0.2mm/20%/60mm/s 的 benchy 約 1.5 小時（與 Cura/Prusa 估計相近）
+  const time = layers * m.width * m.volumeFactor * (1 + params.infill / 100) / params.speed * 1.8;
   // 品質評分（綜合層厚 + 速度）
   const quality = Math.max(0, Math.min(100, 100 - (params.layer - 0.1) * 200 - (params.speed - 50) * 0.5 + (params.infill - 20) * 0.2));
 
@@ -80,8 +80,9 @@ function draw() {
   ctx.font = 'bold 11px Inter';
   ctx.textAlign = 'center';
   // 熱床溫度依噴頭溫度推斷使用的材料（Prusa Knowledge Base 建議值）
-  // PLA (180-220°C) → 60°C, PETG (220-245°C) → 85°C, ABS (240°C+) → 100°C
-  const bedTemp = params.temp >= 240 ? 100 : params.temp >= 220 ? 85 : params.temp >= 180 ? 60 : 25;
+  // PLA (180–215°C) → 60°C, PETG (220–240°C) → 85°C, ABS (245°C 以上) → 100°C
+  // 滑桿步進 5°C；PETG 常用 240°C（見模組 3），所以 245°C 以上才視為 ABS
+  const bedTemp = params.temp >= 245 ? 100 : params.temp >= 220 ? 85 : params.temp >= 180 ? 60 : 25;
   ctx.fillText(`HEATED BED ${bedTemp}°C`, W / 2, bedY + 22);
 
   // 模型輪廓 + 切片層

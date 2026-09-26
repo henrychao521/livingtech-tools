@@ -1,12 +1,12 @@
 // 麵包板平台 模組 5：故障排除圖鑑
 const ERRORS = [
   { id: 'no-resistor', name: 'LED 沒接電阻就上電', symptom: '通電瞬間 LED 變很亮然後永遠變暗（燒掉）', cause: '5V 直接驅動 LED 沒有電阻限流。LED 內部 PN 接面瞬間燒毀。', fix: '永遠在 LED 串聯一顆 220Ω 以上電阻。LED 已燒毀只能換新。' },
-  { id: 'led-reversed', name: 'LED 反接', symptom: 'LED 沒亮但其他正常', cause: 'LED 是二極體，只允許電流從正極（長腳）流向負極（短腳）。反接電流不通；且 LED 反向擊穿電壓僅約 5V，電源 ≥ 5V 反接會直接損壞。', fix: '把 LED 拔起來翻轉 180° 再插回去。長腳那邊應該接電阻側。' },
+  { id: 'led-reversed', name: 'LED 反接', symptom: 'LED 沒亮但其他正常', cause: 'LED 是二極體，只允許電流從正極（長腳）流向負極（短腳）。反接時不導通、不會亮；規格書的反向耐壓通常只有 5V，長時間或高電壓反接可能損壞。', fix: '先斷電，再把 LED 拔起來翻轉 180° 插回去。長腳那邊應該接電阻側。' },
   { id: 'wrong-row', name: '元件兩腳插同一直行', symptom: '元件腳互相短路 / 電阻或 LED 沒作用', cause: '麵包板同一直行 5 個洞（同數字、不同字母，如 a5-e5）內部金屬條相連。LED 兩腳都插 a5 與 b5 等於把兩腳直接連在一起 = 短路。', fix: '元件兩腳要插在不同數字（不同直行）。例如 LED 長腳插 a5、短腳插 a6（跨越兩個獨立的直行）。' },
   { id: 'rail-broken', name: '電源軌斷點未跨接', symptom: '左側電路正常，右側 LED 不亮', cause: '大型麵包板（830 點）電源軌中央有實體斷點，左半 與 右半其實是分開的金屬條。', fix: '在斷點兩側用同色跳線跨接（紅軌跨紅、黑軌跨黑）。' },
   { id: 'short-circuit', name: '正負極直接短路', symptom: '電池發燙、變形、電源燈狂閃，元件可能燒毀', cause: '一條跳線把 + 軌直接連到 − 軌（中間沒有任何負載）。電流瞬間衝到最大。', fix: '立刻拔電池！檢查所有跳線：每條紅線都應接到負載（電阻、LED 等）才轉到地。' },
   { id: 'loose-wire', name: '跳線沒插緊', symptom: '時好時壞，動到麵包板就斷電', cause: '跳線插得太淺，沒接觸到內部金屬簧片。', fix: '每條線都壓到底，插到聽到「卡」聲。線芯彎曲的話用斜口鉗剪斷重剝。' },
-  { id: 'wrong-resistor', name: '電阻值太大', symptom: 'LED 很暗或完全不亮', cause: '誤用 10kΩ 取代 220Ω。電阻太大導致電流不足以點亮 LED（< 1mA）。', fix: '檢查色環：紅紅棕 = 220Ω。常見錯誤：紅黑橙 = 20kΩ。換用正確阻值。' },
+  { id: 'wrong-resistor', name: '電阻值太大', symptom: 'LED 很暗或完全不亮', cause: '誤用 10kΩ 取代 220Ω。電阻太大導致電流不足以點亮 LED（< 1mA）。', fix: '檢查色環：紅紅棕 = 220Ω。常見錯誤：棕黑橙 = 10kΩ（第一環是棕、不是紅）。換用正確阻值。' },
   { id: 'cap-reversed', name: '電解電容反接', symptom: '電容鼓起、漏液、爆炸', cause: '電解電容（圓柱型有金屬殼）有極性。長腳是正極（+），短腳是負極（−）。反接會讓內部化學反應失控。', fix: '立刻斷電！電容已鼓起的不能再用，要換新。陶瓷電容（小盤狀）才沒有極性。' },
 ];
 
@@ -87,7 +87,7 @@ function renderErrorSVG(id) {
       <!-- 電阻 -->
       <rect x="55" y="62" width="32" height="9" rx="2" fill="#d4a574" stroke="#7c4a14"/>
       <rect x="61" y="62" width="2.5" height="9" fill="#dc2626"/>
-      <rect x="66" y="62" width="2.5" height="9" fill="#1a1a1a"/>
+      <rect x="66" y="62" width="2.5" height="9" fill="#dc2626"/>
       <rect x="71" y="62" width="2.5" height="9" fill="#92400e"/>
       <line x1="55" y1="66" x2="50" y2="66" stroke="#9ca3af" stroke-width="1.5"/>
       <line x1="87" y1="66" x2="95" y2="66" stroke="#9ca3af" stroke-width="1.5"/>
@@ -106,7 +106,7 @@ function renderErrorSVG(id) {
       <!-- 電流箭頭：被阻擋 -->
       <line x1="95" y1="66" x2="100" y2="75" stroke="#dc2626" stroke-width="1.5"/>
       <text x="105" y="55" font-size="9" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">⛔ 不通</text>
-      <text x="100" y="32" text-anchor="middle" font-size="10" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">⚠ LED 反接 → 不亮（5V↑ 會擊穿）</text>
+      <text x="100" y="32" text-anchor="middle" font-size="10" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">⚠ LED 反接 → 不導通、不亮</text>
     </svg>`,
 
     'wrong-row': `<svg viewBox="0 0 200 140" style="width:90%">
@@ -210,7 +210,7 @@ function renderErrorSVG(id) {
     </svg>`,
 
     'wrong-resistor': `<svg viewBox="0 0 200 140" style="width:90%">
-      <!-- 左：錯誤的電阻 20kΩ -->
+      <!-- 左：錯誤的電阻 10kΩ -->
       <g transform="translate(20,55)">
         <!-- 接腳 -->
         <line x1="-10" y1="10" x2="0" y2="10" stroke="#9ca3af" stroke-width="1.5"/>
@@ -219,13 +219,13 @@ function renderErrorSVG(id) {
         <ellipse cx="30" cy="10" rx="32" ry="6" fill="#e7c89a" stroke="#7c4a14"/>
         <rect x="0" y="6" width="60" height="8" fill="#e7c89a"/>
         <rect x="0" y="6" width="60" height="8" fill="none" stroke="#7c4a14" stroke-width=".5"/>
-        <!-- 色環：紅黑橙 = 20kΩ -->
-        <rect x="14" y="6" width="3.5" height="8" fill="#dc2626"/>
+        <!-- 色環：棕黑橙 = 10kΩ -->
+        <rect x="14" y="6" width="3.5" height="8" fill="#92400e"/>
         <rect x="20" y="6" width="3.5" height="8" fill="#1a1a1a"/>
         <rect x="26" y="6" width="3.5" height="8" fill="#f97316"/>
         <rect x="42" y="6" width="3.5" height="8" fill="#fbbf24"/>
-        <text x="30" y="34" text-anchor="middle" font-size="9" fill="#1a1a1a" font-family="monospace" font-weight="700">紅 黑 橙</text>
-        <text x="30" y="46" text-anchor="middle" font-size="14" fill="#dc2626" font-weight="700">20 kΩ</text>
+        <text x="30" y="34" text-anchor="middle" font-size="9" fill="#1a1a1a" font-family="monospace" font-weight="700">棕 黑 橙</text>
+        <text x="30" y="46" text-anchor="middle" font-size="14" fill="#dc2626" font-weight="700">10 kΩ</text>
         <text x="30" y="58" text-anchor="middle" font-size="9" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">✗ 太大 LED 很暗</text>
       </g>
 

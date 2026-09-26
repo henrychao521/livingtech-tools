@@ -1,11 +1,11 @@
 // 麵包板平台 模組 3：接線步驟教學
 const STEPS = [
   { title: '檢查麵包板', anim: 'check', desc: '把麵包板平放，確認沒有金屬屑、孔洞沒被堵塞。確認上下電源軌的標示（紅+ 黑−）。', tip: '新麵包板有時內部金屬條會比較緊，第一次插要用點力但不要彎元件腳。', warn: null },
-  { title: '插入電池盒線', anim: 'battery', desc: '電池盒紅線（+）插上電源軌的紅 + 行；黑線（−）插下電源軌的黑 − 行。或都插上半也可以，但要記住自己的習慣。', tip: '養成「紅+黑−」習慣，整個學期都這樣，未來除錯快很多。', warn: '此時不要裝電池！等所有元件接好再裝電池。' },
+  { title: '插入電池盒線', anim: 'battery', desc: '電池盒紅線（+）插上電源軌的紅 + 軌；黑線（−）插下電源軌的黑 − 軌。或都插上半也可以，但要記住自己的習慣。', tip: '養成「紅+黑−」習慣，整個學期都這樣，未來除錯快很多。', warn: '此時不要裝電池！等所有元件接好再裝電池。' },
   { title: '電源軌跨接（選用）', anim: 'rail-bridge', desc: '麵包板大塊（830 點）的電源軌中央有斷點。如果你的電路用到全長，需要用跳線把斷點兩側連起來。小塊麵包板（400 點）通常不用。', tip: '電源軌左右兩段內部其實是分開的金屬條，沒跨接的話只有半邊有電。', warn: null },
-  { title: '插入電阻', anim: 'resistor', desc: '把 220Ω 電阻（紅紅棕）跨接：一腳插上電源軌的紅 + 行，另一腳插中間區的某一行（例如 e10）。電阻沒方向性，不用管正反。', tip: '電阻腳太長就先用斜口鉗剪短，但留至少 5mm 才好插。', warn: null },
-  { title: '插入 LED', anim: 'led', desc: '把 LED 長腳（陽極）跟電阻另一端接同一直行（例如電阻在 e10，LED 長腳就接 a10 / b10 / c10 / d10 / e10 任一個——同直行內金屬條相連）。短腳（陰極）插另一直行（例如 e13）。', tip: '不確定哪腳長就拿到光下看：LED 內部有兩塊金屬，較大的那塊是負極（陰極）、較小的尖頭是正極（陽極）。', warn: '插反的話 LED 不會亮；3V 電池下通常不會壞，但 5V 以上（USB、9V 電池）會超過 LED 反向擊穿電壓而損壞，所以一發現不亮應立刻檢查方向並拔除。' },
-  { title: '把 LED 負極接到地', anim: 'gnd', desc: '用一條跳線：一端插 LED 短腳所在的直行（e13），另一端插下電源軌的黑 − 行。這樣電流路徑就完整：電池+ → 電阻 → LED → 地。', tip: '使用黑色跳線會讓電路圖更直覺。', warn: null },
+  { title: '插入電阻', anim: 'resistor', desc: '把 220Ω 電阻（紅紅棕）跨接：一腳插上電源軌的紅 + 軌，另一腳插中間區的某一直行（例如 e10）。電阻沒方向性，不用管正反。', tip: '電阻腳太長就先用斜口鉗剪短，但留至少 5mm 才好插。', warn: null },
+  { title: '插入 LED', anim: 'led', desc: '把 LED 長腳（陽極）跟電阻另一端接同一直行（例如電阻在 e10，LED 長腳就接 a10 / b10 / c10 / d10 / e10 任一個——同直行內金屬條相連）。短腳（陰極）插另一直行（例如 e13）。', tip: '不確定哪腳長就拿到光下看：LED 內部有兩塊金屬，較大的那塊是負極（陰極）、較小的尖頭是正極（陽極）。', warn: '插反的話 LED 不導通、不會亮；規格書的反向耐壓通常只有 5V，長時間或高電壓反接可能損壞，所以發現不亮先斷電再檢查方向、翻面重插。' },
+  { title: '把 LED 負極接到地', anim: 'gnd', desc: '用一條跳線：一端插 LED 短腳所在的直行（e13），另一端插下電源軌的黑 − 軌。這樣電流路徑就完整：電池+ → 電阻 → LED → 地。', tip: '使用黑色跳線會讓電路圖更直覺。', warn: null },
   { title: '裝入電池', anim: 'install-battery', desc: '所有跳線檢查完畢，最後一步才裝入電池。LED 應該立刻亮起。', tip: '裝電池的瞬間如果聞到焦味、看到冒煙，立刻拿掉電池！', warn: '電池負極（平底端）對齊電池盒的彈簧側，正極（凸出端）對齊平片接點；依電池盒內的 + − 標示裝入。' },
   { title: '收電路 / 拆解', anim: 'cleanup', desc: '結束實驗時：先拿掉電池 → 拔下所有跳線（有條理地一條一條） → 拔元件 → 把元件分類收好。', tip: '元件按種類收（電阻一袋、LED 一袋）。下次找元件不會浪費時間。', warn: null },
 ];
@@ -80,7 +80,7 @@ function renderAnim(type) {
     check: `<svg viewBox="0 0 400 240" style="width:90%">${baseRect}<text x="200" y="125" text-anchor="middle" font-size="40">👀</text><text x="200" y="220" text-anchor="middle" font-size="12" fill="#666" font-family="Noto Sans TC,sans-serif">確認電源軌標示與洞洞通暢</text></svg>`,
     battery: `<svg viewBox="0 0 400 240" style="width:90%">${baseRect}<g transform="translate(60,210)"><rect x="-22" y="-12" width="44" height="24" rx="3" fill="#1f2937"/><line x1="20" y1="-6" x2="60" y2="55" stroke="#dc2626" stroke-width="2"/><line x1="20" y1="6" x2="60" y2="180" stroke="#1a1a1a" stroke-width="2"/></g><circle cx="60" cy="55" r="3" fill="#dc2626"/><circle cx="60" cy="180" r="3" fill="#1a1a1a"/><text x="200" y="225" text-anchor="middle" font-size="12" fill="#666" font-family="Noto Sans TC,sans-serif">紅線→正電源軌・黑線→負電源軌</text></svg>`,
     'rail-bridge': `<svg viewBox="0 0 400 240" style="width:90%">${baseRect}<line x1="200" y1="40" x2="200" y2="68" stroke="#fefce8" stroke-width="6"/><line x1="200" y1="180" x2="200" y2="200" stroke="#fefce8" stroke-width="6"/><path d="M 180 55 Q 200 30 220 55" stroke="#dc2626" stroke-width="3" fill="none" stroke-linecap="round"><animate attributeName="stroke-dasharray" values="0,100;100,0" dur="2s" repeatCount="indefinite"/></path><circle cx="180" cy="55" r="3" fill="#dc2626"/><circle cx="220" cy="55" r="3" fill="#dc2626"/><text x="200" y="220" text-anchor="middle" font-size="12" fill="#666" font-family="Noto Sans TC,sans-serif">電源軌斷點兩側用跳線跨接</text></svg>`,
-    resistor: `<svg viewBox="0 0 400 240" style="width:90%">${baseRect}<g transform="translate(150,110)"><line x1="0" y1="-55" x2="0" y2="-22" stroke="#9ca3af" stroke-width="1.5"/><rect x="-22" y="-22" width="44" height="12" rx="3" fill="#fef3c7" stroke="#92400e"/><rect x="-14" y="-22" width="3" height="12" fill="#dc2626"/><rect x="-9" y="-22" width="3" height="12" fill="#1a1a1a"/><rect x="-2" y="-22" width="3" height="12" fill="#92400e"/><line x1="0" y1="-10" x2="0" y2="22" stroke="#9ca3af" stroke-width="1.5"/></g><circle cx="150" cy="55" r="3" fill="#16a34a"/><circle cx="150" cy="132" r="3" fill="#16a34a"/><text x="200" y="220" text-anchor="middle" font-size="12" fill="#666" font-family="Noto Sans TC,sans-serif">220Ω 電阻：跨電源軌與中間區</text></svg>`,
+    resistor: `<svg viewBox="0 0 400 240" style="width:90%">${baseRect}<g transform="translate(150,110)"><line x1="0" y1="-55" x2="0" y2="-22" stroke="#9ca3af" stroke-width="1.5"/><rect x="-22" y="-22" width="44" height="12" rx="3" fill="#fef3c7" stroke="#92400e"/><rect x="-14" y="-22" width="3" height="12" fill="#dc2626"/><rect x="-9" y="-22" width="3" height="12" fill="#dc2626"/><rect x="-2" y="-22" width="3" height="12" fill="#92400e"/><line x1="0" y1="-10" x2="0" y2="22" stroke="#9ca3af" stroke-width="1.5"/></g><circle cx="150" cy="55" r="3" fill="#16a34a"/><circle cx="150" cy="132" r="3" fill="#16a34a"/><text x="200" y="220" text-anchor="middle" font-size="12" fill="#666" font-family="Noto Sans TC,sans-serif">220Ω 電阻：跨電源軌與中間區</text></svg>`,
     led: `<svg viewBox="0 0 400 240" style="width:90%">${baseRect}<g transform="translate(250,120)"><line x1="-4" y1="-55" x2="-4" y2="-15" stroke="#9ca3af" stroke-width="1.5"/><line x1="4" y1="-55" x2="4" y2="-15" stroke="#9ca3af" stroke-width="1.5"/><circle cx="0" cy="0" r="14" fill="#ef4444" opacity=".85" stroke="#991b1b"/><circle cx="-3" cy="-3" r="3" fill="#fef9c3" opacity=".7"/><line x1="-4" y1="14" x2="-4" y2="55" stroke="#9ca3af" stroke-width="2"/><line x1="4" y1="14" x2="4" y2="55" stroke="#9ca3af" stroke-width="1.5"/><text x="-12" y="-58" font-size="9" fill="#dc2626" font-weight="700">+</text><text x="6" y="-58" font-size="9" fill="#1a1a1a" font-weight="700">−</text></g><text x="200" y="220" text-anchor="middle" font-size="12" fill="#666" font-family="Noto Sans TC,sans-serif">LED 長腳=正極（接電阻側）/ 短腳=負極</text></svg>`,
     gnd: `<svg viewBox="0 0 400 240" style="width:90%">${baseRect}<g transform="translate(250,120)"><line x1="-4" y1="-55" x2="-4" y2="-15" stroke="#9ca3af" stroke-width="1.5"/><line x1="4" y1="-55" x2="4" y2="-15" stroke="#9ca3af" stroke-width="1.5"/><circle cx="0" cy="0" r="14" fill="#ef4444" opacity=".85"/><line x1="4" y1="14" x2="4" y2="55" stroke="#1a1a1a" stroke-width="3"/></g><path d="M 254 192 Q 280 195 320 192" stroke="#1a1a1a" stroke-width="3" fill="none" stroke-linecap="round"/><text x="200" y="220" text-anchor="middle" font-size="12" fill="#666" font-family="Noto Sans TC,sans-serif">LED 短腳→負電源軌（地）</text></svg>`,
     'install-battery': `<svg viewBox="0 0 400 240" style="width:90%">${baseRect}<g transform="translate(60,210)"><rect x="-22" y="-12" width="44" height="24" rx="3" fill="#1f2937"/><rect x="-18" y="-9" width="16" height="18" fill="#dc2626"><animate attributeName="opacity" values="0;1;1" dur="2s" repeatCount="indefinite"/></rect><rect x="2" y="-9" width="16" height="18" fill="#1a1a1a"><animate attributeName="opacity" values="0;1;1" dur="2s" repeatCount="indefinite"/></rect></g><g transform="translate(250,120)"><circle cx="0" cy="0" r="14" fill="#ef4444"><animate attributeName="opacity" values="0.3;1;1" dur="2s" repeatCount="indefinite"/></circle><circle cx="0" cy="0" r="22" fill="#ef4444" opacity="0"><animate attributeName="r" values="0;28;0" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;.4;0" dur="2s" repeatCount="indefinite"/></circle></g><text x="200" y="225" text-anchor="middle" font-size="13" fill="#16a34a" font-weight="700" font-family="Noto Sans TC,sans-serif">💡 LED 點亮成功！</text></svg>`,
@@ -161,14 +161,14 @@ if (typeof Interactions !== 'undefined') {
         <path d="M170 40 l6 -8 l8 16 l8 -16 l8 16 l8 -16 l8 16 l6 -8" fill="none" stroke="#1F2937" stroke-width="2"/>
         <text x="205" y="22" text-anchor="middle" font-size="11" fill="#6B7280">② 220Ω</text>
       </g>
-      <!-- ③ LED(右邊,二極體+箭頭) -->
+      <!-- ③ LED(右邊,二極體+箭頭;電流在右邊由上往下流,三角形尖端朝下、橫線(陰極)在下) -->
       <g>
-        <polygon points="390,75 410,85 390,95" fill="#DC2626" stroke="#1F2937" stroke-width="1.5"/>
-        <line x1="410" y1="75" x2="410" y2="95" stroke="#1F2937" stroke-width="2.5"/>
-        <line x1="400" y1="40" x2="400" y2="75" stroke="#1F2937" stroke-width="2" transform="translate(0,0)"/>
-        <path d="M398 64 l8 -8 M404 68 l8 -8" stroke="#F59E0B" stroke-width="2" fill="none"/>
-        <path d="M404 58 l2 -2 l-3 0 z M410 62 l2 -2 l-3 0 z" fill="#F59E0B"/>
-        <text x="432" y="90" font-size="11" fill="#6B7280">③ LED</text>
+        <rect x="386" y="76" width="28" height="16" fill="#F8FAFC"/>
+        <polygon points="390,75 410,75 400,92" fill="#DC2626" stroke="#1F2937" stroke-width="1.5"/>
+        <line x1="390" y1="92" x2="410" y2="92" stroke="#1F2937" stroke-width="2.5"/>
+        <path d="M411 80 l8 -6 M411 88 l8 -6" stroke="#F59E0B" stroke-width="2" fill="none"/>
+        <path d="M421 73 l-5 1 l2 4 z M421 81 l-5 1 l2 4 z" fill="#F59E0B"/>
+        <text x="424" y="100" font-size="11" fill="#6B7280">③ LED</text>
       </g>
       <!-- ④ 節點(下邊,打點) -->
       <g>

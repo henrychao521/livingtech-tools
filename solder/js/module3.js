@@ -74,6 +74,11 @@ function saveSolderProgress(p) {
 
 const savedProg = loadSolderProgress();
 if (savedProg.module3_seen) savedProg.module3_seen.forEach(i => seenSteps.add(i));
+// 已完成過本模組：重新整理或回頭複習時，下一關維持解鎖
+if (savedProg.module3) {
+  document.getElementById('next-btn').style.opacity = 1;
+  document.getElementById('next-btn').style.pointerEvents = 'auto';
+}
 
 STEPS.forEach((s, i) => {
   const item = document.createElement('div');

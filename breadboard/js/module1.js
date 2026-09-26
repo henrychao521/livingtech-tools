@@ -13,7 +13,7 @@ const PARTS = {
     fact: '在電子電路中，地（GND）是所有電壓的參考點。'
   },
   'middle-rows': {
-    name: '中間區（行 a–e、f–j）',
+    name: '中間區（橫列 a–e、f–j）',
     role: 'TIE POINTS GRID',
     desc: '麵包板中央的元件區，分成上半（a-e）與下半（f-j）。<strong>同一直行 5 個洞（如 a1-b1-c1-d1-e1）內部金屬條相連</strong>，但 a1-a2 不相連（不同直行）。',
     fact: '元件腳插「同一數字、不同字母」就是相連；插不同數字就是分開。理解這點是麵包板的核心。'
@@ -21,14 +21,14 @@ const PARTS = {
   gap: {
     name: '中央溝槽（Gap）',
     role: 'MIDDLE DIVIDER',
-    desc: '麵包板中央的橫向溝槽，<strong>把上半（a-e）和下半（f-j）分開</strong>。a 行不會連到 f 行。這個設計是為了讓 IC 晶片可以橫跨溝槽插入。',
-    fact: 'IC 晶片的接腳會跨溝插下去，左右兩排腳分別連到不同行。'
+    desc: '麵包板中央的橫向溝槽，<strong>把上半（a-e）和下半（f-j）分開</strong>。a 列不會連到 f 列（同一直行的上下兩半不相通）。這個設計是為了讓 IC 晶片可以橫跨溝槽插入。',
+    fact: 'IC 晶片的接腳會跨溝插下去，左右兩排腳分別連到上下半區的不同直行。'
   },
   led: {
     name: 'LED（發光二極體）',
     role: 'LIGHT EMITTING DIODE',
     desc: '會發光的二極體，常見紅、綠、藍、黃。<strong>有方向性</strong>：長腳是正極（陽極/anode），短腳是負極（陰極/cathode）。電流必須從長腳進、短腳出才會發光。',
-    fact: '插反 LED 不會亮；3V 電池下通常不會壞，但 5V 以上（USB、9V 電池）會超過反向擊穿電壓而損壞。一定要搭配限流電阻使用。'
+    fact: '插反時 LED 不導通、不會亮；規格書的反向耐壓通常只有 5V，長時間或高電壓反接可能損壞，發現不亮先斷電再翻面。一定要搭配限流電阻使用。'
   },
   resistor: {
     name: '電阻（Resistor）',
@@ -40,12 +40,12 @@ const PARTS = {
     name: '電池盒 / 電源',
     role: 'POWER SOURCE',
     desc: '提供電路電力。常見規格：3V（兩顆 AA）、4.5V（三顆 AA）、9V（方形電池）。紅色線是正極（+），黑色線是負極（−）。',
-    fact: '不要用超過 5V 直接驅動 LED，即使加了電阻也容易過熱。教學常用 4.5V 或 USB 5V。'
+    fact: '電壓越高，限流電阻要越大（R =（電源電壓 − LED 電壓）÷ 電流），並注意電阻的功率；例如 9V 可用 470Ω。教學常用 4.5V 或 USB 5V 搭配 220Ω。'
   },
   jumper: {
     name: '跳線（Jumper Wires）',
     role: 'JUMPER WIRE',
-    desc: '不同顏色的彩色硬芯線，兩端有金屬針可插入麵包板洞。用來連接不同行、或跨接電源軌。<strong>顏色慣例</strong>：紅色 = 正電源、黑色 = 地、其他顏色 = 訊號線。',
+    desc: '不同顏色的彩色硬芯線，兩端有金屬針可插入麵包板洞。用來連接不同直行、或跨接電源軌。<strong>顏色慣例</strong>：紅色 = 正電源、黑色 = 地、其他顏色 = 訊號線。',
     fact: '養成「紅+黑−」的習慣，未來除錯時看顏色就知道哪條線是電源。'
   },
 };
@@ -173,7 +173,7 @@ document.querySelectorAll('.part-chip').forEach(c => {
            onerror="this.style.display='none'">
       <div style="flex:1;min-width:160px">
         <p style="margin:0 0 6px;font-size:13px;font-weight:700;color:#374151">📷 真實內部構造</p>
-        <p style="margin:0 0 8px;font-size:13px;color:#64748b;line-height:1.6">上圖為麵包板背面翻開後的實物照，清楚可見每直行（column）內部的金屬彈片條。正是這些金屬條讓同一行的 5 個洞相通，而電源軌則是整排橫向連通。</p>
+        <p style="margin:0 0 8px;font-size:13px;color:#64748b;line-height:1.6">上圖為麵包板背面翻開後的實物照，清楚可見每直行（column）內部的金屬彈片條。正是這些金屬條讓同一直行的 5 個洞相通，而電源軌則是整排橫向連通。</p>
         <a href="https://commons.wikimedia.org/wiki/File:Metal_contacts_within_a_breadboard.jpg" target="_blank" rel="noopener" style="font-size:11px;color:#6366f1">🔗 CC BY 4.0 · Zeroping / Wikimedia Commons</a>
       </div>
     </div>`;
@@ -295,8 +295,8 @@ document.querySelectorAll('.part-chip').forEach(c => {
   }
 
   function descGroup(g, cnt) {
-    if (g.startsWith('ct_')) return `上半區第 ${parseInt(g.split('_')[1])+1} 行（a–e）：${cnt} 洞相連 ✓`;
-    if (g.startsWith('cb_')) return `下半區第 ${parseInt(g.split('_')[1])+1} 行（f–j）：${cnt} 洞相連 ✓`;
+    if (g.startsWith('ct_')) return `上半區第 ${parseInt(g.split('_')[1])+1} 直行（a–e）：${cnt} 洞相連 ✓`;
+    if (g.startsWith('cb_')) return `下半區第 ${parseInt(g.split('_')[1])+1} 直行（f–j）：${cnt} 洞相連 ✓`;
     const side = g.endsWith('L') ? '左段' : '右段（斷點後）';
     if (g.startsWith('rtp') || g.startsWith('rbp')) return `正電源軌（+） ${side}：${cnt} 洞相連`;
     return `接地軌（−） ${side}：${cnt} 洞相連`;

@@ -247,7 +247,7 @@ document.querySelectorAll('.part-chip').forEach(c => {
         <circle cx="159" cy="50" r="3" fill="#fbbf24"/>`,
     },
     {
-      id: 'chisel', name: '扁頭（馬蹄形）', en: 'Chisel / Screwdriver Tip',
+      id: 'chisel', name: '一字扁頭（鑿形）', en: 'Chisel / Screwdriver Tip',
       color: '#ea580c', temp: '320–380°C',
       best: '通孔焊接、大焊盤、電線接頭、最常用',
       avoid: '密集 SMD 腳（太寬容易橋接）',
@@ -256,7 +256,7 @@ document.querySelectorAll('.part-chip').forEach(c => {
         <rect x="140" y="38" width="22" height="24" rx="2" fill="#ea580c"/>`,
     },
     {
-      id: 'bevel', name: '斜切頭（刀形）', en: 'Bevel / Hoof Tip',
+      id: 'bevel', name: '斜切頭（馬蹄形）', en: 'Bevel / Hoof Tip',
       color: '#d97706', temp: '320–370°C',
       best: 'SMD 拖焊（Drag Soldering）、IC 陣腳快速焊',
       avoid: '通孔單點精細焊',
@@ -290,7 +290,7 @@ document.querySelectorAll('.part-chip').forEach(c => {
   sec.className = 'panel';
   sec.innerHTML = `
     <h3>🔧 烙鐵頭形狀圖鑑 <span style="font-size:13px;font-weight:500;color:#64748b;margin-left:8px">點選查看用途與建議</span></h3>
-    <p class="muted" style="margin-bottom:14px">烙鐵頭形狀決定了傳熱效率與適用場景。課堂新手建議從<strong>扁頭（馬蹄形）</strong>開始。</p>
+    <p class="muted" style="margin-bottom:14px">烙鐵頭形狀決定了傳熱效率與適用場景。課堂新手建議從<strong>一字扁頭（鑿形）</strong>開始。</p>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px" id="tip-tabs">
       ${TIPS.map(t => `<button data-tip="${t.id}" style="padding:9px 13px;border:2px solid #e2e8f0;border-radius:8px;cursor:pointer;background:#fff;font-weight:700;font-size:12px;transition:all .2s;color:#374151;line-height:1.3">${t.name}</button>`).join('')}
     </div>

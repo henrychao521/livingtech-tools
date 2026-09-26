@@ -3,7 +3,7 @@ const PARTS = {
   nozzle: { name: '噴嘴（Nozzle）', role: 'NOZZLE TIP', desc: '熔融塑料絲（filament）從噴嘴擠出的位置。標準孔徑 0.4mm，會影響細節度與列印速度。較細孔徑（0.2mm）細節好但慢；較大（0.6–0.8mm）速度快但粗糙。', fact: '噴嘴是耗材，會磨損。黃銅噴嘴印一般 PLA/PETG 建議 300–600 小時更換；硬化鋼噴嘴印含碳/含金屬磨料絲可延長至 1000+ 小時（All3DP）。' },
   hotend: { name: '加熱頭（Hot-End）', role: 'HEATER BLOCK', desc: '把絲線加熱到熔融狀態的金屬塊，內含加熱棒與熱敏電阻。常見溫度：PLA 190–220°C、PETG 230–250°C、ABS 240–260°C。', fact: '加熱頭旁邊一定要有散熱風扇，否則熱會傳到上方造成「堵料」。' },
   bed: { name: '加熱平台（Heated Bed）', role: 'HEATED BUILD PLATE', desc: '列印物件附著的平面。可加熱以幫助第一層附著（PLA 約 60°C，ABS 約 100°C）。表面材質：玻璃、PEI 板、磁性彈簧鋼板等。', fact: '熱床平整度是列印成功的最大關鍵。每次列印前都要校正。' },
-  'x-axis': { name: 'X 軸（Carriage）', role: 'HORIZONTAL TRAVEL', desc: '帶動噴頭左右移動的橫桿。透過皮帶 + 步進馬達精確定位。', fact: 'X 軸皮帶鬆動會造成「Z 紋」（垂直波浪紋）瑕疵。' },
+  'x-axis': { name: 'X 軸（Carriage）', role: 'HORIZONTAL TRAVEL', desc: '帶動噴頭左右移動的橫桿。透過皮帶 + 步進馬達精確定位。', fact: 'X 軸皮帶鬆動會造成鬼影（ringing）或層位移；「Z 紋」是 Z 軸絲桿偏心造成的水平條紋，見模組 5。' },
   'z-axis': { name: 'Z 軸（Vertical Lift）', role: 'LAYER HEIGHT', desc: '控制噴頭上下移動的螺桿（梯形螺桿或滾珠螺桿）。每列印完一層就上升一個「層厚」（通常 0.1–0.3mm）。', fact: 'Z 軸校正不準會讓首層過鬆（黏不住）或過緊（壓扁絲線堵住噴嘴）。' },
   extruder: { name: '擠出機（Extruder）', role: 'FILAMENT FEEDER', desc: '把絲線推進加熱頭的馬達 + 齒輪組。分兩種：直接式／近端式（Direct，馬達在噴頭旁）和遠端式（Bowden，馬達裝在框架上、經鐵氟龍管送料）。', fact: '遠端式噴頭輕、移動快，但回抽（避免漏料）效果差；直接式列印 PETG、TPU 等軟料較佳。' },
   filament: { name: '絲線（Filament）', role: 'PRINTING MATERIAL', desc: 'PLA 是最常見、最容易列印的材料（玉米澱粉製、低毒、低溫）。其他常見：PETG（耐用）、ABS（強度高但有毒煙）、TPU（軟性）。直徑 1.75mm 為主流。', fact: 'PLA 含雜質或受潮會「啵啵」響、列印表面有氣泡。要密封防潮保存。' },
@@ -77,7 +77,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
         <text x="150" y="96" text-anchor="middle" font-size="12" fill="#dc2626" font-weight="700">角落翹起脫離熱床</text>
         <line x1="150" y1="100" x2="200" y2="115" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3 2"/>`,
       cause: '熱床溫度不足 / 材料冷卻過快收縮 / 首層沒壓實。ABS 收縮率約 0.8%，翹曲最嚴重；PLA 約 0.3%，較輕微。',
-      fix: '① 熱床升溫（PLA: 60°C, ABS: 100°C） ② 塗固體膠棒或噴 ABS 汁 ③ 切片加 Brim（裙邊） ④ 降低散熱風扇轉速 ⑤ 使用封閉式機箱印 ABS'
+      fix: '① 熱床升溫（PLA: 60°C, ABS: 100°C） ② 塗固體膠棒或噴 ABS 汁 ③ 切片加 Brim（邊緣；不是不接觸物件的裙邊 Skirt） ④ 降低散熱風扇轉速 ⑤ 使用封閉式機箱印 ABS'
     },
     {
       id: 'string', name: '拉絲（Stringing）', icon: '〰', color: '#d97706',

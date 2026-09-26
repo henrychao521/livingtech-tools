@@ -384,9 +384,9 @@ function drawResistor(p) {
   ctx.lineWidth = 1.5;
   ctx.fillRect(x - 22, y - 8, 44, 16);
   ctx.strokeRect(x - 22, y - 8, 44, 16);
-  // 色環
+  // 色環：紅紅棕 = 220Ω
   ctx.fillStyle = '#dc2626'; ctx.fillRect(x - 14, y - 8, 3, 16);
-  ctx.fillStyle = '#1a1a1a'; ctx.fillRect(x - 9, y - 8, 3, 16);
+  ctx.fillStyle = '#dc2626'; ctx.fillRect(x - 9, y - 8, 3, 16);
   ctx.fillStyle = '#92400e'; ctx.fillRect(x - 2, y - 8, 3, 16);
 }
 

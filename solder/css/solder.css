@@ -47,6 +47,15 @@
 #solder-canvas.holding {
   cursor: grabbing;
 }
+/* 手機窄螢幕：格線欄位允許縮到比內容窄，按鈕列可換行，說明浮層不超出畫面 */
+.solder-theme .practice-layout > * { min-width: 0; }
+.solder-canvas-wrap .sim-controls { flex-wrap: wrap; }
+.solder-canvas-wrap .sim-overlay { max-width: calc(100% - 56px); }
+@media (max-width: 600px) {
+  .solder-canvas-wrap { padding: 10px; }
+  .solder-canvas-wrap .sim-overlay { top: 16px; left: 16px; max-width: calc(100% - 32px); font-size: 12px; padding: 6px 10px; }
+  .solder-canvas-wrap .sim-controls .btn { flex: 1 1 40%; }
+}
 
 /* 「按住送錫」鈕：平板的主要送錫途徑，桌機等同空白鍵 */
 .btn-feed {
@@ -60,6 +69,8 @@
   touch-action: none;
   min-height: 44px;
 }
+.btn-desolder { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
+.btn-desolder[hidden] { display: none; }
 .btn-feed.feeding {
   background: linear-gradient(135deg, #dc2626, #b91c1c);
   transform: scale(.97);

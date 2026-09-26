@@ -36,7 +36,8 @@ const LEVELS = {
   },
   L5: {
     name: 'L5 修正錯誤焊',
-    desc: '3 個焊點：先吸掉預設的虛焊，再重新焊好（拆焊手法見模組 3）',
+    desc: '先把冷焊和連錫吸掉（加熱後按住「吸錫」），再重新焊好',
+    desolder: true,
     pads: [
       { x: 280, y: 250, defective: 'cold' },
       { x: 380, y: 250, defective: 'bridge' },
@@ -55,7 +56,8 @@ const state = {
   ironX: 200,
   ironY: 100,
   ironVisible: false,
-  pressing: false,      // 按住中
+  pressing: false,      // 按住中（送錫）
+  desoldering: false,   // 按住「吸錫」中（L5 修正錯誤焊）
   joints: [],           // 已完成的焊點
   particles: [],
   contactStart: null,   // 接觸接點起始時間
@@ -94,6 +96,10 @@ function initLevel(lvlId) {
   state.contactStart = null;
   state.contactPad = null;
   state.readyShown = false;
+  state.desoldering = false;
+  // 「吸錫」鈕只在有預設不良焊點的關卡（L5）出現
+  const desolderBtn = document.getElementById('btn-desolder');
+  if (desolderBtn) desolderBtn.hidden = !state.level.desolder;
 
   document.getElementById('level-display').textContent = lvlId;
   document.getElementById('joint-count').textContent = `0 / ${state.level.pads.length}`;
@@ -139,6 +145,29 @@ if (feedBtn) {
   }));
   feedBtn.addEventListener('contextmenu', e => e.preventDefault());
 }
+// 「吸錫」鈕（L5）：按住即用吸錫器／吸錫線吸掉不良焊點的舊錫，和送錫分開，不會一邊吸一邊送錫
+const desolderBtn = document.getElementById('btn-desolder');
+if (desolderBtn) {
+  desolderBtn.addEventListener('pointerdown', e => {
+    e.preventDefault();
+    state.desoldering = true;
+    state.pressing = false;
+    desolderBtn.classList.add('feeding');
+    try { desolderBtn.setPointerCapture(e.pointerId); } catch (_) {}
+  });
+  ['pointerup', 'pointercancel'].forEach(ev => desolderBtn.addEventListener(ev, () => {
+    state.desoldering = false;
+    desolderBtn.classList.remove('feeding');
+  }));
+  desolderBtn.addEventListener('contextmenu', e => e.preventDefault());
+}
+// 鍵盤：按住 D 鍵吸錫（只在有吸錫鈕的關卡）
+window.addEventListener('keydown', e => {
+  if (e.code === 'KeyD' && state.level.desolder) { state.desoldering = true; e.preventDefault(); }
+});
+window.addEventListener('keyup', e => {
+  if (e.code === 'KeyD') state.desoldering = false;
+});
 
 // === 主迴圈 ===
 function loop() {
@@ -163,7 +192,9 @@ function update() {
   // 烙鐵到溫的瞬間更新畫面提示（原本停留在「等溫度達 320°C」不會變）
   if (state.ironTemp >= 320 && state.startedAt && !state.readyShown) {
     state.readyShown = true;
-    document.getElementById('sim-overlay').textContent = '✓ 烙鐵已就緒｜移到接點加熱 ~1 秒，再按住送錫';
+    document.getElementById('sim-overlay').textContent = state.level.desolder
+      ? '✓ 烙鐵已就緒｜先加熱不良焊點，按住「吸錫」吸掉舊錫，再重新送錫'
+      : '✓ 烙鐵已就緒｜移到接點加熱 ~1 秒，再按住送錫';
   }
 
   if (!state.startedAt || state.finished) return;
@@ -205,8 +236,8 @@ function update() {
       });
     }
 
-    // 接觸時按住送錫
-    if (state.pressing) {
+    // 接觸時按住送錫（吸錫中不送錫）
+    if (state.pressing && !state.desoldering) {
       // 必須先加熱 0.8 秒以上才能送錫（不能直接碰錫絲到冷接點）
       if (elapsed >= 0.8) {
         state.contactPad.solderAmount = Math.min(2, state.contactPad.solderAmount + 0.025);
@@ -254,12 +285,14 @@ function update() {
       j.status = 'burnt';
     }
 
-    // 修正模式：吸掉之前的不良焊接
-    if (j.defective && state.contactPad === j && state.pressing && state.contactPad.heatTime > 1.5) {
+    // 修正模式：烙鐵加熱不良焊點 1 秒以上、按住「吸錫」才吸掉舊錫（和送錫分開）
+    if (j.defective && state.contactPad === j && state.desoldering && state.contactPad.heatTime > 1.0) {
       j.defective = null;
       j.status = 'empty';
       j.solderAmount = 0;
-      showToast('已吸除不良焊錫，可以重新焊', 'good');
+      state.desoldering = false;
+      if (desolderBtn) desolderBtn.classList.remove('feeding');
+      showToast('已吸除不良焊錫，放開「吸錫」後按住送錫重新焊', 'good');
     }
   });
 

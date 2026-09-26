@@ -37,7 +37,7 @@
     <div>
       <span class="module-step" style="background:var(--success-light);color:#1b6e3a">MODULE 04 ・ 核心</span>
       <h2>模擬焊接練習</h2>
-      <p class="muted">滑鼠或手指拖曳烙鐵到接點上，按住空白鍵、滑鼠左鍵或「送錫」鈕送錫。注意停留時間：太短虛焊、太長燒板。L5 要先吸掉虛焊再重焊——<a href="module3.html#desolder-guide">拆焊手法見模組 3</a>。</p>
+      <p class="muted">滑鼠或手指拖曳烙鐵到接點上，按住空白鍵、滑鼠左鍵或「送錫」鈕送錫。注意停留時間：太短虛焊、太長燒板。L5 要先把冷焊和連錫吸掉（加熱不良焊點後按住「吸錫」鈕或 D 鍵），再重新焊好——<a href="module3.html#desolder-guide">拆焊手法見模組 3</a>。</p>
     </div>
     <div class="muted" style="font-family:Inter,sans-serif">關卡：<span id="level-display" style="font-weight:700">L1</span></div>
   </div>
@@ -49,6 +49,7 @@
       <div class="sim-controls">
         <button class="btn btn-primary" id="btn-start">▶ 開始焊接</button>
         <button class="btn btn-feed" id="btn-feed">🧵 按住送錫</button>
+        <button class="btn btn-feed btn-desolder" id="btn-desolder" hidden>🧽 按住吸錫</button>
         <button class="btn btn-ghost" id="btn-reset">↺ 重置</button>
         <button class="btn btn-ghost" id="btn-finish">✓ 提交評分</button>
       </div>
@@ -94,6 +95,7 @@
           <li>加熱 1.5 秒後送錫</li>
           <li>按住「空白鍵」、滑鼠左鍵或「🧵 送錫」鈕送錫</li>
           <li>放開後再停 0.5 秒移開</li>
+          <li>L5：加熱不良焊點後按住「🧽 吸錫」鈕（或 D 鍵）吸掉舊錫，再送錫重焊</li>
         </ul>
       </div>
     </div>

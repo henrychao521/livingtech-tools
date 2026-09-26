@@ -287,13 +287,15 @@
         <!-- 互動熱點 -->
         <g id="hotspots">
           <g class="hotspot-group" data-id="nozzle"><circle class="hotspot-pulse" cx="302" cy="254" r="14"><animate attributeName="r" values="14;22;14" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0;1" dur="2s" repeatCount="indefinite"/></circle><circle class="hotspot" cx="302" cy="254" r="14"/><text class="hotspot-label" x="302" y="258">1</text></g>
-          <g class="hotspot-group" data-id="hotend"><circle class="hotspot" cx="302" cy="215" r="14"/><text class="hotspot-label" x="302" y="219">2</text></g>
+          <!-- 2：標記移到加熱塊右側＋短引線，避免蓋住「200°C」 -->
+          <g class="hotspot-group" data-id="hotend"><line x1="334" y1="222" x2="322" y2="222" stroke="rgba(255,122,0,.85)" stroke-width="1.5" pointer-events="none"/><circle class="hotspot" cx="348" cy="222" r="14"/><text class="hotspot-label" x="348" y="226">2</text></g>
           <g class="hotspot-group" data-id="bed"><circle class="hotspot" cx="160" cy="400" r="14"/><text class="hotspot-label" x="160" y="404">3</text></g>
           <g class="hotspot-group" data-id="x-axis"><circle class="hotspot" cx="200" cy="184" r="14"/><text class="hotspot-label" x="200" y="188">4</text></g>
           <g class="hotspot-group" data-id="z-axis"><circle class="hotspot" cx="500" cy="280" r="14"/><text class="hotspot-label" x="500" y="284">5</text></g>
           <g class="hotspot-group" data-id="extruder"><circle class="hotspot" cx="130" cy="168" r="14"/><text class="hotspot-label" x="130" y="172">6</text></g>
           <g class="hotspot-group" data-id="filament"><circle class="hotspot" cx="555" cy="218" r="14"/><text class="hotspot-label" x="555" y="222">7</text></g>
-          <g class="hotspot-group" data-id="lcd"><circle class="hotspot" cx="435" cy="455" r="14"/><text class="hotspot-label" x="435" y="459">8</text></g>
+          <!-- 8：標記移到 LCD 右側＋短引線，避免蓋住「PRINTING 45%」與溫度 -->
+          <g class="hotspot-group" data-id="lcd"><line x1="520" y1="457" x2="510" y2="457" stroke="rgba(255,122,0,.85)" stroke-width="1.5" pointer-events="none"/><circle class="hotspot" cx="534" cy="457" r="14"/><text class="hotspot-label" x="534" y="461">8</text></g>
         </g>
       </svg>
     </div>
