@@ -37,8 +37,10 @@
 .upload-zone h4 { font-size:18px; margin-bottom:6px; }
 .upload-zone p { font-size:13px; color:var(--text-muted); }
 
-.student-table { width:100%; background:#fff; border:1px solid var(--border); border-radius:14px; overflow:hidden; margin-top:24px; }
-.student-table table { width:100%; border-collapse:collapse; font-size:13px; }
+.student-table { width:100%; background:#fff; border:1px solid var(--border); border-radius:14px; overflow-x:auto; margin-top:24px; }
+/* 手機上欄位原本被擠成一字一行：給表格最小寬度，外框橫向捲動 */
+.student-table table { width:100%; min-width:560px; border-collapse:collapse; font-size:13px; }
+.student-table th { white-space:nowrap; }
 .student-table thead { background:var(--bg-soft); }
 .student-table th { padding:12px 14px; text-align:left; font-weight:700; color:var(--text-soft); border-bottom:1px solid var(--border); }
 .student-table td { padding:10px 14px; border-bottom:1px dashed var(--border); }

@@ -817,6 +817,10 @@ footer {
   justify-content: space-between;
   gap: 12px;
 }
+/* 2026-09-26 動態體檢：手機寬度兩顆導覽按鈕並排又禁止換行，文字被切掉最後幾個字 */
+@media (max-width: 600px) {
+  .module-nav-bottom .btn { white-space: normal; flex: 1 1 0; min-width: 0; justify-content: center; text-align: center; }
+}
 
 .panel {
   background: #fff;
