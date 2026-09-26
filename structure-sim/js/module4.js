@@ -123,7 +123,7 @@ function analyzeForces(truss, loadN, loadPosPercent) {
   nodes.forEach((n, i) => { if (i > last && Math.abs(n.x - loadX) < minD) { minD = Math.abs(n.x - loadX); loadNode = i; } });
   // 以節點法實際求解（畫布 y 向下，所以向下的荷重是 +y）
   const sol = solveTruss(nodes, members, [{ node: loadNode, fy: loadN }]);
-  return members.map((m, i) => {
+  const result = members.map((m, i) => {
     const n1 = nodes[m.a], n2 = nodes[m.b];
     const len = Math.hypot(n2.x - n1.x, n2.y - n1.y);
     // 畫面慣例：force < 0 = 張力（紅）、force > 0 = 壓力（藍）
@@ -131,6 +131,10 @@ function analyzeForces(truss, loadN, loadPosPercent) {
     const force = Math.abs(t) < 1e-6 ? 0 : -t;
     return { ...m, force, len };
   });
+  // 支承反力與實際施力節點一併帶出，供數值面板與荷重箭頭使用
+  result.reactions = sol.reactions;
+  result.loadNode = loadNode;
+  return result;
 }
 
 function draw() {
@@ -206,14 +210,11 @@ function draw() {
     }
   });
 
-  // 荷重箭頭
+  // 荷重箭頭：畫在求解時實際施力的上弦節點上（拉桿位置會吸附到最近的上弦節點）
   if (loaded) {
-    const right = truss.nodes.reduce((k, nd, i) => (nd.fixed ? i : k), 0);
-    const span0 = truss.nodes[right].x - truss.nodes[0].x;
-    const loadX = truss.nodes[0].x + span0 * (loadPos / 100);
-    const topNodes = truss.nodes.slice(right + 1);
-    let loadY = truss.nodes[0].y - height;
-    if (topNodes.length) loadY = topNodes[0].y;
+    const ln = truss.nodes[forces.loadNode];
+    const loadX = ln.x;
+    const loadY = ln.y;
     ctx.strokeStyle = '#dc2626';
     ctx.lineWidth = 5;
     ctx.beginPath();
@@ -225,8 +226,8 @@ function draw() {
     ctx.lineTo(loadX - 8, loadY - 14);
     ctx.lineTo(loadX + 8, loadY - 14);
     ctx.closePath();
-    ctx.fill();
     ctx.fillStyle = '#dc2626';
+    ctx.fill();
     ctx.font = '700 14px Inter';
     ctx.textAlign = 'center';
     ctx.fillText(`${loadN}N`, loadX, loadY - 70);
@@ -253,7 +254,8 @@ function updateEstimates(forces) {
   const loadN = parseInt(els.load.value);
   els.eTens.textContent = tens.length ? Math.max(...tens).toFixed(1) + ' N' : '0 N';
   els.eComp.textContent = comp.length ? Math.max(...comp).toFixed(1) + ' N' : '0 N';
-  els.eReact.textContent = (loadN / 2).toFixed(1) + ' N × 2';
+  const r = forces.reactions;
+  els.eReact.textContent = r ? `左 ${r.ly.toFixed(1)} N／右 ${r.ry.toFixed(1)} N` : '—';
   els.eDefl.textContent = (loadN / 20).toFixed(1) + ' px';
 }
 

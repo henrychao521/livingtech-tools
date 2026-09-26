@@ -23,7 +23,7 @@ document.querySelectorAll('.mode-tab').forEach(tab => {
    座標系：viewBox="0 0 360 96"，4 格桁架，格寬 80px
    Bottom y=78，Top y=18，左邊距 10px
    底弦節點：L0(10),L1(90),L2(170),L3(250),L4(330)
-   上弦節點（Pratt/Howe/K）：U1(90),U2(170),U3(250)
+   上弦節點（Pratt/Howe/K）：U1(90),U2(170),U3(250)；K 型另有豎桿中點 M1(90,48)、M3(250,48)
    上弦節點（Warren）：U1(50),U2(130),U3(210),U4(290)
 ════════════════════════════════════════════════════ */
 const _SVG_NODES_STD = `<g fill="#fff" stroke="#0f766e" stroke-width="1.5">
@@ -109,10 +109,10 @@ ${_SVG_NODES_STD}${_SVG_SUP}</svg>`,
 <!-- 端斜桿 -->
 <line x1="10" y1="78" x2="50" y2="18" stroke="#0f766e" stroke-width="3"/>
 <line x1="330" y1="78" x2="290" y2="18" stroke="#0f766e" stroke-width="3"/>
-<!-- zigzag 斜桿：壓(紅)↘ 和 拉(藍)↗ 交替 -->
-<line x1="50" y1="18" x2="90" y2="78" stroke="#dc2626" stroke-width="2.5"/>
-<line x1="90" y1="78" x2="130" y2="18" stroke="#2563eb" stroke-width="2.5"/>
-<line x1="130" y1="18" x2="170" y2="78" stroke="#dc2626" stroke-width="2.5"/>
+<!-- zigzag 斜桿（下弦節點受荷重時，以節點法驗算）：往跨中向下傾者受拉(藍)、反向者受壓(紅) -->
+<line x1="50" y1="18" x2="90" y2="78" stroke="#2563eb" stroke-width="2.5"/>
+<line x1="90" y1="78" x2="130" y2="18" stroke="#dc2626" stroke-width="2.5"/>
+<line x1="130" y1="18" x2="170" y2="78" stroke="#2563eb" stroke-width="2.5"/>
 <line x1="170" y1="78" x2="210" y2="18" stroke="#2563eb" stroke-width="2.5"/>
 <line x1="210" y1="18" x2="250" y2="78" stroke="#dc2626" stroke-width="2.5"/>
 <line x1="250" y1="78" x2="290" y2="18" stroke="#2563eb" stroke-width="2.5"/>
@@ -124,9 +124,9 @@ ${_SVG_NODES_WRN}${_SVG_SUP}</svg>`,
     title: 'K 型桁架 K-Truss',
     year: '適合大跨度（50m+）深桁架橋樑',
     features: [
-      '每個底弦節點 Lᵢ 向<b>左右兩側</b>各伸出一根斜桿',
-      '豎桿加上雙向斜桿在面板上形成 K 字形',
-      '有效縮短壓力桿件的挫曲長度，適合重荷重',
+      '豎桿<b>中點</b>多一個節點，兩根斜桿從這裡分別連到相鄰豎桿的<b>上端</b>與<b>下端</b>',
+      '豎桿加上這兩根斜桿就是一個 K 字；上斜桿受<b style="color:#dc2626">壓</b>、下斜桿受<b style="color:#2563eb">拉</b>',
+      '豎桿被中點節點切成兩半，壓力桿件的挫曲長度減半，適合重荷重',
       '桿件多、節點計算複雜，現代以電腦輔助設計',
     ],
     svg: `<svg viewBox="0 0 360 96" xmlns="http://www.w3.org/2000/svg" style="width:100%">
@@ -135,15 +135,16 @@ ${_SVG_CHORD_STD}
 <line x1="90" y1="18" x2="90" y2="78" stroke="#0d9488" stroke-width="3"/>
 <line x1="170" y1="18" x2="170" y2="78" stroke="#0d9488" stroke-width="3"/>
 <line x1="250" y1="18" x2="250" y2="78" stroke="#0d9488" stroke-width="3"/>
-<!-- 右斜桿 DRᵢ：Lᵢ→U(i+1)（藍=拉） -->
-<line x1="90" y1="78" x2="170" y2="18" stroke="#2563eb" stroke-width="2.5"/>
-<line x1="170" y1="78" x2="250" y2="18" stroke="#2563eb" stroke-width="2.5"/>
-<!-- 左斜桿 DLᵢ：Lᵢ→U(i-1)（紅=壓，虛線區別） -->
-<line x1="170" y1="78" x2="90" y2="18" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="5,3"/>
-<line x1="250" y1="78" x2="170" y2="18" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="5,3"/>
+<!-- K 形斜桿：從豎桿中點 M 連到相鄰（靠跨中）豎桿的上、下端；上斜桿受壓(紅)、下斜桿受拉(藍) -->
+<line x1="90" y1="48" x2="170" y2="18" stroke="#dc2626" stroke-width="2.5"/>
+<line x1="90" y1="48" x2="170" y2="78" stroke="#2563eb" stroke-width="2.5"/>
+<line x1="250" y1="48" x2="170" y2="18" stroke="#dc2626" stroke-width="2.5"/>
+<line x1="250" y1="48" x2="170" y2="78" stroke="#2563eb" stroke-width="2.5"/>
 <!-- K 標示 -->
-<text x="130" y="54" text-anchor="middle" font-size="13" fill="#7c3aed" font-family="Inter,sans-serif" font-weight="900">K</text>
-<text x="214" y="54" text-anchor="middle" font-size="13" fill="#7c3aed" font-family="Inter,sans-serif" font-weight="900">K</text>
+<text x="118" y="52" text-anchor="middle" font-size="13" fill="#7c3aed" font-family="Inter,sans-serif" font-weight="900">K</text>
+<text x="222" y="52" text-anchor="middle" font-size="13" fill="#7c3aed" font-family="Inter,sans-serif" font-weight="900" transform="translate(444,0) scale(-1,1)">K</text>
+<!-- 豎桿中點節點 -->
+<g fill="#fff" stroke="#0f766e" stroke-width="1.5"><circle cx="90" cy="48" r="4"/><circle cx="250" cy="48" r="4"/></g>
 ${_SVG_NODES_STD}${_SVG_SUP}</svg>`,
   },
   simply: {
@@ -319,10 +320,14 @@ function guidedSolveBeam(span, loadKN, material) {
     <div class="fem-stat"><span class="label">材料</span><span class="value">${mat.name}</span></div>
   `;
 
+  // 抗拉比抗壓弱的材料（混凝土）由下緣受拉側決定安全係數
+  const tensNote = bm.sfTens < bm.sfComp
+    ? `${mat.name}受拉只有 ${((mat.tensileStress || mat.yieldStress) / 1e6).toFixed(0)}MPa，下緣受拉會先裂開（受壓側 SF=${bm.sfComp.toFixed(1)}），所以要加鋼筋。`
+    : '';
   const notes = {
-    '7': `簡支梁靠彎曲承重：上緣受壓、下緣受拉，跨中最危險。SF=${bm.sf.toFixed(1)}，大於 2 才安全。`,
+    '7': `簡支梁靠彎曲承重：上緣受壓、下緣受拉，跨中最危險。SF=${bm.sf.toFixed(1)}，大於 2 才安全。${tensNote}`,
     '8': `荷重 ${loadKN}kN 放在跨中，兩端支承各分擔 ${(loadKN / 2).toFixed(0)}kN。最小 SF=${bm.sf.toFixed(2)}；材料用量 ${bm.weight.toFixed(0)}kg。`,
-    '9': `M = PL/4 = ${loadKN}kN × ${span}m / 4 = ${(bm.M / 1000).toFixed(0)}kN·m；S = bh²/6 = ${(bm.S * 1e6).toFixed(0)}cm³；σ = M/S = ${(bm.sigma / 1e6).toFixed(1)} MPa`,
+    '9': `M = PL/4 = ${loadKN}kN × ${span}m / 4 = ${(bm.M / 1000).toFixed(0)}kN·m；S = bh²/6 = ${(bm.S * 1e6).toFixed(0)}cm³；σ = M/S = ${(bm.sigma / 1e6).toFixed(1)} MPa。${tensNote}`,
     'T': `梁公式（非桁架求解）：梁深 h = L/${BEAM_SPAN_DEPTH} = ${bm.h.toFixed(2)}m、寬 b = h/2，σ = M/S，SF = σ_y/σ`
   };
   document.getElementById('g-grade-note').textContent = notes[getGrade()] || notes['7'];
@@ -598,7 +603,7 @@ advCanvas.addEventListener('pointerdown', e => {
         if (!exists) {
           const mat = MATERIALS[document.getElementById('adv-material').value];
           advMembers.push({ id: `M${memberIdCounter++}`, n1Id: selectedNode.id, n2Id: nd.id,
-            E: mat.E, A: DEFAULT_AREA, yieldStress: mat.yieldStress });
+            E: mat.E, A: DEFAULT_AREA, yieldStress: mat.yieldStress, tensileStress: mat.tensileStress || mat.yieldStress });
           if (typeof SoundFX !== 'undefined') SoundFX.click();
         }
         selectedNode = null;

@@ -7,14 +7,15 @@
  *   const result = solver.solve();
  *
  * nodes:    [{ id, x, y }]                          座標單位：m
- * members:  [{ id, n1Id, n2Id, E, A, yieldStress }] E in Pa, A in m², yieldStress in Pa
+ * members:  [{ id, n1Id, n2Id, E, A, yieldStress, tensileStress? }] E in Pa, A in m², 強度 in Pa
+ *           yieldStress = 抗壓（受壓桿用）；tensileStress = 抗拉（受拉桿用，省略時同 yieldStress）
  * loads:    [{ nodeId, fx, fy }]                     力單位：N（向下為負）
  * supports: [{ nodeId, fixX, fixY }]                 true = 固定該方向自由度
  *
  * returns:
  *   { ok, displacements, memberForces, reactions, safetyFactors, error }
  *   memberForces[id]    = N  (正 = 張力, 負 = 壓力)
- *   safetyFactors[id]   = yieldStress * A / |force|  (>2 安全, <1 失效)
+ *   safetyFactors[id]   = 強度 * A / |force|（受拉用 tensileStress、受壓用 yieldStress；>2 安全, <1 失效）
  *   displacements[dof]  = m  (全域自由度向量)
  */
 
@@ -63,7 +64,8 @@ class TrussSolver {
           K[dofs[r]][dofs[col]] += EA_L * ke[r][col];
         }
       }
-      memberData[m.id] = { i, j, L, c, s, EA_L, E: m.E, A: m.A, yieldStress: m.yieldStress || 250e6 };
+      const yieldStress = m.yieldStress || 250e6;
+      memberData[m.id] = { i, j, L, c, s, EA_L, E: m.E, A: m.A, yieldStress, tensileStress: m.tensileStress || yieldStress };
     }
 
     // 2. 組裝載重向量 F
@@ -127,7 +129,7 @@ class TrussSolver {
     const memberForces = {};
     const safetyFactors = {};
     for (const m of members) {
-      const { i, j, L, c, s, EA_L, A, yieldStress } = memberData[m.id] || {};
+      const { i, j, L, c, s, EA_L, A, yieldStress, tensileStress } = memberData[m.id] || {};
       if (!memberData[m.id]) continue;
       const u1 = d[2*i], v1 = d[2*i+1], u2 = d[2*j], v2 = d[2*j+1];
       // 軸向延伸量 = (u2-u1)*c + (v2-v1)*s
@@ -137,7 +139,9 @@ class TrussSolver {
       const axialForce = EA_L * ((u2 - u1) * c + (v2 - v1) * s);
       memberForces[m.id] = axialForce;
       const stress = Math.abs(axialForce) / A;
-      safetyFactors[m.id] = stress > 1e-6 ? yieldStress / stress : Infinity;
+      // 受拉看抗拉強度、受壓看抗壓強度（混凝土受拉只有約 2MPa，不能拿 25MPa 抗壓強度來算）
+      const strength = axialForce > 0 ? tensileStress : yieldStress;
+      safetyFactors[m.id] = stress > 1e-6 ? strength / stress : Infinity;
     }
 
     // 7. 計算支承反力
@@ -158,11 +162,13 @@ class TrussSolver {
 }
 
 // 材料常數資料庫（供 module3/4 使用）
+// yieldStress＝抗壓（受壓桿）強度；tensileStress＝抗拉強度，省略時與抗壓相同。
+// 混凝土抗拉只有抗壓的約 1/10（模組 2 教的 1～2MPa），取 2MPa。
 const MATERIALS = {
   steel:    { name: '鋼', E: 200e9, yieldStress: 250e6, density: 7850, color: '#94a3b8' },
   wood:     { name: '木材', E: 12e9,  yieldStress: 30e6,  density: 600,  color: '#a16207' },
   bamboo:   { name: '竹子', E: 17e9,  yieldStress: 80e6,  density: 700,  color: '#65a30d' },
-  concrete: { name: '混凝土', E: 30e9, yieldStress: 25e6, density: 2400, color: '#78716c' },
+  concrete: { name: '混凝土', E: 30e9, yieldStress: 25e6, tensileStress: 2e6, density: 2400, color: '#78716c' },
 };
 
 // 斷面積預設值（教學用）
@@ -190,7 +196,7 @@ function memberColor(force, sf) {
  */
 function generateBridge(type, span, height, material = 'steel') {
   const mat = MATERIALS[material];
-  const E = mat.E, A = DEFAULT_AREA, y = mat.yieldStress;
+  const E = mat.E, A = DEFAULT_AREA, y = mat.yieldStress, t = mat.tensileStress || mat.yieldStress;
   const panels = type === 'simply' ? 2 : 6;
   const panelW = span / panels;
   const nodes = [], members = [];
@@ -204,8 +210,8 @@ function generateBridge(type, span, height, material = 'steel') {
     // 簡支梁：梁靠「彎曲」承重，不是只受軸力的二力桿，不能交給上面的桁架求解器
     // （原本把荷重加在支承 L0 上，桿件軸力永遠 0，SF 恆為 ∞）。
     // 這裡只提供繪圖用的幾何（跨中節點 L1 放集中荷重），內力請改用 solveSimplyBeam()。
-    members.push({ id: 'M0', n1Id: 'L0', n2Id: 'L1', E, A, yieldStress: y });
-    members.push({ id: 'M1', n1Id: 'L1', n2Id: 'L2', E, A, yieldStress: y });
+    members.push({ id: 'M0', n1Id: 'L0', n2Id: 'L1', E, A, yieldStress: y, tensileStress: t });
+    members.push({ id: 'M1', n1Id: 'L1', n2Id: 'L2', E, A, yieldStress: y, tensileStress: t });
     return {
       nodes,
       members,
@@ -222,63 +228,68 @@ function generateBridge(type, span, height, material = 'steel') {
   const topStart = panels + 1; // index of U1 in nodes[]
 
   // 下弦桿
-  for (let i = 0; i < panels; i++) members.push({ id: `B${i}`, n1Id: `L${i}`, n2Id: `L${i+1}`, E, A, yieldStress: y });
+  for (let i = 0; i < panels; i++) members.push({ id: `B${i}`, n1Id: `L${i}`, n2Id: `L${i+1}`, E, A, yieldStress: y, tensileStress: t });
   // 上弦桿
-  for (let i = 1; i < panels - 1; i++) members.push({ id: `T${i}`, n1Id: `U${i}`, n2Id: `U${i+1}`, E, A, yieldStress: y });
+  for (let i = 1; i < panels - 1; i++) members.push({ id: `T${i}`, n1Id: `U${i}`, n2Id: `U${i+1}`, E, A, yieldStress: y, tensileStress: t });
   // 端斜桿
-  members.push({ id: 'E0', n1Id: 'L0', n2Id: 'U1', E, A, yieldStress: y });
-  members.push({ id: 'E1', n1Id: `L${panels}`, n2Id: `U${panels-1}`, E, A, yieldStress: y });
+  members.push({ id: 'E0', n1Id: 'L0', n2Id: 'U1', E, A, yieldStress: y, tensileStress: t });
+  members.push({ id: 'E1', n1Id: `L${panels}`, n2Id: `U${panels-1}`, E, A, yieldStress: y, tensileStress: t });
 
   if (type === 'pratt') {
     // 豎桿 + V形斜桿（斜桿受拉）
     // 斜桿由上弦往跨中向下傾：左半 Ui→L(i+1)（↘）、右半 U(i+1)→Li（↙），在下弦中央會合成 V
     for (let i = 1; i < panels; i++) {
-      members.push({ id: `V${i}`, n1Id: `L${i}`, n2Id: `U${i}`, E, A, yieldStress: y });
+      members.push({ id: `V${i}`, n1Id: `L${i}`, n2Id: `U${i}`, E, A, yieldStress: y, tensileStress: t });
     }
     for (let i = 1; i < panels - 1; i++) {
       const left = i < panels / 2;
-      if (left) members.push({ id: `D${i}`, n1Id: `L${i+1}`, n2Id: `U${i}`, E, A, yieldStress: y });
-      else      members.push({ id: `D${i}`, n1Id: `L${i}`, n2Id: `U${i+1}`, E, A, yieldStress: y });
+      if (left) members.push({ id: `D${i}`, n1Id: `L${i+1}`, n2Id: `U${i}`, E, A, yieldStress: y, tensileStress: t });
+      else      members.push({ id: `D${i}`, n1Id: `L${i}`, n2Id: `U${i+1}`, E, A, yieldStress: y, tensileStress: t });
     }
   } else if (type === 'howe') {
     // 豎桿 + 反V斜桿（斜桿受壓）
     // 斜桿由下弦往跨中向上升：左半 Li→U(i+1)（↗）、右半 L(i+1)→Ui（↖），在上弦中央會合成倒 V
     for (let i = 1; i < panels; i++) {
-      members.push({ id: `V${i}`, n1Id: `L${i}`, n2Id: `U${i}`, E, A, yieldStress: y });
+      members.push({ id: `V${i}`, n1Id: `L${i}`, n2Id: `U${i}`, E, A, yieldStress: y, tensileStress: t });
     }
     for (let i = 1; i < panels - 1; i++) {
       const left = i < panels / 2;
-      if (left) members.push({ id: `D${i}`, n1Id: `L${i}`, n2Id: `U${i+1}`, E, A, yieldStress: y });
-      else      members.push({ id: `D${i}`, n1Id: `L${i+1}`, n2Id: `U${i}`, E, A, yieldStress: y });
+      if (left) members.push({ id: `D${i}`, n1Id: `L${i}`, n2Id: `U${i+1}`, E, A, yieldStress: y, tensileStress: t });
+      else      members.push({ id: `D${i}`, n1Id: `L${i+1}`, n2Id: `U${i}`, E, A, yieldStress: y, tensileStress: t });
     }
   } else if (type === 'warren') {
     // Warren 桁架：無豎桿，等腰三角形
-    // 上弦節點移至下弦節點中點位置（正確幾何，才能形成真正的三角形）
+    // 上弦節點放在每一格的中點：U1～U6 位於 0.5、1.5 … 5.5 格（6 格要 6 個上弦節點才左右對稱，
+    // 原本只有 5 個，右端斜桿 E1 被迫跨 1.5 格、內力左右不對稱）
     for (let i = 1; i < panels; i++) {
       const uNode = nodes.find(n => n.id === `U${i}`);
       if (uNode) uNode.x = (i - 0.5) * panelW;
     }
-    // 9 根內部斜桿（zigzag）：Ui→Li（上→下） + Li→U(i+1)（下→上）
-    // 與兩端斜桿 E0(L0→U1) 和 E1(Ln→U(n-1)) 合計 11 根斜桿，共 21 根桿件
+    nodes.push({ id: `U${panels}`, x: (panels - 0.5) * panelW, y: height });
+    members.push({ id: `T${panels-1}`, n1Id: `U${panels-1}`, n2Id: `U${panels}`, E, A, yieldStress: y, tensileStress: t });
+    members.find(m => m.id === 'E1').n2Id = `U${panels}`;
+    // 內部斜桿（zigzag）：Ui→Li（上→下） + Li→U(i+1)（下→上）各 5 根
+    // 與兩端斜桿 E0(L0→U1)、E1(Ln→Un) 合計 12 根斜桿；全橋 13 節點、23 根桿件（2×13−3，靜定）
     for (let i = 1; i < panels; i++) {
-      members.push({ id: `DA${i}`, n1Id: `U${i}`, n2Id: `L${i}`, E, A, yieldStress: y });
-      if (i < panels - 1) {
-        members.push({ id: `DB${i}`, n1Id: `L${i}`, n2Id: `U${i+1}`, E, A, yieldStress: y });
-      }
+      members.push({ id: `DA${i}`, n1Id: `U${i}`, n2Id: `L${i}`, E, A, yieldStress: y, tensileStress: t });
+      members.push({ id: `DB${i}`, n1Id: `L${i}`, n2Id: `U${i+1}`, E, A, yieldStress: y, tensileStress: t });
     }
   } else if (type === 'k') {
-    // K型桁架：豎桿 + K形斜桿（深桁架）
-    // 豎桿
+    // K型桁架：豎桿中點加一個節點 Mi，兩根斜桿從 Mi 分別連到相鄰豎桿的上端與下端，
+    // 和豎桿合起來就是一個「K」。左半 K 開口朝跨中、右半鏡射；中央豎桿不分段。
+    // 原本兩根斜桿在面板中央交叉、交點沒有節點，其實是 X 形交叉斜撐。
+    const mid = panels / 2;
     for (let i = 1; i < panels; i++) {
-      members.push({ id: `V${i}`, n1Id: `L${i}`, n2Id: `U${i}`, E, A, yieldStress: y });
-    }
-    // 左斜桿：Li→U(i-1)，i 從 2 開始避免引用不存在的 U0
-    for (let i = 2; i < panels; i++) {
-      members.push({ id: `DL${i}`, n1Id: `L${i}`, n2Id: `U${i-1}`, E, A: A * 0.8, yieldStress: y });
-    }
-    // 右斜桿：Li→U(i+1)，i 到 panels-2 避免引用不存在的 U(panels)
-    for (let i = 1; i < panels - 1; i++) {
-      members.push({ id: `DR${i}`, n1Id: `L${i}`, n2Id: `U${i+1}`, E, A: A * 0.8, yieldStress: y });
+      if (i === mid) {
+        members.push({ id: `V${i}`, n1Id: `L${i}`, n2Id: `U${i}`, E, A, yieldStress: y, tensileStress: t });
+        continue;
+      }
+      nodes.push({ id: `M${i}`, x: i * panelW, y: height / 2 });
+      members.push({ id: `VL${i}`, n1Id: `L${i}`, n2Id: `M${i}`, E, A, yieldStress: y, tensileStress: t });
+      members.push({ id: `VU${i}`, n1Id: `M${i}`, n2Id: `U${i}`, E, A, yieldStress: y, tensileStress: t });
+      const toward = i < mid ? i + 1 : i - 1; // 斜桿連到靠跨中那一根豎桿的上下端
+      members.push({ id: `KU${i}`, n1Id: `M${i}`, n2Id: `U${toward}`, E, A: A * 0.8, yieldStress: y, tensileStress: t });
+      members.push({ id: `KL${i}`, n1Id: `M${i}`, n2Id: `L${toward}`, E, A: A * 0.8, yieldStress: y, tensileStress: t });
     }
   }
 
@@ -305,7 +316,7 @@ function generateBridge(type, span, height, material = 'steel') {
  * @param {number} span 跨度（m）
  * @param {number} loadN 跨中集中荷重（N）
  * @param {string} material 材料 key
- * @returns { M, S, sigma, sf, b, h, weight }  M: N·m、sigma: Pa、weight: kg
+ * @returns { M, S, sigma, sf, sfComp, sfTens, b, h, weight }  M: N·m、sigma: Pa、weight: kg；sf = min(受壓側, 受拉側)
  */
 const BEAM_SPAN_DEPTH = 20;
 function solveSimplyBeam(span, loadN, material = 'steel') {
@@ -314,9 +325,13 @@ function solveSimplyBeam(span, loadN, material = 'steel') {
   const S = b * h * h / 6;
   const M = loadN * span / 4;
   const sigma = M / S;
-  const sf = sigma > 1e-6 ? mat.yieldStress / sigma : Infinity;
+  // 上緣受壓、下緣受拉，兩側應力同為 σ；取較弱的一側（混凝土是受拉側 2MPa 先裂）
+  const tensile = mat.tensileStress || mat.yieldStress;
+  const sfComp = sigma > 1e-6 ? mat.yieldStress / sigma : Infinity;
+  const sfTens = sigma > 1e-6 ? tensile / sigma : Infinity;
+  const sf = Math.min(sfComp, sfTens);
   const weight = b * h * span * mat.density;
-  return { M, S, sigma, sf, b, h, weight };
+  return { M, S, sigma, sf, sfComp, sfTens, b, h, weight };
 }
 
 /**

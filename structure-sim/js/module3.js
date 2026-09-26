@@ -58,6 +58,11 @@ function selectStep(i) {
 window.selectStep = selectStep;
 selectStep(0);
 stepProgressEl.textContent = `已學習 ${seenSteps.size} / ${STEPS.length} 步`;
+// 重新整理／重新進入：先前已看完 8 步就直接解鎖下一關（selectStep 只在「第一次看到」時才解鎖）
+if (seenSteps.size === STEPS.length) {
+  nextBtn.style.opacity = 1;
+  nextBtn.style.pointerEvents = 'auto';
+}
 
 if (typeof SequencePuzzle === 'function') {
   SequencePuzzle({

@@ -51,7 +51,8 @@ const MECHS = [
 ];
 
 // 立體圖 viz 統一改用 OpenSCAD PNG（從 .scad 參數化建模渲染）
-// 保留原 SVG 動畫 viz 在 .vizAnim 欄位（M4 模擬器可用，本模組 M1 用靜態立體圖）
+// 保留原 SVG 動畫 viz 在 .vizAnim 欄位（目前未使用；凸輪、曲柄滑塊的 SVG 動畫有誤，要改回動畫前先修正）
+// 頁面文案已改為「立體圖」，動態展示交給模組 4 模擬器
 MECHS.forEach(m => {
   m.vizAnim = m.viz;
   m.viz = `<img src="../../models/mechanism/${m.id}-iso.png" alt="${m.name}" style="width:100%;height:140px;object-fit:contain;background:#1E293B;border-radius:8px;display:block" loading="lazy">`;

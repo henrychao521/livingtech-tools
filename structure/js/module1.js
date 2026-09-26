@@ -45,7 +45,7 @@ const HOTSPOTS = {
     name: '鉸支承（Pin Support）',
     role: 'PINNED BOUNDARY',
     desc: '可以旋轉但不能移動的支承，同時提供<strong>水平</strong>與<strong>垂直</strong>反力。橋的一端通常設鉸支承，固定住橋的位置。',
-    formula: gradeText({ '7': '', '8': 'Rx 和 Ry 都不為零', '9': 'ΣFx=Rx=0，ΣFy=Ry-P=0' }),
+    formula: gradeText({ '7': '', '8': '可提供水平與垂直反力（只有垂直荷重時 Rx=0）', '9': 'ΣFx：Rx=0；ΣFy：Ry鉸 + Ry滾 = P' }),
     color: '#0f766e', tag: '固定端',
     fact: '橋用鉸支承的原因：讓橋可以對溫度膨脹做出「旋轉」反應，不把熱漲力硬傳到墩台，避免開裂。'
   },
@@ -53,7 +53,7 @@ const HOTSPOTS = {
     name: '滾支承（Roller Support）',
     role: 'ROLLER BOUNDARY',
     desc: '只提供<strong>垂直</strong>反力，水平方向自由滑動。橋的另一端通常設滾支承，允許橋在溫度變化時自由伸縮。',
-    formula: gradeText({ '7': '', '8': 'Rx=0，Ry = P (1-a)/L', '9': 'ΣM_pin = 0 → Ry = P·a/L' }),
+    formula: gradeText({ '7': '', '8': 'Rx=0，Ry = P·a/L（a＝荷重到鉸支承的距離）', '9': 'ΣM_pin = 0 → Ry = P·a/L' }),
     color: '#0d9488', tag: '滑動端',
     fact: '如果把橋兩端都固定（雙鉸），夏天熱漲的力可以輕易讓橋墩崩潰。台灣多橋就是一端鉸、一端滾。'
   },

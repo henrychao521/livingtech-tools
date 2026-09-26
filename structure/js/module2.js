@@ -71,11 +71,21 @@ document.querySelectorAll('#material-table tbody tr').forEach(tr => {
         if (typeof SoundFX !== 'undefined') SoundFX.unlock();
         document.getElementById('material-feedback').innerHTML = '<div class="feedback success" style="margin-top:8px">✅ 四種材料全部了解！+10 分</div>';
         updateScore();
+        checkUnlock();
         showToast('🎉 材料特性全掌握！', 'good');
       }
     }
   });
 });
+
+// 重新進入頁面：四種材料先前都看過，就直接算關卡 1 完成（否則 Set 已滿、再點也不會加分，關卡 1 永遠卡住）
+if (matSeenSet.size === 4) {
+  matDone = true;
+  matScore = 10;
+  document.querySelectorAll('#material-table tbody tr').forEach(tr => { tr.style.background = 'var(--primary-light)'; });
+  document.getElementById('material-feedback').innerHTML = '<div class="feedback success" style="margin-top:8px">✅ 四種材料全部了解！+10 分</div>';
+  updateScore();
+}
 
 /* ── 安全係數（SF）闖關題目 ─────────────────────────────── */
 const SF_SCENARIOS = [
@@ -87,7 +97,7 @@ const SF_SCENARIOS = [
   { q: '一座人行天橋 SF=3.0，工程師說「可以再省一點」，把 SF 降到 2.1。這是合理的節省嗎？', a: '合理，2.1 仍符合 SF≥2 規定', b: '要看具體情況，考慮維護成本和使用年限', correct: 'b', explain: 'SF=2.1 技術上符合規定，但過低的 SF 代表未來若有腐蝕、超重使用、地震，安全餘量快速消耗。優秀的工程師會用生命週期成本分析（初建費 vs 維護費 vs 意外損失）來決定合理的 SF。' },
   { q: '台灣颱風期間橋樑同時承受行人、車輛和強風荷重，SF 設計值應該如何考量？', a: '只要靜載達到 SF=2 即可', b: '應以組合載重設計，各工況都需達 SF≥2', correct: 'b', explain: '台灣規範採「載重組合設計法」：靜載 DL + 活載 LL + 颱風側風力 WL，每種組合都必須 SF≥2（或配合折減因數）。只考慮靜載是不夠的——颱風時 WL 可能與 LL 同向疊加。' },
   { q: '混凝土橋墩設計抗壓強度 25MPa，承受壓力 8MPa，SF = 25/8 = 3.125。但混凝土幾乎不能受張力，這時需要？', a: '不用管，SF 已足夠', b: '加入鋼筋（RC）抵抗張力，避免拉力區開裂', correct: 'b', explain: '混凝土抗張強度僅有抗壓的 1/10。如果橋墩有任何彎矩（如地震橫向力），就會在橋墩側面產生張力而開裂。鋼筋混凝土（RC）就是讓鋼筋負責抗張，混凝土負責抗壓。' },
-  { q: '一根橋桿截面積 8cm²，鋼材降伏強度 250MPa，最大受力 140kN。這根桿安全嗎？', a: '安全，SF = 250×8×10⁻⁴ / 0.14 = 1.43…不安全！', b: '安全，因為 140kN 看起來不大', correct: 'a', explain: 'SF = 強度 / 力 = (250MPa × 0.0008m²) / 140kN = 200kN / 140kN = 1.43 < 2.0。即使選項文字看起來很複雜，計算結果告訴你不安全——這就是為什麼工程師不能「看感覺」，必須算 SF。' },
+  { q: '一根橋桿截面積 8cm²，鋼材降伏強度 250MPa，最大受力 140kN。這根桿安全嗎？', a: '不安全，SF = 200kN／140kN ≈ 1.43 < 2.0', b: '安全，因為 140kN 看起來不大', correct: 'a', explain: 'SF = 強度 / 力 = (250MPa × 0.0008m²) / 140kN = 200kN / 140kN = 1.43 < 2.0。計算結果告訴你不安全——這就是為什麼工程師不能「看感覺」，必須算 SF。' },
   { q: '安全係數 SF 代表什麼？工程師為什麼不直接把 SF 設計成 1.0（恰好不壞）就好？', a: '因為規定要大於 1.0，只是法規要求', b: 'SF 反映材料變異、預測誤差、意外超載的保險——世界上沒有完美的計算', correct: 'b', explain: 'SF > 1 是對「不確定性」的緩衝：材料強度有統計分布（可能低於平均）、載重預測不精準、施工可能有瑕疵、老化會降低強度。SF=2 代表即使實際強度只有設計值的 50%，橋仍然安全。' },
 ];
 
@@ -123,17 +133,39 @@ sfList.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', 
   sfAnswered.add(i);
   updateScore();
 
-  if (sfAnswered.size === SF_SCENARIOS.length) {
-    const total = matScore + sfScore + ppeScore;
-    const resultDiv = document.getElementById('sf-result');
-    if (total >= 100) {
-      resultDiv.innerHTML = `<div class="feedback success" style="margin-top:20px"><strong>🏆 ${total} 分！安全係數觀念掌握優秀！</strong></div>`;
-    } else {
-      resultDiv.innerHTML = `<div class="feedback error" style="margin-top:20px">${total} 分，未達 100 分，請重新整理再挑戰。</div>`;
-    }
-    checkUnlock();
-  }
+  if (sfAnswered.size === SF_SCENARIOS.length) checkUnlock();
 }));
+
+// 關卡 2 結果：三關都完成才判定成敗；還有關卡沒做就只提示目前分數。
+// 若就算其餘關卡全拿滿也到不了 100 分，才顯示「重新挑戰」（只重做關卡 2，不必重新整理）。
+function showSfResult() {
+  const resultDiv = document.getElementById('sf-result');
+  if (sfAnswered.size < SF_SCENARIOS.length) { resultDiv.innerHTML = ''; return; }
+  const total = matScore + sfScore + ppeScore;
+  const maxPossible = sfScore + 10 + 30; // 材料 10 ＋ PPE 30 都拿滿時的總分
+  const pending = [];
+  if (!matDone) pending.push('關卡 1 材料對比');
+  if (ppeScore < 30) pending.push('關卡 3 工地 PPE');
+  if (total >= 100 && ppeScore >= 30) {
+    resultDiv.innerHTML = `<div class="feedback success" style="margin-top:20px"><strong>🏆 ${total} 分！安全係數觀念掌握優秀！</strong></div>`;
+  } else if (maxPossible >= 100 && pending.length) {
+    resultDiv.innerHTML = `<div class="feedback" style="margin-top:20px">安全係數答對 ${sfScore / PTS_PER_SF} 題，目前 ${total} 分。請繼續完成${pending.join('、')}（通關條件：總分 ≥ 100 且 PPE 全對）。</div>`;
+  } else {
+    resultDiv.innerHTML = `<div class="feedback error" style="margin-top:20px">${total} 分，未達 100 分（安全係數至少要答對 6 題）。
+      <button type="button" class="btn btn-primary" id="sf-retry-btn" style="margin-left:8px;padding:6px 14px;font-size:14px">重新挑戰</button></div>`;
+    document.getElementById('sf-retry-btn').addEventListener('click', resetSfQuiz);
+  }
+}
+
+function resetSfQuiz() {
+  sfScore = 0;
+  sfAnswered.clear();
+  sfList.querySelectorAll('.choice').forEach(b => { b.disabled = false; b.classList.remove('correct', 'wrong'); });
+  sfList.querySelectorAll('.feedback-slot').forEach(el => { el.innerHTML = ''; });
+  document.getElementById('sf-result').innerHTML = '';
+  updateScore();
+  sfList.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 
 // 年級說明
 const gradeNote = document.getElementById('sf-grade-note');
@@ -155,6 +187,7 @@ function updateScore() {
 }
 
 function checkUnlock() {
+  showSfResult();
   const total = matScore + sfScore + ppeScore;
   if (total >= 100 && ppeScore >= 30) {
     document.getElementById('unlock').classList.remove('hidden');

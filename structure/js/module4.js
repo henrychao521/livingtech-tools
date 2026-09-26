@@ -14,7 +14,7 @@ const SCENARIOS = [
   {
     id: 's2', icon: '🚛', name: '公路橋（卡車）',
     desc: '省道公路橋，跨度 16m，必須承受單台 200kN 重卡（移動荷重）。最不利位置：卡車在跨中。目標 SF ≥ 2.0。',
-    bridgeType: 'howe', span: 16, height: 4, loadPerNode: 200000/5, special: 'truck',
+    bridgeType: 'howe', span: 16, height: 4, loadPerNode: 200000, special: 'truck', // 整台 200kN 集中在跨中節點
     tip: '移動荷重：卡車在跨中時，下弦桿中央受最大拉力。Howe 桁架的豎桿受拉、斜桿受壓。',
   },
   {
@@ -25,8 +25,8 @@ const SCENARIOS = [
   },
   {
     id: 's4', icon: '🌍', name: '地震橋',
-    desc: '台灣規範 0.2g 水平地震係數，橋樑慣性力 = 0.2 × 重量。跨度 10m，Warren 桁架，每節點水平慣性力 20kN。目標 SF ≥ 2.5。',
-    bridgeType: 'pratt', span: 10, height: 3, loadPerNode: 40000, special: 'earthquake',
+    desc: '台灣規範 0.2g 水平地震係數，橋樑慣性力 = 0.2 × 重量。跨度 10m，Warren 桁架，每節點垂直荷重 40kN，水平慣性力 = 0.2 × 40kN = 8kN。目標 SF ≥ 2.5。',
+    bridgeType: 'warren', span: 10, height: 3, loadPerNode: 40000, special: 'earthquake',
     tip: '台灣位於板塊交界，橋樑須考慮 PGA=0.2g 的水平慣性力，垂直與水平荷重組合設計。',
   },
   {
@@ -37,11 +37,14 @@ const SCENARIOS = [
   },
   {
     id: 's6', icon: '🏆', name: '輕量設計競賽',
-    desc: '目標：設計能承受 50kN 的 10m 跨度 Pratt 桁架，但材料重量要盡可能輕！SF ≥ 2.0 為通過，SF ≥ 3 且最輕為三星。',
+    desc: '目標：設計能承受 50kN 的 10m 跨度 Pratt 桁架，但材料重量要盡可能輕！SF ≥ 2.0 為通過，SF ≥ 3 且橋重 ≤ 120kg 為三星。',
     bridgeType: 'pratt', span: 10, height: 2.5, loadPerNode: 50000/5, special: 'lightweight',
-    tip: '輕量設計：嘗試減少桿件截面積，或選擇密度低的材料（竹子），同時維持 SF ≥ 2.0。',
+    tip: '輕量設計：比較三種材料的橋重與 SF——密度越低越輕（木材 600、竹子 700、鋼 7850 kg/m³），但強度也不同，要在 SF ≥ 3 的前提下找最輕的。',
   },
 ];
+
+// 輕量競賽三星的重量上限（kg）：可選材料中，SF ≥ 3 且最輕的是木材（約 113kg），竹子約 132kg、鋼約 1482kg
+const LIGHTWEIGHT_MAX_KG = 120;
 
 /* ── 初始化 ──────────────────────────────────────────────── */
 const pp = loadP();
@@ -104,11 +107,14 @@ function solveScenario() {
   truss.loads = [];
 
   if (sc.special === 'wind' || sc.special === 'earthquake') {
-    // 水平 + 垂直組合荷重
-    const WIND_FX = sc.special === 'wind' ? 8000 : 20000; // N/節點
+    // 水平 + 垂直組合荷重；地震水平慣性力 = 0.2g × 垂直荷重
+    const WIND_FX = sc.special === 'wind' ? 8000 : 0.2 * sc.loadPerNode; // N/節點
     for (let i = 1; i < panels; i++) {
       truss.loads.push({ nodeId: `L${i}`, fx: WIND_FX, fy: -sc.loadPerNode });
     }
+  } else if (sc.special === 'truck') {
+    // 單台卡車停在跨中（最不利位置）：整台重量集中在中央節點
+    truss.loads.push({ nodeId: `L${Math.round(panels / 2)}`, fx: 0, fy: -sc.loadPerNode });
   } else if (sc.special === 'train') {
     // 4 個軸重在跨中附近節點
     const axes = [1, 2, panels-2, panels-1].filter(i => i >= 1 && i < panels);
@@ -160,8 +166,9 @@ function solveScenario() {
   const sfThreshold = sc.special === 'earthquake' || sc.special === 'train' ? 2.5 : 2.0;
   if (minSF >= sfThreshold) stars = 1;
   if (minSF >= 2.5) stars = 2;
-  if (minSF >= 3 && (sc.special === 'lightweight' || totalWeight < 3000)) stars = 3;
-  if (sc.special !== 'lightweight' && minSF >= 3) stars = 3;
+  // 一般情境 SF ≥ 3 即三星；輕量競賽另外要求橋重 ≤ LIGHTWEIGHT_MAX_KG
+  const isLight = sc.special === 'lightweight';
+  if (minSF >= 3 && (!isLight || totalWeight <= LIGHTWEIGHT_MAX_KG)) stars = 3;
 
   let verdictHtml = '';
   if (stars === 0) {
@@ -169,9 +176,12 @@ function solveScenario() {
   } else if (stars === 1) {
     verdictHtml = `<div class="feedback success">⭐ 通過！SF=${minSF.toFixed(2)} ≥ ${sfThreshold}。</div>`;
   } else if (stars === 2) {
-    verdictHtml = `<div class="feedback success">⭐⭐ 優秀！SF=${minSF.toFixed(2)} ≥ 2.5。</div>`;
+    const heavyNote = isLight && minSF >= 3 ? `但橋重 ${totalWeight.toFixed(0)}kg 超過 ${LIGHTWEIGHT_MAX_KG}kg，換更輕的材料試試。` : '';
+    verdictHtml = `<div class="feedback success">⭐⭐ 優秀！SF=${minSF.toFixed(2)} ≥ 2.5。${heavyNote}</div>`;
   } else {
-    verdictHtml = `<div class="feedback success">⭐⭐⭐ 完美！SF=${minSF.toFixed(2)} ≥ 3.0，輕量設計！</div>`;
+    verdictHtml = isLight
+      ? `<div class="feedback success">⭐⭐⭐ 完美！SF=${minSF.toFixed(2)} ≥ 3.0、橋重 ${totalWeight.toFixed(0)}kg，輕量設計！</div>`
+      : `<div class="feedback success">⭐⭐⭐ 完美！SF=${minSF.toFixed(2)} ≥ 3.0。</div>`;
   }
   document.getElementById('sc-verdict').innerHTML = verdictHtml;
   document.getElementById('sc-star-display').textContent = '⭐'.repeat(stars) + '☆'.repeat(3-stars);
