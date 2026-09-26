@@ -224,8 +224,8 @@ function renderErrorSVG(id) {
         <rect x="20" y="6" width="3.5" height="8" fill="#1a1a1a"/>
         <rect x="26" y="6" width="3.5" height="8" fill="#f97316"/>
         <rect x="42" y="6" width="3.5" height="8" fill="#fbbf24"/>
-        <text x="30" y="34" text-anchor="middle" font-size="9" fill="#1a1a1a" font-family="monospace" font-weight="700">棕 黑 橙</text>
-        <text x="30" y="46" text-anchor="middle" font-size="14" fill="#dc2626" font-weight="700">10 kΩ</text>
+        <text x="30" y="29" text-anchor="middle" font-size="9" fill="#1a1a1a" font-family="monospace" font-weight="700">棕 黑 橙</text>
+        <text x="30" y="45" text-anchor="middle" font-size="14" fill="#dc2626" font-weight="700">10 kΩ</text>
         <text x="30" y="58" text-anchor="middle" font-size="9" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">✗ 太大 LED 很暗</text>
       </g>
 
@@ -244,8 +244,8 @@ function renderErrorSVG(id) {
         <rect x="20" y="6" width="3.5" height="8" fill="#dc2626"/>
         <rect x="26" y="6" width="3.5" height="8" fill="#92400e"/>
         <rect x="42" y="6" width="3.5" height="8" fill="#fbbf24"/>
-        <text x="30" y="34" text-anchor="middle" font-size="9" fill="#1a1a1a" font-family="monospace" font-weight="700">紅 紅 棕</text>
-        <text x="30" y="46" text-anchor="middle" font-size="14" fill="#16a34a" font-weight="700">220 Ω</text>
+        <text x="30" y="29" text-anchor="middle" font-size="9" fill="#1a1a1a" font-family="monospace" font-weight="700">紅 紅 棕</text>
+        <text x="30" y="45" text-anchor="middle" font-size="14" fill="#16a34a" font-weight="700">220 Ω</text>
         <text x="30" y="58" text-anchor="middle" font-size="9" fill="#16a34a" font-weight="700" font-family="Noto Sans TC">✓ 正常</text>
       </g>
       <text x="100" y="20" text-anchor="middle" font-size="10" fill="#1a1a1a" font-weight="700" font-family="Noto Sans TC">色環 → 阻值</text>
@@ -267,7 +267,7 @@ function renderErrorSVG(id) {
         <animate attributeName="cy" values="42;36;42" dur="1s" repeatCount="indefinite"/>
       </ellipse>
       <!-- 標示 -->
-      <text x="100" y="80" text-anchor="middle" font-size="14" fill="#fff" font-weight="700" font-family="Inter">−</text>
+      <text x="100" y="95" text-anchor="middle" font-size="14" fill="#fff" font-weight="700" font-family="Inter">−</text>
       <text x="93" y="65" font-size="6" fill="#fff" font-weight="700">100μF</text>
       <text x="93" y="72" font-size="6" fill="#fff" font-weight="700">16V</text>
       <!-- 漏液 -->
