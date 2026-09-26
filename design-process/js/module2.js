@@ -32,7 +32,7 @@ const QUIZ = [
   { q: '想討論「理想的兒童學習桌」設計，引發深度討論', ans: 'focus', explain: '焦點團體——8 位家長一起討論會比訪談激出更多想法。' },
   { q: '預算少，想知道台灣青少年運動習慣統計', ans: 'data', explain: '次級資料——體育署、教育部都有現成資料免費下載。' },
   { q: '想知道學生有多少時間使用社群媒體', ans: 'survey', explain: '問卷——量化資料適合此問題。' },
-  { q: '想了解視障者如何使用智慧手機', ans: 'observe', explain: '觀察 + 訪談——他們的使用方式可能完全意料外。' },
+  { q: '想看視障者實際怎麼操作智慧手機，在旁邊看、不打擾', ans: 'observe', explain: '直接觀察——他們的使用方式可能完全意料外，親眼看實際操作最準。' },
 ];
 
 const quizEl = document.getElementById('quiz');
@@ -44,7 +44,7 @@ QUIZ.forEach((q, i) => {
   div.className = 'quiz-item';
   div.style.cssText = 'background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px';
   div.innerHTML = `<p style="font-size:14px;margin-bottom:6px"><strong>題 ${i + 1}：</strong>${q.q}</p>
-    <div class="choice-grid" style="grid-template-columns:repeat(6,1fr)">${METHODS.map(m => `<button class="choice" data-q="${i}" data-c="${m.id}" style="font-size:11px;padding:6px 4px">${m.name}</button>`).join('')}</div>
+    <div class="choice-grid" style="grid-template-columns:repeat(auto-fit,minmax(96px,1fr))">${METHODS.map(m => `<button class="choice" data-q="${i}" data-c="${m.id}" style="font-size:11px;padding:6px 4px">${m.name}</button>`).join('')}</div>
     <div class="feedback-slot"></div>`;
   quizEl.appendChild(div);
 });

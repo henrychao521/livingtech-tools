@@ -7,7 +7,7 @@ const QUIZ = [
   { q: '要做「100 片 3mm 厚的小卡片」當教具，最快又最便宜的方式？', opts: ['3D 列印', '雷射切割', 'CNC 雕刻', '手工剪'], correct: 1, hint: '雷射切割對於薄板狀、大量重複的零件最快（一張板可同時切多片）。3D 列印 100 片要花一整天。' },
   { q: '要做「需要承受機構應力的高強度零件」（例如 FRC 機器人結構件），最佳選擇？', opts: ['3D 列印', '雷射切割', 'CNC 雕刻', '手工製作'], correct: 2, hint: 'CNC 從單一塊材銑出，沒有 3D 列印的層間弱點，強度最高。雷射只能薄板。' },
   { q: 'Onshape 要把零件送到 3D 印表機，匯出格式應該選？', opts: ['STL', 'DXF', 'PDF', 'OBJ'], correct: 0, hint: 'STL 是 3D 列印業界標準。記得勾「將獨特的零件匯出成個別檔案」。' },
-  { q: 'Onshape 要把零件送到雷射切割機，匯出格式應該選？', opts: ['STL', 'DXF', 'PDF', 'GCODE'], correct: 1, hint: 'DXF 是 2D 向量格式，雷射切割機標準輸入。需要先建 Drawing（工程圖）才能匯出 DXF。' },
+  { q: 'Onshape 要把零件送到雷射切割機，匯出格式應該選？', opts: ['STL', 'DXF', 'PDF', 'GCODE'], correct: 1, hint: 'DXF 是 2D 向量格式，雷射切割機標準輸入。單一零件可在 Part Studio 對零件平面或草圖按右鍵 → Export as DXF/DWG 直接匯出；要把多個零件排在同一張圖時再用 Drawing（工程圖）。' },
 ];
 
 const quizDiv = document.getElementById('craft-quiz');

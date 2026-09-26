@@ -40,7 +40,7 @@ const CONCEPTS = [
     name: '6 個基本視圖', icon: '🎲',
     desc: '一個物體可從 6 個方向投影：正視（前視）、後視、左側視、右側視、俯視、仰視。實作通常只畫 3 個就夠。',
     detail: '選擇原則：選最能表達物體特徵的 3 個視圖。圓柱通常選正視 + 俯視兩個。',
-    visual: `<svg viewBox="0 0 240 130" width="100%" style="background:#F1F5F9;border-radius:6px;display:block">
+    visual: `<svg viewBox="0 0 272 130" width="100%" style="background:#F1F5F9;border-radius:6px;display:block">
       <!-- 中央立體（step） -->
       <g transform="translate(120,68)">${STEP_ISO_MINI}</g>
       <!-- 6 個方向標籤 + 視圖縮圖 -->
@@ -60,14 +60,20 @@ const CONCEPTS = [
       <g transform="translate(8,55)">
         <rect x="0" y="0" width="28" height="20" fill="#E0E7FF" stroke="#3730A3" stroke-width="1"/>
         <rect x="6" y="3" width="16" height="14" fill="#A5B4FC" stroke="#3730A3" stroke-width="0.8"/>
-        <text x="14" y="84" text-anchor="middle" font-size="8" fill="#3730A3" font-weight="700">左側視</text>
+        <text x="14" y="30" text-anchor="middle" font-size="8" fill="#3730A3" font-weight="700">左側視</text>
       </g>
       <!-- 右側視（從右看得到低層與上層兩個右面，中間有一條分界線；左側視只看到上層左面一整塊）-->
       <g transform="translate(204,55)">
         <rect x="0" y="0" width="28" height="20" fill="#E0E7FF" stroke="#3730A3" stroke-width="1"/>
         <rect x="6" y="3" width="16" height="14" fill="#A5B4FC" stroke="#3730A3" stroke-width="0.8"/>
         <line x1="6" y1="10" x2="22" y2="10" stroke="#3730A3" stroke-width="0.8"/>
-        <text x="14" y="84" text-anchor="middle" font-size="8" fill="#3730A3" font-weight="700">右側視</text>
+        <text x="14" y="30" text-anchor="middle" font-size="8" fill="#3730A3" font-weight="700">右側視</text>
+      </g>
+      <!-- 後視（第三角法排在右側視的右方；從背面看，階梯左右相反 = 右高左低的 L 形）-->
+      <g transform="translate(238,55)">
+        <rect x="0" y="0" width="28" height="20" fill="#E0E7FF" stroke="#3730A3" stroke-width="1"/>
+        <polygon points="4,17 24,17 24,3 14,3 14,10 4,10" fill="#A5B4FC" stroke="#3730A3" stroke-width="0.8"/>
+        <text x="14" y="30" text-anchor="middle" font-size="8" fill="#3730A3" font-weight="700">後視</text>
       </g>
       <!-- 正視（前，標籤在物體下方） -->
       <text x="120" y="124" text-anchor="middle" font-size="8" fill="#3730A3" font-weight="700">↑ 正視 FRONT（中央）</text>
@@ -81,7 +87,7 @@ const CONCEPTS = [
   },
   {
     name: '投影對齊', icon: '📏',
-    desc: '第三角法排列：俯視在正視「上方」、側視在正視「右方」。三視圖之間有投影對齊關係——正視寬 = 俯視寬（長對正）、正視高 = 側視高（高平齊）。',
+    desc: '第三角法排列：俯視在正視「上方」、側視在正視「右方」。三視圖之間有投影對齊關係——正視長 = 俯視長（長對正）、正視高 = 側視高（高平齊）、俯視寬 = 側視寬（寬相等，都是物體前後深度）。',
     detail: '這個對齊是判讀的關鍵：長對正、高平齊。俯視在正視上方是 CNS 第三角投影法的標準排列，與第一角法（俯視在下）剛好相反。',
     visual: `<svg viewBox="0 0 240 148" width="100%" style="background:#F1F5F9;border-radius:6px;display:block">
       <!-- 俯視（第三角法：正視上方）— 矩形（同寬於正視 x=10..35）+ 分隔線示意高低分界 -->
@@ -137,6 +143,9 @@ const CONCEPTS = [
         <line x1="20" y1="90" x2="100" y2="90" stroke="#1E1B4B" stroke-width="0.7"/>
         <line x1="20" y1="87" x2="20" y2="93" stroke="#1E1B4B" stroke-width="0.7"/>
         <line x1="100" y1="87" x2="100" y2="93" stroke="#1E1B4B" stroke-width="0.7"/>
+        <!-- 兩端實心箭頭 -->
+        <polygon points="20,90 27,87.5 27,92.5" fill="#1E1B4B"/>
+        <polygon points="100,90 93,87.5 93,92.5" fill="#1E1B4B"/>
       </g>
       <text x="140" y="94" font-size="10" fill="#1E1B4B" font-weight="700">尺寸線　0.35mm　含箭頭</text>
     </svg>`

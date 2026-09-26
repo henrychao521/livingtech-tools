@@ -60,6 +60,8 @@ quizDiv.querySelectorAll('.x-opt').forEach(btn => {
       localStorage.setItem(OS_PROGRESS_KEY, JSON.stringify(progress));
       document.getElementById('m9-pill').textContent = `已完成 2 / 2 專題 ✓`;
       if (typeof showToast === 'function') showToast(`🏆 機電整合通過！${correct}/4`, 'good');
+    } else if (answered.size === QUIZ.length) {
+      document.getElementById('m9-pill').textContent = `答對 ${correct} / ${QUIZ.length}，未通過`;
     } else {
       const done = Math.min(2, Math.floor(answered.size / 2));
       document.getElementById('m9-pill').textContent = `已完成 ${done} / 2 專題`;

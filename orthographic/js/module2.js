@@ -1,7 +1,7 @@
 // 三視圖 模組 2：4 種視圖類型
 const TYPES = [
   { id: 'ortho', name: '三視圖（正投影）', use: '工程製造、機械圖、家具圖', pros: '尺寸精確、好標註、製造業通用', cons: '不夠直觀、需訓練才能判讀',
-    viz: '<svg viewBox="0 0 200 100"><rect x="20" y="20" width="40" height="40" fill="#E0E7FF" stroke="#3730A3"/><rect x="80" y="20" width="40" height="40" fill="#E0E7FF" stroke="#3730A3"/><rect x="20" y="70" width="40" height="20" fill="#E0E7FF" stroke="#3730A3"/></svg>' },
+    viz: '<svg viewBox="0 0 200 100"><!-- 第三角法：俯視在正視上方、側視在正視右方；側視寬 = 俯視深 = 20 --><rect x="20" y="8" width="40" height="20" fill="#E0E7FF" stroke="#3730A3"/><rect x="20" y="36" width="40" height="40" fill="#E0E7FF" stroke="#3730A3"/><rect x="68" y="36" width="20" height="40" fill="#E0E7FF" stroke="#3730A3"/></svg>' },
   { id: 'iso', name: '等角圖 Isometric', use: 'IKEA 組裝說明書、簡報示意', pros: '簡單立體、所有平行邊保持比例', cons: '會有透視假象、看起來像「歪的方塊」',
     viz: '<svg viewBox="0 0 200 100"><polygon points="100,20 135,40 100,60 65,40" fill="#A5B4FC" stroke="#3730A3"/><polygon points="65,40 100,60 100,95 65,75" fill="#818CF8" stroke="#3730A3"/><polygon points="100,60 135,40 135,75 100,95" fill="#6366F1" stroke="#3730A3"/></svg>' },
   { id: 'oblique', name: '斜視圖 Oblique', use: '快速手繪示意、教學圖', pros: '正面保持原比例、繪製簡單', cons: '看起來會「拉長」失真',

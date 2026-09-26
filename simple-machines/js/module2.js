@@ -60,15 +60,15 @@ CLASSES.forEach(c => {
 });
 
 const QUIZ = [
-  { tool: '剪刀', ans: 'first' },
-  { tool: '釘拔（榔頭背面拔釘）', ans: 'first' },
-  { tool: '翹翹板', ans: 'first' },
-  { tool: '手推車', ans: 'second' },
-  { tool: '開瓶器（開酒瓶用，槓桿頂壓蓋）', ans: 'second' },
-  { tool: '堅果鉗', ans: 'second' },
-  { tool: '鑷子', ans: 'third' },
-  { tool: '釣魚竿（雙手握）', ans: 'third' },
-  { tool: '人類手臂彎舉', ans: 'third' },
+  { tool: '剪刀', ans: 'first', explain: '中間的螺絲是支點、手握把手施力、刀刃夾住的東西是抗力 → 支點在中間，第一類。' },
+  { tool: '釘拔（榔頭背面拔釘）', ans: 'first', explain: '榔頭頭部抵住木板處是支點、羊角叉口夾住的釘子是抗力、手握柄尾施力 → 支點在中間，第一類。' },
+  { tool: '翹翹板', ans: 'first', explain: '中間的轉軸是支點、兩端的人分別是施力與抗力 → 支點在中間，第一類。' },
+  { tool: '手推車', ans: 'second', explain: '輪軸是支點、貨物在中間是抗力、手在握把最後面施力 → 抗力在中間，第二類。' },
+  { tool: '開瓶器（開酒瓶用，槓桿頂壓蓋）', ans: 'second', explain: '前端頂在瓶蓋上方是支點、勾住瓶蓋邊緣處是抗力、手在握把端施力 → 抗力在中間，第二類。' },
+  { tool: '堅果鉗', ans: 'second', explain: '兩臂相連的一端是支點、堅果夾在中間是抗力、手在握把末端施力 → 抗力在中間，第二類。' },
+  { tool: '鑷子', ans: 'third', explain: '尾端相連處是支點、手指在中間捏是施力、夾尖夾住的東西是抗力 → 施力在中間，第三類。' },
+  { tool: '釣魚竿（雙手握）', ans: 'third', explain: '握竿尾的手是支點、前面的手在中間施力、竿尖的魚是抗力 → 施力在中間，第三類。' },
+  { tool: '人類手臂彎舉', ans: 'third', explain: '手肘是支點、二頭肌拉在前臂靠近手肘處施力、手上的重物是抗力 → 施力在中間，第三類。' },
 ];
 
 const quizEl = document.getElementById('quiz');
@@ -97,7 +97,7 @@ quizEl.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', 
     if (b === btn && !correct) b.classList.add('wrong');
   });
   const ansName = CLASSES.find(c => c.id === q.ans).name;
-  parent.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${correct ? 'success' : 'error'}" style="margin-top:8px">${correct ? '✓ 正確' : `✗ 正確答案：${ansName}`}</div>`;
+  parent.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${correct ? 'success' : 'error'}" style="margin-top:8px">${correct ? '✓ 正確' : `✗ 正確答案：${ansName}`}<br><span style="font-size:13px">${q.explain}</span></div>`;
   if (correct) { quizCorrect++; if (typeof SoundFX !== 'undefined') SoundFX.success(); } else if (typeof SoundFX !== 'undefined') SoundFX.error();
   answered.add(i);
   updateProgress();

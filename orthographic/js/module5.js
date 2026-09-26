@@ -141,7 +141,7 @@ const ROUND1 = [
 
 function buildRound1() {
   const root = document.getElementById('round-1');
-  root.innerHTML = '<p style="font-size:13.5px;color:#475569;margin-bottom:14px">給你正視・側視・俯視，從 4 個 3D 物件中選對的一個。<span class="hint-toggle" onclick="this.nextElementSibling.style.display=\'inline\';this.style.display=\'none\'">💡 顯示提示</span><span style="display:none;margin-left:8px;color:#64748B">「對齊規則」：正視寬 = 俯視寬；高平齊：正視高 = 側視高。</span></p>';
+  root.innerHTML = '<p style="font-size:13.5px;color:#475569;margin-bottom:14px">給你正視・側視・俯視，從 4 個 3D 物件中選對的一個。<span class="hint-toggle" onclick="this.nextElementSibling.style.display=\'inline\';this.style.display=\'none\'">💡 顯示提示</span><span style="display:none;margin-left:8px;color:#64748B">「對齊規則」：長對正：正視長 = 俯視長；高平齊：正視高 = 側視高；寬相等：俯視寬 = 側視寬。</span></p>';
   ROUND1.forEach((q, i) => {
     const card = document.createElement('div');
     card.className = 'qcard';
@@ -157,7 +157,7 @@ function buildRound1() {
       </div>
       <p class="qprompt">這是什麼 3D 物件？</p>
       <div class="opt-grid">
-        ${shuffled(q.options).map(o => `<div class="opt-cell" data-o="${o}">${svgIso(o, 90)}<div class="opt-label">${SHAPES[o].label}</div></div>`).join('')}
+        ${shuffled(q.options).map(o => `<div class="opt-cell" data-o="${o}" tabindex="0" role="button" aria-label="${SHAPES[o].label}">${svgIso(o, 90)}<div class="opt-label">${SHAPES[o].label}</div></div>`).join('')}
       </div>
       <div class="feedback-slot"></div>
     `;
@@ -171,9 +171,23 @@ function buildRound1() {
           if (x.dataset.o === q.ans) x.classList.add('correct');
           if (x === opt && !ok) x.classList.add('wrong');
         });
-        card.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${ok ? 'success' : 'error'}">${ok ? '✓' : '✗'} ${q.expl}</div>`;
-        if (ok) markCorrect(1, i);
-        else markWrong();
+        // 重答（答錯後按「再試一次」）答對只顯示解析、不計分
+        const retried = card.dataset.retry === '1';
+        card.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${ok ? 'success' : 'error'}">${ok ? '✓' : '✗'} ${ok && retried ? '答對了（重答不計分）' : ''}${q.expl}</div>` +
+          (ok ? '' : '<button type="button" class="retry-btn" style="margin-top:8px;font-size:13px;padding:5px 12px;border-radius:6px;border:1px solid #4F46E5;background:#fff;color:#4F46E5;cursor:pointer">↻ 再試一次（不計分）</button>');
+        if (ok && !retried) markCorrect(1, i);
+        else if (!ok) {
+          markWrong();
+          card.querySelector('.retry-btn').addEventListener('click', () => {
+            card.dataset.retry = '1';
+            card.querySelectorAll('.opt-cell').forEach(x => x.classList.remove('disabled', 'correct', 'wrong'));
+            card.querySelector('.feedback-slot').innerHTML = '';
+          });
+        }
+      });
+      // 鍵盤操作：Enter / 空白鍵等同點選
+      opt.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); opt.click(); }
       });
     });
   });
@@ -217,7 +231,7 @@ function buildRound2() {
       </div>
       <p class="qprompt" style="margin-top:14px">缺失的 <strong style="color:#4F46E5">${VIEW_KEY[q.missing]}</strong> 是哪一個？</p>
       <div class="opt-grid">
-        ${shuffled(q.options).map(o => `<div class="opt-cell" data-o="${o}">${svgView(o, 80)}</div>`).join('')}
+        ${shuffled(q.options).map(o => `<div class="opt-cell" data-o="${o}" tabindex="0" role="button" aria-label="選項">${svgView(o, 80)}</div>`).join('')}
       </div>
       <div class="feedback-slot"></div>
     `;
@@ -232,9 +246,23 @@ function buildRound2() {
           if (x.dataset.o === ansSvg) x.classList.add('correct');
           if (x === opt && !ok) x.classList.add('wrong');
         });
-        card.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${ok ? 'success' : 'error'}">${ok ? '✓' : '✗'} ${q.expl}</div>`;
-        if (ok) markCorrect(2, i);
-        else markWrong();
+        // 重答（答錯後按「再試一次」）答對只顯示解析、不計分
+        const retried = card.dataset.retry === '1';
+        card.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${ok ? 'success' : 'error'}">${ok ? '✓' : '✗'} ${ok && retried ? '答對了（重答不計分）' : ''}${q.expl}</div>` +
+          (ok ? '' : '<button type="button" class="retry-btn" style="margin-top:8px;font-size:13px;padding:5px 12px;border-radius:6px;border:1px solid #4F46E5;background:#fff;color:#4F46E5;cursor:pointer">↻ 再試一次（不計分）</button>');
+        if (ok && !retried) markCorrect(2, i);
+        else if (!ok) {
+          markWrong();
+          card.querySelector('.retry-btn').addEventListener('click', () => {
+            card.dataset.retry = '1';
+            card.querySelectorAll('.opt-cell').forEach(x => x.classList.remove('disabled', 'correct', 'wrong'));
+            card.querySelector('.feedback-slot').innerHTML = '';
+          });
+        }
+      });
+      // 鍵盤操作：Enter / 空白鍵等同點選
+      opt.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); opt.click(); }
       });
     });
   });
@@ -279,7 +307,7 @@ function makeEmptyGrid() {
 function buildRound3() {
   const root = document.getElementById('round-3');
   root.innerHTML = `
-    <p style="font-size:13.5px;color:#475569;margin-bottom:14px">這是這個模組最 game 的關卡！在 3×3×3 網格內，<strong>左鍵</strong>點空格加方塊、<strong>右鍵</strong>移除方塊，目標是讓三個視圖完全符合右下角的「目標」。比對 ≥ 95% 即過關。</p>
+    <p style="font-size:13.5px;color:#475569;margin-bottom:14px">這是這個模組最 game 的關卡！在 3×3×3 網格內，<strong>左鍵</strong>點空格加方塊、<strong>右鍵</strong>移除方塊，目標是讓三個視圖完全符合右下角的「目標」。比對 100% 才過關。</p>
     <div id="r3-content"></div>
   `;
   const content = document.getElementById('r3-content');
@@ -496,7 +524,10 @@ function initStackGame(qi, q) {
     }
   }
 
+  // 按過「自動完成（放棄）」的題目就不再計分
+  let gaveUp = false;
   function fillTarget() {
+    gaveUp = true;
     clearAll();
     for (let x = 0; x < GRID; x++) for (let y = 0; y < GRID; y++) for (let z = 0; z < GRID; z++) {
       if (q.target[x][y][z]) addBlock(x, y, z);
@@ -524,7 +555,10 @@ function initStackGame(qi, q) {
     document.getElementById(`stk-match-${qi}`).textContent = pct + '%';
     document.getElementById(`stk-bar-${qi}`).style.width = pct + '%';
     const statusEl = document.getElementById(`stk-status-${qi}`);
-    if (pct >= 95) {
+    if (pct === 100 && gaveUp) {
+      statusEl.textContent = '已自動完成（放棄，不計分）';
+      statusEl.style.color = '#94A3B8';
+    } else if (pct === 100) {
       statusEl.textContent = '🎉 完美匹配！過關！';
       statusEl.style.color = '#16A34A';
       markCorrect(3, qi);

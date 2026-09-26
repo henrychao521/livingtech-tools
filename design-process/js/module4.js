@@ -36,11 +36,20 @@ function calc() {
   document.getElementById('tb').textContent = B;
   document.getElementById('tc').textContent = C;
   const max = Math.max(A, B, C);
-  const winner = A === max ? '方案 A 傳統升級' : B === max ? '方案 B 智慧電子' : '方案 C 輕量人體工學';
+  // 找出所有等於最高分的方案（可能並列），並把最高分欄位標亮
+  const plans = [['ta', A, '方案 A 傳統升級'], ['tb', B, '方案 B 智慧電子'], ['tc', C, '方案 C 輕量人體工學']];
+  plans.forEach(([id]) => document.getElementById(id).classList.remove('best'));
+  const tops = plans.filter(([, s]) => s === max);
+  tops.forEach(([id]) => document.getElementById(id).classList.add('best'));
   document.getElementById('verdict').className = 'verdict good';
-  document.getElementById('verdict').textContent = `🏆 最佳方案：${winner}（${max} 分）。實際決策還要考慮其他不可量化因素（如品牌策略、目標市場）。`;
-  const p = loadP(); p.module4 = true; saveP(p);
+  document.getElementById('verdict').textContent = tops.length > 1
+    ? `⚖️ ${tops.map(t => t[2]).join(' 與 ')} 同分（${max} 分），請回頭檢視權重，或想想能否結合兩案的優點。`
+    : `🏆 最佳方案：${tops[0][2]}（${max} 分）。實際決策還要考慮其他不可量化因素（如品牌策略、目標市場）。`;
 }
 
-rowsEl.addEventListener('input', calc);
+// 學生第一次動手調整矩陣時才記為模組 4 完成（不在載入時就記）
+rowsEl.addEventListener('input', () => {
+  calc();
+  const p = loadP(); if (!p.module4) { p.module4 = true; saveP(p); }
+});
 calc();

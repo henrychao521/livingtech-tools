@@ -37,7 +37,7 @@ const ERRORS = [
     name: '選錯基準平面',
     symptom: '擠出方向出乎預料（往側面、往上下，與設計不符）',
     cause: '在 Front 平面畫了俯視草圖，或在 Top 畫了側視草圖。',
-    fix: '檢查 feature tree → 雙擊草圖右鍵 → Edit reference plane 改到對的平面。',
+    fix: '在特徵樹（feature tree）對該草圖按右鍵 → Edit，點上方的草圖平面欄位，重新選正確的平面。',
     svg: `<svg viewBox="0 0 120 80"><rect x="20" y="20" width="30" height="40" fill="#fbbf24" opacity=".4" stroke="#92400e"/><text x="35" y="44" text-anchor="middle" font-size="8" fill="#92400e">Front</text><polygon points="55,30 75,15 105,15 85,30" fill="#a78bfa" opacity=".5" stroke="#7c3aed"/><text x="80" y="26" text-anchor="middle" font-size="7" fill="#7c3aed">Top</text><text x="60" y="75" text-anchor="middle" font-size="9" fill="#dc2626">⚠ 選錯方向會跑位</text></svg>`,
   },
   {

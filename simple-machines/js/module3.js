@@ -30,7 +30,7 @@ const PROBLEMS = [
   },
   {
     title: '題 5：開瓶器（第二類槓桿）',
-    desc: '開酒瓶用的酒侍開瓶器，從支點到抗力（瓶蓋）3 cm，從支點到施力（握把端）18 cm。要拔出需 30 kgw 力的瓶蓋，需要多大施力？',
+    desc: '開紅酒用的侍酒師開瓶器，從支點到抗力（軟木塞）3 cm，從支點到施力（握把端）18 cm。要拔出阻力 30 kgw 的軟木塞，需要多大施力？',
     formula: 'MA = 18 ÷ 3 = 6 倍\n施力 = 30 ÷ 6 = 5 kgw',
     inputs: [{ label: 'MA', name: 'ma', ans: 6, unit: '倍' }, { label: '所需施力', name: 'f', ans: 5, unit: 'kgw' }],
     tolerance: 0.3,
@@ -39,8 +39,9 @@ const PROBLEMS = [
     title: '題 6：螺絲千斤頂',
     desc: '螺絲千斤頂手柄長 30 cm，螺距 5 mm。轉手柄施 10 kgw 的力，可以舉起多重？（忽略摩擦）',
     formula: 'MA = 2π × 手柄長 ÷ 螺距 = 2 × 3.14 × 30 ÷ 0.5 ≈ 377 倍\n可舉起 = 10 × 377 = 3770 kgw',
-    inputs: [{ label: 'MA（取整數）', name: 'ma', ans: 377, unit: '倍' }, { label: '可舉起重量', name: 'f', ans: 3770, unit: 'kgw' }],
-    tolerance: 50,
+    // MA 與重量數量級差很多，各欄位用自己的容許誤差（MA ±2、重量 ±20）
+    inputs: [{ label: 'MA（取整數）', name: 'ma', ans: 377, unit: '倍', tolerance: 2 }, { label: '可舉起重量', name: 'f', ans: 3770, unit: 'kgw', tolerance: 20 }],
+    tolerance: 20,
   },
 ];
 
@@ -76,7 +77,8 @@ pb.querySelectorAll('button').forEach(btn => btn.addEventListener('click', () =>
   inputs.forEach((inp, j) => {
     const ans = p.inputs[j].ans;
     const v = parseFloat(inp.value);
-    if (isNaN(v) || Math.abs(v - ans) > p.tolerance) {
+    const tol = p.inputs[j].tolerance ?? p.tolerance;
+    if (isNaN(v) || Math.abs(v - ans) > tol) {
       allOK = false;
       wrongs.push(`${p.inputs[j].label}：正確答案 ${ans}${p.inputs[j].unit}`);
     }

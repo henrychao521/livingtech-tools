@@ -11,7 +11,7 @@ const MACHINES = [
   {
     id: 'pulley',
     name: '滑輪 Pulley',
-    principle: '繞線輪改變力的方向（單滑輪）或減小施力（動滑輪）。',
+    principle: '繞線輪改變力的方向（定滑輪）或減小施力（動滑輪）。',
     formula: 'MA = 支持重物的繩段數',
     examples: '升降機、起重機、旗桿、窗簾繩、健身房器械',
   },

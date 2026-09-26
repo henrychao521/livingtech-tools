@@ -15,11 +15,11 @@ const STAGES = [
   { id: 'prototype', name: '4. 原型（Prototype）', icon: '🔨', cn: '快速做出來',
     desc: '把最有潛力的概念做成「能讓人摸到」的原型。原型不需精緻，能傳達概念與測試假設即可。',
     methods: ['紙原型（Paper Prototype）', '3D 列印模型', 'Wireframe（線框圖）', '可動演示版'],
-    deliverable: '低保真→中保真→高保真原型', warning: 'Done is better than perfect ──完成比完美重要。' },
+    deliverable: '低擬真→中擬真→高擬真原型', warning: 'Done is better than perfect ──完成比完美重要。' },
   { id: 'test', name: '5. 測試（Test）', icon: '🧪', cn: '驗證與迭代',
     desc: '把原型給真實使用者試用，觀察反應、收集回饋、修改設計。迭代多次直到滿意。',
     methods: ['可用性測試（5 位使用者）', '焦點團體', 'A/B 測試', '回饋訪談'],
-    deliverable: '改良後的下一版原型', warning: '失敗是常態——8 成的設計需要 5+ 次迭代才上線。' },
+    deliverable: '改良後的下一版原型', warning: '失敗是常態——多數設計都要反覆修改好幾輪才上線。' },
 ];
 
 const PK = 'dp_progress_v1';

@@ -8,7 +8,7 @@ const STEPS = [
   { icon: '✏️', title: '不規則曲線描身體', desc: 'Spline 工具沿身體外輪廓描繪。回到起點形成封閉曲線（橘色小框）才能 Extrude。彎折大的地方分段畫。' },
   { icon: '🚀', title: 'Extrude 身體厚度 3mm', desc: '選封閉曲線 → Extrude → 深度 3mm（材料厚度）→ 方向選「對稱」讓身體在中央。' },
   { icon: '🟦', title: '偏移平面 + 畫腳', desc: '右側平面右鍵 → 偏移平面 → 設 15mm。建兩個偏移平面分前後腳（雙箭頭改方向）。在偏移面上畫腳曲線，與 Top 平面相切。' },
-  { icon: '📄', title: '輸出 DXF 雷射切割', desc: '建立 Drawing → 每個零件擺到圖頁 → 右鍵匯出 → 格式 DXF → 送雷射切割機。' },
+  { icon: '📄', title: '輸出 DXF 雷射切割', desc: '多個零件要排在一起：建立 Drawing → 每個零件擺到圖頁 → 右鍵匯出 → 格式 DXF → 送雷射切割機。單一零件也可在零件平面按右鍵 → Export as DXF/DWG 直接匯出。' },
 ];
 
 const QUIZ = [

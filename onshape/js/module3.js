@@ -21,7 +21,7 @@ const STEPS = [
   {
     title: '開草圖（Sketch）',
     icon: '✏️',
-    desc: '點工具列 Sketch 按鈕 → 系統把選好的平面轉正對著你 → 進入草圖編輯模式。',
+    desc: '點工具列 Sketch 按鈕 → 選好平面 → 進入草圖編輯模式；畫面不會自動轉正，按 N 鍵（View normal to）把平面轉正對著你。',
     tip: '畫面右上會顯示橘色「Sketch」字樣，表示在草圖模式。',
   },
   {

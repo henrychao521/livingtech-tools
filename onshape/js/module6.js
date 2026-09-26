@@ -78,9 +78,7 @@ function updateProgressPill() {
   let done = 0;
   if (progress.module6_measure) done++;
   if (progress.module6_mate) done++;
-  // 2 個書中內容區塊也算 (測量工具區 + Assembly 區) — 預設算已閱讀
-  done += 2;
-  document.getElementById('m6-pill').textContent = `已完成 ${done} / 4 項`;
+  document.getElementById('m6-pill').textContent = `已完成 ${done} / 2 項測驗`;
   if (progress.module6_measure && progress.module6_mate) {
     progress.module6 = true;
     localStorage.setItem(OS_PROGRESS_KEY, JSON.stringify(progress));

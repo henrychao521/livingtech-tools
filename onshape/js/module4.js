@@ -59,7 +59,7 @@ const METHODS = [
     name: 'Shell（薄殼）',
     icon: '🥃',
     desc: '把實心物件挖空，留下指定厚度的外殼。先做出實心，再 Shell 挖空。',
-    egs: '適合：杯子（外形已有再挖內部）、容器、外殼',
+    egs: '適合：收納盒（外形已有再挖內部）、容器、外殼',
     svg: `<svg viewBox="0 0 140 140" data-anim="shell">
       <!-- 實心方塊（前面、頂面、側面）-->
       <polygon class="shell-front" points="35,40 95,40 95,115 35,115" fill="#fbbf24" stroke="#92400e" stroke-width="1.5"/>
@@ -90,7 +90,7 @@ const METHODS = [
 ];
 
 const CHALLENGES = [
-  { shape: '🔩 螺絲（圓柱形+螺紋）', correct: 'revolve', why: '圓柱本體是旋轉對稱，最快的方式是用 Revolve 把 L 形截面繞中軸旋轉。' },
+  { shape: '🔩 螺絲本體（頭＋桿，不含螺紋）', correct: 'revolve', why: '圓柱本體是旋轉對稱，最快的方式是用 Revolve 把 L 形截面繞中軸旋轉。螺紋是螺旋形，Revolve 做不出來，要另外用螺旋線（Helix）＋ Sweep 或螺紋特徵。' },
   { shape: '📦 收納盒（長方形有內部空間）', correct: 'shell', why: '先 Extrude 出實心長方體，再用 Shell 挖空（指定保留厚度）。' },
   { shape: '🏺 花瓶（底圓 → 中段方形 → 頂部六角形）', correct: 'loft', why: '不同截面之間的漸變，必用 Loft 連接多層草圖。' },
   { shape: '🪑 椅腳（截面均勻的細長條）', correct: 'extrude', why: '截面不變的條狀物，最簡單是用 Extrude 把矩形/圓形草圖往上拉。' },
