@@ -3,7 +3,7 @@ const PARTS = {
   spindle: { name: '主軸（Spindle）', role: 'ROTATION SHAFT', desc: '由皮帶驅動的垂直旋轉軸，下端鎖夾頭。主軸上下位置由進刀手柄控制，可精準達到 90° 垂直鑽孔——這是鑽床和手電鑽最大差別。', fact: '主軸轉速由皮帶輪位置決定，常見有 5 段（如 500/720/1100/1700/2400 RPM）。鑽鋼用低速（直徑越大越慢，小直徑可稍快）、鑽木用高速。' },
   chuck: { name: '夾頭（Keyed Chuck）', role: 'BIT HOLDER', desc: '鑽床多為「鑰匙式夾頭」（chuck key），用 T 型小工具旋轉鎖緊三爪。可鎖到比免鑰匙式更緊，適合大直徑鑽孔。', fact: '⚠ 開機前一定要把夾頭鑰匙拔下！沒拔的鑰匙會被甩飛——是鑽床最危險的事故之一。' },
   table: { name: '工作台（Table）', role: 'WORK PLATFORM', desc: '放工件的鑄鐵平台。可上下調整高度（鬆開後方鎖具搖動）、也可向左右傾斜做斜角鑽孔。表面有「T 槽」可裝機台老虎鉗或夾具。', fact: '工件下方必須墊木塊（犧牲層），避免鑽穿後把工作台也鑽出洞。' },
-  feed: { name: '進刀手柄（Feed Handle）', role: 'DOWNFEED CONTROL', desc: '3 支放射狀手柄，控制主軸下降進行鑽孔。順時針旋轉 = 下降進刀、逆時針 = 上升退鑽。多數鑽床有「進刀深度限位環」可設定鑽孔深度。', fact: '進刀力要均勻，不能突然用力——突然壓會讓鑽頭斷裂或工件彈起。' },
+  feed: { name: '進刀手柄（Feed Handle）', role: 'DOWNFEED CONTROL', desc: '3 支放射狀手柄，控制主軸下降進行鑽孔。把手柄往下拉 = 進刀、放回 = 退鑽（手柄有回彈彈簧）。多數鑽床有「進刀深度限位環」可設定鑽孔深度。', fact: '進刀力要均勻，不能突然用力——突然壓會讓鑽頭斷裂或工件彈起。' },
   motor: { name: '馬達（Motor）', role: 'POWER UNIT', desc: '位於頭部後方的電動機，常見 250–550W。透過皮帶把動力傳到主軸。長時間連續運轉會發熱——要讓馬達休息。', fact: '聞到焦味或聽到異音要立刻停機。馬達燒了維修費可能比機台還貴。' },
   belt: { name: '皮帶與皮帶輪（Belt & Pulley）', role: 'SPEED TRANSMISSION', desc: '透過 V 型皮帶在馬達與主軸的「階梯式皮帶輪」間傳動。把皮帶移到不同的皮帶輪組合，就改變主軸轉速。', fact: '換檔前務必斷電。原理：皮帶掛在主軸側「大輪」（馬達側小輪）= 低速大扭力（鑽鋼）；主軸側「小輪」（馬達側大輪）= 高速（鑽木）。各機型輪組排列不同，請與教室機台實際核對。' },
   stop: { name: '緊急停止鈕（Emergency Stop）', role: 'E-STOP', desc: '大紅色按鈕，遇到危險時用手掌「拍下去」就能立刻切斷電源。多數鑽床的開關蓋是「拍下停、拉開啟」的設計。', fact: '操作前先確認緊急停止鈕的位置，意外時不用思考、直接拍。' },
@@ -68,15 +68,23 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
 // ========================
 (function() {
   const POSITIONS = [
-    { pos: 1, rpm: 500,  label: '最低速 — 大扭力', color: '#dc2626', mat: '厚鋼板 / 硬鐵', tip: '鑽大孔徑硬金屬，務必加切削液降溫' },
+    { pos: 1, rpm: 500,  label: '最低速 — 大扭力', color: '#dc2626', mat: '厚鋼板 / 硬鐵', tip: '鑽大孔徑硬金屬，務必加切削液（切削油）降溫' },
     { pos: 2, rpm: 720,  label: '低速',             color: '#f97316', mat: '薄鋼 / 不鏽鋼', tip: '金屬鑽孔常用，兼顧速度與扭力' },
-    { pos: 3, rpm: 1100, label: '中速',             color: '#eab308', mat: '銅 / 塑膠',     tip: '銅材與硬塑膠常用段，加少許機油' },
+    { pos: 3, rpm: 1100, label: '中速',             color: '#eab308', mat: '銅 / 塑膠',     tip: '銅材與硬塑膠常用段，加少許切削液' },
     { pos: 4, rpm: 1700, label: '中高速',           color: '#22c55e', mat: '合板 / 硬木',   tip: '木材常用段，排屑順暢，深孔定時退屑' },
     { pos: 5, rpm: 2400, label: '最高速',           color: '#06b6d4', mat: '軟木 / MDF / 鋁', tip: '小直徑 + 軟材最快；鋁的切削速度約為鋼的 3–4 倍，8mm 以下也用這段（加切削液）' },
   ];
 
-  // Spindle pulley radii for each position (larger r = lower belt = higher RPM)
-  const spRadii = { 1: [22, 16, 10, 5], 2: [18, 13, 8, 4], 3: [15, 11, 7, 3], 4: [12, 9, 6, 3], 5: [10, 7, 4, 2] };
+  // 各段皮帶所在的塔輪半徑：主軸輪越大（馬達輪越小）→ 主軸越慢；P1 主軸輪最大、P5 最小
+  const PULLEY_R = {
+    motor:   { 1: 12, 2: 16, 3: 20, 4: 24, 5: 28 },
+    spindle: { 1: 28, 2: 24, 3: 20, 4: 16, 5: 12 },
+  };
+  // 皮帶路徑：馬達輪上緣 → 主軸輪上緣 → 繞主軸輪 → 主軸輪下緣 → 馬達輪下緣 → 繞馬達輪
+  function beltPath(n) {
+    const rm = PULLEY_R.motor[n], rs = PULLEY_R.spindle[n];
+    return `M65,${95 - rm} L148,${95 - rs} A${rs},${rs} 0 0 1 148,${95 + rs} L65,${95 + rm} A${rm},${rm} 0 0 1 65,${95 - rm}`;
+  }
 
   const sec = document.createElement('section');
   sec.className = 'panel';
@@ -94,26 +102,17 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
       <svg viewBox="0 0 200 180" style="width:180px;height:160px;flex-shrink:0">
         <rect x="20" y="10" width="160" height="160" rx="8" fill="#1e293b"/>
         <text x="100" y="26" text-anchor="middle" font-size="10" fill="#64748b" font-weight="700" font-family="Inter">皮帶箱（內部俯視）</text>
-        <!-- 馬達皮帶輪（左，4 階梯圓環） -->
+        <!-- 馬達皮帶輪（左）與主軸皮帶輪（右）：兩個固定的 5 階塔輪，方向相反；換段只移動皮帶 -->
         <g transform="translate(65,95)">
-          <circle r="30" fill="#374151" stroke="#64748b" stroke-width="1.5"/>
-          <circle r="23" fill="#475569" stroke="#94a3b8" stroke-width="1"/>
-          <circle r="15" fill="#334155" stroke="#64748b" stroke-width="1"/>
-          <circle r="8" fill="#1e293b" stroke="#94a3b8" stroke-width="0.5"/>
-          <circle r="3" fill="#64748b"/>
+          ${[5,4,3,2,1].map(n => `<circle id="mp-${n}" r="${PULLEY_R.motor[n]}" fill="${n % 2 ? '#374151' : '#475569'}" stroke="#64748b" stroke-width="1"/>`).join('')}
           <text x="0" y="4" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="700" font-family="Inter">馬達</text>
         </g>
-        <!-- 主軸皮帶輪（右，變換大小） -->
-        <g transform="translate(148,95)" id="sp-pulley">
-          <circle id="sp-r1" r="20" fill="#374151" stroke="#64748b" stroke-width="1.5"/>
-          <circle id="sp-r2" r="13" fill="#475569" stroke="#94a3b8" stroke-width="1"/>
-          <circle id="sp-r3" r="7" fill="#334155" stroke="#64748b" stroke-width="1"/>
-          <circle id="sp-r4" r="3" fill="#1e293b"/>
+        <g transform="translate(148,95)">
+          ${[1,2,3,4,5].map(n => `<circle id="sp-${n}" r="${PULLEY_R.spindle[n]}" fill="${n % 2 ? '#374151' : '#475569'}" stroke="#64748b" stroke-width="1"/>`).join('')}
           <text x="0" y="4" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="700" font-family="Inter">主軸</text>
         </g>
-        <!-- 皮帶（兩條平行線） -->
-        <line id="belt-line1" x1="95" y1="75" x2="128" y2="75" stroke="#b45309" stroke-width="5" stroke-linecap="round"/>
-        <line id="belt-line2" x1="95" y1="115" x2="128" y2="115" stroke="#b45309" stroke-width="5" stroke-linecap="round"/>
+        <!-- 皮帶（繞過兩輪同一段的一圈） -->
+        <path id="belt-path" d="${beltPath(3)}" fill="none" stroke="#b45309" stroke-width="4" stroke-linejoin="round"/>
       </svg>
     </div>
     <!-- 實物參考 -->
@@ -157,7 +156,6 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
   if (nav) nav.parentNode.insertBefore(sec, nav);
 
   // Belt Y positions based on which step/layer the belt is on
-  const beltY = { 1: [65, 125], 2: [72, 118], 3: [80, 110], 4: [87, 103], 5: [92, 98] };
 
   sec.querySelectorAll('[data-pos]').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -177,17 +175,13 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
           <p style="margin:0 0 8px;font-size:15px;color:#fff;font-weight:600">${pos.mat}</p>
           <p style="margin:0;font-size:12px;color:#94a3b8">${pos.tip}</p>
         </div>`;
-      const [y1, y2] = beltY[pos.pos];
-      const b1 = document.getElementById('belt-line1');
-      const b2 = document.getElementById('belt-line2');
-      if (b1) { b1.setAttribute('y1', y1); b1.setAttribute('y2', y1); b1.setAttribute('stroke', pos.color); }
-      if (b2) { b2.setAttribute('y1', y2); b2.setAttribute('y2', y2); b2.setAttribute('stroke', pos.color); }
-      // Adjust spindle radii to reflect which gear is active
-      const r = spRadii[pos.pos];
-      ['sp-r1','sp-r2','sp-r3','sp-r4'].forEach((id, i) => {
-        const el = document.getElementById(id);
-        if (el) el.setAttribute('r', r[i]);
-      });
+      const belt = document.getElementById('belt-path');
+      if (belt) { belt.setAttribute('d', beltPath(pos.pos)); belt.setAttribute('stroke', pos.color); }
+      // 標出皮帶所在的那一階
+      [1, 2, 3, 4, 5].forEach(n => ['mp-', 'sp-'].forEach(pre => {
+        const el = document.getElementById(pre + n);
+        if (el) el.setAttribute('stroke', n === pos.pos ? pos.color : '#64748b');
+      }));
     });
   });
 })();
@@ -199,8 +193,8 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
       id: 'hss', name: 'HSS 高速鋼', color: '#6b7280',
       material: '鋼板 · 不鏽鋼 · 鋁 · 塑膠',
       belt: 'P1–P2（500–720 RPM）', tip: '118° 磨尖螺旋刃',
-      desc: '最通用的金屬鑽頭，螺旋排屑槽讓切屑順暢排出。鑽鐵/鋼時建議加切削油冷卻降溫，延長鑽頭壽命。不適合木材（缺少中心定位尖）。',
-      note: '鑽鋼必須用切削油，否則鑽頭在數分鐘內即因過熱而退火失硬。',
+      desc: '最通用的金屬鑽頭，螺旋排屑槽讓切屑順暢排出。鑽鐵/鋼時建議加切削液（切削油）冷卻降溫，延長鑽頭壽命。不適合木材（缺少中心定位尖）。',
+      note: '鑽鋼必須用切削液，否則鑽頭在數分鐘內即因過熱而退火失硬。',
       photo: { url: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a8/HSS_Twist_Drill_into_Aluminium_with_Lubricant.jpg/330px-HSS_Twist_Drill_into_Aluminium_with_Lubricant.jpg', caption: 'HSS 鑽頭鑽削鋁材（施切削液）', page: 'https://commons.wikimedia.org/wiki/File:HSS_Twist_Drill_into_Aluminium_with_Lubricant.jpg', license: 'CC BY-SA 3.0 · Wikimedia Commons' },
       svg: `<rect x="10" y="43" width="140" height="14" rx="2" fill="#9ca3af"/>
         <g stroke="#4b5563" stroke-width="1" opacity=".7">
@@ -264,7 +258,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
       id: 'holesaw', name: '開孔器（Hole Saw）', color: '#b45309',
       material: '木板 · 石膏板 · 薄金屬（大孔 20–150mm）',
       belt: 'P1（500 RPM，最低速）', tip: '圓筒鋸齒 + 中心導鑽',
-      desc: '圓形鋸齒筒切出大孔，中心有導鑽先定位。適合在木板上開音箱喇叭孔、桌面穿線孔等大直徑場合。鑽床固定了主軸方向，孔形比手持更圓更正。鑽木用雙金屬鋸齒，鑽金屬需加切削油。',
+      desc: '圓形鋸齒筒切出大孔，中心有導鑽先定位。適合在木板上開音箱喇叭孔、桌面穿線孔等大直徑場合。鑽床固定了主軸方向，孔形比手持更圓更正。鑽木用雙金屬鋸齒，鑽金屬需加切削液。',
       note: '開孔器重量大、直徑大，鑽床才能安全操作。手電鑽開大孔容易偏轉傷人，建議在鑽床上進行。鑽完後先停機，再用起子撬出圓木塞。',
       svg: `<line x1="78" y1="50" x2="110" y2="50" stroke="#d97706" stroke-width="2.5" stroke-dasharray="3,2"/>
         <polygon points="110,45 118,50 110,55" fill="#92400e"/>
@@ -280,12 +274,12 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
     { mat: '硬木 / 橡木',   bit: 'wood',     belt: 'P3–P4', note: '中速，分段退屑' },
     { mat: 'MDF 密集板',    bit: 'wood',     belt: 'P3–P5', note: '粉塵多，戴口罩' },
     { mat: '鋁',            bit: 'hss',      belt: 'P4–P5', note: '切削速度約為鋼的 3–4 倍，小孔用 P5；加切削液防黏刃' },
-    { mat: '銅',            bit: 'hss',      belt: 'P3–P4', note: '可加機油，減少黏刃' },
-    { mat: '薄鋼板 ≤3mm',   bit: 'hss',      belt: 'P1–P2', note: '必加切削油' },
-    { mat: '厚鋼板 >3mm',   bit: 'hss',      belt: 'P1',    note: '最低速+大量切削油' },
+    { mat: '銅',            bit: 'hss',      belt: 'P3–P4', note: '可加切削液，減少黏刃' },
+    { mat: '薄鋼板 ≤3mm',   bit: 'hss',      belt: 'P1–P2', note: '必加切削液' },
+    { mat: '厚鋼板 >3mm',   bit: 'hss',      belt: 'P1',    note: '最低速+大量切削液' },
     { mat: '塑膠 / 壓克力', bit: 'hss',      belt: 'P2–P3', note: '慢進刀防破裂' },
     { mat: '磁磚 / 陶板試片', bit: 'masonry',  belt: 'P1–P2', note: '無衝擊，純研磨' },
-    { mat: '鉸鏈槽（盲孔）',bit: 'forstner', belt: 'P1–P2', note: '必須極低速+限位環' },
+    { mat: '鉸鏈槽（盲孔）',bit: 'forstner', belt: 'P1（35mm 鉸鏈座）', note: '必須極低速+限位環' },
     { mat: '薄板多孔徑',    bit: 'step',     belt: 'P2–P3', note: '薄板限定（≤5mm）' },
     { mat: '木板大孔（音箱、穿線孔）', bit: 'holesaw',  belt: 'P1',    note: '最低速，鑽金屬加油' },
   ];
@@ -311,7 +305,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
           <th style="padding:8px 12px;text-align:left">材料</th>
           <th style="padding:8px 12px;text-align:left">推薦鑽頭</th>
           <th style="padding:8px 12px;text-align:left">皮帶段位</th>
-          <th style="padding:8px 12px;text-align:left">備注</th>
+          <th style="padding:8px 12px;text-align:left">備註</th>
         </tr></thead>
         <tbody>${MAT.map((r, i) => `<tr style="background:${i%2?'#f8fafc':'#fff'}">
           <td style="padding:8px 12px;font-weight:600;border-bottom:1px solid #f1f5f9">${r.mat}</td>

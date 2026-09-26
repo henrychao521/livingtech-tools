@@ -3,9 +3,9 @@ const PARTS = {
   belt: { name: '砂帶（Sanding Belt）', role: 'BELT SANDER ABRASIVE', desc: '套在前後兩個滾輪上的環形砂紙帶。常見規格 75×457mm / 100×610mm。粒度（grit）數字越小越粗：60 號粗磨、120 號中磨、240 號細磨、320 號精修。', fact: '砂帶方向有箭頭印在內側——裝錯方向砂粒會被反向拉脫，磨削效率降到一半且砂帶很快壞。' },
   disc: { name: '砂盤（Sanding Disc）', role: 'DISC SANDER ABRASIVE', desc: '圓盤狀砂紙，貼在金屬轉盤上。盤式砂磨機切削力比帶式大，適合快速去料、平面修整、邊角倒角。使用前先空轉觀察旋轉方向，工件只能放在「向下旋轉」那一側才不會被甩起（多數逆時針機型為左半邊；依教室機台實際方向為準）。', fact: '盤式砂磨「往下轉那側才能磨」是鐵則：放到向上旋轉那側，工件會被砂盤甩飛。' },
   motor: { name: '馬達（Motor）', role: 'POWER UNIT', desc: '常見 250–550W，透過 V 型皮帶帶動砂帶滾輪或砂盤轉軸。連續使用 15 分鐘以上要讓馬達休息，避免過熱。', fact: '聞到焦味或砂帶轉速下降 = 馬達過熱。立刻停機、拔插頭、報告老師，讓機台自然冷卻；不可自行打開機殼。' },
-  fence: { name: '靠尺（Fence / Miter Gauge）', role: 'WORKPIECE GUIDE', desc: '工作面後方的金屬導向板，提供工件穩定支撐。可調角度（0°/45°/90°）做斜角倒角。靠尺與砂帶之間應保持極小間隙（< 2mm）避免工件被夾入。', fact: '工件必須平貼靠尺，這樣磨出來才會平直。沒貼靠尺 → 工件會在砂帶上「跳舞」，磨出來歪斜不平。' },
+  fence: { name: '靠尺（Fence / Miter Gauge）', role: 'WORKPIECE GUIDE', desc: '工作面後方的金屬導向板，提供工件穩定支撐。預設與砂面垂直，可調到 45° 做斜角倒角。靠尺與砂帶之間應保持極小間隙（< 2mm）避免工件被夾入。', fact: '工件必須平貼靠尺，這樣磨出來才會平直。沒貼靠尺 → 工件會在砂帶上「跳舞」，磨出來歪斜不平。' },
   switch: { name: '電源開關（On/Off Switch）', role: 'POWER CONTROL', desc: '機台前方的綠色 ON 按鈕，紅色 OFF 按鈕。多數機台採「拍板式」開關蓋——拍下即停機，方便緊急時不假思索直接拍。', fact: '開機前先確認拍板開關位置，演練一次不用看就能拍下；砂磨時雙手穩住工件。' },
-  dust: { name: '集塵口（Dust Collection Port）', role: 'DUST EVACUATION', desc: '砂磨會產生大量粉塵——木屑粉、塑料粉、金屬粉。集塵口連接工坊吸塵器或集塵桶，是「粉塵爆炸防範」的核心。', fact: '⚠ 木屑粉達一定濃度（40g/m³）遇火源會爆炸。集塵連接不是選項，是必要設備。' },
+  dust: { name: '集塵口（Dust Collection Port）', role: 'DUST EVACUATION', desc: '砂磨會產生大量粉塵——木屑粉、塑膠粉、金屬粉。集塵口連接工坊吸塵器或集塵桶，是「粉塵爆炸防範」的核心。', fact: '⚠ 木屑粉達一定濃度（40g/m³）遇火源會爆炸。集塵連接不是選項，是必要設備。' },
   tension: { name: '砂帶張力調整（Belt Tension）', role: 'BELT ADJUSTER', desc: '帶式砂磨機側面的調整旋鈕，控制前後滾輪間距以調整砂帶張力。張力太鬆砂帶會滑脫飛出，張力太緊砂帶壽命會減半。', fact: '正確張力：徒手按砂帶中央，能下壓約 5mm 且不會晃動。換新砂帶後通常要重新調整。' },
   stop: { name: '緊急停止（Emergency Stop）', role: 'E-STOP', desc: '大紅色按鈕，遇到工件飛起、衣物捲入、煙霧等緊急狀況時，用手掌拍下立即斷電。多數機台有「鎖定式」設計——拍下後要拉起才能重新啟動。', fact: '緊急停止位置學生應該背得出來——遇到狀況不用思考、直接伸手拍。' },
 };
@@ -68,8 +68,8 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
   const ABRASIVES = [
     {
       id: 'al2o3', name: '氧化鋁', en: 'Aluminum Oxide (Al₂O₃)', color: '#6b7280', hv: 2000,
-      grit: '60–320', materials: '木材 · 金屬 · 塑料', tag: '⭐ 最通用',
-      note: '最普遍的磨料，適合木工、金屬加工和塑料。耐磨且性價比高，是教室砂磨機的預設選擇。',
+      grit: '60–320', materials: '木材 · 金屬 · 塑膠', tag: '⭐ 最通用',
+      note: '最普遍的磨料，適合木工、金屬加工和塑膠。耐磨且性價比高，是教室砂磨機的預設選擇。',
       warn: '磨不鏽鋼效率偏低，改用氧化鋯效率更高。',
       svgGrains: `<circle cx="20" cy="25" r="8" fill="#9ca3af"/><circle cx="42" cy="18" r="10" fill="#6b7280"/><circle cx="62" cy="28" r="7" fill="#9ca3af"/><circle cx="80" cy="16" r="9" fill="#6b7280"/><circle cx="100" cy="24" r="6" fill="#9ca3af"/><circle cx="118" cy="20" r="8" fill="#6b7280"/>`,
     },
@@ -113,7 +113,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
           <th style="padding:8px 10px;border:1px solid #e2e8f0">禁用場合</th>
         </tr></thead>
         <tbody>
-          <tr><td style="padding:7px 10px;border:1px solid #e2e8f0"><strong style="color:#6b7280">氧化鋁</strong></td><td style="padding:7px 10px;border:1px solid #e2e8f0;text-align:center">2000</td><td style="padding:7px 10px;border:1px solid #e2e8f0;text-align:center">60–320</td><td style="padding:7px 10px;border:1px solid #e2e8f0">木材、金屬、塑料</td><td style="padding:7px 10px;border:1px solid #e2e8f0;color:#dc2626">不鏽鋼效率低</td></tr>
+          <tr><td style="padding:7px 10px;border:1px solid #e2e8f0"><strong style="color:#6b7280">氧化鋁</strong></td><td style="padding:7px 10px;border:1px solid #e2e8f0;text-align:center">2000</td><td style="padding:7px 10px;border:1px solid #e2e8f0;text-align:center">60–320</td><td style="padding:7px 10px;border:1px solid #e2e8f0">木材、金屬、塑膠</td><td style="padding:7px 10px;border:1px solid #e2e8f0;color:#dc2626">不鏽鋼效率低</td></tr>
           <tr style="background:#f8fafc"><td style="padding:7px 10px;border:1px solid #e2e8f0"><strong style="color:#1e293b">碳化矽</strong></td><td style="padding:7px 10px;border:1px solid #e2e8f0;text-align:center">2500</td><td style="padding:7px 10px;border:1px solid #e2e8f0;text-align:center">80–400</td><td style="padding:7px 10px;border:1px solid #e2e8f0">玻璃、陶瓷、石材</td><td style="padding:7px 10px;border:1px solid #e2e8f0;color:#dc2626">禁磨鐵金屬</td></tr>
           <tr><td style="padding:7px 10px;border:1px solid #e2e8f0"><strong style="color:#b45309">氧化鋯鋁</strong></td><td style="padding:7px 10px;border:1px solid #e2e8f0;text-align:center">2200</td><td style="padding:7px 10px;border:1px solid #e2e8f0;text-align:center">36–120</td><td style="padding:7px 10px;border:1px solid #e2e8f0">鋼鐵、不鏽鋼</td><td style="padding:7px 10px;border:1px solid #e2e8f0;color:#dc2626">精細加工不適合</td></tr>
           <tr style="background:#f8fafc"><td style="padding:7px 10px;border:1px solid #e2e8f0"><strong style="color:#9f1239">石榴石</strong></td><td style="padding:7px 10px;border:1px solid #e2e8f0;text-align:center">1200</td><td style="padding:7px 10px;border:1px solid #e2e8f0;text-align:center">80–220</td><td style="padding:7px 10px;border:1px solid #e2e8f0">木材精修</td><td style="padding:7px 10px;border:1px solid #e2e8f0;color:#dc2626">禁磨任何金屬</td></tr>

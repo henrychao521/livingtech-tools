@@ -40,7 +40,7 @@ function calc() {
   const dia = parseFloat(els.dia.value);
   const belt = parseInt(els.belt.value);
   const rpm = BELT_RPM[belt];
-  // SFM = RPM × dia(inches) × π / 12 — but use mm 簡化
+  // SFM = RPM × dia(inches) × π / 12 — 滑桿是 mm，先 ÷25.4 換成吋
   const sfm = Math.round(rpm * (dia / 25.4) * Math.PI / 12);
   const ideal = m.idealSFM;
   // 推薦轉速：用理想 SFM 的中位
@@ -199,14 +199,14 @@ function showResult() {
     msg = r.bestBelt === r.belt
       ? `❌ 轉速太低，切削效率差、鑽頭容易卡。請改用更高一段試試。`
       : `❌ 轉速太低，切削效率差、鑽頭容易卡。應該調到第 ${r.bestBelt} 段。`;
-  } else if (r.cutLabel !== '理想' || (r.m.needOil && !r.m.needOil)) {
+  } else if (r.cutLabel !== '理想') {
     level = 'warn';
     msg = r.atMaxSpeed
       ? `⚠ 已是最高速（第 5 段），這個直徑在${r.m.name}上可接受（SFM ${r.sfm}，理想 ${r.ideal[0]}–${r.ideal[1]}，小鑽頭達不到是正常的）。耗時 ${dur} 秒。`
       : `⚠ 可接受但不理想（SFM ${r.sfm}，理想 ${r.ideal[0]}–${r.ideal[1]}）。耗時 ${dur} 秒。`;
   } else {
     level = 'good';
-    msg = `✓ 完美鑽孔！SFM ${r.sfm} 在理想範圍。耗時 ${dur} 秒。${r.m.needOil ? '提醒：實際操作金屬鑽孔要加切削油。' : ''}`;
+    msg = `✓ 完美鑽孔！SFM ${r.sfm} 在理想範圍。耗時 ${dur} 秒。${r.m.needOil ? '提醒：實際操作金屬鑽孔要加切削液。' : ''}`;
     const prog = loadP();
     prog.module4 = true;
     saveP(prog);

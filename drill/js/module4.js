@@ -184,7 +184,7 @@ function drawScene() {
   ctx.fillStyle = '#FBBF24';
   ctx.font = '700 8px Inter';
   ctx.textAlign = 'center';
-  ctx.fillText('12V', 85, 3);
+  ctx.fillText('18V', 85, 3);
   ctx.restore();
   // 馬達殼（直立，底部接扭力環）
   ctx.fillStyle = '#F59E0B';

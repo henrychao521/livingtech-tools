@@ -1,10 +1,10 @@
 // 手電鑽 模組 3：鑽孔流程
 const STEPS = [
-  { title: '穿戴護具', desc: '護目鏡（防鐵屑/木屑彈飛）、口罩（防 MDF/塑料粉塵）、不戴手套（手套容易被夾頭捲入更危險）。長髮綁起、寬鬆袖口塞好、項鍊摘下。', tip: '護目鏡要選包覆型，普通眼鏡擋不住側面飛屑。', warn: '戴布手套是手電鑽操作的禁忌——比沒戴更危險。', anim: 'ppe' },
-  { title: '選對鑽頭', desc: '木材 → 木工螺旋鑽頭（含中心尖）\n金屬 → 高速鋼（HSS）鑽頭\n磚石 → 碳化鎢磚石鑽頭\n大孔（>10mm）→ 階梯鑽或開孔器\n小心：鑽頭「柄徑」不能超過夾頭規格（10/13mm）；鏟形鑽、開孔器是細柄，可以鑽比夾頭大的孔。', tip: '不確定材料時，用磁鐵測：吸住＝鐵製金屬、不吸＝鋁/銅/塑膠。', warn: null, anim: 'bit' },
-  { title: '裝鑽頭、鎖緊夾頭', desc: '先確認電池拆下或保險開關鎖定。把鑽頭插入夾頭三爪中心 → 一手握機身、另一手轉緊夾頭環，直到聽見連續「咔咔咔」棘輪聲——表示鎖到最緊。', tip: '裝完搖一搖鑽頭確認不會晃動。', warn: '沒鎖到「咔咔」聲不算夾緊，鑽頭會在工件內甩飛。', anim: 'chuck' },
-  { title: '設定扭力與模式', desc: '鑽孔 → 把扭力環轉到「鑽頭符號」（離合器鎖死）\n鎖螺絲 → 中低段（4–10），讓離合器在到位時自動跳脫\n正反轉開關確認在「FWD（正轉）」位置。', tip: '鎖石膏板 1–3、實木 12–18、混凝土壁釘 18+。', warn: null, anim: 'torque' },
-  { title: '標位置、固定工件', desc: '用鉛筆在鑽孔位置畫「十字」。金屬鑽孔可用中心衝（central punch）敲一個小凹點，防止偏鑽。工件必須用 C 型夾或桌上虎鉗固定在工作台上，下方墊廢板防止鑽穿桌面。', tip: '雙手鑽孔時，工件絕對不能用手或膝蓋壓——一定要夾。', warn: '工件不固定是最常見的傷害來源。', anim: 'mark' },
+  { title: '穿戴護具', desc: '護目鏡（防鐵屑/木屑彈飛）、口罩（防 MDF/塑膠粉塵）、不戴手套（手套容易被夾頭捲入更危險）。長髮綁起、寬鬆袖口塞好、項鍊摘下。', tip: '護目鏡要選包覆型，普通眼鏡擋不住側面飛屑。', warn: '戴布手套是手電鑽操作的禁忌——比沒戴更危險。', anim: 'ppe' },
+  { title: '選對鑽頭', desc: '木材 → 木工螺旋鑽頭（含中心尖）\n金屬 → 高速鋼（HSS）鑽頭\n磚石 → 碳化鎢磚石鑽頭\n大孔（>10mm）：木材 → 鏟形或平底鑽頭；薄金屬板 → 階梯鑽；更大的孔 → 開孔器\n小心：鑽頭「柄徑」不能超過夾頭規格（10/13mm）；鏟形鑽、開孔器是細柄，可以鑽比夾頭大的孔。', tip: '不確定材料時，用磁鐵測：吸住＝鐵製金屬、不吸＝鋁/銅/塑膠。', warn: null, anim: 'bit' },
+  { title: '裝鑽頭、鎖緊夾頭', desc: '先確認電池拆下或保險開關鎖定。把鑽頭插入夾頭三爪中心 → 一手握機身、另一手轉緊夾頭環，有棘輪的夾頭要轉到聽見連續「咔咔咔」棘輪聲、沒有棘輪的要轉到轉不動——表示鎖到最緊。', tip: '裝完搖一搖鑽頭確認不會晃動。', warn: '沒鎖緊就開機，鑽頭會在工件內甩飛。', anim: 'chuck' },
+  { title: '設定扭力與模式', desc: '鑽孔 → 把扭力環轉到「鑽頭符號」（離合器鎖死）\n鎖螺絲 → 依材料選段位（軟薄材低、硬厚材高），讓離合器在到位時自動跳脫\n正反轉開關確認在「FWD（正轉）」位置。', tip: '鎖石膏板 1–3、薄夾板 4–7、硬木／厚板 10–16、混凝土壁釘 18–20；刻度依廠牌而異，先在廢料上試鎖。', warn: null, anim: 'torque' },
+  { title: '標位置、固定工件', desc: '用鉛筆在鑽孔位置畫「十字」。金屬鑽孔可用中心衝（center punch）敲一個小凹點，防止偏鑽。工件必須用 C 型夾或桌上虎鉗固定在工作台上，下方墊廢板防止鑽穿桌面。', tip: '雙手鑽孔時，工件絕對不能用手或膝蓋壓——一定要夾。', warn: '工件不固定是最常見的傷害來源。', anim: 'mark' },
   { title: '起鑽：點壓 + 慢速', desc: '雙手握姿勢就位（主手扳機、輔手扶機身前段）。鑽頭垂直對準鉛筆十字、輕扣扳機，以約 10–20% 的轉速慢速起鑽，讓鑽頭咬入材料。咬入後再逐漸加深扣扳機加速。', tip: '鑽頭必須與工件「90°垂直」——歪斜會偏鑽或斷頭。', warn: null, anim: 'start' },
   { title: '鑽孔：穩定進刀、定時退屑', desc: '保持垂直、穩定進刀（不要太用力推，讓鑽頭自己切）。每鑽 5–10mm 退鑽一次清理鐵屑（pecking）。深孔或硬材料更頻繁退屑。聽到「轉速突然下降」就是進刀太猛。', tip: '木材鑽出來是「捲花」狀，金屬是「螺旋狀屑」，磚石是「粉末」——順利時的訊號。', warn: '進刀過快會折斷鑽頭、燒馬達。', anim: 'drill' },
   { title: '退鑽 ＆ 收工', desc: '鑽穿後維持正轉、低速垂直抽出，離開工件再放開扳機（反轉只在卡鑽時使用）。檢查孔徑是否符合需求，必要時用大一號鑽頭擴孔或用銼刀修毛邊。最後：拆電池 → 拆鑽頭 → 鑽頭歸位 → 清理工作台。', tip: '鑽完馬上把鑽頭從夾頭取下，避免下次別人誤觸扳機。', warn: '剛鑽完的金屬鑽頭很燙（200°C+），等待數分鐘，先以手背靠近感溫確認不燙再徒手摸，或用鉗子取下。', anim: 'finish' },
@@ -259,11 +259,23 @@ stepProgressEl.textContent = `已學習 ${seenSteps.size} / ${STEPS.length} 步`
   const seqSec = document.querySelector('#seq-puzzle')?.closest('section') || document.querySelector('.module-nav-bottom');
   if (seqSec && seqSec.parentNode) seqSec.parentNode.insertBefore(sec, seqSec);
 
+  // 純鑽孔模式不用鎖螺絲：螺絲選單變灰、不必選螺絲就顯示結果
+  function syncScrewBtns() {
+    const off = selMat === 'drill';
+    document.getElementById('torq-screw-btns').querySelectorAll('[data-screw]').forEach(b => {
+      b.disabled = off; b.style.opacity = off ? '.4' : ''; b.style.cursor = off ? 'not-allowed' : 'pointer';
+    });
+  }
+
   function calcTorque() {
-    if (!selMat || !selScrew) return;
+    const isDrill = selMat === 'drill';
+    if (!selMat || (!selScrew && !isDrill)) {
+      // 從純鑽孔模式切回鎖螺絲材料、還沒選螺絲時，清掉上一個結果
+      document.getElementById('torque-result').innerHTML = '<p style="color:#94a3b8;margin:8px 0">👆 選擇材料與螺絲後即可看到建議刻度</p>';
+      return;
+    }
     const mat = MATERIALS.find(m => m.id === selMat);
     const screw = SCREWS.find(s => s.id === selScrew);
-    const isDrill = mat.id === 'drill';
     let low = isDrill ? 21 : Math.max(1, mat.range[0] + screw.mod);
     let high = isDrill ? 21 : Math.min(20, mat.range[1] + screw.mod);
     const rangeLabel = isDrill ? '⊕ 鑽頭符號' : `${low}–${high}`;
@@ -292,7 +304,7 @@ stepProgressEl.textContent = `已學習 ${seenSteps.size} / ${STEPS.length} 步`
         <div style="text-align:left;max-width:220px">
           <p style="margin:0 0 4px;font-size:12px;color:#64748b">建議扭力環刻度</p>
           <p style="margin:0 0 10px;font-size:${isDrill?'18':'26'}px;font-weight:900;color:var(--accent,#7C3AED)">${rangeLabel}</p>
-          <p style="margin:0 0 4px;font-size:12px;color:#64748b">${mat.icon} ${mat.name} × ${screw.name}</p>
+          <p style="margin:0 0 4px;font-size:12px;color:#64748b">${mat.icon} ${mat.name}${isDrill ? '' : ` × ${screw.name}`}</p>
           <p style="margin:0;font-size:13px;color:#374151;line-height:1.5">${mat.note}</p>
         </div>
       </div>`;
@@ -303,7 +315,7 @@ stepProgressEl.textContent = `已學習 ${seenSteps.size} / ${STEPS.length} 步`
     btn.addEventListener('click', () => {
       document.getElementById('torq-mat-btns').querySelectorAll('[data-mat]').forEach(b => { b.style.background='#fff'; b.style.borderColor='#e2e8f0'; });
       btn.style.background = 'var(--accent-light,#ede9fe)'; btn.style.borderColor = 'var(--accent,#7C3AED)';
-      selMat = btn.dataset.mat; calcTorque();
+      selMat = btn.dataset.mat; syncScrewBtns(); calcTorque();
     });
   });
   document.getElementById('torq-screw-btns').querySelectorAll('[data-screw]').forEach(btn => {

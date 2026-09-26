@@ -116,8 +116,16 @@ quizEl.querySelectorAll('.choice').forEach(b => b.addEventListener('click', () =
 const wfCanvas = document.getElementById('workflow-canvas');
 if (wfCanvas && wfCanvas.getContext) {
   const ctx = wfCanvas.getContext('2d');
-  const W = wfCanvas.width = wfCanvas.clientWidth || 720;
-  const H = wfCanvas.height = 280;
+  // 寬度依畫布實際寬度計算，視窗縮放時重算；窄螢幕（< 520px）改成四格上下排列，卡片文字才不會被截掉
+  let W, H, vertical;
+  function layout() {
+    W = wfCanvas.width = wfCanvas.clientWidth || 720;
+    vertical = W < 520;
+    H = vertical ? 60 + 4 * 72 + 30 : 280;
+    wfCanvas.height = H;
+    wfCanvas.style.height = H + 'px';
+  }
+  layout();
 
   // 正確順序：1. 清潔 → 2. 檢查 → 3. 上油（金屬工具）→ 4. 歸位影子板
   const STEPS_DEF = [
@@ -133,36 +141,53 @@ if (wfCanvas && wfCanvas.getContext) {
 
   function slotX(i) { return 60 + i * ((W - 120) / 4); }
   function slotW() { return (W - 120) / 4 - 12; }
+  // 每一格與格內卡片的位置（橫排：四欄；直排：四列）
+  function slotRect(i) {
+    return vertical ? { x: 16, y: 50 + i * 72, w: W - 32, h: 64 } : { x: slotX(i), y: 60, w: slotW(), h: 160 };
+  }
+  function cardRect(i) {
+    const r = slotRect(i);
+    return vertical ? { x: r.x + 64, y: r.y + 6, w: r.w - 70, h: 52 } : { x: r.x + 4, y: 95, w: r.w - 8, h: 110 };
+  }
+  // 放開時落在哪一格（橫排看 x、直排看 y）
+  function slotAt(mx, my) {
+    for (let i = 0; i < 4; i++) {
+      const r = slotRect(i);
+      if (vertical ? (my >= r.y && my <= r.y + r.h) : (mx >= r.x && mx <= r.x + r.w)) return i;
+    }
+    return -1;
+  }
 
   function draw() {
     ctx.clearRect(0, 0, W, H);
     // 時間軸底
     ctx.fillStyle = '#F1F5F9';
-    ctx.fillRect(40, 40, W - 80, 4);
+    if (vertical) ctx.fillRect(38, 40, 4, H - 70); else ctx.fillRect(40, 40, W - 80, 4);
     for (let i = 0; i < 4; i++) {
-      const x = slotX(i);
+      const r = slotRect(i);
       // slot
       ctx.fillStyle = '#fff';
       ctx.strokeStyle = '#CBD5E1';
       ctx.lineWidth = 1.2;
       ctx.beginPath();
-      ctx.roundRect(x, 60, slotW(), 160, 12);
+      ctx.roundRect(r.x, r.y, r.w, r.h, 12);
       ctx.fill(); ctx.stroke();
       // step number
       ctx.fillStyle = '#94A3B8';
       ctx.font = '700 13px Inter';
       ctx.textAlign = 'center';
-      ctx.fillText(`步驟 ${i + 1}`, x + slotW() / 2, 80);
+      if (vertical) ctx.fillText(`步驟 ${i + 1}`, r.x + 32, r.y + r.h / 2 + 5);
+      else ctx.fillText(`步驟 ${i + 1}`, r.x + r.w / 2, 80);
     }
     // cards on slots
     cards.forEach(c => {
       if (c.dragging) return;
-      const x = slotX(c.current);
-      drawCard(c, x + 4, 95, slotW() - 8, 110);
+      const cr = cardRect(c.current);
+      drawCard(c, cr.x, cr.y, cr.w, cr.h);
     });
     // dragging card on top
     cards.forEach(c => {
-      if (c.dragging) drawCard(c, c.dx, c.dy, slotW() - 8, 110);
+      if (c.dragging) { const cr = cardRect(0); drawCard(c, c.dx, c.dy, cr.w, cr.h); }
     });
     // result hint
     const allCorrect = cards.every(c => c.current === c.correct);
@@ -170,7 +195,7 @@ if (wfCanvas && wfCanvas.getContext) {
       ctx.fillStyle = '#16A34A';
       ctx.font = '700 16px Inter, "Noto Sans TC"';
       ctx.textAlign = 'center';
-      ctx.fillText('✓ 順序正確！清潔 → 檢查 → 上油 → 歸位', W / 2, 250);
+      ctx.fillText('✓ 順序正確！清潔 → 檢查 → 上油 → 歸位', W / 2, H - 30 + (vertical ? 22 : 0));
       if (!wfCanvas.dataset.passed) {
         wfCanvas.dataset.passed = '1';
         const p = loadP(); p.module5_workflow = true; saveP(p);
@@ -191,7 +216,8 @@ if (wfCanvas && wfCanvas.getContext) {
     ctx.textAlign = 'left';
     // 自動換行
     const lines = wrap(c.label, w - 16, ctx);
-    lines.forEach((line, i) => ctx.fillText(line, x + 8, y + 26 + i * 18));
+    const top = vertical ? y + h / 2 - (lines.length - 1) * 9 + 4 : y + 26;
+    lines.forEach((line, i) => ctx.fillText(line, x + 8, top + i * 18));
   }
 
   function wrap(text, maxW, c) {
@@ -208,12 +234,13 @@ if (wfCanvas && wfCanvas.getContext) {
   function pick(mx, my) {
     for (let i = cards.length - 1; i >= 0; i--) {
       const c = cards[i];
-      const x = slotX(c.current) + 4;
-      const w = slotW() - 8;
-      if (mx >= x && mx <= x + w && my >= 95 && my <= 95 + 110) return c;
+      const r = cardRect(c.current);
+      if (mx >= r.x && mx <= r.x + r.w && my >= r.y && my <= r.y + r.h) return c;
     }
     return null;
   }
+
+  function moveTo(c, mx, my) { const cr = cardRect(0); c.dx = mx - cr.w / 2; c.dy = my - cr.h / 2; }
 
   function swapToSlot(card, slot) {
     const occupant = cards.find(c => c !== card && c.current === slot);
@@ -227,24 +254,24 @@ if (wfCanvas && wfCanvas.getContext) {
     const mx = (e.clientX - r.left) * (W / r.width);
     const my = (e.clientY - r.top) * (H / r.height);
     const c = pick(mx, my);
-    if (c) { c.dragging = true; c.dx = mx - (slotW() - 8) / 2; c.dy = my - 55; draw(); }
+    if (c) { c.dragging = true; moveTo(c, mx, my); draw(); }
   });
   wfCanvas.addEventListener('mousemove', e => {
     const r = wfCanvas.getBoundingClientRect();
     const mx = (e.clientX - r.left) * (W / r.width);
     const my = (e.clientY - r.top) * (H / r.height);
     const c = cards.find(x => x.dragging);
-    if (c) { c.dx = mx - (slotW() - 8) / 2; c.dy = my - 55; draw(); }
+    if (c) { moveTo(c, mx, my); draw(); }
   });
-  wfCanvas.addEventListener('mouseup', e => {
+  // 綁在 window：在畫布外放開，卡片也會落下（落在格外就回原位）
+  window.addEventListener('mouseup', e => {
     const r = wfCanvas.getBoundingClientRect();
     const mx = (e.clientX - r.left) * (W / r.width);
+    const my = (e.clientY - r.top) * (H / r.height);
     const c = cards.find(x => x.dragging);
     if (c) {
-      let target = -1;
-      for (let i = 0; i < 4; i++) {
-        if (mx >= slotX(i) && mx <= slotX(i) + slotW()) { target = i; break; }
-      }
+      const inside = mx >= 0 && mx <= W && my >= 0 && my <= H;
+      const target = inside ? slotAt(mx, my) : -1;
       if (target >= 0) swapToSlot(c, target);
       c.dragging = false;
       draw();
@@ -258,7 +285,7 @@ if (wfCanvas && wfCanvas.getContext) {
     const mx = (t.clientX - r.left) * (W / r.width);
     const my = (t.clientY - r.top) * (H / r.height);
     const c = pick(mx, my);
-    if (c) { c.dragging = true; c.dx = mx - (slotW() - 8) / 2; c.dy = my - 55; draw(); }
+    if (c) { c.dragging = true; moveTo(c, mx, my); draw(); }
   }, { passive: false });
   wfCanvas.addEventListener('touchmove', e => {
     e.preventDefault();
@@ -267,18 +294,17 @@ if (wfCanvas && wfCanvas.getContext) {
     const mx = (t.clientX - r.left) * (W / r.width);
     const my = (t.clientY - r.top) * (H / r.height);
     const c = cards.find(x => x.dragging);
-    if (c) { c.dx = mx - (slotW() - 8) / 2; c.dy = my - 55; draw(); }
+    if (c) { moveTo(c, mx, my); draw(); }
   }, { passive: false });
   wfCanvas.addEventListener('touchend', e => {
     const t = e.changedTouches[0];
     const r = wfCanvas.getBoundingClientRect();
     const mx = (t.clientX - r.left) * (W / r.width);
+    const my = (t.clientY - r.top) * (H / r.height);
     const c = cards.find(x => x.dragging);
     if (c) {
-      let target = -1;
-      for (let i = 0; i < 4; i++) {
-        if (mx >= slotX(i) && mx <= slotX(i) + slotW()) { target = i; break; }
-      }
+      const inside = mx >= 0 && mx <= W && my >= 0 && my <= H;
+      const target = inside ? slotAt(mx, my) : -1;
       if (target >= 0) swapToSlot(c, target);
       c.dragging = false;
       draw();
@@ -300,4 +326,10 @@ if (wfCanvas && wfCanvas.getContext) {
   }
 
   draw();
+  // 視窗縮放（例如手機轉向）時重算寬度與排列
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => { layout(); draw(); }, 150);
+  });
 }

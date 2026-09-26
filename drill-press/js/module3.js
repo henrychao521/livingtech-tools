@@ -3,11 +3,11 @@ const STEPS = [
   { title: '穿戴護具、整理服儀', desc: '護目鏡（防鐵屑彈飛）、口罩（防粉塵）。長髮綁起、寬鬆袖口塞好、項鍊摘下。\n⚠ 鑽床操作禁戴布手套——手套會被夾頭捲入比沒戴更危險。', tip: '護目鏡要選包覆型，普通眼鏡擋不住側面飛屑。', warn: '禁戴布手套是鑽床操作鐵則。', anim: 'ppe' },
   { title: '選鑽頭、裝入夾頭', desc: '依材料選對鑽頭：木 → 木工螺旋；金屬 → HSS。鑽頭直徑不能超過夾頭規格。\n把鑽頭插入夾頭三爪中心約 70–80% 深，用「鑰匙」鎖三個齒輪孔各一次（讓夾爪平均施力）。', tip: '夾頭三個孔都要鎖一遍，只鎖一個會偏心。', warn: null, anim: 'install' },
   { title: '⚠ 拔下夾頭鑰匙', desc: '裝完鑽頭、鎖緊後，**必須**把夾頭鑰匙拔下並放回工具盒。沒拔下鑰匙就開機，鑰匙會以高速甩飛——是鑽床最常見的傷害事故。', tip: '養成「鎖完馬上拔」的肌肉記憶，不要分心。', warn: '沒拔鑰匙絕對不能開機。', anim: 'key' },
-  { title: '依直徑與材料設定轉速', desc: '打開皮帶箱蓋（先確認電源在 OFF）→ 把皮帶移到對應的皮帶輪段位 → 蓋回。\n通則：直徑越大、材料越硬 → 轉速越慢。\n參考：木材 8mm 約 2000 RPM、鋼板 8mm 約 600 RPM。', tip: '機台側邊或皮帶箱蓋內常印有「轉速表」可以對照。', warn: '皮帶換位前一定要拔插頭或斷電。', anim: 'speed' },
+  { title: '依直徑與材料設定轉速', desc: '打開皮帶箱蓋（先確認電源在 OFF）→ 先放鬆皮帶張力 → 把皮帶移到對應的皮帶輪段位 → 重新上緊 → 蓋回。\n通則：直徑越大、材料越硬 → 轉速越慢。\n參考：木材 8mm 約 P4、鋼板 8mm 約 P1–P2。', tip: '機台側邊或皮帶箱蓋內常印有「轉速表」可以對照。', warn: '皮帶換位前一定要拔插頭或斷電。', anim: 'speed' },
   { title: '工件夾上工作台', desc: '把工件放在工作台上，**必須**用以下方式之一固定：\n• 機台老虎鉗（machine vise）\n• C 型夾固定到 T 槽\n• 大型工件直接螺絲鎖工作台\n\n工件下方墊「廢木板」當犧牲層，避免鑽穿工作台。', tip: '小工件絕對不能徒手按——一定要夾住。', warn: '徒手按工件是鑽床最常見事故來源。', anim: 'clamp' },
   { title: '調整工作台高度', desc: '鬆開工作台後方的鎖具，搖動高度調整桿讓鑽頭尖距工件約 5cm（足夠下降鑽孔的空間）。調好再鎖緊。\n大型工件可能需要把工作台轉到旁邊、用基座當工作面。', tip: '鑽頭與工件接觸時，主軸應該還能再下降至少 5–8cm。', warn: null, anim: 'height' },
-  { title: '開機 → 對位 → 進刀鑽孔', desc: '1. 開電源、主軸開始轉動\n2. 觀察是否有異常震動或聲音\n3. 順時針旋轉進刀手柄，鑽頭緩慢下降\n4. 鑽頭接觸工件後輕推進刀（不要猛力）\n5. 深孔或硬料每鑽 5mm 退鑽一次排屑', tip: '聽聲音判斷：穩定的「呼呼聲」= 正常；「咯咯聲」或「叫聲」= 進刀太猛或鑽頭鈍。', warn: null, anim: 'drill' },
-  { title: '退鑽 → 停機 → 清理收工', desc: '1. 鑽穿後逆時針旋轉手柄，鑽頭完全上升\n2. 關電源、等主軸完全停止（約 5–10 秒）\n3. 用毛刷清掉鐵屑（不可徒手撥）\n4. 鬆夾頭、取下鑽頭歸位\n5. 把夾頭鑰匙放回工具盒\n6. 工作台擦乾淨', tip: '剛鑽完的金屬鑽頭很燙（200°C+），等待數分鐘，先以手背靠近感溫確認不燙再徒手摸，或用鉗子取下。', warn: '主軸停止前不可伸手清理。', anim: 'finish' },
+  { title: '開機 → 對位 → 進刀鑽孔', desc: '1. 開電源、主軸開始轉動\n2. 觀察是否有異常震動或聲音\n3. 把進刀手柄往下拉，鑽頭緩慢下降\n4. 鑽頭接觸工件後輕推進刀（不要猛力）\n5. 深孔或硬料每鑽 5mm 退鑽一次排屑', tip: '聽聲音判斷：穩定的「呼呼聲」= 正常；「咯咯聲」或「叫聲」= 進刀太猛或鑽頭鈍。', warn: null, anim: 'drill' },
+  { title: '退鑽 → 停機 → 清理收工', desc: '1. 鑽穿後慢慢放回手柄，鑽頭完全上升\n2. 關電源、等主軸完全停止（約 5–10 秒）\n3. 用毛刷清掉鐵屑（不可徒手撥）\n4. 鬆夾頭、取下鑽頭歸位\n5. 把夾頭鑰匙放回工具盒\n6. 工作台擦乾淨', tip: '剛鑽完的金屬鑽頭很燙（200°C+），等待數分鐘，先以手背靠近感溫確認不燙再徒手摸，或用鉗子取下。', warn: '主軸停止前不可伸手清理。', anim: 'finish' },
 ];
 
 function renderAnim(type) {
@@ -481,8 +481,8 @@ if (typeof SequencePuzzle === 'function') {
   const PROBLEMS = [
     {
       q: '木板厚度 18mm，需要<strong>鑽穿</strong>（通孔），深度限位環應設在幾 mm？',
-      correct: 20, range: [19, 22],
-      explain: '鑽穿孔要在材料厚度（18mm）加上 2–4mm 餘量，確保鑽頭完全穿透、孔邊整潔，並讓鑽尖進入犧牲層。正確答案：<strong>20mm（18+2）</strong>。',
+      correct: 20, range: [20, 22],
+      explain: '鑽穿孔要在材料厚度（18mm）加上 2–4mm 餘量，確保鑽頭完全穿透、孔邊整潔，並讓鑽尖進入犧牲層。<strong>20–22mm 都可以（18＋2～4）</strong>。',
       hint: '穿透孔 = 材料厚度 + 2–4mm 餘量',
     },
     {
@@ -493,8 +493,8 @@ if (typeof SequencePuzzle === 'function') {
     },
     {
       q: '鋼板厚度 6mm，需要<strong>鑽穿</strong>（通孔），深度限位環應設在幾 mm？',
-      correct: 8, range: [7, 10],
-      explain: '金屬穿透孔同樣需要餘量，確保鑽尖完全穿出。6mm 鋼板建議設 8mm（6+2）。若工作台下已墊犧牲層，餘量不影響台面。',
+      correct: 8, range: [8, 10],
+      explain: '金屬穿透孔同樣需要餘量，確保鑽尖完全穿出。6mm 鋼板建議設 8–10mm（6＋2～4）。若工作台下已墊犧牲層，餘量不影響台面。',
       hint: '鋼板穿透孔 = 板厚 + 2–4mm',
     },
   ];
@@ -544,13 +544,13 @@ if (typeof SequencePuzzle === 'function') {
       <!-- Ruler background -->
       <rect x="${RULER_X}" y="${RULER_TOP}" width="${RULER_W}" height="${RULER_LEN}" rx="3" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="1"/>
       <!-- Ruler ticks and labels -->`;
-    for (let d = 0; d <= MAX_DEPTH; d += 2) {
+    for (let d = 0; d <= MAX_DEPTH; d += 1) {
       const y = depthToY(d);
       const major = d % 5 === 0;
       content += `<line x1="${RULER_X - (major ? 10 : 5)}" y1="${y}" x2="${RULER_X}" y2="${y}" stroke="#64748b" stroke-width="${major ? 1.5 : 1}"/>`;
       if (major) content += `<text x="${RULER_X - 14}" y="${y + 4}" text-anchor="end" font-size="10" fill="#374151" font-family="Inter,monospace">${d}</text>`;
       // clickable hot zone
-      content += `<rect x="${RULER_X}" y="${y - 4}" width="${RULER_W}" height="8" fill="transparent" data-d="${d}" class="ds-tick" style="cursor:pointer"/>`;
+      content += `<rect x="${RULER_X}" y="${y - 3}" width="${RULER_W}" height="6" fill="transparent" data-d="${d}" class="ds-tick" style="cursor:pointer"/>`;
     }
     content += `<text x="${RULER_X + RULER_W / 2}" y="${RULER_BOT + 14}" text-anchor="middle" font-size="10" fill="#94a3b8" font-family="Inter">mm</text>`;
     // Selected marker
