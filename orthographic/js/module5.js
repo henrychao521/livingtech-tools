@@ -22,7 +22,7 @@ const SHAPES = {
   cone:      { label: '圓錐',   front: 'triangle', side: 'triangle', top: 'circle-dot', iso: 'cone' },
   sphere:    { label: '球體',   front: 'circle', side: 'circle', top: 'circle', iso: 'sphere' },
   lblock:    { label: 'L 型塊', front: 'l-shape', side: 'rect-tall', top: 'rect', iso: 'lblock' },
-  step:      { label: '階梯塊', front: 'rect',   side: 'rect-tall',  top: 'rect-step', iso: 'step' },
+  step:      { label: '階梯塊', front: 'l-shape', side: 'rect-tall', top: 'rect', iso: 'step' },
   hole:      { label: '帶圓孔板', front: 'rect-circle-hole', side: 'rect-dash-horiz', top: 'rect-dash-vert', iso: 'hole' },
   tslot:     { label: 'T 槽塊', front: 't-shape', side: 'rect', top: 't-rev', iso: 'tslot' },
   bracket:   { label: 'L 角架', front: 'rect', side: 'rect', top: 'l-shape', iso: 'bracket' },
@@ -93,6 +93,16 @@ function svgIso(type, size = 100) {
 // =============================================================
 // 共用：題目骨架
 // =============================================================
+// 選項顯示前隨機排列（Fisher–Yates）；判分看 data-o 的內容，不看位置
+function shuffled(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 const state = { score: 0, total: 0, answered: { 1: new Set(), 2: new Set(), 3: new Set() } };
 
 function updateScore() {
@@ -124,7 +134,7 @@ const ROUND1 = [
   { ans: 'cube',     views: ['square','square','square'],         options: ['cube','cylinder','sphere','pyramid'],  expl: '三個視圖都是正方形 → 立方體（六面相等）。' },
   { ans: 'cylinder', views: ['rect','rect','circle'],             options: ['cylinder','cube','cone','sphere'],     expl: '俯視 = 圓 + 正視 / 側視 = 矩形 → 圓柱。' },
   { ans: 'cone',     views: ['triangle','triangle','circle-dot'], options: ['cone','pyramid','cylinder','sphere'],  expl: '俯視帶中心點（圓錐尖）+ 正視 / 側視為三角形 → 圓錐。' },
-  { ans: 'lblock',   views: ['l-shape','rect-tall','rect'],       options: ['lblock','step','bracket','cube'],      expl: '正視 = L 形 + 俯視 = 矩形 → L 型塊（兩個方塊相連）。' },
+  { ans: 'lblock',   views: ['l-shape','rect-tall','rect'],       options: ['lblock','tslot','bracket','cube'],     expl: '正視 = L 形 + 俯視 = 矩形 → L 型塊（兩個方塊相連）。' },
   { ans: 'hole',     views: ['rect-circle-hole','rect-dash-horiz','rect-dash-vert'], options: ['hole','tslot','step','cylinder'], expl: '正視 = 矩形含實線圓（孔口）+ 側視 = 兩條水平虛線（孔上下邊界）+ 俯視 = 兩條垂直虛線（孔左右邊界）→ 帶圓孔板。' },
 ];
 
@@ -146,7 +156,7 @@ function buildRound1() {
       </div>
       <p class="qprompt">這是什麼 3D 物件？</p>
       <div class="opt-grid">
-        ${q.options.map(o => `<div class="opt-cell" data-o="${o}">${svgIso(o, 90)}<div class="opt-label">${SHAPES[o].label}</div></div>`).join('')}
+        ${shuffled(q.options).map(o => `<div class="opt-cell" data-o="${o}">${svgIso(o, 90)}<div class="opt-label">${SHAPES[o].label}</div></div>`).join('')}
       </div>
       <div class="feedback-slot"></div>
     `;
@@ -206,7 +216,7 @@ function buildRound2() {
       </div>
       <p class="qprompt" style="margin-top:14px">缺失的 <strong style="color:#4F46E5">${VIEW_KEY[q.missing]}</strong> 是哪一個？</p>
       <div class="opt-grid">
-        ${q.options.map(o => `<div class="opt-cell" data-o="${o}">${svgView(o, 80)}</div>`).join('')}
+        ${shuffled(q.options).map(o => `<div class="opt-cell" data-o="${o}">${svgView(o, 80)}</div>`).join('')}
       </div>
       <div class="feedback-slot"></div>
     `;
@@ -240,12 +250,10 @@ const ROUND3 = [
     label: 'L 型塊（兩塊組合）',
     target: (() => {
       const v = makeEmptyGrid();
-      // 底層整片 1×3×3 沒填滿，只填底排 L
-      // 簡化版：x=0,1,2 / y=0 / z=0..2 + x=0 / y=1 / z=0
-      for (let z = 0; z < 3; z++) v[0][0][z] = 1;
-      for (let z = 0; z < 3; z++) v[1][0][z] = 1;
-      for (let z = 0; z < 3; z++) v[2][0][z] = 1;
-      v[0][1][0] = 1; v[0][1][1] = 1;
+      // 底排沿 x 一條長條（x=0..2 / y=0 / z=0）+ 左端往上立起兩格（x=0 / y=1、2 / z=0）
+      // → 正視看到 L 形，共 5 格
+      for (let x = 0; x < 3; x++) v[x][0][0] = 1;
+      v[0][1][0] = 1; v[0][2][0] = 1;
       return v;
     })(),
     hint: 'L 型塊：底排一條長條 + 一邊往上立起兩格。',

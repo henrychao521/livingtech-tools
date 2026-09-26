@@ -26,6 +26,8 @@
   #vp-main:active{cursor:grabbing}
   .reset-btn{position:absolute;top:6px;right:8px;font-size:11px;background:rgba(99,102,241,.85);color:#fff;border:none;padding:4px 10px;border-radius:6px;cursor:pointer;z-index:3}
   .reset-btn:hover{background:#6366F1}
+  /* 手機窄螢幕：按鈕移到右下角，避免蓋住左上的「3D 物件」標籤 */
+  @media (max-width:600px){.reset-btn{top:auto;bottom:6px}}
 </style>
 </head><body data-tool="orthographic" class="ort-theme">
 <header class="topbar"><div class="brand"><span class="logo">📐</span><div><h1>三視圖</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
@@ -55,7 +57,7 @@
           </div>
           <div id="vp-side" class="vp">
             <span class="vp-label" style="color:#34D399">側視 SIDE</span>
-            <span class="vp-axes">從 −X 方向看（左視）</span>
+            <span class="vp-axes">從 +X 方向看（右側視）</span>
           </div>
           <div id="vp-top" class="vp">
             <span class="vp-label" style="color:#FBBF24">俯視 TOP</span>

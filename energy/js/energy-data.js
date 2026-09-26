@@ -11,6 +11,7 @@
  *   3. module4.js 各能源 share 欄位
  *   4. 核電機組現況（module1 / module4 desc）
  *   5. DATA_YEAR 改為新年度
+ *   6. energy/index.html「台灣能源現況」一句的發電占比（燃氣/燃煤/再生/核能）
  */
 const ENERGY_DATA = {
   DATA_YEAR: 2024,

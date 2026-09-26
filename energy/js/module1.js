@@ -1,6 +1,6 @@
 // 能源系統 模組 1：5 種能源
 const ENERGIES = [
-  { id: 'fossil', iso: 'fossil', name: '化石燃料 Fossil', icon: '🛢', renewable: false, tw_share: '81%', co2: '~900 g/kWh',
+  { id: 'fossil', iso: 'fossil', name: '化石燃料 Fossil', icon: '🛢', renewable: false, tw_share: '81%', co2: '~490（燃氣）～900（燃煤）g/kWh',
     desc: '煤、石油、天然氣——上億年前生物遺骸經高壓高溫形成。台灣 2024 年仍佔總發電 81%（燃氣約 42% + 燃煤約 39%）（2024，經濟部能源署）。',
     pros: '能量密度高、技術成熟、發電穩定', cons: '不可再生、高 CO₂ 排放、空汙、價格波動' },
   { id: 'nuclear', iso: 'nuclear', name: '核能 Nuclear', icon: '☢', renewable: false, tw_share: '5%', co2: '~12 g/kWh',

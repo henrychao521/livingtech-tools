@@ -32,14 +32,24 @@ const QUIZ = [
   { q: '想做自動夜燈天黑時亮起', ans: '光敏電阻', explain: '光敏電阻 LDR 偵測光亮度，配 if 判斷暗就亮燈。' },
   { q: '想做手動調整 LED 亮度', ans: '可變電阻', explain: '可變電阻配 analogRead + analogWrite 是 PWM 調光最簡作法。' },
   { q: '想計算腳踏車輪轉幾圈', ans: '霍爾磁感', explain: '輪上裝磁鐵 + 車架裝霍爾感測器，每轉一圈觸發一次。' },
-  { q: '想做最簡單的開關控制', ans: '按鈕', explain: '按鈕是最基礎的數位輸入。digitalRead 讀按鈕狀態。' },
+  { q: '想做最簡單的開關控制', ans: '按鈕開關', explain: '按鈕是最基礎的數位輸入。digitalRead 讀按鈕狀態。' },
 ];
 
 const quizEl = document.getElementById('quiz');
 const allOpts = [...new Set(SENSORS.map(s => s.name.split(' ')[0]))];
+// Fisher–Yates 洗牌
+function shuffled(arr) {
+  const a = [...arr];
+  for (let k = a.length - 1; k > 0; k--) {
+    const j = Math.floor(Math.random() * (k + 1));
+    [a[k], a[j]] = [a[j], a[k]];
+  }
+  return a;
+}
 let answered = new Set(); let correct = 0;
 QUIZ.forEach((q, i) => {
-  const opts = [q.ans, ...allOpts.filter(o => !q.ans.includes(o)).slice(0, 3)].sort(() => Math.random() - 0.5);
+  // 干擾項從其餘 7 種感測器隨機抽 3 個，再和正解一起洗牌（判分看選項內容，不看位置）
+  const opts = shuffled([q.ans, ...shuffled(allOpts.filter(o => o !== q.ans)).slice(0, 3)]);
   const div = document.createElement('div');
   div.className = 'quiz-item';
   div.style.cssText = 'background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px';
@@ -52,9 +62,9 @@ QUIZ.forEach((q, i) => {
 quizEl.querySelectorAll('.choice').forEach(b => b.addEventListener('click', () => {
   const i = parseInt(b.dataset.q);
   if (answered.has(i)) return;
-  const ok = b.dataset.c === QUIZ[i].ans || QUIZ[i].ans.includes(b.dataset.c);
+  const ok = b.dataset.c === QUIZ[i].ans;
   const parent = b.closest('.quiz-item');
-  parent.querySelectorAll('.choice').forEach(x => { x.disabled = true; if (x.dataset.c === QUIZ[i].ans || QUIZ[i].ans.includes(x.dataset.c)) x.classList.add('correct'); if (x === b && !ok) x.classList.add('wrong'); });
+  parent.querySelectorAll('.choice').forEach(x => { x.disabled = true; if (x.dataset.c === QUIZ[i].ans) x.classList.add('correct'); if (x === b && !ok) x.classList.add('wrong'); });
   parent.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${ok?'success':'error'}" style="margin-top:6px">${ok?'✓':'✗'} ${QUIZ[i].explain}</div>`;
   if (ok) { correct++; if (typeof SoundFX !== 'undefined') SoundFX.success(); } else if (typeof SoundFX !== 'undefined') SoundFX.error();
   answered.add(i);

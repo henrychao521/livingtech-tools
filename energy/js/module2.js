@@ -35,10 +35,20 @@ const quizEl = document.getElementById('quiz');
 const progEl = document.getElementById('prog');
 const nextBtn = document.getElementById('next-btn');
 const allChoices = [...new Set(QUIZ.map(q => q.chain))];
+// Fisher–Yates 洗牌
+function shuffled(arr) {
+  const a = [...arr];
+  for (let k = a.length - 1; k > 0; k--) {
+    const j = Math.floor(Math.random() * (k + 1));
+    [a[k], a[j]] = [a[j], a[k]];
+  }
+  return a;
+}
 let answered = new Set();
 let correct = 0;
 QUIZ.forEach((q, i) => {
-  const choices = [q.chain, ...allChoices.filter(c => c !== q.chain).slice(0, 3)].sort(() => Math.random() - 0.5);
+  // 干擾項從其餘 9 條轉換鏈隨機抽 3 條，再和正解一起洗牌（判分看選項內容，不看位置）
+  const choices = shuffled([q.chain, ...shuffled(allChoices.filter(c => c !== q.chain)).slice(0, 3)]);
   const div = document.createElement('div');
   div.classList.add('quiz-item');
   div.style.cssText = 'background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px';

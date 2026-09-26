@@ -9,7 +9,7 @@ const EXAMPLES = [
   <span class="fn">delay</span>(<span class="num">500</span>);
   <span class="fn">digitalWrite</span>(<span class="num">13</span>, <span class="kw">LOW</span>);  <span class="com">// 滅</span>
   <span class="fn">delay</span>(<span class="num">500</span>);
-}`, desc: '入門必跑程式。13 號腳的 LED 每 0.5 秒切換一次。' },
+}`, desc: '入門必跑程式。13 號腳的 LED 每 0.5 秒切換一次（UNO 板上內建 LED 已有限流電阻）。外接 LED 時，要串一顆 220Ω～330Ω 限流電阻，LED 短腳接回 GND。' },
   { title: '按鈕控制 LED', concept: 'digitalRead + if',
     code: `<span class="kw">void</span> <span class="fn">setup</span>() {
   <span class="fn">pinMode</span>(<span class="num">2</span>, <span class="kw">INPUT_PULLUP</span>); <span class="com">// 按鈕</span>
@@ -21,7 +21,7 @@ const EXAMPLES = [
   } <span class="kw">else</span> {
     <span class="fn">digitalWrite</span>(<span class="num">13</span>, <span class="kw">LOW</span>);
   }
-}`, desc: '按按鈕亮燈、放開滅燈。INPUT_PULLUP 啟用內部上拉電阻避免雜訊。' },
+}`, desc: '按按鈕亮燈、放開滅燈。INPUT_PULLUP 啟用內部上拉電阻避免雜訊，按鈕另一腳接 GND。外接 LED 同樣要串 220Ω～330Ω 限流電阻再接回 GND。' },
   { title: '光敏自動夜燈', concept: 'analogRead + 閾值判斷',
     code: `<span class="kw">int</span> threshold = <span class="num">300</span>;
 <span class="kw">void</span> <span class="fn">setup</span>() { <span class="fn">pinMode</span>(<span class="num">13</span>, <span class="kw">OUTPUT</span>); }
@@ -44,12 +44,22 @@ const EXAMPLES = [
   }
 }`, desc: 'LED 亮度逐漸升降形成呼吸感。PWM 接 9 號腳（支援 PWM 的腳位才能用）。' },
   { title: '超音波測距避障', concept: 'pulseIn + 距離公式',
-    code: `<span class="kw">long</span> <span class="fn">getDistance</span>() {
+    code: `<span class="kw">void</span> <span class="fn">setup</span>() {
+  <span class="fn">pinMode</span>(<span class="num">7</span>, <span class="kw">OUTPUT</span>);  <span class="com">// Trig 發射</span>
+  <span class="fn">pinMode</span>(<span class="num">8</span>, <span class="kw">INPUT</span>);   <span class="com">// Echo 接收</span>
+  <span class="fn">Serial.begin</span>(<span class="num">9600</span>);
+}
+<span class="kw">long</span> <span class="fn">getDistance</span>() {
+  <span class="fn">digitalWrite</span>(<span class="num">7</span>, <span class="kw">LOW</span>);  <span class="fn">delayMicroseconds</span>(<span class="num">2</span>);   <span class="com">// 先拉低，觸發才穩定</span>
   <span class="fn">digitalWrite</span>(<span class="num">7</span>, <span class="kw">HIGH</span>); <span class="fn">delayMicroseconds</span>(<span class="num">10</span>);
   <span class="fn">digitalWrite</span>(<span class="num">7</span>, <span class="kw">LOW</span>);
   <span class="kw">long</span> t = <span class="fn">pulseIn</span>(<span class="num">8</span>, <span class="kw">HIGH</span>);
   <span class="kw">return</span> t * <span class="num">0.034</span> / <span class="num">2</span>; <span class="com">// cm</span>
-}`, desc: '7 號 Trigger 發射、8 號 Echo 接收。聲速 340 m/s，除 2 是因為來回兩次。' },
+}
+<span class="kw">void</span> <span class="fn">loop</span>() {
+  <span class="fn">Serial.println</span>(<span class="fn">getDistance</span>());
+  <span class="fn">delay</span>(<span class="num">200</span>);
+}`, desc: '7 號 Trigger 發射、8 號 Echo 接收，setup() 裡一定要先用 pinMode 設好輸出／輸入，不然 Trig 送不出觸發脈衝、距離會一直是 0。聲速 340 m/s，除 2 是因為來回兩次。' },
   { title: 'Serial Monitor 印值', concept: 'Serial.print 除錯',
     code: `<span class="kw">void</span> <span class="fn">setup</span>() {
   <span class="fn">Serial.begin</span>(<span class="num">9600</span>);
@@ -72,7 +82,8 @@ const EXAMPLES = [
   myservo.<span class="fn">write</span>(<span class="num">180</span>); <span class="fn">delay</span>(<span class="num">1000</span>);
 }`, desc: '伺服馬達轉動到 0° / 90° / 180°。需要 #include &lt;Servo.h&gt; 函式庫。' },
   { title: '組合：自動清掃機器人邏輯', concept: '感測 + 邏輯 + 馬達',
-    code: `<span class="kw">void</span> <span class="fn">loop</span>() {
+    code: `<span class="com">// 片段：getDistance() 與 setup() 用範例 5，moveBack() 等馬達函式另外寫</span>
+<span class="kw">void</span> <span class="fn">loop</span>() {
   <span class="kw">long</span> d = <span class="fn">getDistance</span>();
   <span class="kw">if</span> (d &lt; <span class="num">10</span>) {        <span class="com">// 太近</span>
     <span class="fn">moveBack</span>();
@@ -82,7 +93,7 @@ const EXAMPLES = [
   } <span class="kw">else</span> {
     <span class="fn">moveForward</span>();
   }
-}`, desc: '簡化版避障邏輯——對應 3 下統整專題「創意清掃機器人」核心程式架構。' },
+}`, desc: '簡化版避障邏輯——對應 3 下統整專題「創意清掃機器人」核心程式架構。這是程式片段，不能單獨編譯：要搭配範例 5 的 setup() 與 getDistance()，以及自己寫的 moveBack()、turnLeft()、moveForward() 馬達函式。' },
 ];
 
 const PK = 'mc_progress_v1';

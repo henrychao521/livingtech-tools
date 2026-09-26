@@ -62,10 +62,11 @@ const CONCEPTS = [
         <rect x="6" y="3" width="16" height="14" fill="#A5B4FC" stroke="#3730A3" stroke-width="0.8"/>
         <text x="14" y="84" text-anchor="middle" font-size="8" fill="#3730A3" font-weight="700">左側視</text>
       </g>
-      <!-- 右側視 -->
+      <!-- 右側視（從右看得到低層與上層兩個右面，中間有一條分界線；左側視只看到上層左面一整塊）-->
       <g transform="translate(204,55)">
         <rect x="0" y="0" width="28" height="20" fill="#E0E7FF" stroke="#3730A3" stroke-width="1"/>
         <rect x="6" y="3" width="16" height="14" fill="#A5B4FC" stroke="#3730A3" stroke-width="0.8"/>
+        <line x1="6" y1="10" x2="22" y2="10" stroke="#3730A3" stroke-width="0.8"/>
         <text x="14" y="84" text-anchor="middle" font-size="8" fill="#3730A3" font-weight="700">右側視</text>
       </g>
       <!-- 正視（前，標籤在物體下方） -->
@@ -100,6 +101,7 @@ const CONCEPTS = [
       <g transform="translate(142,50)">
         <rect x="0" y="0" width="40" height="50" fill="#fff" stroke="#3730A3" stroke-width="1.2"/>
         <rect x="10" y="10" width="20" height="30" fill="#E0E7FF" stroke="#3730A3" stroke-width="1.2"/>
+        <line x1="10" y1="20" x2="30" y2="20" stroke="#3730A3" stroke-width="1"/>
         <text x="20" y="-2" text-anchor="middle" font-size="9" fill="#3730A3" font-weight="700">側視 SIDE</text>
       </g>
       <!-- 對齊輔助線（黃色虛線）-->
@@ -141,7 +143,7 @@ const CONCEPTS = [
   },
   {
     name: '尺寸標註', icon: '📊',
-    desc: '標註原則：\n• 長度：L 或 mm\n• 直徑：⌀\n• 半徑：R\n• 角度：°\n• 公差：±0.1\n標註位置：在視圖外、不重疊、好找。',
+    desc: '標註原則：\n• 長度：只寫數字（預設單位 mm，不寫單位）\n• 直徑：⌀\n• 半徑：R\n• 角度：°\n• 公差：±0.1\n標註位置：在視圖外、不重疊、好找。',
     detail: '同尺寸只標註一次。標到方便製造為原則——孔徑標在「該孔最明顯的視圖」上。',
     visual: `<svg viewBox="0 0 240 110" width="100%" style="background:#F1F5F9;border-radius:6px;display:block">
       <!-- 主物體：方塊含圓孔 -->

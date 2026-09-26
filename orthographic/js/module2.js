@@ -3,7 +3,7 @@ const TYPES = [
   { id: 'ortho', name: '三視圖（正投影）', use: '工程製造、機械圖、家具圖', pros: '尺寸精確、好標註、製造業通用', cons: '不夠直觀、需訓練才能判讀',
     viz: '<svg viewBox="0 0 200 100"><rect x="20" y="20" width="40" height="40" fill="#E0E7FF" stroke="#3730A3"/><rect x="80" y="20" width="40" height="40" fill="#E0E7FF" stroke="#3730A3"/><rect x="20" y="70" width="40" height="20" fill="#E0E7FF" stroke="#3730A3"/></svg>' },
   { id: 'iso', name: '等角圖 Isometric', use: 'IKEA 組裝說明書、簡報示意', pros: '簡單立體、所有平行邊保持比例', cons: '會有透視假象、看起來像「歪的方塊」',
-    viz: '<svg viewBox="0 0 200 100"><polygon points="60,30 120,30 140,50 80,50" fill="#A5B4FC" stroke="#3730A3"/><polygon points="60,30 60,80 80,90 80,50" fill="#818CF8" stroke="#3730A3"/><polygon points="120,30 120,80 140,90 140,50" fill="#6366F1" stroke="#3730A3"/></svg>' },
+    viz: '<svg viewBox="0 0 200 100"><polygon points="100,20 135,40 100,60 65,40" fill="#A5B4FC" stroke="#3730A3"/><polygon points="65,40 100,60 100,95 65,75" fill="#818CF8" stroke="#3730A3"/><polygon points="100,60 135,40 135,75 100,95" fill="#6366F1" stroke="#3730A3"/></svg>' },
   { id: 'oblique', name: '斜視圖 Oblique', use: '快速手繪示意、教學圖', pros: '正面保持原比例、繪製簡單', cons: '看起來會「拉長」失真',
     viz: '<svg viewBox="0 0 200 100"><rect x="40" y="30" width="60" height="40" fill="#A5B4FC" stroke="#3730A3"/><polygon points="100,30 130,15 130,55 100,70" fill="#6366F1" stroke="#3730A3"/><polygon points="40,30 70,15 130,15 100,30" fill="#818CF8" stroke="#3730A3"/></svg>' },
   { id: 'persp', name: '透視圖 Perspective', use: '建築設計、產品渲染、視覺效果', pros: '最接近人眼所見、視覺真實', cons: '不能直接量測、複雜度高',

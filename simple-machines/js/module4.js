@@ -44,7 +44,7 @@ function drawLever() {
   ctx.fillStyle = '#fff';
   ctx.font = '700 12px Inter';
   ctx.textAlign = 'center';
-  ctx.fillText(`${load}kg`, startX, beamY - lw/2 - 2);
+  ctx.fillText(`${load} kgw`, startX, beamY - lw/2 - 2);
   // 施力箭頭
   const fy = beamY - 80;
   ctx.strokeStyle = '#16A34A';
@@ -61,7 +61,7 @@ function drawLever() {
   ctx.closePath();
   ctx.fill();
   ctx.font = '800 13px Inter';
-  ctx.fillText(`${force.toFixed(1)}kg`, startX + beamLen, fy - 8);
+  ctx.fillText(`${force.toFixed(1)} kgw`, startX + beamLen, fy - 8);
   // 力臂尺度
   ctx.strokeStyle = '#0891B2';
   ctx.lineWidth = 2;
@@ -114,7 +114,7 @@ function drawPulley() {
   ctx.fillStyle = '#fff';
   ctx.font = '800 16px Inter';
   ctx.textAlign = 'center';
-  ctx.fillText(`${load}kg`, cx, 357);
+  ctx.fillText(`${load} kgw`, cx, 357);
   // 動滑輪（在重物上）
   if (ropes > 1) {
     ctx.fillStyle = '#FCE7F3';
@@ -144,7 +144,7 @@ function drawPulley() {
   ctx.stroke();
   ctx.fillStyle = '#16A34A';
   ctx.font = '800 16px Inter';
-  ctx.fillText(`拉力 ${force.toFixed(1)}kg`, px, 430);
+  ctx.fillText(`拉力 ${force.toFixed(1)} kgw`, px, 430);
   ctx.font = '700 12px Inter';
   ctx.fillStyle = '#9D174D';
   ctx.fillText(`MA = ${ma} 段繩 = ${ma} 倍`, cx, 460);
@@ -160,9 +160,11 @@ function drawIncline() {
   const ma = length / height;
   const force = load / ma;
   const baseY = 380;
-  const apexX = 100;
   const baseX = 700;
-  const apexY = baseY - (baseX - apexX) * Math.tan(rad);
+  // 底邊依角度縮放，讓斜面頂點最高只到 y=50，不會衝出畫布（5° 時底邊 600、60° 時約 190）
+  const base = Math.min(600, 330 / Math.tan(rad));
+  const apexX = baseX - base;
+  const apexY = baseY - base * Math.tan(rad);
   // 斜面三角形
   ctx.fillStyle = '#FCE7F3';
   ctx.strokeStyle = '#DB2777';
@@ -174,9 +176,9 @@ function drawIncline() {
   ctx.closePath();
   ctx.fill();
   ctx.stroke();
-  // 物體
-  const objCX = (apexX + baseX) / 2 + 50;
-  const objCY = baseY - (baseX - objCX) * Math.tan(rad);
+  // 物體（放在斜面 55% 處）
+  const objCX = apexX + base * 0.55;
+  const objCY = baseY - (objCX - apexX) * Math.tan(rad);
   ctx.save();
   ctx.translate(objCX, objCY);
   ctx.rotate(-rad);
@@ -185,20 +187,32 @@ function drawIncline() {
   ctx.fillStyle = '#fff';
   ctx.font = '700 12px Inter';
   ctx.textAlign = 'center';
-  ctx.fillText(`${load}kg`, 0, -22);
-  ctx.restore();
-  // 施力箭頭（沿斜面方向）
+  ctx.fillText(`${load} kgw`, 0, -22);
+  // 施力箭頭（沿斜面往上，方向 (cos θ, −sin θ)；在旋轉後的座標系就是 +x 方向）
   ctx.strokeStyle = '#16A34A';
+  ctx.fillStyle = '#16A34A';
   ctx.lineWidth = 5;
   ctx.beginPath();
-  ctx.moveTo(baseX + 50, apexY + 50);
-  ctx.lineTo(baseX - 30, apexY + (baseX - 30 - apexX) * Math.tan(rad) / (baseX - apexX) * 0 + apexY);
-  // 簡化箭頭
+  ctx.moveTo(34, -25);
+  ctx.lineTo(96, -25);
   ctx.stroke();
-  // 角度標示
+  ctx.beginPath();
+  ctx.moveTo(110, -25);
+  ctx.lineTo(94, -33);
+  ctx.lineTo(94, -17);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+  // 角度標示（坡度角在斜面底端的頂點：畫角弧，數字寫在底邊下方）
+  ctx.strokeStyle = '#DB2777';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.arc(apexX, baseY, 28, -rad, 0);
+  ctx.stroke();
   ctx.font = '800 16px Inter';
   ctx.fillStyle = '#DB2777';
-  ctx.fillText(`${angle}°`, baseX - 50, baseY - 12);
+  ctx.textAlign = 'center';
+  ctx.fillText(`${angle}°`, apexX + 30, baseY + 24);
   // 高度標示
   ctx.strokeStyle = '#0891B2';
   ctx.lineWidth = 2;
@@ -214,7 +228,7 @@ function drawIncline() {
   ctx.fillStyle = '#9D174D';
   ctx.font = '800 14px Inter';
   ctx.textAlign = 'left';
-  ctx.fillText(`需 ${force.toFixed(1)}kg 推力`, 30, 50);
+  ctx.fillText(`需 ${force.toFixed(1)} kgw 推力`, 30, 50);
   ctx.fillText(`需走 ${length.toFixed(2)}m 距離`, 30, 75);
   return { ma, force, load, loadDist: height, effortDist: length };
 }
@@ -228,11 +242,11 @@ function update() {
   else if (mode === 'incline') r = drawIncline();
   // 更新數據
   $('e-ma').textContent = r.ma.toFixed(2) + ' 倍';
-  $('e-force').textContent = r.force.toFixed(1) + ' kg';
+  $('e-force').textContent = r.force.toFixed(1) + ' kgw';
   $('e-dist').textContent = r.effortDist.toFixed(2) + ' m';
   const energyLoad = r.load * r.loadDist;
   const energyForce = r.force * r.effortDist;
-  $('e-energy').textContent = `${energyLoad.toFixed(0)} ≈ ${energyForce.toFixed(0)} kg·m`;
+  $('e-energy').textContent = `${energyLoad.toFixed(0)} ≈ ${energyForce.toFixed(0)} kgw·m`;
 }
 
 function switchMode(m) {
@@ -253,11 +267,11 @@ document.querySelectorAll('.machine-tab').forEach(t => t.addEventListener('click
 ['load', 'pivot', 'pload', 'rope', 'iload', 'angle', 'height'].forEach(id => {
   const el = $(`s-${id}`);
   if (el) el.addEventListener('input', () => {
-    if (id === 'load') $('v-load').textContent = el.value + ' kg';
+    if (id === 'load') $('v-load').textContent = el.value + ' kgw';
     if (id === 'pivot') $('v-pivot').textContent = el.value < 40 ? `左側 ${el.value}%` : el.value > 60 ? `右側 ${el.value}%` : '中央';
-    if (id === 'pload') $('v-pload').textContent = el.value + ' kg';
+    if (id === 'pload') $('v-pload').textContent = el.value + ' kgw';
     if (id === 'rope') $('v-rope').textContent = el.value + ' 段';
-    if (id === 'iload') $('v-iload').textContent = el.value + ' kg';
+    if (id === 'iload') $('v-iload').textContent = el.value + ' kgw';
     if (id === 'angle') $('v-angle').textContent = el.value + '°';
     if (id === 'height') $('v-height').textContent = el.value + ' m';
     update();

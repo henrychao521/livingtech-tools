@@ -21,7 +21,7 @@ function show(key) {
   $('r-eff').textContent = d.eff + '%';
   $('r-cost').textContent = '~ NT$' + d.cost;
   $('r-co2').textContent = d.co2 + ' g';
-  $('r-build').textContent = d.build + ' 億';
+  $('r-build').textContent = d.build + ' 萬/kW';
   $('r-share').textContent = d.share + '%';
   $('r-co2').style.color = d.co2 > 500 ? '#dc2626' : d.co2 > 100 ? '#eab308' : '#16A34A';
 }

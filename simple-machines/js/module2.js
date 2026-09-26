@@ -16,7 +16,7 @@ const CLASSES = [
     layout: '施力 — 抗力 — 支點',
     examples: '獨輪手推車、開瓶器、堅果鉗、核桃鉗',
     feature: '永遠省力（MA > 1）',
-    viz: `<svg viewBox="0 0 240 100"><rect x="20" y="50" width="200" height="6" fill="#DB2777"/><polygon points="20,40 38,40 30,68" fill="#9D174D"/><rect x="100" y="30" width="40" height="20" fill="#831843"/><line x1="210" y1="20" x2="210" y2="50" stroke="#16A34A" stroke-width="3"/><polygon points="210,50 206,42 214,42" fill="#16A34A"/><text x="120" y="22" text-anchor="middle" font-size="10" fill="#831843" font-weight="700">抗力</text><text x="30" y="85" text-anchor="middle" font-size="10" fill="#9D174D" font-weight="700">支點</text><text x="210" y="12" text-anchor="middle" font-size="10" fill="#16A34A" font-weight="700">施力</text></svg>`,
+    viz: `<svg viewBox="0 0 240 100"><rect x="20" y="50" width="200" height="6" fill="#DB2777"/><polygon points="20,40 38,40 30,68" fill="#9D174D"/><rect x="100" y="30" width="40" height="20" fill="#831843"/><line x1="210" y1="50" x2="210" y2="26" stroke="#16A34A" stroke-width="3"/><polygon points="210,20 206,28 214,28" fill="#16A34A"/><text x="120" y="22" text-anchor="middle" font-size="10" fill="#831843" font-weight="700">抗力</text><text x="30" y="85" text-anchor="middle" font-size="10" fill="#9D174D" font-weight="700">支點</text><text x="210" y="12" text-anchor="middle" font-size="10" fill="#16A34A" font-weight="700">施力</text></svg>`,
   },
   {
     id: 'third',
@@ -25,7 +25,7 @@ const CLASSES = [
     layout: '支點 — 施力 — 抗力',
     examples: '鑷子、釣竿（雙手版）、釘書機、人類手臂、掃帚',
     feature: '永遠費力（MA < 1），但動作放大',
-    viz: `<svg viewBox="0 0 240 100"><rect x="20" y="50" width="200" height="6" fill="#DB2777"/><polygon points="20,40 38,40 30,68" fill="#9D174D"/><line x1="115" y1="20" x2="115" y2="50" stroke="#16A34A" stroke-width="3"/><polygon points="115,50 111,42 119,42" fill="#16A34A"/><rect x="200" y="30" width="30" height="20" fill="#831843"/><text x="30" y="85" text-anchor="middle" font-size="10" fill="#9D174D" font-weight="700">支點</text><text x="115" y="12" text-anchor="middle" font-size="10" fill="#16A34A" font-weight="700">施力</text><text x="215" y="22" text-anchor="middle" font-size="10" fill="#831843" font-weight="700">抗力</text></svg>`,
+    viz: `<svg viewBox="0 0 240 100"><rect x="20" y="50" width="200" height="6" fill="#DB2777"/><polygon points="20,40 38,40 30,68" fill="#9D174D"/><line x1="115" y1="50" x2="115" y2="26" stroke="#16A34A" stroke-width="3"/><polygon points="115,20 111,28 119,28" fill="#16A34A"/><rect x="200" y="30" width="30" height="20" fill="#831843"/><text x="30" y="85" text-anchor="middle" font-size="10" fill="#9D174D" font-weight="700">支點</text><text x="115" y="12" text-anchor="middle" font-size="10" fill="#16A34A" font-weight="700">施力</text><text x="215" y="22" text-anchor="middle" font-size="10" fill="#831843" font-weight="700">抗力</text></svg>`,
   },
 ];
 
@@ -117,3 +117,5 @@ function updateProgress() {
   document.getElementById('quiz-progress').textContent = `類型 ${seenClasses.size}/3 ・ 題目 ${answered.size}/${QUIZ.length}`;
 }
 updateProgress();
+// 已通關過（localStorage 有紀錄）→ 重新整理或重新進入時直接解鎖下一關
+if (loadP().module2) { document.getElementById('next-btn').style.opacity = 1; document.getElementById('next-btn').style.pointerEvents = 'auto'; }
