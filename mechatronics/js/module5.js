@@ -80,17 +80,17 @@ function renderQuiz() {
         ${c.opts.map((o, j) => {
           const on = picked === String(j);
           let bg = '#fff', bd = '#e2e8f0', fg = '#334155';
-          if (picked != null) {
-            if (o.ok) { bg = '#dcfce7'; bd = '#22c55e'; fg = '#15803d'; }
-            else if (on) { bg = '#fee2e2'; bd = '#ef4444'; fg = '#b91c1c'; }
-          }
-          return `<button data-c="${i}" data-o="${j}" ${picked != null ? 'disabled' : ''}
+          // 答對才鎖定並標出正解；答錯只標出所選選項，其他選項仍可點選重答
+          if (correct && o.ok) { bg = '#dcfce7'; bd = '#22c55e'; fg = '#15803d'; }
+          else if (!correct && on) { bg = '#fee2e2'; bd = '#ef4444'; fg = '#b91c1c'; }
+          return `<button data-c="${i}" data-o="${j}" ${correct ? 'disabled' : ''}
             style="text-align:left;padding:10px 13px;border-radius:9px;border:2px solid ${bd};background:${bg};
-            color:${fg};font-weight:600;font-size:13.5px;cursor:${picked != null ? 'default' : 'pointer'}">${o.t}</button>`;
+            color:${fg};font-weight:600;font-size:13.5px;cursor:${correct ? 'default' : 'pointer'}">${o.t}</button>`;
         }).join('')}
       </div>
       ${picked != null ? `<div style="margin-top:10px;font-size:13px;color:#475569;background:#fff;
-        padding:10px 12px;border-radius:8px">${correct ? '✅ 正確。' : '❌ 再想想。'}${c.why}</div>` : ''}
+        padding:10px 12px;border-radius:8px">${correct ? '✅ 正確。' : '❌ 再想想。'}${c.why}${correct ? '' : `
+        <div style="margin-top:6px;font-weight:700;color:#b91c1c">↻ 讀完說明後，請在上方改選其他答案重新作答。</div>`}</div>` : ''}
     </div>`;
   }).join('');
 
@@ -128,7 +128,8 @@ function checkDone() {
 
 document.getElementById('quiz').addEventListener('click', e => {
   const b = e.target.closest('button[data-c]'); if (!b || b.disabled) return;
-  const ci = b.dataset.c; if (answered.has(ci)) return;
+  const ci = b.dataset.c; const prev = answered.get(ci);
+  if (prev != null && (CASES[+ci].opts[+prev].ok || prev === b.dataset.o)) return;  // 答對已鎖定；重複點同一個錯誤選項不處理
   answered.set(ci, b.dataset.o);
   const p = loadP(); p.module5_ans = Object.fromEntries(answered); saveP(p);
   const ok = CASES[+ci].opts[+b.dataset.o].ok;
