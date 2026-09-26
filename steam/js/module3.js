@@ -164,8 +164,8 @@ const QUESTS = [
   { id: 'q_oct',  text: '找到高八度：把頻率調成 880 Hz，確認音名同樣是 A', hint: '可直接按「↑ 高八度」',
     test: () => Math.abs(state.f - 880) <= 5 },
   { id: 'q_tim',  text: '四種音色都看過波形', hint: '點右邊四張卡片', test: () => seenTimbres.size === 4 },
-  { id: 'q_amp',  text: '證明「振幅只改響度、不改音高」：把振幅調到最大與最小，觀察波的疏密沒變',
-    hint: '把振幅拉到 0 再拉到 100', test: () => ampMin && ampMax },
+  { id: 'q_amp',  text: '證明「振幅只改響度、不改音高」：把振幅調到很小與最大，觀察波的疏密沒變',
+    hint: '把振幅拉到很小（例如 10%）再拉到 100%', test: () => ampMin && ampMax },
 ];
 let ampMin = loadP().module3_ampMin || false, ampMax = loadP().module3_ampMax || false;
 const done = new Set(loadP().module3_quests || []);
@@ -215,7 +215,7 @@ document.getElementById('timbrePick').addEventListener('click', e => {
 document.getElementById('sF').addEventListener('input', e => { state.f = +e.target.value; update(); });
 document.getElementById('sA').addEventListener('input', e => {
   state.a = +e.target.value;
-  if (state.a === 0) ampMin = true;
+  if (state.a <= 10) ampMin = true;
   if (state.a === 100) ampMax = true;
   const p = loadP(); p.module3_ampMin = ampMin; p.module3_ampMax = ampMax; saveP(p);
   update();

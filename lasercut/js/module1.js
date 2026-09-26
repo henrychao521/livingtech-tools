@@ -10,7 +10,7 @@ const BANNED = [
     alt: '改用：真皮、壓克力、木質板材。' },
   { id: 'pc', ico: '🚫', name: '聚碳酸酯 PC',   color: '#EA580C',
     why: 'PC 會吸收 CO₂ 雷射的波長但<strong>不會乾淨汽化</strong>，只會焦黑、冒黃煙、切面糊在一起，而且極易起火。',
-    tell: '常見於：防碎「壓克力」板、安全眼鏡、光碟盒。注意——很多標示「壓克力」的便宜板材其實是 PC。',
+    tell: '常見於：防碎「壓克力」板、安全眼鏡、光碟片。注意——外觀像壓克力的板材可能是 PC 或其他塑膠。',
     alt: '改用：真正的壓克力（PMMA），切面會呈現漂亮的透明拋光。' },
   { id: 'metal', ico: '🚫', name: '金屬／鏡面材質', color: '#7C3AED',
     why: 'CO₂ 雷射（80 W 等級）切不動金屬，光會被<strong>直接反射回去</strong>，可能打壞聚焦鏡甚至雷射管——這是最貴的一種事故。',
@@ -117,6 +117,7 @@ function updateProg() {
     nextBtn.style.opacity = 1; nextBtn.style.pointerEvents = 'auto';
     return true;
   }
+  nextBtn.style.opacity = .4; nextBtn.style.pointerEvents = 'none';
   return false;
 }
 

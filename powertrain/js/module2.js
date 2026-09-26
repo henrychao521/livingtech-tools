@@ -3,9 +3,9 @@ const CATS = [
   { id: 'land', icon: '🚗', name: '陸上運輸', desc: '在地面或軌道上行駛。速度範圍最廣（步行 5 km/h 到高鐵 300 km/h）。',
     vehicles: '汽車、機車、腳踏車、火車、高鐵、輕軌、捷運、卡車、巴士', co2: '燃油車 ~150g CO₂/km/人' },
   { id: 'water', icon: '🚢', name: '海上運輸', desc: '靠浮力（船）或氣墊（氣墊船）行駛。是「最節能的運送方式」（每噸貨）。',
-    vehicles: '油輪、貨輪、客船、潛艇、漁船、遊艇、帆船、水翼船', co2: '貨輪 ~10g CO₂/km/噸（陸運的 1/10）' },
+    vehicles: '油輪、貨輪、客船、潛艇、漁船、遊艇、帆船、水翼船、氣墊船', co2: '大型貨輪 ~10–25g CO₂/km/噸（卡車約 100g CO₂/km/噸，貨輪只有其 1/4～1/10）' },
   { id: 'air', icon: '✈', name: '空中運輸', desc: '靠機翼升力或旋翼推力飛行。速度最快但能耗最高、碳排最重。',
-    vehicles: '客機、戰鬥機、直升機、無人機、飛船、滑翔翼', co2: '客機 ~250g CO₂/km/人（陸運 2 倍）' },
+    vehicles: '客機、戰鬥機、直升機、無人機、飛船、滑翔翼', co2: '客機 ~250g CO₂/km/人（約為燃油車的 1.7 倍）' },
 ];
 
 const PK = 'pt_progress_v1';
@@ -24,10 +24,16 @@ CATS.forEach(c => {
 });
 
 const QUIZ = [
-  { v: '高鐵', a: 'land' }, { v: '油輪', a: 'water' }, { v: '直升機', a: 'air' },
-  { v: '貨輪', a: 'water' }, { v: '卡車', a: 'land' }, { v: '無人機', a: 'air' },
-  { v: '捷運', a: 'land' }, { v: '潛艇', a: 'water' }, { v: '滑翔翼', a: 'air' },
-  { v: '腳踏車', a: 'land' },
+  { v: '高鐵', a: 'land', explain: '在地面軌道上行駛，再快也是陸上運輸。' },
+  { v: '油輪', a: 'water', explain: '靠浮力在海上航行，專門載運原油。' },
+  { v: '直升機', a: 'air', explain: '沒有固定機翼，但靠旋翼推力飛在空中，一樣是空中運輸。' },
+  { v: '貨輪', a: 'water', explain: '靠浮力航行，是每噸貨最節能的運送方式。' },
+  { v: '卡車', a: 'land', explain: '在道路上行駛的載貨車輛。' },
+  { v: '無人機', a: 'air', explain: '機上沒有人，但同樣靠旋翼或機翼在空中飛行。' },
+  { v: '捷運', a: 'land', explain: '就算有一段在地底下，仍是在軌道上行駛的陸上運輸。' },
+  { v: '潛艇', a: 'water', explain: '可以潛到水面下，但仍在水中航行，屬於海上運輸。' },
+  { v: '滑翔翼', a: 'air', explain: '沒有引擎，靠機翼的升力在空中滑翔，仍是空中運輸。' },
+  { v: '腳踏車', a: 'land', explain: '靠人力在地面上行駛。' },
 ];
 const quizEl = document.getElementById('quiz');
 const nextBtn = document.getElementById('next-btn');
@@ -49,7 +55,7 @@ quizEl.querySelectorAll('.choice').forEach(b => b.addEventListener('click', () =
   const ok = b.dataset.c === QUIZ[i].a;
   const parent = b.closest('.quiz-item');
   parent.querySelectorAll('.choice').forEach(x => { x.disabled = true; if (x.dataset.c === QUIZ[i].a) x.classList.add('correct'); if (x === b && !ok) x.classList.add('wrong'); });
-  parent.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${ok?'success':'error'}" style="margin-top:6px">${ok?'✓':'✗'} ${CATS.find(c=>c.id===QUIZ[i].a).name}</div>`;
+  parent.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${ok?'success':'error'}" style="margin-top:6px">${ok?'✓':'✗'} ${CATS.find(c=>c.id===QUIZ[i].a).name} — ${QUIZ[i].explain}</div>`;
   if (ok) { correct++; if (typeof SoundFX !== 'undefined') SoundFX.success(); } else if (typeof SoundFX !== 'undefined') SoundFX.error();
   answered.add(i);
   progEl.textContent = `已答 ${answered.size} / ${QUIZ.length} 題`;

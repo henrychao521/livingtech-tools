@@ -8,11 +8,11 @@ const VEHICLES = {
   truck: { name: '大卡車', icon: '🚛', baseConsumption: 5.9, desc: '10 噸載重卡車・約為房車 6 倍耗能（滿載柴油約 30 L/100km）' },
   bike:  { name: '機車', icon: '🛵', baseConsumption: 0.33, desc: '125cc 速克達・約 2 L/100km（每公里能耗最低）' },
 };
-// 效率為「燃料／電能 → 車輪動力」之 well-to-wheel 系統效率
+// 效率為「燃料／電能 → 車輪動力」之 tank-to-wheel（車端）效率
 // 汽油內燃機 ~25% 為動力總成上限（含變速箱、傳動損失）；電動車馬達效率 ~90%（但若計入發電廠效率則約 30-40%）
 // 來源：U.S. Department of Energy fueleconomy.gov、IEA《Global Energy Review 2024》
 const POWERS = {
-  ice:    { name: '汽油內燃機', eff: 25, unit: 'L/100km', costPerUnit: 30, co2PerUnit: 2350, fuelMul: 6 },
+  ice:    { name: '汽油內燃機', eff: 25, unit: 'L/100km', costPerUnit: 30, co2PerUnit: 2350, fuelMul: 6 },   // 2350 g/L：US EPA 8,887 g CO₂/加侖 ÷ 3.785
   diesel: { name: '柴油內燃機', eff: 30, unit: 'L/100km', costPerUnit: 28, co2PerUnit: 2680, fuelMul: 5.1 },
   ev:     { name: '電動 EV',   eff: 90, unit: 'kWh/100km', costPerUnit: 5, co2PerUnit: 495, fuelMul: 15 },
   hybrid: { name: '油電混合',   eff: 40, unit: 'L/100km', costPerUnit: 30, co2PerUnit: 2350, fuelMul: 3.6 },
@@ -52,7 +52,7 @@ function calc() {
   $('r-fuel').textContent = totalFuel.toFixed(2) + ' ' + (p.unit.split('/')[0]);
   $('r-cost').textContent = 'NT$ ' + totalCost.toFixed(0);
   $('r-co2').textContent = (totalCO2 / 1000).toFixed(1) + ' kg';
-  $('r-trees').textContent = trees.toFixed(2) + ' 棵/年';
+  $('r-trees').textContent = trees.toFixed(2) + ' 棵';
   $('r-co2').style.color = totalCO2 > 50000 ? '#dc2626' : totalCO2 > 10000 ? '#eab308' : '#16A34A';
   $('r-co2-note').textContent = CO2_NOTE[pId];
   markUsed(pId);

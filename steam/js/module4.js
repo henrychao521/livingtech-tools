@@ -66,6 +66,14 @@ function draw(r) {
   ctx.fillText('物體', ox, ax - oh - 10);
 
   if (!isFinite(r.di)) {
+    // 物距 = 焦距：兩條折射光互相平行，畫到右緣讓學生看見「永遠不會相交」
+    ctx.strokeStyle = '#FDE047'; ctx.lineWidth = 2;
+    // 光線 ①：平行入射 → 折射後通過後焦點
+    ctx.beginPath(); ctx.moveTo(ox, ax - oh); ctx.lineTo(lensX, ax - oh);
+    ctx.lineTo(W, (ax - oh) + oh / (state.f * S) * (W - lensX)); ctx.stroke();
+    // 光線 ②：過透鏡中心直行（斜率 oh / (do·S)，do = f 時與光線 ① 相同）
+    ctx.beginPath(); ctx.moveTo(ox, ax - oh);
+    ctx.lineTo(W, (ax - oh) + oh / (lensX - ox) * (W - ox)); ctx.stroke();
     ctx.fillStyle = '#ef4444'; ctx.font = '900 18px Inter, sans-serif'; ctx.textAlign = 'center';
     ctx.fillText('物體正好在焦點上 → 折射後平行，不成像', W / 2, 34);
     return;
@@ -106,7 +114,7 @@ function draw(r) {
 
   // 圖例
   ctx.textAlign = 'left'; ctx.font = '11px Inter, sans-serif'; ctx.fillStyle = '#94a3b8';
-  ctx.fillText('黃＝光線　綠＝實像（可投影在屏幕上）　紫＝虛像（只能用眼睛看到）', 12, H - 10);
+  ctx.fillText('黃＝光線　綠＝實像（可投影在紙屏上）　紫＝虛像（只能用眼睛看到）', 12, H - 10);
 }
 
 function update() {
@@ -120,7 +128,7 @@ function update() {
 
   const v = document.getElementById('verdict');
   if (!isFinite(r.di)) { v.className = 'verdict warn'; v.textContent = '⚠️ 物體正好在焦點上：折射後光線互相平行，不會會聚成像。'; }
-  else if (!r.real) { v.className = 'verdict good'; v.textContent = `🔎 放大鏡模式：物體在焦距內（${state.dobj} < ${state.f}），成正立放大虛像，放大 ${Math.abs(r.m).toFixed(2)} 倍。像無法投影在屏幕上。`; }
+  else if (!r.real) { v.className = 'verdict good'; v.textContent = `🔎 放大鏡模式：物體在焦距內（${state.dobj} < ${state.f}），成正立放大虛像，放大 ${Math.abs(r.m).toFixed(2)} 倍。像無法投影在紙屏上。`; }
   else if (Math.abs(r.m) > 1.02) { v.className = 'verdict good'; v.textContent = `📽️ 投影機模式：物體在 f 與 2f 之間，成倒立放大實像（${Math.abs(r.m).toFixed(2)} 倍）。`; }
   else if (Math.abs(r.m) < 0.98) { v.className = 'verdict good'; v.textContent = `📷 相機模式：物體在 2f 之外，成倒立縮小實像（${Math.abs(r.m).toFixed(2)} 倍）。`; }
   else { v.className = 'verdict good'; v.textContent = `⚖️ 物體剛好在 2f：成倒立等大實像，像距也等於 2f。`; }

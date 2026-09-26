@@ -100,16 +100,23 @@ listEl.addEventListener('dragstart', e => {
   const li = e.target.closest('.step-item'); if (!li) return;
   dragId = li.dataset.id; li.classList.add('dragging');
 });
-listEl.addEventListener('dragend', e => {
-  const li = e.target.closest('.step-item'); if (li) li.classList.remove('dragging');
+listEl.addEventListener('dragend', () => {
+  // 拖曳途中只搬 DOM 節點，放開後再依 DOM 順序更新 order 並重繪（更新序號與 data-i）
+  if (!dragId) return;
+  dragId = null;
+  order = Array.from(listEl.querySelectorAll('.step-item')).map(el => el.dataset.id);
+  render();
 });
+listEl.addEventListener('drop', e => e.preventDefault());
 listEl.addEventListener('dragover', e => {
   e.preventDefault();
   const li = e.target.closest('.step-item'); if (!li || !dragId) return;
-  const from = order.indexOf(dragId), to = +li.dataset.i;
-  if (from === to || from < 0) return;
-  order.splice(from, 1); order.splice(to, 0, dragId);
-  render();
+  const dragEl = listEl.querySelector('.step-item.dragging');
+  if (!dragEl || dragEl === li) return;
+  const items = Array.from(listEl.children);
+  // 被拖的在目標下方 → 插到目標前；在上方 → 插到目標後
+  if (items.indexOf(dragEl) > items.indexOf(li)) listEl.insertBefore(dragEl, li);
+  else listEl.insertBefore(dragEl, li.nextSibling);
 });
 
 document.getElementById('checkBtn').addEventListener('click', checkOrder);

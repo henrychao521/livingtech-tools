@@ -18,7 +18,7 @@
 
   <section class="panel">
     <h3>🔢 位元翻翻看</h3>
-    <p class="muted" style="margin-bottom:8px">點下面的方格切換 0／1。每個位置代表的值是<strong>前一個的兩倍</strong>，加起來就是這個位元組表示的數。</p>
+    <p class="muted" style="margin-bottom:8px">點下面的方格切換 0／1。<strong>從右往左，每一格是前一格的兩倍</strong>（1、2、4…128），加起來就是這個位元組表示的數。</p>
     <div class="bit-row" id="bits"></div>
     <div class="stat-grid">
       <div class="stat" style="background:#EDE9FE"><div class="stat-label" style="color:#5B21B6">十進位</div><div class="stat-val" id="dec" style="color:#6D28D9">0</div></div>
@@ -36,7 +36,7 @@
 
   <section class="panel">
     <h3>✉️ 文字怎麼變成 0 和 1</h3>
-    <p class="muted" style="margin-bottom:10px">輸入英文字母或符號，看它在電腦裡實際的樣子。</p>
+    <p class="muted" style="margin-bottom:10px">輸入英文字母、符號或中文字，看它在電腦裡實際的樣子。</p>
     <input type="text" id="msg" value="Hi!" maxlength="12"
       style="width:100%;padding:12px 14px;border:2px solid #cbd5e1;border-radius:10px;font-size:16px;font-family:'JetBrains Mono',monospace">
     <div id="encoded" style="margin-top:14px"></div>

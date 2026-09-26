@@ -64,7 +64,7 @@ function renderEncoded() {
         </tr>`;
       }).join('')}
       </tbody></table></div>
-    <p class="muted" style="margin-top:10px">💡 中文字的編碼值遠大於 255，所以無法塞進一個位元組——這就是為什麼中文通常需要 <strong>2～4 個位元組</strong>（UTF-8）來儲存。</p>`;
+    <p class="muted" style="margin-top:10px">💡 中文字的編碼值遠大於 255，所以無法塞進一個位元組——這就是為什麼常用中文在 UTF-8 需要 <strong>3 個位元組</strong>（少數罕用字 4 個）來儲存；舊的 Big5 編碼則是 2 個位元組。</p>`;
   check();
 }
 document.getElementById('msg').addEventListener('input', renderEncoded);
@@ -87,8 +87,9 @@ function renderParity() {
   const v = document.getElementById('parityVerdict');
 
   if (flipped === 0) {
+    const n1 = pbits.reduce((s, b) => s + b, 0);
     v.className = 'verdict good';
-    v.textContent = `✅ 資料完好。1 的個數為 ${pbits.reduce((s, b) => s + b, 0)}，與同位位元 ${SENT_PARITY} 一致。`;
+    v.textContent = `✅ 資料完好。1 的個數為 ${n1}（${n1 % 2 ? '奇數' : '偶數'}），同位位元 ${SENT_PARITY} 代表${SENT_PARITY ? '奇數' : '偶數'}，兩者相符。`;
   } else if (now !== SENT_PARITY) {
     v.className = 'verdict bad';
     v.textContent = `🚨 偵測到錯誤！翻了 ${flipped} 個位元（奇數），同位檢查發現不一致 → 接收端會要求重傳。`;

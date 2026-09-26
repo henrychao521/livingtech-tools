@@ -1,7 +1,9 @@
 // 雷射切割 模組 4：參數試切模擬器
 // 模型：線能量 E = 功率(W) / 速度(mm/s)  [J/mm]；切透門檻 th = k × 板厚。
-// k 值由 80W 機台的建議參數反推校準（木板3mm 20mm/s 65%、壓克力3mm 17.5mm/s 60%、
-// MDF3mm 15mm/s 65% 三組皆精確落在 E/th = 1.00），詳見 VERIFICATION.md。
+// k 值由 80W 機台的建議參數反推校準，E/th 三組都約等於 1.00：
+//   合板 3mm 20mm/s 65%：E = 0.65×80/20 = 2.60，th = 0.87×3 = 2.61 → 0.996
+//   壓克力 3mm 17.5mm/s 60%：E = 0.60×80/17.5 = 2.74，th = 0.91×3 = 2.73 → 1.005
+//   MDF 3mm 15mm/s 65%：E = 0.65×80/15 = 3.47，th = 1.16×3 = 3.48 → 0.996
 // 這是教學用示意模型，呈現趨勢與相對關係，實務仍須試切。
 
 const PK = 'laser_progress_v1';
@@ -12,7 +14,7 @@ const MAX_W = 80;   // 機台額定功率
 const MATS = [
   { id: 'wood',    ico: '🪵', name: '合板',      k: 0.87, burn: 1.9, col: '#B45309', char: '#3F2410', meta: '最常用' },
   { id: 'acrylic', ico: '💎', name: '壓克力',    k: 0.91, burn: 2.2, col: '#7DD3FC', char: '#0C4A6E', meta: '切面會亮' },
-  { id: 'mdf',     ico: '🟫', name: 'MDF 密迪板', k: 1.16, burn: 1.8, col: '#A16207', char: '#292014', meta: '較密、要更多能量' },
+  { id: 'mdf',     ico: '🟫', name: '密集板（MDF）', k: 1.16, burn: 1.8, col: '#A16207', char: '#292014', meta: '較密、要更多能量' },
   { id: 'card',    ico: '📦', name: '厚紙板',    k: 0.22, burn: 2.6, col: '#D6BC97', char: '#4A3520', meta: '極易燒，功率要小' },
 ];
 
@@ -154,6 +156,12 @@ function update() {
   if (state.mode === 'engrave' && res.r >= 0.9) {
     v.className = 'verdict bad';
     v.innerHTML = `⚠️ 你選的是<strong>雕刻</strong>，但這組參數已經把板子切透了——雕刻的能量應該遠低於切透門檻。`;
+  } else if (state.mode === 'engrave' && res.r >= 0.55) {
+    v.className = 'verdict warn';
+    v.innerHTML = `🟡 你選的是<strong>雕刻</strong>，但太深了（${(res.r * 100).toFixed(0)}%），已經接近切斷。把速度調快或功率調低。`;
+  } else if (state.mode === 'engrave') {
+    v.className = 'verdict good';
+    v.innerHTML = `✅ 表面雕刻（${(res.r * 100).toFixed(0)}%），這就是雕刻要的效果：只燒掉表層，不傷到板子結構。`;
   }
   check(res);
 }
@@ -166,7 +174,7 @@ const QUESTS = [
     test: (r) => r.level === 'partial' },
   { id: 'q_burn',  text: '做出「切透但邊緣焦黑」', hint: '速度調得很慢，或功率拉滿',
     test: (r) => r.level === 'burn' || r.level === 'fire' },
-  { id: 'q_thick', text: '挑戰厚板：把 5 mm 的 MDF 也乾淨切透', hint: 'MDF 比合板密，同樣厚度要更多能量',
+  { id: 'q_thick', text: '挑戰厚板：把 5 mm 的密集板（MDF）也乾淨切透', hint: '密集板比合板密，同樣厚度要更多能量',
     test: (r) => state.mat === 'mdf' && state.t === 5 && r.level === 'clean' },
 ];
 const done = new Set(loadP().module4_quests || []);
