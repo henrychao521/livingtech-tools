@@ -77,7 +77,8 @@ function draw(r) {
   ctx.strokeStyle = '#FDE047'; ctx.lineWidth = 2;
   ctx.beginPath(); ctx.moveTo(ox, ax - oh); ctx.lineTo(lensX, ax - oh); ctx.stroke();
   ctx.beginPath(); ctx.moveTo(lensX, ax - oh);
-  if (r.real) ctx.lineTo(ix, ax - ih); else ctx.lineTo(W, ax - oh + (ax - oh - (ax - ih)) / (ix - lensX) * (lensX - W) * -1);
+  // 折射後必通過後焦點 (lensX + f·S, ax)：y = (ax − oh) + oh / (f·S) × (x − lensX)
+  if (r.real) ctx.lineTo(ix, ax - ih); else ctx.lineTo(W, (ax - oh) + oh / (state.f * S) * (W - lensX));
   ctx.stroke();
 
   // 光線 ②：過透鏡中心
