@@ -191,3 +191,13 @@ renderScenarios();
   const nav = document.querySelector('.module-nav-bottom');
   if (nav) nav.parentNode.insertBefore(sec, nav);
 })();
+
+// 已通過的學生重新進入：保留通關並解鎖下一關（2026-09-26 審查，同電烙鐵模組 2）
+(function restorePassed() {
+  const prog = loadBBProgress();
+  if (!(prog.module2 || prog.safetyPassed)) return;
+  document.getElementById('unlock').classList.remove('hidden');
+  const next = document.getElementById('next-btn');
+  next.style.opacity = 1;
+  next.style.pointerEvents = 'auto';
+})();

@@ -71,7 +71,7 @@
   let isAnimating = false;
 
   // 模式狀態
-  let stripperGauge = 22;              // 使用者選的剝線鉗孔
+  let stripperGauge = null;            // 使用者選的剝線鉗孔（null＝還沒選；不預先選好，避免直接給答案）
   let nibbles = [];                    // 兩鉗模式累積的咬合 [{pressure, angle}]
   const NIBBLE_MAX = 4;
 
@@ -521,6 +521,12 @@
     const actBtn = document.getElementById('ws-btn-act');
     if (actBtn) actBtn.addEventListener('click', () => {
       if (isAnimating) return;
+      if (currentMode === 'stripper' && stripperGauge == null) {
+        const el = document.getElementById('ws-result');
+        el.className = 'ws-result show lose';
+        el.innerHTML = '<strong>先選剝線鉗的孔位</strong>：對照電線外皮上印的 AWG 線徑，選對應的孔。';
+        return;
+      }
       attempts++;
       document.getElementById('ws-attempts').textContent = `嘗試次數：${attempts}`;
       const r = currentMode === 'stripper' ? evaluateStripper() : evaluateCutter();
@@ -565,7 +571,7 @@
     currentMode = mode;
     nibbles = [];
     attempts = 0;
-    stripperGauge = 22;
+    stripperGauge = null;
     document.getElementById('ws-attempts').textContent = `嘗試次數：0`;
     document.querySelectorAll('.ws-mode-tab').forEach(t => t.classList.toggle('active', t.dataset.mode === mode));
     const info = document.getElementById('ws-mode-info');
@@ -584,7 +590,7 @@
     currentLevel = level;
     nibbles = [];
     attempts = 0;
-    stripperGauge = LEVELS[level].stripperHole;
+    stripperGauge = null;   // 換關不預選孔位：原本直接選成正確答案，學生不必判斷線徑
     document.getElementById('ws-attempts').textContent = `嘗試次數：0`;
     document.querySelectorAll('.ws-level-tab').forEach((tab, i) => tab.classList.toggle('active', i === level));
     document.getElementById('ws-result').className = 'ws-result';

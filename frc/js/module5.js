@@ -94,7 +94,7 @@ function updateChecklistResult() {
     msg = `✅ <strong>${checked} / ${total} ・ 不錯！</strong>已有競賽基礎，補齊剩下 ${total - checked} 項就有獎項競爭力。`;
     cls = 'success';
   } else if (checked >= 4) {
-    msg = `⚠️ <strong>${checked} / ${total} ・ 還需努力</strong>。工程筆記是 FRC 的核心評鑑項目，建議優先補足量化數據與決策紀錄。`;
+    msg = `⚠️ <strong>${checked} / ${total} ・ 還需努力</strong>。工程筆記能在評審訪談時提供具體證據，建議優先補足量化數據與決策紀錄。`;
     cls = 'warn';
   } else if (checked > 0) {
     msg = `❌ <strong>${checked} / ${total} ・ 基礎不足</strong>。工程筆記不是 FRC 規定要交的文件，但能在評審訪談時拿出具體證據，是爭取工程類獎項的重要助力。`;
