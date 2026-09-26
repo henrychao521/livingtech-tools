@@ -31,7 +31,7 @@
 <body data-tool="mechanism" class="mech-theme">
 <header class="topbar"><div class="brand"><span class="logo">🎡</span><div><h1>機構運動</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
 <main class="module-page">
-  <div class="module-header"><div><span class="module-step" style="background:var(--success-light);color:#1b6e3a">MODULE 04 ・ 核心</span><h2>機構運動模擬器</h2><p class="muted">調整機構參數，看實時運動曲線。</p></div></div>
+  <div class="module-header"><div><span class="module-step" style="background:var(--success-light);color:#1b6e3a">MODULE 04 ・ 核心</span><h2>機構運動模擬器</h2><p class="muted">調整機構參數，看即時動畫與曲柄滑塊的位移–時間曲線。</p></div></div>
 
   <div class="practice-layout">
     <div class="mech-canvas-wrap">
@@ -74,11 +74,11 @@
 
         <div id="gear-controls" style="display:none">
           <div class="slider-row">
-            <label>大齒輪齒數 <span class="v" id="v-n1">24</span></label>
+            <label>主動輪齒數 N₁ <span class="v" id="v-n1">24</span></label>
             <input type="range" id="s-n1" min="12" max="48" step="2" value="24">
           </div>
           <div class="slider-row">
-            <label>小齒輪齒數 <span class="v" id="v-n2">12</span></label>
+            <label>從動輪齒數 N₂ <span class="v" id="v-n2">12</span></label>
             <input type="range" id="s-n2" min="6" max="24" step="2" value="12">
           </div>
         </div>
@@ -93,9 +93,9 @@
         <strong>💡 觀察重點</strong>
         <ul>
           <li>R 越大 = 滑塊行程越大</li>
-          <li>L 越長 = 運動越接近正弦波</li>
+          <li>L 越長 = 位移曲線（實線）越接近正弦參考（虛線）</li>
           <li>L 太短會卡死（必須 L > R）</li>
-          <li>齒輪比 i = N<sub>從動</sub> / N<sub>驅動</sub> = N₂ / N₁；轉速反比 ω₁ / ω₂ = N₂ / N₁（驅動大齒輪 → 從動小齒輪轉得快但扭力小）</li>
+          <li>齒輪比 i = N<sub>從動</sub> / N<sub>驅動</sub> = N₂ / N₁；轉速反比 ω₁ / ω₂ = N₂ / N₁（主動輪齒數多於從動輪 → 從動輪轉得快但扭力小）</li>
         </ul>
       </div>
     </div>

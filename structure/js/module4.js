@@ -164,11 +164,13 @@ function solveScenario() {
   // 評星
   let stars = 0;
   const sfThreshold = sc.special === 'earthquake' || sc.special === 'train' ? 2.5 : 2.0;
+  // 星級以通過門檻為基準往上加：二星 +0.5、三星 +1.0（地震、鐵路門檻 2.5，否則一過關就是二星）
+  const sf2 = sfThreshold + 0.5, sf3 = sfThreshold + 1.0;
   if (minSF >= sfThreshold) stars = 1;
-  if (minSF >= 2.5) stars = 2;
-  // 一般情境 SF ≥ 3 即三星；輕量競賽另外要求橋重 ≤ LIGHTWEIGHT_MAX_KG
+  if (minSF >= sf2) stars = 2;
+  // 三星另需 SF ≥ sf3；輕量競賽另外要求橋重 ≤ LIGHTWEIGHT_MAX_KG
   const isLight = sc.special === 'lightweight';
-  if (minSF >= 3 && (!isLight || totalWeight <= LIGHTWEIGHT_MAX_KG)) stars = 3;
+  if (minSF >= sf3 && (!isLight || totalWeight <= LIGHTWEIGHT_MAX_KG)) stars = 3;
 
   let verdictHtml = '';
   if (stars === 0) {
@@ -176,12 +178,12 @@ function solveScenario() {
   } else if (stars === 1) {
     verdictHtml = `<div class="feedback success">⭐ 通過！SF=${minSF.toFixed(2)} ≥ ${sfThreshold}。</div>`;
   } else if (stars === 2) {
-    const heavyNote = isLight && minSF >= 3 ? `但橋重 ${totalWeight.toFixed(0)}kg 超過 ${LIGHTWEIGHT_MAX_KG}kg，換更輕的材料試試。` : '';
-    verdictHtml = `<div class="feedback success">⭐⭐ 優秀！SF=${minSF.toFixed(2)} ≥ 2.5。${heavyNote}</div>`;
+    const heavyNote = isLight && minSF >= sf3 ? `但橋重 ${totalWeight.toFixed(0)}kg 超過 ${LIGHTWEIGHT_MAX_KG}kg，換更輕的材料試試。` : '';
+    verdictHtml = `<div class="feedback success">⭐⭐ 優秀！SF=${minSF.toFixed(2)} ≥ ${sf2.toFixed(1)}。${heavyNote}</div>`;
   } else {
     verdictHtml = isLight
-      ? `<div class="feedback success">⭐⭐⭐ 完美！SF=${minSF.toFixed(2)} ≥ 3.0、橋重 ${totalWeight.toFixed(0)}kg，輕量設計！</div>`
-      : `<div class="feedback success">⭐⭐⭐ 完美！SF=${minSF.toFixed(2)} ≥ 3.0。</div>`;
+      ? `<div class="feedback success">⭐⭐⭐ 完美！SF=${minSF.toFixed(2)} ≥ ${sf3.toFixed(1)}、橋重 ${totalWeight.toFixed(0)}kg，輕量設計！</div>`
+      : `<div class="feedback success">⭐⭐⭐ 完美！SF=${minSF.toFixed(2)} ≥ ${sf3.toFixed(1)}。</div>`;
   }
   document.getElementById('sc-verdict').innerHTML = verdictHtml;
   document.getElementById('sc-star-display').textContent = '⭐'.repeat(stars) + '☆'.repeat(3-stars);

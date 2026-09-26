@@ -28,10 +28,10 @@
     <div id="st3d-tabs" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px">
       <button type="button" class="st3d-btn" data-src="truss.glb">桁架</button>
       <button type="button" class="st3d-btn" data-src="arch.glb">拱</button>
-      <button type="button" class="st3d-btn" data-src="frame.glb">剛架</button>
+      <button type="button" class="st3d-btn" data-src="frame.glb">框架</button>
       <button type="button" class="st3d-btn" data-src="shell.glb">殼</button>
-      <button type="button" class="st3d-btn" data-src="cable.glb">纜索</button>
-      <button type="button" class="st3d-btn" data-src="tensile.glb">張力結構</button>
+      <button type="button" class="st3d-btn" data-src="cable.glb">纜索懸吊</button>
+      <button type="button" class="st3d-btn" data-src="tensile.glb">張拉結構</button>
     </div>
     <div style="background:#1e293b;border-radius:14px;overflow:hidden">
       <model-viewer id="st3d-viewer" src="../assets/models/truss.glb" loading="eager" camera-controls auto-rotate auto-rotate-delay="0" rotation-per-second="22deg" environment-image="neutral" shadow-intensity="1" style="width:100%;height:320px;--poster-color:#1e293b"></model-viewer>
@@ -99,6 +99,30 @@
           <polygon points="40,0 34,-4 34,4" fill="#1E40AF" transform="rotate(180 34 0)"/>
         </g>
 
+        <!-- 剪力、彎矩、扭力另畫在舞台旁：桁架桿件只受軸力，不把這三種標在桿件上 -->
+        <g transform="translate(230,460)" font-family="Inter" font-size="9" font-weight="700">
+          <text x="20" y="-14" fill="#7C3AED" text-anchor="middle">剪力（螺栓）</text>
+          <rect x="0" y="-9" width="40" height="7" fill="#e9d5ff" stroke="#7C3AED" stroke-width="1.5"/>
+          <rect x="0" y="2" width="40" height="7" fill="#e9d5ff" stroke="#7C3AED" stroke-width="1.5"/>
+          <line x1="20" y1="-12" x2="20" y2="12" stroke="#7C3AED" stroke-width="3"/>
+          <polygon points="46,-5 40,-9 40,-1" fill="#7C3AED"/>
+          <polygon points="-6,5 0,1 0,9" fill="#7C3AED"/>
+        </g>
+        <g transform="translate(350,460)" font-family="Inter" font-size="9" font-weight="700">
+          <text x="20" y="-14" fill="#0F766E" text-anchor="middle">彎矩（樑）</text>
+          <path d="M 0 0 Q 20 10 40 0" fill="none" stroke="#0F766E" stroke-width="3"/>
+          <polygon points="0,2 -4,9 4,9" fill="#0F766E"/>
+          <polygon points="40,2 36,9 44,9" fill="#0F766E"/>
+          <line x1="20" y1="-10" x2="20" y2="1" stroke="#0F766E" stroke-width="2"/>
+          <polygon points="20,4 17,-2 23,-2" fill="#0F766E"/>
+        </g>
+        <g transform="translate(470,460)" font-family="Inter" font-size="9" font-weight="700">
+          <text x="20" y="-14" fill="#BE185D" text-anchor="middle">扭力（軸）</text>
+          <rect x="0" y="-4" width="40" height="8" rx="2" fill="#fbcfe8" stroke="#BE185D" stroke-width="1.5"/>
+          <path d="M -3 -7 A 4 8 0 1 0 -3 7" fill="none" stroke="#BE185D" stroke-width="2"/>
+          <path d="M 43 7 A 4 8 0 1 0 43 -7" fill="none" stroke="#BE185D" stroke-width="2"/>
+        </g>
+
         <!-- 互動熱點 -->
         <g id="hotspots">
           <g class="hotspot-group" data-id="node"><circle class="hotspot-pulse" cx="220" cy="200" r="16"><animate attributeName="r" values="16;24;16" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0;1" dur="2s" repeatCount="indefinite"/></circle><circle class="hotspot" cx="220" cy="200" r="16"/><text class="hotspot-label" x="220" y="205">1</text></g>
@@ -106,9 +130,9 @@
           <g class="hotspot-group" data-id="support"><circle class="hotspot" cx="120" cy="395" r="14"/><text class="hotspot-label" x="120" y="399">3</text></g>
           <g class="hotspot-group" data-id="tension"><circle class="hotspot" cx="80" cy="468" r="14"/><text class="hotspot-label" x="80" y="472">4</text></g>
           <g class="hotspot-group" data-id="compression"><circle class="hotspot" cx="140" cy="468" r="14"/><text class="hotspot-label" x="140" y="472">5</text></g>
-          <g class="hotspot-group" data-id="shear"><circle class="hotspot" cx="340" cy="290" r="14"/><text class="hotspot-label" x="340" y="294">6</text></g>
-          <g class="hotspot-group" data-id="bending"><circle class="hotspot" cx="400" cy="290" r="14"/><text class="hotspot-label" x="400" y="294">7</text></g>
-          <g class="hotspot-group" data-id="torsion"><circle class="hotspot" cx="460" cy="290" r="14"/><text class="hotspot-label" x="460" y="294">8</text></g>
+          <g class="hotspot-group" data-id="shear"><circle class="hotspot" cx="250" cy="488" r="14"/><text class="hotspot-label" x="250" y="492">6</text></g>
+          <g class="hotspot-group" data-id="bending"><circle class="hotspot" cx="370" cy="488" r="14"/><text class="hotspot-label" x="370" y="492">7</text></g>
+          <g class="hotspot-group" data-id="torsion"><circle class="hotspot" cx="490" cy="488" r="14"/><text class="hotspot-label" x="490" y="492">8</text></g>
         </g>
       </svg>
     </div>

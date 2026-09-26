@@ -44,15 +44,10 @@ function drawCrank() {
   ctx.beginPath();
   ctx.arc(px, py, 8, 0, Math.PI * 2);
   ctx.fill();
-  // 連桿
-  // 計算滑塊位置（滑塊在水平軌道上）
-  const dx = px - cx;
-  const slidedx = Math.sqrt(l * l - py * py + 2 * py * cy - cy * cy);
-  let sx = cx + dx + slidedx; // 簡化
-  // 用正確公式
+  // 計算滑塊位置（滑塊在水平軌道上）：x = R cos θ + √(L² − R² sin² θ)
   const a = Math.cos(angle) * r;
   const b = Math.sqrt(l * l - Math.pow(r * Math.sin(angle), 2));
-  sx = cx + a + b;
+  const sx = cx + a + b;
   // 連桿
   ctx.strokeStyle = '#0F766E';
   ctx.lineWidth = 6;
@@ -85,6 +80,41 @@ function drawCrank() {
   // 行程指示
   ctx.fillStyle = '#DC2626';
   ctx.fillText(`行程 = 2R = ${2 * r} px`, 16, 110);
+  drawCrankTrace((sx - cx - l) / r, Math.cos(angle));
+}
+
+// 滑塊位移–時間曲線（實線），並以虛線疊上正弦參考（R cos θ）：L 越長兩條越貼近
+const crankTrace = [];
+const TRACE_N = 330;
+function drawCrankTrace(d, ref) {
+  crankTrace.push({ d, ref });
+  if (crankTrace.length > TRACE_N) crankTrace.shift();
+  const x0 = 60, x1 = W - 40, yMid = 430, amp = 40;
+  const step = (x1 - x0) / (TRACE_N - 1);
+  ctx.strokeStyle = '#334155';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(x0, yMid); ctx.lineTo(x1, yMid);
+  ctx.moveTo(x0, yMid - amp - 8); ctx.lineTo(x0, yMid + amp + 8);
+  ctx.stroke();
+  const plot = (key, color, dash) => {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2;
+    ctx.setLineDash(dash);
+    ctx.beginPath();
+    crankTrace.forEach((p, i) => {
+      const y = yMid - p[key] * amp;
+      if (i === 0) ctx.moveTo(x0, y); else ctx.lineTo(x0 + i * step, y);
+    });
+    ctx.stroke();
+    ctx.setLineDash([]);
+  };
+  plot('ref', '#64748b', [5, 4]);
+  plot('d', '#14B8A6', []);
+  ctx.fillStyle = '#94a3b8';
+  ctx.font = '700 12px Inter';
+  ctx.textAlign = 'left';
+  ctx.fillText('滑塊位移–時間（實線）　正弦參考（虛線）', x0 + 6, yMid - amp - 14);
 }
 
 function drawCam() {
@@ -169,7 +199,7 @@ function drawGear() {
       ctx.save();
       ctx.translate(tx, ty);
       ctx.rotate(a);
-      ctx.fillRect(-2, 0, 4, 10);
+      ctx.fillRect(0, -2, 10, 4);
       ctx.restore();
     }
     ctx.fillStyle = '#0F766E';
@@ -192,18 +222,18 @@ function drawGear() {
   ctx.fillStyle = '#0F766E';
   ctx.font = '700 14px Inter';
   ctx.textAlign = 'center';
-  ctx.fillText(`大齒輪 N₁=${n1}`, cx1, cy1 + r1 + 30);
+  ctx.fillText(`主動輪 N₁=${n1}`, cx1, cy1 + r1 + 30);
   ctx.fillStyle = '#92400E';
-  ctx.fillText(`小齒輪 N₂=${n2}`, cx2, cy2 + r2 + 25);
+  ctx.fillText(`從動輪 N₂=${n2}`, cx2, cy2 + r2 + 25);
   // 計算
   ctx.fillStyle = '#14B8A6';
   ctx.font = '700 14px Inter';
   ctx.textAlign = 'left';
-  ctx.fillText(`齒數比 N₁:N₂ = ${n1}:${n2}`, 16, 30);
+  ctx.fillText(`齒輪比 i = N₂/N₁ = ${n2}/${n1} = ${(n2 / n1).toFixed(2)}`, 16, 30);
   ctx.fillText(`速度比 ω₂/ω₁ = ${(n1 / n2).toFixed(2)} 倍`, 16, 55);
   ctx.fillText(`扭力比 T₂/T₁ = ${(n2 / n1).toFixed(2)} 倍`, 16, 80);
   ctx.fillStyle = '#DC2626';
-  ctx.fillText(n1 > n2 ? '→ 增速減扭' : '→ 減速增扭', 16, 105);
+  ctx.fillText(n1 === n2 ? '→ 等速、只改變方向' : n1 > n2 ? '→ 增速減扭' : '→ 減速增扭', 16, 105);
 }
 
 function loop() {
@@ -231,6 +261,7 @@ document.querySelectorAll('.mech-tab').forEach(t => t.addEventListener('click', 
   t.classList.add('active');
   mode = t.dataset.m;
   angle = 0;
+  crankTrace.length = 0;
   document.getElementById('crank-controls').style.display = mode === 'crank' ? '' : 'none';
   document.getElementById('cam-controls').style.display = mode === 'cam' ? '' : 'none';
   document.getElementById('gear-controls').style.display = mode === 'gear' ? '' : 'none';

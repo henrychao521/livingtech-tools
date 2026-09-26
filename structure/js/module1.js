@@ -111,7 +111,7 @@ const BRIDGE_TYPES = [
               <line x1="100" y1="20" x2="170" y2="65" stroke="#f59e0b" stroke-width="2"/>
               <line x1="10" y1="65" x2="190" y2="65" stroke="#92400e" stroke-width="5" stroke-linecap="round"/>
               <text x="100" y="82" text-anchor="middle" font-size="9" fill="#f59e0b" font-family="Inter" font-weight="700">索拉・塔壓</text>`,
-    example: '高雄斜張橋（大港橋）・楊梅交流道',
+    example: '高屏溪斜張橋（國道 3 號）・高雄大港橋（斜張式旋轉橋）・楊梅交流道',
     range: '跨度 100–1000m',
   },
   {

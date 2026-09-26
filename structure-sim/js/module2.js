@@ -5,7 +5,7 @@ const TYPES = [
   { id: 'cable', name: '纜索懸吊 Cable / Suspension', principle: '用鋼纜把橋面「吊」起來。鋼纜純受張力——張力構件不會挫屈，可以做超長跨距。', uses: '長跨距橋梁、纜車、屋頂', example: 'Golden Gate Bridge 金門大橋 / Akashi Kaikyō Bridge', viz: 'cable' },
   { id: 'frame', name: '框架 Frame', principle: '由樑（橫）+ 柱（直）組成，節點為剛接。可承受垂直、水平、彎矩多種力——適合需要大空間且開窗的建築。', uses: '高樓、住宅、體育館', example: 'Taipei 101 / Burj Khalifa 哈里發塔', viz: 'frame' },
   { id: 'shell', name: '殼結構 Shell', principle: '薄而曲的面，靠形狀承力——蛋殼原理。應力分布在整個殼面上，材料用量極少卻很強。', uses: '體育館屋頂、貝殼、頭骨、汽車車身', example: 'Sydney Opera House 雪梨歌劇院 / Pantheon 萬神殿圓頂', viz: 'shell' },
-  { id: 'tensile', name: '張弦 / 張拉 Tensile', principle: '用纖維、薄膜、纜索組成的純張力結構。沒有壓桿，所以可以非常輕。形狀依張力分布動態確定。', uses: '帳篷、體育場屋頂、雕塑', example: 'Munich Olympic Stadium 慕尼黑奧運場 / Denver Airport', viz: 'tensile' },
+  { id: 'tensile', name: '張拉結構 Tensile', principle: '用纖維、薄膜、纜索組成的純張力結構。沒有壓桿，所以可以非常輕。形狀依張力分布動態確定。', uses: '帳篷、體育場屋頂、雕塑', example: 'Munich Olympic Stadium 慕尼黑奧運場 / Denver Airport', viz: 'tensile' },
 ];
 
 // 立體圖：OpenSCAD 參數化建模 → STL → 等角 PNG

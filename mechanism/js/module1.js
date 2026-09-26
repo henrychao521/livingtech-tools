@@ -6,7 +6,7 @@ const MECHS = [
     motion: '旋轉 ↔ 往復',
     principle: '驅動圓盤連動連桿，把圓周運動轉換成滑塊的直線往復運動（或反過來）。是內燃機活塞、縫紉機針、空氣壓縮機的核心。',
     examples: '汽車活塞、縫紉機、空氣壓縮機、衝床',
-    viz: `<svg viewBox="0 0 240 100"><line x1="20" y1="60" x2="220" y2="60" stroke="#475569" stroke-width="2"/><circle cx="50" cy="60" r="22" fill="#CCFBF1" stroke="#14B8A6" stroke-width="3"/><circle cx="50" cy="60" r="5" fill="#0F766E"/><g><circle cx="72" cy="60" r="5" fill="#DC2626"><animateTransform attributeName="transform" type="rotate" from="0 50 60" to="360 50 60" dur="2.5s" repeatCount="indefinite"/></circle></g><line x1="72" y1="60" x2="170" y2="60" stroke="#0F766E" stroke-width="3"><animate attributeName="x1" values="72;50;28;50;72" dur="2.5s" repeatCount="indefinite"/><animate attributeName="y1" values="60;82;60;38;60" dur="2.5s" repeatCount="indefinite"/></line><rect x="160" y="50" width="20" height="20" fill="#14B8A6"><animate attributeName="x" values="160;145;160;180;160" dur="2.5s" repeatCount="indefinite"/></rect></svg>`,
+    viz: `<svg viewBox="0 0 240 100"><line x1="20" y1="60" x2="220" y2="60" stroke="#475569" stroke-width="2"/><circle cx="50" cy="60" r="22" fill="#CCFBF1" stroke="#14B8A6" stroke-width="3"/><circle cx="50" cy="60" r="5" fill="#0F766E"/><g><circle cx="72" cy="60" r="5" fill="#DC2626"><animateTransform attributeName="transform" type="rotate" from="0 50 60" to="360 50 60" dur="2.5s" repeatCount="indefinite"/></circle></g><line x1="72" y1="60" x2="162" y2="60" stroke="#0F766E" stroke-width="3"><animate attributeName="x1" values="72;71.3;69.1;65.6;61;55.7;50;44.3;39;34.4;30.9;28.7;28;28.7;30.9;34.4;39;44.3;50;55.7;61;65.6;69.1;71.3;72" keyTimes="0;0.0417;0.0833;0.125;0.1667;0.2083;0.25;0.2917;0.3333;0.375;0.4167;0.4583;0.5;0.5417;0.5833;0.625;0.6667;0.7083;0.75;0.7917;0.8333;0.875;0.9167;0.9583;1" dur="2.5s" repeatCount="indefinite"/><animate attributeName="y1" values="60;65.7;71;75.6;79.1;81.3;82;81.3;79.1;75.6;71;65.7;60;54.3;49;44.4;40.9;38.7;38;38.7;40.9;44.4;49;54.3;60" keyTimes="0;0.0417;0.0833;0.125;0.1667;0.2083;0.25;0.2917;0.3333;0.375;0.4167;0.4583;0.5;0.5417;0.5833;0.625;0.6667;0.7083;0.75;0.7917;0.8333;0.875;0.9167;0.9583;1" dur="2.5s" repeatCount="indefinite"/><animate attributeName="x2" values="162;161.1;158.4;154.2;149;143.1;137.3;131.8;127;123.1;120.3;118.6;118;118.6;120.3;123.1;127;131.8;137.3;143.1;149;154.2;158.4;161.1;162" keyTimes="0;0.0417;0.0833;0.125;0.1667;0.2083;0.25;0.2917;0.3333;0.375;0.4167;0.4583;0.5;0.5417;0.5833;0.625;0.6667;0.7083;0.75;0.7917;0.8333;0.875;0.9167;0.9583;1" dur="2.5s" repeatCount="indefinite"/></line><rect x="152" y="50" width="20" height="20" fill="#14B8A6"><animate attributeName="x" values="152;151.1;148.4;144.2;139;133.1;127.3;121.8;117;113.1;110.3;108.6;108;108.6;110.3;113.1;117;121.8;127.3;133.1;139;144.2;148.4;151.1;152" keyTimes="0;0.0417;0.0833;0.125;0.1667;0.2083;0.25;0.2917;0.3333;0.375;0.4167;0.4583;0.5;0.5417;0.5833;0.625;0.6667;0.7083;0.75;0.7917;0.8333;0.875;0.9167;0.9583;1" dur="2.5s" repeatCount="indefinite"/></rect></svg>`,
   },
   {
     id: 'cam',
@@ -14,7 +14,7 @@ const MECHS = [
     motion: '旋轉 → 規律往復',
     principle: '凸輪是非圓形的旋轉件，從動件（follower）沿凸輪輪廓上下移動。凸輪輪廓形狀決定從動件的運動曲線（如等速、加速、停留）。',
     examples: '引擎進排氣門、自動鎖、印刷機、機械音樂盒',
-    viz: `<svg viewBox="0 0 240 100"><g transform="translate(80,55)"><ellipse rx="32" ry="22" fill="#CCFBF1" stroke="#14B8A6" stroke-width="3"><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="3s" repeatCount="indefinite"/></ellipse><circle r="6" fill="#0F766E"/></g><rect x="74" y="22" width="12" height="20" fill="#14B8A6"><animate attributeName="y" values="22;14;22;30;22" dur="3s" repeatCount="indefinite"/></rect><line x1="80" y1="22" x2="80" y2="6" stroke="#0F766E" stroke-width="3"/><rect x="140" y="20" width="80" height="6" fill="#475569"/><text x="170" y="80" font-size="9" fill="#0F766E" font-weight="700">從動件上下</text></svg>`,
+    viz: `<svg viewBox="0 0 240 100"><g transform="translate(80,62)"><ellipse rx="32" ry="22" fill="#CCFBF1" stroke="#14B8A6" stroke-width="3"><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="3s" repeatCount="indefinite"/></ellipse><circle r="6" fill="#0F766E"/></g><g><rect x="74" y="0" width="12" height="14" fill="#14B8A6"/><line x1="80" y1="0" x2="80" y2="-14" stroke="#0F766E" stroke-width="3"/><animateTransform attributeName="transform" type="translate" values="0 26;0 25.6;0 24.4;0 22.4;0 19.7;0 17.1;0 16;0 17.1;0 19.7;0 22.4;0 24.4;0 25.6;0 26;0 25.6;0 24.4;0 22.4;0 19.7;0 17.1;0 16;0 17.1;0 19.7;0 22.4;0 24.4;0 25.6;0 26" keyTimes="0;0.0417;0.0833;0.125;0.1667;0.2083;0.25;0.2917;0.3333;0.375;0.4167;0.4583;0.5;0.5417;0.5833;0.625;0.6667;0.7083;0.75;0.7917;0.8333;0.875;0.9167;0.9583;1" dur="3s" repeatCount="indefinite"/></g><rect x="140" y="20" width="80" height="6" fill="#475569"/><text x="170" y="80" font-size="9" fill="#0F766E" font-weight="700">從動件上下</text></svg>`,
   },
   {
     id: 'gear',
@@ -36,7 +36,7 @@ const MECHS = [
     id: 'ratchet',
     name: '棘輪機構 Ratchet',
     motion: '單向旋轉 / 間歇傳動',
-    principle: '齒輪只能單向轉動——卡爪（pawl）防止反轉。轉動方向上有間歇式咔咔咔的鎖緊感。',
+    principle: '齒輪只能單向轉動——棘爪（pawl）防止反轉。轉動方向上有間歇式咔咔咔的鎖緊感。',
     examples: '扳手、絞盤、手錶上鏈、自行車後輪、千斤頂',
     viz: `<svg viewBox="0 0 240 100"><g transform="translate(120,55)"><g><circle r="28" fill="#CCFBF1" stroke="#14B8A6" stroke-width="2"/><g fill="#14B8A6"><polygon points="-3,-28 6,-26 0,-20"/><polygon points="25,-12 30,-3 21,-9"/><polygon points="25,12 18,9 28,3"/><polygon points="0,28 -6,20 6,20"/><polygon points="-25,12 -28,3 -18,9"/><polygon points="-25,-12 -18,-9 -28,-3"/></g><animateTransform attributeName="transform" type="rotate" values="0;60;60;120;120;180;180;240;240;300;300;360" dur="3.6s" repeatCount="indefinite" keyTimes="0;.083;.166;.249;.332;.415;.498;.581;.664;.747;.83;.913;1"/></g></g><line x1="148" y1="42" x2="166" y2="32" stroke="#DC2626" stroke-width="3" stroke-linecap="round"/><circle cx="166" cy="32" r="4" fill="#DC2626"/></svg>`,
   },
@@ -51,7 +51,7 @@ const MECHS = [
 ];
 
 // 立體圖 viz 統一改用 OpenSCAD PNG（從 .scad 參數化建模渲染）
-// 保留原 SVG 動畫 viz 在 .vizAnim 欄位（目前未使用；凸輪、曲柄滑塊的 SVG 動畫有誤，要改回動畫前先修正）
+// 保留原 SVG 動畫 viz 在 .vizAnim 欄位（目前未使用；凸輪已改為每轉升降兩次、以短軸為下限，曲柄滑塊連桿終點已跟滑塊同步）
 // 頁面文案已改為「立體圖」，動態展示交給模組 4 模擬器
 MECHS.forEach(m => {
   m.vizAnim = m.viz;

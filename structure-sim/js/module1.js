@@ -2,12 +2,12 @@
 const PARTS = {
   node: { name: '節點（Node / Joint）', role: 'CONNECTION POINT', desc: '結構中桿件交會的點。節點可以是「鉸接」（允許旋轉，桿件只承受軸力）或「剛接」（不允許旋轉，可傳遞彎矩）。桁架的節點都是鉸接。', fact: '節點是結構的「弱點」——多數結構失效都從節點開始（焊點裂、釘子鬆、銷孔變形）。' },
   member: { name: '桿件（Member）', role: 'STRUCTURAL ELEMENT', desc: '連接兩個節點的桿狀構件。桁架的桿件只承受「軸力」（張力或壓力）。桿件被命名常依角色：上弦、下弦、豎桿、斜桿。', fact: '桿件越長越容易「挫屈」（buckling）失效——細長的壓桿要設計得短或加支撐。' },
-  support: { name: '支承（Support）', role: 'BOUNDARY CONDITION', desc: '結構與地面或其他固定物的連接點，提供反作用力。常見三種：滾支（roller，只擋垂直力）、鉸支（pin，擋兩個方向）、固定端（fixed，全部擋住含旋轉）。', fact: '橋通常一邊鉸支、一邊滾支，讓結構可隨溫度膨脹收縮——固定兩端會把橋熱漲冷縮的力放大十倍。' },
+  support: { name: '支承（Support）', role: 'BOUNDARY CONDITION', desc: '結構與地面或其他固定物的連接點，提供反作用力。常見三種：滾支（roller，只擋垂直力）、鉸支（pin，擋兩個方向）、固定端（fixed，全部擋住含旋轉）。', fact: '橋通常一邊鉸支、一邊滾支，讓結構可隨溫度膨脹收縮——兩端都固定時，熱脹冷縮會在橋身產生很大的內力，可能擠裂橋面或破壞支承。' },
   tension: { name: '張力（Tension）', role: 'AXIAL PULLING', desc: '把桿件「拉長」的內力。受拉桿件兩端的力是「往外拉」。材料受張力時會延伸變細。鋼、鋁、繩索都很擅長受張力。', fact: '張力沒有「挫屈」問題——桿件多長都能承受設計值的張力。但要小心節點被拉脫。' },
-  compression: { name: '壓力（Compression）', role: 'AXIAL PUSHING', desc: '把桿件「壓短」的內力。受壓桿件兩端的力是「往內推」。混凝土、磚塊、實心木頭很擅長受壓。', fact: '壓桿可能會「挫屈」（突然側向彎折）——這發生在壓力到達臨界值之前，是壓桿的最大威脅。長細比 L/r 越大越容易挫屈。' },
+  compression: { name: '壓力（Compression）', role: 'AXIAL PUSHING', desc: '把桿件「壓短」的內力。受壓桿件兩端的力是「往內推」。混凝土、磚塊、實心木頭很擅長受壓。', fact: '壓桿可能會「挫屈」（突然側向彎折）——常在材料被壓壞之前發生：壓力一達到臨界載重就突然側彎，是壓桿的最大威脅。長細比 L/r 越大越容易挫屈。' },
   shear: { name: '剪力（Shear）', role: 'PERPENDICULAR FORCE', desc: '把材料「上下錯開」的力。想像用剪刀剪紙——一邊往上一邊往下就是剪力。樑承受橫向荷重時，內部就有剪力。', fact: '剪力會讓材料「滑開」——剪刀就是利用剪力。釘子、螺栓、銷主要承受剪力。' },
   bending: { name: '彎矩（Bending Moment）', role: 'ROTATIONAL FORCE', desc: '讓桿件「彎曲」的內力。樑承受橫向荷重時，靠近荷重的內部會「上拉下壓」——這就是彎矩造成的應力分布。', fact: 'I 型樑就是針對彎矩優化的——上下翼緣抗拉抗壓、中間腹板抗剪。比同樣重量的實心方桿強 5 倍。' },
-  torsion: { name: '扭力（Torsion）', role: 'TWISTING FORCE', desc: '讓桿件「扭轉」的內力。轉動方向盤時方向機柱受扭力。汽車傳動軸是受扭力的代表元件。', fact: '圓管比實心圓桿抗扭強——這就是為何腳踏車車架、傳動軸都用「中空管」。' },
+  torsion: { name: '扭力（Torsion）', role: 'TWISTING FORCE', desc: '讓桿件「扭轉」的內力。轉動方向盤時方向機柱受扭力。汽車傳動軸是受扭力的代表元件。', fact: '用同樣多的材料時，圓管比實心圓桿更抗扭——這就是為何腳踏車車架、傳動軸都用「中空管」。' },
 };
 
 const seenSet = new Set();

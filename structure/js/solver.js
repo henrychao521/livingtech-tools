@@ -182,6 +182,7 @@ const DEFAULT_AREA = 0.004; // 0.004 m² ≈ 64mm × 64mm
  */
 function memberColor(force, sf) {
   if (sf !== undefined && sf < 1.5) return '#f97316'; // 危險（橘）
+  if (sf !== undefined && sf < 2) return '#ca8a04';   // 偏低（黃），與總評三段一致
   if (Math.abs(force) < 1) return '#94a3b8';          // 零力
   return force > 0 ? '#2563eb' : '#dc2626';            // 張力藍 / 壓力紅
 }

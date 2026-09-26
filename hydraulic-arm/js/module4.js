@@ -108,8 +108,9 @@ function draw() {
     if (typeof SoundFX !== 'undefined') SoundFX.pop();
   } else if (bottleHeld && g > 40) {
     bottleHeld = false;
-    bottlePos.y = 380;
   }
+  // 放開後瓶子往下掉，落到地面（y = 380）為止
+  if (!bottleHeld && bottlePos.y < 380) bottlePos.y = Math.min(380, bottlePos.y + 6);
 
   ctx.fillStyle = '#84CC16';
   ctx.fillRect(bottlePos.x - 12, bottlePos.y - 30, 24, 35);
@@ -122,6 +123,7 @@ function draw() {
     $('verdict').className = 'verdict good';
     $('verdict').textContent = '🏆 成功！瓶子搬到目標位置。';
     const p = loadP(); p.module4 = true; p.module4_target = true; saveP(p);
+    unlockNext();
   } else if (bottleHeld) {
     $('verdict').className = 'verdict good';
     $('verdict').textContent = '✓ 抓住瓶子！把它移到目標位置。';
@@ -191,6 +193,15 @@ function drawSyringes() {
   });
   ctx.restore();
 }
+
+// 下一關：成功搬到目標才解鎖；重新進入時已完成就直接解鎖
+const nextBtn = document.getElementById('next-btn');
+function unlockNext(silent) {
+  if (nextBtn.style.pointerEvents === 'auto') return;
+  nextBtn.style.opacity = 1; nextBtn.style.pointerEvents = 'auto';
+  if (!silent && typeof SoundFX !== 'undefined') SoundFX.unlock();
+}
+if (loadP().module4_target) unlockNext(true);
 
 function loop() {
   if (document.hidden) { window.__rafPaused = true; return; }
