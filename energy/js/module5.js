@@ -1,12 +1,12 @@
 // 能源系統 模組 5：家庭用電試算
 const APPS = [
   { name: '冷氣（變頻 1.0t）', w: 900, h: 8 },
-  { name: '冰箱（500L）', w: 100, h: 24 },
+  { name: '冰箱（500L，壓縮機約一半時間運轉）', w: 100, h: 12 },
   { name: 'LED 燈（10 盞 × 12W）', w: 120, h: 5 },
   { name: '電視（55" LED）', w: 100, h: 4 },
   { name: '電腦 + 螢幕', w: 200, h: 6 },
   { name: '洗衣機', w: 500, h: 1 },
-  { name: '熱水器（電熱水瓶）', w: 800, h: 3 },
+  { name: '電熱水瓶（煮水＋保溫）', w: 800, h: 1 },
   { name: '電鍋', w: 700, h: 0.5 },
   { name: '吹風機', w: 1200, h: 0.2 },
   { name: '其他待機電器', w: 50, h: 24 },
@@ -54,8 +54,8 @@ function calc() {
     const t = Math.min(r, cap - prev);
     cost += t * price; r -= t; prev = cap;
   }
-  // CO₂ 排放係數（台灣 2023 約 495 g/kWh）
-  const co2Kg = (kwhMonth * 495) / 1000;
+  // CO₂ 排放係數由 energy-data.js 的 ENERGY_DATA.CO2_FACTOR 提供（g/kWh，每年對照能源署公告更新）
+  const co2Kg = (kwhMonth * ENERGY_DATA.CO2_FACTOR) / 1000;
   // 一棵樹一年約吸 22 kg CO₂；月排放 ×12 = 全年排放，才能和「一年吸碳量」同一個時間尺度相除
   const trees = co2Kg * 12 / 22;
 

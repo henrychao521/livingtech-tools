@@ -8,16 +8,16 @@ const FORMS = [
   { name: '位能', icon: '⛰', desc: '物體因位置擁有的能量。高處水、拉開的弓、壓縮的彈簧。' },
 ];
 const QUIZ = [
-  { q: '燃煤發電廠', chain: '化學能 → 熱能 → 動能 → 電能' },
-  { q: '太陽能板', chain: '光能 → 電能' },
-  { q: '水力發電廠', chain: '位能 → 動能 → 電能' },
-  { q: '風力發電', chain: '動能 → 電能' },
-  { q: '電燈泡', chain: '電能 → 光能 + 熱能' },
-  { q: '人類運動消耗食物', chain: '化學能 → 動能 + 熱能' },
-  { q: '電池供電給手機', chain: '化學能 → 電能' },
-  { q: '微波爐加熱食物', chain: '電能 → 光能（微波）→ 熱能' },
-  { q: '車輛煞車', chain: '動能 → 熱能（摩擦）' },
-  { q: '電動車充電與行駛', chain: '電能 → 化學能（電池）→ 電能 → 動能' },
+  { q: '燃煤發電廠', chain: '化學能 → 熱能 → 動能 → 電能', explain: '燃燒把煤的化學能變成熱能，蒸汽推動渦輪（動能），再由發電機轉成電能。' },
+  { q: '太陽能板', chain: '光能 → 電能', explain: '太陽光電效應讓光直接產生電流，中間不經過熱能或轉動。' },
+  { q: '水力發電廠', chain: '位能 → 動能 → 電能', explain: '高處的水有位能，往下流時變成動能推動水輪機，再帶動發電機發電。' },
+  { q: '風力發電', chain: '動能 → 電能', explain: '流動的空氣有動能，推動葉片帶動發電機；風本身就是動能，不是位能。' },
+  { q: '電燈泡', chain: '電能 → 光能 + 熱能', explain: '電燈不只發光也會發熱，燈泡摸起來燙就是有一部分電能變成熱能。' },
+  { q: '人類運動消耗食物', chain: '化學能 → 動能 + 熱能', explain: '食物的化學能讓肌肉做功（動能），同時大量變成體熱，所以運動會流汗。' },
+  { q: '電池供電給手機', chain: '化學能 → 電能', explain: '電池內的化學反應把儲存的化學能釋放成電能。' },
+  { q: '微波爐加熱食物', chain: '電能 → 光能（微波）→ 熱能', explain: '電能先產生微波，微波讓食物裡的水分子快速振動，才變成熱能。' },
+  { q: '車輛煞車', chain: '動能 → 熱能（摩擦）', explain: '煞車片和碟盤摩擦，把車子的動能變成熱能，所以煞車後碟盤會發燙。' },
+  { q: '電動車充電與行駛', chain: '電能 → 化學能（電池）→ 電能 → 動能', explain: '充電時電能存成電池的化學能，行駛時再放出電能驅動馬達轉動。' },
 ];
 const PK = 'energy_progress_v1';
 function loadP() { try { return JSON.parse(localStorage.getItem(PK)) || {}; } catch { return {}; } }
@@ -68,7 +68,7 @@ quizEl.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', 
     if (b.dataset.c === QUIZ[i].chain) b.classList.add('correct');
     if (b === btn && !ok) b.classList.add('wrong');
   });
-  parent.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${ok ? 'success' : 'error'}" style="margin-top:8px">${ok ? '✓' : '✗'} 能量轉換：${QUIZ[i].chain}</div>`;
+  parent.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${ok ? 'success' : 'error'}" style="margin-top:8px">${ok ? '✓' : '✗'} 能量轉換：${QUIZ[i].chain}<br>${QUIZ[i].explain}</div>`;
   if (ok) { correct++; if (typeof SoundFX !== 'undefined') SoundFX.success(); } else if (typeof SoundFX !== 'undefined') SoundFX.error();
   answered.add(i);
   progEl.textContent = `已答 ${answered.size} / ${QUIZ.length} 題`;

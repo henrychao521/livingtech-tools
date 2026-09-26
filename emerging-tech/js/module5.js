@@ -1,6 +1,6 @@
 // 新興科技 模組 5：穿戴式裝置 — PPG 準確度與資料歸屬
 // 誤差模型為教學用示意：呈現「運動雜訊 > 配戴鬆緊 > 位置 > 末梢循環」的相對影響，
-// 方向與公開文獻一致（動作偽影是 PPG 最大誤差來源），數值非特定產品實測。
+// 方向與公開文獻一致（動作假影是 PPG 最大誤差來源），數值非特定產品實測。
 
 const PK = 'et_progress_v1';
 function loadP() { try { return JSON.parse(localStorage.getItem(PK)) || {}; } catch { return {}; } }
@@ -41,7 +41,7 @@ function compute() {
   // 位置：越靠手臂上方越穩（腕骨上會滑動）
   const posPenalty = (100 - state.pos) / 100;
 
-  // 動作偽影是主因；配戴不良會放大它。
+  // 動作假影是主因；配戴不良會放大它。
   const motionTerm = a.motion * 9 * (1 + fitPenalty * 0.9 + posPenalty * 0.5);
   // 靜態因素（鬆緊／位置／刺青／末梢循環）在靜止時影響小，運動時才被放大
   const staticTerm = (fitPenalty * 4 + posPenalty * 2.5
@@ -50,7 +50,7 @@ function compute() {
 
   let err = Math.max(0.4, motionTerm + staticTerm);
   const errPct = err / a.hr * 100;
-  // 誤差方向：動作偽影常讓 PPG 低估或鎖到步頻，這裡以低估呈現
+  // 誤差方向：動作假影常讓 PPG 低估或鎖到步頻，這裡以低估呈現
   // 讀值＝真實 − 誤差，三張數據卡相減一致，挑戰判定也用同一個誤差值
   const errR = Math.round(err);
   const reading = a.hr - errR;
@@ -92,7 +92,7 @@ function render(r) {
   ctx.fillStyle = '#22c55e'; ctx.fillText('胸帶 ECG（基準・電位訊號）', 12, 22);
   ctx.fillStyle = '#3b82f6'; ctx.fillText('手錶 PPG（光學訊號）', 12, midP - 78);
   ctx.fillStyle = '#94a3b8'; ctx.font = '11px Inter, sans-serif';
-  ctx.fillText(noise > .5 ? '⚠ 動作偽影明顯，波峰難以辨識' : '訊號穩定，波峰清楚', 12, H - 10);
+  ctx.fillText(noise > .5 ? '⚠ 動作假影明顯，波峰難以辨識' : '訊號穩定，波峰清楚', 12, H - 10);
 }
 
 // ---------- 挑戰 ----------
@@ -127,7 +127,7 @@ function checkQuests(r) {
   if (done.size === QUESTS.length) {
     p.module5 = true; nextBtn.style.opacity = 1; nextBtn.style.pointerEvents = 'auto';
     if (typeof SoundFX !== 'undefined') SoundFX.unlock();
-    if (typeof showToast === 'function') showToast('🎉 五個模組全部完成！', 'good');
+    if (typeof showToast === 'function') showToast('🎉 三個挑戰都完成了！', 'good');
   } else {
     if (typeof SoundFX !== 'undefined') SoundFX.pop();
     if (typeof showToast === 'function') showToast('✅ 挑戰達成！', 'good');

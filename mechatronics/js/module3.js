@@ -65,6 +65,7 @@ function step(c) {
   const om = params.kp * e + params.kd * (e - c.pe) / DT;
   c.pe = e;
 
+  // 注意：畫布 y 軸向下，座標系與實體車鏡像，cr 在畫面上實際對應車子的左輪；頁面公式以實體車（y 向上）為準
   let cl = params.v - om * WB / 2, cr = params.v + om * WB / 2;
   cl = Math.max(-VMAX, Math.min(VMAX, cl));
   cr = Math.max(-VMAX, Math.min(VMAX, cr));
@@ -202,7 +203,7 @@ function finish() {
       v.innerHTML = `❌ 蛇行後脫線（跑到 ${pct}%）：修正過頭了，加 Kd 或降 Kp。`;
     } else if (params.kd < 0.005 && params.v >= 100) {
       // 已驗證：速度 ≥100 且 Kd=0 時，整個 Kp 範圍都無解 —— 此時叫學生調 Kp 是錯的提示
-      v.innerHTML = `❌ 在彎道脫線（跑到 ${pct}%）：在這個速度下，<strong>光靠 Kp 是穩不住的</strong>——馬達來不及反應。試著加入 Kd，或先把速度降下來。`;
+      v.innerHTML = `❌ 在彎道脫線（跑到 ${pct}%）：在這個速度下，<strong>Kd 太小（或為 0）時，光靠 Kp 是穩不住的</strong>——馬達來不及反應。試著加入 Kd，或先把速度降下來。`;
     } else {
       v.innerHTML = `❌ 在彎道脫線（跑到 ${pct}%）：修正不夠，調高 Kp 或降低速度。`;
     }

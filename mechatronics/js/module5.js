@@ -96,8 +96,14 @@ function renderQuiz() {
 
   let right = 0;
   answered.forEach((v, k) => { if (CASES[+k].opts[+v].ok) right++; });
-  progEl.textContent = `診斷 ${answered.size} / ${CASES.length}　答對 ${right}`;
+  updateProg(right);
   return right;
+}
+
+// 頁首進度：診斷題與檢核表都是過關條件，兩者一起顯示
+function updateProg(right) {
+  if (right == null) { right = 0; answered.forEach((v, k) => { if (CASES[+k].opts[+v].ok) right++; }); }
+  progEl.textContent = `診斷 ${answered.size} / ${CASES.length}　答對 ${right}　檢核 ${checked.size} / ${CHECKLIST.length}`;
 }
 
 function renderCheck() {
@@ -113,6 +119,7 @@ function renderCheck() {
   el.className = checked.size === CHECKLIST.length ? 'verdict good'
                : checked.size >= 6 ? 'verdict warn' : 'verdict bad';
   if (checked.size === CHECKLIST.length) el.textContent = '✅ 檢核表全數完成，可以上場了！';
+  updateProg();
 }
 
 function checkDone() {

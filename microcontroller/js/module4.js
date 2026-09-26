@@ -31,9 +31,16 @@ function setMode(m) {
   ledOn = false;
   buttonPressed = false;
   distance = 50;
-  $('btn-toggle').textContent = m === 'blink' ? '⏸ LED 自動閃爍中' : m === 'button' ? '🔘 按按鈕' : '📏 改變距離';
-  const p = loadP(); p.module4 = true; saveP(p);
+  $('btn-toggle').textContent = m === 'blink' ? '自動閃爍中（不需操作）' : m === 'button' ? '🔘 按按鈕' : '📏 改變距離';
+  $('btn-toggle').disabled = m === 'blink';   // 閃爍情境不需要外部輸入，按鈕停用避免誤以為能暫停
+  // 三個情境都切換過才記為完成（載入時的 blink 算一個）
+  visited.add(m);
+  if (visited.size === Object.keys(CODES).length) {
+    const p = loadP();
+    if (!p.module4) { p.module4 = true; saveP(p); showToast('🎉 3 個情境都操作過了！', 'good'); }
+  }
 }
+const visited = new Set();
 
 document.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () => setMode(b.dataset.s)));
 $('btn-toggle').addEventListener('click', () => {

@@ -4,7 +4,7 @@ const SENSORS = [
   { name: 'PIR 人體感測', icon: '👤', type: '數位', desc: '偵測紅外線變化判斷有人經過。自動門、走廊燈。' },
   { name: '超音波 HC-SR04', icon: '📡', type: '特殊', desc: '發射超音波測距 2cm-4m。避障機器人、停車測距。' },
   { name: 'DHT11 溫濕度', icon: '🌡', type: '特殊', desc: '單線數位傳輸溫度（±2°C）與濕度（±5%）。氣象站。' },
-  { name: '可變電阻', icon: '🎛', type: '類比', desc: '手動旋轉產生 0-1023 值。音量旋鈕、調速器。' },
+  { name: '可變電阻', icon: '🎛', type: '類比', desc: '旋轉改變分壓，輸出 0～5V 連續電壓；Arduino 用 analogRead 讀成 0-1023。音量旋鈕、調速器。' },
   { name: '土壤濕度', icon: '🪴', type: '類比', desc: '兩支電極測土壤導電性。自動灌溉系統。' },
   { name: '按鈕開關', icon: '🔘', type: '數位', desc: '按下接通、放開斷開。最簡單的數位輸入。' },
   { name: '霍爾磁感', icon: '🧲', type: '兩種都有', desc: '偵測磁場有無或強度。腳踏車速、磁鐵感應。' },
@@ -46,36 +46,54 @@ function shuffled(arr) {
   }
   return a;
 }
+const GOOD_SCORE = 6;   // 低於此分數不播勝利音效、改顯示提示與重新作答（不影響解鎖）
 let answered = new Set(); let correct = 0;
-QUIZ.forEach((q, i) => {
-  // 干擾項從其餘 7 種感測器隨機抽 3 個，再和正解一起洗牌（判分看選項內容，不看位置）
-  const opts = shuffled([q.ans, ...shuffled(allOpts.filter(o => o !== q.ans)).slice(0, 3)]);
-  const div = document.createElement('div');
-  div.className = 'quiz-item';
-  div.style.cssText = 'background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px';
-  div.innerHTML = `<p style="font-size:14px;margin-bottom:6px"><strong>題 ${i + 1}：</strong>${q.q}</p>
-    <div class="choice-grid" style="grid-template-columns:repeat(4,1fr)">${opts.map(o => `<button class="choice" data-q="${i}" data-c="${o}">${o}</button>`).join('')}</div>
-    <div class="feedback-slot"></div>`;
-  quizEl.appendChild(div);
-});
+function buildQuiz() {
+  quizEl.innerHTML = '';
+  answered = new Set(); correct = 0;
+  document.getElementById('prog').textContent = `已答 0 / ${QUIZ.length} 題`;
+  QUIZ.forEach((q, i) => {
+    // 干擾項從其餘 7 種感測器隨機抽 3 個，再和正解一起洗牌（判分看選項內容，不看位置）
+    const opts = shuffled([q.ans, ...shuffled(allOpts.filter(o => o !== q.ans)).slice(0, 3)]);
+    const div = document.createElement('div');
+    div.className = 'quiz-item';
+    div.style.cssText = 'background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px';
+    div.innerHTML = `<p style="font-size:14px;margin-bottom:6px"><strong>題 ${i + 1}：</strong>${q.q}</p>
+      <div class="choice-grid" style="grid-template-columns:repeat(4,1fr)">${opts.map(o => `<button class="choice" data-q="${i}" data-c="${o}">${o}</button>`).join('')}</div>
+      <div class="feedback-slot"></div>`;
+    quizEl.appendChild(div);
+  });
 
-quizEl.querySelectorAll('.choice').forEach(b => b.addEventListener('click', () => {
-  const i = parseInt(b.dataset.q);
-  if (answered.has(i)) return;
-  const ok = b.dataset.c === QUIZ[i].ans;
-  const parent = b.closest('.quiz-item');
-  parent.querySelectorAll('.choice').forEach(x => { x.disabled = true; if (x.dataset.c === QUIZ[i].ans) x.classList.add('correct'); if (x === b && !ok) x.classList.add('wrong'); });
-  parent.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${ok?'success':'error'}" style="margin-top:6px">${ok?'✓':'✗'} ${QUIZ[i].explain}</div>`;
-  if (ok) { correct++; if (typeof SoundFX !== 'undefined') SoundFX.success(); } else if (typeof SoundFX !== 'undefined') SoundFX.error();
-  answered.add(i);
-  document.getElementById('prog').textContent = `已答 ${answered.size} / ${QUIZ.length} 題`;
-  if (answered.size === QUIZ.length) {
-    const p = loadP(); p.module2 = true; p.module2_score = correct; saveP(p);
-    document.getElementById('next-btn').style.opacity = 1; document.getElementById('next-btn').style.pointerEvents = 'auto';
-    if (typeof SoundFX !== 'undefined') SoundFX.win();
-    showToast(`🎓 ${correct}/${QUIZ.length} 答對`, 'good');
-  }
-}));
+  quizEl.querySelectorAll('.choice').forEach(b => b.addEventListener('click', () => {
+    const i = parseInt(b.dataset.q);
+    if (answered.has(i)) return;
+    const ok = b.dataset.c === QUIZ[i].ans;
+    const parent = b.closest('.quiz-item');
+    parent.querySelectorAll('.choice').forEach(x => { x.disabled = true; if (x.dataset.c === QUIZ[i].ans) x.classList.add('correct'); if (x === b && !ok) x.classList.add('wrong'); });
+    parent.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${ok?'success':'error'}" style="margin-top:6px">${ok?'✓':'✗'} ${QUIZ[i].explain}</div>`;
+    if (ok) { correct++; if (typeof SoundFX !== 'undefined') SoundFX.success(); } else if (typeof SoundFX !== 'undefined') SoundFX.error();
+    answered.add(i);
+    document.getElementById('prog').textContent = `已答 ${answered.size} / ${QUIZ.length} 題`;
+    if (answered.size === QUIZ.length) {
+      const p = loadP(); p.module2 = true; p.module2_score = correct; saveP(p);
+      document.getElementById('next-btn').style.opacity = 1; document.getElementById('next-btn').style.pointerEvents = 'auto';
+      if (correct >= GOOD_SCORE) {
+        if (typeof SoundFX !== 'undefined') SoundFX.win();
+        showToast(`🎓 ${correct}/${QUIZ.length} 答對`, 'good');
+      } else {
+        if (typeof SoundFX !== 'undefined') SoundFX.pop();
+        showToast(`${correct}/${QUIZ.length} 答對，建議看完解說後重新作答一次`, 'info');
+        const retry = document.createElement('button');
+        retry.className = 'btn btn-primary';
+        retry.style.marginTop = '8px';
+        retry.textContent = '🔄 重新作答';
+        retry.addEventListener('click', buildQuiz);
+        quizEl.appendChild(retry);
+      }
+    }
+  }));
+}
+buildQuiz();
 
 // 已通關過（localStorage 有紀錄）→ 重新整理或重新進入時直接解鎖下一關
 if (loadP().module2) { document.getElementById('next-btn').style.opacity = 1; document.getElementById('next-btn').style.pointerEvents = 'auto'; }

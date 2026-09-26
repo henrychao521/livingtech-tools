@@ -28,8 +28,20 @@ function show(key) {
   $('r-co2').style.color = d.co2 > 500 ? '#dc2626' : d.co2 > 100 ? '#eab308' : '#16A34A';
 }
 
-document.querySelectorAll('.e-tab').forEach(t => t.addEventListener('click', () => show(t.dataset.e)));
-show('fossil');
+// 五個分頁都點過才記為完成（載入時顯示的燃煤算一個）
+const viewed = new Set();
+function markViewed(key) {
+  viewed.add(key);
+  if (viewed.size === Object.keys(DATA).length) {
+    const p = loadP();
+    if (!p.module4) { p.module4 = true; saveP(p); showToast('🎉 5 種發電方式都比較過了！', 'good'); }
+  }
+}
+document.querySelectorAll('.e-tab').forEach(t => t.addEventListener('click', () => { show(t.dataset.e); markViewed(t.dataset.e); }));
+show('fossil'); markViewed('fossil');
+
+// 說明本頁的分類和模組 1 不同的原因（水力占比從 GEN_SHARE 讀）
+$('scope-note').textContent = `本頁比較台灣發電量前幾大的電源，化石燃料拆成燃煤與燃氣；水力約 ${GS.hydro.toFixed(1)}% 未列入。`;
 
 // 排行圖
 const bars = $('bars');
@@ -49,4 +61,3 @@ bar('💰 每度電成本 NT$', Object.fromEntries(Object.entries(DATA).map(([k,
 bar('🏭 CO₂ 排放 g/kWh', Object.fromEntries(Object.entries(DATA).map(([k,v]) => [k, v.co2])), 1000, 'g', { fossil:'#dc2626', gas:'#eab308', nuclear:'#22c55e', solar:'#22c55e', wind:'#22c55e' });
 bar('⚙ 發電效率 %', Object.fromEntries(Object.entries(DATA).map(([k,v]) => [k, v.eff])), 60, '%', { fossil:'#92400E', gas:'#16A34A', nuclear:'#1E40AF', solar:'#CA8A04', wind:'#0EA5E9' });
 
-const p = loadP(); p.module4 = true; saveP(p);

@@ -32,7 +32,7 @@ const EXAMPLES = [
   } <span class="kw">else</span> {
     <span class="fn">digitalWrite</span>(<span class="num">13</span>, <span class="kw">LOW</span>);
   }
-}`, desc: 'A0 接光敏電阻 + 10kΩ。光線變暗時自動亮燈。閾值可校正。' },
+}`, desc: '分壓接法：5V → 光敏電阻 → A0 → 10kΩ → GND（變暗時讀值下降；接反則邏輯相反）。光線變暗時自動亮燈。閾值可校正。' },
   { title: 'PWM 呼吸燈', concept: 'analogWrite + for 迴圈',
     code: `<span class="kw">void</span> <span class="fn">setup</span>() { <span class="fn">pinMode</span>(<span class="num">9</span>, <span class="kw">OUTPUT</span>); }
 <span class="kw">void</span> <span class="fn">loop</span>() {

@@ -100,7 +100,7 @@ quizEl.addEventListener('click', e => {
   saveP(p);
 
   const ok = pick === QUESTIONS[+qi].a;
-  if (typeof SoundFX !== 'undefined') ok ? SoundFX.pop() : SoundFX.pop();
+  if (typeof SoundFX !== 'undefined') ok ? SoundFX.pop() : SoundFX.error();
   if (typeof showToast === 'function') showToast(ok ? '✅ 答對了' : '❌ 再看一次判斷關鍵', ok ? 'good' : '');
   if (allDone) {
     if (typeof SoundFX !== 'undefined') SoundFX.unlock();
