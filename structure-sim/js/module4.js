@@ -19,76 +19,116 @@ let loaded = false;
 let animProgress = 0;
 
 function generateTruss(type, span, height, panels = 6) {
+  // Warren 用奇數節間（5 格），上弦才有正中央的節點可以放置中荷重，桿件數也最少
+  if (type === 'warren') panels = 5;
   const cx = W / 2, cy = 350;
   const halfSpan = span / 2;
   const panelW = span / panels;
   const nodes = [];
-  // 下弦節點
+  // 下弦節點（索引 0 ～ panels；0 為鉸支承、panels 為滾支承）
   for (let i = 0; i <= panels; i++) nodes.push({ x: cx - halfSpan + i * panelW, y: cy, fixed: i === 0 || i === panels });
-  // 上弦節點
-  for (let i = 1; i < panels; i++) nodes.push({ x: cx - halfSpan + i * panelW, y: cy - height });
   const members = [];
   // 下弦
   for (let i = 0; i < panels; i++) members.push({ a: i, b: i + 1, type: 'bot' });
-  // 上弦
-  for (let i = 0; i < panels - 2; i++) members.push({ a: panels + 1 + i, b: panels + 2 + i, type: 'top' });
-  // 端斜桿
-  members.push({ a: 0, b: panels + 1, type: 'end' });
-  members.push({ a: panels, b: panels * 2 - 1, type: 'end' });
-  // 豎桿與斜桿（依 type 改變）
-  for (let i = 1; i < panels; i++) {
-    members.push({ a: i, b: panels + i, type: 'vert' });
+
+  if (type === 'warren') {
+    // Warren：上弦節點在每個節間的正中央，沒有豎桿，斜桿「/ \ / \」交替
+    for (let i = 0; i < panels; i++) nodes.push({ x: cx - halfSpan + (i + 0.5) * panelW, y: cy - height });
+    const T = i => panels + 1 + i; // 第 i 個上弦節點
+    for (let i = 0; i < panels - 1; i++) members.push({ a: T(i), b: T(i + 1), type: 'top' });
+    for (let i = 0; i < panels; i++) {
+      members.push({ a: i, b: T(i), type: i === 0 ? 'end' : 'diag' });                 // 往右上
+      members.push({ a: T(i), b: i + 1, type: i === panels - 1 ? 'end' : 'diag' });     // 往右下
+    }
+    return { nodes, members };
   }
-  if (type === 'pratt') {
-    for (let i = 1; i < panels; i++) {
-      const isLeft = i < panels / 2;
-      const top = panels + i;
-      if (isLeft) members.push({ a: i, b: top + 1, type: 'diag' });
-      else if (i > panels / 2) members.push({ a: i, b: top - 1, type: 'diag' });
-    }
-  } else if (type === 'howe') {
-    for (let i = 1; i < panels; i++) {
-      const isLeft = i < panels / 2;
-      const top = panels + i;
-      if (isLeft) members.push({ a: i + 1, b: top, type: 'diag' });
-      else if (i > panels / 2) members.push({ a: i - 1, b: top, type: 'diag' });
-    }
-  } else if (type === 'warren') {
-    for (let i = 1; i < panels; i++) {
-      const top = panels + i;
-      if (i % 2 === 1) members.push({ a: i, b: top - 1 < panels + 1 ? 0 : top - 1, type: 'diag' });
-      else members.push({ a: i, b: top + 1 >= panels * 2 ? panels : top + 1, type: 'diag' });
+
+  // Pratt／Howe：上弦節點在下弦節點正上方（索引 panels+1 起）
+  for (let i = 1; i < panels; i++) nodes.push({ x: cx - halfSpan + i * panelW, y: cy - height });
+  const T = i => panels + i; // 在下弦節點 i 正上方的上弦節點
+  // 上弦
+  for (let i = 1; i < panels - 1; i++) members.push({ a: T(i), b: T(i + 1), type: 'top' });
+  // 端斜桿（從支承斜上到上弦，對稱荷重下受壓）
+  members.push({ a: 0, b: T(1), type: 'end' });
+  members.push({ a: panels, b: T(panels - 1), type: 'end' });
+  // 豎桿
+  for (let i = 1; i < panels; i++) members.push({ a: i, b: T(i), type: 'vert' });
+  // 斜桿
+  const mid = panels / 2;
+  for (let i = 1; i < panels; i++) {
+    if (type === 'pratt') {
+      // Pratt：斜桿由上弦往跨中向下傾「\ \ / /」→ 斜桿受張、豎桿受壓
+      if (i < mid) members.push({ a: T(i), b: i + 1, type: 'diag' });
+      else if (i > mid) members.push({ a: T(i), b: i - 1, type: 'diag' });
+    } else {
+      // Howe：斜桿由下弦往跨中向上升「/ / \ \」→ 斜桿受壓、豎桿受張
+      if (i < mid) members.push({ a: i, b: T(i + 1), type: 'diag' });
+      else if (i > mid) members.push({ a: i, b: T(i - 1), type: 'diag' });
     }
   }
   return { nodes, members };
 }
 
+// 節點法求解：每個節點 ΣFx = 0、ΣFy = 0，連同 3 個支承反力
+// （左端鉸支承 Rx、Ry，右端滾支承 Ry）組成線性方程組，用高斯消去求出每根桿的軸力。
+// 回傳 { forces, reactions, rank }；forces[i] 以「張力為正」表示。
+function solveTruss(nodes, members, loads) {
+  const n = nodes.length, m = members.length;
+  const last = nodes.reduce((k, nd, i) => (nd.fixed ? i : k), 0);
+  const cols = m + 3;
+  const A = Array.from({ length: 2 * n }, () => new Array(cols + 1).fill(0));
+  members.forEach((mb, j) => {
+    const p = nodes[mb.a], q = nodes[mb.b];
+    const L = Math.hypot(q.x - p.x, q.y - p.y);
+    const ux = (q.x - p.x) / L, uy = (q.y - p.y) / L;
+    // 張力把節點拉向桿件另一端
+    A[2 * mb.a][j] += ux; A[2 * mb.a + 1][j] += uy;
+    A[2 * mb.b][j] -= ux; A[2 * mb.b + 1][j] -= uy;
+  });
+  // 支承反力（畫布座標 y 向下，反力向上 = −y）
+  A[0][m] = 1;             // 左支承 Rx
+  A[1][m + 1] = -1;        // 左支承 Ry（向上為正）
+  A[2 * last + 1][m + 2] = -1; // 右支承 Ry（向上為正）
+  // 外力移到右側：Σ(桿力) + 反力 + 外力 = 0
+  loads.forEach(ld => { A[2 * ld.node][cols] -= ld.fx || 0; A[2 * ld.node + 1][cols] -= ld.fy || 0; });
+  // 高斯消去（部分樞軸）
+  let rank = 0;
+  const pivCol = [];
+  for (let c = 0; c < cols && rank < A.length; c++) {
+    let best = rank;
+    for (let r = rank + 1; r < A.length; r++) if (Math.abs(A[r][c]) > Math.abs(A[best][c])) best = r;
+    if (Math.abs(A[best][c]) < 1e-9) continue;
+    [A[rank], A[best]] = [A[best], A[rank]];
+    for (let r = 0; r < A.length; r++) {
+      if (r === rank) continue;
+      const f = A[r][c] / A[rank][c];
+      if (f) for (let k = c; k <= cols; k++) A[r][k] -= f * A[rank][k];
+    }
+    pivCol.push(c);
+    rank++;
+  }
+  const x = new Array(cols).fill(0);
+  pivCol.forEach((c, r) => { x[c] = A[r][cols] / A[r][c]; });
+  return { forces: x.slice(0, m), reactions: { lx: x[m], ly: x[m + 1], ry: x[m + 2] }, rank, needed: 2 * n };
+}
+
 function analyzeForces(truss, loadN, loadPosPercent) {
   const { nodes, members } = truss;
-  const span = nodes[6].x - nodes[0].x;
-  // 簡化：假設荷重集中於頂弦中央或可移動位置
+  const last = nodes.reduce((k, nd, i) => (nd.fixed ? i : k), 0);
+  const span = nodes[last].x - nodes[0].x;
+  // 荷重放在最接近拉桿位置的上弦節點
   const loadX = nodes[0].x + span * (loadPosPercent / 100);
-  // 找最接近 loadX 的上弦節點
-  const topNodes = nodes.slice(7);
-  let loadNode = 0;
+  let loadNode = last + 1;
   let minD = Infinity;
-  topNodes.forEach((n, i) => { if (Math.abs(n.x - loadX) < minD) { minD = Math.abs(n.x - loadX); loadNode = i + 7; } });
-  // 支承反力（簡化：對中點對稱時左右各分一半）
-  const a = (nodes[loadNode].x - nodes[0].x) / span;
-  const reactL = loadN * (1 - a);
-  const reactR = loadN * a;
-  // 簡化每根桿的力（教學用近似值）
+  nodes.forEach((n, i) => { if (i > last && Math.abs(n.x - loadX) < minD) { minD = Math.abs(n.x - loadX); loadNode = i; } });
+  // 以節點法實際求解（畫布 y 向下，所以向下的荷重是 +y）
+  const sol = solveTruss(nodes, members, [{ node: loadNode, fy: loadN }]);
   return members.map((m, i) => {
     const n1 = nodes[m.a], n2 = nodes[m.b];
-    const dx = n2.x - n1.x, dy = n2.y - n1.y;
-    const len = Math.sqrt(dx * dx + dy * dy);
-    let force = 0;
-    // 簡化分配：依桿類型估算
-    if (m.type === 'bot') force = -loadN * span / (4 * (nodes[7].y - nodes[0].y) * -1); // 下弦張力
-    else if (m.type === 'top') force = loadN * span / (4 * (nodes[0].y - nodes[7].y)); // 上弦壓力
-    else if (m.type === 'end') force = -loadN * 0.7; // 端斜桿張力
-    else if (m.type === 'vert') force = loadN * 0.3 * (trussType === 'pratt' ? -1 : 1);
-    else if (m.type === 'diag') force = loadN * 0.5 * (trussType === 'pratt' ? 1 : -1);
+    const len = Math.hypot(n2.x - n1.x, n2.y - n1.y);
+    // 畫面慣例：force < 0 = 張力（紅）、force > 0 = 壓力（藍）
+    const t = sol.forces[i];
+    const force = Math.abs(t) < 1e-6 ? 0 : -t;
     return { ...m, force, len };
   });
 }
@@ -112,15 +152,12 @@ function draw() {
     forces = analyzeForces(truss, loadN, loadPos);
     // 變形（簡化視覺：下弦中央下沉）
     const defl = loadN / 20 * animProgress;
-    truss.nodes.forEach((n, i) => {
-      if (!n.fixed && i <= 6) {
-        const distFromCenter = Math.abs(i - 3) / 3;
-        n.y += defl * (1 - distFromCenter) * 0.4;
-      } else if (i > 6) {
-        const idx = i - 7;
-        const distFromCenter = Math.abs(idx - 2) / 2;
-        n.y += defl * (1 - distFromCenter) * 0.4;
-      }
+    const right = truss.nodes.reduce((k, nd, i) => (nd.fixed ? i : k), 0);
+    const cx0 = (truss.nodes[0].x + truss.nodes[right].x) / 2, half0 = (truss.nodes[right].x - truss.nodes[0].x) / 2;
+    truss.nodes.forEach(n => {
+      if (n.fixed) return;
+      const distFromCenter = Math.abs(n.x - cx0) / half0;
+      n.y += defl * (1 - distFromCenter) * 0.4;
     });
   }
 
@@ -171,9 +208,10 @@ function draw() {
 
   // 荷重箭頭
   if (loaded) {
-    const span0 = truss.nodes[6].x - truss.nodes[0].x;
+    const right = truss.nodes.reduce((k, nd, i) => (nd.fixed ? i : k), 0);
+    const span0 = truss.nodes[right].x - truss.nodes[0].x;
     const loadX = truss.nodes[0].x + span0 * (loadPos / 100);
-    const topNodes = truss.nodes.slice(7);
+    const topNodes = truss.nodes.slice(right + 1);
     let loadY = truss.nodes[0].y - height;
     if (topNodes.length) loadY = topNodes[0].y;
     ctx.strokeStyle = '#dc2626';

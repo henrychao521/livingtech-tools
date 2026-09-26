@@ -245,6 +245,7 @@
 .case-card .case-bar.fatigue { background:#92400e; }
 .case-card .case-bar.design { background:#dc2626; }
 .case-card .case-bar.earthquake { background:#f97316; }
+.case-card .case-bar.scour { background:#0369a1; }
 .case-card .case-body { padding:18px 20px; }
 .case-card h4 { font-size:15px; font-weight:800; margin-bottom:4px; }
 .case-card .case-meta { font-size:12px; color:var(--text-muted); margin-bottom:10px; }
@@ -258,6 +259,7 @@
 .case-tag.fatigue { background:#fef3c7; color:#92400e; }
 .case-tag.design { background:#fee2e2; color:#991b1b; }
 .case-tag.earthquake { background:#fff7ed; color:#c2410c; }
+.case-tag.scour { background:#e0f2fe; color:#075985; }
 
 /* ── Unlock banner ──────────────────────────────────────── */
 .unlock-banner { background:linear-gradient(135deg,var(--primary),var(--primary-dark)); color:#fff; padding:28px 32px; border-radius:16px; text-align:center; margin-top:24px; }

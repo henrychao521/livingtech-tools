@@ -191,7 +191,7 @@ function memberColor(force, sf) {
 function generateBridge(type, span, height, material = 'steel') {
   const mat = MATERIALS[material];
   const E = mat.E, A = DEFAULT_AREA, y = mat.yieldStress;
-  const panels = type === 'simply' ? 1 : 6;
+  const panels = type === 'simply' ? 2 : 6;
   const panelW = span / panels;
   const nodes = [], members = [];
 
@@ -201,14 +201,17 @@ function generateBridge(type, span, height, material = 'steel') {
   }
 
   if (type === 'simply') {
-    // 簡支梁：就一根水平桿
+    // 簡支梁：梁靠「彎曲」承重，不是只受軸力的二力桿，不能交給上面的桁架求解器
+    // （原本把荷重加在支承 L0 上，桿件軸力永遠 0，SF 恆為 ∞）。
+    // 這裡只提供繪圖用的幾何（跨中節點 L1 放集中荷重），內力請改用 solveSimplyBeam()。
     members.push({ id: 'M0', n1Id: 'L0', n2Id: 'L1', E, A, yieldStress: y });
-    const loads = [{ nodeId: 'L0', fx: 0, fy: 0 }]; // 無外載（展示用）
+    members.push({ id: 'M1', n1Id: 'L1', n2Id: 'L2', E, A, yieldStress: y });
     return {
       nodes,
       members,
-      loads: [{ nodeId: 'L0', fx: 0, fy: -50000 }],
-      supports: [{ nodeId: 'L0', fixX: true, fixY: true }, { nodeId: 'L1', fixX: false, fixY: true }],
+      loads: [{ nodeId: 'L1', fx: 0, fy: -100000 }],
+      supports: [{ nodeId: 'L0', fixX: true, fixY: true }, { nodeId: 'L2', fixX: false, fixY: true }],
+      beam: true,
     };
   }
 
@@ -228,16 +231,7 @@ function generateBridge(type, span, height, material = 'steel') {
 
   if (type === 'pratt') {
     // 豎桿 + V形斜桿（斜桿受拉）
-    for (let i = 1; i < panels; i++) {
-      members.push({ id: `V${i}`, n1Id: `L${i}`, n2Id: `U${i}`, E, A, yieldStress: y });
-    }
-    for (let i = 1; i < panels - 1; i++) {
-      const left = i < panels / 2;
-      if (left) members.push({ id: `D${i}`, n1Id: `L${i}`, n2Id: `U${i+1}`, E, A, yieldStress: y });
-      else      members.push({ id: `D${i}`, n1Id: `L${i+1}`, n2Id: `U${i}`, E, A, yieldStress: y });
-    }
-  } else if (type === 'howe') {
-    // 豎桿 + 反V斜桿（斜桿受壓）
+    // 斜桿由上弦往跨中向下傾：左半 Ui→L(i+1)（↘）、右半 U(i+1)→Li（↙），在下弦中央會合成 V
     for (let i = 1; i < panels; i++) {
       members.push({ id: `V${i}`, n1Id: `L${i}`, n2Id: `U${i}`, E, A, yieldStress: y });
     }
@@ -245,6 +239,17 @@ function generateBridge(type, span, height, material = 'steel') {
       const left = i < panels / 2;
       if (left) members.push({ id: `D${i}`, n1Id: `L${i+1}`, n2Id: `U${i}`, E, A, yieldStress: y });
       else      members.push({ id: `D${i}`, n1Id: `L${i}`, n2Id: `U${i+1}`, E, A, yieldStress: y });
+    }
+  } else if (type === 'howe') {
+    // 豎桿 + 反V斜桿（斜桿受壓）
+    // 斜桿由下弦往跨中向上升：左半 Li→U(i+1)（↗）、右半 L(i+1)→Ui（↖），在上弦中央會合成倒 V
+    for (let i = 1; i < panels; i++) {
+      members.push({ id: `V${i}`, n1Id: `L${i}`, n2Id: `U${i}`, E, A, yieldStress: y });
+    }
+    for (let i = 1; i < panels - 1; i++) {
+      const left = i < panels / 2;
+      if (left) members.push({ id: `D${i}`, n1Id: `L${i}`, n2Id: `U${i+1}`, E, A, yieldStress: y });
+      else      members.push({ id: `D${i}`, n1Id: `L${i+1}`, n2Id: `U${i}`, E, A, yieldStress: y });
     }
   } else if (type === 'warren') {
     // Warren 桁架：無豎桿，等腰三角形
@@ -293,6 +298,28 @@ function generateBridge(type, span, height, material = 'steel') {
 }
 
 /**
+ * 簡支梁的梁公式（教學用）
+ *   跨中集中荷重 P：支承反力各 P/2，跨中彎矩 M_max = P·L/4
+ *   矩形實心斷面 b × h：斷面模數 S = b·h² / 6，最大彎曲應力 σ = M / S
+ *   梁深取經驗值 h = L / 20、梁寬 b = h / 2
+ * @param {number} span 跨度（m）
+ * @param {number} loadN 跨中集中荷重（N）
+ * @param {string} material 材料 key
+ * @returns { M, S, sigma, sf, b, h, weight }  M: N·m、sigma: Pa、weight: kg
+ */
+const BEAM_SPAN_DEPTH = 20;
+function solveSimplyBeam(span, loadN, material = 'steel') {
+  const mat = MATERIALS[material];
+  const h = span / BEAM_SPAN_DEPTH, b = h / 2;
+  const S = b * h * h / 6;
+  const M = loadN * span / 4;
+  const sigma = M / S;
+  const sf = sigma > 1e-6 ? mat.yieldStress / sigma : Infinity;
+  const weight = b * h * span * mat.density;
+  return { M, S, sigma, sf, b, h, weight };
+}
+
+/**
  * 在 Canvas 上繪製桁架（含 FEM 結果著色）
  * @param {CanvasRenderingContext2D} ctx
  * @param {number} W canvas width
@@ -312,7 +339,7 @@ function drawTruss(ctx, W, H, truss, result, selectedMemberId) {
   });
   const pw = W * 0.82, ph = H * 0.70;
   const scaleX = (maxX - minX) < 1e-6 ? 1 : pw / (maxX - minX);
-  const scaleY = (maxY - minY) < 1e-6 ? 1 : ph / (maxY - minY);
+  const scaleY = (maxY - minY) < 1e-6 ? Infinity : ph / (maxY - minY);
   const sc = Math.min(scaleX, scaleY);
   const offX = (W - (maxX - minX) * sc) / 2 - minX * sc;
   const offY = H * 0.85 - maxY * sc; // 底部留空

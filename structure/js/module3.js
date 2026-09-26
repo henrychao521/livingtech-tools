@@ -52,7 +52,7 @@ const BRIDGE_INFO = {
     features: [
       '豎桿受<b style="color:#dc2626">壓力</b>（紅），斜桿受<b style="color:#2563eb">張力</b>（藍）',
       '斜桿只受拉力，可做得又細又長，不怕挫曲',
-      '左半斜桿向右上傾 ↗，右半向左上傾 ↖',
+      '斜桿由上弦往橋中央向下傾：左半 ↘、右半 ↙，在下弦中央會合成 V 字',
       '台灣鐵路橋、早期公路橋最常見的形式',
     ],
     svg: `<svg viewBox="0 0 360 96" xmlns="http://www.w3.org/2000/svg" style="width:100%">
@@ -61,12 +61,12 @@ ${_SVG_CHORD_STD}
 <line x1="90" y1="18" x2="90" y2="78" stroke="#dc2626" stroke-width="3"/>
 <line x1="170" y1="18" x2="170" y2="78" stroke="#dc2626" stroke-width="3"/>
 <line x1="250" y1="18" x2="250" y2="78" stroke="#dc2626" stroke-width="3"/>
-<!-- 斜桿（藍=張力，左↗右↖） -->
-<line x1="90" y1="78" x2="170" y2="18" stroke="#2563eb" stroke-width="2.5"/>
-<line x1="250" y1="78" x2="170" y2="18" stroke="#2563eb" stroke-width="2.5"/>
+<!-- 斜桿（藍=張力，左↘右↙，V 字交在下弦中央） -->
+<line x1="90" y1="18" x2="170" y2="78" stroke="#2563eb" stroke-width="2.5"/>
+<line x1="250" y1="18" x2="170" y2="78" stroke="#2563eb" stroke-width="2.5"/>
 <!-- 標籤 -->
 <text x="129" y="13" text-anchor="middle" font-size="9.5" fill="#dc2626" font-family="Inter,sans-serif" font-weight="700">豎桿＝壓</text>
-<text x="88" y="60" text-anchor="middle" font-size="9.5" fill="#2563eb" font-family="Inter,sans-serif" font-weight="700">斜桿＝拉</text>
+<text x="122" y="70" text-anchor="middle" font-size="9.5" fill="#2563eb" font-family="Inter,sans-serif" font-weight="700">斜桿＝拉</text>
 ${_SVG_NODES_STD}${_SVG_SUP}</svg>`,
   },
   howe: {
@@ -75,7 +75,7 @@ ${_SVG_NODES_STD}${_SVG_SUP}</svg>`,
     features: [
       '豎桿受<b style="color:#2563eb">張力</b>（藍），斜桿受<b style="color:#dc2626">壓力</b>（紅）',
       '歷史上組合鐵製豎桿（耐拉）+ 木製斜桿（耐壓）',
-      '左半斜桿向左上傾 ↖，右半向右上傾 ↗（與 Pratt 相反）',
+      '斜桿由下弦往橋中央向上升：左半 ↗、右半 ↖，交在上弦中央（與 Pratt 相反）',
       '壓力斜桿需較大截面積以防挫曲，現今較少使用',
     ],
     svg: `<svg viewBox="0 0 360 96" xmlns="http://www.w3.org/2000/svg" style="width:100%">
@@ -84,12 +84,12 @@ ${_SVG_CHORD_STD}
 <line x1="90" y1="18" x2="90" y2="78" stroke="#2563eb" stroke-width="3"/>
 <line x1="170" y1="18" x2="170" y2="78" stroke="#2563eb" stroke-width="3"/>
 <line x1="250" y1="18" x2="250" y2="78" stroke="#2563eb" stroke-width="3"/>
-<!-- 斜桿（紅=壓力，左↖右↗，方向與 Pratt 相反） -->
-<line x1="170" y1="78" x2="90" y2="18" stroke="#dc2626" stroke-width="2.5"/>
-<line x1="170" y1="78" x2="250" y2="18" stroke="#dc2626" stroke-width="2.5"/>
+<!-- 斜桿（紅=壓力，左↗右↖，倒 V 交在上弦中央，方向與 Pratt 相反） -->
+<line x1="90" y1="78" x2="170" y2="18" stroke="#dc2626" stroke-width="2.5"/>
+<line x1="250" y1="78" x2="170" y2="18" stroke="#dc2626" stroke-width="2.5"/>
 <!-- 標籤 -->
 <text x="129" y="13" text-anchor="middle" font-size="9.5" fill="#2563eb" font-family="Inter,sans-serif" font-weight="700">豎桿＝拉</text>
-<text x="130" y="60" text-anchor="middle" font-size="9.5" fill="#dc2626" font-family="Inter,sans-serif" font-weight="700">斜桿＝壓</text>
+<text x="130" y="72" text-anchor="middle" font-size="9.5" fill="#dc2626" font-family="Inter,sans-serif" font-weight="700">斜桿＝壓</text>
 ${_SVG_NODES_STD}${_SVG_SUP}</svg>`,
   },
   warren: {
@@ -231,6 +231,7 @@ function guidedSolve() {
   const loadKN   = parseFloat(document.getElementById('g-load').value)   || 100;
 
   guidedTruss = generateBridge(currentBridgeType, span, height, material);
+  if (guidedTruss.beam) { guidedSolveBeam(span, loadKN, material); return; }
   // 覆蓋荷重
   const panels = guidedTruss.nodes.filter(n => n.id.startsWith('L')).length - 1;
   guidedTruss.loads = [];
@@ -292,6 +293,43 @@ function guidedSolve() {
 
   // 儲存進度
   // 教師後台與首頁都以 module3 判定完成，只寫 module3_guided 會讓學生卡在 4/5
+  const pp = loadP(); pp.module3_guided = true; pp.module3 = true; saveP(pp);
+  if (typeof SoundFX !== 'undefined') SoundFX.unlock();
+}
+
+// 簡支梁：梁靠彎曲承重，桁架（軸力）求解器算不出來，改用梁公式 M = PL/4、σ = M/S
+function guidedSolveBeam(span, loadKN, material) {
+  const P = loadKN * 1000;
+  guidedTruss.loads = [{ nodeId: 'L1', fx: 0, fy: -P }];
+  const bm = solveSimplyBeam(span, P, material);
+  guidedResult = null; // 沒有桿件軸力，崩塌動畫不適用
+
+  document.getElementById('guided-canvas-hint').style.display = 'none';
+  drawTruss(guidedCtx, guidedCanvas.width, guidedCanvas.height, guidedTruss, null, null);
+
+  const mat = MATERIALS[material];
+  const sfColor = bm.sf < 1.5 ? '#f97316' : bm.sf < 2 ? '#ca8a04' : '#16a34a';
+  const sfLabel = bm.sf < 1.5 ? '❌ 危險' : bm.sf < 2 ? '⚠ 偏低' : '✅ 安全';
+  document.getElementById('fem-results').innerHTML = `
+    <div class="fem-stat"><span class="label">跨中彎矩</span><span class="value">${(bm.M / 1000).toFixed(1)} kN·m</span></div>
+    <div class="fem-stat"><span class="label">最大彎曲應力</span><span class="value">${(bm.sigma / 1e6).toFixed(1)} MPa</span></div>
+    <div class="fem-stat"><span class="label">最小安全係數</span><span class="value" style="color:${sfColor}">${bm.sf.toFixed(2)} ${sfLabel}</span></div>
+    <div class="fem-stat"><span class="label">梁斷面</span><span class="value">${(bm.b * 100).toFixed(0)} × ${(bm.h * 100).toFixed(0)} cm</span></div>
+    <div class="fem-stat"><span class="label">估計重量</span><span class="value">${bm.weight.toFixed(0)} kg</span></div>
+    <div class="fem-stat"><span class="label">材料</span><span class="value">${mat.name}</span></div>
+  `;
+
+  const notes = {
+    '7': `簡支梁靠彎曲承重：上緣受壓、下緣受拉，跨中最危險。SF=${bm.sf.toFixed(1)}，大於 2 才安全。`,
+    '8': `荷重 ${loadKN}kN 放在跨中，兩端支承各分擔 ${(loadKN / 2).toFixed(0)}kN。最小 SF=${bm.sf.toFixed(2)}；材料用量 ${bm.weight.toFixed(0)}kg。`,
+    '9': `M = PL/4 = ${loadKN}kN × ${span}m / 4 = ${(bm.M / 1000).toFixed(0)}kN·m；S = bh²/6 = ${(bm.S * 1e6).toFixed(0)}cm³；σ = M/S = ${(bm.sigma / 1e6).toFixed(1)} MPa`,
+    'T': `梁公式（非桁架求解）：梁深 h = L/${BEAM_SPAN_DEPTH} = ${bm.h.toFixed(2)}m、寬 b = h/2，σ = M/S，SF = σ_y/σ`
+  };
+  document.getElementById('g-grade-note').textContent = notes[getGrade()] || notes['7'];
+
+  document.getElementById('g-collapse-btn').style.opacity = '.4';
+  document.getElementById('g-collapse-btn').style.pointerEvents = 'none';
+
   const pp = loadP(); pp.module3_guided = true; pp.module3 = true; saveP(pp);
   if (typeof SoundFX !== 'undefined') SoundFX.unlock();
 }
