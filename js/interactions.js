@@ -15,7 +15,10 @@ window.Interactions = (function() {
     const onComplete = opts.onComplete || opts.onPass;
     const title = opts.title || '把下方步驟排回正確順序';
     const items = (opts.items || []).map(it =>
-      typeof it === 'string' ? it : (it && (it.label != null ? it.label : (it.text != null ? it.text : String(it.id)))));
+      typeof it === 'string' ? it : (it && (it.label != null ? it.label : (it.text != null ? it.text : String(it.id)))))
+      // 2026-09-26 審查：多個工具把正確順序的號碼寫進選項（`${i + 1}. 步驟`），照數字排就過關。
+      // 顯示前去掉開頭的「1.」「2、」「③」這類序號；「3D 列印」這種開頭數字不動（數字後面要有標點才算序號）
+      .map(t => String(t).replace(/^\s*(?:[(（]?\d{1,2}\s*(?:[.．](?!\d)|[、:：)）])|[①-⑳])\s*/, ''));
 
     const root = typeof container === 'string' ? document.querySelector(container) : container;
     if (!root) return;
