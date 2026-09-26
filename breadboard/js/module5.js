@@ -111,30 +111,31 @@ function renderErrorSVG(id) {
 
     'wrong-row': `<svg viewBox="0 0 200 140" style="width:90%">
       ${bbBase(false, 'bbg-wr')}
-      <!-- 凸顯同一行的金屬條（紅色虛線）-->
-      <rect x="14" y="68" width="172" height="6" fill="rgba(220,38,38,.15)" stroke="#dc2626" stroke-width="1" stroke-dasharray="3 2"/>
-      <text x="100" y="65" text-anchor="middle" font-size="7" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">同一直行 → 金屬條相連</text>
-      <!-- LED 兩腳都插在同一行 -->
-      <line x1="80" y1="71" x2="80" y2="32" stroke="#9ca3af" stroke-width="1.5"/>
-      <line x1="88" y1="71" x2="88" y2="32" stroke="#9ca3af" stroke-width="1.5"/>
+      <!-- 凸顯同一直行的金屬條（紅色虛線，a–e 五孔垂直相連）-->
+      <rect x="76" y="66" width="8" height="32" rx="2" fill="rgba(220,38,38,.15)" stroke="#dc2626" stroke-width="1" stroke-dasharray="3 2"/>
+      <text x="12" y="136" text-anchor="start" font-size="7" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">同一直行 5 孔 → 金屬條相連</text>
+      <!-- LED 兩腳都插在同一直行（上下兩孔）-->
+      <line x1="80" y1="32" x2="80" y2="70" stroke="#9ca3af" stroke-width="1.5"/>
+      <polyline points="88,32 88,84 80,88" fill="none" stroke="#9ca3af" stroke-width="1.5"/>
       <ellipse cx="84" cy="22" rx="11" ry="10" fill="#ef4444" stroke="#7f1d1d" stroke-width="1"/>
       <ellipse cx="81" cy="19" rx="3" ry="2" fill="rgba(255,255,255,.5)"/>
       <!-- 短路電流符號 -->
       <g>
-        <polygon points="79,65 87,65 83,55 91,55 79,42 81,52 73,52" fill="#fbbf24" stroke="#dc2626" stroke-width=".5">
+        <polygon points="71,65 79,65 75,55 83,55 71,42 73,52 65,52" fill="#fbbf24" stroke="#dc2626" stroke-width=".5">
           <animate attributeName="opacity" values=".5;1;.5" dur=".4s" repeatCount="indefinite"/>
         </polygon>
       </g>
-      <!-- 對照組：正確接法 -->
+      <!-- 對照組：正確接法（兩腳分插兩個不同直行，兩條金屬條互不相通）-->
       <g transform="translate(105,0)">
-        <line x1="20" y1="71" x2="20" y2="32" stroke="#9ca3af" stroke-width="1.5"/>
-        <line x1="35" y1="83" x2="35" y2="32" stroke="#9ca3af" stroke-width="1.5"/>
-        <line x1="20" y1="71" x2="35" y2="71" stroke="#16a34a" stroke-width="1" stroke-dasharray="2 1" opacity=".4"/>
+        <rect x="16" y="66" width="8" height="32" rx="2" fill="none" stroke="#16a34a" stroke-width="1" stroke-dasharray="3 2" opacity=".7"/>
+        <rect x="31" y="66" width="8" height="32" rx="2" fill="none" stroke="#16a34a" stroke-width="1" stroke-dasharray="3 2" opacity=".7"/>
+        <line x1="20" y1="32" x2="20" y2="70" stroke="#9ca3af" stroke-width="1.5"/>
+        <line x1="35" y1="32" x2="35" y2="70" stroke="#9ca3af" stroke-width="1.5"/>
         <ellipse cx="27" cy="22" rx="11" ry="10" fill="#22c55e" stroke="#15803d" stroke-width="1"/>
         <ellipse cx="24" cy="19" rx="3" ry="2" fill="rgba(255,255,255,.7)"/>
-        <text x="27" y="125" text-anchor="middle" font-size="8" fill="#16a34a" font-weight="700" font-family="Noto Sans TC">✓ 不同行</text>
+        <text x="27" y="125" text-anchor="middle" font-size="8" fill="#16a34a" font-weight="700" font-family="Noto Sans TC">✓ 不同直行</text>
       </g>
-      <text x="55" y="125" text-anchor="middle" font-size="8" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">✗ 同行 = 短路</text>
+      <text x="55" y="125" text-anchor="middle" font-size="8" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">✗ 同一直行 = 短路</text>
     </svg>`,
 
     'rail-broken': `<svg viewBox="0 0 200 140" style="width:90%">

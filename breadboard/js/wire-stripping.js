@@ -250,12 +250,12 @@
     if (stripperGauge === lvl.stripperHole) {
       checks.nick = 'pass';
       checks.edge = 'pass';
-    } else if (stripperGauge < lvl.stripperHole) {
-      // 孔比線徑小 → 切到銅芯
+    } else if (stripperGauge > lvl.stripperHole) {
+      // AWG 數字越大孔越小：孔比線徑小 → 切到銅芯
       checks.nick = 'fail-nick';
       checks.edge = 'pass';
     } else {
-      // 孔比線徑大 → 夾不住、外皮被推回去
+      // AWG 數字較小 = 孔較大：孔比線徑大 → 夾不住、外皮被推回去
       checks.nick = 'pass';
       checks.edge = 'fail-loose';
     }

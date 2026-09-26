@@ -7,92 +7,187 @@ const W = canvas.width, H = canvas.height;
 const BB = {
   x: 60, y: 100,
   w: 640, h: 280,
-  // 行間距
+  // 橫列間距
   rowSpace: 18,
-  // 列間距
+  // 直行間距
   colSpace: 32,
   cols: 18,
+  // 分段式電源軌的斷點：第 8 與第 9 直行之間（正、負兩條軌都斷開）
+  railBreakAfter: 8,
 };
+
+// === 麵包板連通規則 ===
+// 孔位寫成 [橫列, 直行]，橫列用 'rail+'、'rail-'（上電源軌）、'a'–'e'（上半區）、'f'–'j'（下半區）
+// ・中間區：同一直行的 a–e 五孔相連；f–j 五孔相連；中央溝槽兩側互不相連
+// ・電源軌：整條橫向相連；分段式麵包板在斷點兩側不相連，要靠跨接跳線
+// 電池 + 接上電源軌 + 的第 0 孔，電池 − 接上電源軌 − 的第 0 孔
+const BAT_POS = ['rail+', 0];
+const BAT_NEG = ['rail-', 0];
+
+function stripOf(hole, railBroken) {
+  const [row, col] = hole;
+  if (row === 'rail+' || row === 'rail-') {
+    const side = railBroken ? (col <= BB.railBreakAfter ? 'L' : 'R') : '';
+    return row + side;
+  }
+  if ('abcde'.includes(row)) return 'T' + col;   // 上半區第 col 直行
+  if ('fghij'.includes(row)) return 'B' + col;   // 下半區第 col 直行
+  return row + col;
+}
+
+// 元件建構函式
+const wire = (color, a, b, id) => ({ type: 'wire', color, a, b, id });
+const resistor = (a, b, id) => ({ type: 'resistor', a, b, id });
+// LED：a 為左腳、b 為右腳；flipped=false 時長腳（+）在 a
+const led = (a, b, id, flipped = false) => ({ type: 'led', a, b, id, flipped });
+const pushSwitch = (a, b, id) => ({ type: 'switch', a, b, id });
+
+// 一組標準「電阻＋LED」支路：電源跳線插第 c 直行，電阻 b 列跨 c→c+3，LED 長腳插 c+3、短腳插 c+4，接地跳線插 c+4
+function branch(c, suffix = '') {
+  return [
+    wire('red', ['rail+', c], ['a', c], 'vcc' + suffix),
+    resistor(['b', c], ['b', c + 3], 'r' + suffix),
+    led(['e', c + 3], ['e', c + 4], 'led' + suffix),
+    wire('black', ['a', c + 4], ['rail-', c + 4], 'gnd' + suffix),
+  ];
+}
 
 // 關卡定義 — 每關有「初始狀態」「需要的修正」「目標」
 const LEVELS = {
   L1: {
     name: 'L1 加入電阻',
-    goal: '電路缺少限流電阻，LED 會燒掉。請點擊紅圈位置，加入 220Ω 電阻保護 LED。',
+    goal: '電路缺少限流電阻：黃色跳線把電源直接接到 LED 長腳，LED 會燒掉。請點擊紅圈位置，把這條跳線換成 220Ω 電阻保護 LED。',
     initial: {
-      battery: { row: 0, col: 0 },           // 電池接電源軌左端
-      led: { col: 12, flipped: false },      // LED 在 col 12
-      wires: [
-        { from: ['rail+', 8], to: ['mid', 8, 'b'] },     // 電源到中間區
-        { from: ['mid', 12, 'b'], to: ['rail-', 12] },   // LED 短腳到地
+      parts: [
+        wire('red', ['rail+', 4], ['a', 4], 'vcc'),
+        wire('yellow', ['b', 4], ['b', 7], 'direct'),    // 應該是電阻的位置，卻直接用跳線
+        led(['e', 7], ['e', 8], 'led'),
+        wire('black', ['a', 8], ['rail-', 8], 'gnd'),
       ],
-      missing: ['resistor'],
     },
     fix: 'resistor',
+    hotspot: { col: 5.5, row: 'b' },
   },
   L2: {
     name: 'L2 修正 LED 方向',
     goal: 'LED 接反了不會亮。請點擊 LED 把它翻面。',
     initial: {
-      battery: { row: 0, col: 0 },
-      resistor: { col: 8 },
-      led: { col: 12, flipped: true },
-      wires: [
-        { from: ['rail+', 4], to: ['mid', 4, 'b'] },
-        { from: ['mid', 12, 'b'], to: ['rail-', 12] },
+      parts: [
+        wire('red', ['rail+', 4], ['a', 4], 'vcc'),
+        resistor(['b', 4], ['b', 7], 'r'),
+        led(['e', 7], ['e', 8], 'led', true),            // 短腳（−）插在電阻那一直行
+        wire('black', ['a', 8], ['rail-', 8], 'gnd'),
       ],
     },
     fix: 'flip-led',
+    hotspot: { col: 7.5, row: 'led' },
   },
   L3: {
     name: 'L3 跨接電源軌',
-    goal: '麵包板電源軌中間有斷點，右側 LED 拿不到電。請點擊紅圈處加入跨接跳線。',
+    goal: '這塊麵包板的電源軌在中間有斷點（紅 + 軌和黑 − 軌都斷開），電池接在左半段，右側電路拿不到電也回不了電池。請點擊紅圈處加入跨接跳線（紅線接 + 軌、黑線接 − 軌）。',
     initial: {
-      battery: { row: 0, col: 0 },
-      resistor: { col: 14 },                  // 電阻在右側
-      led: { col: 17, flipped: false },
-      wires: [
-        { from: ['rail+', 11], to: ['mid', 14, 'b'] },
-        { from: ['mid', 17, 'b'], to: ['rail-', 17] },
-      ],
-      // 電源軌中間斷點在 col 9-10
       railBroken: true,
-      missing: ['rail-bridge'],
+      parts: branch(11),
     },
     fix: 'rail-bridge',
+    hotspot: { col: 8.5, row: 'rails' },
   },
   L4: {
     name: 'L4 並聯兩顆 LED',
-    goal: '加入第二顆 LED + 第二顆 220Ω 電阻（每顆 LED 各串一個電阻）。請點擊空槽完成。⚠ 兩顆 LED 共用一顆電阻是錯誤教法（current hogging：因正向電壓差異，電流不會均分，會造成一顆過亮另一顆暗或燒毀）。',
+    goal: '加入第二顆 LED + 第二顆 220Ω 電阻（每顆 LED 各串一個電阻），兩顆都要亮。請點擊空槽完成。⚠ 兩顆 LED 共用一顆電阻是錯誤教法（current hogging：因順向電壓差異，電流不會均分，會造成一顆過亮另一顆暗或燒毀）。',
     initial: {
-      battery: { row: 0, col: 0 },
-      resistor: { col: 8 },
-      led: { col: 12, flipped: false },
-      wires: [
-        { from: ['rail+', 4], to: ['mid', 4, 'b'] },
-        { from: ['mid', 12, 'b'], to: ['rail-', 12] },
-      ],
-      missing: ['led2'],
+      parts: branch(2, '1'),
     },
     fix: 'led2',
+    needLeds: 2,
+    hotspot: { col: 12, row: 'c' },
   },
   L5: {
     name: 'L5 加入開關',
-    goal: '加入按鈕開關，按下時 LED 才亮。請點擊紅圈處放入開關。',
+    goal: '電源到電阻之間缺了一段（b2 與 b4 之間），LED 不會亮。請點擊紅圈處放入按鈕開關，按下時 LED 才亮。',
     initial: {
-      battery: { row: 0, col: 0 },
-      resistor: { col: 8 },
-      led: { col: 14, flipped: false },
-      wires: [
-        { from: ['rail+', 4], to: ['mid', 4, 'b'] },
-        { from: ['mid', 14, 'b'], to: ['rail-', 14] },
+      parts: [
+        wire('red', ['rail+', 2], ['a', 2], 'vcc'),
+        resistor(['c', 4], ['c', 7], 'r'),
+        led(['e', 7], ['e', 8], 'led'),
+        wire('black', ['a', 8], ['rail-', 8], 'gnd'),
       ],
-      missing: ['switch'],
     },
     fix: 'switch',
+    hotspot: { col: 3, row: 'b' },
     needsButton: true,
   },
 };
+
+// === 電路判定（依接線資料推導，不寫死結果）===
+// 回傳 { leds: {id: 'lit'|'burnt'|'off'}, paths: [[{part, from, to}]], short }
+function simulate(config, switchPressed) {
+  const rb = !!config.railBroken;
+  const S = h => stripOf(h, rb);
+  const start = S(BAT_POS), target = S(BAT_NEG);
+  // 可通過的「邊」：跳線、電阻雙向；LED 只能由長腳（+）流向短腳（−）；開關按下才通
+  const edges = [];
+  config.parts.forEach(p => {
+    if (p.type === 'switch' && !switchPressed) return;
+    if (p.type === 'led') {
+      const an = p.flipped ? p.b : p.a, ca = p.flipped ? p.a : p.b;
+      edges.push({ part: p, from: an, to: ca });
+    } else {
+      edges.push({ part: p, from: p.a, to: p.b });
+      edges.push({ part: p, from: p.b, to: p.a });
+    }
+  });
+  // 零電阻導體（跳線、按下的開關）連起來的直行群組 → 判斷 LED 兩腳是否被短接
+  const zeroParent = {};
+  const find = x => (zeroParent[x] === undefined || zeroParent[x] === x) ? x : (zeroParent[x] = find(zeroParent[x]));
+  config.parts.forEach(p => {
+    if (p.type === 'wire' || (p.type === 'switch' && switchPressed)) {
+      const ra = find(S(p.a)), rbb = find(S(p.b));
+      if (ra !== rbb) zeroParent[ra] = rbb;
+    }
+  });
+
+  const paths = [];
+  const visited = new Set([start]);
+  (function dfs(strip, trail) {
+    if (strip === target) { paths.push(trail.slice()); return; }
+    edges.forEach(e => {
+      if (S(e.from) !== strip) return;
+      const next = S(e.to);
+      if (visited.has(next)) return;          // 同一直行兩腳（自我迴圈）或已走過
+      visited.add(next); trail.push(e);
+      dfs(next, trail);
+      trail.pop(); visited.delete(next);
+    });
+  })(start, []);
+
+  const leds = {};
+  config.parts.filter(p => p.type === 'led').forEach(p => { leds[p.id] = 'off'; });
+  let short = false;
+  paths.forEach(path => {
+    const hasR = path.some(e => e.part.type === 'resistor');
+    const ledsOnPath = path.filter(e => e.part.type === 'led').map(e => e.part);
+    if (!hasR && ledsOnPath.length === 0) short = true;   // 電池正負極直接接通
+    ledsOnPath.forEach(p => {
+      if (find(S(p.a)) === find(S(p.b))) return;           // 兩腳被導線短接 → 電流繞過 LED
+      if (!hasR) leds[p.id] = 'burnt';
+      else if (leds[p.id] !== 'burnt') leds[p.id] = 'lit';
+    });
+  });
+  return { leds, paths, short };
+}
+
+// 關卡是否完成：至少 needLeds 顆 LED、全部正常點亮、沒有短路；有開關的關卡另需「放開時不亮」
+function levelPassed(config, switchPressed, needLeds = 1) {
+  const allLit = r => Object.keys(r.leds).length >= needLeds && Object.values(r.leds).every(s => s === 'lit') && !r.short;
+  const on = simulate(config, switchPressed);
+  if (!allLit(on)) return false;
+  if (config.parts.some(p => p.type === 'switch')) {
+    const off = simulate(config, false);
+    return switchPressed && Object.values(off.leds).every(s => s === 'off');
+  }
+  return true;
+}
 
 let state = null;
 
@@ -130,12 +225,14 @@ function rowY_bot(letter) {
   return BB.y + offsets[letter];
 }
 function holeY(letter) {
-  if (['rail+'].includes(letter)) return rowY_top('rail_p');
-  if (['rail-'].includes(letter)) return rowY_top('rail_n');
-  if (['rail+_b'].includes(letter)) return rowY_bot('rail_p');
-  if (['rail-_b'].includes(letter)) return rowY_bot('rail_n');
-  return rowY_top(letter) || rowY_bot(letter);
+  if (letter === 'rail+') return rowY_top('rail_p');
+  if (letter === 'rail-') return rowY_top('rail_n');
+  if (letter === 'rail+_b') return rowY_bot('rail_p');
+  if (letter === 'rail-_b') return rowY_bot('rail_n');
+  return 'abcde'.includes(letter) ? rowY_top(letter) : rowY_bot(letter);
 }
+function holeXY(hole) { return { x: colX(hole[1]), y: holeY(hole[0]) }; }
+function ledBodyY(p) { return holeY(p.a[0]) - 20; }
 
 function draw() {
   ctx.clearRect(0, 0, W, H);
@@ -173,10 +270,15 @@ function draw() {
   ctx.strokeStyle = '#a89770'; ctx.lineWidth = 4;
   ctx.beginPath(); ctx.moveTo(BB.x, BB.y + 140); ctx.lineTo(BB.x + BB.w, BB.y + 140); ctx.stroke();
 
-  // 電源軌斷點（如果 L3 還沒修）
-  if (state.level.initial.railBroken && !state.fixed) {
+  // 電源軌斷點（分段式麵包板：正、負兩條軌都斷開；跨接跳線補上後斷點仍在，只是被跳線接通）
+  if (state.config.railBroken) {
+    const gx = (colX(BB.railBreakAfter) + colX(BB.railBreakAfter + 1)) / 2;
     ctx.fillStyle = '#fefce8';
-    ctx.fillRect(BB.x + 290, rowY_top('rail_p') - 8, 20, 30);
+    ctx.fillRect(gx - 9, rowY_top('rail_p') - 6, 18, 30);
+    ctx.fillStyle = '#a89770';
+    ctx.font = 'bold 10px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('斷點', gx, rowY_top('rail_n') + 18);
   }
 
   // 洞洞
@@ -188,69 +290,57 @@ function draw() {
     ['f', 'g', 'h', 'i', 'j'].forEach(r => { ctx.beginPath(); ctx.arc(x, rowY_bot(r), 1.8, 0, Math.PI * 2); ctx.fill(); });
     [rowY_bot('rail_p'), rowY_bot('rail_n')].forEach(y => { ctx.beginPath(); ctx.arc(x, y, 1.8, 0, Math.PI * 2); ctx.fill(); });
   }
+  // 橫列字母與直行編號
+  ctx.fillStyle = '#a89770';
+  ctx.font = '9px Inter, sans-serif';
+  ctx.textAlign = 'center';
+  ['a', 'b', 'c', 'd', 'e'].forEach(r => ctx.fillText(r, BB.x + 12, rowY_top(r) + 3));
+  ['f', 'g', 'h', 'i', 'j'].forEach(r => ctx.fillText(r, BB.x + 12, rowY_bot(r) + 3));
+  for (let col = 0; col < BB.cols; col += 2) ctx.fillText(String(col), colX(col), BB.y + BB.h + 14);
+
+  const sim = state.powered ? simulate(state.config, state.switchPressed) : null;
 
   // 繪製跳線
-  state.config.wires.forEach(w => drawWire(w));
+  state.config.parts.filter(p => p.type === 'wire').forEach(p => drawWire(p));
 
   // 繪製電池盒（左側）
   drawBattery(BB.x - 50, BB.y + 130);
 
-  // 繪製電阻
-  if (state.config.resistor) drawResistor(colX(state.config.resistor.col));
-  if (state.config.resistor2) drawResistor(colX(state.config.resistor2.col));
-
-  // 繪製 LED
-  if (state.config.led) drawLED(colX(state.config.led.col), state.config.led.flipped);
-  if (state.config.led2) drawLED(colX(state.config.led2.col), state.config.led2.flipped);
-
-  // 繪製電源軌跨接
-  if (state.config.railBridge) {
-    ctx.strokeStyle = '#dc2626';
-    ctx.lineWidth = 4;
-    ctx.beginPath();
-    ctx.arc(BB.x + 300, rowY_top('rail_p') - 20, 18, 0.2 * Math.PI, 0.8 * Math.PI, true);
-    ctx.stroke();
-  }
-
-  // 繪製開關
-  if (state.config.switch) {
-    drawSwitch(colX(state.config.switch.col), state.switchPressed);
-  }
+  // 繪製元件
+  state.config.parts.forEach(p => {
+    if (p.type === 'resistor') drawResistor(p);
+    else if (p.type === 'switch') drawSwitch(p, state.switchPressed);
+    else if (p.type === 'led') drawLED(p, sim ? sim.leds[p.id] : 'off');
+  });
 
   // 繪製紅圈提示（未修正時）
   if (!state.fixed) drawHotspot();
 
-  // 通電動畫
-  if (state.powered && state.fixed) drawCurrentFlow();
+  // 通電動畫：沿實際導通的路徑
+  if (sim) drawCurrentFlow(sim);
 
-  // 冒煙特效（未修正就通電）
-  if (state.smoking) drawSmoke();
+  // 冒煙特效（沒有限流電阻就通電）
+  if (state.smoking) drawSmoke(sim);
 }
 
-function drawWire(w) {
-  const [fromType, fromCol] = w.from;
-  const [toType, toCol] = w.to;
-  let x1, y1, x2, y2;
-  if (fromType === 'rail+') { x1 = colX(fromCol); y1 = rowY_top('rail_p'); }
-  else if (fromType === 'rail-') { x1 = colX(fromCol); y1 = rowY_top('rail_n'); }
-  else if (fromType === 'mid') { x1 = colX(fromCol); y1 = rowY_top(w.from[2]); }
-  if (toType === 'rail+') { x2 = colX(toCol); y2 = rowY_top('rail_p'); }
-  else if (toType === 'rail-') { x2 = colX(toCol); y2 = rowY_top('rail_n'); }
-  else if (toType === 'mid') { x2 = colX(toCol); y2 = rowY_top(w.to[2]); }
-
-  const isGround = w.to[0] === 'rail-' || w.from[0] === 'rail-';
-  ctx.strokeStyle = isGround ? '#1a1a1a' : '#dc2626';
+const WIRE_COLORS = { red: '#dc2626', black: '#1a1a1a', yellow: '#eab308' };
+function drawWire(p) {
+  const { x: x1, y: y1 } = holeXY(p.a);
+  const { x: x2, y: y2 } = holeXY(p.b);
+  const color = WIRE_COLORS[p.color] || '#dc2626';
+  ctx.strokeStyle = color;
   ctx.lineWidth = 3;
   ctx.lineCap = 'round';
   ctx.beginPath();
   ctx.moveTo(x1, y1);
-  // 略微弧度
-  const mx = (x1 + x2) / 2;
-  const my = (y1 + y2) / 2 - 12;
+  // 略微弧度（直的跳線往右彎，橫的往上拱）
+  const vertical = x1 === x2;
+  const mx = (x1 + x2) / 2 + (vertical ? 10 : 0);
+  const my = (y1 + y2) / 2 - (vertical ? 0 : 12);
   ctx.quadraticCurveTo(mx, my, x2, y2);
   ctx.stroke();
   // 端點
-  ctx.fillStyle = isGround ? '#1a1a1a' : '#dc2626';
+  ctx.fillStyle = color;
   ctx.beginPath(); ctx.arc(x1, y1, 3, 0, Math.PI * 2); ctx.fill();
   ctx.beginPath(); ctx.arc(x2, y2, 3, 0, Math.PI * 2); ctx.fill();
 }
@@ -267,16 +357,28 @@ function drawBattery(x, y) {
   ctx.textAlign = 'center';
   ctx.fillText('+', x - 13, y + 4);
   ctx.fillText('−', x + 13, y + 4);
-  // 連到電源軌
+  // 連到電源軌（第 0 孔）
+  const pos = holeXY(BAT_POS), neg = holeXY(BAT_NEG);
   ctx.strokeStyle = '#dc2626';
   ctx.lineWidth = 3;
-  ctx.beginPath(); ctx.moveTo(x + 22, y - 6); ctx.lineTo(BB.x + 30, rowY_top('rail_p')); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(x + 22, y - 6); ctx.lineTo(pos.x, pos.y); ctx.stroke();
   ctx.strokeStyle = '#1a1a1a';
-  ctx.beginPath(); ctx.moveTo(x + 22, y + 6); ctx.lineTo(BB.x + 30, rowY_top('rail_n')); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(x + 22, y + 6); ctx.lineTo(neg.x, neg.y); ctx.stroke();
 }
+const BAT_TERM = { pos: { x: BB.x - 28, y: BB.y + 124 }, neg: { x: BB.x - 28, y: BB.y + 136 } };
 
-function drawResistor(x) {
-  const y = (rowY_top('e') + rowY_bot('f')) / 2;
+function drawResistor(p) {
+  // 橫躺在同一橫列，兩腳插在兩個不同直行的孔上
+  const a = holeXY(p.a), b = holeXY(p.b);
+  const x = (a.x + b.x) / 2, y = a.y;
+  // 接腳
+  ctx.strokeStyle = '#9ca3af';
+  ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+  ctx.fillStyle = '#9ca3af';
+  ctx.beginPath(); ctx.arc(a.x, a.y, 2.5, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.arc(b.x, b.y, 2.5, 0, Math.PI * 2); ctx.fill();
+  // 本體
   ctx.fillStyle = '#fef3c7';
   ctx.strokeStyle = '#92400e';
   ctx.lineWidth = 1.5;
@@ -286,24 +388,25 @@ function drawResistor(x) {
   ctx.fillStyle = '#dc2626'; ctx.fillRect(x - 14, y - 8, 3, 16);
   ctx.fillStyle = '#1a1a1a'; ctx.fillRect(x - 9, y - 8, 3, 16);
   ctx.fillStyle = '#92400e'; ctx.fillRect(x - 2, y - 8, 3, 16);
-  // 接腳
-  ctx.strokeStyle = '#9ca3af';
-  ctx.lineWidth = 2;
-  ctx.beginPath(); ctx.moveTo(x - 22, y); ctx.lineTo(x - 22, rowY_top('e')); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(x + 22, y); ctx.lineTo(x + 22, rowY_bot('f')); ctx.stroke();
 }
 
-function drawLED(x, flipped) {
-  const yTop = rowY_bot('f') + 6;
-  const yBody = yTop + 12;
+function drawLED(p, status) {
+  // 兩腳插在同一橫列、相鄰兩個直行；燈泡本體畫在兩腳上方
+  const a = holeXY(p.a), b = holeXY(p.b);
+  const x = (a.x + b.x) / 2;
+  const yBody = ledBodyY(p);
   // 接腳
   ctx.strokeStyle = '#9ca3af';
   ctx.lineWidth = 2;
-  ctx.beginPath(); ctx.moveTo(x - 5, yTop); ctx.lineTo(x - 5, rowY_bot('f')); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(x + 5, yTop); ctx.lineTo(x + 5, rowY_bot('f')); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(x - 5, yBody + 8); ctx.lineTo(a.x, a.y); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(x + 5, yBody + 8); ctx.lineTo(b.x, b.y); ctx.stroke();
+  ctx.fillStyle = '#9ca3af';
+  ctx.beginPath(); ctx.arc(a.x, a.y, 2.5, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.arc(b.x, b.y, 2.5, 0, Math.PI * 2); ctx.fill();
   // 燈泡
-  const isLit = state.powered && state.fixed && !flipped && (!state.config.switch || state.switchPressed);
-  ctx.fillStyle = isLit ? '#22c55e' : (flipped ? '#7f1d1d' : '#ef4444');
+  const isLit = status === 'lit';
+  const burnt = status === 'burnt';
+  ctx.fillStyle = isLit ? '#22c55e' : burnt ? '#3f3f46' : (p.flipped ? '#7f1d1d' : '#ef4444');
   ctx.strokeStyle = '#7f1d1d';
   ctx.lineWidth = 1.5;
   ctx.beginPath();
@@ -315,12 +418,12 @@ function drawLED(x, flipped) {
   ctx.beginPath();
   ctx.arc(x - 3, yBody - 3, 3, 0, Math.PI * 2);
   ctx.fill();
-  // 標示 + / -
+  // 標示 + / −（標在孔位下方）
   ctx.fillStyle = '#1a1a1a';
-  ctx.font = 'bold 9px Inter';
+  ctx.font = 'bold 10px Inter';
   ctx.textAlign = 'center';
-  ctx.fillText(flipped ? '−' : '+', x - 5, yTop - 4);
-  ctx.fillText(flipped ? '+' : '−', x + 5, yTop - 4);
+  ctx.fillText(p.flipped ? '−' : '+', a.x, a.y + 13);
+  ctx.fillText(p.flipped ? '+' : '−', b.x, b.y + 13);
   // 發光光暈
   if (isLit) {
     const glow = ctx.createRadialGradient(x, yBody, 0, x, yBody, 30);
@@ -333,8 +436,13 @@ function drawLED(x, flipped) {
   }
 }
 
-function drawSwitch(x, pressed) {
-  const y = (rowY_top('e') + rowY_bot('f')) / 2;
+function drawSwitch(p, pressed) {
+  const a = holeXY(p.a), b = holeXY(p.b);
+  const x = (a.x + b.x) / 2, y = a.y;
+  // 接腳
+  ctx.strokeStyle = '#9ca3af';
+  ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
   ctx.fillStyle = pressed ? '#16a34a' : '#374151';
   ctx.fillRect(x - 16, y - 12, 32, 24);
   ctx.fillStyle = pressed ? '#15803d' : '#1f2937';
@@ -343,30 +451,23 @@ function drawSwitch(x, pressed) {
   ctx.font = 'bold 10px Inter';
   ctx.textAlign = 'center';
   ctx.fillText(pressed ? 'ON' : 'OFF', x, y + 3);
-  // 接腳
-  ctx.strokeStyle = '#9ca3af';
-  ctx.lineWidth = 2;
-  ctx.beginPath(); ctx.moveTo(x - 8, y + 12); ctx.lineTo(x - 8, rowY_bot('f')); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(x + 8, y - 12); ctx.lineTo(x + 8, rowY_top('e')); ctx.stroke();
+}
+
+function hotspotXY() {
+  const h = state.level.hotspot;
+  const x = colX(h.col);
+  let y;
+  if (h.row === 'rails') y = (rowY_top('rail_p') + rowY_top('rail_n')) / 2;
+  else if (h.row === 'led') y = ledBodyY(state.config.parts.find(p => p.type === 'led'));
+  else y = holeY(h.row);
+  return { x, y };
 }
 
 function drawHotspot() {
   // 紅圈閃爍提示
   const t = performance.now() / 400;
   const pulse = 1 + Math.sin(t) * 0.2;
-  let x, y;
-  switch (state.level.fix) {
-    case 'resistor':
-      x = colX(8); y = (rowY_top('e') + rowY_bot('f')) / 2; break;
-    case 'flip-led':
-      x = colX(state.config.led.col); y = rowY_bot('f') + 18; break;
-    case 'rail-bridge':
-      x = BB.x + 300; y = rowY_top('rail_p') - 14; break;
-    case 'led2':
-      x = colX(15); y = rowY_bot('f') + 18; break;
-    case 'switch':
-      x = colX(11); y = (rowY_top('e') + rowY_bot('f')) / 2; break;
-  }
+  const { x, y } = hotspotXY();
   ctx.strokeStyle = `rgba(220, 38, 38, ${0.7 + Math.sin(t) * 0.3})`;
   ctx.lineWidth = 3;
   ctx.beginPath();
@@ -387,60 +488,60 @@ function drawHotspot() {
   ctx.fillText('點我', x, y + 3);
 }
 
-function drawCurrentFlow() {
-  // 沿實際電路路徑畫電流（電池+ → +軌 → 電阻 → LED → −軌 → 電池−）
+// 把判定找到的導通路徑轉成畫面上的折線：
+// 電池 + → 沿電源軌橫走 → 跳線 → 沿直行上下走（同一直行才相連）→ 元件 → … → 電源軌 − → 電池 −
+function flowPolyline(path) {
+  const pts = [BAT_TERM.pos, holeXY(BAT_POS)];
+  path.forEach(e => {
+    pts.push(holeXY(e.from));   // 在同一條金屬條內移動（直行為垂直、電源軌為水平）
+    pts.push(holeXY(e.to));     // 穿過元件或跳線
+  });
+  pts.push(holeXY(BAT_NEG), BAT_TERM.neg);
+  return pts;
+}
+
+function drawCurrentFlow(sim) {
   const t = performance.now() / 80;
   const flow = (t % 100) / 100;
   ctx.fillStyle = '#22c55e';
-  // 6 個關鍵節點，電流沿這條多段折線循環
-  const ledCol = state.config.led ? state.config.led.col : 12;
-  const resCol = state.config.resistor ? state.config.resistor.col : 8;
-  const path = [
-    { x: BB.x + 20, y: rowY_top('rail_p') },              // 電池 + 出
-    { x: colX(resCol), y: rowY_top('rail_p') },           // 沿 +軌到電阻
-    { x: colX(resCol), y: rowY_top('e') },                // 進電阻上端
-    { x: colX(resCol), y: rowY_bot('f') },                // 穿電阻到下端
-    { x: colX(ledCol), y: rowY_bot('f') },                // 到 LED（如同欄則為同點）
-    { x: colX(ledCol), y: rowY_top('e') },                // 經 LED 到上半
-    { x: colX(ledCol), y: rowY_top('rail_n') },           // 到 −軌
-    { x: BB.x + 20, y: rowY_top('rail_n') },              // 回電池 −
-  ];
-  // 計算路徑總長
-  let totalLen = 0;
-  const segs = [];
-  for (let i = 0; i < path.length - 1; i++) {
-    const dx = path[i + 1].x - path[i].x;
-    const dy = path[i + 1].y - path[i].y;
-    const len = Math.hypot(dx, dy);
-    segs.push({ len, start: totalLen });
-    totalLen += len;
-  }
-  // 畫 4 個流動點
-  for (let i = 0; i < 4; i++) {
-    const p = (flow + i / 4) % 1;
-    const dist = p * totalLen;
-    for (let j = 0; j < segs.length; j++) {
-      if (dist >= segs[j].start && dist < segs[j].start + segs[j].len) {
-        const localP = (dist - segs[j].start) / segs[j].len;
-        const x = path[j].x + (path[j + 1].x - path[j].x) * localP;
-        const y = path[j].y + (path[j + 1].y - path[j].y) * localP;
-        ctx.beginPath();
-        ctx.arc(x, y, 4, 0, Math.PI * 2);
-        ctx.fill();
-        break;
+  // 只畫有正常點亮 LED 的路徑（燒毀、短路另以冒煙表示）
+  sim.paths
+    .filter(path => path.some(e => e.part.type === 'resistor') && path.some(e => e.part.type === 'led' && sim.leds[e.part.id] === 'lit'))
+    .forEach(path => {
+      const pts = flowPolyline(path);
+      let totalLen = 0;
+      const segs = [];
+      for (let i = 0; i < pts.length - 1; i++) {
+        const len = Math.hypot(pts[i + 1].x - pts[i].x, pts[i + 1].y - pts[i].y);
+        segs.push({ len, start: totalLen });
+        totalLen += len;
       }
-    }
-  }
+      // 畫 8 個流動點
+      for (let i = 0; i < 8; i++) {
+        const dist = ((flow + i / 8) % 1) * totalLen;
+        for (let j = 0; j < segs.length; j++) {
+          if (segs[j].len > 0 && dist >= segs[j].start && dist < segs[j].start + segs[j].len) {
+            const localP = (dist - segs[j].start) / segs[j].len;
+            ctx.beginPath();
+            ctx.arc(pts[j].x + (pts[j + 1].x - pts[j].x) * localP, pts[j].y + (pts[j + 1].y - pts[j].y) * localP, 4, 0, Math.PI * 2);
+            ctx.fill();
+            break;
+          }
+        }
+      }
+    });
 }
 
-function drawSmoke() {
+function drawSmoke(sim) {
   const t = performance.now() / 60;
-  const x = state.config.led ? colX(state.config.led.col) : 300;
+  const burnt = state.config.parts.find(p => p.type === 'led' && sim && sim.leds[p.id] === 'burnt');
+  const x = burnt ? (holeXY(burnt.a).x + holeXY(burnt.b).x) / 2 : 300;
+  const y0 = burnt ? ledBodyY(burnt) : rowY_top('c');
   for (let i = 0; i < 5; i++) {
     const offset = (t + i * 30) % 100;
     ctx.fillStyle = `rgba(80,80,80,${0.7 - offset / 100})`;
     ctx.beginPath();
-    ctx.arc(x + Math.sin(t / 10 + i) * 8, rowY_bot('f') + 18 - offset, 6 + offset / 8, 0, Math.PI * 2);
+    ctx.arc(x + Math.sin(t / 10 + i) * 8, y0 - offset, 6 + offset / 8, 0, Math.PI * 2);
     ctx.fill();
   }
 }
@@ -452,9 +553,10 @@ canvas.addEventListener('click', e => {
   const y = (e.clientY - rect.top) * (H / rect.height);
   if (state.fixed) {
     // 已修正：測試開關
-    if (state.config.switch) {
-      const sx = colX(state.config.switch.col);
-      const sy = (rowY_top('e') + rowY_bot('f')) / 2;
+    const sw = state.config.parts.find(p => p.type === 'switch');
+    if (sw) {
+      const sx = (holeXY(sw.a).x + holeXY(sw.b).x) / 2;
+      const sy = holeXY(sw.a).y;
       if (Math.hypot(x - sx, y - sy) < 22) {
         state.switchPressed = !state.switchPressed;
         if (typeof SoundFX !== 'undefined') SoundFX.click();
@@ -463,40 +565,46 @@ canvas.addEventListener('click', e => {
     return;
   }
   // 檢查點擊位置
-  let hotspotX, hotspotY;
-  switch (state.level.fix) {
-    case 'resistor': hotspotX = colX(8); hotspotY = (rowY_top('e') + rowY_bot('f')) / 2; break;
-    case 'flip-led': hotspotX = colX(state.config.led.col); hotspotY = rowY_bot('f') + 18; break;
-    case 'rail-bridge': hotspotX = BB.x + 300; hotspotY = rowY_top('rail_p') - 14; break;
-    case 'led2': hotspotX = colX(15); hotspotY = rowY_bot('f') + 18; break;
-    case 'switch': hotspotX = colX(11); hotspotY = (rowY_top('e') + rowY_bot('f')) / 2; break;
-  }
-  if (Math.hypot(x - hotspotX, y - hotspotY) < 28) {
+  const hs = hotspotXY();
+  if (Math.hypot(x - hs.x, y - hs.y) < 28) {
     applyFix();
   }
 });
 
+// 每一關的修正：直接改接線資料，判定與動畫都由修正後的接線重新推導
+const FIXES = {
+  // 把「直接接 LED 的跳線」換成 220Ω 電阻（同樣兩個孔位）
+  resistor(config) {
+    const i = config.parts.findIndex(p => p.id === 'direct');
+    const w = config.parts[i];
+    config.parts.splice(i, 1, resistor(w.a, w.b, 'r'));
+  },
+  'flip-led'(config) {
+    config.parts.find(p => p.type === 'led').flipped = false;
+  },
+  // 斷點兩側各補一條跨接跳線：紅線接 + 軌、黑線接 − 軌
+  'rail-bridge'(config) {
+    const c = BB.railBreakAfter;
+    config.parts.push(
+      wire('red', ['rail+', c], ['rail+', c + 1], 'bridge+'),
+      wire('black', ['rail-', c], ['rail-', c + 1], 'bridge-'),
+    );
+  },
+  // ⚠ 兩 LED 並聯時必須各串一顆電阻（避免 current hogging）：第二條支路含自己的電源、接地跳線
+  led2(config) {
+    config.parts.push(...branch(10, '2'));
+  },
+  // 開關接在 b2（電源跳線那一直行）與 b4（電阻那一直行）之間
+  switch(config) {
+    config.parts.push(pushSwitch(['b', 2], ['b', 4], 'sw'));
+  },
+};
+
 function applyFix() {
-  switch (state.level.fix) {
-    case 'resistor':
-      state.config.resistor = { col: 8 };
-      break;
-    case 'flip-led':
-      state.config.led.flipped = false;
-      break;
-    case 'rail-bridge':
-      state.config.railBridge = true;
-      break;
-    case 'led2':
-      // ⚠ 修正：兩 LED 並聯時必須各串一顆電阻（避免 current hogging）
-      state.config.led2 = { col: 15, flipped: false };
-      state.config.resistor2 = { col: 13 };
-      break;
-    case 'switch':
-      state.config.switch = { col: 11 };
-      break;
-  }
+  FIXES[state.level.fix](state.config);
   state.fixed = true;
+  state.smoking = false;
+  state.powered = false;
   if (typeof SoundFX !== 'undefined') SoundFX.success();
   showToast('✓ 修正完成！按「通電測試」看 LED 是否點亮', 'good');
   document.getElementById('sim-overlay').textContent = '按「通電測試」看 LED 是否點亮';
@@ -505,33 +613,48 @@ function applyFix() {
 // === 控制按鈕 ===
 document.getElementById('btn-power').onclick = () => {
   if (typeof SoundFX !== 'undefined') SoundFX.click();
-  if (!state.fixed) {
-    // 未修正就通電 → 冒煙
+  state.powered = true;
+  const sim = simulate(state.config, state.switchPressed);
+  const ledStates = Object.values(sim.leds);
+  // 沒有限流電阻（或正負極直接接通）→ 冒煙
+  if (sim.short || ledStates.includes('burnt')) {
     state.smoking = true;
-    state.powered = true;
     if (typeof SoundFX !== 'undefined') SoundFX.error();
     setTimeout(() => {
-      showResult(0, { '結果': '電路有錯！LED 燒掉或不亮', '建議': '先修正紅圈處再通電' });
+      showResult(0, { '結果': sim.short ? '電源短路！' : 'LED 燒掉了（電流沒有經過限流電阻）', '建議': '先修正紅圈處再通電' });
     }, 1500);
     return;
   }
-  state.powered = true;
+  if (levelPassed(state.config, state.switchPressed, state.level.needLeds)) {
+    // 成功
+    if (typeof SoundFX !== 'undefined') SoundFX.win();
+    setTimeout(() => {
+      const stars = 3;
+      const prog = loadBBProgress();
+      prog.module4_levels = prog.module4_levels || {};
+      prog.module4_levels[state.levelId] = Math.max(prog.module4_levels[state.levelId] || 0, stars);
+      saveBBProgress(prog);
+      document.getElementById('star-' + state.levelId).textContent = '★'.repeat(stars) + '☆'.repeat(3 - stars);
+      showResult(stars, { 'LED 狀態': '✓ 點亮成功', '電路': '正常運作' });
+    }, 800);
+    return;
+  }
   // L5 需要按開關
-  if (state.config.switch && !state.switchPressed) {
+  if (state.fixed && state.config.parts.some(p => p.type === 'switch') && !state.switchPressed) {
     showToast('別忘了按開關才會亮！', 'warn');
     return;
   }
-  // 成功
-  if (typeof SoundFX !== 'undefined') SoundFX.win();
+  // 迴路不完整或 LED 反接 → 不亮
+  if (typeof SoundFX !== 'undefined') SoundFX.error();
+  const litCount = ledStates.filter(s => s === 'lit').length;
   setTimeout(() => {
-    const stars = 3;
-    const prog = loadBBProgress();
-    prog.module4_levels = prog.module4_levels || {};
-    prog.module4_levels[state.levelId] = Math.max(prog.module4_levels[state.levelId] || 0, stars);
-    saveBBProgress(prog);
-    document.getElementById('star-' + state.levelId).textContent = '★'.repeat(stars) + '☆'.repeat(3 - stars);
-    showResult(stars, { 'LED 狀態': '✓ 點亮成功', '電路': '正常運作' });
-  }, 800);
+    showResult(0, {
+      '結果': litCount > 0 ? `只有 ${litCount} 顆 LED 亮，還沒完成`
+        : state.config.parts.some(p => p.type === 'led' && p.flipped) ? 'LED 不亮：LED 接反，電流過不去'
+        : 'LED 不亮：電流沒有完整的迴路',
+      '建議': '先修正紅圈處再通電',
+    });
+  }, 1200);
 };
 
 document.getElementById('btn-reset').onclick = () => {
