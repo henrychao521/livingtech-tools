@@ -476,7 +476,7 @@ if (typeof Interactions !== 'undefined') {
       </div>
     </div>
     <div style="margin-top:12px;padding:10px 14px;background:#fff7ed;border-left:3px solid #f97316;border-radius:6px;font-size:13px;color:#9a3412;line-height:1.7">
-      <strong>⚠ RoHS 無鉛焊錫提醒：</strong>學校常用的無鉛焊錫（RoHS）熔點比含鉛錫高，拆焊時需要略高的溫度（約 360°C）與更久的加熱時間，別以為「加熱兩秒還沒熔」是工具壞了。
+      <strong>⚠ RoHS 無鉛焊錫提醒：</strong>無鉛焊錫（RoHS，例如老師示範用的 SAC305）熔點比本校課堂用的含鉛錫高，拆焊時需要略高的溫度（約 360°C）與更久的加熱時間，別以為「加熱兩秒還沒熔」是工具壞了。
     </div>
     <div style="margin-top:10px;padding:10px 14px;background:#f0fdf4;border-left:3px solid #22c55e;border-radius:6px;font-size:13px;color:#15803d;line-height:1.7">
       <strong>💡 拆完之後：</strong>孔位清乾淨、銅環沒受損，就可以照前面八個步驟重新焊一次。拆焊不是失敗，是每個焊接高手都會的「後悔藥」。
