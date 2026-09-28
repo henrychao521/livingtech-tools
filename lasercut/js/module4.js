@@ -153,7 +153,16 @@ function update() {
   v.className = 'verdict ' + d.cls;
   v.innerHTML = d.txt(res.r);
 
-  if (state.mode === 'engrave' && res.r >= 0.9) {
+  if (state.mode === 'score' && res.r >= 0.9) {
+    v.className = 'verdict bad';
+    v.innerHTML = `❌ 你選的是<strong>刻線</strong>，但這組參數已經把板子切斷了（${(res.r * 100).toFixed(0)}%）。刻線要用切割模式的「高速、低功率」，只刻出一條不斷的線。`;
+  } else if (state.mode === 'score' && res.r >= 0.3) {
+    v.className = 'verdict good';
+    v.innerHTML = `✅ 刻出一條清楚、但沒有切斷的線（${(res.r * 100).toFixed(0)}%）。這就是刻線要的效果：摺線、分界線、裝飾線都用這種深度。`;
+  } else if (state.mode === 'score') {
+    v.className = 'verdict warn';
+    v.innerHTML = `🟡 你選的是<strong>刻線</strong>，但線太淺了（${(res.r * 100).toFixed(0)}%），可能看不清楚。把速度調慢一點或功率調高一點。`;
+  } else if (state.mode === 'engrave' && res.r >= 0.9) {
     v.className = 'verdict bad';
     v.innerHTML = `⚠️ 你選的是<strong>雕刻</strong>，但這組參數已經把板子切透了——雕刻的能量應該遠低於切透門檻。`;
   } else if (state.mode === 'engrave' && res.r >= 0.55) {
@@ -237,7 +246,7 @@ document.getElementById('modePick').addEventListener('click', e => {
     x.className = 'btn ' + (on ? 'btn-primary' : 'btn-ghost');
     x.style.flex = '1';
   });
-  // 切換模式時調整速度範圍（雕刻速度遠高於切割）
+  // 切換模式時調整速度範圍（雕刻速度遠高於切割；刻線在 RDWorks 裡同樣是 Cut，只是用高速、低功率，所以沿用切割的範圍）
   if (state.mode === 'engrave') {
     sV.min = 100; sV.max = 500; sV.step = 10;
     if (state.v < 100) { state.v = 300; sV.value = 300; }

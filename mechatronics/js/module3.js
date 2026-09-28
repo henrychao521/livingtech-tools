@@ -193,7 +193,8 @@ function finish() {
 
   if (c.done) {
     if (best == null || c.t < best) best = c.t;
-    if (c.zig > 25) { v.className = 'verdict warn'; v.textContent = `🟡 跑完了（${c.t.toFixed(2)} s），但蛇行 ${c.zig} 次——加一點 Kd 會更順，也會更快。`; }
+    // 完賽品質門檻：蛇行超過 15 次給黃燈，鼓勵加 Kd（脫線診斷另用 12 次判斷是否因蛇行脫線，兩者用途不同）
+    if (c.zig > 15) { v.className = 'verdict warn'; v.textContent = `🟡 跑完了（${c.t.toFixed(2)} s），但蛇行 ${c.zig} 次——加一點 Kd 會更順，也會更快。`; }
     else { v.className = 'verdict good'; v.textContent = `✅ 完成一圈！${c.t.toFixed(2)} 秒，蛇行 ${c.zig} 次。`; }
     if (typeof SoundFX !== 'undefined') SoundFX.unlock();
   } else if (c.why === '脫線') {

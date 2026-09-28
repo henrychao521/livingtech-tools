@@ -76,7 +76,7 @@
       </div>
       <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px">
         <h5 style="font-size:13px;margin:0 0 6px;color:var(--primary-dark)">三軸夾角</h5>
-        <p style="font-size:12.5px;line-height:1.6;margin:0;color:var(--text-soft)">每軸間夾 <strong>120°</strong>（用尺規作圖法繪製）。書中用 X 軸 ±30° 作輔助線。</p>
+        <p style="font-size:12.5px;line-height:1.6;margin:0;color:var(--text-soft)">每軸間夾 <strong>120°</strong>。Y 軸往上一條，再加兩條「與 X 軸往下夾 30°」的線，三條射線正好互差 120°。</p>
       </div>
       <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px">
         <h5 style="font-size:13px;margin:0 0 6px;color:var(--primary-dark)">外圓直徑</h5>
@@ -90,10 +90,10 @@
     <h4 style="font-size:15px;margin-top:14px">關鍵 Onshape 操作</h4>
     <ol style="line-height:2;font-size:14px;color:var(--text-soft);padding-left:24px">
       <li>畫中央 22mm 圓（軸承位置）</li>
-      <li>畫 25mm 輔助直線，末端加上另一個 22mm 圓</li>
-      <li>用尺規作圖法（X 軸 ±30°）建立 120° 夾角的三條軸線</li>
-      <li><strong>修剪</strong> 不需要的線段（直接刪除比剪刀工具有效率）</li>
-      <li><strong>環狀複製排列</strong>：全選 (Ctrl+A) → 環狀複製 → 預設 3 個（也可改 5 瓣等變化）</li>
+      <li>沿 Y 軸畫一條 25mm 輔助直線，末端加上另一個 22mm 圓——這就是<strong>第一個葉片</strong></li>
+      <li>畫葉片外形並<strong>修剪</strong>：整條多餘的線直接選取刪除；只想剪掉其中一段時才用修剪（Trim）工具</li>
+      <li><strong>環狀複製排列</strong>：只選第一個葉片的線段（不要選中央圓）→ 環狀複製 → 中心點選原點 → 3 份（也可改 5 份做五瓣）</li>
+      <li style="list-style:none;margin-left:-4px;font-size:13px">💡 另一種畫法：不用環狀複製，改用尺規作圖法先畫出三條互差 120° 的軸線（Y 軸＋與 X 軸往下夾 ±30° 的兩條線），再逐一畫三個葉片。兩種方法擇一，不要畫完三條軸又整個複製 3 份，會重疊。</li>
       <li>Extrude 4mm 厚度（依手感調整）</li>
     </ol>
   </section>

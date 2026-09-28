@@ -4,9 +4,9 @@ function loadP() { try { return JSON.parse(localStorage.getItem(PK)) || {}; } ca
 function saveP(p) { localStorage.setItem(PK, JSON.stringify(p)); }
 
 const BANNED = [
-  { id: 'pvc', ico: '🚫', name: 'PVC／人造皮革', color: '#DC2626',
+  { id: 'pvc', ico: '🚫', name: 'PVC／成分不明的人造皮革', color: '#DC2626',
     why: '含氯。雷射高溫會分解出<strong>氯化氫氣體</strong>，遇水氣變鹽酸——不只傷肺，還會從內部腐蝕機器的導軌、鏡片與電路板。',
-    tell: '常見於：水管、透明軟墊、部分「皮革」其實是 PVC 貼皮。分辨方式：PVC 燃燒會有刺鼻酸味（<strong>不要真的去點火測試</strong>，改查材質標示或問供應商）。',
+    tell: '常見於：水管、透明軟墊、部分「皮革」其實是 PVC 貼皮。分辨方式：PVC 燃燒會有刺鼻酸味（<strong>不要真的去點火測試</strong>，改查材質標示或問供應商）。其他人造皮（如 PU 合成皮）受熱也會冒出有害煙霧，而且外觀很難和 PVC 皮分辨——<strong>成分說不清楚的人造皮革一律不切</strong>。',
     alt: '改用：真皮、壓克力、木質板材。' },
   { id: 'pc', ico: '🚫', name: '聚碳酸酯 PC',   color: '#EA580C',
     why: 'PC 會吸收 CO₂ 雷射的波長但<strong>不會乾淨汽化</strong>，只會焦黑、冒黃煙、切面糊在一起，而且極易起火。',

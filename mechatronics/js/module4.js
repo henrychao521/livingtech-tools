@@ -1,12 +1,12 @@
 // 機電整合 模組 4：超音波測距的盲區與失效
-// 模型重點：min/max 量程、斜面反射失效、吸音材質、音速隨溫度變化造成的系統性誤差。
+// 模型重點：最小／最大量測範圍、斜面反射失效、吸音材質、音速隨溫度變化造成的系統性誤差。
 // 音速公式 c = 331.3 + 0.606·T (m/s) 為標準近似式。
 
 const PK = 'mecha_progress_v1';
 function loadP() { try { return JSON.parse(localStorage.getItem(PK)) || {}; } catch { return {}; } }
 function saveP(p) { localStorage.setItem(PK, JSON.stringify(p)); }
 
-const D_MIN = 2, D_MAX = 400;          // 典型 HC-SR04 量程 (cm)
+const D_MIN = 2, D_MAX = 400;          // 典型 HC-SR04 量測範圍 (cm)
 const BEAM = 15;                       // 半波束角(度)
 
 const MATERIALS = [
@@ -30,7 +30,7 @@ function measure() {
 
   let fail = null;
   if (state.d < D_MIN) fail = '盲區';
-  else if (state.d > D_MAX) fail = '超出量程';
+  else if (state.d > D_MAX) fail = '超出量測範圍';
   else if (echo < 0.12) fail = '回音太弱';
 
   if (fail) return { fail, meas: 0, real: state.d, err: null, echo };
@@ -129,7 +129,7 @@ function update() {
 
   const v = document.getElementById('verdict');
   if (r.fail === '盲區') { v.className = 'verdict bad'; v.textContent = '❌ 物體太近，落在盲區內：發射與接收時間重疊，感測器根本收不到有效回音，程式會拿到 0。'; }
-  else if (r.fail === '超出量程') { v.className = 'verdict bad'; v.textContent = '❌ 超出最大量程：回音已經衰減到收不到，同樣回報 0——這時「0」代表的是「很遠」而不是「很近」。'; }
+  else if (r.fail === '超出量測範圍') { v.className = 'verdict bad'; v.textContent = '❌ 超出最大量測範圍：回音已經衰減到收不到，同樣回報 0——這時「0」代表的是「很遠」而不是「很近」。'; }
   else if (r.fail === '回音太弱') { v.className = 'verdict bad'; v.textContent = '❌ 有物體但量不到：聲波被斜面反射到別的方向、或被材質吸收了。這是超音波最典型的失效。'; }
   else if (Math.abs(r.err) >= 3) { v.className = 'verdict warn'; v.textContent = `🟡 量得到，但誤差 ${r.err} cm：程式裡的音速常數是以 20°C 計算，溫度差越多、距離越遠，誤差越大。`; }
   else { v.className = 'verdict good'; v.textContent = `✅ 量測正常，誤差 ${r.err} cm，可放心使用。`; }
