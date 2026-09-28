@@ -2134,3 +2134,17 @@ input[type=range]:disabled { opacity: .45; cursor: not-allowed; }
 h1, h2, h3, h4, h5, h6, .brand, .brand h1, .section-title, .card h4, .tool-head h3, .cat-head h4 {
   font-family: var(--font-head);
 }
+
+/* ===== 延伸補充區與「高中延伸」標籤（2026-09-28 教師決定：補充資料、高中延伸標示）===== */
+.panel.supplement { padding: 14px 18px; }
+.panel.supplement > summary { cursor: pointer; font-weight: 700; font-size: 15px; color: var(--text); list-style: none; }
+.panel.supplement > summary::-webkit-details-marker { display: none; }
+.panel.supplement > summary::after { content: ' ▾'; color: var(--text-soft); font-weight: 400; }
+.panel.supplement[open] > summary::after { content: ' ▴'; }
+.panel.supplement > summary:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; border-radius: 4px; }
+.panel.supplement ul { margin: 10px 0 0; padding-left: 20px; }
+.panel.supplement li { font-size: 13.5px; line-height: 1.7; margin: 4px 0; color: var(--text-soft); }
+.panel.supplement a { color: var(--primary-dark, #1e40af); text-decoration: underline; text-underline-offset: 2px; }
+/* 放在另一個面板裡時不要再框一層 */
+.panel .panel.supplement { border: none; box-shadow: none; background: var(--bg-soft, #f8fafc); margin: 14px 0 0; }
+.tag-ext { display: inline-block; font-size: 11px; font-weight: 600; padding: 1px 8px; margin-left: 6px; border-radius: 999px; background: #eceff3; color: #4b5563; vertical-align: middle; white-space: nowrap; }
