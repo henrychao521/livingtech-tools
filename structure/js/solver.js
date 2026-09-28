@@ -176,15 +176,15 @@ const DEFAULT_AREA = 0.004; // 0.004 m² ≈ 64mm × 64mm
 
 /**
  * 顏色對應：
- *   力 > threshold → 張力（藍）
- *   力 < -threshold → 壓力（紅）
+ *   力 > threshold → 張力（紅）
+ *   力 < -threshold → 壓力（藍）
  *   其他 → 零力（灰）
  */
 function memberColor(force, sf) {
   if (sf !== undefined && sf < 1.5) return '#f97316'; // 危險（橘）
   if (sf !== undefined && sf < 2) return '#ca8a04';   // 偏低（黃），與總評三段一致
   if (Math.abs(force) < 1) return '#94a3b8';          // 零力
-  return force > 0 ? '#2563eb' : '#dc2626';            // 張力藍 / 壓力紅
+  return force > 0 ? '#dc2626' : '#2563eb';            // 張力紅 / 壓力藍
 }
 
 /**
@@ -458,17 +458,17 @@ function drawTruss(ctx, W, H, truss, result, selectedMemberId) {
       ctx.beginPath();
       ctx.moveTo(x0, y0 - len);
       ctx.lineTo(x0, y0 - 6);
-      ctx.strokeStyle = '#dc2626';
+      ctx.strokeStyle = '#334155';
       ctx.lineWidth = 2.5;
       ctx.stroke();
       ctx.beginPath();
       ctx.moveTo(x0 - 6, y0 - 14);
       ctx.lineTo(x0, y0 - 4);
       ctx.lineTo(x0 + 6, y0 - 14);
-      ctx.fillStyle = '#dc2626';
+      ctx.fillStyle = '#334155';
       ctx.fill();
       const kN = Math.abs(ld.fy / 1000).toFixed(0);
-      ctx.fillStyle = '#dc2626';
+      ctx.fillStyle = '#334155';
       ctx.font = 'bold 10px Inter,sans-serif';
       ctx.textAlign = 'center';
       ctx.fillText(`${kN}kN`, x0, y0 - len - 8);

@@ -91,7 +91,7 @@
             <stop offset="1" stop-color="#99f6e4"/>
           </linearGradient>
           <marker id="arr2" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="7" markerHeight="7" orient="auto">
-            <path d="M0 0 L12 6 L0 12z" fill="#dc2626"/>
+            <path d="M0 0 L12 6 L0 12z" fill="#334155"/>
           </marker>
         </defs>
 
@@ -106,16 +106,16 @@
         <!-- 端斜桿 -->
         <line x1="50" y1="220" x2="110" y2="150" stroke="#0d9488" stroke-width="3.5"/>
         <line x1="430" y1="220" x2="370" y2="150" stroke="#0d9488" stroke-width="3.5"/>
-        <!-- 豎桿（紅=壓力，Pratt 桁架豎桿受壓） -->
-        <line x1="175" y1="150" x2="175" y2="220" stroke="#dc2626" stroke-width="3"/>
-        <line x1="240" y1="150" x2="240" y2="220" stroke="#dc2626" stroke-width="3"/>
-        <line x1="305" y1="150" x2="305" y2="220" stroke="#dc2626" stroke-width="3"/>
-        <!-- 斜桿（藍=張力；Pratt 斜桿由上弦往跨中向下傾：左半 ↘、右半 ↙） -->
-        <line x1="110" y1="150" x2="175" y2="220" stroke="#2563eb" stroke-width="2.5" opacity=".8"/>
-        <line x1="175" y1="150" x2="240" y2="220" stroke="#2563eb" stroke-width="2.5" opacity=".8"/>
-        <!-- 斜桿（藍=張力，Pratt 桁架右半段斜桿亦受拉） -->
-        <line x1="305" y1="150" x2="240" y2="220" stroke="#2563eb" stroke-width="2.5" opacity=".8"/>
-        <line x1="370" y1="150" x2="305" y2="220" stroke="#2563eb" stroke-width="2.5" opacity=".8"/>
+        <!-- 豎桿（藍=壓力，Pratt 桁架豎桿受壓） -->
+        <line x1="175" y1="150" x2="175" y2="220" stroke="#2563eb" stroke-width="3"/>
+        <line x1="240" y1="150" x2="240" y2="220" stroke="#2563eb" stroke-width="3"/>
+        <line x1="305" y1="150" x2="305" y2="220" stroke="#2563eb" stroke-width="3"/>
+        <!-- 斜桿（紅=張力；Pratt 斜桿由上弦往跨中向下傾：左半 ↘、右半 ↙） -->
+        <line x1="110" y1="150" x2="175" y2="220" stroke="#dc2626" stroke-width="2.5" opacity=".8"/>
+        <line x1="175" y1="150" x2="240" y2="220" stroke="#dc2626" stroke-width="2.5" opacity=".8"/>
+        <!-- 斜桿（紅=張力，Pratt 桁架右半段斜桿亦受拉） -->
+        <line x1="305" y1="150" x2="240" y2="220" stroke="#dc2626" stroke-width="2.5" opacity=".8"/>
+        <line x1="370" y1="150" x2="305" y2="220" stroke="#dc2626" stroke-width="2.5" opacity=".8"/>
         <!-- 節點 -->
         <g fill="#fff" stroke="#0f766e" stroke-width="2">
           <circle cx="50" cy="220" r="5"/><circle cx="110" cy="220" r="5"/><circle cx="175" cy="220" r="5"/>
@@ -130,16 +130,16 @@
         <line x1="36" y1="238" x2="64" y2="238" stroke="#0f766e" stroke-width="2"/>
         <line x1="418" y1="238" x2="442" y2="238" stroke="#0d9488" stroke-width="2"/>
         <!-- 載重箭頭 -->
-        <line x1="175" y1="100" x2="175" y2="142" stroke="#dc2626" stroke-width="3" marker-end="url(#arr2)"/>
-        <line x1="240" y1="100" x2="240" y2="142" stroke="#dc2626" stroke-width="3" marker-end="url(#arr2)"/>
-        <line x1="305" y1="100" x2="305" y2="142" stroke="#dc2626" stroke-width="3" marker-end="url(#arr2)"/>
+        <line x1="175" y1="100" x2="175" y2="142" stroke="#334155" stroke-width="3" marker-end="url(#arr2)"/>
+        <line x1="240" y1="100" x2="240" y2="142" stroke="#334155" stroke-width="3" marker-end="url(#arr2)"/>
+        <line x1="305" y1="100" x2="305" y2="142" stroke="#334155" stroke-width="3" marker-end="url(#arr2)"/>
         <!-- 圖例 -->
         <g font-size="11" font-family="Inter,sans-serif" font-weight="700">
-          <line x1="14" y1="30" x2="34" y2="30" stroke="#2563eb" stroke-width="2.5"/>
-          <text x="38" y="34" fill="#2563eb">張力</text>
-          <line x1="80" y1="30" x2="100" y2="30" stroke="#dc2626" stroke-width="2.5"/>
-          <text x="104" y="34" fill="#dc2626">壓力</text>
-          <text x="240" y="95" text-anchor="middle" fill="#dc2626" font-size="12">荷重</text>
+          <line x1="14" y1="30" x2="34" y2="30" stroke="#dc2626" stroke-width="2.5"/>
+          <text x="38" y="34" fill="#dc2626">張力</text>
+          <line x1="80" y1="30" x2="100" y2="30" stroke="#2563eb" stroke-width="2.5"/>
+          <text x="104" y="34" fill="#2563eb">壓力</text>
+          <text x="240" y="95" text-anchor="middle" fill="#334155" font-size="12">荷重</text>
         </g>
         <text x="240" y="264" text-anchor="middle" font-size="13" fill="#ccfbf1" font-weight="800" font-family="Inter,sans-serif">PRATT TRUSS — 橋樑工程師實驗室</text>
       </svg>
@@ -200,7 +200,7 @@
   <section class="about">
     <h3 class="section-title">橋樑為什麼是學結構的最佳教材？</h3>
     <div class="reason-grid">
-      <div class="reason"><span>📐</span><h4>力可視化</h4><p>FEM 計算讓每根桿件的張力（藍）或壓力（紅）直接顯示，學生看到就懂。</p></div>
+      <div class="reason"><span>📐</span><h4>力可視化</h4><p>FEM 計算讓每根桿件的張力（紅）或壓力（藍）直接顯示，學生看到就懂。</p></div>
       <div class="reason"><span>💥</span><h4>失效有視覺</h4><p>Matter.js 崩塌動畫：超出安全係數的桿件「斷開」，橋段落入水中，衝擊感超強。</p></div>
       <div class="reason"><span>🧑‍💻</span><h4>真實工程計算</h4><p>直接剛度法（DSM）求解器，每個數字都有工程根據，不是「玩遊戲」。</p></div>
       <div class="reason"><span>🏆</span><h4>競賽前模擬</h4><p>紙橋負重賽前先在電腦測試設計，找到最輕量又最強的桁架型態。</p></div>

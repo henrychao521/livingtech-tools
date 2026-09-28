@@ -14,7 +14,7 @@ const HOTSPOTS = {
     role: 'COMPRESSION MEMBER',
     desc: '桁架橋最上方的水平桿件，承受垂直荷重後<strong>受壓</strong>——就像拱的「壓力線」在這裡。上弦桿必須夠粗壯才不會「挫屈」（橫向彎折）。',
     formula: gradeText({ '7': '', '8': 'F = -P（壓力，負號代表受壓）', '9': 'σ = F/A，臨界挫屈力 Pcr = π²EI/L²' }),
-    color: '#dc2626', tag: '受壓',
+    color: '#2563eb', tag: '受壓',
     fact: '上弦桿太細或太長時，會突然側向彎折——這就是「挫屈」（Buckling），是壓桿最怕的失效模式。'
   },
   'bot-chord': {
@@ -22,7 +22,7 @@ const HOTSPOTS = {
     role: 'TENSION MEMBER',
     desc: '桁架橋最下方的水平桿件，垂直荷重讓它<strong>受拉</strong>伸長。鋼和繩索最擅長受拉，木材和混凝土則不擅長承受張力。',
     formula: gradeText({ '7': '', '8': 'F = +P（張力，正號代表受拉）', '9': 'σ = F/A ≤ σ_allow' }),
-    color: '#2563eb', tag: '受拉',
+    color: '#dc2626', tag: '受拉',
     fact: '下弦桿受張力，不會挫屈。但要注意節點孔洞造成的應力集中——這是 Silver Bridge 斷裂的真正原因。'
   },
   'diagonal': {
@@ -38,7 +38,7 @@ const HOTSPOTS = {
     role: 'VERTICAL MEMBER',
     desc: '連接上下弦桿的垂直桿件。在 Pratt 桁架中<strong>受壓</strong>，負責把上弦荷重傳遞到下弦。豎桿也是「梁」與「桁架」外形上的主要差異。',
     formula: gradeText({ '7': '', '8': 'Fvert ≈ P（集中力直傳）', '9': '以節點法逐段求解' }),
-    color: '#dc2626', tag: '受壓',
+    color: '#2563eb', tag: '受壓',
     fact: '桁架橋的豎桿讓橋看起來有「格柵」感。Warren 桁架沒有豎桿，只靠斜桿傳遞力，重量更輕。'
   },
   'pin-support': {
@@ -70,7 +70,7 @@ const HOTSPOTS = {
     role: 'APPLIED FORCE',
     desc: '在特定節點向下施加的外力，代表橋上的車輛、行人重量。集中力的位置影響各桿件的受力大小——越靠近橋中央，下弦桿拉力越大。',
     formula: gradeText({ '7': '', '8': 'P 在距左支承 a 處 → 反力 RL = P(L-a)/L', '9': '移動荷重求最不利位置：RL·x = max 時 x = L/2' }),
-    color: '#dc2626', tag: '向下外力',
+    color: '#334155', tag: '向下外力',
     fact: '台灣舊橋「超重車輛」常是斷橋主因：設計承重 20t，實際開過 60t 砂石車，安全係數瞬間不足。'
   },
 };
@@ -121,12 +121,12 @@ const BRIDGE_TYPES = [
     svgPath: `<line x1="10" y1="60" x2="190" y2="60" stroke="#0d9488" stroke-width="4"/>
               <line x1="40" y1="25" x2="160" y2="25" stroke="#0d9488" stroke-width="4"/>
               <line x1="10" y1="60" x2="40" y2="25" stroke="#0d9488" stroke-width="2.5"/>
-              <line x1="40" y1="25" x2="80" y2="60" stroke="#2563eb" stroke-width="2.5"/>
-              <line x1="80" y1="60" x2="120" y2="25" stroke="#2563eb" stroke-width="2.5"/>
-              <line x1="120" y1="25" x2="160" y2="60" stroke="#dc2626" stroke-width="2.5"/>
+              <line x1="40" y1="25" x2="80" y2="60" stroke="#dc2626" stroke-width="2.5"/>
+              <line x1="80" y1="60" x2="120" y2="25" stroke="#dc2626" stroke-width="2.5"/>
+              <line x1="120" y1="25" x2="160" y2="60" stroke="#2563eb" stroke-width="2.5"/>
               <line x1="160" y1="25" x2="190" y2="60" stroke="#0d9488" stroke-width="2.5"/>
-              <line x1="80" y1="25" x2="80" y2="60" stroke="#dc2626" stroke-width="2" opacity=".7"/>
-              <line x1="120" y1="25" x2="120" y2="60" stroke="#dc2626" stroke-width="2" opacity=".7"/>
+              <line x1="80" y1="25" x2="80" y2="60" stroke="#2563eb" stroke-width="2" opacity=".7"/>
+              <line x1="120" y1="25" x2="120" y2="60" stroke="#2563eb" stroke-width="2" opacity=".7"/>
               <text x="100" y="78" text-anchor="middle" font-size="9" fill="#0d9488" font-family="Inter" font-weight="700">桿件只承受軸力</text>`,
     example: '鐵路橋・十九孔橋（舊台鐵）',
     range: '跨度 30–300m',

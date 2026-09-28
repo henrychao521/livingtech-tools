@@ -50,46 +50,46 @@ const BRIDGE_INFO = {
     title: '普拉特桁架 Pratt Truss',
     year: '1844 年 Thomas Pratt 發明 ／ 適合跨度 15–75m',
     features: [
-      '豎桿受<b style="color:#dc2626">壓力</b>（紅），斜桿受<b style="color:#2563eb">張力</b>（藍）',
+      '豎桿受<b style="color:#2563eb">壓力</b>（藍），斜桿受<b style="color:#dc2626">張力</b>（紅）',
       '斜桿只受拉力，可做得又細又長，不怕挫曲',
       '斜桿由上弦往橋中央向下傾：左半 ↘、右半 ↙，在下弦中央會合成 V 字',
       '台灣鐵路橋、早期公路橋最常見的形式',
     ],
     svg: `<svg viewBox="0 0 360 96" xmlns="http://www.w3.org/2000/svg" style="width:100%">
 ${_SVG_CHORD_STD}
-<!-- 豎桿（紅=壓力） -->
-<line x1="90" y1="18" x2="90" y2="78" stroke="#dc2626" stroke-width="3"/>
-<line x1="170" y1="18" x2="170" y2="78" stroke="#dc2626" stroke-width="3"/>
-<line x1="250" y1="18" x2="250" y2="78" stroke="#dc2626" stroke-width="3"/>
-<!-- 斜桿（藍=張力，左↘右↙，V 字交在下弦中央） -->
-<line x1="90" y1="18" x2="170" y2="78" stroke="#2563eb" stroke-width="2.5"/>
-<line x1="250" y1="18" x2="170" y2="78" stroke="#2563eb" stroke-width="2.5"/>
+<!-- 豎桿（藍=壓力） -->
+<line x1="90" y1="18" x2="90" y2="78" stroke="#2563eb" stroke-width="3"/>
+<line x1="170" y1="18" x2="170" y2="78" stroke="#2563eb" stroke-width="3"/>
+<line x1="250" y1="18" x2="250" y2="78" stroke="#2563eb" stroke-width="3"/>
+<!-- 斜桿（紅=張力，左↘右↙，V 字交在下弦中央） -->
+<line x1="90" y1="18" x2="170" y2="78" stroke="#dc2626" stroke-width="2.5"/>
+<line x1="250" y1="18" x2="170" y2="78" stroke="#dc2626" stroke-width="2.5"/>
 <!-- 標籤 -->
-<text x="129" y="13" text-anchor="middle" font-size="9.5" fill="#dc2626" font-family="Inter,sans-serif" font-weight="700">豎桿＝壓</text>
-<text x="122" y="70" text-anchor="middle" font-size="9.5" fill="#2563eb" font-family="Inter,sans-serif" font-weight="700">斜桿＝拉</text>
+<text x="129" y="13" text-anchor="middle" font-size="9.5" fill="#2563eb" font-family="Inter,sans-serif" font-weight="700">豎桿＝壓</text>
+<text x="122" y="70" text-anchor="middle" font-size="9.5" fill="#dc2626" font-family="Inter,sans-serif" font-weight="700">斜桿＝拉</text>
 ${_SVG_NODES_STD}${_SVG_SUP}</svg>`,
   },
   howe: {
     title: '豪氏桁架 Howe Truss',
     year: '1840 年 William Howe 設計 ／ 早期鐵路橋主流',
     features: [
-      '豎桿受<b style="color:#2563eb">張力</b>（藍），斜桿受<b style="color:#dc2626">壓力</b>（紅）',
+      '豎桿受<b style="color:#dc2626">張力</b>（紅），斜桿受<b style="color:#2563eb">壓力</b>（藍）',
       '歷史上組合鐵製豎桿（耐拉）+ 木製斜桿（耐壓）',
       '斜桿由下弦往橋中央向上升：左半 ↗、右半 ↖，交在上弦中央（與 Pratt 相反）',
       '壓力斜桿需較大截面積以防挫曲，現今較少使用',
     ],
     svg: `<svg viewBox="0 0 360 96" xmlns="http://www.w3.org/2000/svg" style="width:100%">
 ${_SVG_CHORD_STD}
-<!-- 豎桿（藍=張力） -->
-<line x1="90" y1="18" x2="90" y2="78" stroke="#2563eb" stroke-width="3"/>
-<line x1="170" y1="18" x2="170" y2="78" stroke="#2563eb" stroke-width="3"/>
-<line x1="250" y1="18" x2="250" y2="78" stroke="#2563eb" stroke-width="3"/>
-<!-- 斜桿（紅=壓力，左↗右↖，倒 V 交在上弦中央，方向與 Pratt 相反） -->
-<line x1="90" y1="78" x2="170" y2="18" stroke="#dc2626" stroke-width="2.5"/>
-<line x1="250" y1="78" x2="170" y2="18" stroke="#dc2626" stroke-width="2.5"/>
+<!-- 豎桿（紅=張力） -->
+<line x1="90" y1="18" x2="90" y2="78" stroke="#dc2626" stroke-width="3"/>
+<line x1="170" y1="18" x2="170" y2="78" stroke="#dc2626" stroke-width="3"/>
+<line x1="250" y1="18" x2="250" y2="78" stroke="#dc2626" stroke-width="3"/>
+<!-- 斜桿（藍=壓力，左↗右↖，倒 V 交在上弦中央，方向與 Pratt 相反） -->
+<line x1="90" y1="78" x2="170" y2="18" stroke="#2563eb" stroke-width="2.5"/>
+<line x1="250" y1="78" x2="170" y2="18" stroke="#2563eb" stroke-width="2.5"/>
 <!-- 標籤 -->
-<text x="129" y="13" text-anchor="middle" font-size="9.5" fill="#2563eb" font-family="Inter,sans-serif" font-weight="700">豎桿＝拉</text>
-<text x="130" y="72" text-anchor="middle" font-size="9.5" fill="#dc2626" font-family="Inter,sans-serif" font-weight="700">斜桿＝壓</text>
+<text x="129" y="13" text-anchor="middle" font-size="9.5" fill="#dc2626" font-family="Inter,sans-serif" font-weight="700">豎桿＝拉</text>
+<text x="130" y="72" text-anchor="middle" font-size="9.5" fill="#2563eb" font-family="Inter,sans-serif" font-weight="700">斜桿＝壓</text>
 ${_SVG_NODES_STD}${_SVG_SUP}</svg>`,
   },
   warren: {
@@ -97,7 +97,7 @@ ${_SVG_NODES_STD}${_SVG_SUP}</svg>`,
     year: '1848 年 James Warren 發明 ／ 現代公路橋主流',
     features: [
       '<b>無豎桿</b>，上弦節點位於下弦節點<b>中點</b>位置',
-      '斜桿交替受<b style="color:#2563eb">拉</b>（藍）/<b style="color:#dc2626">壓</b>（紅）',
+      '斜桿交替受<b style="color:#dc2626">拉</b>（紅）/<b style="color:#2563eb">壓</b>（藍）',
       '桿件數量少，結構輕盈、外觀通透簡潔',
       '台灣省道橋、人行陸橋廣泛採用',
     ],
@@ -109,13 +109,13 @@ ${_SVG_NODES_STD}${_SVG_SUP}</svg>`,
 <!-- 端斜桿 -->
 <line x1="10" y1="78" x2="50" y2="18" stroke="#0f766e" stroke-width="3"/>
 <line x1="330" y1="78" x2="290" y2="18" stroke="#0f766e" stroke-width="3"/>
-<!-- zigzag 斜桿（下弦節點受荷重時，以節點法驗算）：往跨中向下傾者受拉(藍)、反向者受壓(紅) -->
-<line x1="50" y1="18" x2="90" y2="78" stroke="#2563eb" stroke-width="2.5"/>
-<line x1="90" y1="78" x2="130" y2="18" stroke="#dc2626" stroke-width="2.5"/>
-<line x1="130" y1="18" x2="170" y2="78" stroke="#2563eb" stroke-width="2.5"/>
-<line x1="170" y1="78" x2="210" y2="18" stroke="#2563eb" stroke-width="2.5"/>
-<line x1="210" y1="18" x2="250" y2="78" stroke="#dc2626" stroke-width="2.5"/>
-<line x1="250" y1="78" x2="290" y2="18" stroke="#2563eb" stroke-width="2.5"/>
+<!-- zigzag 斜桿（下弦節點受荷重時，以節點法驗算）：往跨中向下傾者受拉(紅)、反向者受壓(藍) -->
+<line x1="50" y1="18" x2="90" y2="78" stroke="#dc2626" stroke-width="2.5"/>
+<line x1="90" y1="78" x2="130" y2="18" stroke="#2563eb" stroke-width="2.5"/>
+<line x1="130" y1="18" x2="170" y2="78" stroke="#dc2626" stroke-width="2.5"/>
+<line x1="170" y1="78" x2="210" y2="18" stroke="#dc2626" stroke-width="2.5"/>
+<line x1="210" y1="18" x2="250" y2="78" stroke="#2563eb" stroke-width="2.5"/>
+<line x1="250" y1="78" x2="290" y2="18" stroke="#dc2626" stroke-width="2.5"/>
 <!-- 標籤 -->
 <text x="180" y="54" text-anchor="middle" font-size="9.5" fill="#555" font-family="Inter,sans-serif" font-weight="700">無豎桿</text>
 ${_SVG_NODES_WRN}${_SVG_SUP}</svg>`,
@@ -125,7 +125,7 @@ ${_SVG_NODES_WRN}${_SVG_SUP}</svg>`,
     year: '適合大跨度（50m+）深桁架橋樑',
     features: [
       '豎桿<b>中點</b>多一個節點，兩根斜桿從這裡分別連到相鄰豎桿的<b>上端</b>與<b>下端</b>',
-      '豎桿加上這兩根斜桿就是一個 K 字；上斜桿受<b style="color:#dc2626">壓</b>、下斜桿受<b style="color:#2563eb">拉</b>',
+      '豎桿加上這兩根斜桿就是一個 K 字；上斜桿受<b style="color:#2563eb">壓</b>、下斜桿受<b style="color:#dc2626">拉</b>',
       '豎桿被中點節點切成兩半，壓力桿件的挫曲長度減半，適合重荷重',
       '桿件多、節點計算複雜，現代以電腦輔助設計',
     ],
@@ -135,11 +135,11 @@ ${_SVG_CHORD_STD}
 <line x1="90" y1="18" x2="90" y2="78" stroke="#0d9488" stroke-width="3"/>
 <line x1="170" y1="18" x2="170" y2="78" stroke="#0d9488" stroke-width="3"/>
 <line x1="250" y1="18" x2="250" y2="78" stroke="#0d9488" stroke-width="3"/>
-<!-- K 形斜桿：從豎桿中點 M 連到相鄰（靠跨中）豎桿的上、下端；上斜桿受壓(紅)、下斜桿受拉(藍) -->
-<line x1="90" y1="48" x2="170" y2="18" stroke="#dc2626" stroke-width="2.5"/>
-<line x1="90" y1="48" x2="170" y2="78" stroke="#2563eb" stroke-width="2.5"/>
-<line x1="250" y1="48" x2="170" y2="18" stroke="#dc2626" stroke-width="2.5"/>
-<line x1="250" y1="48" x2="170" y2="78" stroke="#2563eb" stroke-width="2.5"/>
+<!-- K 形斜桿：從豎桿中點 M 連到相鄰（靠跨中）豎桿的上、下端；上斜桿受壓(藍)、下斜桿受拉(紅) -->
+<line x1="90" y1="48" x2="170" y2="18" stroke="#2563eb" stroke-width="2.5"/>
+<line x1="90" y1="48" x2="170" y2="78" stroke="#dc2626" stroke-width="2.5"/>
+<line x1="250" y1="48" x2="170" y2="18" stroke="#2563eb" stroke-width="2.5"/>
+<line x1="250" y1="48" x2="170" y2="78" stroke="#dc2626" stroke-width="2.5"/>
 <!-- K 標示 -->
 <text x="118" y="52" text-anchor="middle" font-size="13" fill="#7c3aed" font-family="Inter,sans-serif" font-weight="900">K</text>
 <text x="222" y="52" text-anchor="middle" font-size="13" fill="#7c3aed" font-family="Inter,sans-serif" font-weight="900" transform="translate(444,0) scale(-1,1)">K</text>
@@ -151,7 +151,7 @@ ${_SVG_NODES_STD}${_SVG_SUP}</svg>`,
     title: '簡支梁橋 Simply Supported Beam',
     year: '最基本橋型 ／ 短跨度（< 15m）首選',
     features: [
-      '上緣受<b style="color:#dc2626">壓力</b>，下緣受<b style="color:#2563eb">張力</b>（彎矩效應）',
+      '上緣受<b style="color:#2563eb">壓力</b>，下緣受<b style="color:#dc2626">張力</b>（彎矩效應）',
       '結構最簡單，施工快速，成本最低',
       '跨度受限於梁深比（span/depth ≤ 20）',
       '跨度越大需越深的梁，效率不如桁架橋',
@@ -160,11 +160,11 @@ ${_SVG_NODES_STD}${_SVG_SUP}</svg>`,
 <!-- 梁體 -->
 <rect x="15" y="26" width="330" height="42" rx="5" fill="#e0f2fe" stroke="#0f766e" stroke-width="2"/>
 <!-- 上緣壓力 -->
-<rect x="15" y="26" width="330" height="11" rx="5" fill="#dc2626" opacity=".22"/>
-<text x="180" y="36" text-anchor="middle" font-size="9.5" fill="#dc2626" font-family="Inter,sans-serif" font-weight="700">上緣 ＝ 壓力</text>
+<rect x="15" y="26" width="330" height="11" rx="5" fill="#2563eb" opacity=".22"/>
+<text x="180" y="36" text-anchor="middle" font-size="9.5" fill="#2563eb" font-family="Inter,sans-serif" font-weight="700">上緣 ＝ 壓力</text>
 <!-- 下緣張力 -->
-<rect x="15" y="57" width="330" height="11" rx="5" fill="#2563eb" opacity=".22"/>
-<text x="180" y="67" text-anchor="middle" font-size="9.5" fill="#2563eb" font-family="Inter,sans-serif" font-weight="700">下緣 ＝ 張力</text>
+<rect x="15" y="57" width="330" height="11" rx="5" fill="#dc2626" opacity=".22"/>
+<text x="180" y="67" text-anchor="middle" font-size="9.5" fill="#dc2626" font-family="Inter,sans-serif" font-weight="700">下緣 ＝ 張力</text>
 <!-- 中性軸 -->
 <line x1="15" y1="47" x2="345" y2="47" stroke="#94a3b8" stroke-width="1" stroke-dasharray="6,3"/>
 <text x="349" y="50" font-size="8" fill="#94a3b8" font-family="Inter,sans-serif">N.A.</text>
@@ -172,9 +172,9 @@ ${_SVG_NODES_STD}${_SVG_SUP}</svg>`,
 <path d="M15,80 Q180,93 345,80" stroke="#f59e0b" stroke-width="2" fill="none" stroke-dasharray="4,2"/>
 <text x="180" y="95" text-anchor="middle" font-size="8.5" fill="#b45309" font-family="Inter,sans-serif" font-weight="600">彎矩圖（跨中最大）</text>
 <!-- 集中荷重箭頭 -->
-<line x1="180" y1="10" x2="180" y2="24" stroke="#dc2626" stroke-width="2.5"/>
-<polygon points="180,26 174,16 186,16" fill="#dc2626"/>
-<text x="180" y="8" text-anchor="middle" font-size="9" fill="#dc2626" font-family="Inter,sans-serif" font-weight="700">P</text>
+<line x1="180" y1="10" x2="180" y2="24" stroke="#334155" stroke-width="2.5"/>
+<polygon points="180,26 174,16 186,16" fill="#334155"/>
+<text x="180" y="8" text-anchor="middle" font-size="9" fill="#334155" font-family="Inter,sans-serif" font-weight="700">P</text>
 <!-- 支承 -->
 <polygon points="15,68 7,82 23,82" fill="#0f766e"/>
 <polygon points="345,68 337,82 353,82" fill="#0d9488"/>
@@ -280,7 +280,7 @@ function guidedSolve() {
 
   // 年級說明
   const notes = {
-    '7': `桿件顏色：藍=張力、紅=壓力。SF=${isFinite(minSF) ? minSF.toFixed(1) : '∞'}，大於 2 才安全。`,
+    '7': `桿件顏色：紅=張力、藍=壓力。SF=${isFinite(minSF) ? minSF.toFixed(1) : '∞'}，大於 2 才安全。`,
     '8': `FEM 求解完成。最小 SF=${isFinite(minSF) ? minSF.toFixed(2) : '∞'}；材料用量 ${totalWeight.toFixed(0)}kg。`,
     '9': `σ_max = F_max / A = ${Math.max(maxTens, Math.abs(maxComp)).toFixed(0)}kN / ${(DEFAULT_AREA*1e4).toFixed(0)}cm² = ${(Math.max(maxTens, Math.abs(maxComp))*1000/DEFAULT_AREA/1e6).toFixed(1)} MPa`,
     'T': `DSM求解：${guidedTruss.nodes.length} nodes, ${guidedTruss.members.length} members, DOF=${guidedTruss.nodes.length*2}`

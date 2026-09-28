@@ -7,8 +7,8 @@
   --accent: #f59e0b;
   --accent-light: #fef3c7;
   /* FEM 桿件顏色 */
-  --fem-tension: #2563eb;
-  --fem-compression: #dc2626;
+  --fem-tension: #dc2626;
+  --fem-compression: #2563eb;
   --fem-zero: #94a3b8;
   --fem-danger: #f97316;
 }
