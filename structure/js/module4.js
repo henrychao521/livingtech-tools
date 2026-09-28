@@ -1,4 +1,4 @@
-// 橋樑工程師實驗室 模組 4：負載情境挑戰
+// 橋梁工程師實驗室 模組 4：負載情境挑戰
 const PK = 'structure_progress_v1';
 function loadP() { try { return JSON.parse(localStorage.getItem(PK)) || {}; } catch { return {}; } }
 function saveP(p) { localStorage.setItem(PK, JSON.stringify(p)); }
@@ -25,9 +25,9 @@ const SCENARIOS = [
   },
   {
     id: 's4', icon: '🌍', name: '地震橋',
-    desc: '以水平地震係數 0.2g 簡化估算（實際係數依規範與橋址而定），橋樑慣性力 = 0.2 × 重量。跨度 10m，Warren 桁架，每節點垂直荷重 40kN，水平慣性力 = 0.2 × 40kN = 8kN。目標 SF ≥ 2.5。',
+    desc: '以水平地震係數 0.2g 簡化估算（實際係數依規範與橋址而定），橋梁慣性力 = 0.2 × 重量。跨度 10m，Warren 桁架，每節點垂直荷重 40kN，水平慣性力 = 0.2 × 40kN = 8kN。目標 SF ≥ 2.5。',
     bridgeType: 'warren', span: 10, height: 3, loadPerNode: 40000, special: 'earthquake',
-    tip: '台灣位於板塊交界，橋樑須考慮 PGA=0.2g 的水平慣性力，垂直與水平荷重組合設計。',
+    tip: '台灣位於板塊交界，橋梁須考慮 PGA=0.2g 的水平慣性力，垂直與水平荷重組合設計。',
   },
   {
     id: 's5', icon: '🚂', name: '鐵路橋',
@@ -100,7 +100,7 @@ function solveScenario() {
   const material = document.getElementById('sc-material').value;
   const mat = MATERIALS[material];
 
-  // 生成橋樑
+  // 生成橋梁
   const truss = generateBridge(sc.bridgeType, sc.span, sc.height, material);
 
   // 修改荷重（依情境）

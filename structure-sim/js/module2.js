@@ -2,7 +2,7 @@
 const TYPES = [
   { id: 'truss', name: '桁架 Truss', principle: '由三角形組成。所有桿件只受軸力（張力/壓力），沒有彎矩。三角形是唯一不會變形的多邊形——這是桁架最強之處。', uses: '橋梁、屋頂、塔架、起重機臂', example: 'Eiffel Tower 艾菲爾鐵塔 / Forth Rail Bridge', viz: 'truss' },
   { id: 'arch', name: '拱 Arch', principle: '彎曲形狀把垂直荷重轉換成「沿拱身的壓力」。整體只受壓不受拉，適合磚石、混凝土等不耐拉的材料。', uses: '橋梁、洞穴、城門、教堂', example: 'Pont du Gard 羅馬輸水道 / Sydney Harbour Bridge', viz: 'arch' },
-  { id: 'cable', name: '纜索懸吊 Cable / Suspension', principle: '用鋼纜把橋面「吊」起來。鋼纜純受張力——張力構件不會挫屈，可以做超長跨距。', uses: '長跨距橋梁、纜車、屋頂', example: 'Golden Gate Bridge 金門大橋 / Akashi Kaikyō Bridge', viz: 'cable' },
+  { id: 'cable', name: '纜索懸吊 Cable / Suspension', principle: '用鋼纜把橋面「吊」起來。鋼纜純受張力——張力構件不會挫曲，可以做超長跨距。', uses: '長跨距橋梁、纜車、屋頂', example: 'Golden Gate Bridge 金門大橋 / Akashi Kaikyō Bridge', viz: 'cable' },
   { id: 'frame', name: '框架 Frame', principle: '由樑（橫）+ 柱（直）組成，節點為剛接。可承受垂直、水平、彎矩多種力——適合需要大空間且開窗的建築。', uses: '高樓、住宅、體育館', example: 'Taipei 101 / Burj Khalifa 哈里發塔', viz: 'frame' },
   { id: 'shell', name: '殼結構 Shell', principle: '薄而曲的面，靠形狀承力——蛋殼原理。應力分布在整個殼面上，材料用量極少卻很強。', uses: '體育館屋頂、貝殼、頭骨、汽車車身', example: 'Sydney Opera House 雪梨歌劇院 / Pantheon 萬神殿圓頂', viz: 'shell' },
   { id: 'tensile', name: '張拉結構 Tensile', principle: '用纖維、薄膜、纜索組成的純張力結構。沒有壓桿，所以可以非常輕。形狀依張力分布動態確定。', uses: '帳篷、體育場屋頂、雕塑', example: 'Munich Olympic Stadium 慕尼黑奧運場 / Denver Airport', viz: 'tensile' },

@@ -1,4 +1,4 @@
-// 橋樑工程師實驗室 模組 1：認識橋樑結構
+// 橋梁工程師實驗室 模組 1：認識橋梁結構
 const PK = 'structure_progress_v1';
 function loadP() { try { return JSON.parse(localStorage.getItem(PK)) || {}; } catch { return {}; } }
 function saveP(p) { localStorage.setItem(PK, JSON.stringify(p)); }
@@ -12,10 +12,10 @@ const HOTSPOTS = {
   'top-chord': {
     name: '上弦桿（Top Chord）',
     role: 'COMPRESSION MEMBER',
-    desc: '桁架橋最上方的水平桿件，承受垂直荷重後<strong>受壓</strong>——就像拱的「壓力線」在這裡。上弦桿必須夠粗壯才不會「挫屈」（橫向彎折）。',
-    formula: gradeText({ '7': '', '8': 'F = -P（壓力，負號代表受壓）', '9': 'σ = F/A，臨界挫屈力 Pcr = π²EI/L²' }),
+    desc: '桁架橋最上方的水平桿件，承受垂直荷重後<strong>受壓</strong>——就像拱的「壓力線」在這裡。上弦桿必須夠粗壯才不會「挫曲」（橫向彎折）。',
+    formula: gradeText({ '7': '', '8': 'F = -P（壓力，負號代表受壓）', '9': 'σ = F/A，臨界挫曲力 Pcr = π²EI/L²' }),
     color: '#2563eb', tag: '受壓',
-    fact: '上弦桿太細或太長時，會突然側向彎折——這就是「挫屈」（Buckling），是壓桿最怕的失效模式。'
+    fact: '上弦桿太細或太長時，會突然側向彎折——這就是「挫曲」（Buckling），是壓桿最怕的失效模式。'
   },
   'bot-chord': {
     name: '下弦桿（Bottom Chord）',
@@ -23,7 +23,7 @@ const HOTSPOTS = {
     desc: '桁架橋最下方的水平桿件，垂直荷重讓它<strong>受拉</strong>伸長。鋼和繩索最擅長受拉，木材和混凝土則不擅長承受張力。',
     formula: gradeText({ '7': '', '8': 'F = +P（張力，正號代表受拉）', '9': 'σ = F/A ≤ σ_allow' }),
     color: '#dc2626', tag: '受拉',
-    fact: '下弦桿受張力，不會挫屈。但要注意節點孔洞造成的應力集中——這是 Silver Bridge 斷裂的真正原因。'
+    fact: '下弦桿受張力，不會挫曲。但要注意節點孔洞造成的應力集中——這是 Silver Bridge 斷裂的真正原因。'
   },
   'diagonal': {
     name: '斜桿（Diagonal）',
@@ -63,7 +63,7 @@ const HOTSPOTS = {
     desc: '多根桿件的交會點。桁架理論中，假設節點為<strong>鉸接</strong>（可旋轉），因此桿件只承受軸力（張力或壓力），不承受彎矩——這大大簡化計算。',
     formula: gradeText({ '7': '', '8': '節點法：ΣFx=0，ΣFy=0', '9': '求出各桿件軸力，再代入截面法驗算' }),
     color: '#1e293b', tag: '鉸接假設',
-    fact: '節點是結構的弱點：大部分橋樑失效都從節點開始（焊縫裂、螺栓鬆、銷孔磨損）。I-35W 橋就是節點鋼板太薄。'
+    fact: '節點是結構的弱點：大部分橋梁失效都從節點開始（焊縫裂、螺栓鬆、銷孔磨損）。I-35W 橋就是節點鋼板太薄。'
   },
   'load': {
     name: '集中載重（Concentrated Load）',

@@ -12,7 +12,7 @@ const TOOLS = [
   { id: 'drill-press', name: '鑽床', emoji: '🛠', key: 'dpress_progress_v1', color: '#475569', url: '../drill-press/' },
   { id: 'sander', name: '砂磨機', emoji: '✨', key: 'sander_progress_v1', color: '#D97706', url: '../sander/' },
   { id: 'hand-tools', name: '基本手工具', emoji: '🔨', key: 'ht_progress_v1', color: '#92400E', url: '../hand-tools/' },
-  { id: 'structure', name: '橋樑工程師', emoji: '🏗️', key: 'structure_progress_v1', color: '#0E7490', url: '../structure/' },
+  { id: 'structure', name: '橋梁工程師', emoji: '🏗️', key: 'structure_progress_v1', color: '#0E7490', url: '../structure/' },
   { id: 'structure-sim', name: '結構模擬器', emoji: '🏛', key: 'struct_progress_v1', color: '#334155', url: '../structure-sim/' },
   { id: 'simple-machines', name: '簡單機械', emoji: '⚙', key: 'sm_progress_v1', color: '#65A30D', url: '../simple-machines/' },
   { id: 'mechanism', name: '機構運動', emoji: '🎡', key: 'mech_progress_v1', color: '#BE185D', url: '../mechanism/' },

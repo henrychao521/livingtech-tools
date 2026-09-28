@@ -1,4 +1,4 @@
-// 橋樑工程師實驗室 模組 3：橋樑設計實驗室
+// 橋梁工程師實驗室 模組 3：橋梁設計實驗室
 // 依賴 solver.js（TrussSolver、generateBridge、drawTruss、MATERIALS、memberColor）
 const PK = 'structure_progress_v1';
 function loadP() { try { return JSON.parse(localStorage.getItem(PK)) || {}; } catch { return {}; } }
@@ -122,7 +122,7 @@ ${_SVG_NODES_WRN}${_SVG_SUP}</svg>`,
   },
   k: {
     title: 'K 型桁架 K-Truss',
-    year: '適合大跨度（50m+）深桁架橋樑',
+    year: '適合大跨度（50m+）深桁架橋梁',
     features: [
       '豎桿<b>中點</b>多一個節點，兩根斜桿從這裡分別連到相鄰豎桿的<b>上端</b>與<b>下端</b>',
       '豎桿加上這兩根斜桿就是一個 K 字；上斜桿受<b style="color:#2563eb">壓</b>、下斜桿受<b style="color:#dc2626">拉</b>',
