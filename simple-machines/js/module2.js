@@ -5,7 +5,7 @@ const CLASSES = [
     name: '第一類槓桿',
     desc: '支點在中間（施力與抗力分別在支點兩側）。可以省力或費力，看力臂比例。',
     layout: '施力 — 支點 — 抗力',
-    examples: '剪刀、翹翹板、撬棍、釘拔、釣魚竿（單手版）',
+    examples: '剪刀、翹翹板、撬棍、釘拔、天平',
     feature: '功能多樣：力臂可省力或省距離',
     viz: `<svg viewBox="0 0 240 100"><rect x="20" y="50" width="200" height="6" fill="#DB2777"/><polygon points="115,56 135,56 125,75" fill="#9D174D"/><rect x="20" y="30" width="30" height="20" fill="#831843"/><line x1="200" y1="20" x2="200" y2="50" stroke="#16A34A" stroke-width="3"/><polygon points="200,50 196,42 204,42" fill="#16A34A"/><text x="35" y="22" font-size="10" fill="#831843" font-weight="700">抗力</text><text x="125" y="92" text-anchor="middle" font-size="10" fill="#9D174D" font-weight="700">支點</text><text x="200" y="12" text-anchor="middle" font-size="10" fill="#16A34A" font-weight="700">施力</text></svg>`,
   },
@@ -23,7 +23,7 @@ const CLASSES = [
     name: '第三類槓桿',
     desc: '施力在中間（支點在一端、抗力在另一端）。永遠費力，但換來精準操控與動作放大。',
     layout: '支點 — 施力 — 抗力',
-    examples: '鑷子、釣竿（雙手版）、釘書機、人類手臂、掃帚',
+    examples: '鑷子、筷子、夾子（麵包夾、烤肉夾）、釣魚竿、人類前臂、掃帚',
     feature: '永遠費力（MA < 1），但動作放大',
     viz: `<svg viewBox="0 0 240 100"><rect x="20" y="50" width="200" height="6" fill="#DB2777"/><polygon points="20,40 38,40 30,68" fill="#9D174D"/><line x1="115" y1="50" x2="115" y2="26" stroke="#16A34A" stroke-width="3"/><polygon points="115,20 111,28 119,28" fill="#16A34A"/><rect x="200" y="30" width="30" height="20" fill="#831843"/><text x="30" y="85" text-anchor="middle" font-size="10" fill="#9D174D" font-weight="700">支點</text><text x="115" y="12" text-anchor="middle" font-size="10" fill="#16A34A" font-weight="700">施力</text><text x="215" y="22" text-anchor="middle" font-size="10" fill="#831843" font-weight="700">抗力</text></svg>`,
   },
@@ -67,7 +67,7 @@ const QUIZ = [
   { tool: '開瓶器（開酒瓶用，槓桿頂壓蓋）', ans: 'second', explain: '前端頂在瓶蓋上方是支點、勾住瓶蓋邊緣處是抗力、手在握把端施力 → 抗力在中間，第二類。' },
   { tool: '堅果鉗', ans: 'second', explain: '兩臂相連的一端是支點、堅果夾在中間是抗力、手在握把末端施力 → 抗力在中間，第二類。' },
   { tool: '鑷子', ans: 'third', explain: '尾端相連處是支點、手指在中間捏是施力、夾尖夾住的東西是抗力 → 施力在中間，第三類。' },
-  { tool: '釣魚竿（雙手握）', ans: 'third', explain: '握竿尾的手是支點、前面的手在中間施力、竿尖的魚是抗力 → 施力在中間，第三類。' },
+  { tool: '釣魚竿（一手壓住竿尾、一手在前方提竿）', ans: 'third', explain: '壓住竿尾的手是支點、前面的手在中間施力、竿尖的魚是抗力 → 施力在中間，第三類。' },
   { tool: '人類手臂彎舉', ans: 'third', explain: '手肘是支點、二頭肌拉在前臂靠近手肘處施力、手上的重物是抗力 → 施力在中間，第三類。' },
 ];
 

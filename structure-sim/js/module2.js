@@ -52,14 +52,14 @@ function syncTypes() {
 
 // 結構類型測驗
 const QUIZ = [
-  { q: '艾菲爾鐵塔（Eiffel Tower）', ans: 'truss' },
-  { q: '羅馬鬥獸場拱門', ans: 'arch' },
-  { q: '金門大橋（Golden Gate）', ans: 'cable' },
-  { q: 'Taipei 101', ans: 'frame' },
-  { q: '雪梨歌劇院屋頂', ans: 'shell' },
-  { q: '帳篷', ans: 'tensile' },
-  { q: '木橋桁架', ans: 'truss' },
-  { q: '萬神殿圓頂', ans: 'shell' },
+  { q: '艾菲爾鐵塔（Eiffel Tower）', ans: 'truss', explain: '整座塔由熟鐵桿件交錯成無數三角形（格構），桿件主要受張力或壓力——這是桁架。' },
+  { q: '羅馬鬥獸場拱門', ans: 'arch', explain: '一圈圈半圓形開口把上方的重量沿著弧形往兩側「壓」下去，石材只受壓——這是拱。' },
+  { q: '金門大橋（Golden Gate）', ans: 'cable', explain: '兩座高塔之間掛著主纜，再用吊索把橋面吊起來，主纜只受張力——這是纜索懸吊（懸索橋）。' },
+  { q: 'Taipei 101', ans: 'frame', explain: '由巨柱與各層的樑組成、節點剛接的骨架，能同時抵抗重力、風力與地震的側向力——這是框架。（它的巨柱之間還有斜撐與外伸桁架加強。）' },
+  { q: '雪梨歌劇院屋頂', ans: 'shell', explain: '屋頂是一片片彎曲的薄殼，靠「曲面形狀」把力分散到整個面上——這是殼結構。' },
+  { q: '帳篷', ans: 'tensile', explain: '布面與營繩都被拉緊、只受張力，靠營柱撐起形狀——這是張拉結構。' },
+  { q: '木橋桁架', ans: 'truss', explain: '木條組成一個接一個的三角形，桿件只受軸力（張力或壓力）——這是桁架。' },
+  { q: '萬神殿圓頂', ans: 'shell', explain: '混凝土圓頂是彎曲的連續曲面，重量沿曲面分散往下傳——這是殼結構（圓頂可以想成拱繞中心轉一圈）。' },
 ];
 const quizEl = document.getElementById('quiz');
 let answered = new Set();
@@ -89,7 +89,7 @@ quizEl.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', 
     if (b === btn && !correct) b.classList.add('wrong');
   });
   const ansName = TYPES.find(t => t.id === q.ans).name;
-  parent.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${correct ? 'success' : 'error'}" style="margin-top:8px">${correct ? '✓ 正確' : `✗ 正確答案：${ansName}`}</div>`;
+  parent.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${correct ? 'success' : 'error'}" style="margin-top:8px">${correct ? '✓ 正確' : `✗ 正確答案：${ansName}`}<br><span style="font-size:13px">${q.explain}</span></div>`;
   if (correct) { quizCorrect++; if (typeof SoundFX !== 'undefined') SoundFX.success(); } else if (typeof SoundFX !== 'undefined') SoundFX.error();
   answered.add(i);
   updateQuizProg();

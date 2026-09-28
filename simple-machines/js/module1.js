@@ -4,8 +4,8 @@ const MACHINES = [
   {
     id: 'lever',
     name: '槓桿 Lever',
-    principle: '一根剛性桿件圍繞「支點」轉動。施力與阻力分別作用在桿的兩側（或同側）。',
-    formula: 'MA = 施力臂 ÷ 阻力臂',
+    principle: '一根剛性桿件圍繞「支點」轉動。施力與抗力分別作用在桿的兩側（或同側）。',
+    formula: 'MA = 施力臂 ÷ 抗力臂',
     examples: '剪刀、開瓶器、撬棍、釣魚竿、翹翹板',
   },
   {

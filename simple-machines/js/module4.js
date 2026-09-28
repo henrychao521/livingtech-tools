@@ -71,7 +71,7 @@ function drawLever() {
   ctx.stroke();
   ctx.font = '700 12px Inter';
   ctx.fillStyle = '#0891B2';
-  ctx.fillText(`阻力臂 ${loadArm.toFixed(1)}m`, (startX + pivotX) / 2, beamY + 80);
+  ctx.fillText(`抗力臂 ${loadArm.toFixed(1)}m`, (startX + pivotX) / 2, beamY + 80);
   ctx.strokeStyle = '#16A34A';
   ctx.beginPath();
   ctx.moveTo(pivotX, beamY + 60);

@@ -25,15 +25,16 @@ const SCENARIOS = [
   },
   {
     id: 's4', icon: '🌍', name: '地震橋',
-    desc: '台灣規範 0.2g 水平地震係數，橋樑慣性力 = 0.2 × 重量。跨度 10m，Warren 桁架，每節點垂直荷重 40kN，水平慣性力 = 0.2 × 40kN = 8kN。目標 SF ≥ 2.5。',
+    desc: '以水平地震係數 0.2g 簡化估算（實際係數依規範與橋址而定），橋樑慣性力 = 0.2 × 重量。跨度 10m，Warren 桁架，每節點垂直荷重 40kN，水平慣性力 = 0.2 × 40kN = 8kN。目標 SF ≥ 2.5。',
     bridgeType: 'warren', span: 10, height: 3, loadPerNode: 40000, special: 'earthquake',
     tip: '台灣位於板塊交界，橋樑須考慮 PGA=0.2g 的水平慣性力，垂直與水平荷重組合設計。',
   },
   {
     id: 's5', icon: '🚂', name: '鐵路橋',
-    desc: '單線鐵路桁架橋，跨度 20m。4 個軸重各 120kN（台鐵電力機車），動態放大係數 1.3，有效荷重 = 120×1.3 = 156kN/軸。目標 SF ≥ 2.5。',
-    bridgeType: 'pratt', span: 20, height: 5, loadPerNode: 156000, special: 'train',
-    tip: '鐵路橋的衝擊荷重（Impact factor）將靜態軸重放大 1.3 倍，這是比公路橋更嚴格的規定。',
+    desc: '單線鐵路桁架橋，跨度 20m。機車 4 個軸重各 120kN（簡化假設），動態放大係數 1.3，有效荷重 = 120×1.3 = 156kN/軸；橋面由左右兩片桁架共同支撐，模擬的這一片每軸分擔 78kN。目標 SF ≥ 2.5。',
+    // 每片桁架分擔一半軸重（同行人天橋 s1 的做法）；156kN 全壓在單片時鋼材 SF 只有約 2.67，最多一星
+    bridgeType: 'pratt', span: 20, height: 5, loadPerNode: 156000 / 2, special: 'train',
+    tip: '鐵路橋的衝擊荷重（Impact factor）將靜態軸重放大 1.3 倍；列車又重又集中，只有強度高的材料才撐得住足夠的安全餘裕。',
   },
   {
     id: 's6', icon: '🏆', name: '輕量設計競賽',
