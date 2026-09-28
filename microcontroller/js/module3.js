@@ -54,12 +54,12 @@ const EXAMPLES = [
   <span class="fn">digitalWrite</span>(<span class="num">7</span>, <span class="kw">HIGH</span>); <span class="fn">delayMicroseconds</span>(<span class="num">10</span>);
   <span class="fn">digitalWrite</span>(<span class="num">7</span>, <span class="kw">LOW</span>);
   <span class="kw">long</span> t = <span class="fn">pulseIn</span>(<span class="num">8</span>, <span class="kw">HIGH</span>);
-  <span class="kw">return</span> t * <span class="num">0.034</span> / <span class="num">2</span>; <span class="com">// cm</span>
+  <span class="kw">return</span> t * <span class="num">0.0343</span> / <span class="num">2</span>; <span class="com">// cm</span>
 }
 <span class="kw">void</span> <span class="fn">loop</span>() {
   <span class="fn">Serial.println</span>(<span class="fn">getDistance</span>());
   <span class="fn">delay</span>(<span class="num">200</span>);
-}`, desc: '7 號 Trigger 發射、8 號 Echo 接收，setup() 裡一定要先用 pinMode 設好輸出／輸入，不然 Trig 送不出觸發脈衝、距離會一直是 0。聲速 340 m/s，除 2 是因為來回兩次。' },
+}`, desc: '7 號 Trigger 發射、8 號 Echo 接收，setup() 裡一定要先用 pinMode 設好輸出／輸入，不然 Trig 送不出觸發脈衝、距離會一直是 0。聲速約 343 m/s（20°C），除 2 是因為來回兩次。' },
   { title: 'Serial Monitor 印值', concept: 'Serial.print 除錯',
     code: `<span class="kw">void</span> <span class="fn">setup</span>() {
   <span class="fn">Serial.begin</span>(<span class="num">9600</span>);
