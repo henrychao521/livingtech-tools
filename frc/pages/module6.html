@@ -138,6 +138,7 @@ drive.<span class="fn">setDefaultCommand</span>(drive.<span class="fn">driveComm
         <div class="slider-block"><label>kD（微分）</label><input type="range" min="0" max="5" step="0.1" value="0.5" id="pid-d"><strong id="val-d">0.5</strong></div>
         <div class="slider-block"><label>kV（速度 FF × 目標速度）</label><input type="range" min="0" max="2" step="0.05" value="0" id="pid-v"><strong id="val-v">0.00</strong></div>
       </div>
+      <p id="pid-status" style="font-size:13px;margin-top:10px;padding:8px 12px;border-radius:8px;background:#f1f5f9;color:var(--text-soft)"></p>
       <p style="font-size:12px;color:var(--text-muted);margin-top:10px;line-height:1.6">🎯 <strong>調參流程</strong>：先把 P 加大到看到震盪 → 加 D 抑制震盪 → 如果穩態有誤差再加 I。FeedForward kV / kS / kA 在跑 SysId 後自動算出，比手動調快十倍。<br>💡 本模擬的 kV 乘的是「梯形速度規劃給出的目標速度」：把 kP、kD 調小、只拉 kV，會看到前饋自己就把機構推向目標（kV 約 1 時停在 1 附近），再大就會衝過頭；但不管多大都不會發散，因為前饋只看規劃，不看量到的速度。</p>
     </div>
   </section>
@@ -264,9 +265,21 @@ drive.<span class="fn">setDefaultCommand</span>(drive.<span class="fn">driveComm
     });
     d += ` L 580 180 L 50 180 Z`;
     curveEl.setAttribute('d', d);
+    // 2026-09-28 教師決定 Q14：完成條件改成「曲線穩定」——超越量 ≤ 10%、最後 0.3 秒誤差都在 ±5% 內
+    const overshoot = Math.max(0, Math.max(...points) - target);
+    const settleErr = Math.max(...points.slice(-15).map(y => Math.abs(target - y)));
+    const ok = overshoot <= 0.10 && settleErr <= 0.05;
+    const st = document.getElementById('pid-status');
+    if (st) {
+      st.style.background = ok ? '#dcfce7' : '#f1f5f9';
+      st.innerHTML = `📏 超越量 <strong>${(overshoot * 100).toFixed(1)}%</strong>（目標 ≤ 10%）｜最後 0.3 秒最大誤差 <strong>${(settleErr * 100).toFixed(1)}%</strong>（目標 ≤ 5%）` +
+        (ok ? '　✅ 曲線已穩定，調參成功！' : '　⏳ 繼續調整，讓曲線快速貼齊 Target 且不要衝過頭太多。');
+    }
+    return ok;
   }
   // 進度：教師後台把 FRC 算成 6 個模組，但本頁從未寫過 module6，
-  // 所以每個學生都卡在 5/6。學生實際調整過 PID 參數（四支滑桿至少動過三支）才算完成。
+  // 所以每個學生都卡在 5/6。學生把響應曲線調到穩定（超越量 ≤ 10%、最後 0.3 秒誤差 ≤ 5%）才算完成；
+  // touched 只記錄動過哪些滑桿，供教師後台參考。
   const touched = new Set();
   function markDone() {
     const PK = 'frc_progress_v1';
@@ -286,9 +299,8 @@ drive.<span class="fn">setDefaultCommand</span>(drive.<span class="fn">driveComm
     }
   }
   Object.entries(sliders).forEach(([k, s]) => s.addEventListener('input', () => {
-    simulate();
     touched.add(k);
-    if (touched.size >= 3) markDone();
+    if (simulate()) markDone();
   }));
   simulate();
 })();

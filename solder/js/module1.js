@@ -2,49 +2,49 @@
 const PARTS = {
   tip: {
     name: '烙鐵頭（Tip）',
-    role: 'CORE HEATING POINT',
+    role: '傳熱核心',
     desc: '直接接觸接點與焊錫的核心，溫度約 300–400°C。常見形狀：尖頭（細部焊接）、扁頭（一般用途）、刀型（大面積散熱）。新手練習多用扁頭或鉛筆型尖頭。',
     fact: '烙鐵頭表面要保持「上錫」（tinning）才能有效傳熱；發黑就是氧化，要用海綿擦或清潔粉處理。'
   },
   heating: {
     name: '加熱元件（Heating Element）',
-    role: 'INTERNAL HEATER',
+    role: '內部發熱',
     desc: '位於烙鐵頭內部的陶瓷電阻發熱體，把電能轉為熱能。功率常見 30W、40W、60W。功率越大加熱越快，但學生用建議 30–40W 就夠。',
     fact: '從冷態加熱到 350°C 約需 30–60 秒，這也是為什麼上課要先開電源讓它預熱。'
   },
   handle: {
     name: '隔熱握柄（Handle）',
-    role: 'INSULATED GRIP',
+    role: '隔熱握持',
     desc: '由耐高溫塑膠或軟木製成的握把，避免操作者燙傷。手持時應像握筆一樣握在握柄前段（不接觸金屬段為原則）以提高精度。',
     fact: '握柄如果發燙、變形、裂痕，就是危險警訊，要立即停用並通報老師。'
   },
   display: {
     name: '溫控與顯示器（Temp Display）',
-    role: 'TEMPERATURE CONTROL',
+    role: '溫度控制',
     desc: '可調溫烙鐵會顯示當前溫度與設定溫度。常用設定：含鉛錫 320°C、無鉛錫 360–400°C、SMD 焊接 280–320°C。',
     fact: '指示燈閃爍代表加熱中，恆亮代表已達設定溫度可以開始焊接。'
   },
   cord: {
     name: '電源線（Power Cord）',
-    role: 'POWER LINE',
+    role: '供電線路',
     desc: '矽膠或耐熱橡膠材質，避免被自身高溫熔毀。要確保電線不會纏繞、不會被烙鐵頭碰到。',
     fact: '電源線若有破皮、銅絲外露、發燙等狀況，必須立即停用更換。'
   },
   stand: {
     name: '烙鐵架（Stand）',
-    role: 'IRON HOLDER',
+    role: '安全擺放',
     desc: '金屬底座 + 螺旋彈簧，讓加熱中的烙鐵有安全停放處。烙鐵離手必須立刻放架上，**絕對不可以**直接放桌面或紙上。',
     fact: '直接放桌面是焊接最常見的火災與燙傷成因之一（依 Illinois DRS、MIT EHS 等安全教材）。'
   },
   sponge: {
     name: '清潔海綿（Cleaning Sponge）',
-    role: 'TIP CLEANER',
+    role: '烙鐵頭清潔',
     desc: '使用前要先用水沾濕並擰乾。焊接過程中烙鐵頭容易黏上焊渣，每幾次焊接要在海綿上擦一下。',
     fact: '進階款用「黃銅球」清潔器，比海綿溫和不會驟冷烙鐵頭。'
   },
   'solder-wire': {
     name: '焊錫絲（Solder Wire）',
-    role: 'FILLER METAL',
+    role: '填充金屬',
     desc: '中空管狀，內含助焊劑（flux）。常見規格：直徑 0.6mm（精細）、0.8mm（一般）、1.0mm（粗）。本校課堂使用 0.8mm 含鉛錫（Sn63Pb37），老師另備一卷無鉛錫（SAC305）示範比較。',
     fact: '無鉛錫熔點較高（約 217°C），烙鐵要設得比含鉛錫高（約 360–380°C）、流動性也較差；含鉛錫熔點 183°C，較好上手，但焊完一定要洗手。'
   },

@@ -121,8 +121,13 @@ function drawModel() {
   const totalLayers = Math.round(m.height / params.layer);
   const visibleLayers = printState.running ? Math.floor(totalLayers * printState.progress) : totalLayers;
   const layerH = h / totalLayers;
+  // 2026-09-28 教師決定 Q40：尚未開始列印時，改用半透明＋虛線外框表示「切片預覽」，
+  // 避免學生以為成品已經印好；按下開始後才從第一層實心長起。
+  const preview = !printState.running && printState.progress < 1;
+  const outline = [];  // 預覽外框：記錄每層左右邊界
 
   // 繪製每層（從下往上）
+  if (preview) { ctx.save(); ctx.globalAlpha = 0.22; }
   for (let i = 0; i < visibleLayers; i++) {
     const layerY = baseY - (i + 1) * layerH;
     const ratio = i / totalLayers;
@@ -141,6 +146,7 @@ function drawModel() {
       layerW = w * profile;
       layerLeft = cx - layerW / 2;
     }
+    outline.push([layerLeft, layerLeft + layerW, layerY]);
     // 顏色：略有層感
     const alpha = 0.85 + (i % 2) * 0.1;
     ctx.fillStyle = m.color + (Math.floor(alpha * 255).toString(16).padStart(2, '0'));
@@ -160,6 +166,31 @@ function drawModel() {
       ctx.lineTo(layerLeft + layerW, layerY);
       ctx.stroke();
     }
+  }
+
+  if (preview) {
+    ctx.restore();
+    // 虛線外框（線框預覽）
+    if (outline.length) {
+      ctx.save();
+      ctx.strokeStyle = m.color;
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([6, 4]);
+      ctx.beginPath();
+      ctx.moveTo(outline[0][0], baseY);
+      outline.forEach(([l, , y]) => ctx.lineTo(l, y));
+      for (let k = outline.length - 1; k >= 0; k--) ctx.lineTo(outline[k][1], outline[k][2]);
+      ctx.lineTo(outline[0][1], baseY);
+      ctx.closePath();
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '13px "Noto Sans TC", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('切片預覽（尚未列印）', cx, top - 12);
+      ctx.restore();
+    }
+    return;
   }
 
   // 填充紋理（內部）

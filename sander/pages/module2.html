@@ -26,7 +26,7 @@
   <!-- 關卡 1：PPE 護具配置 -->
   <section class="panel" id="part-ppe">
     <h3>🎯 關卡 1 ／ 護具配置 <span style="color:var(--text-muted);font-weight:500;font-size:14px;margin-left:8px">30 分</span></h3>
-    <p class="muted" style="margin-bottom:18px">把右側「正確護具」拖曳到左側操作員對應的保護部位。危險物品請不要拖。</p>
+    <p class="muted" style="margin-bottom:18px">右側物品有的該穿戴、有的不該帶上機台。自己判斷後，把該穿戴的拖曳到左側操作員對應的保護部位；拖錯會跳出說明。</p>
     <div class="dressup">
       <div class="dressup-character" id="ppe-scene" style="min-height:420px">
         <svg id="ppe-svg" viewBox="0 0 300 420" class="character-svg" preserveAspectRatio="xMidYMid meet">
@@ -79,12 +79,12 @@
         </svg>
       </div>
       <div class="dressup-items" id="ppe-items">
-        <div class="draggable" draggable="true" data-id="sd-goggles" data-correct="1"><span class="icon">🥽</span><div><div style="font-weight:700">護目鏡</div><div style="font-size:12px;color:#888">放到「眼睛保護」位置</div></div></div>
-        <div class="draggable" draggable="true" data-id="sd-mask" data-correct="1"><span class="icon">😷</span><div><div style="font-weight:700">N95 防塵口罩</div><div style="font-size:12px;color:#888">放到「口鼻保護」位置</div></div></div>
-        <div class="draggable" draggable="true" data-id="sd-sleeves" data-correct="1"><span class="icon">👕</span><div><div style="font-weight:700">束緊袖口</div><div style="font-size:12px;color:#888">放到「袖口束緊」位置</div></div></div>
-        <div class="draggable" draggable="true" data-id="sd-glove" data-correct="0"><span class="icon">🧤</span><div><div style="font-weight:700">手套（布／皮）</div><div style="font-size:12px;color:#a72d2d">⚠ 危險！</div></div></div>
-        <div class="draggable" draggable="true" data-id="sd-earphone" data-correct="0"><span class="icon">🎧</span><div><div style="font-weight:700">戴耳機</div><div style="font-size:12px;color:#a72d2d">⚠ 危險！</div></div></div>
-        <div class="draggable" draggable="true" data-id="sd-bracelet" data-correct="0"><span class="icon">📿</span><div><div style="font-weight:700">金屬手環</div><div style="font-size:12px;color:#a72d2d">⚠ 危險！</div></div></div>
+        <div class="draggable" draggable="true" data-id="sd-goggles" data-correct="1"><span class="icon">🥽</span><div><div style="font-weight:700">護目鏡</div><div style="font-size:12px;color:#888">透明鏡片、側邊有護罩</div></div></div>
+        <div class="draggable" draggable="true" data-id="sd-mask" data-correct="1"><span class="icon">😷</span><div><div style="font-weight:700">N95 防塵口罩</div><div style="font-size:12px;color:#888">可過濾細微顆粒</div></div></div>
+        <div class="draggable" draggable="true" data-id="sd-sleeves" data-correct="1"><span class="icon">👕</span><div><div style="font-weight:700">束緊袖口</div><div style="font-size:12px;color:#888">把袖口扣好、捲緊</div></div></div>
+        <div class="draggable" draggable="true" data-id="sd-glove" data-correct="0"><span class="icon">🧤</span><div><div style="font-weight:700">手套（布／皮／防割）</div><div style="font-size:12px;color:#888">包住整隻手</div></div></div>
+        <div class="draggable" draggable="true" data-id="sd-earphone" data-correct="0"><span class="icon">🎧</span><div><div style="font-weight:700">戴耳機</div><div style="font-size:12px;color:#888">一邊聽音樂一邊做</div></div></div>
+        <div class="draggable" draggable="true" data-id="sd-bracelet" data-correct="0"><span class="icon">📿</span><div><div style="font-weight:700">金屬手環</div><div style="font-size:12px;color:#888">平常就戴著的飾品</div></div></div>
       </div>
     </div>
     <div id="ppe-feedback"></div>
@@ -102,6 +102,16 @@
     <div id="scenario-list"></div>
     <div id="scenario-result"></div>
   </section>
+
+  <details class="panel supplement">
+    <summary>📎 延伸補充：集塵有法規依據嗎？（台灣法規＋國外規範參考）</summary>
+    <ul>
+      <li><strong>台灣｜職業安全衛生設施規則第 188 條：</strong>有可燃性粉塵、可能引起爆炸或火災的工作場所，應有通風、換氣、除塵、去除靜電等必要設施。木屑粉就是可燃性粉塵。<a href="https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=N0060009&amp;flno=188" target="_blank" rel="noopener">（全國法規資料庫）</a></li>
+      <li><strong>台灣｜粉塵危害預防標準：</strong>規定粉塵作業要用密閉設備、局部排氣裝置（在粉塵產生處直接吸走）等方式控制粉塵。適用哪些作業以該標準附表一為準，但「在源頭吸走粉塵」正是砂磨機接集塵口的道理。<a href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=N0060021" target="_blank" rel="noopener">（全國法規資料庫）</a></li>
+      <li><span class="tag-ref" style="display:inline-block;font-size:11px;background:#e2e8f0;color:#475569;border-radius:10px;padding:1px 8px;margin-right:4px">外國規範・供參考</span><strong>美國 OSHA 木塵專頁（英文）：</strong>重點是美國沒有專門的「木塵標準」，而是用一般空氣污染物容許濃度、危害溝通、呼吸防護等通用規定來管；木塵的火災爆炸風險也列入可燃性粉塵的重點檢查。<a href="https://www.osha.gov/wood-dust/standards" target="_blank" rel="noopener">（OSHA Wood Dust – Standards）</a></li>
+      <li><span class="tag-ref" style="display:inline-block;font-size:11px;background:#e2e8f0;color:#475569;border-radius:10px;padding:1px 8px;margin-right:4px">外國規範・供參考</span><strong>美國 OSHA 木塵危害說明（英文）：</strong>整理木塵對呼吸道、皮膚的影響與可燃性粉塵風險。<a href="https://www.osha.gov/wood-dust/hazards" target="_blank" rel="noopener">（OSHA Wood Dust – Hazard Recognition）</a></li>
+    </ul>
+  </details>
 
   <div class="unlock-banner hidden" id="unlock"><h3>🏆 通關！</h3><a href="module3.html" class="btn" style="background:#fff;color:#1e9450;margin-top:18px;font-weight:700">進入模組 3 →</a></div>
   <div class="module-nav-bottom"><a href="module1.html" class="btn btn-ghost">← 上一關</a><a href="module3.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a></div>

@@ -1,8 +1,8 @@
 // 砂磨機 模組 1：認識部件
 const PARTS = {
-  belt: { name: '砂帶（Sanding Belt）', role: 'BELT SANDER ABRASIVE', desc: '套在前後兩個滾輪上的環形砂紙帶。常見規格 75×457mm / 100×610mm。粒度（grit）數字越小越粗：60 號粗磨、120 號中磨、240 號細磨、320 號精修。', fact: '砂帶方向有箭頭印在內側——裝錯方向砂粒會被反向拉脫，磨削效率降到一半且砂帶很快壞。' },
+  belt: { name: '砂帶（Sanding Belt）', role: 'BELT SANDER ABRASIVE', desc: '套在前後兩個滾輪上的環形砂紙帶。教室桌上型帶盤式砂磨機常見 4×36 吋（約 100×915mm）或 6×48 吋（約 150×1220mm）；75×457mm、100×610mm 則是手持式砂帶機的尺寸。實際規格以教室機台銘牌為準。粒度（grit）數字越小越粗：60 號粗磨、120 號中磨、240 號細磨、320 號精修。', fact: '砂帶方向有箭頭印在內側——裝錯方向砂粒會被反向拉脫，磨削效率降到一半且砂帶很快壞。' },
   disc: { name: '砂盤（Sanding Disc）', role: 'DISC SANDER ABRASIVE', desc: '圓盤狀砂紙，貼在金屬轉盤上。盤式砂磨機切削力比帶式大，適合快速去料、平面修整、邊角倒角。使用前先空轉觀察旋轉方向，工件只能放在「向下旋轉」那一側才不會被甩起（多數逆時針機型為左半邊；依教室機台實際方向為準）。', fact: '盤式砂磨「往下轉那側才能磨」是鐵則：放到向上旋轉那側，工件會被砂盤甩飛。' },
-  motor: { name: '馬達（Motor）', role: 'POWER UNIT', desc: '常見 250–550W，透過 V 型皮帶帶動砂帶滾輪或砂盤轉軸。連續使用 15 分鐘以上要讓馬達休息，避免過熱。', fact: '聞到焦味或砂帶轉速下降 = 馬達過熱。立刻停機、拔插頭、報告老師，讓機台自然冷卻；不可自行打開機殼。' },
+  motor: { name: '馬達（Motor）', role: 'POWER UNIT', desc: '桌上型常見約 1/3–3/4 馬力（約 250–550W，各廠牌型號比較見本頁「延伸補充」），透過皮帶或直接驅動砂帶滾輪與砂盤轉軸。能連續使用多久、何時該讓馬達休息，各機型不同，請依機台說明書規定。', fact: '聞到焦味或砂帶轉速下降 = 馬達過熱。立刻停機、拔插頭、報告老師，讓機台自然冷卻；不可自行打開機殼。' },
   fence: { name: '靠尺（Fence / Miter Gauge）', role: 'WORKPIECE GUIDE', desc: '工作面後方的金屬導向板，提供工件穩定支撐。預設與砂面垂直，可調到 45° 做斜角倒角。靠尺與砂帶之間應保持極小間隙（< 2mm）避免工件被夾入。', fact: '工件必須平貼靠尺，這樣磨出來才會平直。沒貼靠尺 → 工件會在砂帶上「跳舞」，磨出來歪斜不平。' },
   switch: { name: '電源開關（On/Off Switch）', role: 'POWER CONTROL', desc: '機台前方的綠色 ON 按鈕，紅色 OFF 按鈕。多數機台採「拍板式」開關蓋——拍下即停機，方便緊急時不假思索直接拍。', fact: '開機前先確認拍板開關位置，演練一次不用看就能拍下；砂磨時雙手穩住工件。' },
   dust: { name: '集塵口（Dust Collection Port）', role: 'DUST EVACUATION', desc: '砂磨會產生大量粉塵——木屑粉、塑膠粉、金屬粉。集塵口連接工坊吸塵器或集塵桶，是「粉塵爆炸防範」的核心。', fact: '⚠ 木屑粉達一定濃度（40g/m³）遇火源會爆炸。集塵連接不是選項，是必要設備。' },
@@ -186,7 +186,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
       id: 'belt', name: '帶式砂磨機', en: 'Belt Sander', color: '#7C3AED',
       photo: { url: '../assets/img/belt-sander.jpg', credit: 'CC0 · Arp，Wikimedia Commons', link: 'https://commons.wikimedia.org/wiki/File:Bandslijpmachine_hobbykwaliteit_(Westfalia).jpg' },
       desc: '使用環形砂帶套在前後兩個滾輪上，砂帶持續單向移動。去料速度最快，適合大面積平面磨削、去漆、整平。',
-      specs: '砂帶規格：75×457mm 或 100×610mm；線速度：600–1800 m/min',
+      specs: '砂帶規格：桌上型常見 100×915mm（4×36 吋）或 150×1220mm（6×48 吋）；線速度：每分鐘數百公尺（原廠標示多在 400–650 m/min，依機型而異，見下方延伸補充）',
       safety: [
         { c:'#dc2626', t:'砂帶內側有箭頭方向印記，必須對齊滾輪旋轉方向安裝——裝反砂粒反向受力，砂帶壽命砍半且容易斷裂飛出。' },
         { c:'#dc2626', t:'工件必須持續橫向移動，不可停在同一點超過 2 秒——摩擦熱會立刻燒焦木材。' },
@@ -198,7 +198,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
       id: 'disc', name: '盤式砂磨機', en: 'Disc Sander', color: '#dc2626',
       photo: { url: '../assets/img/disc-sander.jpg', credit: 'CC BY-SA 3.0 · Vishwin60，Wikimedia Commons', link: 'https://commons.wikimedia.org/wiki/File:Disc_sander.JPG' },
       desc: '圓盤狀砂紙貼在金屬轉盤上高速旋轉。切削力比帶式大，最適合工件端面整平、倒角、快速去料。常與帶式組合成「帶盤式砂磨機」。',
-      specs: '砂盤直徑：200–300mm；轉速：1400–3600 RPM',
+      specs: '砂盤直徑：常見 150–300mm（6–12 吋）；轉速：約 1700–3600 RPM（砂盤越大、轉速通常越低，依機型而異）',
       safety: [
         { c:'#dc2626', t:'⚠ 核心規則：先空轉觀察旋轉方向，工件只能放在砂盤「向下旋轉」那一側（多數逆時針機型為左半邊；依教室機台實際方向為準）！放到向上旋轉側，工件會瞬間被甩起飛出。' },
         { c:'#dc2626', t:'工件後緣必須平貼靠尺（fence），不可懸空或傾斜。' },
@@ -265,6 +265,52 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
   `;
   const nav = document.querySelector('.module-nav-bottom');
   if (nav) nav.parentNode.insertBefore(sec, nav);
+
+  /* ── 延伸補充：不同廠牌型號規格比較（2026-09-28 教師決定 Q42／Q43）── */
+  const SPEC_MODELS = [
+    { m: '力山 REXON BD46A', origin: '台灣', kind: '桌上型帶盤式', motor: '1/3 HP（約 250 W）', belt: '4×36 吋（約 100×915mm）', speed: '400 m/min', disc: '6 吋・2070 RPM',
+      url: 'https://rexon-taiwan.com.tw/portfolio-item/bd46a-4x6%E6%A1%8C%E4%B8%8A%E5%9E%8B%E5%9C%93%E7%9B%A4-%E7%A0%82%E5%B8%B6%E6%A9%9F/', src: 'REXON 力山台灣' },
+    { m: '力山 REXON BD69', origin: '台灣', kind: '帶盤式（附腳架）', motor: '3/4 HP（約 560 W）', belt: '6×48 吋（約 150×1220mm）', speed: '600 m/min', disc: '9 吋・2450 RPM',
+      url: 'https://rexon-taiwan.com.tw/portfolio-item/bd69-6x9%E5%9C%93%E7%9B%A4-%E7%A0%82%E5%B8%B6%E6%A9%9F%E9%99%84%E8%85%B3%E6%9E%B6/', src: 'REXON 力山台灣' },
+    { m: 'WEN 6502T', origin: '美國', kind: '桌上型帶盤式', motor: '4.3 A（約 1/2 HP）', belt: '4×36 吋（約 100×915mm）', speed: '1900 ft/min（約 580 m/min，無負載）', disc: '6 吋・3600 RPM',
+      url: 'https://wenproducts.com/products/wen-6502t-4-3-amp-4-x-36-in-belt-and-6-in-disc-sander', src: 'WEN 原廠' },
+    { m: 'RIKON 50-112', origin: '美國', kind: '桌上型帶盤式', motor: '1/2 HP（約 370 W）', belt: '4×36 吋（約 100×915mm）', speed: '1900 ft/min（約 580 m/min）', disc: '6 吋・3450 RPM',
+      url: 'https://rikontools.com/product/model-50-112-4-x-36-belt-6-disc-sander/', src: 'RIKON 原廠' },
+    { m: 'RIKON 50-120', origin: '美國', kind: '桌上型帶盤式（大型）', motor: '3/4 HP（約 560 W）', belt: '6×48 吋（約 150×1220mm）', speed: '2030 ft/min（約 620 m/min）', disc: '10 吋・1720 RPM',
+      url: 'https://rikontools.com/product/model-50-120-6-x-48-belt-10-disc-sander/', src: 'RIKON 原廠' },
+    { m: 'Makita 9403（對照組）', origin: '日本', kind: '手持式砂帶機', motor: '11 A（美規 120V）', belt: '4×24 吋（約 100×610mm）', speed: '1640 ft/min（約 500 m/min）', disc: '—（無砂盤）',
+      url: 'https://www.makitatools.com/products/details/9403', src: 'Makita USA 原廠' },
+  ];
+  const supSpec = document.createElement('details');
+  supSpec.className = 'panel supplement';
+  supSpec.innerHTML = `
+    <summary>📎 延伸補充：不同廠牌、型號的砂磨機規格差多少？</summary>
+    <p style="font-size:14px;color:#374151;line-height:1.7;margin:10px 0">同樣叫「帶盤式砂磨機」，不同廠牌、型號的馬達、砂帶尺寸與速度都不一樣。下表整理原廠公布的規格（2026 年 9 月查閱），最後一列是手持式砂帶機，給大家對照。<strong>教室機台請以銘牌與說明書為準。</strong></p>
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font-size:12.5px;min-width:720px">
+        <thead><tr style="background:#f1f5f9">
+          ${['廠牌型號','品牌國別','類型','馬達','砂帶尺寸','砂帶線速度','砂盤','原廠頁面'].map(h => `<th style="padding:7px 8px;border:1px solid #e2e8f0;text-align:left;white-space:nowrap">${h}</th>`).join('')}
+        </tr></thead>
+        <tbody>
+          ${SPEC_MODELS.map((r, i) => `<tr style="${i % 2 ? 'background:#f8fafc' : ''}">
+            <td style="padding:6px 8px;border:1px solid #e2e8f0;font-weight:600">${r.m}</td>
+            <td style="padding:6px 8px;border:1px solid #e2e8f0;white-space:nowrap">${r.origin}</td>
+            <td style="padding:6px 8px;border:1px solid #e2e8f0">${r.kind}</td>
+            <td style="padding:6px 8px;border:1px solid #e2e8f0">${r.motor}</td>
+            <td style="padding:6px 8px;border:1px solid #e2e8f0">${r.belt}</td>
+            <td style="padding:6px 8px;border:1px solid #e2e8f0">${r.speed}</td>
+            <td style="padding:6px 8px;border:1px solid #e2e8f0">${r.disc}</td>
+            <td style="padding:6px 8px;border:1px solid #e2e8f0"><a href="${r.url}" target="_blank" rel="noopener">${r.src}</a></td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+    <ul style="font-size:13.5px;color:#374151;line-height:1.8;margin:12px 0 0;padding-left:20px">
+      <li><strong>看得出的差異：</strong>桌上型的砂帶線速度大多落在每分鐘 400–650 公尺；砂帶越寬、砂盤越大的機型，馬達通常也越大（1/3 → 3/4 馬力）。砂盤越大，轉速反而越低，因為外緣的線速度已經很快。</li>
+      <li><strong>單位換算：</strong>美國原廠常用 ft/min（SFPM，每分鐘英尺），乘以 0.3048 就是 m/min；1 馬力（HP）約 746 W。美規機台有時只標電流（A），要換算成瓦數才能和其他機型比較，不能直接看數字大小。</li>
+      <li><strong>尺寸寫法：</strong>「4×36 吋」指砂帶寬 4 吋、周長 36 吋，買砂帶時兩個數字都要對。WEN 的速度是「無負載」數值，壓上工件後會變慢。</li>
+    </ul>`;
+  if (nav) nav.parentNode.insertBefore(supSpec, nav);
 
   const grid = document.getElementById('mtype-grid');
   const detail = document.getElementById('mtype-detail');

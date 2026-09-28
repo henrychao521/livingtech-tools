@@ -471,17 +471,17 @@ if ('IntersectionObserver' in window) {
         { text: '增加頂層數（top layers）至 4–5 層 + 提高 infill 密度到 20%+', correct: true, explain: '正解！頂層太少（< 3）或填充太稀（< 15%）支撐不住表面。也可開啟 ironing（熨平）功能讓表面更平滑。' },
         { text: '降低列印速度', correct: false },
         { text: '降低熱床溫度', correct: false },
-        { text: '換絲線顏色', correct: false },
+        { text: '增加回抽距離（retraction）', correct: false },
       ],
     },
     {
       cube: 'small-cube',
       question: '列印出來是 19.6mm 而非 20mm（小 2%），要怎麼校正？',
       options: [
-        { text: '校正 X/Y 軸 steps/mm（韌體裡 M92 指令）+ 檢查皮帶張力', correct: true, explain: '正解！這是「尺寸縮放」問題，源於 X/Y 軸步進馬達校正不準或皮帶鬆。實測誤差後調整 steps/mm（如原 80 → 81.6）。' },
+        { text: '先檢查皮帶張力與齒輪，再用切片軟體做尺寸補償', correct: true, explain: '正解！2% 的尺寸誤差，常見原因是皮帶太鬆、齒輪螺絲打滑，或是線材冷卻收縮、擠出線寬造成的偏差，所以先排除機構問題，再到切片軟體做尺寸補償。注意：X/Y 軸的 steps/mm（馬達每走 1mm 要幾步）是由機構算出來的，例如 1.8° 馬達、16 微步、GT2 皮帶（節距 2mm）配 20 齒齒輪：200×16÷(2×20)＝80。只要零件沒換，就不應該依一次量測去改韌體數值。' },
         { text: '提高列印溫度', correct: false },
         { text: '增加 wall 層數', correct: false },
-        { text: '換新絲線', correct: false },
+        { text: '改韌體的 steps/mm，把 80 改成 81.6', correct: false },
       ],
     },
   ];
