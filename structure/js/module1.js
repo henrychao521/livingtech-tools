@@ -23,7 +23,7 @@ const HOTSPOTS = {
     desc: '桁架橋最下方的水平桿件，垂直荷重讓它<strong>受拉</strong>伸長。鋼和繩索最擅長受拉，木材和混凝土則不擅長承受張力。',
     formula: gradeText({ '7': '', '8': 'F = +P（張力，正號代表受拉）', '9': 'σ = F/A ≤ σ_allow' }),
     color: '#dc2626', tag: '受拉',
-    fact: '下弦桿受張力，不會挫曲。但要注意節點孔洞造成的應力集中——這是 Silver Bridge 斷裂的真正原因。'
+    fact: '下弦桿受張力，不會挫曲。但受拉桿件也要注意銷孔、螺栓孔的應力集中——銀橋（Silver Bridge）就是懸吊鏈眼桿的銷孔處裂開而倒塌。'
   },
   'diagonal': {
     name: '斜桿（Diagonal）',
@@ -111,7 +111,7 @@ const BRIDGE_TYPES = [
               <line x1="100" y1="20" x2="170" y2="65" stroke="#f59e0b" stroke-width="2"/>
               <line x1="10" y1="65" x2="190" y2="65" stroke="#92400e" stroke-width="5" stroke-linecap="round"/>
               <text x="100" y="82" text-anchor="middle" font-size="9" fill="#f59e0b" font-family="Inter" font-weight="700">索拉・塔壓</text>`,
-    example: '高屏溪斜張橋（國道 3 號）・高雄大港橋（斜張式旋轉橋）・楊梅交流道',
+    example: '淡江大橋（2026 年通車，主跨 450 m，世界最長單塔不對稱斜張橋）・高屏溪斜張橋（國道 3 號）・高雄大港橋（斜張式旋轉橋）・楊梅交流道',
     range: '跨度 100–1000m',
   },
   {

@@ -27,7 +27,7 @@ const SCENARIOS = [
     id: 's4', icon: '🌍', name: '地震橋',
     desc: '以水平地震係數 0.2g 簡化估算（實際係數依規範與橋址而定），橋梁慣性力 = 0.2 × 重量。跨度 10m，Warren 桁架，每節點垂直荷重 40kN，水平慣性力 = 0.2 × 40kN = 8kN。目標 SF ≥ 2.5。',
     bridgeType: 'warren', span: 10, height: 3, loadPerNode: 40000, special: 'earthquake',
-    tip: '台灣位於板塊交界，橋梁須考慮 PGA=0.2g 的水平慣性力，垂直與水平荷重組合設計。',
+    tip: '台灣位於板塊交界，橋梁一定要考慮地震的水平慣性力（這裡簡化假設 0.2g；真實規範依地區與地盤而異），垂直與水平荷重組合設計。',
   },
   {
     id: 's5', icon: '🚂', name: '鐵路橋',
