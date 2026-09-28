@@ -3,7 +3,7 @@
 const GS = ENERGY_DATA.GEN_SHARE;
 const twPct = v => (v < 2 ? v.toFixed(1) : Math.round(v)) + '%';
 const ENERGIES = [
-  { id: 'fossil', iso: 'fossil', name: '化石燃料 Fossil', icon: '🛢', renewable: false, tw_share: '約 ' + twPct(GS.gas + GS.coal + GS.oil), co2: '~490（燃氣）～900（燃煤）g/kWh',
+  { id: 'fossil', iso: 'fossil', name: '化石燃料 Fossil', icon: '🛢', renewable: false, tw_share: '約 ' + twPct(GS.gas + GS.coal + GS.oil), co2: '~490（燃氣）～820（燃煤）g/kWh（生命週期）',
     desc: '煤、石油、天然氣——上億年前生物遺骸經高壓高溫形成。台灣 2024 年仍佔總發電約 83%（燃氣約 42%、燃煤約 39%、燃油約 1.5%）（2024，經濟部能源署）。',
     pros: '能量密度高、技術成熟、發電穩定', cons: '不可再生、高 CO₂ 排放、空汙、價格波動' },
   { id: 'nuclear', iso: 'nuclear', name: '核能 Nuclear', icon: '☢', renewable: false, tw_share: '約 ' + twPct(GS.nuclear) + '（2024；2025 年 5 月起為 0）', co2: '~12 g/kWh',

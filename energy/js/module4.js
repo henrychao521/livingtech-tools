@@ -2,7 +2,7 @@
 // share（2024 年發電量占比）從 energy-data.js 的 ENERGY_DATA.GEN_SHARE 讀，四捨五入到整數
 const GS = ENERGY_DATA.GEN_SHARE;
 const DATA = {
-  fossil:  { name: '燃煤發電', icon: '🛢', eff: 38, cost: 2.1, co2: 900, build: 8, share: Math.round(GS.coal), desc: '台中、林口等大型電廠。穩定但 CO₂ 排放最高。空汙嚴重期會被要求降載。占比約 39%（2024，經濟部能源署）。' },
+  fossil:  { name: '燃煤發電', icon: '🛢', eff: 38, cost: 2.1, co2: 820, build: 8, share: Math.round(GS.coal), desc: '台中、林口等大型電廠。穩定但 CO₂ 排放最高。空汙嚴重期會被要求降載。占比約 39%（2024，經濟部能源署）。' },
   gas:     { name: '燃氣發電', icon: '⛽', eff: 55, cost: 3.5, co2: 490, build: 6, share: Math.round(GS.gas), desc: '大潭、通霄等。LNG 從卡達/澳洲海運來台。可快速啟停，調節負載彈性最高。占比約 42%（2024，經濟部能源署）。' },
   nuclear: { name: '核能發電', icon: '☢', eff: 33, cost: 1.5, co2: 12,  build: 35, share: Math.round(GS.nuclear), desc: '2024 年占比約 4%（2024，經濟部能源署）；核三 2 號機已於 2025 年 5 月除役，台灣目前無運轉中核電機組。發電穩定、碳排極低，但核廢料處理是世紀難題。' },
   solar:   { name: '太陽能發電', icon: '☀', eff: 22, cost: 4.5, co2: 45, build: 4, share: Math.round(GS.solar), desc: '裝置量已達 14GW。屋頂型 + 大型地面型。發電量看天氣，需配合儲能系統。' },
@@ -58,6 +58,6 @@ function bar(label, values, max, unit, colors) {
 }
 
 bar('💰 每度電成本 NT$', Object.fromEntries(Object.entries(DATA).map(([k,v]) => [k, v.cost])), 6, '元', { fossil:'#854D0E', gas:'#92400E', nuclear:'#1E40AF', solar:'#CA8A04', wind:'#0EA5E9' });
-bar('🏭 CO₂ 排放 g/kWh', Object.fromEntries(Object.entries(DATA).map(([k,v]) => [k, v.co2])), 1000, 'g', { fossil:'#dc2626', gas:'#eab308', nuclear:'#22c55e', solar:'#22c55e', wind:'#22c55e' });
+bar('🏭 生命週期 CO₂ 排放 g/kWh（IPCC AR5 中位數）', Object.fromEntries(Object.entries(DATA).map(([k,v]) => [k, v.co2])), 1000, 'g', { fossil:'#dc2626', gas:'#eab308', nuclear:'#22c55e', solar:'#22c55e', wind:'#22c55e' });
 bar('⚙ 發電效率 %', Object.fromEntries(Object.entries(DATA).map(([k,v]) => [k, v.eff])), 60, '%', { fossil:'#92400E', gas:'#16A34A', nuclear:'#1E40AF', solar:'#CA8A04', wind:'#0EA5E9' });
 
