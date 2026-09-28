@@ -10,9 +10,9 @@ const MEASURE_Q = [
 ];
 
 const MATE_Q = [
-  { q: '凸輪玩具的「把手」要與「軸」永久固定，旋轉時一起轉動。應用哪種 Mate？', opts: ['緊固結合 Fastened', '旋轉結合 Revolute', '滑動結合 Slider', '相切結合 Tangent'], correct: 0, hint: '兩零件無相對運動 → 緊固結合（像強力膠黏住）。' },
-  { q: '輪子要能繞著輪軸自由旋轉。應用哪種 Mate？', opts: ['緊固結合 Fastened', '旋轉結合 Revolute', '滑動結合 Slider', '球體結合 Ball'], correct: 1, hint: '繞同軸旋轉 → 旋轉結合。書 Ch 5 凸輪玩具的把手裝到傳動軸用緊固，但軸與基座之間是旋轉結合。' },
-  { q: '從動件需要沿直線上下移動（凸輪頂起來、放下去）。應用哪種 Mate？', opts: ['緊固結合 Fastened', '旋轉結合 Revolute', '滑動結合 Slider', '齒輪結合 Gear'], correct: 2, hint: '沿單一直線方向移動 → 滑動結合（Slider）。' },
+  { q: '凸輪玩具的「把手」要與「軸」永久固定，旋轉時一起轉動。應用哪種 Mate？', opts: ['緊固結合 Fastened', '轉動結合 Revolute', '滑動結合 Slider', '相切結合 Tangent'], correct: 0, hint: '兩零件無相對運動 → 緊固結合（像強力膠黏住）。' },
+  { q: '輪子要能繞著輪軸自由旋轉。應用哪種 Mate？', opts: ['緊固結合 Fastened', '轉動結合 Revolute', '滑動結合 Slider', '球體結合 Ball'], correct: 1, hint: '繞同軸旋轉 → 轉動結合。書 Ch 5 凸輪玩具的把手裝到傳動軸用緊固，但軸與基座之間是轉動結合。' },
+  { q: '從動件需要沿直線上下移動（凸輪頂起來、放下去）。應用哪種 Mate？', opts: ['緊固結合 Fastened', '轉動結合 Revolute', '滑動結合 Slider', '齒輪結合 Gear'], correct: 2, hint: '沿單一直線方向移動 → 滑動結合（Slider）。' },
   { q: '基座是整個機構的「不動的參考點」。應該用什麼操作？', opts: ['緊固結合到地板', '滑動結合到原點', '不需設定', '右鍵 → 固定 Fix'], correct: 3, hint: '對基座按右鍵 → 固定（Fix），它就不會在 Assembly 中移動。書 Ch 5-3 範例第一步就是固定基座。' },
 ];
 

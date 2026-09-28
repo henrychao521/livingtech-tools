@@ -10,18 +10,18 @@ const ERRORS = [
   },
   {
     id: 'over',
-    name: '過度約束（Over-defined）',
+    name: '過度限制條件（Over-defined）',
     symptom: '草圖線變紅色 + 出現「Cannot satisfy constraints」警告',
-    cause: '加了互相衝突的尺寸 / 約束。例如同一條線同時標 50mm 和 60mm。',
-    fix: '在 feature tree 看 Over-Defined 標記 → 刪除多餘約束/尺寸。',
+    cause: '加了互相衝突的尺寸 / 限制條件。例如同一條線同時標 50mm 和 60mm。',
+    fix: '在 feature tree 看 Over-Defined 標記 → 刪除多餘限制條件/尺寸。',
     svg: `<svg viewBox="0 0 120 80"><line x1="20" y1="40" x2="100" y2="40" stroke="#dc2626" stroke-width="3"/><text x="60" y="30" text-anchor="middle" font-size="9" fill="#dc2626">50mm</text><text x="60" y="60" text-anchor="middle" font-size="9" fill="#dc2626">60mm ⚠</text></svg>`,
   },
   {
     id: 'under',
-    name: '約束不足（Under-defined）',
+    name: '限制條件不足（Under-defined）',
     symptom: '線段是藍色（可拖動），尺寸看起來會跑掉',
-    cause: '少了關鍵約束。藍線雖然能 extrude，但日後改尺寸時形狀會跑位。',
-    fix: '加水平 / 垂直 / 等長等約束 → 標所有關鍵尺寸 → 直到全部變黑色。',
+    cause: '少了關鍵限制條件。藍線雖然能 extrude，但日後改尺寸時形狀會跑位。',
+    fix: '加水平 / 垂直 / 等長等限制條件 → 標所有關鍵尺寸 → 直到全部變黑色。',
     svg: `<svg viewBox="0 0 120 80"><polygon points="25,55 50,20 90,30 100,60 60,65" fill="none" stroke="#3b82f6" stroke-width="2" stroke-dasharray="3 2"/><text x="60" y="78" text-anchor="middle" font-size="9" fill="#3b82f6">藍色 = 可動</text></svg>`,
   },
   {
@@ -90,7 +90,7 @@ ERRORS.forEach(e => {
 // 8 題判讀
 const SHUFFLED_QUESTIONS = [
   { id: 'open', q: '畫了矩形但 extrude 提示 No closed region，可能是？' },
-  { id: 'over', q: '草圖某條線變紅、出現「無法滿足約束」，這是？' },
+  { id: 'over', q: '草圖某條線變紅、出現「無法滿足限制條件」，這是？' },
   { id: 'under', q: '草圖線都是藍色、可以用滑鼠拖動位置，是？' },
   { id: 'self-intersect', q: '輪廓畫成 8 字型，extrude 提示自交錯誤，是？' },
   { id: 'wrong-plane', q: 'extrude 方向跑到側面，與設計預期不同，是？' },

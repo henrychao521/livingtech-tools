@@ -29,9 +29,9 @@ const QUIZ = [
   },
   {
     q: 'Onshape 要讓兩齒輪「按播放就會嚙合轉動」，應該怎麼設定？',
-    opts: ['兩個齒輪都用緊固結合 Fastened', '只加兩個旋轉結合 Revolute（各自轉、不會連動）', '兩個旋轉結合 Revolute＋齒輪關係 Gear relation', '一個滑動結合 Slider'],
+    opts: ['兩個齒輪都用緊固結合 Fastened', '只加兩個轉動結合 Revolute（各自轉、不會連動）', '兩個轉動結合 Revolute＋齒輪關係 Gear relation', '一個滑動結合 Slider'],
     correct: 2,
-    hint: '齒輪連動不是一種結合（Mate），而是「結合關係（Mate relations）」：先替兩個齒輪各加一個旋轉結合（Revolute），再選工具列的 Gear relation，把這兩個旋轉結合連起來並設定齒數比。它是數學上的連動，不會檢查齒形有沒有互相穿透。',
+    hint: '齒輪連動不是一種結合（Mate），而是「結合關係（Mate relations）」：先替兩個齒輪各加一個轉動結合（Revolute），再選工具列的 Gear relation，把這兩個轉動結合連起來並設定齒數比。它是數學上的連動，不會檢查齒形有沒有互相穿透。',
   },
 ];
 

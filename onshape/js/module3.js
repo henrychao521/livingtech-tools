@@ -31,10 +31,10 @@ const STEPS = [
     tip: '繪製時可先粗略畫，再用步驟 6 的尺寸標註修正精確值。',
   },
   {
-    title: '加約束 + 標尺寸',
+    title: '加限制條件 + 標尺寸',
     icon: '📏',
-    desc: '用 Dimension 標尺寸（如長 50mm）、加水平 / 垂直 / 平行等約束。當所有線都變成<strong>黑色</strong>就是「完全定義」。',
-    tip: '藍色 = 未完全定義（可拖動）、黑色 = 已定義、紅色 = 過度約束（有衝突）。',
+    desc: '用 Dimension 標尺寸（如長 50mm）、加水平 / 垂直 / 平行等限制條件。當所有線都變成<strong>黑色</strong>就是「完全定義」。',
+    tip: '藍色 = 未完全定義（可拖動）、黑色 = 已定義、紅色 = 過度限制條件（有衝突）。',
   },
   {
     title: '退出草圖',
@@ -144,7 +144,7 @@ function playMasterDemo() {
     .add({ targets: '#m3-sketch', opacity: [0, 1], duration: 500 })
     .add({ duration: 400 })
     .add({ targets: label, opacity: [1,1], duration: 100,
-      begin: () => { label.textContent = '⑥ 約束 + 標尺寸（藍→黑）'; num.textContent = 'Step 6 / 8'; } })
+      begin: () => { label.textContent = '⑥ 限制條件 + 標尺寸（藍→黑）'; num.textContent = 'Step 6 / 8'; } })
     .add({ targets: '#m3-sketch', opacity: 0, duration: 400 })
     .add({ targets: '#m3-sketch-fixed', opacity: [0, 1], duration: 400 }, '-=300')
     .add({ targets: '#m3-dim', opacity: [0, 1], duration: 400 })
