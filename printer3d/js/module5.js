@@ -4,8 +4,8 @@ const ERRORS = [
   { id: 'spaghetti', name: '義大利麵（Spaghetti）', symptom: '列印中物件掉了，噴頭在空中亂噴絲', cause: '首層沒附著好就繼續列印 / 列印中物件被撞掉', fix: '立刻停止列印！清除所有絲線、重新校正熱床、檢查首層附著是否確實' },
   { id: 'splitting', name: '層分離（Layer Splitting）', symptom: '列印物件中間裂開、層與層之間分離', cause: '溫度不夠（層間黏不牢）、列印速度太快、絲線受潮、風扇太強', fix: '提高噴頭溫度 5–10°C、降低速度、絲線烘乾 4 小時、降低風扇強度' },
   { id: 'under', name: '擠出不足（Under-extrusion）', symptom: '物件表面有縫、層不滿、像啃過的餅乾', cause: '噴嘴堵料、絲線打滑、絲線受潮、流量設定太低', fix: '冷拉清噴嘴、檢查擠出機齒輪有沒有打滑磨損、烘乾絲線、流量調至 100% 或微調' },
-  { id: 'over', name: '擠出過量（Over-extrusion）', symptom: '表面凸凹、有絲線堆積、邊緣鼓起', cause: '流量設定太高、層厚過薄', fix: '流量降至 95%、檢查層厚是否合理（建議 0.15–0.25mm）' },
-  { id: 'stringing', name: '牽絲（Stringing）', symptom: '兩個物件之間有細絲、表面有蜘蛛網狀絲線', cause: '回抽不足、列印溫度過高、絲線受潮', fix: '增加回抽距離（5–8mm）、降低溫度 5°C、烘乾絲線' },
+  { id: 'over', name: '擠出過量（Over-extrusion）', symptom: '表面凸凹、有絲線堆積、邊緣鼓起', cause: '流量設定太高、層高過薄', fix: '流量降至 95%、檢查層高是否合理（建議 0.15–0.25mm）' },
+  { id: 'stringing', name: '牽絲（Stringing）', symptom: '兩個物件之間有細絲、表面有蜘蛛網狀絲線', cause: '回抽不足、列印溫度過高、絲線受潮', fix: '增加回抽距離（Bowden 約 4–7mm、直接擠出約 0.5–2mm）、降低溫度 5°C、烘乾絲線' },
   { id: 'bridging', name: '橋接失敗（Bridging）', symptom: '懸空部位下垂、不平整', cause: '橋接距離太長、風扇不足、橋接速度太快', fix: '加支撐結構、開風扇 100%、橋接速度降至 30–50mm/s' },
   { id: 'zbanding', name: 'Z 紋（Z-banding）', symptom: '物件表面有規律的水平條紋', cause: 'Z 軸絲桿不直 / 偏心、Z 軸馬達失步、列印溫度不穩', fix: '檢查 Z 軸絲桿、潤滑滑軌、確認熱床溫度穩定（電源功率充足）' },
 ];
@@ -440,7 +440,7 @@ if ('IntersectionObserver' in window) {
       options: [
         { text: '熱床溫度太高 → 降低 5–10°C', correct: true, explain: '正解！底層遇熱床高溫 PLA 軟化擠扁。把熱床降到 55–60°C（PLA）即可。也可以提高 Z 軸首層高度。' },
         { text: '提高列印速度', correct: false },
-        { text: '加大層厚', correct: false },
+        { text: '加大層高', correct: false },
         { text: '換新噴嘴', correct: false },
       ],
     },
@@ -449,7 +449,7 @@ if ('IntersectionObserver' in window) {
       question: '立方體邊角從熱床翹起，主要原因？',
       options: [
         { text: '熱床溫度不足 + 沒附著輔助', correct: true, explain: '正解！PLA 熱床 60°C、ABS 100°C；可加 Brim（邊緣）增加底面、塗一層膠水、或關閉外殼風扇。' },
-        { text: '層厚太薄', correct: false },
+        { text: '層高太薄', correct: false },
         { text: '速度太慢', correct: false },
         { text: '絲線受潮', correct: false },
       ],
@@ -458,10 +458,10 @@ if ('IntersectionObserver' in window) {
       cube: 'stringing',
       question: '立方體側面有許多細絲毛刺，要調什麼？',
       options: [
-        { text: '增加回抽距離（retraction）+ 降低噴頭溫度 5°C', correct: true, explain: '正解！回抽不足 + 溫度太高造成「牽絲」。Bowden 系統建議 5-8mm retraction，Direct 系統 1-2mm。也檢查絲線是否受潮。' },
+        { text: '增加回抽距離（retraction）+ 降低噴頭溫度 5°C', correct: true, explain: '正解！回抽不足 + 溫度太高造成「牽絲」。Bowden 系統建議回抽約 4–7mm，直接擠出（Direct）約 0.5–2mm。也檢查絲線是否受潮。' },
         { text: '提高熱床溫度', correct: false },
         { text: '換大噴嘴', correct: false },
-        { text: '增加層厚', correct: false },
+        { text: '增加層高', correct: false },
       ],
     },
     {

@@ -4,7 +4,7 @@ const PARTS = {
   hotend: { name: '加熱頭（Hot-End）', role: 'HEATER BLOCK', desc: '把絲線加熱到熔融狀態的金屬塊，內含加熱棒與熱敏電阻。常見溫度：PLA 190–220°C、PETG 230–250°C、ABS 240–260°C。', fact: '加熱頭旁邊一定要有散熱風扇，否則熱會傳到上方造成「堵料」。' },
   bed: { name: '加熱平台（Heated Bed）', role: 'HEATED BUILD PLATE', desc: '列印物件附著的平面。可加熱以幫助第一層附著（PLA 約 60°C，ABS 約 100°C）。表面材質：玻璃、PEI 板、磁性彈簧鋼板等。', fact: '熱床平整度是列印成功的最大關鍵。每次列印前都要校正。' },
   'x-axis': { name: 'X 軸（X-axis gantry）', role: 'HORIZONTAL TRAVEL', desc: '帶動噴頭左右移動的橫桿；噴頭所在、沿橫桿滑動的滑座稱為 Carriage。透過皮帶 + 步進馬達精確定位。', fact: 'X 軸皮帶鬆動會造成鬼影（ringing）或層位移；「Z 紋」是 Z 軸絲桿偏心造成的水平條紋，見模組 5。' },
-  'z-axis': { name: 'Z 軸（Vertical Lift）', role: 'LAYER HEIGHT', desc: '控制噴頭上下移動的螺桿（梯形螺桿或滾珠螺桿）。每列印完一層就上升一個「層厚」（通常 0.1–0.3mm）。', fact: 'Z 軸校正不準會讓首層過鬆（黏不住）或過緊（壓扁絲線堵住噴嘴）。' },
+  'z-axis': { name: 'Z 軸（Vertical Lift）', role: 'LAYER HEIGHT', desc: '控制噴頭上下移動的螺桿（梯形螺桿或滾珠螺桿）。每列印完一層就上升一個「層高」（即每層高度，通常 0.1–0.3mm）。', fact: 'Z 軸校正不準會讓首層過鬆（黏不住）或過緊（壓扁絲線堵住噴嘴）。' },
   extruder: { name: '擠出機（Extruder）', role: 'FILAMENT FEEDER', desc: '把絲線推進加熱頭的馬達 + 齒輪組。分兩種：直接式／近端式（Direct，馬達在噴頭旁）和遠端式（Bowden，馬達裝在框架上、經鐵氟龍管送料）。', fact: '遠端式噴頭輕、移動快，但回抽（避免漏料）效果差；直接式列印 PETG、TPU 等軟料較佳。' },
   filament: { name: '絲線（Filament）', role: 'PRINTING MATERIAL', desc: 'PLA 是最常見、最容易列印的材料（玉米澱粉製、低毒、低溫）。其他常見：PETG（耐用）、ABS（強度高但有毒煙）、TPU（軟性）。直徑 1.75mm 為主流。', fact: 'PLA 含雜質或受潮會「啵啵」響、列印表面有氣泡。要密封防潮保存。' },
   lcd: { name: '控制面板 / LCD', role: 'CONTROL INTERFACE', desc: '顯示列印進度、溫度、剩餘時間。可手動調整溫度、Z 高度（baby step）、暫停 / 繼續、緊急停止。', fact: '緊急按下「停止」按鈕時，噴頭會停在當前位置，不會自動歸位，要手動移開避免熔毀模型。' },
@@ -90,7 +90,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
         <path d="M 118 152 Q 165 140 182 135" stroke="#fde68a" stroke-width="0.6" stroke-dasharray="2 5"/>
         <text x="150" y="45" text-anchor="middle" font-size="12" fill="#d97706" font-weight="700">空中牽出細絲</text>`,
       cause: '噴頭移動時絲料從噴嘴漏出，在空中拉出細絲。通常是列印溫度過高或「回抽（retraction）」設定不足。',
-      fix: '① 降低列印溫度 5–10°C ② 增大回抽距離（Bowden 管: 4–7mm；直接式: 1–2mm） ③ 增加回抽速度（40–60 mm/s） ④ 增加移頭速度'
+      fix: '① 降低列印溫度 5–10°C ② 增大回抽距離（Bowden 管: 4–7mm；直接式: 0.5–2mm） ③ 增加回抽速度（40–60 mm/s） ④ 增加移頭速度'
     },
     {
       id: 'shift', name: '層位移（Layer Shift）', icon: '↔', color: '#7c3aed',

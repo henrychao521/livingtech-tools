@@ -2,7 +2,7 @@
 const STEPS = [
   { title: '建模 / 取得 STL', desc: '從 Tinkercad、Fusion 360、Blender 等軟體匯出 STL 檔案，或從 Thingiverse、Printables 下載現成模型。', tip: 'STL 檔本身沒有顏色與材質資訊，只記錄三角面。', warn: null, anim: 'stl' },
   { title: '匯入切片軟體', desc: '常用切片軟體：Cura（免費）、PrusaSlicer（免費）、Bambu Studio。把 STL 拖入軟體，選擇你的印表機型號。', tip: '確認模型擺放方向：底面要平、避免懸空。', warn: null, anim: 'slicer' },
-  { title: '調整切片參數', desc: '層厚（0.2mm 標準）、填充密度（15–20% 一般、80%+ 結構件）、列印速度（50–100mm/s）、支撐（懸空角度 > 45° 才需要）。', tip: '初學者：使用內建「PLA 標準」配置即可。', warn: null, anim: 'params' },
+  { title: '調整切片參數', desc: '層高（0.2mm 標準）、填充密度（15–20% 一般、80%+ 結構件）、列印速度（50–100mm/s）、支撐（懸空角度 > 45° 才需要）。', tip: '初學者：使用內建「PLA 標準」配置即可。', warn: null, anim: 'params' },
   { title: '匯出 G-code', desc: '切片完成後匯出 .gcode 檔，存到 SD 卡或透過 Wi-Fi / USB 傳給印表機。預估時間和耗材重量會顯示在切片軟體中。', tip: '檔名要避免中文與空格，部分機型不認得。', warn: null, anim: 'gcode' },
   { title: '預熱噴頭與熱床', desc: 'PLA：噴頭 200°C / 熱床 60°C\nPETG：噴頭 240°C / 熱床 85°C\nABS：噴頭 250°C / 熱床 100°C\n預熱完成才進行校正——熱脹冷縮會改變高度。', tip: '可在切片時順便預熱，等到列印開始溫度也達標。', warn: null, anim: 'heat' },
   { title: '熱床校正', desc: '預熱完成後 → 將噴頭手動移到四角 → 用 A4 紙確認摩擦阻力 → 微調螺絲。某些機型有自動調平（auto bed leveling）。', tip: 'A4 紙能略微通過、有阻力是最佳距離（約 0.1mm）。', warn: '校正不準是「首層失敗」最大原因。', anim: 'calibrate' },
@@ -56,7 +56,7 @@ function renderAnim(type) {
       </g>
       <!-- 右側參數面板 -->
       <rect x="270" y="50" width="100" height="110" fill="#0f172a"/>
-      <text x="280" y="65" font-size="8" fill="#94a3b8" font-family="Inter">層厚 0.2mm</text>
+      <text x="280" y="65" font-size="8" fill="#94a3b8" font-family="Inter">層高 0.2mm</text>
       <text x="280" y="80" font-size="8" fill="#94a3b8" font-family="Inter">填充 20%</text>
       <text x="280" y="95" font-size="8" fill="#94a3b8" font-family="Inter">速度 60mm/s</text>
       <text x="280" y="110" font-size="8" fill="#94a3b8" font-family="Inter">材料 PLA</text>
@@ -69,7 +69,7 @@ function renderAnim(type) {
       <!-- 三個參數對比視覺 -->
       <g>
         <rect x="20" y="40" width="100" height="120" rx="6" fill="#f1f5f9" stroke="#cbd5e1"/>
-        <text x="70" y="60" text-anchor="middle" font-size="11" font-weight="700" fill="#334155" font-family="Noto Sans TC">層厚 0.1mm</text>
+        <text x="70" y="60" text-anchor="middle" font-size="11" font-weight="700" fill="#334155" font-family="Noto Sans TC">層高 0.1mm</text>
         <!-- 細密層紋 -->
         <g stroke="#8b5cf6" stroke-width=".8">
           ${Array.from({length: 22}, (_, i) => `<line x1="35" y1="${75 + i*3.5}" x2="105" y2="${75 + i*3.5}"/>`).join('')}
@@ -78,7 +78,7 @@ function renderAnim(type) {
       </g>
       <g>
         <rect x="150" y="40" width="100" height="120" rx="6" fill="#ecfdf5" stroke="#86efac"/>
-        <text x="200" y="60" text-anchor="middle" font-size="11" font-weight="700" fill="#15803d" font-family="Noto Sans TC">層厚 0.2mm</text>
+        <text x="200" y="60" text-anchor="middle" font-size="11" font-weight="700" fill="#15803d" font-family="Noto Sans TC">層高 0.2mm</text>
         <g stroke="#8b5cf6" stroke-width="1.2">
           ${Array.from({length: 12}, (_, i) => `<line x1="165" y1="${75 + i*7}" x2="235" y2="${75 + i*7}"/>`).join('')}
         </g>
@@ -86,13 +86,13 @@ function renderAnim(type) {
       </g>
       <g>
         <rect x="280" y="40" width="100" height="120" rx="6" fill="#fef3c7" stroke="#fbbf24"/>
-        <text x="330" y="60" text-anchor="middle" font-size="11" font-weight="700" fill="#92400e" font-family="Noto Sans TC">層厚 0.3mm</text>
+        <text x="330" y="60" text-anchor="middle" font-size="11" font-weight="700" fill="#92400e" font-family="Noto Sans TC">層高 0.3mm</text>
         <g stroke="#8b5cf6" stroke-width="2">
           ${Array.from({length: 8}, (_, i) => `<line x1="295" y1="${78 + i*11}" x2="365" y2="${78 + i*11}"/>`).join('')}
         </g>
         <text x="330" y="170" text-anchor="middle" font-size="9" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">粗糙・快</text>
       </g>
-      <text x="200" y="206" text-anchor="middle" font-size="12" fill="#444" font-family="Noto Sans TC">層厚 ↑ → 速度 ↑ ／ 細節 ↓</text>
+      <text x="200" y="206" text-anchor="middle" font-size="12" fill="#444" font-family="Noto Sans TC">層高 ↑ → 速度 ↑ ／ 細節 ↓</text>
     </svg>`,
 
     gcode: `<svg viewBox="0 0 400 220" style="width:90%;max-width:380px">
@@ -322,7 +322,7 @@ selectStep(0);
 window.selectStep = selectStep; window.markDone = markDone;
 
 // ========================
-// 層厚 × 填充率 互動預覽（模組 3 延伸互動）
+// 層高 × 填充率 互動預覽（模組 3 延伸互動）
 // ========================
 (function() {
   const sec = document.createElement('section');
@@ -330,11 +330,11 @@ window.selectStep = selectStep; window.markDone = markDone;
   sec.id = 'slice-params';
   sec.innerHTML = `
     <h3>🎛️ 切片參數互動預覽</h3>
-    <p class="muted" style="margin-bottom:18px">調整「層厚」與「填充率」，即時看到截面效果與列印時間估算變化。</p>
+    <p class="muted" style="margin-bottom:18px">調整「層高」與「填充率」，即時看到截面效果與列印時間估算變化。</p>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:18px">
       <div>
         <label style="font-weight:700;font-size:13px;display:block;margin-bottom:8px">
-          層厚（Layer Height）：<span id="lh-val" style="color:var(--accent,#7c3aed);font-family:Inter,monospace">0.20</span> mm
+          層高（Layer Height）：<span id="lh-val" style="color:var(--accent,#7c3aed);font-family:Inter,monospace">0.20</span> mm
         </label>
         <input type="range" id="lh-slider" min="1" max="3" step="1" value="2"
           style="width:100%;accent-color:var(--accent,#7c3aed);cursor:pointer">
@@ -462,14 +462,14 @@ window.selectStep = selectStep; window.markDone = markDone;
     const quality = lh.mm === '0.10' ? '精緻 ★★★' : lh.mm === '0.20' ? '標準 ★★' : '快速 ★';
     document.getElementById('slice-info').innerHTML = `
       <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:13px">
-        <span style="color:#64748b">層厚</span><strong>${lh.mm} mm（${lh.label}）</strong>
+        <span style="color:#64748b">層高</span><strong>${lh.mm} mm（${lh.label}）</strong>
         <span style="color:#64748b">填充率</span><strong>${inf.pct}%（${inf.label}）</strong>
         <span style="color:#64748b">表面品質</span><strong>${quality}</strong>
         <span style="color:#64748b">結構強度</span><strong>${strength}</strong>
         <span style="color:#64748b">估算時間</span><strong style="color:var(--accent,#7c3aed)">${timeStr}</strong>
       </div>
       <div style="margin-top:12px;background:#ede9fe;border-radius:8px;padding:10px;font-size:12px;color:#5b21b6">
-        💡 ${lh.mm === '0.10' ? '精細層厚表面最光滑，但耗時最長。用於展示品或需要精緻外觀的零件。' : lh.mm === '0.30' ? '快速列印省時間，層紋較明顯。適合結構測試版本或不需要精緻表面的零件。' : '0.2mm 是最常見的標準設定，平衡品質與速度。大多數情況下使用此設定。'}
+        💡 ${lh.mm === '0.10' ? '精細層高表面最光滑，但耗時最長。用於展示品或需要精緻外觀的零件。' : lh.mm === '0.30' ? '快速列印省時間，層紋較明顯。適合結構測試版本或不需要精緻表面的零件。' : '0.2mm 是最常見的標準設定，平衡品質與速度。大多數情況下使用此設定。'}
       </div>`;
     drawSlice();
   }

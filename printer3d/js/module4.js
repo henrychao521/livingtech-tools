@@ -34,7 +34,7 @@ function recalcEstimates() {
   const TEMP_OK = [190, 220];
   const tempDev = params.temp < TEMP_OK[0] ? TEMP_OK[0] - params.temp : params.temp > TEMP_OK[1] ? params.temp - TEMP_OK[1] : 0;
   const tempPenalty = Math.min(40, tempDev * 2);
-  // 品質評分（綜合層厚 + 速度 + 溫度）
+  // 品質評分（綜合層高 + 速度 + 溫度）
   const quality = Math.max(0, Math.min(100, 100 - (params.layer - 0.1) * 200 - (params.speed - 50) * 0.5 + (params.infill - 20) * 0.2 - tempPenalty));
   const tempNote = document.getElementById('e-temp-note');
   if (tempNote) {
