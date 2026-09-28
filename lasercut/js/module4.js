@@ -244,7 +244,7 @@ document.getElementById('modePick').addEventListener('click', e => {
   document.querySelectorAll('#modePick button').forEach(x => {
     const on = x === b;
     x.className = 'btn ' + (on ? 'btn-primary' : 'btn-ghost');
-    x.style.flex = '1';
+    x.style.flex = '1 1 88px'; x.style.paddingInline = '8px';
   });
   // 切換模式時調整速度範圍（雕刻速度遠高於切割；刻線在 RDWorks 裡同樣是 Cut，只是用高速、低功率，所以沿用切割的範圍）
   if (state.mode === 'engrave') {

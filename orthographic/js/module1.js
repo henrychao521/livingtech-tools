@@ -132,7 +132,7 @@ const CONCEPTS = [
     name: '線型規範', icon: '✏',
     desc: '實線（粗）＝物體可見輪廓\n虛線（中）＝物體背後不可見輪廓\n中心線（細鏈線）＝對稱軸或圓心\n尺寸線（細）＝標註尺寸用',
     detail: 'CNS 線條分粗、中、細三級，粗細要配合圖紙大小。A4 圖紙常用：粗 0.5mm（可見輪廓）、中 0.35mm（虛線）、細 0.18mm（中心線、尺寸線）。',
-    visual: `<svg viewBox="0 0 240 110" width="100%" style="background:#F1F5F9;border-radius:6px;display:block">
+    visual: `<svg viewBox="0 0 290 110" width="100%" style="background:#F1F5F9;border-radius:6px;display:block">
       <line x1="20" y1="18" x2="130" y2="18" stroke="#1E1B4B" stroke-width="2.4"/>
       <text x="140" y="22" font-size="10" fill="#1E1B4B" font-weight="700">粗實線　0.5mm　可見輪廓</text>
       <line x1="20" y1="42" x2="130" y2="42" stroke="#1E1B4B" stroke-width="1.2" stroke-dasharray="7 3"/>
