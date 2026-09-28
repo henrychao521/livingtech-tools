@@ -79,7 +79,7 @@ function draw(r) {
     ctx.beginPath(); ctx.moveTo(ox, ax - oh);
     ctx.lineTo(W, (ax - oh) + oh / (lensX - ox) * (W - ox)); ctx.stroke();
     ctx.fillStyle = '#ef4444'; ctx.font = '900 18px Inter, sans-serif'; ctx.textAlign = 'center';
-    ctx.fillText('物體正好在焦點上 → 折射後平行，不成像', W / 2, 34);
+    ctx.fillText('物體正好在焦點上 → 折射後平行，不在有限距離成像（可視為成像於無窮遠）', W / 2, 34);
     return;
   }
 
@@ -134,7 +134,7 @@ function update() {
   document.getElementById('typeVal').textContent = r.type;
 
   const v = document.getElementById('verdict');
-  if (!isFinite(r.di)) { v.className = 'verdict warn'; v.textContent = '⚠️ 物體正好在焦點上：折射後光線互相平行，不會會聚成像。'; }
+  if (!isFinite(r.di)) { v.className = 'verdict warn'; v.textContent = '⚠️ 物體正好在焦點上：折射後光線互相平行，不會在有限距離會聚成像（可視為成像於無窮遠）。'; }
   else if (!r.real) { v.className = 'verdict good'; v.textContent = `🔎 放大鏡模式：物體在焦距內（${state.dobj} < ${state.f}），成正立放大虛像，放大 ${Math.abs(r.m).toFixed(2)} 倍。像無法投影在紙屏上。`; }
   else if (Math.abs(r.m) > 1.02) { v.className = 'verdict good'; v.textContent = `📽️ 投影機模式：物體在 f 與 2f 之間，成倒立放大實像（${Math.abs(r.m).toFixed(2)} 倍）。`; }
   else if (Math.abs(r.m) < 0.98) { v.className = 'verdict good'; v.textContent = `📷 相機模式：物體在 2f 之外，成倒立縮小實像（${Math.abs(r.m).toFixed(2)} 倍）。`; }
