@@ -6,12 +6,12 @@ function saveP(p) { localStorage.setItem(PK, JSON.stringify(p)); }
 // 5 段皮帶對應 RPM
 const BELT_RPM = { 1: 500, 2: 720, 3: 1100, 4: 1700, 5: 2400 };
 
-// 材料屬性（理想 SFM 範圍）
+// 材料屬性（理想切削速度 Vc 範圍，m/min；HSS 鑽頭參考值，1 SFM = 0.3048 m/min）
 const MATERIALS = {
-  wood: { name: '軟木', color: '#a16207', dust: '#92400e', idealSFM: [100, 500], hardness: 1, needOil: false },
-  hardwood: { name: '硬木', color: '#78350f', dust: '#451a03', idealSFM: [150, 350], hardness: 1.8, needOil: false },
-  aluminum: { name: '鋁', color: '#cbd5e1', dust: '#94a3b8', idealSFM: [200, 400], hardness: 2.5, needOil: true },
-  steel: { name: '不鏽鋼', color: '#475569', dust: '#94a3b8', idealSFM: [30, 80], hardness: 4, needOil: true },
+  wood: { name: '軟木', color: '#a16207', dust: '#92400e', idealVc: [30, 150], hardness: 1, needOil: false },
+  hardwood: { name: '硬木', color: '#78350f', dust: '#451a03', idealVc: [45, 105], hardness: 1.8, needOil: false },
+  aluminum: { name: '鋁', color: '#cbd5e1', dust: '#94a3b8', idealVc: [60, 120], hardness: 2.5, needOil: true },
+  steel: { name: '不鏽鋼', color: '#475569', dust: '#94a3b8', idealVc: [9, 24], hardness: 4, needOil: true },
 };
 
 const cv = document.getElementById('dpress-canvas');
@@ -40,25 +40,26 @@ function calc() {
   const dia = parseFloat(els.dia.value);
   const belt = parseInt(els.belt.value);
   const rpm = BELT_RPM[belt];
-  // SFM = RPM × dia(inches) × π / 12 — 滑桿是 mm，先 ÷25.4 換成吋
-  const sfm = Math.round(rpm * (dia / 25.4) * Math.PI / 12);
-  const ideal = m.idealSFM;
-  // 推薦轉速：用理想 SFM 的中位
+  // 切削速度 Vc（m/min）＝ π × 直徑(mm) × 轉速(RPM) ÷ 1000（與手電鑽模組同一公式）
+  const vc = Math.round(Math.PI * dia * rpm / 1000);
+  const sfm = Math.round(vc / 0.3048); // 英制 SFM 僅供對照
+  const ideal = m.idealVc;
+  // 推薦轉速：用理想 Vc 的中位
   const idealMid = (ideal[0] + ideal[1]) / 2;
-  const recRpm = Math.round(idealMid * 12 / Math.PI / (dia / 25.4));
+  const recRpm = Math.round(idealMid * 1000 / (Math.PI * dia));
   const bestBelt = Object.entries(BELT_RPM).reduce((best, [b, r]) => Math.abs(r - recRpm) < Math.abs(BELT_RPM[best] - recRpm) ? parseInt(b) : best, 3);
   let cutLabel = 'OK';
-  if (sfm < ideal[0] * 0.6) cutLabel = '太慢';
-  else if (sfm > ideal[1] * 1.4) cutLabel = '太快';
-  else if (sfm < ideal[0] || sfm > ideal[1]) cutLabel = '可接受';
+  if (vc < ideal[0] * 0.6) cutLabel = '太慢';
+  else if (vc > ideal[1] * 1.4) cutLabel = '太快';
+  else if (vc < ideal[0] || vc > ideal[1]) cutLabel = '可接受';
   else cutLabel = '理想';
   // 已在最高速（第 5 段）仍低於理想：小鑽頭的物理限制，不是學生選錯，判「可接受」
-  const atMaxSpeed = belt === 5 && sfm < ideal[0];
+  const atMaxSpeed = belt === 5 && vc < ideal[0];
   if (atMaxSpeed) cutLabel = '可接受';
-  // 過熱：SFM 過高 + 硬材料
-  const heatScore = Math.max(0, (sfm - ideal[1]) / ideal[1]) * m.hardness;
+  // 過熱：切削速度過高 + 硬材料
+  const heatScore = Math.max(0, (vc - ideal[1]) / ideal[1]) * m.hardness;
   const heatLabel = heatScore < 0.3 ? '低' : heatScore < 0.8 ? '中' : '高';
-  return { m, dia, belt, rpm, sfm, ideal, cutLabel, heatScore, heatLabel, bestBelt, recRpm, atMaxSpeed };
+  return { m, dia, belt, rpm, vc, sfm, ideal, cutLabel, heatScore, heatLabel, bestBelt, recRpm, atMaxSpeed };
 }
 
 function updateValueDisplays() {
@@ -71,7 +72,7 @@ function updateEstimates() {
   const r = calc();
   els.vRec.textContent = `第 ${r.bestBelt} 段（${BELT_RPM[r.bestBelt]} RPM）`;
   els.vRec.style.color = r.bestBelt === r.belt ? '#22c55e' : '#eab308';
-  els.eSfm.textContent = `${r.sfm} ft/min`;
+  els.eSfm.textContent = `${r.vc} m/min（約 ${r.sfm} SFM）`;
   els.eCut.textContent = r.cutLabel;
   els.eCut.style.color = r.cutLabel === '理想' ? '#22c55e' : r.cutLabel === '可接受' ? '#eab308' : '#dc2626';
   els.eHeat.textContent = r.heatLabel;
@@ -148,7 +149,7 @@ function drawScene() {
   ctx.fillStyle = '#22c55e';
   ctx.font = '700 13px Inter';
   ctx.textAlign = 'left';
-  ctx.fillText(`${r.m.name} · ⌀${r.dia}mm · SFM ${r.sfm} · ${r.cutLabel}`, 14, 24);
+  ctx.fillText(`${r.m.name} · ⌀${r.dia}mm · Vc ${r.vc} m/min · ${r.cutLabel}`, 14, 24);
 }
 
 function tickSim() {
@@ -202,11 +203,11 @@ function showResult() {
   } else if (r.cutLabel !== '理想') {
     level = 'warn';
     msg = r.atMaxSpeed
-      ? `⚠ 已是最高速（第 5 段），這個直徑在${r.m.name}上可接受（SFM ${r.sfm}，理想 ${r.ideal[0]}–${r.ideal[1]}，小鑽頭達不到是正常的）。耗時 ${dur} 秒。`
-      : `⚠ 可接受但不理想（SFM ${r.sfm}，理想 ${r.ideal[0]}–${r.ideal[1]}）。耗時 ${dur} 秒。`;
+      ? `⚠ 已是最高速（第 5 段），這個直徑在${r.m.name}上可接受（切削速度 ${r.vc} m/min，理想 ${r.ideal[0]}–${r.ideal[1]}，小鑽頭達不到是正常的）。耗時 ${dur} 秒。`
+      : `⚠ 可接受但不理想（切削速度 ${r.vc} m/min，理想 ${r.ideal[0]}–${r.ideal[1]} m/min）。耗時 ${dur} 秒。`;
   } else {
     level = 'good';
-    msg = `✓ 完美鑽孔！SFM ${r.sfm} 在理想範圍。耗時 ${dur} 秒。${r.m.needOil ? '提醒：實際操作金屬鑽孔要加切削液。' : ''}`;
+    msg = `✓ 完美鑽孔！切削速度 ${r.vc} m/min 在理想範圍。耗時 ${dur} 秒。${r.m.needOil ? '提醒：實際操作金屬鑽孔要加切削液。' : ''}`;
     const prog = loadP();
     prog.module4 = true;
     saveP(prog);

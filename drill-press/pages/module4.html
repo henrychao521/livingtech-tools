@@ -34,7 +34,7 @@
 <body data-tool="drill-press" class="dpress-theme">
 <header class="topbar"><div class="brand"><span class="logo">🛠</span><div><h1>數位鑽床</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
 <main class="module-page">
-  <div class="module-header"><div><span class="module-step" style="background:var(--success-light);color:#1b6e3a">MODULE 04 ・ 核心</span><h2>轉速選配模擬</h2><p class="muted">依鑽頭直徑與材料選對皮帶段位，看切削速度（SFM）與過熱風險。</p></div></div>
+  <div class="module-header"><div><span class="module-step" style="background:var(--success-light);color:#1b6e3a">MODULE 04 ・ 核心</span><h2>轉速選配模擬</h2><p class="muted">依鑽頭直徑與材料選對皮帶段位，看切削速度（m/min）與過熱風險。</p></div></div>
 
   <div class="practice-layout">
     <div class="dpress-canvas-wrap">
@@ -70,7 +70,7 @@
           <label>建議轉速 <span class="v" id="v-recommend">—</span></label>
         </div>
         <div class="estimates">
-          <div class="row"><span>實際 SFM</span><strong id="e-sfm">—</strong></div>
+          <div class="row"><span>實際切削速度 Vc</span><strong id="e-sfm">—</strong></div>
           <div class="row"><span>切削速度</span><strong id="e-cut">—</strong></div>
           <div class="row"><span>過熱風險</span><strong id="e-heat">—</strong></div>
           <div class="row"><span>是否需切削液</span><strong id="e-oil">—</strong></div>
@@ -79,13 +79,14 @@
       </div>
 
       <div class="help-card">
-        <strong>📐 SFM = Surface Feet per Minute</strong>
+        <strong>📐 切削速度 Vc（m/min，鑽頭外緣每分鐘走幾公尺）</strong>
         <ul>
-          <li>軟木：理想 SFM 100–500</li>
-          <li>硬木：理想 SFM 150–350</li>
-          <li>鋁：理想 SFM 200–400</li>
-          <li>不鏽鋼：理想 SFM 30–80</li>
-          <li>公式：SFM = RPM × 直徑(吋) × π / 12（直徑 mm ÷ 25.4 ＝ 吋）</li>
+          <li>軟木：理想 30–150 m/min</li>
+          <li>硬木：理想 45–105 m/min</li>
+          <li>鋁：理想 60–120 m/min</li>
+          <li>不鏽鋼：理想 9–24 m/min</li>
+          <li>公式：Vc = π × 直徑(mm) × 轉速(RPM) ÷ 1000</li>
+          <li>英文手冊常用 SFM（ft/min）：1 SFM ＝ 0.3048 m/min</li>
         </ul>
       </div>
     </div>
