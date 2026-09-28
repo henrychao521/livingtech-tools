@@ -13,8 +13,8 @@ const SCENARIOS = [
   },
   {
     id: 's2', icon: '🚛', name: '公路橋（卡車）',
-    desc: '省道公路橋，跨度 16m，必須承受單台 200kN 重卡（移動荷重）。最不利位置：卡車在跨中。目標 SF ≥ 2.0。',
-    bridgeType: 'howe', span: 16, height: 4, loadPerNode: 200000, special: 'truck', // 整台 200kN 集中在跨中節點
+    desc: '省道公路橋，跨度 16m，必須承受一台滿載全聯結車（法定總重上限 42 公噸 ≈ 412kN，移動荷重）。最不利位置：卡車在跨中。橋面由左右兩片桁架共同支撐，模擬的這一片分擔約 206kN。目標 SF ≥ 2.0。',
+    bridgeType: 'howe', span: 16, height: 4, loadPerNode: 412000 / 2, special: 'truck', // 每片桁架分擔一半車重（同 s1、s5 的做法），集中在跨中節點；42 公噸依道路交通安全規則第 38 條
     tip: '移動荷重：卡車在跨中時，下弦桿中央受最大拉力。Howe 桁架的豎桿受拉、斜桿受壓。',
   },
   {
