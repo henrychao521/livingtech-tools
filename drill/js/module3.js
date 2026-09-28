@@ -220,7 +220,7 @@ stepProgressEl.textContent = `已學習 ${seenSteps.size} / ${STEPS.length} 步`
   const MATERIALS = [
     { id: 'drywall', name: '石膏板', icon: '🧱', range: [1, 3], note: '最輕扭力，避免螺絲穿頭損壞板材' },
     { id: 'thin',    name: '薄夾板 ≤12mm', icon: '🪵', range: [4, 7], note: '中低扭力，到位後離合器自動跳脫' },
-    { id: 'hard',    name: '硬木 / 厚板', icon: '🌲', range: [10, 16], note: '中高扭力，硬材阻力大需要更多轉矩' },
+    { id: 'hard',    name: '硬木 / 厚板', icon: '🌲', range: [10, 16], note: '中高扭力，硬材阻力大需要更大扭力' },
     { id: 'concrete',name: '混凝土壁釘', icon: '🪨', range: [18, 20], note: '最高扭力，螺絲要先敲入導孔' },
     { id: 'drill',   name: '純鑽孔模式', icon: '⚙️', range: [21, 21], note: '轉到「⊕ 鑽頭符號」鎖死離合器，專用於鑽孔' },
   ];
