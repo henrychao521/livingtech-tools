@@ -27,7 +27,7 @@ color([0.92, 0.10, 0.10])
   translate([-20, 0, 8]) cylinder(h = 8, r = 2.5);
 color([0.92, 0.10, 0.10, 0.5])
   translate([-20, 0, 14]) sphere(r = 3.5);
-// LED 引腳
+// LED 接腳
 color([0.72, 0.72, 0.75]) {
   translate([-21.5, 0, 0]) cylinder(h = 9, r = 0.5);
   translate([-18.5, 0, 0]) cylinder(h = 9, r = 0.5);
@@ -40,7 +40,7 @@ color([0.88, 0.88, 0.15])  // 色環1
   translate([-5, -4, 8]) rotate([90, 0, 0]) cylinder(h = 1.5, r = 2.6, center = true);
 color([0.82, 0.08, 0.08])  // 色環2
   translate([-5, -1, 8]) rotate([90, 0, 0]) cylinder(h = 1.5, r = 2.6, center = true);
-// 電阻引腳
+// 電阻接腳
 color([0.72, 0.72, 0.75]) {
   translate([-5, -8, 0]) cylinder(h = 9, r = 0.5);
   translate([-5, 8, 0]) cylinder(h = 9, r = 0.5);

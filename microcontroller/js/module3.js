@@ -69,7 +69,7 @@ const EXAMPLES = [
   <span class="fn">Serial.print</span>(<span class="str">"value="</span>);
   <span class="fn">Serial.println</span>(v);
   <span class="fn">delay</span>(<span class="num">500</span>);
-}`, desc: 'Arduino IDE 工具→序列監控視窗看數值。除錯神器。' },
+}`, desc: 'Arduino IDE 工具→序列埠監控視窗（Serial Monitor）看數值。除錯神器。' },
   { title: '伺服馬達控制', concept: 'Servo library',
     code: `<span class="com">#include &lt;Servo.h&gt;</span>
 <span class="kw">Servo</span> myservo;

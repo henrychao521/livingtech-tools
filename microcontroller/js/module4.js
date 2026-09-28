@@ -72,7 +72,7 @@ function draw() {
   ctx.fillStyle = '#fbbf24';
   ctx.font = '700 11px Inter';
   ctx.fillText('ATmega328P', 160, 200);
-  // 引腳
+  // 腳位
   ctx.fillStyle = '#94a3b8';
   for (let i = 0; i < 6; i++) ctx.fillRect(55 + i * 30, 360, 12, 14);
 

@@ -175,7 +175,7 @@ window.SOURCES = {
   ],
 
   microcontroller: [
-    { tag: 'ARDU', text: 'Arduino 官方文件 docs.arduino.cc — UNO R3 / R4 規格、引腳定義、I/O 電壓。', url: 'https://docs.arduino.cc/' },
+    { tag: 'ARDU', text: 'Arduino 官方文件 docs.arduino.cc — UNO R3 / R4 規格、腳位定義、I/O 電壓。', url: 'https://docs.arduino.cc/' },
     { tag: 'MBIT', text: 'Microsoft micro:bit 官方文件 microbit.org — V2 板卡感測器、MakeCode 編輯器。', url: 'https://microbit.org/' },
     { tag: 'ESP',  text: 'Espressif《ESP32 Technical Reference Manual》— 雙核心、Wi-Fi/BLE、GPIO 規格。', url: 'https://www.espressif.com/' },
     { tag: 'HCSR', text: 'HC-SR04 超音波感測器 Datasheet — 頻率 40 kHz、量測距離 2 cm–4 m、誤差 ±3 mm。', url: 'https://www.handsontec.com/dataspecs/HC-SR04-Ultrasonic.pdf' },
