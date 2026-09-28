@@ -14,8 +14,8 @@ const STEP_ISO_MINI = `<g transform="translate(0,0)" stroke="#1E1B4B" stroke-wid
 const CONCEPTS = [
   {
     name: '第三角投影法', icon: '📐',
-    desc: '投影面放在「觀察者與物體」之間——像隔著玻璃描圖，視線先穿過投影面才到物體。是中華民國國家標準（CNS）與美國 ANSI 採用的方式。',
-    detail: '第三角法配置：俯視在正視「上方」、右側視在正視「右方」，台灣 CNS、美國、日本 JIS 都採用。第一角法（ISO／歐洲慣用）剛好相反：物體在觀察者與投影面之間，俯視在下、右側視在左。',
+    desc: '投影面放在「觀察者與物體」之間——像隔著玻璃描圖，視線先穿過投影面才到物體。CNS 規定第一角法、第三角法同等適用（同一張圖不可混用，要標投影符號）；台灣教學與業界、美國 ANSI 多用第三角法，本平台一律用第三角法。',
+    detail: '第三角法配置：俯視在正視「上方」、右側視在正視「右方」，台灣、美國、日本慣用。第一角法（ISO／歐洲慣用）剛好相反：物體在觀察者與投影面之間，俯視在下、右側視在左。',
     visual: `<svg viewBox="0 0 240 90" width="100%" style="background:#F1F5F9;border-radius:6px;display:block">
       <defs><marker id="arr1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4F46E5"/></marker></defs>
       <!-- 觀察者 -->
@@ -130,15 +130,15 @@ const CONCEPTS = [
   },
   {
     name: '線型規範', icon: '✏',
-    desc: '實線（粗）＝物體可見輪廓\n虛線（細）＝物體背後不可見輪廓\n中心線（點劃線）＝對稱軸或圓心\n尺寸線（細）＝標註尺寸用',
-    detail: '線粗 0.7mm 實線、0.35mm 虛線、0.35mm 中心線、0.35mm 尺寸線是 CNS 標準。',
+    desc: '實線（粗）＝物體可見輪廓\n虛線（中）＝物體背後不可見輪廓\n中心線（細鏈線）＝對稱軸或圓心\n尺寸線（細）＝標註尺寸用',
+    detail: 'CNS 線條分粗、中、細三級，粗細要配合圖紙大小。A4 圖紙常用：粗 0.5mm（可見輪廓）、中 0.35mm（虛線）、細 0.18mm（中心線、尺寸線）。',
     visual: `<svg viewBox="0 0 240 110" width="100%" style="background:#F1F5F9;border-radius:6px;display:block">
       <line x1="20" y1="18" x2="130" y2="18" stroke="#1E1B4B" stroke-width="2.4"/>
-      <text x="140" y="22" font-size="10" fill="#1E1B4B" font-weight="700">粗實線　0.7mm　可見輪廓</text>
+      <text x="140" y="22" font-size="10" fill="#1E1B4B" font-weight="700">粗實線　0.5mm　可見輪廓</text>
       <line x1="20" y1="42" x2="130" y2="42" stroke="#1E1B4B" stroke-width="1.2" stroke-dasharray="7 3"/>
-      <text x="140" y="46" font-size="10" fill="#1E1B4B" font-weight="700">虛線　　0.35mm　不可見</text>
+      <text x="140" y="46" font-size="10" fill="#1E1B4B" font-weight="700">虛線（中）0.35mm　不可見</text>
       <line x1="20" y1="66" x2="130" y2="66" stroke="#1E1B4B" stroke-width="1" stroke-dasharray="14 2 2 2"/>
-      <text x="140" y="70" font-size="10" fill="#1E1B4B" font-weight="700">中心線　0.35mm　對稱軸</text>
+      <text x="140" y="70" font-size="10" fill="#1E1B4B" font-weight="700">中心線（細）0.18mm　對稱軸</text>
       <g>
         <line x1="20" y1="90" x2="100" y2="90" stroke="#1E1B4B" stroke-width="0.7"/>
         <line x1="20" y1="87" x2="20" y2="93" stroke="#1E1B4B" stroke-width="0.7"/>
@@ -147,7 +147,7 @@ const CONCEPTS = [
         <polygon points="20,90 27,87.5 27,92.5" fill="#1E1B4B"/>
         <polygon points="100,90 93,87.5 93,92.5" fill="#1E1B4B"/>
       </g>
-      <text x="140" y="94" font-size="10" fill="#1E1B4B" font-weight="700">尺寸線　0.35mm　含箭頭</text>
+      <text x="140" y="94" font-size="10" fill="#1E1B4B" font-weight="700">尺寸線（細）0.18mm　含箭頭</text>
     </svg>`
   },
   {
