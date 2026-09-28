@@ -2,7 +2,7 @@
 const TOOLS = [
   { name: '腦力激盪 Brainstorming', icon: '🧠', use: '快速產生大量點子', rule: '不批評、求量、歡迎瘋狂、組合他人想法、視覺化',
     example: '5 人 30 分鐘可產出 100+ 個點子。「設計新書包」可能想到：磁吸帶、太陽能板、防雨袋、會發光、藍牙喇叭...' },
-  { name: 'SCAMPER 七法', icon: '🔧', use: '改良既有產品', rule: 'S 替換 / C 結合 / A 適應 / M 修改 / P 用途 / E 消除 / R 反向',
+  { name: 'SCAMPER 七法', icon: '🔧', use: '改良既有產品', rule: 'S 替代 Substitute / C 結合 Combine / A 調整 Adapt / M 修改 Modify / P 其他用途 Put to other uses / E 消除 Eliminate / R 重組・反轉 Rearrange/Reverse',
     example: '改良傳統雨傘：S 把布換成自動烘乾材質、C 結合 LED 照明、M 改 360° 設計、E 消除骨架（智慧薄膜雨衣）' },
   { name: '心智圖 Mind Map', icon: '🌳', use: '展開議題的所有面向', rule: '中央寫主題 → 放射主分支 → 每分支再分子分支',
     example: '中央：學生書包 → 分支：使用情境（上下學/體育課）、痛點（重、悶）、材料（防水/輕量）、智慧化（GPS/RFID）' },
