@@ -8,14 +8,14 @@
   gtag('js', new Date());
   gtag('config', 'G-YCXP16QQM1');
 </script><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>模組 1：4 種動力系統</title>
+<title>模組 1：動力來源與液壓傳動</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/powertrain.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🚗%3C/text%3E%3C/svg%3E">
 </head><body data-tool="powertrain" class="pt-theme">
 <header class="topbar"><div class="brand"><span class="logo">🚗</span><div><h1>動力與運輸</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
 <main class="module-page">
-  <div class="module-header"><div><span class="module-step">MODULE 01</span><h2>4 種動力系統</h2><p class="muted">點擊每張卡認識動力原理與應用。</p></div><div class="muted" id="prog">已認識 0 / 4 種</div></div>
+  <div class="module-header"><div><span class="module-step">MODULE 01</span><h2>3 種動力來源 + 液壓傳動</h2><p class="muted">點擊每張卡認識動力原理與應用。前 3 種會自己產生動力；液壓負責把動力傳過去。</p></div><div class="muted" id="prog">已認識 0 / 4 種</div></div>
   <!-- TRIPO-3D --><section class="panel">
     <h3>🔭 寫實 3D 動力系統(可旋轉) <span style="font-size:12px;font-weight:500;color:#64748b;margin-left:6px">點名稱切換 · 拖曳旋轉 · 滾輪縮放</span></h3>
     <p class="muted" style="margin-bottom:12px">AI 生成的示意模型,從各角度認識各動力系統的外形。</p>
@@ -23,7 +23,7 @@
       <button type="button" class="p3d-btn" data-src="ice.glb">內燃機</button>
       <button type="button" class="p3d-btn" data-src="motor.glb">電動機</button>
       <button type="button" class="p3d-btn" data-src="fuelcell.glb">燃料電池</button>
-      <button type="button" class="p3d-btn" data-src="hydraulic.glb">液壓動力</button>
+      <button type="button" class="p3d-btn" data-src="hydraulic.glb">液壓傳動</button>
     </div>
     <div style="background:#1e293b;border-radius:14px;overflow:hidden">
       <model-viewer id="p3d-viewer" src="../assets/models/ice.glb" loading="eager" camera-controls auto-rotate auto-rotate-delay="0" rotation-per-second="20deg" environment-image="neutral" shadow-intensity="1" style="width:100%;height:340px;--poster-color:#1e293b"></model-viewer>
@@ -42,7 +42,18 @@
     })();
     </script>
   </section>
-  <section class="panel"><h3>主要動力系統</h3><div id="grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px"></div></section>
+  <section class="panel"><h3>主要動力系統</h3><div id="grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px"></div>
+    <details class="panel supplement" style="margin-top:16px"><summary>📎 延伸補充：液壓是「傳遞動力」，不是「產生動力」</summary>
+      <p style="font-size:14px;line-height:1.8;margin:10px 0 6px">課本 2下 關卡 5（p.61，圖 5-3）的說法：液壓傳動是一種<b>動力傳輸的方式</b>，需要人力或原動機（馬達、引擎）提供能量。能量一路這樣轉換：</p>
+      <p style="font-size:14px;font-weight:700;color:#9A3412;background:#FFEDD5;border-radius:8px;padding:8px 12px;margin:0 0 8px">電能或燃料的化學能 →（馬達／引擎）機械能 →（油壓泵）液壓能 →（油壓缸／油壓馬達）機械能 → 挖斗、貨叉動起來</p>
+      <ul style="margin:0 0 0 18px;line-height:1.8;font-size:14px">
+        <li>判斷口訣：拔掉引擎或馬達，液壓系統就不會動——所以它是「傳動」，跟齒輪、皮帶、鏈條同一類，只是用液體傳力、管路可以轉彎。</li>
+        <li>挖土機就是「引擎帶動油壓泵 → 控制閥分配油 → 油壓缸推動大臂、小臂、挖斗」，原廠用圖解說明：<a href="https://www.volvoce.com/united-states/en-us/resources/blog/2025/understanding-excavator-hydraulics-part-1/" target="_blank" rel="noopener">Understanding Excavator Hydraulic Systems（Volvo 營建設備，英文）</a></li>
+        <li>想看油壓泵怎麼把機械能變成油的壓力，可以看技職課程影片：<a href="https://www.youtube.com/watch?v=w33S9VbXSew" target="_blank" rel="noopener">氣液壓概論：液壓泵、液壓動力單元及液壓油（DeltaMOOCx，YouTube）</a></li>
+        <li>本平台的<a href="../../hydraulic-arm/">液壓手臂</a>工具可以動手算帕斯卡原理，課本關卡 5 的電動液壓手臂就是「馬達（動力來源）＋針筒液壓（傳動）」的組合。</li>
+      </ul>
+    </details>
+  </section>
   <div class="module-nav-bottom"><a href="../index.html" class="btn btn-ghost">← 回首頁</a><a href="module2.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a></div>
 </main>
 <script src="../../js/main.js"></script><script src="../../js/sources.js"></script><script src="../../js/audio.js"></script><script src="../js/module1.js"></script>

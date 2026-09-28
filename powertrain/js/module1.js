@@ -1,9 +1,11 @@
-// 動力與運輸 模組 1：4 種動力系統
+// 動力與運輸 模組 1：3 種動力來源 + 液壓傳動
+// 2026-09 教師決定：課本（2下 關卡 5 p.61）說「液壓傳動是一種動力傳輸的方式」，需由引擎或馬達帶動油壓泵，
+// 因此液壓卡保留，但改稱「液壓傳動」並說明它不是動力來源。
 const POWERS = [
   { id: 'ice', iso: 'ice-engine', name: '內燃機 Internal Combustion', icon: '🛢', eff: 25, desc: '燃料（汽油/柴油）在汽缸內燃燒，推動活塞 → 曲軸 → 變速箱 → 車輪。技術成熟 100+ 年。', pros: '加油快、續航長、技術成熟', cons: '效率低（25-30%）、CO₂ 排放、噪音、震動', use: '汽油車、機車、卡車、發電機' },
   { id: 'em', iso: 'ev-motor', name: '電動機 Electric Motor', icon: '⚡', eff: 90, desc: '電池或電網供電給馬達 → 經減速齒輪驅動車輪（不需要多檔變速箱）。BLDC 無刷馬達是主流。', pros: '效率極高（90%+）、零排放、瞬間扭力大', cons: '電池貴、續航短、充電慢、寒冷耗電', use: '電動車、電動機車、電動巴士、高鐵（架空線供電）' },
   { id: 'fc', iso: 'fuel-cell', name: '燃料電池 Fuel Cell', icon: '⛽', eff: 60, desc: '氫氣 + 氧氣化學反應 → 直接產生電能（副產物是純水）。加氫 3 分鐘可跑 600 公里。', pros: '加氫快、零排放、續航長', cons: '氫氣製造耗電、儲存運輸難、加氫站少', use: 'Toyota Mirai、燃料電池巴士、未來航空' },
-  { id: 'hyd', iso: 'hydraulic', name: '液壓動力 Hydraulic', icon: '💪', eff: 60, desc: '高壓液壓油推動油壓缸做直線運動。重型機械標配——力大、控制精準。', pros: '力極大（數十噸）、運動穩定、可精確定位', cons: '管路漏油、效率不如電動、需液壓站', use: '挖土機、堆高機、煞車系統、椅子升降' },
+  { id: 'hyd', iso: 'hydraulic', name: '液壓傳動 Hydraulic（負責傳遞動力）', icon: '💪', eff: 60, desc: '<strong>液壓本身不是動力來源</strong>：需由引擎或馬達帶動油壓泵，把機械能變成油的壓力，再經管路推動油壓缸做直線運動。它的角色跟齒輪、皮帶一樣是「傳動」，好處是力大、管路可以彎、控制精準，所以是重型機械標配。', pros: '力極大（數十噸）、運動穩定、可精確定位', cons: '管路漏油、多一道能量轉換（效率不如直接用馬達）、需液壓站', use: '挖土機、堆高機、煞車系統、椅子升降' },
 ];
 
 const PK = 'pt_progress_v1';
@@ -31,7 +33,7 @@ POWERS.forEach(p => {
       seen.add(p.id); c.style.background = '#FFEDD5';
       progEl.textContent = `已認識 ${seen.size} / 4 種`;
       const pr = loadP(); pr.module1_seen = Array.from(seen);
-      if (seen.size === 4) { pr.module1 = true; nextBtn.style.opacity = 1; nextBtn.style.pointerEvents = 'auto'; if (typeof SoundFX !== 'undefined') SoundFX.unlock(); showToast('🎉 4 種動力都認識！', 'good'); } else if (typeof SoundFX !== 'undefined') SoundFX.pop();
+      if (seen.size === 4) { pr.module1 = true; nextBtn.style.opacity = 1; nextBtn.style.pointerEvents = 'auto'; if (typeof SoundFX !== 'undefined') SoundFX.unlock(); showToast('🎉 動力來源與液壓傳動都認識了！', 'good'); } else if (typeof SoundFX !== 'undefined') SoundFX.pop();
       saveP(pr);
     }
   });

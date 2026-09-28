@@ -18,6 +18,19 @@
   <div class="module-header"><div><span class="module-step" style="background:var(--accent-light);color:#5b21b6">MODULE 03</span><h2>液壓手臂製作 8 步驟</h2><p class="muted">對應翰林附件 3 紙模製作流程。</p></div><div class="muted" id="step-progress">已學習 0 / 8 步</div></div>
   <div class="steps-layout"><div class="step-list" id="step-list"></div><div class="step-detail" id="step-detail"></div></div>
   <section style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:24px;margin-top:24px"><h3 style="font-size:19px;margin-bottom:8px">🧩 排序測驗</h3><p class="muted" style="margin-bottom:14px;font-size:13px">把打亂的步驟排回正確順序。</p><div id="seq-puzzle"></div></section>
+  <section class="panel" style="margin-top:24px">
+    <h3>⚡ 電動延伸：把「手推針筒」換成「馬達推針筒」</h3>
+    <p class="muted" style="margin-bottom:10px">課本關卡名稱是「製作<b>電動</b>液壓動力機械手臂」：上面 8 步驟先用手推針筒做出會動的手臂，接著再照課本步驟 18～23，把人力換成馬達。馬達負責產生動力，針筒裡的水負責傳遞動力。</p>
+    <p style="font-size:14px;font-weight:700;color:#075985;background:#E0F2FE;border-radius:8px;padding:8px 12px;margin:0 0 10px">電池 → 6P 開關（控制正轉／反轉）→ 減速馬達 → 聯軸器 → 螺桿轉動、螺帽滑塊直線移動 → 推拉主動針筒 → 水管 → 手臂上的從動針筒</p>
+    <ul style="margin:0 0 0 18px;line-height:1.8;font-size:14px">
+      <li><b>為什麼要減速馬達</b>：一般直流馬達轉太快、力太小，課本建議用金屬減速齒輪的 N20 馬達或塑膠減速的 TT 馬達。</li>
+      <li><b>旋轉變直線（線性致動器）</b>：馬達軸經聯軸器（3D 列印轉接器、塑膠齒輪或金屬聯軸器，再用熱縮套固定）接到螺栓；螺帽固定在滑塊上，螺栓一轉，滑塊就前進或後退，帶著針筒活塞推桿走。做 4 組，對應 4 個動作。</li>
+      <li><b>控制器</b>：用 4 顆 6P 開關做 2 個正反轉控制器，開關往前扳、往後扳就是正轉、反轉；也可以沿用 2上 關卡 2「線控仿生獸」做過的正反轉控制器。</li>
+      <li><b>常見問題</b>：馬達軸和螺栓的中心線沒對準，轉起來會晃、會卡；滑塊推到底還一直按開關，馬達會卡住發燙，推到底就放開；針筒大小不同行程也不同，位置要實際調整。</li>
+      <li><b>安全</b>：電池盒、開關和電線要遠離水管接頭，充水或漏水時先把開關關掉。</li>
+    </ul>
+    <p class="muted" style="margin-top:8px;font-size:13px">以上整理自課本 2下 關卡 5（任務緣起、選擇材料與設計、製作步驟 18～23）；尺寸與材料請以課本和老師的材料包為準。</p>
+  </section>
   <div class="module-nav-bottom"><a href="module2.html" class="btn btn-ghost">← 上一關</a><a href="module4.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a></div>
 </main>
 <script src="../../js/main.js"></script><script src="../../js/sources.js"></script><script src="../../js/audio.js"></script><script src="../../js/interactions.js"></script><script src="../js/module3.js"></script>

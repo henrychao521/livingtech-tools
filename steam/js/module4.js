@@ -47,13 +47,17 @@ function draw(r) {
   ctx.fillStyle = 'rgba(56,189,248,.35)'; ctx.strokeStyle = '#0EA5E9'; ctx.lineWidth = 2.5;
   ctx.beginPath(); ctx.ellipse(lensX, ax, 15, H / 2 - 26, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
 
-  // 焦點
-  ctx.fillStyle = '#22c55e';
+  // 焦點 F（實心綠點）與 2 倍焦距 2F（空心橘點）：挑戰提示會用到「2 倍焦距」「f 和 2f 之間」
+  ctx.font = '700 11px Inter, sans-serif'; ctx.textAlign = 'center';
   [-1, 1].forEach(s => {
     const fx = lensX + s * state.f * S;
+    ctx.fillStyle = '#22c55e';
     ctx.beginPath(); ctx.arc(fx, ax, 4.5, 0, Math.PI * 2); ctx.fill();
-    ctx.font = '700 11px Inter, sans-serif'; ctx.textAlign = 'center';
-    ctx.fillText(s > 0 ? 'F' : 'F', fx, ax + 18);
+    ctx.fillText('F', fx, ax + 18);
+    const f2x = lensX + s * 2 * state.f * S;
+    ctx.strokeStyle = '#fb923c'; ctx.lineWidth = 2; ctx.fillStyle = '#fb923c';
+    ctx.beginPath(); ctx.arc(f2x, ax, 4.5, 0, Math.PI * 2); ctx.stroke();
+    ctx.fillText('2F', f2x, ax + 18);
   });
 
   // 物體
@@ -114,7 +118,7 @@ function draw(r) {
 
   // 圖例
   ctx.textAlign = 'left'; ctx.font = '11px Inter, sans-serif'; ctx.fillStyle = '#94a3b8';
-  ctx.fillText('黃＝光線　綠＝實像（可投影在紙屏上）　紫＝虛像（只能用眼睛看到）', 12, H - 10);
+  ctx.fillText('黃＝光線　綠＝實像（可投影在紙屏上）　紫＝虛像（只能用眼睛看到）　F＝焦點　2F＝2 倍焦距', 12, H - 10);
 }
 
 function update() {
@@ -123,7 +127,10 @@ function update() {
   document.getElementById('vF').textContent = state.f + ' cm';
   document.getElementById('vH').textContent = state.h + ' cm';
   document.getElementById('diVal').textContent = isFinite(r.di) ? r.di.toFixed(1) + ' cm' : '∞';
-  document.getElementById('mVal').textContent = isFinite(r.m) ? r.m.toFixed(2) + '×' : '—';
+  // 欄位顯示倍數（絕對值）；m 的正負號另外註明：負號＝倒立、正號＝正立
+  document.getElementById('mVal').innerHTML = isFinite(r.m)
+    ? `${Math.abs(r.m).toFixed(2)}×<div style="font-size:12px;font-weight:600;margin-top:2px">${r.m < 0 ? '倒立' : '正立'}（m = ${r.m.toFixed(2).replace('-', '−')}，${r.m < 0 ? '負號＝倒立' : '正號＝正立'}）</div>`
+    : '—';
   document.getElementById('typeVal').textContent = r.type;
 
   const v = document.getElementById('verdict');
