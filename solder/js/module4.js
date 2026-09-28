@@ -703,7 +703,7 @@ function evaluate() {
   const detail = {
     '完美焊點': `${good} / ${total}`,
   };
-  if (cold) detail['冷焊（虛焊）'] = cold;
+  if (cold) detail['冷焊'] = cold;
   if (insufficient) detail['缺錫'] = insufficient;
   if (defective) detail['未修正（原本的不良焊點）'] = defective;
   if (over) detail['過量錫'] = over;

@@ -21,7 +21,7 @@ const PARTS = {
   display: {
     name: '溫控與顯示器（Temp Display）',
     role: '溫度控制',
-    desc: '可調溫烙鐵會顯示當前溫度與設定溫度。常用設定：含鉛錫 320°C、無鉛錫 360–400°C、SMD 焊接 280–320°C。',
+    desc: '可調溫烙鐵會顯示當前溫度與設定溫度。常用設定：含鉛錫 320°C、無鉛錫 360–380°C、SMD 焊接 280–320°C。',
     fact: '指示燈閃爍代表加熱中，恆亮代表已達設定溫度可以開始焊接。'
   },
   cord: {
@@ -147,7 +147,7 @@ document.querySelectorAll('.part-chip').forEach(c => {
       desc: '焊點呈「火山錐」形，表面光亮（低氧化），焊錫均勻包覆元件腳底部，接觸角 ≤ 45°。機械強度高、電氣可靠。這是每個焊點的目標。'
     },
     {
-      id: 'cold', name: '冷焊（虛焊）', badge: '△', color: '#d97706',
+      id: 'cold', name: '冷焊', badge: '△', color: '#d97706',
       photo: { url: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a0/Cold_solder_joint.jpg/330px-Cold_solder_joint.jpg', caption: '冷焊實物照：表面顆粒粗糙、無金屬光澤', page: 'https://commons.wikimedia.org/wiki/File:Cold_solder_joint.jpg', license: 'CC BY-SA 3.0 · Coronium / Wikimedia Commons' },
       svg: `<rect x="55" y="94" width="190" height="12" fill="#16a34a"/>
         <ellipse cx="150" cy="92" rx="38" ry="10" fill="#fbbf24" stroke="#b45309" stroke-width="1.5"/>
@@ -162,15 +162,15 @@ document.querySelectorAll('.part-chip').forEach(c => {
       desc: '表面呈「霧面」或顆粒狀，因焊錫未完全熔融即冷卻。常見原因：加熱時間不足（＜ 1 秒）或送錫太早。導電電阻高，振動下容易斷路，是最常見的焊接失敗。'
     },
     {
-      id: 'over', name: '過焊（錫球）', badge: '●', color: '#7c3aed',
+      id: 'over', name: '過量錫', badge: '●', color: '#7c3aed',
       photo: { url: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/2/29/Soldering-bad.jpg/330px-Soldering-bad.jpg', caption: '過量焊錫示例：錫料堆積過多、形態不規則', page: 'https://commons.wikimedia.org/wiki/File:Soldering-bad.jpg', license: 'CC BY-SA · Wikimedia Commons' },
       svg: `<rect x="55" y="94" width="190" height="12" fill="#16a34a"/>
         <ellipse cx="150" cy="95" rx="50" ry="14" fill="#fbbf24" stroke="#b45309" stroke-width="1.5"/>
         <circle cx="150" cy="70" r="28" fill="#d0d0d0" stroke="#606060" stroke-width="1.5"/>
         <ellipse cx="140" cy="62" rx="10" ry="6" fill="rgba(255,255,255,.65)"/>
         <ellipse cx="162" cy="76" rx="5" ry="3" fill="rgba(255,255,255,.3)"/>
-        <text x="150" y="122" text-anchor="middle" font-size="11" fill="#7c3aed" font-weight="700">球形隆起 · 可能橋接鄰腳短路</text>`,
-      desc: '送錫過多，焊錫因表面張力堆積成球形。可能碰觸相鄰腳造成短路。修復方式：用吸錫帶或吸錫器去除多餘焊錫，再重新加熱整形成錐形。'
+        <text x="150" y="122" text-anchor="middle" font-size="11" fill="#7c3aed" font-weight="700">凸起大包 · 可能橋接鄰腳短路</text>`,
+      desc: '送錫過多，焊錫堆成凸起的大包、把元件腳整個包住，看不到腳的輪廓（但錫仍有沾在焊墊上；若錫縮成球、沒沾上焊墊，則是冷焊／潤濕不良）。可能碰觸相鄰腳造成短路。修復方式：用吸錫帶或吸錫器去除多餘焊錫，再重新加熱整形成錐形。'
     },
     {
       id: 'bridge', name: '橋接連錫', badge: '✗', color: '#dc2626',
