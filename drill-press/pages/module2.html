@@ -20,7 +20,7 @@
 <body data-tool="drill-press" class="dpress-theme">
 <header class="topbar"><div class="brand"><span class="logo">🛠</span><div><h1>數位鑽床</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
 <main class="module-page">
-  <div class="module-header"><div><span class="module-step" style="background:var(--danger-light);color:#B83333">MODULE 02 ・ 必修</span><h2>鑽床安全規範</h2><p class="muted">裝備檢查 + 15 題情境，達 120 分通關。</p></div><div class="muted" style="font-size:16px">總分：<span id="score-display" style="color:var(--primary-dark);font-weight:800;font-size:22px;font-family:Inter">0</span> / 180</div></div>
+  <div class="module-header"><div><span class="module-step" style="background:var(--danger-light);color:#B83333">MODULE 02 ・ 必修</span><h2>鑽床安全規範</h2><p class="muted" id="pass-rule">裝備檢查 + 20 題情境，達 190 分通關（情境題至少答對 16 題）。</p></div><div class="muted" style="font-size:16px">總分：<span id="score-display" style="color:var(--primary-dark);font-weight:800;font-size:22px;font-family:Inter">0</span> / <span id="score-max">230</span></div></div>
   <div class="safety-progress"><div class="safety-progress-bar" id="progress-bar" style="width:0%"></div></div>
 
   <!-- 關卡 1：裝備安全檢查 -->
@@ -108,6 +108,17 @@
       <span style="font-size:15px;font-weight:700;color:#64748b">請先完成上方裝備安全檢查</span>
     </div>
   </section>
+  <!-- 2026-09-28 教師決定 Q06：保留「犧牲層」專業詞，另附白話說明與延伸資料 -->
+  <details class="panel supplement" style="margin-top:16px">
+    <summary style="cursor:pointer;font-weight:700;font-size:15px">📎 延伸補充：什麼是「犧牲層」？為什麼工件下面要墊廢木板</summary>
+    <p style="font-size:14px;color:#374151;line-height:1.8;margin:12px 0 8px"><strong>專業說法：</strong>犧牲層（sacrificial board／backer board）是墊在工件下方、預期會被鑽穿的墊板。<br><strong>白話說：</strong>就是一塊「專門拿來被鑽壞」的廢木板。鑽頭穿出工件後會鑽進它，而不是鑽進鐵做的工作台；它也從下面撐住木纖維，孔的出口比較不會爆開、起毛邊。墊板用久了滿是洞，換個位置或換一塊就好——因為它本來就是要被「犧牲」的。</p>
+    <ul style="margin:8px 0 0;padding-left:20px;line-height:1.8;font-size:14px;color:#475569">
+      <li>影片：生活科技教室鑽床的基本操作與安全注意事項（中文）。<a href="https://www.youtube.com/watch?v=wt8uGgeywLI" target="_blank" rel="noopener" style="color:#2563eb;text-decoration:underline">國中小自造教育及科技輔導中心（YouTube）</a></li>
+      <li>影片（英文）：鑽木頭時孔的出口為什麼會撕裂、爆邊，以及怎麼避免。<a href="https://www.youtube.com/watch?v=Gx1HzC52Eu4" target="_blank" rel="noopener" style="color:#2563eb;text-decoration:underline">TernTek：Prevent Wood Tearing and Blowout（YouTube）</a></li>
+      <li>影片（英文）：木工雜誌示範鑽床各部位與基本操作。<a href="https://www.youtube.com/watch?v=Gq8jL_ZDjNM" target="_blank" rel="noopener" style="color:#2563eb;text-decoration:underline">WOOD magazine：Drill Press Basics（YouTube）</a></li>
+      <li>美國職業安全衛生署整理的鑽床危害與防護方式（英文）。<a href="https://www.osha.gov/etools/woodworking/production/machines-tools/drill-press" target="_blank" rel="noopener" style="color:#2563eb;text-decoration:underline">OSHA eTool：Drill Press</a></li>
+    </ul>
+  </details>
   <div class="unlock-banner hidden" id="unlock"><h3>🏆 通關！</h3><a href="module3.html" class="btn" style="background:#fff;color:#1e9450;margin-top:18px;font-weight:700">進入模組 3 →</a></div>
   <div class="module-nav-bottom"><a href="module1.html" class="btn btn-ghost">← 上一關</a><a href="module3.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a></div>
 </main>

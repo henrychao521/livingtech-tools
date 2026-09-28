@@ -2,7 +2,7 @@
 const PARTS = {
   spindle: { name: '主軸（Spindle）', role: 'ROTATION SHAFT', desc: '由皮帶驅動的垂直旋轉軸，下端鎖夾頭。主軸上下位置由進刀手柄控制，可精準達到 90° 垂直鑽孔——這是鑽床和手電鑽最大差別。', fact: '主軸轉速由皮帶輪位置決定，常見有 5 段（如 500/720/1100/1700/2400 RPM）。鑽鋼用低速（直徑越大越慢，小直徑可稍快）、鑽木用高速。' },
   chuck: { name: '夾頭（Keyed Chuck）', role: 'BIT HOLDER', desc: '鑽床多為「鑰匙式夾頭」（chuck key），用 T 型小工具旋轉鎖緊三爪。可鎖到比免鑰匙式更緊，適合大直徑鑽孔。', fact: '⚠ 開機前一定要把夾頭鑰匙拔下！沒拔的鑰匙會被甩飛——是鑽床最危險的事故之一。' },
-  table: { name: '工作台（Table）', role: 'WORK PLATFORM', desc: '放工件的鑄鐵平台。可上下調整高度（鬆開後方鎖具搖動）、也可向左右傾斜做斜角鑽孔。表面有「T 槽」可裝機台老虎鉗或夾具。', fact: '工件下方必須墊木塊（犧牲層），避免鑽穿後把工作台也鑽出洞。' },
+  table: { name: '工作台（Table）', role: 'WORK PLATFORM', desc: '放工件的鑄鐵平台。可上下調整高度（鬆開後方鎖具搖動）、也可向左右傾斜做斜角鑽孔。表面有「T 槽」可裝機台老虎鉗或夾具。', fact: '工件下方必須墊木塊（犧牲層），避免鑽穿後把工作台也鑽出洞。<br>💬 白話說：「犧牲層」就是一塊專門拿來「被鑽壞」的廢木板——鑽頭穿出工件後鑽進它，犧牲它、保護工作台，也讓孔的出口不會爆邊。' },
   feed: { name: '進刀手柄（Feed Handle）', role: 'DOWNFEED CONTROL', desc: '3 支放射狀手柄，控制主軸下降進行鑽孔。把手柄往下拉 = 進刀、放回 = 退鑽（手柄有回彈彈簧）。多數鑽床有「進刀深度限位環」可設定鑽孔深度。', fact: '進刀力要均勻，不能突然用力——突然壓會讓鑽頭斷裂或工件彈起。' },
   motor: { name: '馬達（Motor）', role: 'POWER UNIT', desc: '位於頭部後方的電動機，常見 250–550W。透過皮帶把動力傳到主軸。長時間連續運轉會發熱——要讓馬達休息。', fact: '聞到焦味或聽到異音要立刻停機。馬達燒了維修費可能比機台還貴。' },
   belt: { name: '皮帶與皮帶輪（Belt & Pulley）', role: 'SPEED TRANSMISSION', desc: '透過 V 型皮帶在馬達與主軸的「階梯式皮帶輪」間傳動。把皮帶移到不同的皮帶輪組合，就改變主軸轉速。', fact: '換檔前務必斷電。原理：皮帶掛在主軸側「大輪」（馬達側小輪）= 低速大扭力（鑽鋼）；主軸側「小輪」（馬達側大輪）= 高速（鑽木）。各機型輪組排列不同，請與教室機台實際核對。' },
@@ -194,7 +194,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
       material: '鋼板 · 不鏽鋼 · 鋁 · 塑膠',
       belt: 'P1–P2（500–720 RPM）', tip: '118° 磨尖螺旋刃',
       desc: '最通用的金屬鑽頭，螺旋排屑槽讓切屑順暢排出。鑽鐵/鋼時建議加切削液（切削油）冷卻降溫，延長鑽頭壽命。不適合木材（缺少中心定位尖）。',
-      note: '鑽鋼必須用切削液，否則鑽頭在數分鐘內即因過熱而退火失硬。',
+      note: '鑽鋼必須用切削液，否則鑽頭在數分鐘內即因過熱而退火失硬。<br>💬 白話說：鑽頭硬，是因為出廠時經過「熱處理」把鋼變硬；如果鑽孔時摩擦熱讓鑽頭燒到發藍、發黑，等於把那道熱處理抵銷掉，鑽頭就「變軟」了——刃口一下就磨圓，之後再也鑽不動，只能換新。（嚴格說，高速鋼過熱變軟在材料學上叫「回火軟化」，比較精確。）',
       photo: { url: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a8/HSS_Twist_Drill_into_Aluminium_with_Lubricant.jpg/330px-HSS_Twist_Drill_into_Aluminium_with_Lubricant.jpg', caption: 'HSS 鑽頭鑽削鋁材（施切削液）', page: 'https://commons.wikimedia.org/wiki/File:HSS_Twist_Drill_into_Aluminium_with_Lubricant.jpg', license: 'CC BY-SA 3.0 · Wikimedia Commons' },
       svg: `<rect x="10" y="43" width="140" height="14" rx="2" fill="#9ca3af"/>
         <g stroke="#4b5563" stroke-width="1" opacity=".7">
@@ -298,6 +298,21 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
     <div id="dp-bit-detail" style="background:#f8fafc;border-radius:12px;padding:18px;min-height:140px">
       <p style="color:#94a3b8;text-align:center;margin-top:24px">👆 點選上方鑽頭查看規格</p>
     </div>
+    <!-- 2026-09-28 教師決定 Q05：保留「退火失硬」專業詞，另附白話說明與延伸資料 -->
+    <details class="panel supplement" style="margin-top:16px">
+      <summary style="cursor:pointer;font-weight:700;font-size:15px">📎 延伸補充：什麼是「退火失硬」？鑽頭為什麼會燒軟</summary>
+      <p style="font-size:14px;color:#374151;line-height:1.8;margin:12px 0 8px"><strong>專業說法：</strong>高速鋼（HSS）鑽頭靠淬火＋回火熱處理得到高硬度；鑽孔時如果摩擦熱讓刃口溫度超過它能承受的範圍，組織會再次改變，硬度下降，稱為「退火失硬」（材料學上較精確的說法是「回火軟化」）。<br><strong>白話說：</strong>鑽頭燒過頭就會「變軟」，軟掉的刃口磨一下就圓了，之後怎麼鑽都鑽不動。看到鑽頭尖端變成<strong>藍色或黑色</strong>，就代表它曾經燒過頭。</p>
+      <figure style="margin:10px 0;max-width:330px">
+        <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/a/aa/Tempering_colors_in_steel.jpg/330px-Tempering_colors_in_steel.jpg" alt="鋼材加熱後表面出現由淡黃到藍色的回火色" style="width:100%;border-radius:8px;display:block" loading="lazy" onerror="this.parentNode.style.display='none'">
+        <figcaption style="font-size:12px;color:#64748b;margin-top:4px">圖說：鋼加熱到不同溫度，表面會出現淡黃→褐→紫→藍的「回火色」；顏色越偏藍，代表溫度越高。鑽頭尖端出現藍色，就是過熱的證據。（Zaereth，<a href="https://commons.wikimedia.org/wiki/File:Tempering_colors_in_steel.jpg" target="_blank" rel="noopener" style="color:#2563eb;text-decoration:underline">CC0 · Wikimedia Commons</a>）</figcaption>
+      </figure>
+      <ul style="margin:8px 0 0;padding-left:20px;line-height:1.8;font-size:14px;color:#475569">
+        <li>高速鋼為什麼能高速切削、又在多少溫度以上會失去硬度。<a href="https://zh.wikipedia.org/wiki/%E9%AB%98%E9%80%9F%E9%8B%BC" target="_blank" rel="noopener" style="color:#2563eb;text-decoration:underline">維基百科：高速鋼</a></li>
+        <li>「回火」是什麼、溫度和硬度的關係。<a href="https://zh.wikipedia.org/wiki/%E5%9B%9E%E7%81%AB" target="_blank" rel="noopener" style="color:#2563eb;text-decoration:underline">維基百科：回火</a></li>
+        <li>影片：各種鑽頭（鑽鐵、鑽木、鑽水泥）怎麼分、鑽金屬要注意什麼。<a href="https://www.youtube.com/watch?v=3qSclIkN3BE" target="_blank" rel="noopener" style="color:#2563eb;text-decoration:underline">好資材實驗室（YouTube）</a></li>
+        <li>影片：鑽頭表面不同顏色（鍍鈦、含鈷、高速鋼）代表什麼。<a href="https://www.youtube.com/watch?v=UCucUNzHiQI" target="_blank" rel="noopener" style="color:#2563eb;text-decoration:underline">Ochiu Magic 黑手創藝（YouTube）</a></li>
+      </ul>
+    </details>
     <h4 style="margin:22px 0 10px;font-size:14px;font-weight:700">📊 材料 × 鑽頭 × 皮帶段位速查</h4>
     <div style="overflow-x:auto;border-radius:10px;border:1px solid #e2e8f0">
       <table style="width:100%;border-collapse:collapse;font-size:13px">
