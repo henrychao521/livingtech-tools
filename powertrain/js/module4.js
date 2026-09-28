@@ -14,19 +14,19 @@ const VEHICLES = {
 const POWERS = {
   ice:    { name: '汽油內燃機', eff: 25, unit: 'L/100km', costPerUnit: 30, co2PerUnit: 2350, fuelMul: 6 },   // 2350 g/L：US EPA 8,887 g CO₂/加侖 ÷ 3.785
   diesel: { name: '柴油內燃機', eff: 30, unit: 'L/100km', costPerUnit: 28, co2PerUnit: 2680, fuelMul: 5.1 },
-  ev:     { name: '電動 EV',   eff: 90, unit: 'kWh/100km', costPerUnit: 5, co2PerUnit: 495, fuelMul: 15 },
+  ev:     { name: '電動 EV',   eff: 90, unit: 'kWh/100km', costPerUnit: 5, co2PerUnit: 467, fuelMul: 15 },   // 467 g/kWh：能源署 114 年度電力排碳係數，與能源站 ENERGY_DATA.CO2_FACTOR 同值
   hybrid: { name: '油電混合',   eff: 40, unit: 'L/100km', costPerUnit: 30, co2PerUnit: 2350, fuelMul: 3.6 },
   fc:     { name: '燃料電池',   eff: 60, unit: 'kg/100km', costPerUnit: 250, co2PerUnit: 10000, fuelMul: 1.0 },
 };
 
-// CO₂ 口徑：汽油／柴油只算排氣管排放；電動車以台灣電力排碳係數（經濟部能源署 112 年度 0.494 kg CO2e/度）計、
+// CO₂ 口徑：汽油／柴油只算排氣管排放；電動車以台灣電力排碳係數（經濟部能源署 114 年度 0.467 kg CO2e/度）計、
 // 燃料電池以灰氫（天然氣重組製氫，IEA《Global Hydrogen Review 2024》10–12 kg CO2-eq/kg H₂，取 10）計，
 // 後兩者都含能源生產端，燃料電池車端雖然零排放，製氫仍有碳排
 const CO2_NOTE = {
   ice: '只算排氣管排放（不含煉油、運輸）',
   diesel: '只算排氣管排放（不含煉油、運輸）',
   hybrid: '只算排氣管排放（不含煉油、運輸）',
-  ev: '車端零排放；此數字是發電端排放（台灣電力排碳係數約 0.49 kg/度）',
+  ev: '車端零排放；此數字是發電端排放（台灣電力排碳係數約 0.47 kg/度，114 年度）',
   fc: '車端只排水；此數字是製氫排放（以天然氣製的灰氫約 10 kg CO₂/kg 計）',
 };
 

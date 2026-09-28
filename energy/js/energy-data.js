@@ -28,9 +28,10 @@ const ENERGY_DATA = {
     pumpedHydro: 1.07,
   },
   /* 電力排碳係數（g CO₂e/kWh）——模組 5 家庭用電試算讀這個值。
-   * 113（2024）年度 0.474 公斤 CO₂e/度；112 年度為 0.494。
-   * 出處：經濟部能源署 113 年度電力排碳係數 https://www.moeaea.gov.tw/ecw/populace/content/ContentDesc.aspx?menu_id=26678 */
-  CO2_FACTOR: 474,
+   * 114（2025）年度公用售電業 0.467 公斤 CO₂e/度（2026-06-02 公布；民生住宅用電 0.471、產業用電 0.466）；
+   * 113 年度為 0.474、112 年度為 0.494。
+   * 出處：經濟部能源署 114 年度電力排碳係數 https://www.moeaea.gov.tw/ecw/populace/content/ContentDesc.aspx?menu_id=27028 */
+  CO2_FACTOR: 467,
   /* 夏季電價級距（元/度，非時間電價住宅用）：[度數上限, 單價] */
   RATES_SUMMER: [
     [120, 1.68],

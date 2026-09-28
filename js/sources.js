@@ -155,7 +155,7 @@ window.SOURCES = {
     { tag: 'EPA',  text: '環境部《溫室氣體排放係數管理表》— 台灣電力排放係數（gCO₂e/kWh）。', url: 'https://ghgregistry.moenv.gov.tw/' },
     { tag: 'NTSEC', text: '國立臺灣科學教育館《科學之眼》能源展項。', url: 'https://www.ntsec.edu.tw/The_Eye_of_Science/exhibit02-02.html' },
     { tag: 'NASA', text: 'NASA Science《Tour of the Electromagnetic Spectrum》。', url: 'https://science.nasa.gov/ems/01_intro/' },
-    { tag: 'MOEAEA', text: '經濟部能源署《電力排碳係數》（114 年度 0.467 kg CO₂e/度）。', url: 'https://www.moeaea.gov.tw/ecw/populace/content/ContentDesc.aspx?menu_id=26678' },
+    { tag: 'MOEAEA', text: '經濟部能源署《電力排碳係數》（114 年度 0.467 kg CO₂e/度）。', url: 'https://www.moeaea.gov.tw/ecw/populace/content/ContentDesc.aspx?menu_id=27028' },
     { tag: 'RSPRC', text: '臺大風險社會與政策研究中心 — 能源轉型研究。', url: 'https://rsprc.ntu.edu.tw/web/research/research_in.jsp?lang=tw&rp_id=RP1741944880461' },
   ],
 
@@ -164,7 +164,7 @@ window.SOURCES = {
     { tag: 'IEA-EV', text: 'IEA《Global EV Outlook 2024》— 電動車整體效率（電池→輪 ~85–90%）。', url: 'https://www.iea.org/reports/global-ev-outlook-2024' },
     { tag: 'EBA-T', text: '經濟部能源署《車輛能源消耗指南》、《電動車耗電量資料庫》。', url: 'https://www.energy-efficiency.org.tw/' },
     { tag: 'MOTC', text: '交通部運輸研究所《道路擁擠成本研究》、《道路交通安全統計》。', url: 'https://www.iot.gov.tw/' },
-    { tag: 'MOEAEA', text: '經濟部能源署《電力排碳係數》（114 年度 0.467 kg CO₂e/度）。', url: 'https://www.moeaea.gov.tw/ecw/populace/content/ContentDesc.aspx?menu_id=26678' },
+    { tag: 'MOEAEA', text: '經濟部能源署《電力排碳係數》（114 年度 0.467 kg CO₂e/度）。', url: 'https://www.moeaea.gov.tw/ecw/populace/content/ContentDesc.aspx?menu_id=27028' },
   ],
 
   'hydraulic-arm': [
