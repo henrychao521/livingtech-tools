@@ -21,6 +21,9 @@ window.SOURCES = {
     { tag: 'OSHA', text: 'Illinois DRS《Soldering Safety》、MIT EHS《Soldering and Brazing》— 通風、護目鏡、含鉛錫處理。', url: 'https://ehs.mit.edu/workplace-safety/' },
     { tag: 'IEC',  text: 'IEC 60068-2-20《Test T: Soldering》— 烙鐵溫度與焊點測試方法。含鉛錫共晶熔點 183 °C。', url: 'https://webstore.iec.ch/' },
     { tag: 'HAKKO', text: 'Hakko《FX-888D Soldering Station User Manual》— 推薦工作溫度 320–360 °C。', url: 'https://www.hakko.com/' },
+    { tag: 'MOHW', text: '衛生福利部 — 燙傷急救「沖脫泡蓋送」。', url: 'https://www.mohw.gov.tw/cp-3163-28813-1.html' },
+    { tag: 'NFA', text: '內政部消防署 — 燙傷緊急處理。', url: 'https://www.nfa.gov.tw/pro/index.php?code=list&flag=detail&ids=113&article_id=905' },
+    { tag: 'ILCOR', text: 'ILCOR CoSTR：燙傷以流動冷水冷卻的時間（系統性回顧）。', url: 'https://costr.ilcor.org/document/duration-of-cooling-with-water-for-thermal-burns-as-a-first-aid-intervention-fa-770-systematic-review' },
   ],
 
   breadboard: [
@@ -67,7 +70,7 @@ window.SOURCES = {
     { tag: 'ARDU', text: 'Arduino 官方文件《PWM》《analogWrite()》與 Motor Shield 教學 — 馬達調速與驅動器接法。', url: 'https://docs.arduino.cc/learn/microcontrollers/analog-output/' },
     { tag: 'NIST', text: 'NIST／標準大氣模型《Speed of Sound in Air》— 音速隨溫度變化 c ≈ 331.3 + 0.606·T (m/s)，本模組溫度誤差計算依據。', url: 'https://www.nist.gov/' },
     { tag: 'CTRL', text: 'Åström & Murray《Feedback Systems: An Introduction for Scientists and Engineers》(Princeton, 開放取用) — 比例／微分控制與過度增益振盪的理論依據。', url: 'https://www.cds.caltech.edu/~murray/amwiki/' },
-    { tag: 'HCSR', text: 'HC-SR04 超音波模組 Datasheet — 量程約 2–400 cm、波束角約 15°、盲區與時序規格。', url: 'https://www.handsontec.com/dataspecs/HC-SR04-Ultrasonic.pdf' },
+    { tag: 'HCSR', text: 'HC-SR04 超音波模組 Datasheet — 量測範圍約 2–400 cm、波束角約 15°、盲區與時序規格。', url: 'https://www.handsontec.com/dataspecs/HC-SR04-Ultrasonic.pdf' },
     { tag: 'IPC',  text: 'IPC-A-620《Acceptability of Cable and Wire Harness Assemblies》— 接線與壓接品質，對應除錯章節的接觸不良判讀。', url: 'https://www.ipc.org/' },
     { tag: 'CURR', text: '教育部十二年國教科技領域課程綱要 — 生 J-B3 設計與製作能力、3 下統整專題「自動化裝置」。', url: 'https://cirn.moe.edu.tw/' },
   ],
@@ -81,35 +84,58 @@ window.SOURCES = {
     { tag: 'ASHRAE', text: 'ASHRAE Standard 55《Thermal Environmental Conditions for Human Occupancy》— 室內舒適溫濕度範圍，作為節能控制策略的舒適度底線。', url: 'https://www.ashrae.org/technical-resources/bookstore/standard-55-thermal-environmental-conditions-for-human-occupancy' },
     { tag: 'EBA',  text: '經濟部能源署《能源統計手冊》與建築節能相關指引 — 空調與照明耗電占比、節能措施效益估算依據。', url: 'https://www.esist.org.tw/' },
     { tag: 'CURR', text: '教育部十二年國教科技領域課程綱要 — 生 J-C3 新興科技對社會的影響、資 J-A2 運算思維與科技應用。', url: 'https://cirn.moe.edu.tw/' },
+    { tag: 'REDC', text: '中華民國紅十字會 — 急救訓練資訊。', url: 'https://www.redcross.org.tw/home.jsp?serno=202202180035' },
   ],
 
   onshape: [
     { tag: 'OS',   text: 'Onshape Learning Center 官方學習資源（Sketch、Feature、Assembly、Drawings）。', url: 'https://learn.onshape.com/' },
     { tag: 'CAD',  text: '趙珩宇《Onshape 3D 雲端建模教學》（YouTube 播放清單，珩宇老師頻道）。', url: 'https://www.youtube.com/@henrychao521' },
+    { tag: 'ONS', text: 'Onshape Help — Mates 結合。', url: 'https://cad.onshape.com/help/Content/Assembly/mates.htm' },
+    { tag: 'ONS', text: 'Onshape Help — Extrude 擠出。', url: 'https://cad.onshape.com/help/Content/PartStudio/extrude.htm' },
+    { tag: 'ONS', text: 'Onshape Help — Mate connector 結合連接器。', url: 'https://cad.onshape.com/help/Content/Assembly/assembly_mate_connector.htm' },
   ],
 
   drill: [
     { tag: 'OSHA', text: 'U.S. OSHA 29 CFR 1910.243《Portable Powered Tools》— 手電鑽防護與使用規範。', url: 'https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.243' },
     { tag: 'MMS',  text: '《Machinery\'s Handbook》Industrial Press — 鑽孔切削速度 SFM 公式與材料對照表（軟木 200–500、鋁 200–300、鋼 30–80）。', url: 'https://industrialpress.com/' },
     { tag: 'OSHA-D', text: 'U.S. OSHA Hand and Power Tools booklet（OSHA 3080）— 手持動力工具一般安全規範。', url: 'https://www.osha.gov/Publications/OSHA3080/osha3080.html' },
+    { tag: 'MAKITA', text: 'Makita DF002G 充電式起子電鑽 產品資料（台灣牧田）。', url: 'https://makita.com.tw/wp-content/uploads/2020/10/DF002GD201-information.pdf' },
+    { tag: 'MAKITA', text: 'Makita DF012D 充電式起子機 產品資料（台灣牧田）。', url: 'https://makita.com.tw/wp-content/uploads/2017/10/df012-information.pdf' },
+    { tag: 'BOSCH', text: 'Bosch GSR 120-LI 鋰電起子電鑽（台灣博世）。', url: 'https://www.bosch-pt.com.tw/tw/zh/products/gsr-120-li-06019G80C1' },
+    { tag: 'B+D', text: 'BLACK+DECKER 支援中心 — 電鑽使用說明。', url: 'https://support.blackanddecker.com/hc/en-us' },
   ],
 
   'drill-press': [
     { tag: 'OSHA', text: 'U.S. OSHA 29 CFR 1910.212《General Requirements for All Machines》— 機座、護罩、緊急停機。', url: 'https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.212' },
     { tag: 'MMS',  text: '《Machinery\'s Handbook》— 鑽床主軸 SFM 公式與皮帶段位轉速對應。', url: 'https://industrialpress.com/' },
     { tag: 'POW',  text: 'Powermatic / JET 鑽床操作手冊（皮帶段位 vs RPM 對照表）。', url: 'https://www.powermatic.com/' },
+    { tag: 'OSHA', text: 'OSHA eTools《Woodworking: Drill Press》。', url: 'https://www.osha.gov/etools/woodworking/production/machines-tools/drill-press' },
+    { tag: 'WIKI', text: '維基百科〈高速鋼〉、〈回火〉。', url: 'https://zh.wikipedia.org/wiki/%E9%AB%98%E9%80%9F%E9%8B%BC' },
+    { tag: 'COMMONS', text: 'Wikimedia Commons《Tempering colors in steel》回火色對照圖。', url: 'https://commons.wikimedia.org/wiki/File:Tempering_colors_in_steel.jpg' },
   ],
 
   sander: [
     { tag: 'OSHA', text: 'U.S. OSHA 29 CFR 1910.243(c) — 砂輪與砂帶機防護裝置；OSHA Combustible Dust 標準（粉塵爆炸防範）。', url: 'https://www.osha.gov/combustible-dust' },
     { tag: 'ISO',  text: 'ISO 4287:1997《Geometrical Product Specifications — Surface texture》— Ra 粗糙度量測標準。', url: 'https://www.iso.org/standard/10132.html' },
     { tag: 'FAO',  text: 'FPInnovations / FAO 木材加工指南 — 不同砂紙號數對應的表面粗糙度 Ra 估算值。', url: 'https://fpinnovations.ca/' },
+    { tag: 'REXON', text: '力山 BD46A 桌上型圓盤砂帶機 產品頁。', url: 'https://rexon-taiwan.com.tw/portfolio-item/bd46a-4x6%E6%A1%8C%E4%B8%8A%E5%9E%8B%E5%9C%93%E7%9B%A4-%E7%A0%82%E5%B8%B6%E6%A9%9F/' },
+    { tag: 'REXON', text: '力山 BD69 圓盤砂帶機 產品頁。', url: 'https://rexon-taiwan.com.tw/portfolio-item/bd69-6x9%E5%9C%93%E7%9B%A4-%E7%A0%82%E5%B8%B6%E6%A9%9F%E9%99%84%E8%85%B3%E6%9E%B6/' },
+    { tag: 'WEN', text: 'WEN 6502T 砂帶／圓盤砂磨機 產品頁。', url: 'https://wenproducts.com/products/wen-6502t-4-3-amp-4-x-36-in-belt-and-6-in-disc-sander' },
+    { tag: 'RIKON', text: 'RIKON 50-112／50-120 砂帶圓盤砂磨機 產品頁。', url: 'https://rikontools.com/product/model-50-112-4-x-36-belt-6-disc-sander/' },
+    { tag: 'MAKITA', text: 'Makita 9403 砂帶機 產品頁。', url: 'https://www.makitatools.com/products/details/9403' },
+    { tag: 'LAW', text: '《職業安全衛生設施規則》第 56 條（研磨機）、第 188 條。', url: 'https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=N0060009&flno=56' },
+    { tag: 'OSHA', text: 'OSHA 3170《Safeguarding Equipment and Protecting Employees from Amputations》。', url: 'https://www.osha.gov/sites/default/files/publications/OSHA3170.pdf' },
+    { tag: 'OSHA', text: 'OSHA《Wood Dust: Hazards / Standards》。', url: 'https://www.osha.gov/wood-dust/hazards' },
+    { tag: 'CCOHS', text: '加拿大職業健康安全中心 CCOHS — 刃具與手套安全。', url: 'https://www.ccohs.ca/oshanswers/safety_haz/sharp_blades.html' },
+    { tag: 'OSHC', text: '香港職業安全健康局《正確選擇及使用防護手套》PDF。', url: 'https://www.oshc.org.hk/oshc_data/files/greencross/2021/July%202021%20%E2%80%93%2010_%20Proper%20Selection%20and%20Use%20of%20Protective%20Gloves%20for%20Mechanical%20hazard%20and%20Chemical%20hazard.pdf' },
   ],
 
   'structure-sim': [
     { tag: 'CNS',  text: 'CNS 560《建築用熱軋鋼板》、AISC《Steel Construction Manual》— 桁架構件規格與容許應力。', url: 'https://www.cnsonline.com.tw/' },
     { tag: 'TEXT', text: 'Beer & Johnston《Mechanics of Materials》— 桁架方法、節點法、截面法。', url: 'https://www.mheducation.com/' },
     { tag: 'BRIDG', text: '美國 ASCE《Bridge Engineering Handbook》— Pratt / Warren / Howe 桁架的歷史與適用情境。', url: 'https://ascelibrary.org/' },
+    { tag: 'NCREE', text: '國家地震工程研究中心《921 震災橋梁資料：烏溪橋震害情況》。', url: 'https://www.ncree.org/921_bridge_project/BridgeData/%E7%83%8F%E6%BA%AA%E6%A9%8B/%E7%83%8F%E6%BA%AA%E6%A9%8B%E9%9C%87%E5%AE%B3%E6%83%85%E6%B3%81.htm' },
+    { tag: 'CECI', text: '中華顧問工程司《工程叢書》— 921 橋梁震損與修復。', url: 'https://www.ceci.org.tw/book/58/ch58_2.htm' },
   ],
 
   'simple-machines': [
@@ -127,6 +153,10 @@ window.SOURCES = {
     { tag: 'TPC',  text: '台灣電力公司《年報》與《供電資訊》— 燃煤／燃氣／核能／再生能源發電組合。', url: 'https://www.taipower.com.tw/' },
     { tag: 'IEA',  text: 'International Energy Agency《Global Energy Review》、《Renewables 2024》— 各能源發電效率與 CO₂ 排放係數。', url: 'https://www.iea.org/' },
     { tag: 'EPA',  text: '環境部《溫室氣體排放係數管理表》— 台灣電力排放係數（gCO₂e/kWh）。', url: 'https://ghgregistry.moenv.gov.tw/' },
+    { tag: 'NTSEC', text: '國立臺灣科學教育館《科學之眼》能源展項。', url: 'https://www.ntsec.edu.tw/The_Eye_of_Science/exhibit02-02.html' },
+    { tag: 'NASA', text: 'NASA Science《Tour of the Electromagnetic Spectrum》。', url: 'https://science.nasa.gov/ems/01_intro/' },
+    { tag: 'MOEAEA', text: '經濟部能源署《電力排碳係數》（114 年度 0.467 kg CO₂e/度）。', url: 'https://www.moeaea.gov.tw/ecw/populace/content/ContentDesc.aspx?menu_id=26678' },
+    { tag: 'RSPRC', text: '臺大風險社會與政策研究中心 — 能源轉型研究。', url: 'https://rsprc.ntu.edu.tw/web/research/research_in.jsp?lang=tw&rp_id=RP1741944880461' },
   ],
 
   powertrain: [
@@ -134,12 +164,14 @@ window.SOURCES = {
     { tag: 'IEA-EV', text: 'IEA《Global EV Outlook 2024》— 電動車整體效率（電池→輪 ~85–90%）。', url: 'https://www.iea.org/reports/global-ev-outlook-2024' },
     { tag: 'EBA-T', text: '經濟部能源署《車輛能源消耗指南》、《電動車耗電量資料庫》。', url: 'https://www.energy-efficiency.org.tw/' },
     { tag: 'MOTC', text: '交通部運輸研究所《道路擁擠成本研究》、《道路交通安全統計》。', url: 'https://www.iot.gov.tw/' },
+    { tag: 'MOEAEA', text: '經濟部能源署《電力排碳係數》（114 年度 0.467 kg CO₂e/度）。', url: 'https://www.moeaea.gov.tw/ecw/populace/content/ContentDesc.aspx?menu_id=26678' },
   ],
 
   'hydraulic-arm': [
     { tag: 'ISO',  text: 'ISO 4413《Hydraulic Fluid Power — General Rules》— 液壓系統設計與安全規範。', url: 'https://www.iso.org/standard/45657.html' },
     { tag: 'TEXT', text: 'Esposito《Fluid Power with Applications》— 帕斯卡定律與液壓缸推力計算。', url: 'https://www.pearson.com/' },
     { tag: 'HLE-A', text: '翰林版生活科技附件 3《液壓手臂製作》紙模 + 注射器組件清單。', url: 'https://www.hle.com.tw/' },
+    { tag: 'VOLVO', text: 'Volvo CE《Understanding excavator hydraulics》— 挖土機液壓系統。', url: 'https://www.volvoce.com/united-states/en-us/resources/blog/2025/understanding-excavator-hydraulics-part-1/' },
   ],
 
   microcontroller: [
@@ -159,6 +191,7 @@ window.SOURCES = {
     { tag: 'IDEO', text: 'IDEO Design Kit《The Field Guide to Human-Centered Design》— 同理／定義／發想／原型／測試五階段。', url: 'https://www.designkit.org/' },
     { tag: 'STAN', text: 'Stanford d.school《Design Thinking Bootleg》— 設計思考工具卡與決策矩陣（Pugh Matrix）。', url: 'https://dschool.stanford.edu/resources' },
     { tag: 'BIOS', text: '各案例之原廠歷史頁面與當事人自傳（見每張案例卡片底部「📚 來源」欄）。', url: '' },
+    { tag: 'DC', text: 'Design Council《The Double Diamond》。', url: 'https://www.designcouncil.org.uk/our-resources/the-double-diamond/' },
   ],
 
   'hand-tools': [
