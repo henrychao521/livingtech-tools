@@ -23,6 +23,14 @@ window.Interactions = (function() {
     const root = typeof container === 'string' ? document.querySelector(container) : container;
     if (!root) return;
 
+    // 作答紀錄（sheet-log.js）：題目＝這組步驟（原始正確順序），作答＝第一次按「檢查答案」時排出的順序；
+    // 通關時送出，沒通關就離開頁面也會送（sendOnLeave）。題號用「工具.模組.order」，同頁第二組起加序號
+    const sheetKey = opts.sheetKey || ('order' + (SequencePuzzle._n = (SequencePuzzle._n || 0) + 1 > 1 ? SequencePuzzle._n : ''));
+    const SLQ = window.SheetLog && window.SheetLog.quiz({
+      kind: 'exercise', sendOnLeave: true,
+      questions: [{ key: sheetKey, t: 'order', stem: title, items }]
+    });
+
     // 打亂步驟
     // Fisher–Yates：sort(() => Math.random() - 0.5) 的分布不均，某些排列出現機率偏高
     const fisherYates = arr => { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr; };
@@ -114,6 +122,7 @@ window.Interactions = (function() {
 
     root.querySelector('.sp-check').addEventListener('click', () => {
       const correct = userOrder.every((v, i) => v === i);
+      if (SLQ) { SLQ.answer(sheetKey, userOrder.slice()); if (correct) SLQ.finish(); }
       if (correct) {
         feedbackEl.innerHTML = '<span style="color:var(--success);font-weight:700">✓ 排序正確！</span>';
         listEl.querySelectorAll('.sp-item').forEach(li => {
@@ -152,11 +161,17 @@ window.Interactions = (function() {
   // 2. 熱點獵殺：給一張圖，學生點出所有「問題位置」
   //    options: { container, image, hotspots: [{x, y, r, label}], targetText, onAllFound }
   // ============================================================
-  function HotspotHunt({ container, imageHTML, hotspots, instruction = '點出圖中所有問題位置', onAllFound }) {
+  function HotspotHunt({ container, imageHTML, hotspots, instruction = '點出圖中所有問題位置', onAllFound, sheetKey = 'hunt' }) {
     const root = typeof container === 'string' ? document.querySelector(container) : container;
     if (!root) return;
 
     const found = new Set();
+    // 作答紀錄：整張圖算一題（遊戲），全部找到時送出；點到沒問題的地方算一次失誤，零失誤才算「一次就對」
+    let misses = 0;
+    const SLQ = window.SheetLog && window.SheetLog.quiz({
+      kind: 'game', sendOnLeave: true,
+      questions: [{ key: sheetKey, t: 'game', stem: instruction + '：' + hotspots.map(h => h.label).join('、') }]
+    });
 
     root.innerHTML = `
       <div class="hh-wrapper" style="background:var(--bg-soft);border-radius:14px;padding:18px;border:1px solid var(--border)">
@@ -199,6 +214,7 @@ window.Interactions = (function() {
         if (found.size === hotspots.length) {
           if (typeof SoundFX !== 'undefined') SoundFX.win();
           feedbackEl.innerHTML = `<div style="background:var(--success-light);color:#15803d;padding:12px;border-radius:8px;border-left:4px solid var(--success);font-weight:700">🏆 全部找到！你掌握了找出問題的能力。</div>`;
+          if (SLQ) { SLQ.answer(sheetKey, misses === 0, { tries: misses + 1 }); SLQ.finish(); }
           if (onAllFound) onAllFound();
         }
       });
@@ -208,6 +224,7 @@ window.Interactions = (function() {
     // 點到空處 → 提示
     imgEl.addEventListener('click', e => {
       if (e.target.classList.contains('hh-dot')) return;
+      if (found.size < hotspots.length) misses++;
       const rect = imgEl.getBoundingClientRect();
       const cx = ((e.clientX - rect.left) / rect.width * 100);
       const cy = ((e.clientY - rect.top) / rect.height * 100);
