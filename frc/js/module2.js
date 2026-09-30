@@ -24,9 +24,12 @@ SCENARIOS.forEach((s, i) => {
   div.innerHTML = `<h4>${s.q}</h4><div class="choice-grid">${['a', 'b', 'c', 'd'].filter(k => s[k]).map(k => `<button class="choice" data-q="${i}" data-c="${k}">${k.toUpperCase()}. ${s[k]}</button>`).join('')}</div><div class="feedback-slot"></div>`;
   list.appendChild(div);
 });
+// 作答紀錄（js/sheet-log.js）：情境題全部答完送一筆；重新挑戰＝新的一份
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', questions: SheetLog.fromScenarios(SCENARIOS) });
 const answered = new Set();
 // 未達門檻時重新挑戰：清掉本測驗的作答狀態，不必重新整理網頁
 function resetQuiz() {
+  if (SLQ) SLQ.reset();
   score = 0;
   answered.clear();
   list.querySelectorAll('.choice').forEach(b => { b.disabled = false; b.classList.remove('correct', 'wrong'); });
@@ -41,6 +44,7 @@ list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', ()
   if (answered.has(i)) return;
   const s = SCENARIOS[i];
   const correct = btn.dataset.c === s.correct;
+  if (SLQ) SLQ.answer('s' + i, ['a', 'b', 'c', 'd'].indexOf(btn.dataset.c));
   const parent = btn.closest('.scenario');
   parent.querySelectorAll('.choice').forEach(b => { b.disabled = true; if (b.dataset.c === s.correct) b.classList.add('correct'); if (b === btn && !correct) b.classList.add('wrong'); });
   parent.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${correct ? 'success' : 'error'}">${correct ? '✓' : '✗'} ${s.explain}</div>`;
@@ -49,6 +53,7 @@ list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', ()
   document.getElementById('score-display').textContent = score;
   document.getElementById('progress-bar').style.width = score + '%';
   if (answered.size === SCENARIOS.length) {
+    if (SLQ) SLQ.finish({ score, max: SCENARIOS.length * 10 });
     if (score >= 90) {
       document.getElementById('scenario-result').innerHTML = `<div class="feedback success" style="margin-top:20px"><strong>🏆 ${score} 分通過！</strong></div>`;
       document.getElementById('unlock').classList.remove('hidden');

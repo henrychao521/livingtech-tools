@@ -165,6 +165,10 @@ const SCENARIOS = [
   },
 ];
 
+// 作答紀錄（js/sheet-log.js）：情境題全部答完送一筆；重新挑戰＝新的一份
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', questions: SheetLog.fromScenarios(SCENARIOS) });
+// 環境配置關算一題遊戲（放錯不該放的物品算失誤），完成時單獨送一筆
+const SLP = window.SheetLog && SheetLog.quiz({ kind: 'game', questions: [{ key: 'ppe', t: 'game', stem: '焊接環境配置：護目鏡、圍裙、通風、烙鐵架放到對應位置；紙張、徒手、飲料杯不能放' }] });
 const items = document.querySelectorAll('.draggable');
 const zones = document.querySelectorAll('.svg-dropzone'); // SVG-based dropzones now
 const sceneEl = document.getElementById('scene');
@@ -302,6 +306,7 @@ function showFeedback(msg, type) {
 function checkDressupComplete() {
   const placed = document.querySelectorAll('.draggable.placed').length;
   if (placed === 4) {
+    if (SLP && !SLP.sent) { SLP.answer('ppe', dressupErrors === 0, { tries: dressupErrors + 1 }); SLP.finish(); }
     if (typeof SoundFX !== 'undefined') SoundFX.unlock();
     document.getElementById('dressup-feedback').innerHTML =
       `<div class="feedback success">🎉 環境配置完成！${dressupErrors > 0 ? `（過程中錯誤 ${dressupErrors} 次，這些都是常見的危險行為）` : '一次到位，太棒了'}</div>`;
@@ -339,6 +344,7 @@ function answerScenario(btn) {
   if (answered.has(i)) return;
   const s = SCENARIOS[i];
   const correct = choice === s.correct;
+  if (SLQ) SLQ.answer('s' + i, ['a', 'b', 'c', 'd'].indexOf(choice));
   const parent = btn.closest('.scenario');
   parent.querySelectorAll('.choice').forEach(b => {
     b.disabled = true;
@@ -358,6 +364,7 @@ function checkAllDone() {
   if (answered.size === SCENARIOS.length) {
     const result = document.getElementById('scenario-result');
     const total = dressupScore + scenarioScore;
+    if (SLQ) SLQ.finish({ score: scenarioScore, max: SCENARIOS.length * 10 });
     if (total >= 120) {
       result.innerHTML = `<div class="feedback success" style="font-size:16px;margin-top:20px"><strong>🏆 你以 ${Math.round(total)} 分通過了焊接安全規範闖關！</strong></div>`;
       document.getElementById('unlock').classList.remove('hidden');
@@ -376,6 +383,7 @@ function checkAllDone() {
 
 // 情境題未達門檻：只清掉情境題作答狀態重新作答，環境配置關分數保留
 function resetScenarios() {
+  if (SLQ) SLQ.reset();
   scenarioScore = 0;
   answered.clear();
   const list = document.getElementById('scenario-list');

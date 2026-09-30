@@ -50,6 +50,9 @@ STEPS.forEach((s, i) => {
 
 // 測驗
 const quizDiv = document.getElementById('puzzle-quiz');
+// 作答紀錄（js/sheet-log.js）：全部答完送一筆
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', questions: QUIZ.map((Q, i) => ({
+  key: 'q' + i, t: 'single', stem: Q.q, options: Q.opts, answer: Q.correct })) });
 const answeredSet = new Set();
 let correctCount = 0;
 QUIZ.forEach((Q, i) => {
@@ -72,6 +75,7 @@ quizDiv.querySelectorAll('.p-opt').forEach(btn => {
     const Q = QUIZ[qIdx];
     const isRight = pick === Q.correct;
     if (isRight) correctCount++;
+    if (SLQ) { SLQ.answer('q' + qIdx, pick); if (answeredSet.size === QUIZ.length) SLQ.finish({ score: correctCount, max: QUIZ.length }); }
 
     quizDiv.querySelectorAll(`.p-opt[data-q="${qIdx}"]`).forEach((b, j) => {
       b.style.cursor = 'default';

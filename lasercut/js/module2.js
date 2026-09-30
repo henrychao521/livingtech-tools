@@ -26,6 +26,10 @@ const STEPS = [
 ];
 
 let order = [];
+// 作答紀錄（js/sheet-log.js）：排序題（a／k 用步驟原始序號），記第一次按「檢查順序」排出的順序與檢查次數；
+// 排對時送一筆，沒排對就離開頁面也會送
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'exercise', sendOnLeave: true, questions: [{
+  key: 'order', t: 'order', stem: 'RDWorks 雷射切割九步驟排序', items: STEPS.map(s => s.t) }] });
 const listEl = document.getElementById('steps');
 const progEl = document.getElementById('prog'), nextBtn = document.getElementById('next-btn');
 let solved = !!loadP().module2;
@@ -64,6 +68,7 @@ function checkOrder() {
   const correct = STEPS.map(s => s.id);
   const marks = order.map((id, i) => id === correct[i]);
   const nRight = marks.filter(Boolean).length;
+  if (SLQ) { SLQ.answer('order', order.map(id => STEPS.findIndex(s => s.id === id))); if (nRight === STEPS.length) SLQ.finish(); }
   render(marks);
   const v = document.getElementById('verdict');
   if (nRight === STEPS.length) {

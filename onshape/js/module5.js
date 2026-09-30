@@ -119,6 +119,9 @@ SHUFFLED_QUESTIONS.forEach((Q, i) => {
 });
 
 const answeredSet = new Set();
+// 作答紀錄（js/sheet-log.js）：每題畫面只抽 4 個選項，紀錄的選項代號一律用 8 種錯誤的原始順序（A–H）；8 題答完送一筆
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', questions: SHUFFLED_QUESTIONS.map((Q, i) => ({
+  key: 'q' + i, t: 'single', stem: Q.q, options: ERRORS.map(e => e.name), answer: ERRORS.findIndex(e => e.id === Q.id) })) });
 quizDiv.querySelectorAll('.e-opt').forEach(btn => {
   btn.addEventListener('click', () => {
     const qIdx = parseInt(btn.dataset.q);
@@ -129,6 +132,7 @@ quizDiv.querySelectorAll('.e-opt').forEach(btn => {
     const isRight = pick === cid;
     if (isRight) correct++;
     answered++;
+    if (SLQ) { SLQ.answer('q' + qIdx, ERRORS.findIndex(e => e.id === pick)); if (answered === SHUFFLED_QUESTIONS.length) SLQ.finish({ score: correct, max: SHUFFLED_QUESTIONS.length }); }
 
     quizDiv.querySelectorAll(`.e-opt[data-q="${qIdx}"]`).forEach(b => {
       b.style.cursor = 'default';

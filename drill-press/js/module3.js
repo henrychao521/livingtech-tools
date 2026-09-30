@@ -454,7 +454,12 @@ if (typeof SequencePuzzle === 'function') {
     draw();
   });
 
+  // 作答紀錄（js/sheet-log.js）：情境判斷一題，只記這次開頁「第一次」的選擇（之後重玩不再送）
+  const SLK = window.SheetLog && SheetLog.quiz({ kind: 'game', questions: [{ key: 'chuckkey', t: 'scenario',
+    stem: '裝好鑽頭準備開機，夾頭鑰匙還插著，你的選擇是？', options: ['先確認鑰匙已拔下，再開機', '直接開機'], answer: 0 }] });
+  const logKey = pick => { if (SLK && !SLK.sent) { SLK.answer('chuckkey', pick); SLK.finish(); } };
   document.getElementById('ck-wrong')?.addEventListener('click', () => {
+    logKey(1);
     stage = 'wrong_anim';
     flashAlpha = 0.6;
     document.getElementById('ck-decision').style.display = 'none';
@@ -465,6 +470,7 @@ if (typeof SequencePuzzle === 'function') {
   });
 
   document.getElementById('ck-correct')?.addEventListener('click', () => {
+    logKey(0);
     stage = 'correct_anim';
     document.getElementById('ck-decision').style.display = 'none';
     document.getElementById('ck-label').textContent = '✅ 拔下鑰匙，放回工具盒...';

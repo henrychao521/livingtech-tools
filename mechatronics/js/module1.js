@@ -102,12 +102,16 @@ document.getElementById('motorPick').addEventListener('click', e => {
   renderMotors(); updateProg();
 });
 
+// 作答紀錄（js/sheet-log.js）：配對題（選項＝三種馬達原始順序），3 題答完送一筆；只記這次開頁新作答的題目，沒答完就離開也會送已作答的部分
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', sendOnLeave: true, questions: QUESTIONS.map((item, i) => ({
+  key: 'q' + i, t: 'match', stem: item.q, options: MOTORS.map(m => m.name), answer: MOTORS.findIndex(m => m.id === item.a) })) });
 document.getElementById('quiz').addEventListener('click', e => {
   const b = e.target.closest('button[data-q]'); if (!b || b.disabled) return;
   const qi = b.dataset.q; if (answered.has(qi)) return;
   answered.set(qi, b.dataset.m);
   const p = loadP(); p.module1_ans = Object.fromEntries(answered); saveP(p);
   const ok = b.dataset.m === QUESTIONS[+qi].a;
+  if (SLQ) { SLQ.answer('q' + qi, MOTORS.findIndex(m => m.id === b.dataset.m)); if (answered.size === QUESTIONS.length) SLQ.finish(); }
   if (typeof SoundFX !== 'undefined') SoundFX.pop();
   if (typeof showToast === 'function') showToast(ok ? '✅ 答對了' : '❌ 再想想它需要什麼特性', ok ? 'good' : '');
   renderQuiz(); updateProg();

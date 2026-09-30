@@ -555,7 +555,12 @@ if (typeof SequencePuzzle === 'function') {
     }, 2800);
   });
 
+  // 作答紀錄（js/sheet-log.js）：情境判斷一題，只記這次開頁「第一次」的選擇（之後重玩不再送）
+  const SLK = window.SheetLog && SheetLog.quiz({ kind: 'game', questions: [{ key: 'kickback', t: 'scenario',
+    stem: '手電鑽鑽到一半突然卡住、機身開始反轉，你的第一個反應？', options: ['繼續施力硬鑽', '立刻放開扳機'], answer: 1 }] });
+  const logKick = pick => { if (SLK && !SLK.sent) { SLK.answer('kickback', pick); SLK.finish(); } };
   document.getElementById('kb-wrong')?.addEventListener('click', () => {
+    logKick(0);
     document.getElementById('kb-decision').style.display = 'none';
     stage = 'wrong'; kickAngle = 0; tick();
     document.getElementById('kb-label').textContent = '💥 錯誤！電鑽失控旋轉！';
@@ -575,6 +580,7 @@ if (typeof SequencePuzzle === 'function') {
   });
 
   document.getElementById('kb-correct')?.addEventListener('click', () => {
+    logKick(1);
     document.getElementById('kb-decision').style.display = 'none';
     cancelAnimationFrame(animId);
     stage = 'correct'; draw();

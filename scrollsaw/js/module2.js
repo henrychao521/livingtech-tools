@@ -96,6 +96,12 @@ const SCENARIOS = [
   },
 ];
 
+// 作答紀錄（js/sheet-log.js）：服儀檢查算一題（遊戲，零失誤才算一次就對）＋ 7 題情境題，全部答完送一筆
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', questions: [
+  { key: 'ppe', t: 'game', stem: '服儀檢查：把正確的安全配備穿到對應部位（手套、手機、項鍊不是安全配備）' },
+  ...SheetLog.fromScenarios(SCENARIOS),
+] });
+
 // === 拖曳邏輯 ===
 const items = document.querySelectorAll('.draggable');
 const zones = document.querySelectorAll('.dropzone');
@@ -205,6 +211,7 @@ function checkDressupComplete() {
   const placed = document.querySelectorAll('.draggable.placed').length;
   if (placed === 4) {
     if (typeof SoundFX !== 'undefined') SoundFX.unlock();
+    if (SLQ && !SLQ.has('ppe')) SLQ.answer('ppe', dressupErrors === 0, { tries: dressupErrors + 1 });
     document.getElementById('dressup-feedback').innerHTML =
       `<div class="feedback success">🎉 服儀檢查完成！${dressupErrors > 0 ? `（過程中錯誤 ${dressupErrors} 次，注意這些是常見的危險裝備）` : '一次到位，太棒了'}</div>`;
     renderScenarios();
@@ -242,6 +249,7 @@ function answerScenario(btn) {
   if (answered.has(i)) return;
   const s = SCENARIOS[i];
   const correct = choice === s.correct;
+  if (SLQ) SLQ.answer('s' + i, ['a', 'b', 'c', 'd'].indexOf(choice));
   const parent = btn.closest('.scenario');
   parent.querySelectorAll('.choice').forEach(b => {
     b.disabled = true;
@@ -265,6 +273,7 @@ function checkAllDone() {
   if (answered.size === SCENARIOS.length) {
     const result = document.getElementById('scenario-result');
     const total = dressupScore + scenarioScore;
+    if (SLQ) SLQ.finish({ score: Math.round(total), max: 100 });
     if (total >= 95) {
       result.innerHTML = `<div class="feedback success" style="font-size:16px;margin-top:20px"><strong>🏆 你以 ${Math.round(total)} 分通過了安全規範闖關！</strong></div>`;
       document.getElementById('unlock').classList.remove('hidden');

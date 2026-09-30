@@ -30,11 +30,15 @@ const QUIZ = [
 ];
 
 const quizEl = document.getElementById('quiz');
+// 作答紀錄（js/sheet-log.js）：全部答完送一筆；「重新作答」＝新的一份
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', questions: QUIZ.map((q, i) => ({
+  key: 'q' + i, t: 'single', stem: q.q, options: q.options, answer: q.correct })) });
 const PASS = 2;   // 門檻：3 題答對 2 題
 let answered = new Set();
 let quizCorrect = 0;
 
 function renderQuiz() {
+  if (SLQ && SLQ.count()) SLQ.reset();
   answered = new Set();
   quizCorrect = 0;
   quizEl.innerHTML = '';
@@ -59,6 +63,7 @@ function onChoice(e) {
   const i = parseInt(btn.dataset.q);
   if (answered.has(i)) return;
   const correct = parseInt(btn.dataset.c) === QUIZ[i].correct;
+  if (SLQ) SLQ.answer('q' + i, parseInt(btn.dataset.c));
   const parent = btn.closest('.quiz-item');
   parent.querySelectorAll('.choice').forEach((b, k) => {
     b.disabled = true;
@@ -72,6 +77,7 @@ function onChoice(e) {
 }
 
 function finish() {
+  if (SLQ) SLQ.finish({ score: quizCorrect, max: QUIZ.length });
   const p = loadP();
   p.module5_quiz_score = Math.max(quizCorrect, p.module5_quiz_score || 0);
   const result = document.getElementById('quiz-result');

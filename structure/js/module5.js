@@ -159,6 +159,8 @@ function openCase(c, card) {
 
 /* ── 診斷測驗 ────────────────────────────────────────────── */
 const quizList = document.getElementById('quiz-list');
+// 作答紀錄（js/sheet-log.js）：8 題答完送一筆
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', questions: SheetLog.fromScenarios(QUIZ, 'q', 'single') });
 QUIZ.forEach((q, i) => {
   const div = document.createElement('div');
   div.className = 'scenario';
@@ -176,6 +178,7 @@ quizList.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click'
   if (quizAnswered.has(i)) return;
   const q = QUIZ[i];
   const correct = btn.dataset.c === q.correct;
+  if (SLQ) SLQ.answer('q' + i, ['a', 'b', 'c', 'd'].indexOf(btn.dataset.c));
   const parent = btn.closest('.scenario');
   parent.querySelectorAll('.choice').forEach(b => {
     b.disabled = true;
@@ -188,6 +191,7 @@ quizList.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click'
   quizAnswered.add(i);
 
   if (quizAnswered.size === QUIZ.length) {
+    if (SLQ) SLQ.finish({ score: quizScore, max: QUIZ.length * 10 });
     const resultDiv = document.getElementById('quiz-result');
     if (quizScore >= 60) {
       resultDiv.innerHTML = `<div class="feedback success" style="margin-top:20px"><strong>🏆 ${quizScore} 分！橋梁失效案例診斷通過！</strong></div>`;

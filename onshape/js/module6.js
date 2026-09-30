@@ -20,6 +20,10 @@ function renderQuiz(containerId, questions, progressField, requireCorrect, onDon
   const div = document.getElementById(containerId);
   if (!div) return;
   const state = { answered: new Set(), correct: 0 };
+  // 作答紀錄（js/sheet-log.js）：每組題目全部答完送一筆；題號用組名（measure／mate）＋ 題序
+  const key = containerId.replace(/-quiz$/, '');
+  const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', questions: questions.map((Q, i) => ({
+    key: key + i, t: 'single', stem: Q.q, options: Q.opts, answer: Q.correct })) });
   questions.forEach((Q, i) => {
     const card = document.createElement('div');
     card.style.cssText = 'background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:14px';
@@ -40,6 +44,7 @@ function renderQuiz(containerId, questions, progressField, requireCorrect, onDon
       const Q = questions[qIdx];
       const isRight = pick === Q.correct;
       if (isRight) state.correct++;
+      if (SLQ) { SLQ.answer(key + qIdx, pick); if (state.answered.size === questions.length) SLQ.finish({ score: state.correct, max: questions.length }); }
 
       div.querySelectorAll(`.q-opt[data-q="${qIdx}"]`).forEach((b, j) => {
         b.style.cursor = 'default';

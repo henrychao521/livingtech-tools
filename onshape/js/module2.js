@@ -36,6 +36,8 @@ let passed = 0;
 let answered = new Set();
 
 const container = document.getElementById('safety-quiz');
+// 作答紀錄（js/sheet-log.js）：情境題全部答完送一筆
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', questions: SheetLog.fromScenarios(SCENARIOS) });
 SCENARIOS.forEach((s, i) => {
   const div = document.createElement('div');
   div.style.cssText = 'background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:14px';
@@ -57,6 +59,7 @@ container.querySelectorAll('.sc-opt').forEach(btn => {
     const correct = SCENARIOS[qIdx].correct;
     const isRight = pick === correct;
     if (isRight) passed++;
+    if (SLQ) { SLQ.answer('s' + qIdx, ['a', 'b', 'c', 'd'].indexOf(pick)); if (answered.size === SCENARIOS.length) SLQ.finish({ score: passed, max: SCENARIOS.length }); }
 
     container.querySelectorAll(`.sc-opt[data-q="${qIdx}"]`).forEach(b => {
       const p = b.dataset.pick;

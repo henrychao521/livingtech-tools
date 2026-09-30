@@ -369,6 +369,9 @@ if (typeof Interactions !== 'undefined') {
   const container = document.getElementById('temp-quiz-list');
   let tqScore = 0;
   const tqAnswered = new Set();
+  // 作答紀錄（js/sheet-log.js）：4 題答完送一筆
+  const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', questions: TQ.map((q, i) => ({
+    key: 'temp' + i, t: 'scenario', stem: q.situation, options: q.options, answer: q.correct })) });
 
   TQ.forEach((q, i) => {
     const div = document.createElement('div');
@@ -395,6 +398,7 @@ if (typeof Interactions !== 'undefined') {
       if (tqAnswered.has(i)) return;
       tqAnswered.add(i);
       const correct = c === TQ[i].correct;
+      if (SLQ) SLQ.answer('temp' + i, c);
       // .tq-feedback 在卡片層，而 closest('div[style]') 會停在選項的 flex 容器，
       // 於是 fb.innerHTML 每次都丟例外，測驗不計分也不顯示解說。
       let parent = btn.parentElement;
@@ -425,6 +429,7 @@ if (typeof Interactions !== 'undefined') {
       else if (typeof SoundFX !== 'undefined') SoundFX.error();
 
       if (tqAnswered.size === TQ.length) {
+        if (SLQ) SLQ.finish({ score: tqScore, max: TQ.length });
         const result = document.getElementById('temp-quiz-result');
         const pct = Math.round(tqScore / TQ.length * 100);
         const pass = pct >= 75;

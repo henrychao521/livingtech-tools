@@ -489,6 +489,9 @@ if ('IntersectionObserver' in window) {
   let currentIdx = 0;
   let answered = 0;
   let correct = 0;
+  // 作答紀錄（js/sheet-log.js）：畫面選項有洗牌，紀錄換回原始順序；5 個案例答完送一筆，沒做完就離開也會送已作答的部分
+  const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', sendOnLeave: true, questions: CASES.map((c, i) => ({
+    key: 'calib' + i, t: 'single', stem: c.question, options: c.options.map(o => o.text), answer: c.options.findIndex(o => o.correct) })) });
 
   // 選項顯示時隨機排列（Fisher–Yates）；判分看選項物件的 correct，與顯示位置無關
   function shuffled(arr) {
@@ -515,12 +518,14 @@ if ('IntersectionObserver' in window) {
       </div>
     `;
 
+    const shown = shuffled(c.options);
     Interactions.DiagnosisQuiz({
       container: '#cq-content',
       question: c.question,
       image: cubeSVG(c.cube),
-      options: shuffled(c.options),
-      onAnswer: (isCorrect) => {
+      options: shown,
+      onAnswer: (isCorrect, pickIdx) => {
+        if (SLQ) { SLQ.answer('calib' + currentIdx, c.options.indexOf(shown[pickIdx])); if (currentIdx === CASES.length - 1) SLQ.finish({ score: correct + (isCorrect ? 1 : 0), max: CASES.length }); }
         answered = Math.max(answered, currentIdx + 1);
         if (isCorrect) correct++;   // DiagnosisQuiz 已擋重複作答，每題最多加一次
         document.getElementById('cq-nav').innerHTML = `

@@ -47,6 +47,9 @@ document.getElementById('xrCards').innerHTML = TYPES.map(t => `
 
 // ---------- 測驗 ----------
 const quizEl = document.getElementById('quiz');
+// 作答紀錄（js/sheet-log.js）：配對題（選項＝AR／MR／VR／XR 原始順序），8 題答完送一筆；只記這次開頁新作答的題目，沒答完就離開也會送已作答的部分
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', sendOnLeave: true, questions: QUESTIONS.map((item, i) => ({
+  key: 'q' + i, t: 'match', stem: item.q, options: TYPES.map(t => t.name), answer: TYPES.findIndex(t => t.id === item.a) })) });
 
 function renderQuiz() {
   quizEl.innerHTML = QUESTIONS.map((item, i) => {
@@ -100,6 +103,7 @@ quizEl.addEventListener('click', e => {
   saveP(p);
 
   const ok = pick === QUESTIONS[+qi].a;
+  if (SLQ) { SLQ.answer('q' + qi, TYPES.findIndex(t => t.id === pick)); if (allDone) SLQ.finish(); }
   if (typeof SoundFX !== 'undefined') ok ? SoundFX.pop() : SoundFX.error();
   if (typeof showToast === 'function') showToast(ok ? '✅ 答對了' : '❌ 再看一次判斷關鍵', ok ? 'good' : '');
   if (allDone) {

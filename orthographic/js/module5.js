@@ -166,6 +166,7 @@ function buildRound1() {
       opt.addEventListener('click', () => {
         if (card.querySelector('.opt-cell.correct') || card.querySelector('.opt-cell.wrong.disabled')) return;
         const ok = opt.dataset.o === q.ans;
+        ortLog('r1q' + i, q.options.indexOf(opt.dataset.o));
         card.querySelectorAll('.opt-cell').forEach(x => {
           x.classList.add('disabled');
           if (x.dataset.o === q.ans) x.classList.add('correct');
@@ -241,6 +242,7 @@ function buildRound2() {
       opt.addEventListener('click', () => {
         if (card.querySelector('.opt-cell.correct') || card.querySelector('.opt-cell.wrong.disabled')) return;
         const ok = opt.dataset.o === ansSvg;
+        ortLog('r2q' + i, q.options.indexOf(opt.dataset.o));
         card.querySelectorAll('.opt-cell').forEach(x => {
           x.classList.add('disabled');
           if (x.dataset.o === ansSvg) x.classList.add('correct');
@@ -555,6 +557,7 @@ function initStackGame(qi, q) {
     document.getElementById(`stk-match-${qi}`).textContent = pct + '%';
     document.getElementById(`stk-bar-${qi}`).style.width = pct + '%';
     const statusEl = document.getElementById(`stk-status-${qi}`);
+    if (pct === 100 && SLQ && !SLQ.has('r3q' + qi)) ortLog('r3q' + qi, !gaveUp);
     if (pct === 100 && gaveUp) {
       statusEl.textContent = '已自動完成（放棄，不計分）';
       statusEl.style.color = '#94A3B8';
@@ -685,6 +688,18 @@ function switchRound(r) {
 document.querySelectorAll('.round-tab').forEach(t => t.addEventListener('click', () => switchRound(t.dataset.r)));
 
 state.total = ROUND1.length + ROUND2.length + ROUND3.length;
+// 作答紀錄（js/sheet-log.js）：三回合合成一份（第 1、2 回合是看圖選擇題，答錯可再試，記第一次選的答案與嘗試次數；
+// 第 3 回合堆方塊算遊戲題，完美匹配＝過關、按「自動完成（放棄）」＝未過關）。全部做完送一筆，中途離開也會送已做的部分
+const ORT_VIEW_NAMES = { square: '正方形', rect: '長方形', circle: '圓形', triangle: '三角形', 'circle-dot': '圓形＋中心點',
+  'l-shape': 'L 形', 't-shape': 'T 形', 'rect-tall': '直立長方形', 'rect-split': '長方形＋分隔線' };
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'game', sendOnLeave: true, questions: [
+  ...ROUND1.map((q, i) => ({ key: 'r1q' + i, t: 'single', stem: '看正視、側視、俯視，這是什麼 3D 物件？（' + q.views.map(v => ORT_VIEW_NAMES[v] || v).join('／') + '）',
+    options: q.options.map(o => SHAPES[o].label), answer: q.options.indexOf(q.ans) })),
+  ...ROUND2.map((q, i) => ({ key: 'r2q' + i, t: 'single', stem: SHAPES[q.shape].label + ' 缺失的' + VIEW_KEY[q.missing] + '是哪一個？',
+    options: q.options.map(o => ORT_VIEW_NAMES[o] || o), answer: q.options.indexOf(SHAPES[q.shape][q.missing]) })),
+  ...ROUND3.map((q, i) => ({ key: 'r3q' + i, t: 'game', stem: '方塊堆疊：' + q.label + '（三視圖完全符合目標）' })),
+] });
+function ortLog(key, v) { if (!SLQ) return; SLQ.answer(key, v); if (SLQ.count() === state.total) SLQ.finish({ score: state.score, max: state.total }); }
 document.getElementById('total').textContent = state.total;
 buildRound1();
 buildRound2();

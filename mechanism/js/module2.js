@@ -60,6 +60,8 @@ const QUIZ = [
 ];
 
 const quizEl = document.getElementById('quiz');
+// 作答紀錄（js/sheet-log.js）：全部答完送一筆
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', questions: QUIZ.map((q, i) => ({ key: 'q' + i, t: 'single', stem: q.q + ' 屬於哪一種運動？', options: MOTIONS.map(m => m.name), answer: MOTIONS.findIndex(m => m.id === q.ans) })) });
 const progText = document.getElementById('prog');
 const nextBtn = document.getElementById('next-btn');
 let answered = new Set();
@@ -79,6 +81,7 @@ quizEl.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', 
   const i = parseInt(btn.dataset.q);
   if (answered.has(i)) return;
   const correct = btn.dataset.c === QUIZ[i].ans;
+  if (SLQ) SLQ.answer('q' + i, MOTIONS.findIndex(m => m.id === btn.dataset.c));
   const parent = btn.closest('.quiz-item');
   parent.querySelectorAll('.choice').forEach(b => {
     b.disabled = true;
@@ -90,6 +93,7 @@ quizEl.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', 
   answered.add(i);
   progText.textContent = `已答 ${answered.size}/${QUIZ.length} 題`;
   if (answered.size === QUIZ.length) {
+    if (SLQ) SLQ.finish({ score: quizCorrect, max: QUIZ.length });
     const p = loadP();
     p.module2 = true;
     p.module2_score = quizCorrect;

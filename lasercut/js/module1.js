@@ -58,6 +58,10 @@ const seen = new Set(loadP().m1_seen || []);
 const checked = new Set(loadP().m1_check || []);
 const answered = new Map(Object.entries(loadP().m1_ans || {}));
 const progEl = document.getElementById('prog'), nextBtn = document.getElementById('next-btn');
+// 作答紀錄（js/sheet-log.js）：答錯可改選，記第一次選的答案與嘗試次數；只記這次開頁新作答的題目，
+// 三題都答對時送一筆，沒答完就離開頁面也會送已作答的部分
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', sendOnLeave: true, questions: QUIZ.map((item, i) => ({
+  key: 'q' + i, t: 'scenario', stem: item.q, options: item.opts.map(o => o.t), answer: item.opts.findIndex(o => o.ok) })) });
 
 function renderBan() {
   document.getElementById('banPick').innerHTML = BANNED.map(b =>
@@ -152,6 +156,10 @@ document.getElementById('quiz').addEventListener('click', e => {
   answered.set(qi, b.dataset.o);
   const p = loadP(); p.m1_ans = Object.fromEntries(answered); saveP(p);
   const ok = QUIZ[+qi].opts[+b.dataset.o].ok;
+  if (SLQ) {
+    SLQ.answer('q' + qi, +b.dataset.o);
+    if ([...answered].every(([k, v]) => QUIZ[+k].opts[+v].ok) && answered.size === QUIZ.length) SLQ.finish();
+  }
   if (typeof SoundFX !== 'undefined') SoundFX.pop();
   if (typeof showToast === 'function') showToast(ok ? '✅ 判斷正確' : '❌ 看看下面的說明', ok ? 'good' : '');
   renderQuiz();

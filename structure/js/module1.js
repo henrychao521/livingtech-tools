@@ -267,6 +267,9 @@ const UNIT_QUIZ = [
 const uQuizEl = document.getElementById('unit-quiz');
 if (uQuizEl) {
   const uAnswered = new Set(); let uCorrect = 0;
+  // 作答紀錄（js/sheet-log.js）：3 題答完送一筆
+  const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', questions: UNIT_QUIZ.map((q, i) => ({
+    key: 'unit' + i, t: 'single', stem: q.q, options: q.opts, answer: q.ans })) });
   UNIT_QUIZ.forEach((q, i) => {
     const div = document.createElement('div');
     div.style.cssText = 'background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px';
@@ -279,12 +282,14 @@ if (uQuizEl) {
     const i = parseInt(b.dataset.q);
     if (uAnswered.has(i)) return;
     const ok = parseInt(b.dataset.k) === UNIT_QUIZ[i].ans;
+    if (SLQ) SLQ.answer('unit' + i, parseInt(b.dataset.k));
     const card = b.closest('div[style*="border-radius"]');
     card.querySelectorAll('.choice').forEach(x => { x.disabled = true; if (parseInt(x.dataset.k) === UNIT_QUIZ[i].ans) x.classList.add('correct'); if (x === b && !ok) x.classList.add('wrong'); });
     card.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${ok ? 'success' : 'error'}" style="margin-top:6px">${ok ? '✓' : '✗'} ${UNIT_QUIZ[i].explain}</div>`;
     if (ok) { uCorrect++; if (typeof SoundFX !== 'undefined') SoundFX.success(); } else if (typeof SoundFX !== 'undefined') SoundFX.error();
     uAnswered.add(i);
     if (uAnswered.size === UNIT_QUIZ.length) {
+      if (SLQ) SLQ.finish({ score: uCorrect, max: UNIT_QUIZ.length });
       const pp = loadP(); pp.m1_unit_sense = true; pp.m1_unit_score = uCorrect; saveP(pp);
       if (typeof SoundFX !== 'undefined') SoundFX.win();
       showToast(`⚖️ 單位量感快問 ${uCorrect}/${UNIT_QUIZ.length} 答對`, uCorrect === UNIT_QUIZ.length ? 'good' : 'info');

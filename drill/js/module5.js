@@ -123,6 +123,9 @@ const QUIZ_CASES = [
 ];
 
 const quizEl = document.getElementById('calib-quiz');
+// 作答紀錄（js/sheet-log.js）：全部答完送一筆（題幹是圖，文字記為「案例 N：哪一種故障？」）
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', questions: QUIZ_CASES.map((c, i) => ({
+  key: 'case' + i, t: 'single', stem: `案例 ${i + 1}：看圖判斷是哪一種故障？`, options: c.options, answer: c.correct })) });
 let quizScore = 0;
 let answered = new Set();
 QUIZ_CASES.forEach((c, i) => {
@@ -145,6 +148,7 @@ quizEl.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', 
   const c = parseInt(btn.dataset.c);
   if (answered.has(i)) return;
   const correct = c === QUIZ_CASES[i].correct;
+  if (SLQ) SLQ.answer('case' + i, c);
   // .feedback-slot 與 .choice-grid 是兄弟，closest('div') 會停在 .choice-grid，
   // 取到 null 後整個 handler 在計分與寫進度之前就中斷。往上找到真正含它的容器。
   let parent = btn.parentElement;
@@ -164,6 +168,7 @@ quizEl.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', 
   }
   answered.add(i);
   if (answered.size === QUIZ_CASES.length) {
+    if (SLQ) SLQ.finish({ score: quizScore, max: QUIZ_CASES.length });
     const p = loadP();
     p.module5 = true;
     p.module5_quiz_score = quizScore;

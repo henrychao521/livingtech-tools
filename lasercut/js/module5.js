@@ -111,6 +111,10 @@ function renderQuiz() {
   return false;
 }
 
+// 作答紀錄（js/sheet-log.js）：答錯可改選，記第一次選的答案與嘗試次數；只記這次開頁新作答的題目，
+// 全部答對時送一筆，沒答完就離開頁面也會送已作答的部分
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', sendOnLeave: true, questions: CASES.map((c, i) => ({
+  key: 'case' + i, t: 'scenario', stem: c.sym, options: c.opts.map(o => o.t), answer: c.opts.findIndex(o => o.ok) })) });
 document.getElementById('quiz').addEventListener('click', e => {
   const b = e.target.closest('button[data-c]'); if (!b || b.disabled) return;
   const ci = b.dataset.c; const prev = answered.get(ci);
@@ -118,6 +122,10 @@ document.getElementById('quiz').addEventListener('click', e => {
   answered.set(ci, b.dataset.o);
   const p = loadP(); p.m5_ans = Object.fromEntries(answered); saveP(p);
   const ok = CASES[+ci].opts[+b.dataset.o].ok;
+  if (SLQ) {
+    SLQ.answer('case' + ci, +b.dataset.o);
+    if (answered.size === CASES.length && [...answered].every(([k, v]) => CASES[+k].opts[+v].ok)) SLQ.finish();
+  }
   if (typeof SoundFX !== 'undefined') SoundFX.pop();
   if (typeof showToast === 'function') showToast(ok ? '✅ 診斷正確' : '❌ 看看下面的說明', ok ? 'good' : '');
   if (renderQuiz()) {

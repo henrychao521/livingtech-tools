@@ -18,10 +18,13 @@ const PK = 'printer3d_progress_v1';
 function loadP() { try { return JSON.parse(localStorage.getItem(PK)) || {}; } catch { return {}; } }
 function saveP(p) { localStorage.setItem(PK, JSON.stringify(p)); }
 const list = document.getElementById('scenario-list');
+// 作答紀錄（js/sheet-log.js）：情境題全部答完送一筆；重新挑戰＝新的一份
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', questions: SheetLog.fromScenarios(SCENARIOS) });
 const answered = new Set();
 
 // 出題（也用於「重新挑戰」：清掉作答狀態、分數與進度條，重新出一次；門檻不變）
 function renderScenarios() {
+  if (SLQ && SLQ.count()) SLQ.reset();
   score = 0;
   answered.clear();
   list.innerHTML = '';
@@ -42,6 +45,7 @@ function answerScenario(btn) {
   if (answered.has(i)) return;
   const s = SCENARIOS[i];
   const correct = btn.dataset.c === s.correct;
+  if (SLQ) SLQ.answer('s' + i, ['a', 'b', 'c', 'd'].indexOf(btn.dataset.c));
   const parent = btn.closest('.scenario');
   parent.querySelectorAll('.choice').forEach(b => { b.disabled = true; if (b.dataset.c === s.correct) b.classList.add('correct'); if (b === btn && !correct) b.classList.add('wrong'); });
   parent.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${correct ? 'success' : 'error'}">${correct ? '✓' : '✗'} ${s.explain}</div>`;
@@ -50,6 +54,7 @@ function answerScenario(btn) {
   document.getElementById('score-display').textContent = score;
   document.getElementById('progress-bar').style.width = Math.min(100, score / (SCENARIOS.length * 10) * 100) + '%';
   if (answered.size === SCENARIOS.length) {
+    if (SLQ) SLQ.finish({ score, max: SCENARIOS.length * 10 });
     if (score >= 110) {
       document.getElementById('scenario-result').innerHTML = `<div class="feedback success" style="margin-top:20px"><strong>🏆 ${score} 分通過！</strong></div>`;
       document.getElementById('unlock').classList.remove('hidden');

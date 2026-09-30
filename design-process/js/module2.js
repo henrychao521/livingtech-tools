@@ -39,6 +39,9 @@ const quizEl = document.getElementById('quiz');
 const progEl = document.getElementById('prog');
 const nextBtn = document.getElementById('next-btn');
 let answered = new Set(); let correct = 0;
+// 作答紀錄（js/sheet-log.js）：選項＝6 種調查方法（原始順序）；第一輪 8 題答完送一筆，「重做錯題」不另送
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', questions: QUIZ.map((q, i) => ({
+  key: 'q' + i, t: 'single', stem: q.q, options: METHODS.map(m => m.name), answer: METHODS.findIndex(m => m.id === q.ans) })) });
 QUIZ.forEach((q, i) => {
   const div = document.createElement('div');
   div.className = 'quiz-item';
@@ -60,6 +63,7 @@ quizEl.querySelectorAll('.choice').forEach(b => b.addEventListener('click', () =
   const i = parseInt(b.dataset.q);
   if (answered.has(i)) return;
   const ok = b.dataset.c === QUIZ[i].ans;
+  if (SLQ) SLQ.answer('q' + i, METHODS.findIndex(m => m.id === b.dataset.c));
   const parent = b.closest('.quiz-item');
   parent.querySelectorAll('.choice').forEach(x => { x.disabled = true; if (x.dataset.c === QUIZ[i].ans) x.classList.add('correct'); if (x === b && !ok) x.classList.add('wrong'); });
   parent.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${ok?'success':'error'}" style="margin-top:6px">${ok?'✓':'✗'} ${QUIZ[i].explain}</div>`;
@@ -73,7 +77,7 @@ quizEl.querySelectorAll('.choice').forEach(b => b.addEventListener('click', () =
 
 function finishRound() {
   const p = loadP();
-  if (firstScore === null) { firstScore = correct; p.module2_score = firstScore; }
+  if (firstScore === null) { firstScore = correct; p.module2_score = firstScore; if (SLQ) SLQ.finish({ score: correct, max: QUIZ.length }); }
   if (correct >= PASS) {
     p.module2 = true; saveP(p);
     retrySlot.innerHTML = '';

@@ -190,6 +190,9 @@ if (typeof Interactions !== 'undefined') {
 
   const wrap = sec.querySelector('#sym-quiz');
   const done = new Set();
+  // 作答紀錄：答錯可以再選，記第一次選的答案與嘗試次數；四題都答對時送一筆
+  const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'exercise', questions: SYM_QUIZ.map((q, i) => ({
+    key: 'sym' + i, t: 'single', stem: q.q, options: q.opts, answer: q.ans })) });
   SYM_QUIZ.forEach((q, i) => {
     const div = document.createElement('div');
     div.classList.add('quiz-item');
@@ -205,6 +208,7 @@ if (typeof Interactions !== 'undefined') {
     const i = parseInt(btn.dataset.q);
     if (done.has(i)) return;
     const correct = parseInt(btn.dataset.c) === SYM_QUIZ[i].ans;
+    if (SLQ) SLQ.answer('sym' + i, parseInt(btn.dataset.c));
     if (!correct) {
       if (typeof SoundFX !== 'undefined') SoundFX.error();
       btn.classList.add('wrong');
@@ -222,6 +226,7 @@ if (typeof Interactions !== 'undefined') {
     item.querySelectorAll('.choice').forEach(b => { b.disabled = true; if (b === btn) b.classList.add('correct'); });
     item.querySelector('.feedback-slot').innerHTML =
       `<div class="feedback success" style="margin-top:8px">✓ ${SYM_QUIZ[i].explain}</div>`;
+    if (done.size === SYM_QUIZ.length && SLQ) SLQ.finish();
     if (done.size === SYM_QUIZ.length && typeof SoundFX !== 'undefined') SoundFX.unlock();
   }));
 })();

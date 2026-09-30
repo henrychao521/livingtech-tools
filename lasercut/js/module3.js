@@ -152,9 +152,17 @@ document.getElementById('opPick').addEventListener('click', e => {
   renderOps(); update();
 });
 
+// 作答紀錄（js/sheet-log.js）：配對題（每個元素選一種加工方式，選項＝切割／刻線／雕刻原始順序），
+// 記第一次選的方式與改了幾次；三個都對時送一筆，沒做完就離開也會送已作答的部分
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'exercise', sendOnLeave: true, questions: PARTS.map(p => ({
+  key: p.id, t: 'match', stem: p.name + '（' + p.desc + '）要用哪一種加工方式？', options: OPS.map(o => o.name), answer: OPS.findIndex(o => o.id === p.ans) })) });
 document.getElementById('assign').addEventListener('click', e => {
   const c = e.target.closest('.layer-chip'); if (!c) return;
   assign.set(c.dataset.p, c.dataset.o);
+  if (SLQ) {
+    SLQ.answer(c.dataset.p, OPS.findIndex(o => o.id === c.dataset.o));
+    if (PARTS.every(pt => assign.get(pt.id) === pt.ans)) SLQ.finish();
+  }
   const p = loadP(); p.m3_assign = Object.fromEntries(assign); saveP(p);
   if (typeof SoundFX !== 'undefined') SoundFX.pop();
   renderAssign();

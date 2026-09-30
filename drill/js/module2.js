@@ -18,6 +18,8 @@ const SCENARIOS = [
 ];
 let ppeScore = 0;
 let score = 0;
+// 作答紀錄（js/sheet-log.js）：情境題全部答完送一筆；重新挑戰＝新的一份
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', questions: SheetLog.fromScenarios(SCENARIOS) });
 const PK = 'drill_progress_v1';
 function loadP() { try { return JSON.parse(localStorage.getItem(PK)) || {}; } catch { return {}; } }
 function saveP(p) { localStorage.setItem(PK, JSON.stringify(p)); }
@@ -34,6 +36,7 @@ list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', ()
   if (answered.has(i)) return;
   const s = SCENARIOS[i];
   const correct = btn.dataset.c === s.correct;
+  if (SLQ) SLQ.answer('s' + i, ['a', 'b', 'c', 'd'].indexOf(btn.dataset.c));
   const parent = btn.closest('.scenario');
   parent.querySelectorAll('.choice').forEach(b => { b.disabled = true; if (b.dataset.c === s.correct) b.classList.add('correct'); if (b === btn && !correct) b.classList.add('wrong'); });
   parent.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${correct ? 'success' : 'error'}">${correct ? '✓' : '✗'} ${s.explain}</div>`;
@@ -43,6 +46,7 @@ list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', ()
   document.getElementById('score-display').textContent = total;
   document.getElementById('progress-bar').style.width = Math.min(100, total / 1.8) + '%';
   if (answered.size === SCENARIOS.length) {
+    if (SLQ) SLQ.finish({ score, max: SCENARIOS.length * 10 });
     if (total >= 120) {
       document.getElementById('scenario-result').innerHTML = `<div class="feedback success" style="margin-top:20px"><strong>🏆 ${total} 分通過！</strong></div>`;
       document.getElementById('unlock').classList.remove('hidden');
@@ -59,6 +63,7 @@ list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', ()
 
 // 情境題未達門檻：只清掉情境題作答狀態重新作答，護具關分數保留
 function resetScenarios() {
+  if (SLQ) SLQ.reset();
   score = 0;
   answered.clear();
   list.querySelectorAll('.scenario').forEach(div => {
@@ -173,6 +178,9 @@ function resetScenarios() {
   };
 
   let dragged = null;
+  // 作答紀錄：護具關算一題遊戲（放錯不能穿的物品算失誤），完成時單獨送一筆
+  let ppeErr = 0;
+  const SLP = window.SheetLog && SheetLog.quiz({ kind: 'game', questions: [{ key: 'ppe', t: 'game', stem: '手電鑽護具檢查：護目鏡、束緊袖口、包鞋放到對應部位；手套、手環、寬鬆長袖不能穿戴' }] });
   let ppeDone = 0; // 已正確放置的件數
 
   const items = document.querySelectorAll('#ppe-items .draggable');
@@ -249,6 +257,7 @@ function resetScenarios() {
       showPpeFb(`✓ 正確！${dragged.querySelector('div div:first-child').textContent} 已穿戴`, 'success');
 
       if (ppeDone >= 3) {
+        if (SLP) { SLP.answer('ppe', ppeErr === 0, { tries: ppeErr + 1 }); SLP.finish(); }
         /* 解鎖情境題 */
         if (typeof SoundFX !== 'undefined') SoundFX.unlock();
         if (lockOverlay) lockOverlay.remove();
@@ -266,6 +275,7 @@ function resetScenarios() {
       if (typeof SoundFX !== 'undefined') SoundFX.error();
       { const el = dragged; el.classList.add('wrong-shake'); setTimeout(() => el.classList.remove('wrong-shake'), 400); }
       const name = dragged.querySelector('div div:first-child')?.textContent || id;
+      ppeErr++;
       showPpeFb(`⚠ 「${name}」不能穿戴！${PPE_WRONG[id] || ''}`, 'error');
     }
     dragged = null;

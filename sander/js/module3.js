@@ -569,6 +569,9 @@ if (typeof SequencePuzzle === 'function') {
       rafId2 = requestAnimationFrame(discLoop);
     }
 
+    // 作答紀錄（js/sheet-log.js）：情境判斷一題，只記這次開頁「第一次」的選擇（之後重玩不再送）
+    const SLK = window.SheetLog && SheetLog.quiz({ kind: 'game', questions: [{ key: 'disc', t: 'scenario',
+      stem: '盤式砂磨機逆時針旋轉，工件要放在砂盤的哪一半？', options: ['左半邊（向下旋轉側）', '右半邊（向上旋轉側）'], answer: 0 }] });
     canvas.addEventListener('click', e => {
       if (discStage !== 'idle') return;
       const rect = canvas.getBoundingClientRect();
@@ -583,6 +586,7 @@ if (typeof SequencePuzzle === 'function') {
       workPiece.y = CY + 10;
       workPiece.vy = 0;
       workPiece.side = side;
+      if (SLK && !SLK.sent) { SLK.answer('disc', side === 'left' ? 0 : 1); SLK.finish(); }
       const res = document.getElementById('disc-result');
       if (side === 'left') {
         discStage = 'correct';

@@ -48,7 +48,11 @@ function shuffled(arr) {
 }
 const GOOD_SCORE = 6;   // 低於此分數不播勝利音效、改顯示提示與重新作答（不影響解鎖）
 let answered = new Set(); let correct = 0;
+// 作答紀錄（js/sheet-log.js）：8 題答完送一筆，「重新作答」＝新的一份。畫面每題只抽 4 個，紀錄的選項代號用 8 種感測器原始順序（A–H）
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', questions: QUIZ.map((q, i) => ({
+  key: 'q' + i, t: 'single', stem: q.q, options: allOpts, answer: allOpts.indexOf(q.ans) })) });
 function buildQuiz() {
+  if (SLQ && SLQ.count()) SLQ.reset();
   quizEl.innerHTML = '';
   answered = new Set(); correct = 0;
   document.getElementById('prog').textContent = `已答 0 / ${QUIZ.length} 題`;
@@ -68,6 +72,7 @@ function buildQuiz() {
     const i = parseInt(b.dataset.q);
     if (answered.has(i)) return;
     const ok = b.dataset.c === QUIZ[i].ans;
+    if (SLQ) SLQ.answer('q' + i, allOpts.indexOf(b.dataset.c));
     const parent = b.closest('.quiz-item');
     parent.querySelectorAll('.choice').forEach(x => { x.disabled = true; if (x.dataset.c === QUIZ[i].ans) x.classList.add('correct'); if (x === b && !ok) x.classList.add('wrong'); });
     parent.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${ok?'success':'error'}" style="margin-top:6px">${ok?'✓':'✗'} ${QUIZ[i].explain}</div>`;
@@ -75,6 +80,7 @@ function buildQuiz() {
     answered.add(i);
     document.getElementById('prog').textContent = `已答 ${answered.size} / ${QUIZ.length} 題`;
     if (answered.size === QUIZ.length) {
+      if (SLQ) SLQ.finish({ score: correct, max: QUIZ.length });
       const p = loadP(); p.module2 = true; p.module2_score = correct; saveP(p);
       document.getElementById('next-btn').style.opacity = 1; document.getElementById('next-btn').style.pointerEvents = 'auto';
       if (correct >= GOOD_SCORE) {

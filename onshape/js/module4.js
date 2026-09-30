@@ -229,12 +229,17 @@ CHALLENGES.forEach((c, i) => {
 });
 
 const answeredSet = new Set();
+// 作答紀錄（js/sheet-log.js）：選項＝4 種建模方式（原始順序）；5 題答完送一筆，重新作答＝新的一份
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', questions: CHALLENGES.map((c, i) => ({
+  key: 'q' + i, t: 'single', stem: '目標形狀：' + c.shape + '，用哪一種建模方式最適合？',
+  options: METHODS.map(m => m.name), answer: METHODS.findIndex(m => m.id === c.correct) })) });
 // 答完 5 題後的結果區（通過／未通過都要有回饋）
 const quizResult = document.createElement('div');
 quizResult.id = 'model-quiz-result';
 quizDiv.after(quizResult);
 // 未達 4 題時重新作答：清掉本測驗的作答狀態與按鈕樣式
 function resetModelQuiz() {
+  if (SLQ) SLQ.reset();
   answered = 0; correct = 0;
   answeredSet.clear();
   quizDiv.querySelectorAll('.m-opt').forEach(b => { b.style.cursor = 'pointer'; b.style.background = '#fafafa'; b.style.borderColor = ''; });
@@ -253,6 +258,7 @@ quizDiv.querySelectorAll('.m-opt').forEach(btn => {
     const isRight = pick === ch.correct;
     if (isRight) correct++;
     answered++;
+    if (SLQ) { SLQ.answer('q' + qIdx, METHODS.findIndex(m => m.id === pick)); if (answered === CHALLENGES.length) SLQ.finish({ score: correct, max: CHALLENGES.length }); }
 
     quizDiv.querySelectorAll(`.m-opt[data-q="${qIdx}"]`).forEach(b => {
       b.style.cursor = 'default';

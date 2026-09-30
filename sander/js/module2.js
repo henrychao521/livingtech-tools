@@ -13,6 +13,8 @@ const SCENARIOS = [
   { q: '砂磨結束，正確收工程序？', a: '關機 → 等砂帶完全停止 → 清理粉塵 → 收起工件 → 鎖緊砂帶蓋', b: '關機後先收工件，粉塵等下課再一起掃', correct: 'a', explain: '殘留粉塵是下次塵爆的火種。完整收工：等慣性停、用毛刷或吸塵器清理機台與地面、檢查砂帶蓋是否完好、確認下一個使用者能直接用。' },
 ];
 let score = 0;
+// 作答紀錄（js/sheet-log.js）：情境題全部答完送一筆；重新挑戰＝新的一份
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', questions: SheetLog.fromScenarios(SCENARIOS) });
 const PK = 'sander_progress_v1';
 function loadP() { try { return JSON.parse(localStorage.getItem(PK)) || {}; } catch { return {}; } }
 function saveP(p) { localStorage.setItem(PK, JSON.stringify(p)); }
@@ -29,6 +31,7 @@ list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', ()
   if (answered.has(i)) return;
   const s = SCENARIOS[i];
   const correct = btn.dataset.c === s.correct;
+  if (SLQ) SLQ.answer('s' + i, ['a', 'b', 'c', 'd'].indexOf(btn.dataset.c));
   const parent = btn.closest('.scenario');
   parent.querySelectorAll('.choice').forEach(b => { b.disabled = true; if (b.dataset.c === s.correct) b.classList.add('correct'); if (b === btn && !correct) b.classList.add('wrong'); });
   parent.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${correct ? 'success' : 'error'}">${correct ? '✓' : '✗'} ${s.explain}</div>`;
@@ -38,6 +41,7 @@ list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', ()
   document.getElementById('score-display').textContent = total;
   document.getElementById('progress-bar').style.width = Math.min(100, total / 1.3) + '%';
   if (answered.size === SCENARIOS.length) {
+    if (SLQ) SLQ.finish({ score, max: SCENARIOS.length * 10 });
     if (total >= 100) {
       document.getElementById('scenario-result').innerHTML = `<div class="feedback success" style="margin-top:20px"><strong>🏆 ${total} 分通過！</strong></div>`;
       document.getElementById('unlock').classList.remove('hidden');
@@ -54,6 +58,7 @@ list.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', ()
 
 // 情境題未達門檻：只清掉情境題作答狀態重新作答，護具關分數保留
 function resetScenarios() {
+  if (SLQ) SLQ.reset();
   score = 0;
   answered.clear();
   list.querySelectorAll('.scenario').forEach(div => {
@@ -129,6 +134,9 @@ function resetScenarios() {
   const items = document.querySelectorAll('#ppe-items .draggable');
   const zones = document.querySelectorAll('#ppe-scene .svg-dropzone');
   let dragged = null;
+  // 作答紀錄：護具關算一題遊戲（放錯不能穿的物品算失誤），完成時單獨送一筆
+  let ppeErr = 0;
+  const SLP = window.SheetLog && SheetLog.quiz({ kind: 'game', questions: [{ key: 'ppe', t: 'game', stem: '砂磨機護具檢查：護目鏡、防塵口罩、束緊袖口放到對應部位；手套、耳機、金屬手環不能帶' }] });
   let ppeDone = 0;
 
   zones.forEach(z => {
@@ -175,6 +183,7 @@ function resetScenarios() {
       document.getElementById('score-display').textContent = total2;
       document.getElementById('progress-bar').style.width = Math.min(100, total2 / 1.3) + '%';
       if (ppeDone >= 3) {
+        if (SLP) { SLP.answer('ppe', ppeErr === 0, { tries: ppeErr + 1 }); SLP.finish(); }
         if (typeof SoundFX !== 'undefined') SoundFX.unlock();
         document.getElementById('ppe-feedback').innerHTML = `<div class="feedback success">🎉 護具配置完成！解鎖情境判斷關卡。</div>`;
         const overlay = document.getElementById('scenario-lock-overlay');
@@ -188,6 +197,7 @@ function resetScenarios() {
     } else {
       if (typeof SoundFX !== 'undefined') SoundFX.error();
       { const el = dragged; el.classList.add('wrong-shake'); setTimeout(() => el.classList.remove('wrong-shake'), 400); }
+      ppeErr++;
       showPpeFeedback(PPE_WRONG[id] || '這個物品不適合帶入操作！', 'error');
     }
     dragged = null;

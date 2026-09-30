@@ -36,6 +36,9 @@ const QUIZ = [
 ];
 
 const quizDiv = document.getElementById('m10-quiz');
+// 作答紀錄（js/sheet-log.js）：全部答完送一筆
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', questions: QUIZ.map((Q, i) => ({
+  key: 'q' + i, t: 'single', stem: Q.q, options: Q.opts, answer: Q.correct })) });
 const answered = new Set();
 let correct = 0;
 
@@ -59,6 +62,7 @@ quizDiv.querySelectorAll('.m10-opt').forEach(btn => {
     const Q = QUIZ[qIdx];
     const isRight = pick === Q.correct;
     if (isRight) correct++;
+    if (SLQ) { SLQ.answer('q' + qIdx, pick); if (answered.size === QUIZ.length) SLQ.finish({ score: correct, max: QUIZ.length }); }
 
     quizDiv.querySelectorAll(`.m10-opt[data-q="${qIdx}"]`).forEach((b, j) => {
       b.style.cursor = 'default';

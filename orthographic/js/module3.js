@@ -59,6 +59,9 @@ const DIM_STATEMENTS = [
 const dimQuizEl = document.getElementById('dim-quiz');
 if (dimQuizEl) {
   const dAnswered = new Set(); let dCorrect = 0;
+  // 作答紀錄（js/sheet-log.js）：是非題，4 題答完送一筆
+  const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', questions: DIM_STATEMENTS.map((s, i) => ({
+    key: 'dim' + i, t: 'tf', stem: s.text, answer: s.ans })) });
   DIM_STATEMENTS.forEach((s, i) => {
     const div = document.createElement('div');
     div.style.cssText = 'background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:10px';
@@ -75,12 +78,14 @@ if (dimQuizEl) {
     if (dAnswered.has(i)) return;
     const s = DIM_STATEMENTS[i];
     const ok = (b.dataset.v === 'true') === s.ans;
+    if (SLQ) SLQ.answer('dim' + i, b.dataset.v === 'true');
     const card = b.closest('div[style*="border-radius"]');
     card.querySelectorAll('.choice').forEach(x => { x.disabled = true; if ((x.dataset.v === 'true') === s.ans) x.classList.add('correct'); if (x === b && !ok) x.classList.add('wrong'); });
     card.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${ok ? 'success' : 'error'}" style="margin-top:6px">${ok ? '✓ 答對！' : '✗ 答錯。'} ${s.explain}</div>`;
     if (ok) { dCorrect++; if (typeof SoundFX !== 'undefined') SoundFX.success(); } else if (typeof SoundFX !== 'undefined') SoundFX.error();
     dAnswered.add(i);
     if (dAnswered.size === DIM_STATEMENTS.length) {
+      if (SLQ) SLQ.finish({ score: dCorrect, max: DIM_STATEMENTS.length });
       const pp = loadP(); pp.module3_dims = true; pp.module3_dims_score = dCorrect; saveP(pp);
       document.getElementById('dim-quiz-summary').innerHTML = `<div class="feedback ${dCorrect === DIM_STATEMENTS.length ? 'success' : 'info'}" style="margin-top:4px"><strong>📐 判斷完成：${dCorrect} / ${DIM_STATEMENTS.length} 答對。</strong>記住三原則——不重複標註、標在最能表達特徵的視圖、線與數字擺放位置照標準。</div>`;
       if (typeof SoundFX !== 'undefined') SoundFX.win();

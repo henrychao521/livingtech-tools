@@ -82,6 +82,8 @@ MAINT.forEach(m => {
 
 const quizEl = document.getElementById('quiz');
 let answered = new Set(); let correct = 0;
+// 作答紀錄（js/sheet-log.js）：全部答完送一筆
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', questions: QUIZ.map((q, i) => ({ key: 'q' + i, t: 'scenario', stem: q.sit, options: ['可修復繼續用', '應該報廢'], answer: ['repair', 'replace'].indexOf(q.ans) })) });
 QUIZ.forEach((q, i) => {
   const div = document.createElement('div');
   div.className = 'quiz-item';
@@ -96,12 +98,14 @@ quizEl.querySelectorAll('.choice').forEach(b => b.addEventListener('click', () =
   const i = parseInt(b.dataset.q);
   if (answered.has(i)) return;
   const ok = b.dataset.c === QUIZ[i].ans;
+  if (SLQ) SLQ.answer('q' + i, ['repair', 'replace'].indexOf(b.dataset.c));
   const parent = b.closest('.quiz-item');
   parent.querySelectorAll('.choice').forEach(x => { x.disabled = true; if (x.dataset.c === QUIZ[i].ans) x.classList.add('correct'); if (x === b && !ok) x.classList.add('wrong'); });
   parent.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${ok?'success':'error'}" style="margin-top:6px">${ok?'✓':'✗'} ${QUIZ[i].explain}<br><span style="font-size:11px;color:#94a3b8">📚 參考：${QUIZ[i].cite}（見頁尾資料來源）</span></div>`;
   if (ok) { correct++; if (typeof SoundFX !== 'undefined') SoundFX.success(); } else if (typeof SoundFX !== 'undefined') SoundFX.error();
   answered.add(i);
   if (answered.size === QUIZ.length) {
+    if (SLQ) SLQ.finish({ score: correct, max: QUIZ.length });
     const p = loadP(); p.module5 = true; p.module5_score = correct; saveP(p);
     if (typeof SoundFX !== 'undefined') SoundFX.win();
     showToast(`🎓 ${correct}/${QUIZ.length} 答對`, 'good');

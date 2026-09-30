@@ -63,6 +63,11 @@ let done = new Set((loadP().module3_done) || []);
 const MAX_TRIES = 2;
 const tries = PROBLEMS.map(() => 0);
 const revealed = new Set();
+// 作答紀錄（js/sheet-log.js）：計算題每一格算一題（t=other，a＝第一次填的數字、k＝正解，誤差內算對），
+// 記第一次的答案與嘗試次數；全部格子都作答過時送一筆，沒做完就離開頁面也會送已作答的部分
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'exercise', sendOnLeave: true, questions: PROBLEMS.flatMap((p, i) =>
+  p.inputs.map(inp => ({ key: 'p' + i + '.' + inp.name, t: 'other', stem: p.desc + '（求' + inp.label + '，單位 ' + inp.unit + '）', answer: String(inp.ans) }))) });
+const SL_TOTAL = PROBLEMS.reduce((n, p) => n + p.inputs.length, 0);
 PROBLEMS.forEach((p, i) => {
   const div = document.createElement('div');
   div.className = 'mc-prob';
@@ -88,6 +93,7 @@ function showSolution(i) {
 pb.querySelectorAll('button[data-act="giveup"]').forEach(btn => btn.addEventListener('click', () => {
   const i = parseInt(btn.dataset.q);
   const p = PROBLEMS[i];
+  if (SLQ) p.inputs.forEach(inp => { if (!SLQ.has('p' + i + '.' + inp.name)) SLQ.answer('p' + i + '.' + inp.name, '看詳解', { ok: false }); });
   const r = document.getElementById(`r${i}`);
   r.style.display = 'block';
   r.className = 'mc-result bad';
@@ -107,6 +113,7 @@ pb.querySelectorAll('button[data-act="check"]').forEach(btn => btn.addEventListe
     const tol = p.inputs[j].tolerance ?? p.tolerance;
     const ok = !isNaN(v) && Math.abs(v - ans) <= tol;
     inp.style.borderColor = ok ? '#22c55e' : '#dc2626';
+    if (SLQ) SLQ.answer('p' + i + '.' + p.inputs[j].name, inp.value.trim() || '（空白）', { ok });
     if (!ok) { allOK = false; wrongs.push(j); }
   });
   const r = document.getElementById(`r${i}`);
@@ -140,6 +147,7 @@ pb.querySelectorAll('button[data-act="check"]').forEach(btn => btn.addEventListe
     if (typeof SoundFX !== 'undefined') SoundFX.error();
   }
   progText.textContent = `已答 ${done.size}/${PROBLEMS.length} 題`;
+  if (SLQ && SLQ.count() === SL_TOTAL) SLQ.finish();
 }));
 progText.textContent = `已答 ${done.size}/${PROBLEMS.length} 題`;
 if (done.size === PROBLEMS.length) { nextBtn.style.opacity = 1; nextBtn.style.pointerEvents = 'auto'; }

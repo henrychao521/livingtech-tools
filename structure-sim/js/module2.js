@@ -62,6 +62,8 @@ const QUIZ = [
   { q: '萬神殿圓頂', ans: 'shell', explain: '混凝土圓頂是彎曲的連續曲面，重量沿曲面分散往下傳——這是殼結構（圓頂可以想成拱繞中心轉一圈）。' },
 ];
 const quizEl = document.getElementById('quiz');
+// 作答紀錄（js/sheet-log.js）：全部答完送一筆
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', questions: QUIZ.map((q, i) => ({ key: 'q' + i, t: 'single', stem: q.q + ' 屬於哪一種結構？', options: TYPES.map(t => t.name), answer: TYPES.findIndex(t => t.id === q.ans) })) });
 let answered = new Set();
 let quizCorrect = 0;
 QUIZ.forEach((q, i) => {
@@ -82,6 +84,7 @@ quizEl.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', 
   if (answered.has(i)) return;
   const q = QUIZ[i];
   const correct = btn.dataset.c === q.ans;
+  if (SLQ) SLQ.answer('q' + i, TYPES.findIndex(t => t.id === btn.dataset.c));
   const parent = btn.closest('.quiz-item');
   parent.querySelectorAll('.choice').forEach(b => {
     b.disabled = true;
@@ -94,6 +97,7 @@ quizEl.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', 
   answered.add(i);
   updateQuizProg();
   if (answered.size === QUIZ.length) {
+    if (SLQ) SLQ.finish({ score: quizCorrect, max: QUIZ.length });
     const p = loadP();
     p.module2 = true;
     p.module2_score = quizCorrect;

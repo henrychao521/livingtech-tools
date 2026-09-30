@@ -37,6 +37,10 @@ const QUIZ = [
 const quizEl = document.getElementById('quiz');
 let answered = new Set();
 let correct = 0;
+// 作答紀錄（js/sheet-log.js）：全部答完送一筆（選項＝5 個面向原始順序；alt 也算對）
+const PT_CATS = Object.keys(CAT_COLORS);
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', questions: QUIZ.map((q, i) => ({
+  key: 'q' + i, t: 'single', stem: q.q, options: PT_CATS, answer: PT_CATS.indexOf(q.ans), alt: (q.alt || []).map(c => PT_CATS.indexOf(c)) })) });
 QUIZ.forEach((q, i) => {
   const div = document.createElement('div');
   div.classList.add('quiz-item');
@@ -50,12 +54,14 @@ quizEl.querySelectorAll('.choice').forEach(b => b.addEventListener('click', () =
   const i = parseInt(b.dataset.q);
   if (answered.has(i)) return;
   const ok = b.dataset.c === QUIZ[i].ans || (QUIZ[i].alt || []).includes(b.dataset.c);
+  if (SLQ) SLQ.answer('q' + i, PT_CATS.indexOf(b.dataset.c));
   const parent = b.closest('.quiz-item');
   parent.querySelectorAll('.choice').forEach(x => { x.disabled = true; if (x.dataset.c === QUIZ[i].ans || (x === b && ok)) x.classList.add('correct'); if (x === b && !ok) x.classList.add('wrong'); });
   parent.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${ok?'success':'error'}" style="margin-top:6px">${ok?'✓':'✗'} ${ok ? b.dataset.c : QUIZ[i].ans}面向 — ${QUIZ[i].explain}</div>`;
   if (ok) { correct++; if (typeof SoundFX !== 'undefined') SoundFX.success(); } else if (typeof SoundFX !== 'undefined') SoundFX.error();
   answered.add(i);
   if (answered.size === QUIZ.length) {
+    if (SLQ) SLQ.finish({ score: correct, max: QUIZ.length });
     const p = loadP(); p.module5 = true; p.module5_score = correct; saveP(p);
     if (typeof SoundFX !== 'undefined') SoundFX.win();
     showToast(`🎓 ${correct}/${QUIZ.length} 答對`, 'good');

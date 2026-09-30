@@ -73,6 +73,8 @@ const SCENARIOS = [
 ];
 
 let scenarioScore = 0;
+// 作答紀錄（js/sheet-log.js）：10 題全部答完送一筆；重新作答＝新的一份
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', questions: SheetLog.fromScenarios(SCENARIOS) });
 const PROGRESS_KEY_BB = 'breadboard_progress_v1';
 function loadBBProgress() {
   try { return JSON.parse(localStorage.getItem(PROGRESS_KEY_BB)) || {}; } catch { return {}; }
@@ -106,6 +108,7 @@ function answer(btn) {
   if (answered.has(i)) return;
   const s = SCENARIOS[i];
   const correct = choice === s.correct;
+  if (SLQ) SLQ.answer('s' + i, ['a', 'b', 'c', 'd'].indexOf(choice));
   const parent = btn.closest('.scenario');
   parent.querySelectorAll('.choice').forEach(b => {
     b.disabled = true;
@@ -122,6 +125,7 @@ function answer(btn) {
   document.getElementById('score-display').textContent = scenarioScore;
   document.getElementById('progress-bar').style.width = scenarioScore + '%';
   if (answered.size === SCENARIOS.length) {
+    if (SLQ) SLQ.finish({ score: scenarioScore, max: SCENARIOS.length * 10 });
     const result = document.getElementById('scenario-result');
     if (scenarioScore >= 90) {
       result.innerHTML = `<div class="feedback success" style="margin-top:20px"><strong>🏆 ${scenarioScore} 分通過！</strong></div>`;
@@ -141,6 +145,7 @@ function answer(btn) {
 
 // 未達 90 分：清掉情境題作答狀態重新作答（不必重新整理頁面）
 function resetScenarios() {
+  if (SLQ) SLQ.reset();
   scenarioScore = 0;
   answered.clear();
   const list = document.getElementById('scenario-list');

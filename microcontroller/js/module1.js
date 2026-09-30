@@ -81,8 +81,12 @@ const SAFETY_QUIZ = [
     ans: 1, explain: '除錯第一步永遠是「先斷電」，再檢查 LED 極性與接線。帶電亂動線材或用手摸發燙元件都很危險。' },
 ];
 const sQuizEl = document.getElementById('safety-quiz');
+// 作答紀錄（js/sheet-log.js）：3 題答完送一筆，「重新挑戰」＝新的一份
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', questions: SAFETY_QUIZ.map((q, i) => ({
+  key: 'safety' + i, t: 'scenario', stem: q.q, options: q.opts, answer: q.ans })) });
 function buildSafetyQuiz() {
   sQuizEl.innerHTML = '';
+  if (SLQ && SLQ.count()) SLQ.reset();
   const sAnswered = new Set(); let sCorrect = 0;
   SAFETY_QUIZ.forEach((q, i) => {
     const div = document.createElement('div');
@@ -96,6 +100,7 @@ function buildSafetyQuiz() {
     const i = parseInt(b.dataset.q);
     if (sAnswered.has(i)) return;
     const ok = parseInt(b.dataset.k) === SAFETY_QUIZ[i].ans;
+    if (SLQ) SLQ.answer('safety' + i, parseInt(b.dataset.k));
     const parent = b.closest('div[style*="border-radius"]') || b.closest('div');
     parent.querySelectorAll('.choice').forEach(x => { x.disabled = true; if (parseInt(x.dataset.k) === SAFETY_QUIZ[i].ans) x.classList.add('correct'); if (x === b && !ok) x.classList.add('wrong'); });
     parent.querySelector('.feedback-slot').innerHTML = `<div class="feedback ${ok ? 'success' : 'error'}" style="margin-top:6px">${ok ? '✓' : '✗'} ${SAFETY_QUIZ[i].explain}</div>`;
@@ -104,6 +109,7 @@ function buildSafetyQuiz() {
     if (sAnswered.size === SAFETY_QUIZ.length) {
       // 安全測驗要真的答對才算通過，否則 0 分也會被記成 safety passed
       const pass = sCorrect === SAFETY_QUIZ.length;
+      if (SLQ) SLQ.finish({ score: sCorrect, max: SAFETY_QUIZ.length });
       const pp = loadP(); pp.module1_safety = pass; pp.module1_safety_score = sCorrect; saveP(pp);
       if (pass) {
         if (typeof SoundFX !== 'undefined') SoundFX.win();

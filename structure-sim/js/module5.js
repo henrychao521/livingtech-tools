@@ -53,6 +53,9 @@ const QUIZ = [
 ];
 
 const quizEl = document.getElementById('calib-quiz');
+// 作答紀錄（js/sheet-log.js）：全部答完送一筆
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', questions: QUIZ.map((q, i) => ({
+  key: 'q' + i, t: 'scenario', stem: q.situation, options: q.options, answer: q.correct })) });
 let answered = new Set();
 let quizScore = 0;
 QUIZ.forEach((q, i) => {
@@ -70,6 +73,7 @@ quizEl.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', 
   const i = parseInt(btn.dataset.q);
   if (answered.has(i)) return;
   const correct = parseInt(btn.dataset.c) === QUIZ[i].correct;
+  if (SLQ) SLQ.answer('q' + i, parseInt(btn.dataset.c));
   const parent = btn.closest('.quiz-item');
   parent.querySelectorAll('.choice').forEach((b, k) => {
     b.disabled = true;
@@ -80,6 +84,7 @@ quizEl.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', 
   if (correct) { quizScore++; if (typeof SoundFX !== 'undefined') SoundFX.success(); } else if (typeof SoundFX !== 'undefined') SoundFX.error();
   answered.add(i);
   if (answered.size === QUIZ.length) {
+    if (SLQ) SLQ.finish({ score: quizScore, max: QUIZ.length });
     const p = loadP();
     p.module5 = true;
     p.module5_quiz_score = quizScore;

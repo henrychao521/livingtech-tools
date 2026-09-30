@@ -49,10 +49,14 @@ QUIZ.forEach((q, i) => {
 
 let answered = new Set();
 let quizCorrect = 0;
+// 作答紀錄（js/sheet-log.js）：12 題分散在各動畫下方，全部答完送一筆；沒答完就離開頁面也會送已作答的部分
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', sendOnLeave: true, questions: QUIZ.map((q, i) => ({
+  key: 'q' + i, t: 'single', stem: q.q, options: q.options, answer: q.correct })) });
 document.querySelectorAll('.sim-card .choice').forEach(btn => btn.addEventListener('click', () => {
   const i = parseInt(btn.dataset.q);
   if (answered.has(i)) return;
   const correct = parseInt(btn.dataset.c) === QUIZ[i].correct;
+  if (SLQ) SLQ.answer('q' + i, parseInt(btn.dataset.c));
   const parent = btn.closest('.sim-quiz');
   parent.querySelectorAll('.choice').forEach((b, k) => {
     b.disabled = true;
@@ -63,6 +67,7 @@ document.querySelectorAll('.sim-card .choice').forEach(btn => btn.addEventListen
   if (correct) quizCorrect++;
   answered.add(i);
   if (answered.size === TOTAL) {
+    if (SLQ) SLQ.finish({ score: quizCorrect, max: TOTAL });
     const p = loadP();
     p.quiz_done = true;
     p.quiz_score = quizCorrect;

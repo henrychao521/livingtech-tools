@@ -52,6 +52,10 @@ QUIZ.forEach((q, i) => {
   container.appendChild(div);
 });
 
+// 作答紀錄（js/sheet-log.js）：3 題答完送一筆；重新作答＝新的一份（選項文字去掉開頭的「A. 」）
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', questions: QUIZ.map((q, i) => ({
+  key: 'q' + i, t: 'single', stem: q.q, options: q.options.map(o => o.text.replace(/^[A-F][.．、]\s*/, '')),
+  answer: q.options.findIndex(o => o.correct) })) });
 container.querySelectorAll('.quiz-opt').forEach(btn => {
   btn.addEventListener('click', () => {
     const qIdx = parseInt(btn.dataset.q);
@@ -61,6 +65,7 @@ container.querySelectorAll('.quiz-opt').forEach(btn => {
 
     const opt = QUIZ[qIdx].options[optIdx];
     if (opt.correct) score++;
+    if (SLQ) { SLQ.answer('q' + qIdx, optIdx); if (answered.size === QUIZ.length) SLQ.finish({ score, max: QUIZ.length }); }
 
     // 鎖定所有此題的按鈕
     container.querySelectorAll(`.quiz-opt[data-q="${qIdx}"]`).forEach((b, j) => {
@@ -106,6 +111,7 @@ container.querySelectorAll('.quiz-opt').forEach(btn => {
 
 // 未通過時重新作答：清掉本測驗的作答狀態與按鈕樣式，不必重新整理網頁
 function resetQuiz() {
+  if (SLQ) SLQ.reset();
   score = 0;
   answered.clear();
   container.querySelectorAll('.quiz-opt').forEach(b => {

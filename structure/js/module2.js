@@ -101,6 +101,8 @@ const SF_SCENARIOS = [
   { q: '安全係數 SF 代表什麼？工程師為什麼不直接把 SF 設計成 1.0（恰好不壞）就好？', a: '因為規定要大於 1.0，只是法規要求', b: 'SF 反映材料變異、預測誤差、意外超載的保險——世界上沒有完美的計算', correct: 'b', explain: 'SF > 1 是對「不確定性」的緩衝：材料強度有統計分布（可能低於平均）、載重預測不精準、施工可能有瑕疵、老化會降低強度。SF=2 代表即使實際強度只有設計值的 50%，橋仍然安全。' },
 ];
 
+// 作答紀錄（js/sheet-log.js）：安全係數題全部答完送一筆；重新挑戰＝新的一份
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', questions: SheetLog.fromScenarios(SF_SCENARIOS, 'sf') });
 const sfList = document.getElementById('sf-list');
 const sfAnswered = new Set();
 
@@ -121,6 +123,7 @@ sfList.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', 
   if (sfAnswered.has(i)) return;
   const s = SF_SCENARIOS[i];
   const correct = btn.dataset.c === s.correct;
+  if (SLQ) SLQ.answer('sf' + i, ['a', 'b', 'c', 'd'].indexOf(btn.dataset.c));
   const parent = btn.closest('.scenario');
   parent.querySelectorAll('.choice').forEach(b => {
     b.disabled = true;
@@ -133,7 +136,7 @@ sfList.querySelectorAll('.choice').forEach(btn => btn.addEventListener('click', 
   sfAnswered.add(i);
   updateScore();
 
-  if (sfAnswered.size === SF_SCENARIOS.length) checkUnlock();
+  if (sfAnswered.size === SF_SCENARIOS.length) { if (SLQ) SLQ.finish({ score: sfScore, max: SF_SCENARIOS.length * PTS_PER_SF }); checkUnlock(); }
 }));
 
 // 關卡 2 結果：三關都完成才判定成敗；還有關卡沒做就只提示目前分數。
@@ -158,6 +161,7 @@ function showSfResult() {
 }
 
 function resetSfQuiz() {
+  if (SLQ) SLQ.reset();
   sfScore = 0;
   sfAnswered.clear();
   sfList.querySelectorAll('.choice').forEach(b => { b.disabled = false; b.classList.remove('correct', 'wrong'); });
@@ -246,6 +250,9 @@ function checkUnlock() {
   const items = document.querySelectorAll('#ppe-items .draggable');
   const zones = document.querySelectorAll('#ppe-scene .svg-dropzone');
   let dragged = null, ppeDone = 0;
+  // 作答紀錄：工地護具關算一題遊戲（放錯不該帶的物品算失誤），完成時單獨送一筆
+  let ppeErr = 0;
+  const SLP = window.SheetLog && SheetLog.quiz({ kind: 'game', questions: [{ key: 'ppe', t: 'game', stem: '工地護具配置：安全帽、護目鏡、安全吊帶放到對應部位；拖鞋、耳機、圍巾不能帶' }] });
 
   zones.forEach(z => {
     z.addEventListener('mouseenter', () => { if (!z.classList.contains('filled')) z.setAttribute('stroke','#0d9488'); });
@@ -288,6 +295,7 @@ function checkUnlock() {
       showFb('✓ 正確！', 'success');
       updateScore();
       if (ppeDone >= 3) {
+        if (SLP) { SLP.answer('ppe', ppeErr === 0, { tries: ppeErr + 1 }); SLP.finish(); }
         if (typeof SoundFX !== 'undefined') SoundFX.unlock();
         document.getElementById('ppe-feedback').innerHTML = `<div class="feedback success">🎉 工地護具配置完成！</div>`;
         checkUnlock();
@@ -299,6 +307,7 @@ function checkUnlock() {
     } else {
       if (typeof SoundFX !== 'undefined') SoundFX.error();
       { const el = dragged; el.classList.add('wrong-shake'); setTimeout(() => el.classList.remove('wrong-shake'), 400); }
+      ppeErr++;
       showFb(PPE_WRONG[id] || '這個物品不適合帶入工地！', 'error');
     }
     dragged = null;

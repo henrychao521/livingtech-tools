@@ -210,6 +210,9 @@ const QUIZ_OPTIONS_MAP = {};
 JOINT_TYPES.forEach(j => { QUIZ_OPTIONS_MAP[j.id] = j.name.replace(/^[✓✗]\s*/, ''); });
 
 const quizContainer = document.getElementById('quiz-container');
+// 作答紀錄（js/sheet-log.js）：畫面每題只抽 4 個選項，紀錄的選項代號一律用全部焊點類型的原始順序；10 題答完送一筆
+const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'quiz', questions: QUIZ.map((q, i) => ({
+  key: 'q' + i, t: 'single', stem: q.q, options: JOINT_TYPES.map(j => QUIZ_OPTIONS_MAP[j.id]), answer: JOINT_TYPES.findIndex(j => j.id === q.id) })) });
 let quizScore = 0;
 const quizAnswered = new Set();
 
@@ -244,6 +247,7 @@ function answerQuiz(btn) {
   const id = btn.dataset.id;
   if (quizAnswered.has(i)) return;
   const correct = id === QUIZ[i].id;
+  if (SLQ) SLQ.answer('q' + i, JOINT_TYPES.findIndex(j => j.id === id));
   const parent = btn.closest('.scenario');
   parent.querySelectorAll('.choice').forEach(b => {
     b.disabled = true;
@@ -261,7 +265,7 @@ function answerQuiz(btn) {
     if (typeof SoundFX !== 'undefined') SoundFX.success();
   } else if (typeof SoundFX !== 'undefined') SoundFX.error();
   quizAnswered.add(i);
-  if (quizAnswered.size === QUIZ.length) showQuizResult();
+  if (quizAnswered.size === QUIZ.length) { if (SLQ) SLQ.finish({ score: quizScore, max: QUIZ.length * 10 }); showQuizResult(); }
 }
 
 function showQuizResult() {
