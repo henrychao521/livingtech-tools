@@ -1,0 +1,6257 @@
+{
+ "platform": "livingtech",
+ "version": "2026-09-30",
+ "count": 431,
+ "questions": [
+  {
+   "q": "breadboard.m2.s0",
+   "h": "7a5b9b34",
+   "t": "scenario",
+   "page": "breadboard/module2",
+   "stem": "LED 接到電源前，最重要的是？",
+   "options": {
+    "A": "確認 LED 方向（長腳接正、短腳接負）並串聯電阻",
+    "B": "直接把 LED 兩腳跨接到電池兩極"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "breadboard.m2.s1",
+   "h": "878a6c7d",
+   "t": "scenario",
+   "page": "breadboard/module2",
+   "stem": "電池正極不小心直接連到負極會發生什麼？",
+   "options": {
+    "A": "電池會發熱、變形，甚至爆炸",
+    "B": "沒事，電池會自動斷電"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "breadboard.m2.s2",
+   "h": "a4c2feab",
+   "t": "scenario",
+   "page": "breadboard/module2",
+   "stem": "電路接好但 LED 不亮，第一步該做什麼？",
+   "options": {
+    "A": "增加電池數量",
+    "B": "檢查極性、跳線是否插穩、有沒有插錯直行"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "breadboard.m2.s3",
+   "h": "864aefe3",
+   "t": "scenario",
+   "page": "breadboard/module2",
+   "stem": "麵包板的 a1-b1-c1-d1-e1 之間：",
+   "options": {
+    "A": "互相連通（金屬條相連）",
+    "B": "互相獨立"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "breadboard.m2.s4",
+   "h": "eed48fca",
+   "t": "scenario",
+   "page": "breadboard/module2",
+   "stem": "修改電路前應該？",
+   "options": {
+    "A": "直接拔元件",
+    "B": "先斷電源（拆掉電池或關開關）"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "breadboard.m2.s5",
+   "h": "0567c6bc",
+   "t": "scenario",
+   "page": "breadboard/module2",
+   "stem": "電池盒的正極要接到麵包板，跳線顏色的慣例是？",
+   "options": {
+    "A": "用紅線接到正電源軌（+），負極用黑線接負電源軌（−）",
+    "B": "混用紅黑線只要連對極性即可"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "breadboard.m2.s6",
+   "h": "975bdf61",
+   "t": "scenario",
+   "page": "breadboard/module2",
+   "stem": "電阻插反方向會怎樣？",
+   "options": {
+    "A": "電阻會燒掉",
+    "B": "電阻沒有方向，正反一樣"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "breadboard.m2.s7",
+   "h": "1e081267",
+   "t": "scenario",
+   "page": "breadboard/module2",
+   "stem": "看到電子元件冒煙、變色、變形，立刻怎麼做？",
+   "options": {
+    "A": "繼續觀察看看會不會自己好",
+    "B": "立刻斷電源，等冷卻後再檢查"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "breadboard.m2.s8",
+   "h": "85ed2eaa",
+   "t": "scenario",
+   "page": "breadboard/module2",
+   "stem": "電容（capacitor）有極性的那種，正極接錯會？",
+   "options": {
+    "A": "只是不工作而已",
+    "B": "電容會鼓起，嚴重時爆炸"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "breadboard.m2.s9",
+   "h": "11478a82",
+   "t": "scenario",
+   "page": "breadboard/module2",
+   "stem": "所有元件的負極（地、GND）應該連到哪？",
+   "options": {
+    "A": "麵包板的負電源軌（−）",
+    "B": "隨便找個沒用到的洞"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "breadboard.m3.order",
+   "h": "f58140eb",
+   "t": "order",
+   "page": "breadboard/module3",
+   "stem": "把打亂的步驟排回正確順序",
+   "options": {},
+   "answer": "1>2>3>4>5>6>7>8",
+   "items": [
+    "檢查麵包板",
+    "插入電池盒線",
+    "電源軌跨接（選用）",
+    "插入電阻",
+    "插入 LED",
+    "把 LED 負極接到地",
+    "裝入電池",
+    "收電路 / 拆解"
+   ]
+  },
+  {
+   "q": "breadboard.m3.sym0",
+   "h": "857bdaad",
+   "t": "single",
+   "page": "breadboard/module3",
+   "stem": "電路圖裡「一長一短的兩條平行線」,對應麵包板上的哪個實體?",
+   "options": {
+    "A": "電池盒(長線那端=紅色正極線)",
+    "B": "220Ω 電阻",
+    "C": "LED",
+    "D": "跳線"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "breadboard.m3.sym1",
+   "h": "adf440b4",
+   "t": "single",
+   "page": "breadboard/module3",
+   "stem": "鋸齒狀(或長方形)的符號,在這顆電路的實體是?",
+   "options": {
+    "A": "LED",
+    "B": "220Ω 色環電阻(紅紅棕)",
+    "C": "開關",
+    "D": "電池"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "breadboard.m3.sym2",
+   "h": "3c6a60d3",
+   "t": "single",
+   "page": "breadboard/module3",
+   "stem": "三角形加上兩個小箭頭的符號是?",
+   "options": {
+    "A": "蜂鳴器",
+    "B": "馬達",
+    "C": "LED(箭頭代表發光,三角形尖端指向電流方向)",
+    "D": "電容"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "breadboard.m3.sym3",
+   "h": "a35b8cc1",
+   "t": "single",
+   "page": "breadboard/module3",
+   "stem": "電路圖上兩條線交叉處「打一個實心點」,代表什麼?",
+   "options": {
+    "A": "兩條線互相絕緣、只是畫圖經過",
+    "B": "兩條線在這裡相連(像插在麵包板同一直行)",
+    "C": "這裡要焊接",
+    "D": "這裡有開關"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "design-process.m2.q0",
+   "h": "10dd41b5",
+   "t": "single",
+   "page": "design-process/module2",
+   "stem": "想知道全班最受歡迎的 3 種顏色",
+   "options": {
+    "A": "問卷調查",
+    "B": "深度訪談",
+    "C": "直接觀察",
+    "D": "競品分析",
+    "E": "焦點團體",
+    "F": "次級資料"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "design-process.m2.q1",
+   "h": "f0e1b709",
+   "t": "single",
+   "page": "design-process/module2",
+   "stem": "想了解為什麼有些人不買某品牌手機",
+   "options": {
+    "A": "問卷調查",
+    "B": "深度訪談",
+    "C": "直接觀察",
+    "D": "競品分析",
+    "E": "焦點團體",
+    "F": "次級資料"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "design-process.m2.q2",
+   "h": "02a29afd",
+   "t": "single",
+   "page": "design-process/module2",
+   "stem": "想知道老人家如何使用 App，不打擾他們",
+   "options": {
+    "A": "問卷調查",
+    "B": "深度訪談",
+    "C": "直接觀察",
+    "D": "競品分析",
+    "E": "焦點團體",
+    "F": "次級資料"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "design-process.m2.q3",
+   "h": "fbf3f93c",
+   "t": "single",
+   "page": "design-process/module2",
+   "stem": "想設計新運動 App，看市面上競品有什麼功能",
+   "options": {
+    "A": "問卷調查",
+    "B": "深度訪談",
+    "C": "直接觀察",
+    "D": "競品分析",
+    "E": "焦點團體",
+    "F": "次級資料"
+   },
+   "answer": "D",
+   "items": []
+  },
+  {
+   "q": "design-process.m2.q4",
+   "h": "764b632c",
+   "t": "single",
+   "page": "design-process/module2",
+   "stem": "想討論「理想的兒童學習桌」設計，引發深度討論",
+   "options": {
+    "A": "問卷調查",
+    "B": "深度訪談",
+    "C": "直接觀察",
+    "D": "競品分析",
+    "E": "焦點團體",
+    "F": "次級資料"
+   },
+   "answer": "E",
+   "items": []
+  },
+  {
+   "q": "design-process.m2.q5",
+   "h": "429f847f",
+   "t": "single",
+   "page": "design-process/module2",
+   "stem": "預算少，想知道台灣青少年運動習慣統計",
+   "options": {
+    "A": "問卷調查",
+    "B": "深度訪談",
+    "C": "直接觀察",
+    "D": "競品分析",
+    "E": "焦點團體",
+    "F": "次級資料"
+   },
+   "answer": "F",
+   "items": []
+  },
+  {
+   "q": "design-process.m2.q6",
+   "h": "f2d4e404",
+   "t": "single",
+   "page": "design-process/module2",
+   "stem": "想知道學生有多少時間使用社群媒體",
+   "options": {
+    "A": "問卷調查",
+    "B": "深度訪談",
+    "C": "直接觀察",
+    "D": "競品分析",
+    "E": "焦點團體",
+    "F": "次級資料"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "design-process.m2.q7",
+   "h": "b38935d0",
+   "t": "single",
+   "page": "design-process/module2",
+   "stem": "想看視障者實際怎麼操作智慧手機，在旁邊看、不打擾",
+   "options": {
+    "A": "問卷調查",
+    "B": "深度訪談",
+    "C": "直接觀察",
+    "D": "競品分析",
+    "E": "焦點團體",
+    "F": "次級資料"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "drill-press.m2.ppe",
+   "h": "0c3dc671",
+   "t": "game",
+   "page": "drill-press/module2",
+   "stem": "鑽床護具檢查：護目鏡、束緊袖口、包鞋放到對應部位；布手套、金屬手環、寬鬆長袖不能穿戴",
+   "options": {},
+   "answer": "pass",
+   "items": []
+  },
+  {
+   "q": "drill-press.m2.s0",
+   "h": "d87df772",
+   "t": "scenario",
+   "page": "drill-press/module2",
+   "stem": "把鑽頭裝進鑽床夾頭後，下一步？",
+   "options": {
+    "A": "直接按開關鑽孔",
+    "B": "把夾頭鑰匙拔下、確認沒留在夾頭上才開機"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "drill-press.m2.s1",
+   "h": "d4dc451e",
+   "t": "scenario",
+   "page": "drill-press/module2",
+   "stem": "想鑽一塊小金屬片，工件可以用手按住嗎？",
+   "options": {
+    "A": "絕對不行！要用機用虎鉗或 C 型夾固定在工作台上",
+    "B": "小心一點按住就可以"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "drill-press.m2.s10",
+   "h": "15c7f7b3",
+   "t": "scenario",
+   "page": "drill-press/module2",
+   "stem": "要鑽一個 15mm 深的盲孔（不鑽穿），應該怎麼控制深度？",
+   "options": {
+    "A": "憑感覺手動停，進刀到差不多就好",
+    "B": "設定進刀深度限位環到 15mm，限位環擋住進刀、不會再往下鑽（主軸仍在轉，要退鑽後關機）"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "drill-press.m2.s11",
+   "h": "51af5767",
+   "t": "scenario",
+   "page": "drill-press/module2",
+   "stem": "要把皮帶從 P5（2400RPM）換到 P1（500RPM）來鑽鋼板，正確步驟是？",
+   "options": {
+    "A": "機器停下來後，直接打開皮帶箱快速換帶",
+    "B": "先拔插頭（或關總電源）斷電，再開皮帶箱換帶，蓋回後才接電"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "drill-press.m2.s12",
+   "h": "88b4881b",
+   "t": "scenario",
+   "page": "drill-press/module2",
+   "stem": "用 Forstner 平底鑽頭（直徑 25mm）鑽硬木盲孔，轉速應該選？",
+   "options": {
+    "A": "最低速（P1–P2，500–720 RPM）",
+    "B": "中高速（P4–P5，1700–2400 RPM），轉快才有效率"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "drill-press.m2.s13",
+   "h": "496363cc",
+   "t": "scenario",
+   "page": "drill-press/module2",
+   "stem": "要在圓柱形木棒上鑽孔，如何固定在工作台上？",
+   "options": {
+    "A": "用 V 型槽固定塊（V-block）或機用虎鉗的 V 型缺口夾穩",
+    "B": "圓柱直接平放工作台，用手按住就好"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "drill-press.m2.s14",
+   "h": "29f4474a",
+   "t": "scenario",
+   "page": "drill-press/module2",
+   "stem": "要在光滑的鐵板上鑽孔，已經用鉛筆畫好十字，下一步？",
+   "options": {
+    "A": "直接對準十字下鑽，慢慢壓就好",
+    "B": "先用中心衝在十字中心敲一個小凹點，再對準凹點起鑽"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "drill-press.m2.s15",
+   "h": "1dbb03ee",
+   "t": "scenario",
+   "page": "drill-press/module2",
+   "stem": "用夾頭鑰匙鎖鑽頭，正確的鎖法是？",
+   "options": {
+    "A": "三個鑰匙孔都插進去鎖一次，平均鎖緊，鎖完輕搖確認不晃",
+    "B": "找一個最順手的鑰匙孔用力鎖緊就夠了"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "drill-press.m2.s16",
+   "h": "7ff3c66a",
+   "t": "scenario",
+   "page": "drill-press/module2",
+   "stem": "在薄鐵板上鑽孔，快要鑽穿的時候，進刀力要怎麼調整？",
+   "options": {
+    "A": "加大力量一口氣壓穿，比較快",
+    "B": "放輕進刀力、慢慢穿過，避免鑽頭突然咬住薄板"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "drill-press.m2.s17",
+   "h": "da200d3a",
+   "t": "scenario",
+   "page": "drill-press/module2",
+   "stem": "鑽孔時薄板突然被鑽頭咬住、跟著轉起來，第一個動作是？",
+   "options": {
+    "A": "立刻拍下緊急停止鈕，手遠離旋轉區",
+    "B": "趕快伸手把薄板抓住，不讓它轉"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "drill-press.m2.s18",
+   "h": "ae7e8b8b",
+   "t": "scenario",
+   "page": "drill-press/module2",
+   "stem": "在木頭上鑽一個 40mm 深的孔，鑽到一半木屑越來越難排出，怎麼做？",
+   "options": {
+    "A": "分段進刀：每鑽一小段就把鑽頭退出來排屑，再繼續鑽",
+    "B": "一口氣鑽到底，最後再一起清屑"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "drill-press.m2.s19",
+   "h": "02271ac4",
+   "t": "scenario",
+   "page": "drill-press/module2",
+   "stem": "想在木板上鑽一個 30° 斜角孔，鑽床可以做到嗎？",
+   "options": {
+    "A": "可以！鬆開工作台的傾斜鎖具，用量角器調到 30° 後鎖緊再鑽",
+    "B": "不行，鑽床主軸固定垂直，斜角孔要用手電鑽"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "drill-press.m2.s2",
+   "h": "75df7532",
+   "t": "scenario",
+   "page": "drill-press/module2",
+   "stem": "要在不鏽鋼板上鑽 10mm 的孔，要用什麼轉速？",
+   "options": {
+    "A": "最高速（2400 RPM）",
+    "B": "低速（P1–P2，約 500–720 RPM），並加切削液"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "drill-press.m2.s3",
+   "h": "b11780b0",
+   "t": "scenario",
+   "page": "drill-press/module2",
+   "stem": "長頭髮的同學要操作鑽床，怎麼處理？",
+   "options": {
+    "A": "必須先綁起來，最好加戴髮網或鴨舌帽",
+    "B": "把頭髮塞進衣領就好"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "drill-press.m2.s4",
+   "h": "a89daf93",
+   "t": "scenario",
+   "page": "drill-press/module2",
+   "stem": "操作鑽床時可以戴布手套嗎？",
+   "options": {
+    "A": "可以，戴手套才能防鐵屑割手",
+    "B": "禁止！手套容易被夾頭捲入"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "drill-press.m2.s5",
+   "h": "1a7c8a37",
+   "t": "scenario",
+   "page": "drill-press/module2",
+   "stem": "工件下方應該怎麼處理才能保護工作台？",
+   "options": {
+    "A": "墊一塊「廢木板」當犧牲層",
+    "B": "直接放在工作台上鑽"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "drill-press.m2.s6",
+   "h": "f74106df",
+   "t": "scenario",
+   "page": "drill-press/module2",
+   "stem": "鑽到鐵屑卡在鑽頭周圍，要怎麼清？",
+   "options": {
+    "A": "用手撥開",
+    "B": "停機 → 等鑽頭完全停止 → 用毛刷或鉤子清"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "drill-press.m2.s7",
+   "h": "6eb9f919",
+   "t": "scenario",
+   "page": "drill-press/module2",
+   "stem": "進刀時感覺異常吃力（鑽不下去），可能是？",
+   "options": {
+    "A": "停機檢查——可能鑽頭鈍了或卡屑了，要退鑽排屑",
+    "B": "繼續用力推穿過去"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "drill-press.m2.s8",
+   "h": "62d0449d",
+   "t": "scenario",
+   "page": "drill-press/module2",
+   "stem": "主軸開始轉動後發現工件沒夾穩，怎麼辦？",
+   "options": {
+    "A": "快速調整一下",
+    "B": "立刻關機、等主軸完全停止後再處理"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "drill-press.m2.s9",
+   "h": "bb06d183",
+   "t": "scenario",
+   "page": "drill-press/module2",
+   "stem": "鑽完孔結束操作，最後一步？",
+   "options": {
+    "A": "關機 → 等主軸停止 → 拆下鑽頭 → 清理鐵屑 → 把夾頭鑰匙歸位",
+    "B": "直接離開"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "drill-press.m3.chuckkey",
+   "h": "7352c6ec",
+   "t": "scenario",
+   "page": "drill-press/module3",
+   "stem": "裝好鑽頭準備開機，夾頭鑰匙還插著，你的選擇是？",
+   "options": {
+    "A": "先確認鑰匙已拔下，再開機",
+    "B": "直接開機"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "drill-press.m3.order",
+   "h": "ec48656d",
+   "t": "order",
+   "page": "drill-press/module3",
+   "stem": "把下方步驟排回正確順序",
+   "options": {},
+   "answer": "1>2>3>4>5>6>7>8",
+   "items": [
+    "穿戴護具、整理服儀",
+    "選鑽頭、裝入夾頭",
+    "⚠ 拔下夾頭鑰匙",
+    "依直徑與材料設定轉速",
+    "工件夾上工作台",
+    "調整工作台高度",
+    "開機 → 對位 → 進刀鑽孔",
+    "退鑽 → 停機 → 清理收工"
+   ]
+  },
+  {
+   "q": "drill-press.m5.case0",
+   "h": "8998e350",
+   "t": "scenario",
+   "page": "drill-press/module5",
+   "stem": "同學裝完鑽頭、按下開關，「咚！」鑰匙以高速彈飛擦過耳邊。",
+   "options": {
+    "A": "夾頭鑰匙甩飛",
+    "B": "鑽頭飛出",
+    "C": "皮帶打滑"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "drill-press.m5.case1",
+   "h": "41d952b9",
+   "t": "scenario",
+   "page": "drill-press/module5",
+   "stem": "鑽小金屬片時老師沒注意，學生用左手按住工件。鑽下去後工件突然旋轉飛起。",
+   "options": {
+    "A": "偏鑽",
+    "B": "工件飛起",
+    "C": "鑽穿工作台"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "drill-press.m5.case2",
+   "h": "6482186e",
+   "t": "scenario",
+   "page": "drill-press/module5",
+   "stem": "鑽 8mm 不鏽鋼，學生看皮帶在最高速段位，鑽下去後孔周冒煙、有焦味。",
+   "options": {
+    "A": "鑽頭斷裂",
+    "B": "皮帶打滑",
+    "C": "過熱燒孔"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "drill-press.m5.case3",
+   "h": "3c0cfdf9",
+   "t": "scenario",
+   "page": "drill-press/module5",
+   "stem": "鑽完 5mm 木板後鑽頭繼續下降，工作台多了一道凹痕。",
+   "options": {
+    "A": "偏鑽",
+    "B": "鑽穿工作台",
+    "C": "鑽頭斷裂"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "drill-press.m5.case4",
+   "h": "dc1c081f",
+   "t": "scenario",
+   "page": "drill-press/module5",
+   "stem": "深孔鑽到一半，鑽頭突然「啪」一聲斷成兩半，半截卡在工件內。",
+   "options": {
+    "A": "夾頭沒鎖緊",
+    "B": "鑽頭斷裂",
+    "C": "皮帶打滑"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "drill-press.m5.case5",
+   "h": "52d7d313",
+   "t": "scenario",
+   "page": "drill-press/module5",
+   "stem": "在 P1 最低速鑽厚鋼板，同學進刀太猛，忽然聽到皮帶箱發出刺耳的尖叫聲，主軸轉速明顯下降。",
+   "options": {
+    "A": "偏鑽",
+    "B": "皮帶打滑",
+    "C": "過熱燒孔"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "drill-press.m5.case6",
+   "h": "1b61ab25",
+   "t": "scenario",
+   "page": "drill-press/module5",
+   "stem": "要在光滑的不鏽鋼板上鑽孔，學生沒有先打中心衝就直接下鑽。鑽頭起鑽時在金屬表面滑動了 3mm，最終孔位偏移目標。",
+   "options": {
+    "A": "夾頭沒鎖緊",
+    "B": "鑽穿工作台",
+    "C": "偏鑽（Bit Walk）"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "drill-press.m5.case7",
+   "h": "c33a1b71",
+   "t": "scenario",
+   "page": "drill-press/module5",
+   "stem": "裝完 10mm 鑽頭後，同學只用夾頭鑰匙轉了一個齒輪孔就開始鑽孔。鑽孔過程中發現孔徑變大，鑽頭在夾頭中出現甩動。",
+   "options": {
+    "A": "鑽頭斷裂",
+    "B": "夾頭沒鎖緊",
+    "C": "工件飛起"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "drill.m2.ppe",
+   "h": "d43a54dd",
+   "t": "game",
+   "page": "drill/module2",
+   "stem": "手電鑽護具檢查：護目鏡、束緊袖口、包鞋放到對應部位；手套、手環、寬鬆長袖不能穿戴",
+   "options": {},
+   "answer": "pass",
+   "items": []
+  },
+  {
+   "q": "drill.m2.s0",
+   "h": "be21844e",
+   "t": "scenario",
+   "page": "drill/module2",
+   "stem": "準備鑽孔，工件擺在桌上沒固定，可以直接鑽嗎？",
+   "options": {
+    "A": "只要小心點就可以",
+    "B": "不行！必須先用 C 型夾或桌上虎鉗固定"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "drill.m2.s1",
+   "h": "4e847df7",
+   "t": "scenario",
+   "page": "drill/module2",
+   "stem": "長頭髮的同學使用手電鑽，應該怎麼處理？",
+   "options": {
+    "A": "必須先綁起來、塞進帽子或衣領裡",
+    "B": "小心一點就好"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "drill.m2.s10",
+   "h": "4c6f3c6b",
+   "t": "scenario",
+   "page": "drill/module2",
+   "stem": "發現電池包側面明顯鼓脹，還能繼續使用嗎？",
+   "options": {
+    "A": "停用，更換膨脹電池再操作",
+    "B": "沒關係，電池鼓脹是正常老化"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "drill.m2.s11",
+   "h": "7a547b9f",
+   "t": "scenario",
+   "page": "drill/module2",
+   "stem": "要在磁磚上鑽孔，可以用電鎚模式加磚石鑽頭嗎？",
+   "options": {
+    "A": "不行！要用金剛石空心鑽頭，不能用電鎚衝擊",
+    "B": "對，電鎚模式加磚石鑽頭效率最高"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "drill.m2.s12",
+   "h": "c09e33ae",
+   "t": "scenario",
+   "page": "drill/module2",
+   "stem": "鑽孔時產生大量熱氣、冒煙，且進展非常緩慢，原因最可能是？",
+   "options": {
+    "A": "鑽頭已鈍，應立刻停機更換新鑽頭",
+    "B": "只是轉速太高，把速度調低後繼續用力硬鑽，不必檢查鑽頭"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "drill.m2.s13",
+   "h": "4de58b3a",
+   "t": "scenario",
+   "page": "drill/module2",
+   "stem": "在橡木硬木上鑽 12mm 大孔，應該選哪個轉速設定？",
+   "options": {
+    "A": "低速高扭力（Low gear，300–600 RPM）",
+    "B": "高速（High gear，1500 RPM 以上）讓鑽頭轉快一點"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "drill.m2.s14",
+   "h": "975c79ad",
+   "t": "scenario",
+   "page": "drill/module2",
+   "stem": "需要向上仰鑽天花板，最安全的姿勢是？",
+   "options": {
+    "A": "身體靠牆支撐、護目鏡朝上、側臉避開鑽孔方向",
+    "B": "站直往上看對準鑽點，這樣比較準確"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "drill.m2.s2",
+   "h": "64355f86",
+   "t": "scenario",
+   "page": "drill/module2",
+   "stem": "同學想單手拿手電鑽鑽孔，這樣對嗎？",
+   "options": {
+    "A": "對，老師也常常單手用",
+    "B": "不對，必須雙手握持（主手握把＋輔助手托電池底座或用側把手）"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "drill.m2.s3",
+   "h": "24470dd1",
+   "t": "scenario",
+   "page": "drill/module2",
+   "stem": "想鑽金屬板，應該選哪種鑽頭？",
+   "options": {
+    "A": "高速鋼（HSS）鑽頭",
+    "B": "木工螺旋鑽頭"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "drill.m2.s4",
+   "h": "d982f31c",
+   "t": "scenario",
+   "page": "drill/module2",
+   "stem": "鑽到一半鑽頭卡住，正確處置？",
+   "options": {
+    "A": "繼續用力推，硬鑽過去",
+    "B": "鬆開扳機 → 切到反轉 → 慢慢退出"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "drill.m2.s5",
+   "h": "bf8e3e11",
+   "t": "scenario",
+   "page": "drill/module2",
+   "stem": "剛鑽完的金屬鑽頭，多久能徒手摸？",
+   "options": {
+    "A": "等待數分鐘，先以手背靠近感溫確認不燙，或用鉗子取下",
+    "B": "立刻能摸"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "drill.m2.s6",
+   "h": "460bc86a",
+   "t": "scenario",
+   "page": "drill/module2",
+   "stem": "裝鑽頭時，免鑰匙夾頭要轉到什麼程度才算鎖緊？",
+   "options": {
+    "A": "手覺得緊就行",
+    "B": "要轉到聽見連續「咔咔咔」棘輪聲"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "drill.m2.s7",
+   "h": "3329a2a8",
+   "t": "scenario",
+   "page": "drill/module2",
+   "stem": "想鎖一顆小螺絲到 MDF 板，扭力環應該怎麼設定？",
+   "options": {
+    "A": "設定到中低段（約 4–8），離合器會在到位時跳脫",
+    "B": "直接用最大鑽孔模式"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "drill.m2.s8",
+   "h": "604851ee",
+   "t": "scenario",
+   "page": "drill/module2",
+   "stem": "鑽孔位置上方有電線或水管，發現時怎麼辦？",
+   "options": {
+    "A": "小心點繼續鑽，避開就好",
+    "B": "停止鑽孔，改換位置或用偵測器確認"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "drill.m2.s9",
+   "h": "b38268f8",
+   "t": "scenario",
+   "page": "drill/module2",
+   "stem": "鑽完孔，要把鑽頭從夾頭取下，正確程序？",
+   "options": {
+    "A": "先檢查鑽頭已停止旋轉 → 拆電池 → 反轉夾頭環取下",
+    "B": "直接轉開夾頭就好"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "drill.m3.kickback",
+   "h": "5cf241f4",
+   "t": "scenario",
+   "page": "drill/module3",
+   "stem": "手電鑽鑽到一半突然卡住、機身開始反轉，你的第一個反應？",
+   "options": {
+    "A": "繼續施力硬鑽",
+    "B": "立刻放開扳機"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "drill.m3.order",
+   "h": "1cb0290b",
+   "t": "order",
+   "page": "drill/module3",
+   "stem": "把下方步驟排回正確順序",
+   "options": {},
+   "answer": "1>2>3>4>5>6>7>8",
+   "items": [
+    "穿戴護具",
+    "選對鑽頭",
+    "裝鑽頭、鎖緊夾頭",
+    "設定扭力與模式",
+    "標位置、固定工件",
+    "起鑽：點壓 + 慢速",
+    "鑽孔：穩定進刀、定時退屑",
+    "退鑽 ＆ 收工"
+   ]
+  },
+  {
+   "q": "drill.m5.case0",
+   "h": "dac7ac20",
+   "t": "single",
+   "page": "drill/module5",
+   "stem": "案例 1：看圖判斷是哪一種故障？",
+   "options": {
+    "A": "過熱燒孔",
+    "B": "偏鑽",
+    "C": "毛邊"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "drill.m5.case1",
+   "h": "df05da49",
+   "t": "single",
+   "page": "drill/module5",
+   "stem": "案例 2：看圖判斷是哪一種故障？",
+   "options": {
+    "A": "燒鑽頭",
+    "B": "孔徑過大",
+    "C": "偏鑽"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "drill.m5.case2",
+   "h": "52b5cb48",
+   "t": "single",
+   "page": "drill/module5",
+   "stem": "案例 3：看圖判斷是哪一種故障？",
+   "options": {
+    "A": "卡鑽",
+    "B": "毛邊（底面爆裂）",
+    "C": "孔徑過大"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "drill.m5.case3",
+   "h": "3228a6ae",
+   "t": "single",
+   "page": "drill/module5",
+   "stem": "案例 4：看圖判斷是哪一種故障？",
+   "options": {
+    "A": "過熱燒孔",
+    "B": "鑽頭斷裂",
+    "C": "燒鑽頭"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "drill.m5.case4",
+   "h": "4418347e",
+   "t": "single",
+   "page": "drill/module5",
+   "stem": "案例 5：看圖判斷是哪一種故障？",
+   "options": {
+    "A": "毛邊",
+    "B": "卡鑽",
+    "C": "偏鑽"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "emerging-tech.m3.q0",
+   "h": "e614aaeb",
+   "t": "match",
+   "page": "emerging-tech/module3",
+   "stem": "用平板掃描課本上的圖片，螢幕跳出一隻可旋轉觀察的 3D 恐龍，恐龍浮在畫面上，不會被課本邊緣遮住。",
+   "options": {
+    "A": "AR 擴增實境",
+    "B": "MR 混合實境",
+    "C": "VR 虛擬實境",
+    "D": "XR 延展實境"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "emerging-tech.m3.q1",
+   "h": "b48e8fe8",
+   "t": "match",
+   "page": "emerging-tech/module3",
+   "stem": "戴上頭盔後看不到教室，眼前是一座完整的虛擬工廠，可以走動參觀產線。",
+   "options": {
+    "A": "AR 擴增實境",
+    "B": "MR 混合實境",
+    "C": "VR 虛擬實境",
+    "D": "XR 延展實境"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "emerging-tech.m3.q2",
+   "h": "a3644a7a",
+   "t": "match",
+   "page": "emerging-tech/module3",
+   "stem": "戴上透視頭盔，虛擬的說明標籤「貼」在真實機台上；走到機台後方時，標籤會被機台正確遮住。",
+   "options": {
+    "A": "AR 擴增實境",
+    "B": "MR 混合實境",
+    "C": "VR 虛擬實境",
+    "D": "XR 延展實境"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "emerging-tech.m3.q3",
+   "h": "58fb1fea",
+   "t": "match",
+   "page": "emerging-tech/module3",
+   "stem": "手機相機開啟後，畫面上出現往前走的箭頭指引方向，箭頭永遠浮在畫面正中央上方。",
+   "options": {
+    "A": "AR 擴增實境",
+    "B": "MR 混合實境",
+    "C": "VR 虛擬實境",
+    "D": "XR 延展實境"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "emerging-tech.m3.q4",
+   "h": "94e34927",
+   "t": "match",
+   "page": "emerging-tech/module3",
+   "stem": "教育部公文寫「補助學校建置延展實境教學設備」，未指定是頭戴式或手持式。",
+   "options": {
+    "A": "AR 擴增實境",
+    "B": "MR 混合實境",
+    "C": "VR 虛擬實境",
+    "D": "XR 延展實境"
+   },
+   "answer": "D",
+   "items": []
+  },
+  {
+   "q": "emerging-tech.m3.q5",
+   "h": "e208f754",
+   "t": "match",
+   "page": "emerging-tech/module3",
+   "stem": "虛擬寵物被放在真實的桌面上，你把手伸過去，牠會躲開，走到桌緣會停住不會掉下去。",
+   "options": {
+    "A": "AR 擴增實境",
+    "B": "MR 混合實境",
+    "C": "VR 虛擬實境",
+    "D": "XR 延展實境"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "emerging-tech.m3.q6",
+   "h": "5b1f7ccb",
+   "t": "match",
+   "page": "emerging-tech/module3",
+   "stem": "在完全黑暗的頭盔中進行消防逃生演練，四周的煙霧、火場、樓梯全部由電腦生成。",
+   "options": {
+    "A": "AR 擴增實境",
+    "B": "MR 混合實境",
+    "C": "VR 虛擬實境",
+    "D": "XR 延展實境"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "emerging-tech.m3.q7",
+   "h": "d01db936",
+   "t": "match",
+   "page": "emerging-tech/module3",
+   "stem": "一份研究報告比較「各類 XR 裝置的市場趨勢」，內容同時涵蓋頭戴顯示器與手機擴增應用。",
+   "options": {
+    "A": "AR 擴增實境",
+    "B": "MR 混合實境",
+    "C": "VR 虛擬實境",
+    "D": "XR 延展實境"
+   },
+   "answer": "D",
+   "items": []
+  },
+  {
+   "q": "energy.m2.q0",
+   "h": "d48e7a21",
+   "t": "single",
+   "page": "energy/module2",
+   "stem": "燃煤發電廠 的能量轉換是？",
+   "options": {
+    "A": "化學能 → 熱能 → 動能 → 電能",
+    "B": "光能 → 電能",
+    "C": "位能 → 動能 → 電能",
+    "D": "動能 → 電能",
+    "E": "電能 → 光能 + 熱能",
+    "F": "化學能 → 動能 + 熱能",
+    "G": "化學能 → 電能",
+    "H": "電能 → 電磁能（微波）→ 熱能",
+    "I": "動能 → 熱能（摩擦）",
+    "J": "電能 → 化學能（電池）→ 電能 → 動能"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "energy.m2.q1",
+   "h": "813f94e7",
+   "t": "single",
+   "page": "energy/module2",
+   "stem": "太陽能板 的能量轉換是？",
+   "options": {
+    "A": "化學能 → 熱能 → 動能 → 電能",
+    "B": "光能 → 電能",
+    "C": "位能 → 動能 → 電能",
+    "D": "動能 → 電能",
+    "E": "電能 → 光能 + 熱能",
+    "F": "化學能 → 動能 + 熱能",
+    "G": "化學能 → 電能",
+    "H": "電能 → 電磁能（微波）→ 熱能",
+    "I": "動能 → 熱能（摩擦）",
+    "J": "電能 → 化學能（電池）→ 電能 → 動能"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "energy.m2.q2",
+   "h": "c9a1e162",
+   "t": "single",
+   "page": "energy/module2",
+   "stem": "水力發電廠 的能量轉換是？",
+   "options": {
+    "A": "化學能 → 熱能 → 動能 → 電能",
+    "B": "光能 → 電能",
+    "C": "位能 → 動能 → 電能",
+    "D": "動能 → 電能",
+    "E": "電能 → 光能 + 熱能",
+    "F": "化學能 → 動能 + 熱能",
+    "G": "化學能 → 電能",
+    "H": "電能 → 電磁能（微波）→ 熱能",
+    "I": "動能 → 熱能（摩擦）",
+    "J": "電能 → 化學能（電池）→ 電能 → 動能"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "energy.m2.q3",
+   "h": "6cdb0ed1",
+   "t": "single",
+   "page": "energy/module2",
+   "stem": "風力發電 的能量轉換是？",
+   "options": {
+    "A": "化學能 → 熱能 → 動能 → 電能",
+    "B": "光能 → 電能",
+    "C": "位能 → 動能 → 電能",
+    "D": "動能 → 電能",
+    "E": "電能 → 光能 + 熱能",
+    "F": "化學能 → 動能 + 熱能",
+    "G": "化學能 → 電能",
+    "H": "電能 → 電磁能（微波）→ 熱能",
+    "I": "動能 → 熱能（摩擦）",
+    "J": "電能 → 化學能（電池）→ 電能 → 動能"
+   },
+   "answer": "D",
+   "items": []
+  },
+  {
+   "q": "energy.m2.q4",
+   "h": "6b436bc0",
+   "t": "single",
+   "page": "energy/module2",
+   "stem": "電燈泡 的能量轉換是？",
+   "options": {
+    "A": "化學能 → 熱能 → 動能 → 電能",
+    "B": "光能 → 電能",
+    "C": "位能 → 動能 → 電能",
+    "D": "動能 → 電能",
+    "E": "電能 → 光能 + 熱能",
+    "F": "化學能 → 動能 + 熱能",
+    "G": "化學能 → 電能",
+    "H": "電能 → 電磁能（微波）→ 熱能",
+    "I": "動能 → 熱能（摩擦）",
+    "J": "電能 → 化學能（電池）→ 電能 → 動能"
+   },
+   "answer": "E",
+   "items": []
+  },
+  {
+   "q": "energy.m2.q5",
+   "h": "878e5dec",
+   "t": "single",
+   "page": "energy/module2",
+   "stem": "人類運動消耗食物 的能量轉換是？",
+   "options": {
+    "A": "化學能 → 熱能 → 動能 → 電能",
+    "B": "光能 → 電能",
+    "C": "位能 → 動能 → 電能",
+    "D": "動能 → 電能",
+    "E": "電能 → 光能 + 熱能",
+    "F": "化學能 → 動能 + 熱能",
+    "G": "化學能 → 電能",
+    "H": "電能 → 電磁能（微波）→ 熱能",
+    "I": "動能 → 熱能（摩擦）",
+    "J": "電能 → 化學能（電池）→ 電能 → 動能"
+   },
+   "answer": "F",
+   "items": []
+  },
+  {
+   "q": "energy.m2.q6",
+   "h": "70dce66b",
+   "t": "single",
+   "page": "energy/module2",
+   "stem": "電池供電給手機 的能量轉換是？",
+   "options": {
+    "A": "化學能 → 熱能 → 動能 → 電能",
+    "B": "光能 → 電能",
+    "C": "位能 → 動能 → 電能",
+    "D": "動能 → 電能",
+    "E": "電能 → 光能 + 熱能",
+    "F": "化學能 → 動能 + 熱能",
+    "G": "化學能 → 電能",
+    "H": "電能 → 電磁能（微波）→ 熱能",
+    "I": "動能 → 熱能（摩擦）",
+    "J": "電能 → 化學能（電池）→ 電能 → 動能"
+   },
+   "answer": "G",
+   "items": []
+  },
+  {
+   "q": "energy.m2.q7",
+   "h": "ef1fc25a",
+   "t": "single",
+   "page": "energy/module2",
+   "stem": "微波爐加熱食物 的能量轉換是？",
+   "options": {
+    "A": "化學能 → 熱能 → 動能 → 電能",
+    "B": "光能 → 電能",
+    "C": "位能 → 動能 → 電能",
+    "D": "動能 → 電能",
+    "E": "電能 → 光能 + 熱能",
+    "F": "化學能 → 動能 + 熱能",
+    "G": "化學能 → 電能",
+    "H": "電能 → 電磁能（微波）→ 熱能",
+    "I": "動能 → 熱能（摩擦）",
+    "J": "電能 → 化學能（電池）→ 電能 → 動能"
+   },
+   "answer": "H",
+   "items": []
+  },
+  {
+   "q": "energy.m2.q8",
+   "h": "3e29f8d3",
+   "t": "single",
+   "page": "energy/module2",
+   "stem": "車輛煞車 的能量轉換是？",
+   "options": {
+    "A": "化學能 → 熱能 → 動能 → 電能",
+    "B": "光能 → 電能",
+    "C": "位能 → 動能 → 電能",
+    "D": "動能 → 電能",
+    "E": "電能 → 光能 + 熱能",
+    "F": "化學能 → 動能 + 熱能",
+    "G": "化學能 → 電能",
+    "H": "電能 → 電磁能（微波）→ 熱能",
+    "I": "動能 → 熱能（摩擦）",
+    "J": "電能 → 化學能（電池）→ 電能 → 動能"
+   },
+   "answer": "I",
+   "items": []
+  },
+  {
+   "q": "energy.m2.q9",
+   "h": "e25d4fd5",
+   "t": "single",
+   "page": "energy/module2",
+   "stem": "電動車充電與行駛 的能量轉換是？",
+   "options": {
+    "A": "化學能 → 熱能 → 動能 → 電能",
+    "B": "光能 → 電能",
+    "C": "位能 → 動能 → 電能",
+    "D": "動能 → 電能",
+    "E": "電能 → 光能 + 熱能",
+    "F": "化學能 → 動能 + 熱能",
+    "G": "化學能 → 電能",
+    "H": "電能 → 電磁能（微波）→ 熱能",
+    "I": "動能 → 熱能（摩擦）",
+    "J": "電能 → 化學能（電池）→ 電能 → 動能"
+   },
+   "answer": "J",
+   "items": []
+  },
+  {
+   "q": "energy.m3.order",
+   "h": "85a3a543",
+   "t": "order",
+   "page": "energy/module3",
+   "stem": "把下方步驟排回正確順序",
+   "options": {},
+   "answer": "1>2>3>4>5>6>7>8",
+   "items": [
+    "原料 / 能源取得",
+    "燃料運送與儲存",
+    "能量轉換（產熱）",
+    "推動渦輪機",
+    "發電機產生電能",
+    "升壓變電 → 高壓輸電",
+    "降壓配電到社區",
+    "家中插座 → 電器使用"
+   ]
+  },
+  {
+   "q": "frc.m2.s0",
+   "h": "6242daf7",
+   "t": "scenario",
+   "page": "frc/module2",
+   "stem": "操作 CNC 銑床切割鋁板前最重要的步驟？",
+   "options": {
+    "A": "戴上棉紗手套，切削時方便隨手撥掉鋁屑",
+    "B": "檢查工件夾持是否牢固、清空鋁屑、確認急停按鈕位置",
+    "C": "先按下啟動試跑一次，有問題再按急停",
+    "D": "確認刀具裝好就可以，夾具鬆緊切的時候再看"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "frc.m2.s1",
+   "h": "22d07a0d",
+   "t": "scenario",
+   "page": "frc/module2",
+   "stem": "電池（12V 鉛酸）保管的正確方式？",
+   "options": {
+    "A": "直立放在通風的電池架上、正負極端子加蓋、編號管理",
+    "B": "隨意疊放在工具櫃角落",
+    "C": "橫放在地上節省空間，端子不用蓋，下次好接線"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "frc.m2.s2",
+   "h": "66babe77",
+   "t": "scenario",
+   "page": "frc/module2",
+   "stem": "機器人測試（test mode）時，誰可以接近機器人？",
+   "options": {
+    "A": "所有隊員都可以圍觀",
+    "B": "只要不站在機器人正前方，大家都可以靠近看",
+    "C": "只有 driver 與 1 名安全觀察員，其他人保持 2m 以上距離"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "frc.m2.s3",
+   "h": "18b7a61d",
+   "t": "scenario",
+   "page": "frc/module2",
+   "stem": "焊接電子線材時，工作站應該？",
+   "options": {
+    "A": "在電池附近方便取電",
+    "B": "在通風櫃裡或靠窗處 + 排煙裝置",
+    "C": "關窗開冷氣，讓空氣循環就好"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "frc.m2.s4",
+   "h": "81d4f708",
+   "t": "scenario",
+   "page": "frc/module2",
+   "stem": "CAD 設計的零件交給製造組前必須？",
+   "options": {
+    "A": "自己確認過尺寸就可以送加工，不必給別人看",
+    "B": "直接送去 CNC 加工，有問題再改",
+    "C": "先 peer review、確認 tolerance、檢查刀具是否能加工"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "frc.m2.s5",
+   "h": "dd476590",
+   "t": "scenario",
+   "page": "frc/module2",
+   "stem": "比賽期間機器人異常冒煙，立刻？",
+   "options": {
+    "A": "駕駛員按下急停 → 通知裁判 → 等技術組到場處理",
+    "B": "繼續比賽看會不會自己好",
+    "C": "衝上場伸手把冒煙的那條線拔掉"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "frc.m2.s6",
+   "h": "ebe4fb33",
+   "t": "scenario",
+   "page": "frc/module2",
+   "stem": "3D 列印 PLA 時，安全注意事項？",
+   "options": {
+    "A": "靠近觀察，看到牽絲就伸手進去拔掉",
+    "B": "保持距離、確保通風、不可手伸入加熱區",
+    "C": "開始列印後就可以離開教室，回來再收成品"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "frc.m2.s7",
+   "h": "268aa0cd",
+   "t": "scenario",
+   "page": "frc/module2",
+   "stem": "PIT 區整理工具的原則？",
+   "options": {
+    "A": "常用工具放最方便拿的位置，用完先放機器人旁邊",
+    "B": "Shadow board（影子板）+ 工具回歸定位，每場比賽前盤點",
+    "C": "整天比賽結束後再一起盤點"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "frc.m2.s8",
+   "h": "8c603bf6",
+   "t": "scenario",
+   "page": "frc/module2",
+   "stem": "CIM、NEO、Falcon 等 FRC 馬達操作注意？",
+   "options": {
+    "A": "通電後可用手測試轉動方向",
+    "B": "戴上棉紗手套，就可以用手扶著轉軸測試",
+    "C": "通電前先確保軸上沒有手指/物體；通電測試時手離開轉動件，人員退到工坊規定的安全距離外"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "frc.m2.s9",
+   "h": "1559b153",
+   "t": "scenario",
+   "page": "frc/module2",
+   "stem": "比賽期間 alliance station 駕駛位的安全規範？",
+   "options": {
+    "A": "可以脫下護目鏡看 dashboard",
+    "B": "有戴近視眼鏡就不必再戴護目鏡",
+    "C": "全程戴護目鏡 + 不可越過 alliance wall"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "frc.m3.order",
+   "h": "122e44ac",
+   "t": "order",
+   "page": "frc/module3",
+   "stem": "把工程設計流程排回正確順序",
+   "options": {},
+   "answer": "1>2>3>4>5>6>7",
+   "items": [
+    "Define：問題定義 + 遊戲分析",
+    "Research：研究既有解決方案",
+    "Ideate：腦力激盪 + 概念設計",
+    "Prototype：快速做出可測試版本",
+    "Build：CAD + 製造 + 組裝",
+    "Test：壓力測試 + 駕駛員訓練",
+    "Iterate：賽季中持續優化"
+   ]
+  },
+  {
+   "q": "hand-tools.m2.s0",
+   "h": "495af369",
+   "t": "scenario",
+   "page": "hand-tools/module2",
+   "stem": "美工刀刀片變鈍切不動，下一步？",
+   "options": {
+    "A": "徒手把鈍掉的刀片折斷取得新刃",
+    "B": "把刀片伸出 1 格，用內附折斷器（或刀套底部金屬槽）折斷後收進回收盒，或整片更換"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "hand-tools.m2.s1",
+   "h": "a6b3c92a",
+   "t": "scenario",
+   "page": "hand-tools/module2",
+   "stem": "螺絲鎖很緊轉不動，下一步？",
+   "options": {
+    "A": "改用粗握柄或 T 形柄起子，或用同尺寸六角鋼柄起子搭配扳手夾轉",
+    "B": "用力轉看看，或換更大尺寸的螺絲起子"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "hand-tools.m2.s2",
+   "h": "5a3f221c",
+   "t": "scenario",
+   "page": "hand-tools/module2",
+   "stem": "銼刀握把鬆動／或拿到無柄銼刀，可以用嗎？",
+   "options": {
+    "A": "用毛巾包住莖部代替握把就好",
+    "B": "不能用，要先裝上或更換木柄／塑膠柄"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "hand-tools.m2.s3",
+   "h": "7ae2a9d4",
+   "t": "scenario",
+   "page": "hand-tools/module2",
+   "stem": "要鋸一塊不規則的小工件，可以怎麼固定？",
+   "options": {
+    "A": "用 C 型夾、F 型夾或檯虎鉗固定到工作台",
+    "B": "用左手按住工件右手鋸（學會控制就好）"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "hand-tools.m2.s4",
+   "h": "84707374",
+   "t": "scenario",
+   "page": "hand-tools/module2",
+   "stem": "用活動扳手轉螺帽，活動鉗口應該朝哪邊？",
+   "options": {
+    "A": "朝施力的方向（力比較順）",
+    "B": "朝「不施力」的方向（讓固定鉗口承受主要受力）"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "hand-tools.m2.s5",
+   "h": "91c7e650",
+   "t": "scenario",
+   "page": "hand-tools/module2",
+   "stem": "鎚到手指了，馬上做什麼？",
+   "options": {
+    "A": "停下、報告老師，冰敷 10–15 分鐘並觀察腫脹與活動度；必要時到健康中心或送醫",
+    "B": "甩一甩手繼續做完手上工作"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "hand-tools.m2.s6",
+   "h": "f9624671",
+   "t": "scenario",
+   "page": "hand-tools/module2",
+   "stem": "看到同學鋸子滑掉差點割到，下一步？",
+   "options": {
+    "A": "當作沒看到、各自做自己的",
+    "B": "友善提醒對方檢查工件是否固定，必要時請老師示範"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "hand-tools.m2.s7",
+   "h": "dc422a56",
+   "t": "scenario",
+   "page": "hand-tools/module2",
+   "stem": "工作完後工具怎麼收？",
+   "options": {
+    "A": "清潔 → 檢查有無損壞 → 歸位到「影子板」（shadow board）的原位",
+    "B": "清潔後丟回工具盒就好"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "hand-tools.m2.s8",
+   "h": "6528f81e",
+   "t": "scenario",
+   "page": "hand-tools/module2",
+   "stem": "量尺寸時看起來差不多就好嗎？",
+   "options": {
+    "A": "差 1 mm 內可以接受，量一次就好",
+    "B": "量兩次以上互相確認，重要尺寸請老師複測"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "hand-tools.m2.s9",
+   "h": "8ad2844d",
+   "t": "scenario",
+   "page": "hand-tools/module2",
+   "stem": "看到工具明顯破損（鎚柄裂、銼刀崩齒、起子刀頭歪），怎麼辦？",
+   "options": {
+    "A": "不要用，標示「待修」或「報廢」並通報老師",
+    "B": "裂痕不大、繼續用沒關係"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "hand-tools.m3.order",
+   "h": "8b7a8c79",
+   "t": "order",
+   "page": "hand-tools/module3",
+   "stem": "把下方步驟排回正確順序",
+   "options": {},
+   "answer": "1>2>3>4>5>6>7>8",
+   "items": [
+    "選對工具",
+    "檢查工具狀態",
+    "工件固定",
+    "正確握姿",
+    "正確施力方向",
+    "邊做邊監控",
+    "收尾整理",
+    "清潔歸位"
+   ]
+  },
+  {
+   "q": "hand-tools.m4.q0",
+   "h": "fb1ca481",
+   "t": "single",
+   "page": "hand-tools/module4",
+   "stem": "把鐵釘從木板上拔出來",
+   "options": {
+    "A": "羊角錘",
+    "B": "橡膠槌",
+    "C": "尖嘴鉗",
+    "D": "一字螺絲起子"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "hand-tools.m4.q1",
+   "h": "8bfaa502",
+   "t": "single",
+   "page": "hand-tools/module4",
+   "stem": "鎖一顆十字（Phillips）螺絲",
+   "options": {
+    "A": "一字螺絲起子",
+    "B": "十字螺絲起子",
+    "C": "六角扳手",
+    "D": "尖嘴鉗"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "hand-tools.m4.q2",
+   "h": "c566dde1",
+   "t": "single",
+   "page": "hand-tools/module4",
+   "stem": "在 0.5 mm 鋁板上切出形狀",
+   "options": {
+    "A": "線鋸",
+    "B": "鋼鋸 / 金工剪",
+    "C": "美工刀",
+    "D": "鎚子"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "hand-tools.m4.q3",
+   "h": "a931280f",
+   "t": "single",
+   "page": "hand-tools/module4",
+   "stem": "把金屬零件的孔徑稍微擴大 0.5 mm",
+   "options": {
+    "A": "平銼刀",
+    "B": "半圓銼刀",
+    "C": "圓銼刀",
+    "D": "三角銼刀"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "hand-tools.m4.q4",
+   "h": "7fb38e3d",
+   "t": "single",
+   "page": "hand-tools/module4",
+   "stem": "剝開電線外皮（不傷銅線）",
+   "options": {
+    "A": "尖嘴鉗",
+    "B": "剝線鉗",
+    "C": "美工刀",
+    "D": "斜口鉗"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "hand-tools.m4.q5",
+   "h": "0672cf2d",
+   "t": "single",
+   "page": "hand-tools/module4",
+   "stem": "鎖一顆 M6 內六角螺絲",
+   "options": {
+    "A": "一字螺絲起子",
+    "B": "六角扳手",
+    "C": "活動扳手",
+    "D": "梅花扳手"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "hand-tools.m4.q6",
+   "h": "40d8233b",
+   "t": "single",
+   "page": "hand-tools/module4",
+   "stem": "量測一個小金屬塊外徑 12.5 mm 是否符合圖面",
+   "options": {
+    "A": "直尺",
+    "B": "捲尺",
+    "C": "游標卡尺",
+    "D": "角尺"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "hand-tools.m4.q7",
+   "h": "e1833e42",
+   "t": "single",
+   "page": "hand-tools/module4",
+   "stem": "在木板畫好的線上精準切割直線",
+   "options": {
+    "A": "線鋸",
+    "B": "夾背鋸",
+    "C": "鋼鋸",
+    "D": "美工刀"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "hand-tools.m4.q8",
+   "h": "2a03cd39",
+   "t": "single",
+   "page": "hand-tools/module4",
+   "stem": "把厚紙板裁出一條筆直、整齊的邊（要安全、不傷桌面）",
+   "options": {
+    "A": "剪刀",
+    "B": "美工刀 + 鋼尺 + 切割墊",
+    "C": "線鋸",
+    "D": "只用美工刀（徒手扶紙）"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "hand-tools.m4.q9",
+   "h": "baf3f60b",
+   "t": "single",
+   "page": "hand-tools/module4",
+   "stem": "把一塊 30 mm 小金屬零件牢牢固定，準備銼修",
+   "options": {
+    "A": "C 型夾夾在桌邊",
+    "B": "檯虎鉗（bench vise）",
+    "C": "尖嘴鉗手持",
+    "D": "徒手按住"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "hand-tools.m5.q0",
+   "h": "6041bb0c",
+   "t": "scenario",
+   "page": "hand-tools/module5",
+   "stem": "鎚子木柄出現 3 cm 細裂痕，敲擊時稍有晃動",
+   "options": {
+    "A": "可修復繼續用",
+    "B": "應該報廢"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "hand-tools.m5.q1",
+   "h": "6a765793",
+   "t": "scenario",
+   "page": "hand-tools/module5",
+   "stem": "銼刀齒嚴重磨平（手摸無刺感，光滑）",
+   "options": {
+    "A": "可修復繼續用",
+    "B": "應該報廢"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "hand-tools.m5.q2",
+   "h": "682263fb",
+   "t": "scenario",
+   "page": "hand-tools/module5",
+   "stem": "螺絲起子刀頭歪斜約 30°",
+   "options": {
+    "A": "可修復繼續用",
+    "B": "應該報廢"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "hand-tools.m5.q3",
+   "h": "ca4fd82a",
+   "t": "scenario",
+   "page": "hand-tools/module5",
+   "stem": "尖嘴鉗鉸鏈卡卡轉不順，鉗口本身完好",
+   "options": {
+    "A": "可修復繼續用",
+    "B": "應該報廢"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "hand-tools.m5.q4",
+   "h": "1edb5307",
+   "t": "scenario",
+   "page": "hand-tools/module5",
+   "stem": "鋼鋸框架有 5° 輕微彎曲，鋸條尚可張緊",
+   "options": {
+    "A": "可修復繼續用",
+    "B": "應該報廢"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "hydraulic-arm.m3.order",
+   "h": "2fd893ae",
+   "t": "order",
+   "page": "hydraulic-arm/module3",
+   "stem": "把下方步驟排回正確順序",
+   "options": {},
+   "answer": "1>2>3>4>5>6>7>8",
+   "items": [
+    "材料準備",
+    "裁切骨架",
+    "鑽軸孔與兩腳釘",
+    "組裝關節",
+    "安裝油壓缸（針筒）",
+    "連接油管",
+    "充水排氣",
+    "校正與測試"
+   ]
+  },
+  {
+   "q": "hydraulic-arm.m5.q0",
+   "h": "dc86cd7b",
+   "t": "single",
+   "page": "hydraulic-arm/module5",
+   "stem": "【計算】小活塞面積 2 cm²，施力 10 N。液體壓力是多少？大活塞面積 20 cm²，輸出力是多少？",
+   "options": {
+    "A": "壓力 5 N/cm²，輸出力 100 N",
+    "B": "壓力 20 N/cm²，輸出力 400 N",
+    "C": "壓力 5 N/cm²，輸出力 10 N"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "hydraulic-arm.m5.q1",
+   "h": "7d0755d0",
+   "t": "single",
+   "page": "hydraulic-arm/module5",
+   "stem": "【計算】要用大活塞（面積 30 cm²）抬起 300 N 的重物，小活塞面積 3 cm²，最少要在小活塞上施力多少？",
+   "options": {
+    "A": "3 N",
+    "B": "30 N",
+    "C": "3000 N"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "hydraulic-arm.m5.q2",
+   "h": "13c79931",
+   "t": "single",
+   "page": "hydraulic-arm/module5",
+   "stem": "【觀念】液壓系統把力放大 10 倍，那小活塞移動的距離要是大活塞的幾倍？",
+   "options": {
+    "A": "1/10 倍（小活塞動得比較少）",
+    "B": "1 倍（兩邊一樣）",
+    "C": "10 倍（小活塞要多推 10 倍距離）"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "lasercut.m1.q0",
+   "h": "977758fc",
+   "t": "scenario",
+   "page": "lasercut/module1",
+   "stem": "同學帶了一塊「透明壓克力」要切，但板子上沒有任何材質標示，摸起來比一般壓克力軟。",
+   "options": {
+    "A": "先問來源與材質，問不出來就不切",
+    "B": "先用小塊試切看看會不會冒黃煙",
+    "C": "降低功率就可以安全切"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "lasercut.m1.q1",
+   "h": "1d78a7a6",
+   "t": "scenario",
+   "page": "lasercut/module1",
+   "stem": "切割進行到一半，你發現板材邊緣冒出小火焰。",
+   "options": {
+    "A": "立刻按下急停，火勢未熄再用滅火器",
+    "B": "打開上蓋把材料拿出來",
+    "C": "等它自己燒完，反正在機器裡面"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "lasercut.m1.q2",
+   "h": "8048213b",
+   "t": "scenario",
+   "page": "lasercut/module1",
+   "stem": "為什麼切完的件會比電腦畫的圖小一點點？",
+   "options": {
+    "A": "雷射有寬度，每邊各吃掉半條切縫",
+    "B": "因為材料受熱收縮",
+    "C": "因為機器精度不夠"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "lasercut.m2.order",
+   "h": "fd8a4f8b",
+   "t": "order",
+   "page": "lasercut/module2",
+   "stem": "RDWorks 雷射切割九步驟排序",
+   "options": {},
+   "answer": "1>2>3>4>5>6>7>8>9",
+   "items": [
+    "匯入圖檔",
+    "確認圖面尺寸",
+    "依加工方式建立圖層",
+    "設定各圖層的速度與功率",
+    "Preview 預覽加工路徑",
+    "Download 傳送到控制器",
+    "放置板材、對焦並設定原點",
+    "Frame 掃框確認位置",
+    "開始加工並全程留守"
+   ]
+  },
+  {
+   "q": "lasercut.m3.fold",
+   "h": "7e6ccff0",
+   "t": "match",
+   "page": "lasercut/module3",
+   "stem": "中間摺線（要能沿線折彎，但不能斷）要用哪一種加工方式？",
+   "options": {
+    "A": "切割 Cut",
+    "B": "刻線 Score",
+    "C": "雕刻 Scan"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "lasercut.m3.frame",
+   "h": "b4e1a27a",
+   "t": "match",
+   "page": "lasercut/module3",
+   "stem": "外框輪廓（鑰匙圈的外形，要能拿下來）要用哪一種加工方式？",
+   "options": {
+    "A": "切割 Cut",
+    "B": "刻線 Score",
+    "C": "雕刻 Scan"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "lasercut.m3.text",
+   "h": "248e4437",
+   "t": "match",
+   "page": "lasercut/module3",
+   "stem": "姓名文字（填滿的黑色字，要看得清楚）要用哪一種加工方式？",
+   "options": {
+    "A": "切割 Cut",
+    "B": "刻線 Score",
+    "C": "雕刻 Scan"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "lasercut.m5.case0",
+   "h": "09bd1b61",
+   "t": "scenario",
+   "page": "lasercut/module5",
+   "stem": "昨天用同樣的參數切 3 mm 合板都很順，今天同一批板材卻切不斷。",
+   "options": {
+    "A": "先確認焦距是否跑掉，再檢查鏡片是否有髒污",
+    "B": "直接把功率從 65% 調到 95%",
+    "C": "換一台機器切"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "lasercut.m5.case1",
+   "h": "6be3314c",
+   "t": "scenario",
+   "page": "lasercut/module5",
+   "stem": "切出來的線條一邊乾淨、另一邊有明顯斜角，件裝不進卡榫。",
+   "options": {
+    "A": "檢查焦點高度與雷射頭是否垂直（含反射鏡對位）",
+    "B": "降低速度讓它切慢一點",
+    "C": "在圖面上把尺寸改大 0.5 mm"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "lasercut.m5.case2",
+   "h": "0b83440b",
+   "t": "scenario",
+   "page": "lasercut/module5",
+   "stem": "雕刻文字時，字的邊緣糊糊的、深淺不均勻。",
+   "options": {
+    "A": "清潔聚焦鏡與反射鏡，並確認皮帶張力",
+    "B": "把雕刻功率調高一倍",
+    "C": "把文字放大就看不出來了"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "lasercut.m5.case3",
+   "h": "a809c264",
+   "t": "scenario",
+   "page": "lasercut/module5",
+   "stem": "水冷機發出警報聲，控制面板顯示水保護異常，按開始後雷射頭會動、但完全沒有出光。",
+   "options": {
+    "A": "先停止加工，檢查水冷機電源、水位、水管有沒有折到或脫落、水溫是否過高",
+    "B": "把水保護的訊號線短接，跳過警報先切完再說",
+    "C": "把功率調高，看能不能讓雷射出光"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "mechanism.m2.q0",
+   "h": "df956e32",
+   "t": "single",
+   "page": "mechanism/module2",
+   "stem": "電風扇葉片 屬於哪一種運動？",
+   "options": {
+    "A": "旋轉運動 Rotation",
+    "B": "往復運動 Reciprocating",
+    "C": "擺動運動 Oscillating",
+    "D": "間歇運動 Intermittent"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "mechanism.m2.q1",
+   "h": "c1bb070c",
+   "t": "single",
+   "page": "mechanism/module2",
+   "stem": "時鐘的鐘擺 屬於哪一種運動？",
+   "options": {
+    "A": "旋轉運動 Rotation",
+    "B": "往復運動 Reciprocating",
+    "C": "擺動運動 Oscillating",
+    "D": "間歇運動 Intermittent"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "mechanism.m2.q2",
+   "h": "6247847d",
+   "t": "single",
+   "page": "mechanism/module2",
+   "stem": "縫紉機的針上下動 屬於哪一種運動？",
+   "options": {
+    "A": "旋轉運動 Rotation",
+    "B": "往復運動 Reciprocating",
+    "C": "擺動運動 Oscillating",
+    "D": "間歇運動 Intermittent"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "mechanism.m2.q3",
+   "h": "5bff48ed",
+   "t": "single",
+   "page": "mechanism/module2",
+   "stem": "石英鐘錶秒針一秒跳一格 屬於哪一種運動？",
+   "options": {
+    "A": "旋轉運動 Rotation",
+    "B": "往復運動 Reciprocating",
+    "C": "擺動運動 Oscillating",
+    "D": "間歇運動 Intermittent"
+   },
+   "answer": "D",
+   "items": []
+  },
+  {
+   "q": "mechanism.m2.q4",
+   "h": "2f8ead9d",
+   "t": "single",
+   "page": "mechanism/module2",
+   "stem": "汽車輪子轉動 屬於哪一種運動？",
+   "options": {
+    "A": "旋轉運動 Rotation",
+    "B": "往復運動 Reciprocating",
+    "C": "擺動運動 Oscillating",
+    "D": "間歇運動 Intermittent"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "mechanism.m2.q5",
+   "h": "99de16ce",
+   "t": "single",
+   "page": "mechanism/module2",
+   "stem": "汽車雨刷擺動 屬於哪一種運動？",
+   "options": {
+    "A": "旋轉運動 Rotation",
+    "B": "往復運動 Reciprocating",
+    "C": "擺動運動 Oscillating",
+    "D": "間歇運動 Intermittent"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "mechanism.m2.q6",
+   "h": "9a0b4dd4",
+   "t": "single",
+   "page": "mechanism/module2",
+   "stem": "引擎活塞 屬於哪一種運動？",
+   "options": {
+    "A": "旋轉運動 Rotation",
+    "B": "往復運動 Reciprocating",
+    "C": "擺動運動 Oscillating",
+    "D": "間歇運動 Intermittent"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "mechanism.m2.q7",
+   "h": "fc3d74f9",
+   "t": "single",
+   "page": "mechanism/module2",
+   "stem": "電影膠片每秒 24 格切換 屬於哪一種運動？",
+   "options": {
+    "A": "旋轉運動 Rotation",
+    "B": "往復運動 Reciprocating",
+    "C": "擺動運動 Oscillating",
+    "D": "間歇運動 Intermittent"
+   },
+   "answer": "D",
+   "items": []
+  },
+  {
+   "q": "mechanism.m3.order",
+   "h": "68740729",
+   "t": "order",
+   "page": "mechanism/module3",
+   "stem": "把下方步驟排回正確順序",
+   "options": {},
+   "answer": "1>2>3>4>5>6>7>8",
+   "items": [
+    "決定卡片主題與動作",
+    "選擇機構類型",
+    "繪製機構草圖",
+    "裁切卡片基板與機構紙模",
+    "在卡片基板鑽軸孔",
+    "組裝機構部件",
+    "畫上卡片畫面",
+    "測試與分享"
+   ]
+  },
+  {
+   "q": "mechanism.m5.q0",
+   "h": "0c4c9c04",
+   "t": "single",
+   "page": "mechanism/module5",
+   "stem": "節拍器（metronome）做左右擺動",
+   "options": {
+    "A": "擺動運動",
+    "B": "往復運動",
+    "C": "旋轉運動"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "mechanism.m5.q1",
+   "h": "d0ed2e99",
+   "t": "single",
+   "page": "mechanism/module5",
+   "stem": "電動鋸的鋸條快速上下動",
+   "options": {
+    "A": "旋轉運動",
+    "B": "往復運動",
+    "C": "間歇運動"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "mechanism.m5.q10",
+   "h": "2e2fcf10",
+   "t": "single",
+   "page": "mechanism/module5",
+   "stem": "【觀念】騎腳踏車上陡坡想踩得省力，該怎麼選齒輪組合？（以本課定義：齒輪比＝從動÷主動）",
+   "options": {
+    "A": "大前齒盤 / 小後齒輪：快但費力",
+    "B": "小前齒盤 / 大後齒輪：慢但省力（大齒輪比）",
+    "C": "齒輪比不影響省不省力"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "mechanism.m5.q2",
+   "h": "2b8a58ea",
+   "t": "single",
+   "page": "mechanism/module5",
+   "stem": "汽車冷氣壓縮機",
+   "options": {
+    "A": "齒輪",
+    "B": "凸輪",
+    "C": "曲柄滑塊"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "mechanism.m5.q3",
+   "h": "4c100f3e",
+   "t": "single",
+   "page": "mechanism/module5",
+   "stem": "石英鐘錶的秒針一秒跳一格",
+   "options": {
+    "A": "旋轉運動",
+    "B": "間歇運動",
+    "C": "擺動運動"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "mechanism.m5.q4",
+   "h": "1cce055c",
+   "t": "single",
+   "page": "mechanism/module5",
+   "stem": "挖土機的鏟斗開合",
+   "options": {
+    "A": "凸輪",
+    "B": "螺旋",
+    "C": "四連桿"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "mechanism.m5.q5",
+   "h": "b207f000",
+   "t": "single",
+   "page": "mechanism/module5",
+   "stem": "電風扇葉片旋轉送風",
+   "options": {
+    "A": "擺動運動",
+    "B": "往復運動",
+    "C": "旋轉運動"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "mechanism.m5.q6",
+   "h": "25e22bee",
+   "t": "single",
+   "page": "mechanism/module5",
+   "stem": "腳踏車鏈條傳動",
+   "options": {
+    "A": "齒輪",
+    "B": "鏈條（皮帶族）",
+    "C": "曲柄滑塊"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "mechanism.m5.q7",
+   "h": "5ad45bb3",
+   "t": "single",
+   "page": "mechanism/module5",
+   "stem": "塑膠射出成型機把塑料推進模具",
+   "options": {
+    "A": "凸輪",
+    "B": "螺旋（螺桿）",
+    "C": "四連桿"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "mechanism.m5.q8",
+   "h": "74d7ff73",
+   "t": "single",
+   "page": "mechanism/module5",
+   "stem": "【計算】主動輪 20 齒、從動輪 60 齒，這組齒輪的齒輪比是多少？",
+   "options": {
+    "A": "1/3",
+    "B": "3",
+    "C": "80"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "mechanism.m5.q9",
+   "h": "c5e16fea",
+   "t": "single",
+   "page": "mechanism/module5",
+   "stem": "【計算】馬達轉速 3000 RPM，接上齒輪比 5 的減速箱，輸出轉速是多少？",
+   "options": {
+    "A": "15000 RPM",
+    "B": "3000 RPM",
+    "C": "600 RPM"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "mechatronics.m1.q0",
+   "h": "3a166888",
+   "t": "match",
+   "page": "mechatronics/module1",
+   "stem": "自走車的兩顆驅動輪，需要能持續轉動、有足夠扭力推動車體，不需要知道精確角度。",
+   "options": {
+    "A": "直流馬達 (DC)",
+    "B": "伺服馬達 (Servo)",
+    "C": "步進馬達 (Stepper)"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "mechatronics.m1.q1",
+   "h": "9d1cbd7e",
+   "t": "match",
+   "page": "mechatronics/module1",
+   "stem": "要讓超音波感測器左右擺頭掃描，必須精準轉到 0°、90°、180° 三個位置。",
+   "options": {
+    "A": "直流馬達 (DC)",
+    "B": "伺服馬達 (Servo)",
+    "C": "步進馬達 (Stepper)"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "mechatronics.m1.q2",
+   "h": "ee0d70de",
+   "t": "match",
+   "page": "mechatronics/module1",
+   "stem": "3D 印表機的 X 軸要移動到指定座標，且中途停下時必須固定住不被外力推動。",
+   "options": {
+    "A": "直流馬達 (DC)",
+    "B": "伺服馬達 (Servo)",
+    "C": "步進馬達 (Stepper)"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "mechatronics.m5.case0",
+   "h": "83a3c060",
+   "t": "scenario",
+   "page": "mechatronics/module5",
+   "stem": "按下開關後，控制板的電源燈有亮，但兩顆馬達完全不動，也沒有任何聲音。",
+   "options": {
+    "A": "檢查馬達驅動器的電源與 GND 是否接好（含共同接地）",
+    "B": "直接調高 Kp 讓修正力道變大",
+    "C": "重新校正循跡感測器的閾值"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "mechatronics.m5.case1",
+   "h": "38ce4e2e",
+   "t": "scenario",
+   "page": "mechatronics/module5",
+   "stem": "車子會動，但兩顆馬達轉向相反，車子在原地打轉。",
+   "options": {
+    "A": "把其中一顆馬達的兩條電源線對調",
+    "B": "換一顆更大扭力的馬達",
+    "C": "把電池換成全新的"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "mechatronics.m5.case2",
+   "h": "d2825b21",
+   "t": "scenario",
+   "page": "mechatronics/module5",
+   "stem": "在家裡調得很順，一到比賽場地就整台亂衝，感測器好像都讀不到線。",
+   "options": {
+    "A": "執行開機校正，重新取得該場地的黑白讀值與閾值",
+    "B": "把基礎速度調到最低慢慢走",
+    "C": "增加 Kd 讓它穩定一點"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "mechatronics.m5.case3",
+   "h": "bf767d0e",
+   "t": "scenario",
+   "page": "mechatronics/module5",
+   "stem": "車子沿線走得還算穩，但每次進彎道就整台衝出去。",
+   "options": {
+    "A": "提高 Kp，或降低基礎速度",
+    "B": "把感測器排列改得更窄",
+    "C": "換更大容量的電池"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "mechatronics.m5.case4",
+   "h": "41eaffe3",
+   "t": "scenario",
+   "page": "mechatronics/module5",
+   "stem": "車子一路左右劇烈搖擺，走一段就脫線；電池充飽、感測器讀值也正常。",
+   "options": {
+    "A": "加入 Kd（微分項），或略為降低 Kp",
+    "B": "提高 Kp 讓它修得更快",
+    "C": "把超音波感測器拆掉"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "microcontroller.m1.safety0",
+   "h": "a64f0097",
+   "t": "scenario",
+   "page": "microcontroller/module1",
+   "stem": "同學想把 Arduino UNO（5V 邏輯）的輸出訊號線直接接到 ESP32 的腳位上，會發生什麼事？",
+   "options": {
+    "A": "沒問題，兩塊板子都能用",
+    "B": "ESP32 腳位可能被 5V 燒毀，必須經過邏輯準位轉換",
+    "C": "只會跑得比較慢",
+    "D": "Arduino 會自動降壓成 3.3V"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "microcontroller.m1.safety1",
+   "h": "a30037cf",
+   "t": "scenario",
+   "page": "microcontroller/module1",
+   "stem": "麵包板電路剛接好，要通電之前該做什麼？",
+   "options": {
+    "A": "直接插 USB 看看會不會動",
+    "B": "先寫好程式再說",
+    "C": "對照電路圖從電源到 GND 檢查兩遍，確認極性與腳位無誤再插 USB",
+    "D": "用手摸每個元件確認位置"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "microcontroller.m1.safety2",
+   "h": "5b5052a0",
+   "t": "scenario",
+   "page": "microcontroller/module1",
+   "stem": "通電後 LED 沒亮，第一步該怎麼做？",
+   "options": {
+    "A": "把電壓調高一點看會不會亮",
+    "B": "先拔掉 USB 斷電，再檢查 LED 極性（長腳接正）與接線",
+    "C": "直接換一顆 LED",
+    "D": "用手摸元件看哪個在發燙"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "microcontroller.m2.q0",
+   "h": "8aec4731",
+   "t": "single",
+   "page": "microcontroller/module2",
+   "stem": "想偵測房間是否有人經過",
+   "options": {
+    "A": "光敏電阻",
+    "B": "PIR",
+    "C": "超音波",
+    "D": "DHT11",
+    "E": "可變電阻",
+    "F": "土壤濕度",
+    "G": "按鈕開關",
+    "H": "霍爾磁感"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "microcontroller.m2.q1",
+   "h": "dab9ad03",
+   "t": "single",
+   "page": "microcontroller/module2",
+   "stem": "想做自動灌溉系統，何時要澆水",
+   "options": {
+    "A": "光敏電阻",
+    "B": "PIR",
+    "C": "超音波",
+    "D": "DHT11",
+    "E": "可變電阻",
+    "F": "土壤濕度",
+    "G": "按鈕開關",
+    "H": "霍爾磁感"
+   },
+   "answer": "F",
+   "items": []
+  },
+  {
+   "q": "microcontroller.m2.q2",
+   "h": "f965a8f8",
+   "t": "single",
+   "page": "microcontroller/module2",
+   "stem": "想做機器人避免撞牆",
+   "options": {
+    "A": "光敏電阻",
+    "B": "PIR",
+    "C": "超音波",
+    "D": "DHT11",
+    "E": "可變電阻",
+    "F": "土壤濕度",
+    "G": "按鈕開關",
+    "H": "霍爾磁感"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "microcontroller.m2.q3",
+   "h": "5f82fc0c",
+   "t": "single",
+   "page": "microcontroller/module2",
+   "stem": "想做氣象站記錄溫度濕度",
+   "options": {
+    "A": "光敏電阻",
+    "B": "PIR",
+    "C": "超音波",
+    "D": "DHT11",
+    "E": "可變電阻",
+    "F": "土壤濕度",
+    "G": "按鈕開關",
+    "H": "霍爾磁感"
+   },
+   "answer": "D",
+   "items": []
+  },
+  {
+   "q": "microcontroller.m2.q4",
+   "h": "8aece10a",
+   "t": "single",
+   "page": "microcontroller/module2",
+   "stem": "想做自動夜燈天黑時亮起",
+   "options": {
+    "A": "光敏電阻",
+    "B": "PIR",
+    "C": "超音波",
+    "D": "DHT11",
+    "E": "可變電阻",
+    "F": "土壤濕度",
+    "G": "按鈕開關",
+    "H": "霍爾磁感"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "microcontroller.m2.q5",
+   "h": "9147cac4",
+   "t": "single",
+   "page": "microcontroller/module2",
+   "stem": "想做手動調整 LED 亮度",
+   "options": {
+    "A": "光敏電阻",
+    "B": "PIR",
+    "C": "超音波",
+    "D": "DHT11",
+    "E": "可變電阻",
+    "F": "土壤濕度",
+    "G": "按鈕開關",
+    "H": "霍爾磁感"
+   },
+   "answer": "E",
+   "items": []
+  },
+  {
+   "q": "microcontroller.m2.q6",
+   "h": "45b43fde",
+   "t": "single",
+   "page": "microcontroller/module2",
+   "stem": "想計算腳踏車輪轉幾圈",
+   "options": {
+    "A": "光敏電阻",
+    "B": "PIR",
+    "C": "超音波",
+    "D": "DHT11",
+    "E": "可變電阻",
+    "F": "土壤濕度",
+    "G": "按鈕開關",
+    "H": "霍爾磁感"
+   },
+   "answer": "H",
+   "items": []
+  },
+  {
+   "q": "microcontroller.m2.q7",
+   "h": "24706289",
+   "t": "single",
+   "page": "microcontroller/module2",
+   "stem": "想做最簡單的開關控制",
+   "options": {
+    "A": "光敏電阻",
+    "B": "PIR",
+    "C": "超音波",
+    "D": "DHT11",
+    "E": "可變電阻",
+    "F": "土壤濕度",
+    "G": "按鈕開關",
+    "H": "霍爾磁感"
+   },
+   "answer": "G",
+   "items": []
+  },
+  {
+   "q": "onshape.m1.q0",
+   "h": "b290f847",
+   "t": "single",
+   "page": "onshape/module1",
+   "stem": "Onshape 與其他 CAD 軟體最大的差別是？",
+   "options": {
+    "A": "速度比較快",
+    "B": "完全雲端、瀏覽器即可使用",
+    "C": "只能畫 2D 圖",
+    "D": "需要超強的顯示卡"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "onshape.m1.q1",
+   "h": "2c653fc4",
+   "t": "single",
+   "page": "onshape/module1",
+   "stem": "中學生要使用 Onshape，最適合申請的方案是？",
+   "options": {
+    "A": "Professional 付費版",
+    "B": "Free Personal 個人免費版",
+    "C": "Education 教育版（免費）",
+    "D": "不需要申請帳號"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "onshape.m1.q2",
+   "h": "287b00b8",
+   "t": "single",
+   "page": "onshape/module1",
+   "stem": "為什麼 Onshape 可以多人同時編輯同一個檔案？",
+   "options": {
+    "A": "因為是雲端架構",
+    "B": "因為支援藍牙",
+    "C": "因為每個人下載各自的檔案",
+    "D": "因為有 USB 連線"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "onshape.m10.q0",
+   "h": "2edd113d",
+   "t": "single",
+   "page": "onshape/module10",
+   "stem": "在教室畫好一個 3D 模型，回家想用手機繼續調整尺寸，可行嗎？",
+   "options": {
+    "A": "可以，Onshape App 同步同一個 doc",
+    "B": "不行，必須回學校用桌面版",
+    "C": "需要先匯出 STL 才能在 App 看",
+    "D": "只能用 iPad，不能用手機"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "onshape.m10.q1",
+   "h": "aeb527ab",
+   "t": "single",
+   "page": "onshape/module10",
+   "stem": "想在手機 App 上做完整工程圖（Drawing），可以嗎？",
+   "options": {
+    "A": "完全可以，跟桌面一樣",
+    "B": "只能瀏覽，不能編輯",
+    "C": "需要付費版才能用",
+    "D": "iOS 可以、Android 不行"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "onshape.m10.q2",
+   "h": "9a6cc089",
+   "t": "single",
+   "page": "onshape/module10",
+   "stem": "兩個齒輪能嚙合的「關鍵共同參數」是？",
+   "options": {
+    "A": "齒數要相同",
+    "B": "直徑要相同",
+    "C": "模數（m）要相同",
+    "D": "材料要相同"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "onshape.m10.q3",
+   "h": "32731565",
+   "t": "single",
+   "page": "onshape/module10",
+   "stem": "兩齒輪 m = 1，z₁ = 20、z₂ = 40，組裝時兩軸心距離應該是？",
+   "options": {
+    "A": "30mm",
+    "B": "20mm",
+    "C": "40mm",
+    "D": "60mm"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "onshape.m10.q4",
+   "h": "9774c4f7",
+   "t": "single",
+   "page": "onshape/module10",
+   "stem": "Onshape 要讓兩齒輪「按播放就會嚙合轉動」，應該怎麼設定？",
+   "options": {
+    "A": "兩個齒輪都用緊固結合 Fastened",
+    "B": "只加兩個轉動結合 Revolute（各自轉、不會連動）",
+    "C": "兩個轉動結合 Revolute＋齒輪關係 Gear relation",
+    "D": "一個滑動結合 Slider"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "onshape.m2.s0",
+   "h": "47154aa3",
+   "t": "scenario",
+   "page": "onshape/module2",
+   "stem": "同學申請了 Free Personal 帳號，存了自己的科展作品圖檔。下面哪個做法比較好？",
+   "options": {
+    "A": "請老師幫忙申請 Education 方案後遷移到私人 doc，避免作品提前曝光",
+    "B": "繼續用 Free Personal，反正只是學生作品"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "onshape.m2.s1",
+   "h": "a217c5b6",
+   "t": "scenario",
+   "page": "onshape/module2",
+   "stem": "在 Onshape 看到一個 fork 過來的設計，覺得很棒想當作自己的作品交，可以嗎？",
+   "options": {
+    "A": "直接改成自己的名字，反正是 fork",
+    "B": "可以，但要在文件說明欄註明原作者，並做出顯著的修改"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "onshape.m2.s2",
+   "h": "84e58db2",
+   "t": "scenario",
+   "page": "onshape/module2",
+   "stem": "老師要把全班的 doc 集中管理，最好的做法是？",
+   "options": {
+    "A": "由老師建立班級共享資料夾，把學生 doc 集中管理",
+    "B": "請學生把 doc 設成 public 並把連結貼到 LINE"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "onshape.m2.s3",
+   "h": "b261b4c5",
+   "t": "scenario",
+   "page": "onshape/module2",
+   "stem": "在 Onshape doc 的設計樹（feature tree）中，看到陌生人加入並開始改你的草圖，該怎麼做？",
+   "options": {
+    "A": "先觀察他在改什麼，反正可以還原",
+    "B": "檢查 doc 的 Share 設定、移除不認識的人，關掉連結分享，只開放給指定的同學帳號"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "onshape.m3.order",
+   "h": "3ea41d51",
+   "t": "order",
+   "page": "onshape/module3",
+   "stem": "把打亂的 8 步驟排回正確順序",
+   "options": {},
+   "answer": "1>2>3>4>5>6>7>8",
+   "items": [
+    "建立 Document",
+    "進入 Part Studio",
+    "選擇基準平面",
+    "開草圖（Sketch）",
+    "畫圖形",
+    "加限制條件 + 標尺寸",
+    "退出草圖",
+    "套用特徵（Extrude）"
+   ]
+  },
+  {
+   "q": "onshape.m4.q0",
+   "h": "d7a3a35e",
+   "t": "single",
+   "page": "onshape/module4",
+   "stem": "目標形狀：🔩 螺絲本體（頭＋桿，不含螺紋），用哪一種建模方式最適合？",
+   "options": {
+    "A": "Extrude（擠出）",
+    "B": "Revolve（旋轉）",
+    "C": "Shell（薄殼）",
+    "D": "Loft（疊層拉伸）"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "onshape.m4.q1",
+   "h": "8153d2b3",
+   "t": "single",
+   "page": "onshape/module4",
+   "stem": "目標形狀：📦 收納盒（長方形有內部空間），用哪一種建模方式最適合？",
+   "options": {
+    "A": "Extrude（擠出）",
+    "B": "Revolve（旋轉）",
+    "C": "Shell（薄殼）",
+    "D": "Loft（疊層拉伸）"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "onshape.m4.q2",
+   "h": "061e4af9",
+   "t": "single",
+   "page": "onshape/module4",
+   "stem": "目標形狀：🏺 花瓶（底圓 → 中段方形 → 頂部六角形），用哪一種建模方式最適合？",
+   "options": {
+    "A": "Extrude（擠出）",
+    "B": "Revolve（旋轉）",
+    "C": "Shell（薄殼）",
+    "D": "Loft（疊層拉伸）"
+   },
+   "answer": "D",
+   "items": []
+  },
+  {
+   "q": "onshape.m4.q3",
+   "h": "f8fec740",
+   "t": "single",
+   "page": "onshape/module4",
+   "stem": "目標形狀：🪑 椅腳（截面均勻的細長條），用哪一種建模方式最適合？",
+   "options": {
+    "A": "Extrude（擠出）",
+    "B": "Revolve（旋轉）",
+    "C": "Shell（薄殼）",
+    "D": "Loft（疊層拉伸）"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "onshape.m4.q4",
+   "h": "e062a40b",
+   "t": "single",
+   "page": "onshape/module4",
+   "stem": "目標形狀：☕ 馬克杯（圓柱外型 + 內凹 + 把手），用哪一種建模方式最適合？",
+   "options": {
+    "A": "Extrude（擠出）",
+    "B": "Revolve（旋轉）",
+    "C": "Shell（薄殼）",
+    "D": "Loft（疊層拉伸）"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "onshape.m5.q0",
+   "h": "9a5b025c",
+   "t": "single",
+   "page": "onshape/module5",
+   "stem": "畫了矩形但 extrude 提示 No closed region，可能是？",
+   "options": {
+    "A": "草圖未封閉",
+    "B": "過度限制條件（Over-defined）",
+    "C": "限制條件不足（Under-defined）",
+    "D": "草圖自交（Self-intersecting）",
+    "E": "選錯基準平面",
+    "F": "圓角半徑過大",
+    "G": "薄殼厚度太厚",
+    "H": "疊層拉伸缺中間切片"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "onshape.m5.q1",
+   "h": "5a389cd4",
+   "t": "single",
+   "page": "onshape/module5",
+   "stem": "草圖某條線變紅、出現「無法滿足限制條件」，這是？",
+   "options": {
+    "A": "草圖未封閉",
+    "B": "過度限制條件（Over-defined）",
+    "C": "限制條件不足（Under-defined）",
+    "D": "草圖自交（Self-intersecting）",
+    "E": "選錯基準平面",
+    "F": "圓角半徑過大",
+    "G": "薄殼厚度太厚",
+    "H": "疊層拉伸缺中間切片"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "onshape.m5.q2",
+   "h": "50729213",
+   "t": "single",
+   "page": "onshape/module5",
+   "stem": "草圖線都是藍色、可以用滑鼠拖動位置，是？",
+   "options": {
+    "A": "草圖未封閉",
+    "B": "過度限制條件（Over-defined）",
+    "C": "限制條件不足（Under-defined）",
+    "D": "草圖自交（Self-intersecting）",
+    "E": "選錯基準平面",
+    "F": "圓角半徑過大",
+    "G": "薄殼厚度太厚",
+    "H": "疊層拉伸缺中間切片"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "onshape.m5.q3",
+   "h": "041e11f1",
+   "t": "single",
+   "page": "onshape/module5",
+   "stem": "輪廓畫成 8 字型，extrude 提示自交錯誤，是？",
+   "options": {
+    "A": "草圖未封閉",
+    "B": "過度限制條件（Over-defined）",
+    "C": "限制條件不足（Under-defined）",
+    "D": "草圖自交（Self-intersecting）",
+    "E": "選錯基準平面",
+    "F": "圓角半徑過大",
+    "G": "薄殼厚度太厚",
+    "H": "疊層拉伸缺中間切片"
+   },
+   "answer": "D",
+   "items": []
+  },
+  {
+   "q": "onshape.m5.q4",
+   "h": "1255826d",
+   "t": "single",
+   "page": "onshape/module5",
+   "stem": "extrude 方向跑到側面，與設計預期不同，是？",
+   "options": {
+    "A": "草圖未封閉",
+    "B": "過度限制條件（Over-defined）",
+    "C": "限制條件不足（Under-defined）",
+    "D": "草圖自交（Self-intersecting）",
+    "E": "選錯基準平面",
+    "F": "圓角半徑過大",
+    "G": "薄殼厚度太厚",
+    "H": "疊層拉伸缺中間切片"
+   },
+   "answer": "E",
+   "items": []
+  },
+  {
+   "q": "onshape.m5.q5",
+   "h": "5b144867",
+   "t": "single",
+   "page": "onshape/module5",
+   "stem": "Fillet 提示「Failed to fillet edge」，可能是？",
+   "options": {
+    "A": "草圖未封閉",
+    "B": "過度限制條件（Over-defined）",
+    "C": "限制條件不足（Under-defined）",
+    "D": "草圖自交（Self-intersecting）",
+    "E": "選錯基準平面",
+    "F": "圓角半徑過大",
+    "G": "薄殼厚度太厚",
+    "H": "疊層拉伸缺中間切片"
+   },
+   "answer": "F",
+   "items": []
+  },
+  {
+   "q": "onshape.m5.q6",
+   "h": "55ce48ee",
+   "t": "single",
+   "page": "onshape/module5",
+   "stem": "Shell 提示「Failed to thicken」，可能是？",
+   "options": {
+    "A": "草圖未封閉",
+    "B": "過度限制條件（Over-defined）",
+    "C": "限制條件不足（Under-defined）",
+    "D": "草圖自交（Self-intersecting）",
+    "E": "選錯基準平面",
+    "F": "圓角半徑過大",
+    "G": "薄殼厚度太厚",
+    "H": "疊層拉伸缺中間切片"
+   },
+   "answer": "G",
+   "items": []
+  },
+  {
+   "q": "onshape.m5.q7",
+   "h": "1b9cc316",
+   "t": "single",
+   "page": "onshape/module5",
+   "stem": "Loft 結果扭曲變形，是？",
+   "options": {
+    "A": "草圖未封閉",
+    "B": "過度限制條件（Over-defined）",
+    "C": "限制條件不足（Under-defined）",
+    "D": "草圖自交（Self-intersecting）",
+    "E": "選錯基準平面",
+    "F": "圓角半徑過大",
+    "G": "薄殼厚度太厚",
+    "H": "疊層拉伸缺中間切片"
+   },
+   "answer": "H",
+   "items": []
+  },
+  {
+   "q": "onshape.m6.mate0",
+   "h": "cdc1ca21",
+   "t": "single",
+   "page": "onshape/module6",
+   "stem": "凸輪玩具的「把手」要與「軸」永久固定，旋轉時一起轉動。應用哪種 Mate？",
+   "options": {
+    "A": "緊固結合 Fastened",
+    "B": "轉動結合 Revolute",
+    "C": "滑動結合 Slider",
+    "D": "相切結合 Tangent"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "onshape.m6.mate1",
+   "h": "b41a6f8d",
+   "t": "single",
+   "page": "onshape/module6",
+   "stem": "輪子要能繞著輪軸自由旋轉。應用哪種 Mate？",
+   "options": {
+    "A": "緊固結合 Fastened",
+    "B": "轉動結合 Revolute",
+    "C": "滑動結合 Slider",
+    "D": "球體結合 Ball"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "onshape.m6.mate2",
+   "h": "803de079",
+   "t": "single",
+   "page": "onshape/module6",
+   "stem": "從動件需要沿直線上下移動（凸輪頂起來、放下去）。應用哪種 Mate？",
+   "options": {
+    "A": "緊固結合 Fastened",
+    "B": "轉動結合 Revolute",
+    "C": "滑動結合 Slider",
+    "D": "齒輪結合 Gear"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "onshape.m6.mate3",
+   "h": "e50addab",
+   "t": "single",
+   "page": "onshape/module6",
+   "stem": "基座是整個機構的「不動的參考點」。應該用什麼操作？",
+   "options": {
+    "A": "緊固結合到地板",
+    "B": "滑動結合到原點",
+    "C": "不需設定",
+    "D": "右鍵 → 固定 Fix"
+   },
+   "answer": "D",
+   "items": []
+  },
+  {
+   "q": "onshape.m6.measure0",
+   "h": "b68654b6",
+   "t": "single",
+   "page": "onshape/module6",
+   "stem": "要測量 TT 馬達輸出軸的直徑（約 5.4mm），最適合的工具是？",
+   "options": {
+    "A": "游標卡尺",
+    "B": "直尺",
+    "C": "量角器",
+    "D": "螺旋測微器"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "onshape.m6.measure1",
+   "h": "b264071f",
+   "t": "single",
+   "page": "onshape/module6",
+   "stem": "要量馬達固定孔的「孔徑」（內徑 3mm），最適合的工具是？",
+   "options": {
+    "A": "直尺",
+    "B": "游標卡尺",
+    "C": "量角器",
+    "D": "螺旋測微器"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "onshape.m6.measure2",
+   "h": "0468aca1",
+   "t": "single",
+   "page": "onshape/module6",
+   "stem": "要量機構零件之間的「夾角」（如指尖陀螺的 120°），最適合的工具是？",
+   "options": {
+    "A": "直尺",
+    "B": "游標卡尺",
+    "C": "量角器",
+    "D": "螺旋測微器"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "onshape.m6.measure3",
+   "h": "f4c1ef5d",
+   "t": "single",
+   "page": "onshape/module6",
+   "stem": "要測量馬達中央軸到上表面的「深度」（7.9mm），最適合的工具是？",
+   "options": {
+    "A": "直尺",
+    "B": "量角器",
+    "C": "螺旋測微器",
+    "D": "游標卡尺"
+   },
+   "answer": "D",
+   "items": []
+  },
+  {
+   "q": "onshape.m7.q0",
+   "h": "cdcaceae",
+   "t": "single",
+   "page": "onshape/module7",
+   "stem": "匯入動物圖片後發現比例不對（太小），下一步該？",
+   "options": {
+    "A": "用「尺寸」工具設定目標尺寸（如 120mm）",
+    "B": "重新匯入",
+    "C": "直接 Extrude 看看",
+    "D": "重畫"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "onshape.m7.q1",
+   "h": "9dc970b7",
+   "t": "single",
+   "page": "onshape/module7",
+   "stem": "描完動物身體輪廓後 Extrude 失敗，提示「No closed region」，最可能原因？",
+   "options": {
+    "A": "圖片解析度太低",
+    "B": "曲線沒回到起點（不封閉）",
+    "C": "材料厚度太薄",
+    "D": "Onshape 過期"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "onshape.m7.q2",
+   "h": "d66ff3ad",
+   "t": "single",
+   "page": "onshape/module7",
+   "stem": "畫腳時希望腳底是平的（拼圖能站穩），需要對腳曲線設什麼條件？",
+   "options": {
+    "A": "與 Front 平面平行",
+    "B": "與 Right 平面相切",
+    "C": "與 Top 平面相切",
+    "D": "與身體曲線相切"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "onshape.m7.q3",
+   "h": "d5dbbd6b",
+   "t": "single",
+   "page": "onshape/module7",
+   "stem": "前後兩隻腳要分開列印（雷射切割兩片），最好用什麼方式建立兩個草圖平面？",
+   "options": {
+    "A": "偏移平面（Offset Plane）建立兩個不同 z 位置的平面",
+    "B": "畫在同一平面再分離",
+    "C": "用 Loft 連接",
+    "D": "不可能做到"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "onshape.m7.q4",
+   "h": "0a9394ea",
+   "t": "single",
+   "page": "onshape/module7",
+   "stem": "要把拼圖送到雷射切割機，應該匯出什麼格式？",
+   "options": {
+    "A": "STL（3D 列印用）",
+    "B": "PDF（文件用）",
+    "C": "DXF（2D 雷射切割用）",
+    "D": "OBJ（動畫用）"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "onshape.m8.q0",
+   "h": "4a09ea6a",
+   "t": "single",
+   "page": "onshape/module8",
+   "stem": "要做一個「內含空腔的造型公仔」（裡面有複雜支撐結構），最適合的加工方式？",
+   "options": {
+    "A": "3D 列印",
+    "B": "雷射切割",
+    "C": "CNC 雕刻",
+    "D": "射出成型"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "onshape.m8.q1",
+   "h": "6c3292e6",
+   "t": "single",
+   "page": "onshape/module8",
+   "stem": "要做「100 片 3mm 厚的小卡片」當教具，最快又最便宜的方式？",
+   "options": {
+    "A": "3D 列印",
+    "B": "雷射切割",
+    "C": "CNC 雕刻",
+    "D": "手工剪"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "onshape.m8.q2",
+   "h": "3fe244bc",
+   "t": "single",
+   "page": "onshape/module8",
+   "stem": "要做「需要承受機構應力的高強度零件」（例如 FRC 機器人結構件），最佳選擇？",
+   "options": {
+    "A": "3D 列印",
+    "B": "雷射切割",
+    "C": "CNC 雕刻",
+    "D": "手工製作"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "onshape.m8.q3",
+   "h": "604bdf71",
+   "t": "single",
+   "page": "onshape/module8",
+   "stem": "Onshape 要把零件送到 3D 印表機，匯出格式應該選？",
+   "options": {
+    "A": "STL",
+    "B": "DXF",
+    "C": "PDF",
+    "D": "OBJ"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "onshape.m8.q4",
+   "h": "299e044b",
+   "t": "single",
+   "page": "onshape/module8",
+   "stem": "Onshape 要把零件送到雷射切割機，匯出格式應該選？",
+   "options": {
+    "A": "STL",
+    "B": "DXF",
+    "C": "PDF",
+    "D": "GCODE"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "onshape.m9.q0",
+   "h": "b0e3bcab",
+   "t": "single",
+   "page": "onshape/module9",
+   "stem": "改造 Arduino 三輪車為四輪時，遇到「前輪被抬起就空轉」的問題，書中建議的解法？",
+   "options": {
+    "A": "前後車體之間加 625ZZ 軸承形成可旋轉機構",
+    "B": "改用更大的輪子",
+    "C": "增加車體重量",
+    "D": "改用履帶"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "onshape.m9.q1",
+   "h": "952ac4c5",
+   "t": "single",
+   "page": "onshape/module9",
+   "stem": "3D 列印自走車車體時，最該注意什麼？",
+   "options": {
+    "A": "列印速度",
+    "B": "受力方向（層方向 vs 應力方向）",
+    "C": "顏色搭配",
+    "D": "STL 大小"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "onshape.m9.q2",
+   "h": "24a30399",
+   "t": "single",
+   "page": "onshape/module9",
+   "stem": "指尖陀螺中央的軸承（608ZZ）外徑是？",
+   "options": {
+    "A": "8mm",
+    "B": "15mm",
+    "C": "22mm",
+    "D": "30mm"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "onshape.m9.q3",
+   "h": "d8a09f56",
+   "t": "single",
+   "page": "onshape/module9",
+   "stem": "指尖陀螺要做三軸對稱（每軸 120°），最快的 Onshape 操作？",
+   "options": {
+    "A": "畫一個軸後用「環狀複製排列」設 3 份",
+    "B": "手動畫三次再對齊",
+    "C": "用 Loft 拉伸",
+    "D": "用 Revolve 旋轉"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "orthographic.m2.q0",
+   "h": "db413da6",
+   "t": "single",
+   "page": "orthographic/module2",
+   "stem": "IKEA 組裝說明書多用哪種視圖？",
+   "options": {
+    "A": "三視圖（正投影）",
+    "B": "等角圖 Isometric",
+    "C": "斜視圖 Oblique",
+    "D": "透視圖 Perspective"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "orthographic.m2.q1",
+   "h": "eb7b96a8",
+   "t": "single",
+   "page": "orthographic/module2",
+   "stem": "機械零件加工圖該用哪種？",
+   "options": {
+    "A": "三視圖（正投影）",
+    "B": "等角圖 Isometric",
+    "C": "斜視圖 Oblique",
+    "D": "透視圖 Perspective"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "orthographic.m2.q2",
+   "h": "c8907b5b",
+   "t": "single",
+   "page": "orthographic/module2",
+   "stem": "建築師畫給客戶看的外觀效果圖？",
+   "options": {
+    "A": "三視圖（正投影）",
+    "B": "等角圖 Isometric",
+    "C": "斜視圖 Oblique",
+    "D": "透視圖 Perspective"
+   },
+   "answer": "D",
+   "items": []
+  },
+  {
+   "q": "orthographic.m2.q3",
+   "h": "1f403217",
+   "t": "single",
+   "page": "orthographic/module2",
+   "stem": "老師快速畫黑板示意圖？",
+   "options": {
+    "A": "三視圖（正投影）",
+    "B": "等角圖 Isometric",
+    "C": "斜視圖 Oblique",
+    "D": "透視圖 Perspective"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "orthographic.m2.q4",
+   "h": "76ce1a14",
+   "t": "single",
+   "page": "orthographic/module2",
+   "stem": "汽車設計師畫車身造型？",
+   "options": {
+    "A": "三視圖（正投影）",
+    "B": "等角圖 Isometric",
+    "C": "斜視圖 Oblique",
+    "D": "透視圖 Perspective"
+   },
+   "answer": "D",
+   "items": []
+  },
+  {
+   "q": "orthographic.m2.q5",
+   "h": "f935010a",
+   "t": "single",
+   "page": "orthographic/module2",
+   "stem": "工廠技工要按圖製造零件？",
+   "options": {
+    "A": "三視圖（正投影）",
+    "B": "等角圖 Isometric",
+    "C": "斜視圖 Oblique",
+    "D": "透視圖 Perspective"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "orthographic.m2.q6",
+   "h": "22a15729",
+   "t": "single",
+   "page": "orthographic/module2",
+   "stem": "LEGO 組裝手冊？",
+   "options": {
+    "A": "三視圖（正投影）",
+    "B": "等角圖 Isometric",
+    "C": "斜視圖 Oblique",
+    "D": "透視圖 Perspective"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "orthographic.m2.q7",
+   "h": "b0d16993",
+   "t": "single",
+   "page": "orthographic/module2",
+   "stem": "玩具產品包裝盒插圖？",
+   "options": {
+    "A": "三視圖（正投影）",
+    "B": "等角圖 Isometric",
+    "C": "斜視圖 Oblique",
+    "D": "透視圖 Perspective"
+   },
+   "answer": "D",
+   "items": []
+  },
+  {
+   "q": "orthographic.m3.dim0",
+   "h": "1cf213f9",
+   "t": "tf",
+   "page": "orthographic/module3",
+   "stem": "尺寸線要與輪廓線保持距離,不疊在圖形輪廓上。",
+   "options": {},
+   "answer": "正確",
+   "items": []
+  },
+  {
+   "q": "orthographic.m3.dim1",
+   "h": "b2abb1b4",
+   "t": "tf",
+   "page": "orthographic/module3",
+   "stem": "同一個尺寸在三個視圖各標一次,看起來比較保險。",
+   "options": {},
+   "answer": "錯誤",
+   "items": []
+  },
+  {
+   "q": "orthographic.m3.dim2",
+   "h": "d8e57059",
+   "t": "tf",
+   "page": "orthographic/module3",
+   "stem": "尺寸應標註在最能表達該特徵形狀的視圖上。",
+   "options": {},
+   "answer": "正確",
+   "items": []
+  },
+  {
+   "q": "orthographic.m3.dim3",
+   "h": "75e33381",
+   "t": "tf",
+   "page": "orthographic/module3",
+   "stem": "尺寸數字寫在尺寸線的中斷處或尺寸線上方。",
+   "options": {},
+   "answer": "正確",
+   "items": []
+  },
+  {
+   "q": "orthographic.m3.order",
+   "h": "06f95977",
+   "t": "order",
+   "page": "orthographic/module3",
+   "stem": "把下方步驟排回正確順序",
+   "options": {},
+   "answer": "1>2>3>4>5>6>7>8",
+   "items": [
+    "分析物件特徵",
+    "繪製外框與輔助線",
+    "繪製正視圖（前視）",
+    "依正視繪製俯視圖",
+    "依正視繪製側視圖",
+    "檢查投影對齊",
+    "加入虛線與中心線",
+    "標註尺寸"
+   ]
+  },
+  {
+   "q": "orthographic.m5.r1q0",
+   "h": "b7037fe5",
+   "t": "single",
+   "page": "orthographic/module5",
+   "stem": "看正視、側視、俯視，這是什麼 3D 物件？（正方形／正方形／正方形）",
+   "options": {
+    "A": "立方體",
+    "B": "圓柱",
+    "C": "球體",
+    "D": "金字塔"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "orthographic.m5.r1q1",
+   "h": "56a99d82",
+   "t": "single",
+   "page": "orthographic/module5",
+   "stem": "看正視、側視、俯視，這是什麼 3D 物件？（長方形／長方形／圓形）",
+   "options": {
+    "A": "圓柱",
+    "B": "立方體",
+    "C": "圓錐",
+    "D": "球體"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "orthographic.m5.r1q2",
+   "h": "b1c5d36f",
+   "t": "single",
+   "page": "orthographic/module5",
+   "stem": "看正視、側視、俯視，這是什麼 3D 物件？（三角形／三角形／圓形＋中心點）",
+   "options": {
+    "A": "圓錐",
+    "B": "金字塔",
+    "C": "圓柱",
+    "D": "球體"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "orthographic.m5.r1q3",
+   "h": "d05c7789",
+   "t": "single",
+   "page": "orthographic/module5",
+   "stem": "看正視、側視、俯視，這是什麼 3D 物件？（L 形／直立長方形／長方形＋分隔線）",
+   "options": {
+    "A": "L 型塊",
+    "B": "T 槽塊",
+    "C": "L 角架",
+    "D": "立方體"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "orthographic.m5.r1q4",
+   "h": "ac21b512",
+   "t": "single",
+   "page": "orthographic/module5",
+   "stem": "看正視、側視、俯視，這是什麼 3D 物件？（rect-circle-hole／rect-dash-horiz／rect-dash-vert）",
+   "options": {
+    "A": "帶圓孔板",
+    "B": "T 槽塊",
+    "C": "階梯塊",
+    "D": "圓柱"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "orthographic.m5.r2q0",
+   "h": "79d4daec",
+   "t": "single",
+   "page": "orthographic/module5",
+   "stem": "立方體 缺失的側視是哪一個？",
+   "options": {
+    "A": "正方形",
+    "B": "長方形",
+    "C": "圓形",
+    "D": "三角形"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "orthographic.m5.r2q1",
+   "h": "2c9f4d1e",
+   "t": "single",
+   "page": "orthographic/module5",
+   "stem": "圓柱 缺失的俯視是哪一個？",
+   "options": {
+    "A": "圓形",
+    "B": "正方形",
+    "C": "三角形",
+    "D": "長方形"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "orthographic.m5.r2q2",
+   "h": "e9e29a7f",
+   "t": "single",
+   "page": "orthographic/module5",
+   "stem": "L 型塊 缺失的正視是哪一個？",
+   "options": {
+    "A": "L 形",
+    "B": "長方形",
+    "C": "T 形",
+    "D": "三角形"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "orthographic.m5.r2q3",
+   "h": "fe3a113a",
+   "t": "single",
+   "page": "orthographic/module5",
+   "stem": "圓錐 缺失的俯視是哪一個？",
+   "options": {
+    "A": "圓形＋中心點",
+    "B": "圓形",
+    "C": "三角形",
+    "D": "正方形"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "orthographic.m5.r3q0",
+   "h": "e05e3a0e",
+   "t": "game",
+   "page": "orthographic/module5",
+   "stem": "方塊堆疊：L 型塊（兩塊組合）（三視圖完全符合目標）",
+   "options": {},
+   "answer": "pass",
+   "items": []
+  },
+  {
+   "q": "orthographic.m5.r3q1",
+   "h": "859b5d64",
+   "t": "game",
+   "page": "orthographic/module5",
+   "stem": "方塊堆疊：T 形塊（俯視看像 T）（三視圖完全符合目標）",
+   "options": {},
+   "answer": "pass",
+   "items": []
+  },
+  {
+   "q": "physics.index.q0",
+   "h": "86ab2bb9",
+   "t": "single",
+   "page": "physics/index",
+   "stem": "球每次反彈都比上一次低，主要原因是？",
+   "options": {
+    "A": "重力愈來愈強",
+    "B": "非彈性碰撞把部分力學能耗散成熱與聲音",
+    "C": "球愈跳愈重"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "physics.index.q1",
+   "h": "538ae664",
+   "t": "single",
+   "page": "physics/index",
+   "stem": "如果球與地面是「完全彈性碰撞」（理想狀況），反彈高度會？",
+   "options": {
+    "A": "回到原來放開的高度",
+    "B": "愈彈愈高",
+    "C": "還是愈彈愈低"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "physics.index.q10",
+   "h": "4eb68171",
+   "t": "single",
+   "page": "physics/index",
+   "stem": "等質量的正向彈性碰撞：移動球撞上靜止球後，移動球會？",
+   "options": {
+    "A": "自己停下來，速度全部交給對方",
+    "B": "反彈回去",
+    "C": "兩球黏在一起前進"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "physics.index.q11",
+   "h": "fd14626d",
+   "t": "single",
+   "page": "physics/index",
+   "stem": "關於碰撞的守恆，下列哪個說法正確？",
+   "options": {
+    "A": "只有彈性碰撞動量才守恆",
+    "B": "不論彈性或非彈性碰撞，動量都守恆；但只有彈性碰撞動能不損失",
+    "C": "非彈性碰撞連動量都不守恆"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "physics.index.q2",
+   "h": "aae0f261",
+   "t": "single",
+   "page": "physics/index",
+   "stem": "同樣初速、忽略空氣阻力，哪個發射角度射程最遠？",
+   "options": {
+    "A": "35°",
+    "B": "45°",
+    "C": "55°"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "physics.index.q3",
+   "h": "d8040470",
+   "t": "single",
+   "page": "physics/index",
+   "stem": "拋體飛行中（忽略空氣阻力），水平方向的運動是？",
+   "options": {
+    "A": "等速運動",
+    "B": "等加速運動",
+    "C": "愈飛愈慢"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "physics.index.q4",
+   "h": "bbbf0e02",
+   "t": "single",
+   "page": "physics/index",
+   "stem": "單擺的週期主要由什麼決定？",
+   "options": {
+    "A": "擺錘的質量",
+    "B": "擺長與重力加速度",
+    "C": "擺角（擺幅）大小"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "physics.index.q5",
+   "h": "49a95d85",
+   "t": "single",
+   "page": "physics/index",
+   "stem": "把擺錘換成兩倍重（擺長不變、小角度），週期會？",
+   "options": {
+    "A": "變成兩倍",
+    "B": "變成一半",
+    "C": "不變"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "physics.index.q6",
+   "h": "dbc7cb3c",
+   "t": "single",
+   "page": "physics/index",
+   "stem": "等速圓周運動的小球，速率固定，它有加速度嗎？",
+   "options": {
+    "A": "沒有，速率沒變就沒加速度",
+    "B": "有，因為速度「方向」一直在變（向心加速度）",
+    "C": "只有轉快時才有"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "physics.index.q7",
+   "h": "20f8715d",
+   "t": "single",
+   "page": "physics/index",
+   "stem": "若繩子突然斷掉（向心力消失），球會往哪個方向飛？",
+   "options": {
+    "A": "沿半徑向外飛出",
+    "B": "沿當時的切線方向直線飛出",
+    "C": "繼續繞圓圈"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "physics.index.q8",
+   "h": "ad68051e",
+   "t": "single",
+   "page": "physics/index",
+   "stem": "忽略空氣阻力時，大球和小球從同高度同時放開會同時落地，原因是？",
+   "options": {
+    "A": "重力加速度 g 與質量無關",
+    "B": "空氣把輕的球往下推",
+    "C": "兩球剛好一樣重"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "physics.index.q9",
+   "h": "32ba72d6",
+   "t": "single",
+   "page": "physics/index",
+   "stem": "在抽成真空的管子裡，讓羽毛和鐵球同時落下，結果是？",
+   "options": {
+    "A": "鐵球先落地",
+    "B": "羽毛先落地",
+    "C": "兩者同時落地"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "powertrain.m2.q0",
+   "h": "81a6e128",
+   "t": "single",
+   "page": "powertrain/module2",
+   "stem": "高鐵 屬於哪一類運輸？",
+   "options": {
+    "A": "陸上運輸",
+    "B": "海上運輸",
+    "C": "空中運輸"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "powertrain.m2.q1",
+   "h": "e0483c46",
+   "t": "single",
+   "page": "powertrain/module2",
+   "stem": "油輪 屬於哪一類運輸？",
+   "options": {
+    "A": "陸上運輸",
+    "B": "海上運輸",
+    "C": "空中運輸"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "powertrain.m2.q2",
+   "h": "ed85ae78",
+   "t": "single",
+   "page": "powertrain/module2",
+   "stem": "直升機 屬於哪一類運輸？",
+   "options": {
+    "A": "陸上運輸",
+    "B": "海上運輸",
+    "C": "空中運輸"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "powertrain.m2.q3",
+   "h": "e1dbb858",
+   "t": "single",
+   "page": "powertrain/module2",
+   "stem": "貨輪 屬於哪一類運輸？",
+   "options": {
+    "A": "陸上運輸",
+    "B": "海上運輸",
+    "C": "空中運輸"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "powertrain.m2.q4",
+   "h": "7191aecb",
+   "t": "single",
+   "page": "powertrain/module2",
+   "stem": "卡車 屬於哪一類運輸？",
+   "options": {
+    "A": "陸上運輸",
+    "B": "海上運輸",
+    "C": "空中運輸"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "powertrain.m2.q5",
+   "h": "b9cf3fb0",
+   "t": "single",
+   "page": "powertrain/module2",
+   "stem": "無人機 屬於哪一類運輸？",
+   "options": {
+    "A": "陸上運輸",
+    "B": "海上運輸",
+    "C": "空中運輸"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "powertrain.m2.q6",
+   "h": "a406a6ea",
+   "t": "single",
+   "page": "powertrain/module2",
+   "stem": "捷運 屬於哪一類運輸？",
+   "options": {
+    "A": "陸上運輸",
+    "B": "海上運輸",
+    "C": "空中運輸"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "powertrain.m2.q7",
+   "h": "27da56ce",
+   "t": "single",
+   "page": "powertrain/module2",
+   "stem": "潛艇 屬於哪一類運輸？",
+   "options": {
+    "A": "陸上運輸",
+    "B": "海上運輸",
+    "C": "空中運輸"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "powertrain.m2.q8",
+   "h": "73a2de39",
+   "t": "single",
+   "page": "powertrain/module2",
+   "stem": "滑翔翼 屬於哪一類運輸？",
+   "options": {
+    "A": "陸上運輸",
+    "B": "海上運輸",
+    "C": "空中運輸"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "powertrain.m2.q9",
+   "h": "4f18f792",
+   "t": "single",
+   "page": "powertrain/module2",
+   "stem": "腳踏車 屬於哪一類運輸？",
+   "options": {
+    "A": "陸上運輸",
+    "B": "海上運輸",
+    "C": "空中運輸"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "powertrain.m3.order",
+   "h": "1d44009e",
+   "t": "order",
+   "page": "powertrain/module3",
+   "stem": "把下方步驟排回正確順序",
+   "options": {},
+   "answer": "1>2>3>4>5>6>7>8",
+   "items": [
+    "需求分析與設計目標",
+    "繪製設計草圖",
+    "選擇馬達與電池規格",
+    "計算齒輪比與輪徑",
+    "製作車身結構",
+    "組裝動力系統",
+    "室內測試與調整",
+    "戶外實測 + 成果發表"
+   ]
+  },
+  {
+   "q": "powertrain.m5.q0",
+   "h": "3634eabf",
+   "t": "single",
+   "page": "powertrain/module5",
+   "stem": "每天塞車浪費的通勤時間與油錢，累積成可觀的社會成本",
+   "options": {
+    "A": "經濟",
+    "B": "環境",
+    "C": "社會",
+    "D": "科技",
+    "E": "解方"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "powertrain.m5.q1",
+   "h": "fa0a7a99",
+   "t": "single",
+   "page": "powertrain/module5",
+   "stem": "機車排放的 PM2.5 影響市民呼吸健康",
+   "options": {
+    "A": "經濟",
+    "B": "環境",
+    "C": "社會",
+    "D": "科技",
+    "E": "解方"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "powertrain.m5.q2",
+   "h": "0fc71be1",
+   "t": "single",
+   "page": "powertrain/module5",
+   "stem": "每年 3000 人死於車禍",
+   "options": {
+    "A": "經濟",
+    "B": "環境",
+    "C": "社會",
+    "D": "科技",
+    "E": "解方"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "powertrain.m5.q3",
+   "h": "952d6053",
+   "t": "single",
+   "page": "powertrain/module5",
+   "stem": "汽車中心都市 → 沒車的人不便",
+   "options": {
+    "A": "經濟",
+    "B": "環境",
+    "C": "社會",
+    "D": "科技",
+    "E": "解方"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "powertrain.m5.q4",
+   "h": "7a333484",
+   "t": "single",
+   "page": "powertrain/module5",
+   "stem": "電動車取代燃油車的市場轉型",
+   "options": {
+    "A": "經濟",
+    "B": "環境",
+    "C": "社會",
+    "D": "科技",
+    "E": "解方"
+   },
+   "answer": "D",
+   "items": []
+  },
+  {
+   "q": "powertrain.m5.q5",
+   "h": "1ba4c2d9",
+   "t": "single",
+   "page": "powertrain/module5",
+   "stem": "搭捷運比開車減少 80% 碳排",
+   "options": {
+    "A": "經濟",
+    "B": "環境",
+    "C": "社會",
+    "D": "科技",
+    "E": "解方"
+   },
+   "answer": "E",
+   "items": []
+  },
+  {
+   "q": "printer3d.m2.s0",
+   "h": "1d736ae7",
+   "t": "scenario",
+   "page": "printer3d/module2",
+   "stem": "列印中發現首層沒附著（在亂跑），下一步？",
+   "options": {
+    "A": "立刻按暫停，重新校正熱床",
+    "B": "繼續列印看會不會自己好"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "printer3d.m2.s1",
+   "h": "6fbf1741",
+   "t": "scenario",
+   "page": "printer3d/module2",
+   "stem": "想換絲線，正確順序？",
+   "options": {
+    "A": "加熱噴頭到列印溫度 → 抽出舊絲 → 推入新絲 → 擠出一段確認顏色",
+    "B": "直接拉舊絲、塞新絲"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "printer3d.m2.s10",
+   "h": "0d0f6a60",
+   "t": "scenario",
+   "page": "printer3d/module2",
+   "stem": "密閉小教室長時間列印，最需要注意什麼？",
+   "options": {
+    "A": "開窗通風或使用有濾網的密閉式印表機",
+    "B": "不用管，PLA 是植物做的很安全"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "printer3d.m2.s11",
+   "h": "677a3e5e",
+   "t": "scenario",
+   "page": "printer3d/module2",
+   "stem": "從網路下載別人的模型檔來印，正確的做法是？",
+   "options": {
+    "A": "看清楚授權條款（如 CC 授權），個人學習可印，公開分享或販售要遵守授權",
+    "B": "下載得到就是免費的，想怎麼用都可以"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "printer3d.m2.s2",
+   "h": "90463c56",
+   "t": "scenario",
+   "page": "printer3d/module2",
+   "stem": "剛列印完的物件，多久才能徒手摸熱床？",
+   "options": {
+    "A": "等到 LCD 顯示溫度 < 40°C 才摸",
+    "B": "立刻就能摸（已停止加熱）"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "printer3d.m2.s3",
+   "h": "2b89da45",
+   "t": "scenario",
+   "page": "printer3d/module2",
+   "stem": "列印過程中聞到刺鼻味（特別是塑料燒焦味），怎麼辦？",
+   "options": {
+    "A": "繼續列印但開窗通風",
+    "B": "立刻停止列印，找出問題（可能是 ABS 高溫或堵料燒焦）"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "printer3d.m2.s4",
+   "h": "17e9e66a",
+   "t": "scenario",
+   "page": "printer3d/module2",
+   "stem": "PLA 絲線受潮會有什麼影響？",
+   "options": {
+    "A": "列印時噴嘴會發出「啵啵」聲，表面有氣泡",
+    "B": "完全不影響，PLA 不吸水"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "printer3d.m2.s5",
+   "h": "0424d1a5",
+   "t": "scenario",
+   "page": "printer3d/module2",
+   "stem": "列印中要把噴頭停一下，正確做法？",
+   "options": {
+    "A": "直接拔電源",
+    "B": "在切片軟體或 LCD 用「暫停」（會把噴頭撐開避免燒物件）"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "printer3d.m2.s6",
+   "h": "05dd9486",
+   "t": "scenario",
+   "page": "printer3d/module2",
+   "stem": "取下列印好的物件，工具用什麼？",
+   "options": {
+    "A": "徒手用力拔",
+    "B": "用平頭鏟刀（spatula）斜插底部、順著底面撬"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "printer3d.m2.s7",
+   "h": "e1bc4c10",
+   "t": "scenario",
+   "page": "printer3d/module2",
+   "stem": "看到加熱頭異常冒煙、變色，立刻？",
+   "options": {
+    "A": "緊急停止 → 拔電源 → 等冷卻後檢查",
+    "B": "繼續列印觀察會不會自己好"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "printer3d.m2.s8",
+   "h": "fec2443f",
+   "t": "scenario",
+   "page": "printer3d/module2",
+   "stem": "長時間列印（如 8 小時以上），可以無人在場嗎？",
+   "options": {
+    "A": "可以，現代印表機有過熱保護",
+    "B": "建議至少要有人定期檢查（至少每 1 小時一次）"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "printer3d.m2.s9",
+   "h": "299ccff6",
+   "t": "scenario",
+   "page": "printer3d/module2",
+   "stem": "列印時，可以伸手進去調整熱床嗎？",
+   "options": {
+    "A": "可以，但要小心",
+    "B": "絕對不可以，X 軸會撞到手"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "printer3d.m3.order",
+   "h": "a790e4d3",
+   "t": "order",
+   "page": "printer3d/module3",
+   "stem": "把打亂的步驟排回正確順序",
+   "options": {},
+   "answer": "1>2>3>4>5>6>7>8",
+   "items": [
+    "建模 / 取得 STL",
+    "匯入切片軟體",
+    "調整切片參數",
+    "匯出 G-code",
+    "預熱噴頭與熱床",
+    "熱床校正",
+    "開始列印 ＆ 觀察首層",
+    "取件 ＆ 後處理"
+   ]
+  },
+  {
+   "q": "printer3d.m5.calib0",
+   "h": "2bc03ddf",
+   "t": "single",
+   "page": "printer3d/module5",
+   "stem": "校正立方體底部寬出來像「象腳」，要調什麼？",
+   "options": {
+    "A": "熱床溫度太高 → 降低 5–10°C",
+    "B": "提高列印速度",
+    "C": "加大層高",
+    "D": "換新噴嘴"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "printer3d.m5.calib1",
+   "h": "b0d90a09",
+   "t": "single",
+   "page": "printer3d/module5",
+   "stem": "立方體邊角從熱床翹起，主要原因？",
+   "options": {
+    "A": "熱床溫度不足 + 沒附著輔助",
+    "B": "層高太薄",
+    "C": "速度太慢",
+    "D": "絲線受潮"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "printer3d.m5.calib2",
+   "h": "5782e78e",
+   "t": "single",
+   "page": "printer3d/module5",
+   "stem": "立方體側面有許多細絲毛刺，要調什麼？",
+   "options": {
+    "A": "增加回抽距離（retraction）+ 降低噴頭溫度 5°C",
+    "B": "提高熱床溫度",
+    "C": "換大噴嘴",
+    "D": "增加層高"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "printer3d.m5.calib3",
+   "h": "fd7b0a45",
+   "t": "single",
+   "page": "printer3d/module5",
+   "stem": "立方體頂層有縫隙、像啃過的餅乾，要怎麼解？",
+   "options": {
+    "A": "增加頂層數（top layers）至 4–5 層 + 提高 infill 密度到 20%+",
+    "B": "降低列印速度",
+    "C": "降低熱床溫度",
+    "D": "增加回抽距離（retraction）"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "printer3d.m5.calib4",
+   "h": "af27580a",
+   "t": "single",
+   "page": "printer3d/module5",
+   "stem": "列印出來是 19.6mm 而非 20mm（小 2%），要怎麼校正？",
+   "options": {
+    "A": "先檢查皮帶張力與齒輪，再用切片軟體做尺寸補償",
+    "B": "提高列印溫度",
+    "C": "增加 wall 層數",
+    "D": "改韌體的 steps/mm，把 80 改成 81.6"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "sander.m2.ppe",
+   "h": "b39d76d3",
+   "t": "game",
+   "page": "sander/module2",
+   "stem": "砂磨機護具檢查：護目鏡、防塵口罩、束緊袖口放到對應部位；手套、耳機、金屬手環不能帶",
+   "options": {},
+   "answer": "pass",
+   "items": []
+  },
+  {
+   "q": "sander.m2.s0",
+   "h": "123798c1",
+   "t": "scenario",
+   "page": "sander/module2",
+   "stem": "砂磨木材時沒接集塵器，可以繼續用嗎？",
+   "options": {
+    "A": "只磨一下，粉塵不多應該沒關係",
+    "B": "不行！木屑粉達一定濃度會引發塵爆，要先接集塵器"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "sander.m2.s1",
+   "h": "6ebc94b2",
+   "t": "scenario",
+   "page": "sander/module2",
+   "stem": "想砂磨工件，可以戴手套讓手不會痛嗎？",
+   "options": {
+    "A": "禁止！手套容易被砂帶捲入",
+    "B": "可以，戴皮手套反而能防手被砂帶磨傷"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "sander.m2.s2",
+   "h": "9ea5dcd0",
+   "t": "scenario",
+   "page": "sander/module2",
+   "stem": "在盤式砂磨機上，工件應該放砂盤的哪一側？",
+   "options": {
+    "A": "兩側都可以，只要把工件壓穩就好",
+    "B": "先空轉觀察旋轉方向，只能放在「向下旋轉」那一側"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "sander.m2.s3",
+   "h": "de85cd92",
+   "t": "scenario",
+   "page": "sander/module2",
+   "stem": "砂磨時可以把工件固定壓在一個點不動嗎？",
+   "options": {
+    "A": "不行，要持續移動工件",
+    "B": "可以，要多磨掉一點的地方就停久一點"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "sander.m2.s4",
+   "h": "2d153d0a",
+   "t": "scenario",
+   "page": "sander/module2",
+   "stem": "長頭髮的同學要操作砂磨機，怎麼處理？",
+   "options": {
+    "A": "頭髮沒有過肩就不用特別處理",
+    "B": "必須先綁起來，最好加戴髮網或鴨舌帽"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "sander.m2.s5",
+   "h": "524b7d11",
+   "t": "scenario",
+   "page": "sander/module2",
+   "stem": "換砂帶或砂盤，正確程序？",
+   "options": {
+    "A": "關機 → 等砂帶完全停止 → 拔電源插頭 → 再換",
+    "B": "按下關機鍵、砂帶停了就可以換，不必拔插頭"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "sander.m2.s6",
+   "h": "2125f3fa",
+   "t": "scenario",
+   "page": "sander/module2",
+   "stem": "砂磨過程中砂帶突然「斷裂」飛出，怎麼辦？",
+   "options": {
+    "A": "趕快伸手把砂帶撥開，免得打到旁邊同學",
+    "B": "立刻關機、後退、等馬達完全停止"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "sander.m2.s7",
+   "h": "1b5dc2b4",
+   "t": "scenario",
+   "page": "sander/module2",
+   "stem": "砂磨小工件（< 5cm），可以用手指捏著磨嗎？",
+   "options": {
+    "A": "不行，要用木夾或推板輔助",
+    "B": "可以，手指和砂帶保持 1 公分以上就好"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "sander.m2.s8",
+   "h": "fa132ce6",
+   "t": "scenario",
+   "page": "sander/module2",
+   "stem": "聞到砂磨時的塑膠焦味（如 PVC），應該？",
+   "options": {
+    "A": "先把窗戶打開，磨完這一件再停",
+    "B": "立刻停機通風，可能釋出有毒氣體"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "sander.m2.s9",
+   "h": "4790823c",
+   "t": "scenario",
+   "page": "sander/module2",
+   "stem": "砂磨結束，正確收工程序？",
+   "options": {
+    "A": "關機 → 等砂帶完全停止 → 清理粉塵 → 收起工件 → 鎖緊砂帶蓋",
+    "B": "關機後先收工件，粉塵等下課再一起掃"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "sander.m3.disc",
+   "h": "30086d3f",
+   "t": "scenario",
+   "page": "sander/module3",
+   "stem": "盤式砂磨機逆時針旋轉，工件要放在砂盤的哪一半？",
+   "options": {
+    "A": "左半邊（向下旋轉側）",
+    "B": "右半邊（向上旋轉側）"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "sander.m3.order",
+   "h": "ed7a62c7",
+   "t": "order",
+   "page": "sander/module3",
+   "stem": "把下方步驟排回正確順序",
+   "options": {},
+   "answer": "1>2>3>4>5>6>7>8",
+   "items": [
+    "穿戴護具",
+    "選擇砂帶 / 砂盤粒度",
+    "檢查砂帶 / 砂盤狀態",
+    "接上集塵",
+    "工件就位、用靠尺支撐",
+    "開機 → 等砂帶穩定 → 接觸工件",
+    "均勻施力、持續移動",
+    "離開砂帶 → 停機 → 清潔"
+   ]
+  },
+  {
+   "q": "sander.m5.case0",
+   "h": "ef6bea3c",
+   "t": "scenario",
+   "page": "sander/module5",
+   "stem": "同學用 80 號粗砂帶磨完木板，立刻換 240 號磨，但表面還是有深紋。",
+   "options": {
+    "A": "深紋未消",
+    "B": "燒焦痕",
+    "C": "邊角磨圓"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "sander.m5.case1",
+   "h": "8ee2df74",
+   "t": "scenario",
+   "page": "sander/module5",
+   "stem": "木板磨到中段時，工件表面突然出現一塊黑色斑點，聞到焦味。",
+   "options": {
+    "A": "粉塵爆炸",
+    "B": "燒焦痕",
+    "C": "塑膠熔融"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "sander.m5.case2",
+   "h": "1b6f06e6",
+   "t": "scenario",
+   "page": "sander/module5",
+   "stem": "正在砂磨，砂帶突然「啪」一聲斷成兩段飛出，差點打到隔壁同學。",
+   "options": {
+    "A": "砂帶飛出",
+    "B": "砂帶斷裂",
+    "C": "邊角磨圓"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "sander.m5.case3",
+   "h": "c2a62ccf",
+   "t": "scenario",
+   "page": "sander/module5",
+   "stem": "砂磨 PVC 塑膠邊緣時，表面變黏、冒煙、有刺鼻味。",
+   "options": {
+    "A": "燒焦痕",
+    "B": "不均勻",
+    "C": "塑膠熔融"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "sander.m5.case4",
+   "h": "de2ffa52",
+   "t": "scenario",
+   "page": "sander/module5",
+   "stem": "工件磨完後本來該是直角的邊緣變成圓弧形。",
+   "options": {
+    "A": "燒焦痕",
+    "B": "深紋未消",
+    "C": "邊角磨圓"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "sander.m5.case5",
+   "h": "edcb7e34",
+   "t": "scenario",
+   "page": "sander/module5",
+   "stem": "同學換完新砂帶直接開機，砂帶慢慢往滾輪一側偏移，最後從滾輪上滑脫、甩出機台外。",
+   "options": {
+    "A": "砂帶斷裂",
+    "B": "砂帶飛出",
+    "C": "不均勻"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "sander.m5.case6",
+   "h": "f569f23d",
+   "t": "scenario",
+   "page": "sander/module5",
+   "stem": "同學磨一塊大木板，移動時快時慢、手壓的力道時重時輕。磨完摸起來有些地方很光滑，有些地方還很粗糙。",
+   "options": {
+    "A": "邊角磨圓",
+    "B": "燒焦痕",
+    "C": "不均勻"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "sander.m5.case7",
+   "h": "330c783c",
+   "t": "scenario",
+   "page": "sander/module5",
+   "stem": "使用隨機軌道式砂磨機時，同學在木板同一個圓形區域靜止了約 4 秒，之後發現那個區域出現圓弧刮痕和焦黑點。",
+   "options": {
+    "A": "邊角磨圓",
+    "B": "砂帶斷裂",
+    "C": "燒焦痕"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "scrollsaw.m2.ppe",
+   "h": "04b9c6d6",
+   "t": "game",
+   "page": "scrollsaw/module2",
+   "stem": "服儀檢查：把正確的安全配備穿到對應部位（手套、手機、項鍊不是安全配備）",
+   "options": {},
+   "answer": "pass",
+   "items": []
+  },
+  {
+   "q": "scrollsaw.m2.s0",
+   "h": "e8114798",
+   "t": "scenario",
+   "page": "scrollsaw/module2",
+   "stem": "你正在切割，木屑堆積擋住切割線，怎麼辦？",
+   "options": {
+    "A": "先關機等鋸條停止，再用刷子清理",
+    "B": "直接用嘴吹掉木屑"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "scrollsaw.m2.s1",
+   "h": "c36c65a7",
+   "t": "scenario",
+   "page": "scrollsaw/module2",
+   "stem": "鋸到一半發現切歪了，下一步應該？",
+   "options": {
+    "A": "快速回拉木板回到原線",
+    "B": "緩慢退出鋸條，重新對準切割線"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "scrollsaw.m2.s2",
+   "h": "7def9a8b",
+   "t": "scenario",
+   "page": "scrollsaw/module2",
+   "stem": "同學想跟你打招呼，這時你應該？",
+   "options": {
+    "A": "一邊切一邊回頭打招呼",
+    "B": "先切完目前段落，關機後再回應"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "scrollsaw.m2.s3",
+   "h": "2d668dad",
+   "t": "scenario",
+   "page": "scrollsaw/module2",
+   "stem": "鋸條突然斷掉，你的反應？",
+   "options": {
+    "A": "立刻關電源，等完全停止再處理",
+    "B": "繼續轉動，把斷掉的部分拿出來"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "scrollsaw.m2.s4",
+   "h": "645925f9",
+   "t": "scenario",
+   "page": "scrollsaw/module2",
+   "stem": "哪一種放手位置最安全？",
+   "options": {
+    "A": "兩手拇指扶在木板邊緣，距離鋸條至少 5 公分",
+    "B": "一手按住木板靠近鋸條處，另一手推進"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "scrollsaw.m2.s5",
+   "h": "c33d327e",
+   "t": "scenario",
+   "page": "scrollsaw/module2",
+   "stem": "完成切割要離開機台時，正確順序是？",
+   "options": {
+    "A": "關電源 → 等鋸條停止 → 清理工作台 → 離開",
+    "B": "把木板拿走 → 直接關電源走人"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "scrollsaw.m2.s6",
+   "h": "648a3eec",
+   "t": "scenario",
+   "page": "scrollsaw/module2",
+   "stem": "切薄板時鋸條容易把木板震彈起來，怎麼避免？",
+   "options": {
+    "A": "用力壓住木板",
+    "B": "把壓料桿調低、輕貼在木板上"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "scrollsaw.m3.order",
+   "h": "369a13cb",
+   "t": "order",
+   "page": "scrollsaw/module3",
+   "stem": "把打亂的步驟排回正確順序",
+   "options": {},
+   "answer": "1>2>3>4>5>6>7>8>9",
+   "items": [
+    "開機前檢查",
+    "安裝／確認鋸條",
+    "調整速度",
+    "調整壓料桿",
+    "對準切割線",
+    "雙手扶板",
+    "緩推前進",
+    "內挖切割（先鑽孔再穿鋸條）",
+    "完工關機"
+   ]
+  },
+  {
+   "q": "simple-machines.m2.q0",
+   "h": "c22a904a",
+   "t": "single",
+   "page": "simple-machines/module2",
+   "stem": "剪刀 屬於哪一類槓桿？",
+   "options": {
+    "A": "第一類槓桿",
+    "B": "第二類槓桿",
+    "C": "第三類槓桿"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "simple-machines.m2.q1",
+   "h": "b09856f5",
+   "t": "single",
+   "page": "simple-machines/module2",
+   "stem": "釘拔（榔頭背面拔釘） 屬於哪一類槓桿？",
+   "options": {
+    "A": "第一類槓桿",
+    "B": "第二類槓桿",
+    "C": "第三類槓桿"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "simple-machines.m2.q2",
+   "h": "b5c153b2",
+   "t": "single",
+   "page": "simple-machines/module2",
+   "stem": "翹翹板 屬於哪一類槓桿？",
+   "options": {
+    "A": "第一類槓桿",
+    "B": "第二類槓桿",
+    "C": "第三類槓桿"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "simple-machines.m2.q3",
+   "h": "a40f0c3e",
+   "t": "single",
+   "page": "simple-machines/module2",
+   "stem": "手推車 屬於哪一類槓桿？",
+   "options": {
+    "A": "第一類槓桿",
+    "B": "第二類槓桿",
+    "C": "第三類槓桿"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "simple-machines.m2.q4",
+   "h": "70b6a113",
+   "t": "single",
+   "page": "simple-machines/module2",
+   "stem": "開瓶器（開酒瓶用，槓桿頂壓蓋） 屬於哪一類槓桿？",
+   "options": {
+    "A": "第一類槓桿",
+    "B": "第二類槓桿",
+    "C": "第三類槓桿"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "simple-machines.m2.q5",
+   "h": "546887f3",
+   "t": "single",
+   "page": "simple-machines/module2",
+   "stem": "堅果鉗 屬於哪一類槓桿？",
+   "options": {
+    "A": "第一類槓桿",
+    "B": "第二類槓桿",
+    "C": "第三類槓桿"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "simple-machines.m2.q6",
+   "h": "8613c6e9",
+   "t": "single",
+   "page": "simple-machines/module2",
+   "stem": "鑷子 屬於哪一類槓桿？",
+   "options": {
+    "A": "第一類槓桿",
+    "B": "第二類槓桿",
+    "C": "第三類槓桿"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "simple-machines.m2.q7",
+   "h": "4f80c028",
+   "t": "single",
+   "page": "simple-machines/module2",
+   "stem": "釣魚竿（一手壓住竿尾、一手在前方提竿） 屬於哪一類槓桿？",
+   "options": {
+    "A": "第一類槓桿",
+    "B": "第二類槓桿",
+    "C": "第三類槓桿"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "simple-machines.m2.q8",
+   "h": "826815b6",
+   "t": "single",
+   "page": "simple-machines/module2",
+   "stem": "人類手臂彎舉 屬於哪一類槓桿？",
+   "options": {
+    "A": "第一類槓桿",
+    "B": "第二類槓桿",
+    "C": "第三類槓桿"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "simple-machines.m3.p0.f",
+   "h": "86c35d8d",
+   "t": "other",
+   "page": "simple-machines/module3",
+   "stem": "一根 1.5 m 撬棍，支點離石頭 0.3 m。石頭重 90 kgw（公斤重）。需要施力多少 kgw 才能撬起？（求所需施力，單位 kgw）",
+   "options": {},
+   "answer": "22.5",
+   "items": []
+  },
+  {
+   "q": "simple-machines.m3.p0.ma",
+   "h": "f1d67b56",
+   "t": "other",
+   "page": "simple-machines/module3",
+   "stem": "一根 1.5 m 撬棍，支點離石頭 0.3 m。石頭重 90 kgw（公斤重）。需要施力多少 kgw 才能撬起？（求機械利益 MA，單位 倍）",
+   "options": {},
+   "answer": "4",
+   "items": []
+  },
+  {
+   "q": "simple-machines.m3.p1.d",
+   "h": "1698ca77",
+   "t": "other",
+   "page": "simple-machines/module3",
+   "stem": "一組動滑輪 + 定滑輪的滑輪組，繩子有 3 段支撐重物。要吊起重 60 kgw 的機具需要多大力氣？要拉繩子幾公尺才能讓機具上升 1 公尺？（求拉繩距離（機具升 1m），單位 m）",
+   "options": {},
+   "answer": "3",
+   "items": []
+  },
+  {
+   "q": "simple-machines.m3.p1.f",
+   "h": "c3ff3119",
+   "t": "other",
+   "page": "simple-machines/module3",
+   "stem": "一組動滑輪 + 定滑輪的滑輪組，繩子有 3 段支撐重物。要吊起重 60 kgw 的機具需要多大力氣？要拉繩子幾公尺才能讓機具上升 1 公尺？（求所需施力，單位 kgw）",
+   "options": {},
+   "answer": "20",
+   "items": []
+  },
+  {
+   "q": "simple-machines.m3.p1.ma",
+   "h": "d7d988f9",
+   "t": "other",
+   "page": "simple-machines/module3",
+   "stem": "一組動滑輪 + 定滑輪的滑輪組，繩子有 3 段支撐重物。要吊起重 60 kgw 的機具需要多大力氣？要拉繩子幾公尺才能讓機具上升 1 公尺？（求MA，單位 倍）",
+   "options": {},
+   "answer": "3",
+   "items": []
+  },
+  {
+   "q": "simple-machines.m3.p2.f",
+   "h": "674b65ed",
+   "t": "other",
+   "page": "simple-machines/module3",
+   "stem": "重 200 kgw 的貨物要推上卡車，車尾離地 1 m。斜面長 5 m。需要多大施力？（求所需施力，單位 kgw）",
+   "options": {},
+   "answer": "40",
+   "items": []
+  },
+  {
+   "q": "simple-machines.m3.p2.ma",
+   "h": "3756db8b",
+   "t": "other",
+   "page": "simple-machines/module3",
+   "stem": "重 200 kgw 的貨物要推上卡車，車尾離地 1 m。斜面長 5 m。需要多大施力？（求MA，單位 倍）",
+   "options": {},
+   "answer": "5",
+   "items": []
+  },
+  {
+   "q": "simple-machines.m3.p3.f",
+   "h": "65bae7a2",
+   "t": "other",
+   "page": "simple-machines/module3",
+   "stem": "方向盤半徑 20 cm，轉向柱半徑 2 cm。轉方向盤施力 5 kgw，轉向柱（軸）上的力多少？（求軸上力，單位 kgw）",
+   "options": {},
+   "answer": "50",
+   "items": []
+  },
+  {
+   "q": "simple-machines.m3.p3.ma",
+   "h": "b4964b35",
+   "t": "other",
+   "page": "simple-machines/module3",
+   "stem": "方向盤半徑 20 cm，轉向柱半徑 2 cm。轉方向盤施力 5 kgw，轉向柱（軸）上的力多少？（求MA，單位 倍）",
+   "options": {},
+   "answer": "10",
+   "items": []
+  },
+  {
+   "q": "simple-machines.m3.p4.f",
+   "h": "7893787a",
+   "t": "other",
+   "page": "simple-machines/module3",
+   "stem": "開紅酒用的侍酒師開瓶器，從支點到抗力（軟木塞）3 cm，從支點到施力（握把端）18 cm。軟木塞的抗力是 30 kgw，需要多大施力？（求所需施力，單位 kgw）",
+   "options": {},
+   "answer": "5",
+   "items": []
+  },
+  {
+   "q": "simple-machines.m3.p4.ma",
+   "h": "792b00e4",
+   "t": "other",
+   "page": "simple-machines/module3",
+   "stem": "開紅酒用的侍酒師開瓶器，從支點到抗力（軟木塞）3 cm，從支點到施力（握把端）18 cm。軟木塞的抗力是 30 kgw，需要多大施力？（求MA，單位 倍）",
+   "options": {},
+   "answer": "6",
+   "items": []
+  },
+  {
+   "q": "simple-machines.m3.p5.f",
+   "h": "d5eed701",
+   "t": "other",
+   "page": "simple-machines/module3",
+   "stem": "螺絲千斤頂手柄長 30 cm，螺距 5 mm。轉手柄施 10 kgw 的力，可以舉起多重？（忽略摩擦）（求可舉起重量，單位 kgw）",
+   "options": {},
+   "answer": "3770",
+   "items": []
+  },
+  {
+   "q": "simple-machines.m3.p5.ma",
+   "h": "d8fbc4f3",
+   "t": "other",
+   "page": "simple-machines/module3",
+   "stem": "螺絲千斤頂手柄長 30 cm，螺距 5 mm。轉手柄施 10 kgw 的力，可以舉起多重？（忽略摩擦）（求MA（取整數），單位 倍）",
+   "options": {},
+   "answer": "377",
+   "items": []
+  },
+  {
+   "q": "simple-machines.m5.q0",
+   "h": "d455d519",
+   "t": "single",
+   "page": "simple-machines/module5",
+   "stem": "螺絲 主要使用哪種簡單機械？",
+   "options": {
+    "A": "螺旋",
+    "B": "楔形",
+    "C": "槓桿"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "simple-machines.m5.q1",
+   "h": "98ef4477",
+   "t": "single",
+   "page": "simple-machines/module5",
+   "stem": "滑梯 主要使用哪種簡單機械？",
+   "options": {
+    "A": "楔形",
+    "B": "斜面",
+    "C": "滑輪"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "simple-machines.m5.q2",
+   "h": "075f1a6f",
+   "t": "single",
+   "page": "simple-machines/module5",
+   "stem": "釣魚竿 主要使用哪種簡單機械？",
+   "options": {
+    "A": "槓桿（第一類）",
+    "B": "滑輪",
+    "C": "槓桿（第三類）"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "simple-machines.m5.q3",
+   "h": "c3fd34f9",
+   "t": "single",
+   "page": "simple-machines/module5",
+   "stem": "木工手搖螺旋鑽（前端有螺紋導尖） 主要使用哪種簡單機械？",
+   "options": {
+    "A": "螺旋",
+    "B": "楔形",
+    "C": "輪軸"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "simple-machines.m5.q4",
+   "h": "8c812741",
+   "t": "single",
+   "page": "simple-machines/module5",
+   "stem": "旋轉門把（喇叭鎖） 主要使用哪種簡單機械？",
+   "options": {
+    "A": "槓桿",
+    "B": "輪軸",
+    "C": "滑輪"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "simple-machines.m5.q5",
+   "h": "2465f26d",
+   "t": "single",
+   "page": "simple-machines/module5",
+   "stem": "門擋 主要使用哪種簡單機械？",
+   "options": {
+    "A": "斜面",
+    "B": "槓桿",
+    "C": "楔形"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "simple-machines.m5.q6",
+   "h": "c2c37139",
+   "t": "single",
+   "page": "simple-machines/module5",
+   "stem": "帆船的桅杆繩索 主要使用哪種簡單機械？",
+   "options": {
+    "A": "滑輪",
+    "B": "槓桿",
+    "C": "輪軸"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "simple-machines.m5.q7",
+   "h": "fa890125",
+   "t": "single",
+   "page": "simple-machines/module5",
+   "stem": "鋸子的鋸齒 主要使用哪種簡單機械？",
+   "options": {
+    "A": "螺旋",
+    "B": "楔形",
+    "C": "輪軸"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "solder.m2.ppe",
+   "h": "32f97c0c",
+   "t": "game",
+   "page": "solder/module2",
+   "stem": "焊接環境配置：護目鏡、圍裙、通風、烙鐵架放到對應位置；紙張、徒手、飲料杯不能放",
+   "options": {},
+   "answer": "pass",
+   "items": []
+  },
+  {
+   "q": "solder.m2.s0",
+   "h": "7f096cbc",
+   "t": "scenario",
+   "page": "solder/module2",
+   "stem": "剛使用完的電烙鐵，過多久才能直接用手摸？",
+   "options": {
+    "A": "等待冷卻約 10–15 分鐘，摸前先用手背靠近測試溫度",
+    "B": "拔電後 2 分鐘"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "solder.m2.s1",
+   "h": "134ba135",
+   "t": "scenario",
+   "page": "solder/module2",
+   "stem": "焊接時聞到刺鼻味怎麼辦？",
+   "options": {
+    "A": "立刻打開窗戶或排煙器，並後退一步換氣",
+    "B": "戴上口罩就好，繼續焊完這個點再處理"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "solder.m2.s10",
+   "h": "a5a13dcf",
+   "t": "scenario",
+   "page": "solder/module2",
+   "stem": "下課要離開教室，電烙鐵應該怎麼處理？",
+   "options": {
+    "A": "按下電源開關關閉就好，不需要額外確認",
+    "B": "拔掉電源插頭，等烙鐵頭冷卻後再收拾，確認周圍無易燃物"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "solder.m2.s11",
+   "h": "f2ca96b3",
+   "t": "scenario",
+   "page": "solder/module2",
+   "stem": "焊點完成後表面呈現「霧白粗糙」而非光亮錐形，這是什麼問題？",
+   "options": {
+    "A": "過量焊錫，應減少送錫量",
+    "B": "冷焊（Cold Joint），通常因焊點未凝固就移動，或加熱時間不足"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "solder.m2.s2",
+   "h": "6bb88462",
+   "t": "scenario",
+   "page": "solder/module2",
+   "stem": "焊錫不小心滴到桌面上，下一步應該？",
+   "options": {
+    "A": "等冷卻凝固後，用刮刀清理",
+    "B": "趁它還軟，立刻用衛生紙包著抹掉"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "solder.m2.s3",
+   "h": "4f0c15f6",
+   "t": "scenario",
+   "page": "solder/module2",
+   "stem": "電烙鐵不用時應該放在哪？",
+   "options": {
+    "A": "先拔掉電源，再平放在桌面上等它冷卻",
+    "B": "永遠放在烙鐵架上"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "solder.m2.s4",
+   "h": "1ee2b310",
+   "t": "scenario",
+   "page": "solder/module2",
+   "stem": "焊接過程中需要看清楚接點，怎麼做最安全？",
+   "options": {
+    "A": "戴好護目鏡，就可以湊到 10 公分內仔細看",
+    "B": "保持臉部距離 30 公分以上，使用放大鏡"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "solder.m2.s5",
+   "h": "97c87746",
+   "t": "scenario",
+   "page": "solder/module2",
+   "stem": "電烙鐵電源線破皮露銅，發現後該怎麼處理？",
+   "options": {
+    "A": "用絕緣膠帶纏緊兩三層，下課再報修",
+    "B": "立刻停用，通報老師更換"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "solder.m2.s6",
+   "h": "cf50f6cf",
+   "t": "scenario",
+   "page": "solder/module2",
+   "stem": "同學焊接到一半被燙到，正確處理順序？",
+   "options": {
+    "A": "沖冷水 → 連續沖 15–30 分鐘 → 通報老師 → 必要時就醫",
+    "B": "拿冰塊直接冰敷 5 分鐘止痛 → 通報老師"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "solder.m2.s7",
+   "h": "7966588d",
+   "t": "scenario",
+   "page": "solder/module2",
+   "stem": "要加快焊接速度，可以先把焊錫在烙鐵頭上熔成錫球再滴到接點上嗎？",
+   "options": {
+    "A": "不行！助焊劑會在烙鐵頭上提前燃盡，形成氧化錫球掉落，可能短路",
+    "B": "可以，只要注意溫度就沒問題"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "solder.m2.s8",
+   "h": "cf7ced93",
+   "t": "scenario",
+   "page": "solder/module2",
+   "stem": "「上錫養護（Tinning）」只有拿到全新烙鐵頭時才需要做一次嗎？",
+   "options": {
+    "A": "不對，每次開機預熱後、每次換頭後、以及烙鐵頭變黑時都應該做一次",
+    "B": "對，新烙鐵頭做過一次就夠了"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "solder.m2.s9",
+   "h": "a150c7b0",
+   "t": "scenario",
+   "page": "solder/module2",
+   "stem": "使用含鉛焊錫（Sn63Pb37）後，最重要的衛生動作是？",
+   "options": {
+    "A": "焊接時戴手套，焊完就不必特別洗手",
+    "B": "焊接後立刻洗手，不摸臉不飲食，教室保持通風"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "solder.m3.order",
+   "h": "317f0a08",
+   "t": "order",
+   "page": "solder/module3",
+   "stem": "把打亂的步驟排回正確順序",
+   "options": {},
+   "answer": "1>2>3>4>5>6>7>8",
+   "items": [
+    "開機加熱",
+    "海綿沾水擰乾",
+    "烙鐵頭上錫養護（Tinning）",
+    "對齊接點",
+    "加熱接點",
+    "送焊錫",
+    "抽錫絲",
+    "移開烙鐵"
+   ]
+  },
+  {
+   "q": "solder.m3.temp0",
+   "h": "3c85469d",
+   "t": "scenario",
+   "page": "solder/module3",
+   "stem": "烙鐵設定 250°C，焊接含鉛錫（Sn63Pb37，熔點 183°C）時焊錫依然無法流動，你認為原因是？",
+   "options": {
+    "A": "溫度超過熔點，焊錫應該會流動，可能是焊錫有問題",
+    "B": "250°C 雖超熔點，但接觸冷接點後溫度快速下降，熱容量不足以充分潤濕接點",
+    "C": "焊錫成分比例不正確，換一種牌子就好"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "solder.m3.temp1",
+   "h": "2c09b563",
+   "t": "scenario",
+   "page": "solder/module3",
+   "stem": "焊接 0402 SMD 超小元件時，你把烙鐵調到 430°C，認為高溫縮短接觸時間、元件更安全。這個做法正確嗎？",
+   "options": {
+    "A": "正確，高溫縮短焊接時間，元件受熱更少、更安全",
+    "B": "錯誤，430°C 瞬間過熱反而更容易燒損 SMD 元件和 PCB 焊墊銅箔",
+    "C": "溫度不影響焊接品質，重點是進錫速度"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "solder.m3.temp2",
+   "h": "b749d9e9",
+   "t": "scenario",
+   "page": "solder/module3",
+   "stem": "焊接後烙鐵頭表面出現深褐色氧化層，你拿砂紙把氧化層磨掉，覺得這樣比海綿更徹底。對嗎？",
+   "options": {
+    "A": "對，砂紙比海綿更能徹底清除氧化，效果更好",
+    "B": "不對，砂紙會磨掉烙鐵頭的保護鍍層，使其更快氧化，應用濕海綿擦後立刻上錫",
+    "C": "可以，只要磨輕一點、不磨太深就沒問題"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "solder.m3.temp3",
+   "h": "c6866cb4",
+   "t": "scenario",
+   "page": "solder/module3",
+   "stem": "焊完的焊點表面光亮，但凸起成一大包、把元件腳整個包住，看不到錐形 fillet 與腳的輪廓。這代表什麼問題？",
+   "options": {
+    "A": "完美焊點！光亮就是品質好的表現",
+    "B": "過量焊錫（Excess Solder），是相鄰焊點短路的潛在風險，不符合 IPC-A-610 標準",
+    "C": "焊錫成分不對，應換成無鉛焊錫"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "solder.m5.hunt",
+   "h": "ff9ac2bb",
+   "t": "game",
+   "page": "solder/module5",
+   "stem": "點出 PCB 上的 4 處焊接錯誤（共 8 個接點；連錫跨 2 個接點算 1 處）：冷焊、過量錫（包住元件腳）、連錫（橋接短路）、缺錫",
+   "options": {},
+   "answer": "pass",
+   "items": []
+  },
+  {
+   "q": "solder.m5.q0",
+   "h": "fea75e47",
+   "t": "single",
+   "page": "solder/module5",
+   "stem": "這個焊點屬於？",
+   "options": {
+    "A": "完美焊點",
+    "B": "冷焊",
+    "C": "連錫（橋接短路）",
+    "D": "過量錫",
+    "E": "缺錫",
+    "F": "燒焦 PCB",
+    "G": "錫珠飛散",
+    "H": "元件浮起",
+    "I": "潤濕不全（Partial Wetting）"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "solder.m5.q1",
+   "h": "d7b84cb5",
+   "t": "single",
+   "page": "solder/module5",
+   "stem": "焊點表面顆粒霧面，這是？",
+   "options": {
+    "A": "完美焊點",
+    "B": "冷焊",
+    "C": "連錫（橋接短路）",
+    "D": "過量錫",
+    "E": "缺錫",
+    "F": "燒焦 PCB",
+    "G": "錫珠飛散",
+    "H": "元件浮起",
+    "I": "潤濕不全（Partial Wetting）"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "solder.m5.q2",
+   "h": "7572f10e",
+   "t": "single",
+   "page": "solder/module5",
+   "stem": "兩個焊點被錫連在一起，這是？",
+   "options": {
+    "A": "完美焊點",
+    "B": "冷焊",
+    "C": "連錫（橋接短路）",
+    "D": "過量錫",
+    "E": "缺錫",
+    "F": "燒焦 PCB",
+    "G": "錫珠飛散",
+    "H": "元件浮起",
+    "I": "潤濕不全（Partial Wetting）"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "solder.m5.q3",
+   "h": "f37fc971",
+   "t": "single",
+   "page": "solder/module5",
+   "stem": "焊錫把元件腳整個包住、看不到輪廓，這是？",
+   "options": {
+    "A": "完美焊點",
+    "B": "冷焊",
+    "C": "連錫（橋接短路）",
+    "D": "過量錫",
+    "E": "缺錫",
+    "F": "燒焦 PCB",
+    "G": "錫珠飛散",
+    "H": "元件浮起",
+    "I": "潤濕不全（Partial Wetting）"
+   },
+   "answer": "D",
+   "items": []
+  },
+  {
+   "q": "solder.m5.q4",
+   "h": "fdbd9b98",
+   "t": "single",
+   "page": "solder/module5",
+   "stem": "焊錫還沒凝固就移動了元件，冷卻後焊點會變成下圖這樣，這是？",
+   "options": {
+    "A": "完美焊點",
+    "B": "冷焊",
+    "C": "連錫（橋接短路）",
+    "D": "過量錫",
+    "E": "缺錫",
+    "F": "燒焦 PCB",
+    "G": "錫珠飛散",
+    "H": "元件浮起",
+    "I": "潤濕不全（Partial Wetting）"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "solder.m5.q5",
+   "h": "33b66dbd",
+   "t": "single",
+   "page": "solder/module5",
+   "stem": "PCB 焊點周圍焦黑，這是？",
+   "options": {
+    "A": "完美焊點",
+    "B": "冷焊",
+    "C": "連錫（橋接短路）",
+    "D": "過量錫",
+    "E": "缺錫",
+    "F": "燒焦 PCB",
+    "G": "錫珠飛散",
+    "H": "元件浮起",
+    "I": "潤濕不全（Partial Wetting）"
+   },
+   "answer": "F",
+   "items": []
+  },
+  {
+   "q": "solder.m5.q6",
+   "h": "5d633a7f",
+   "t": "single",
+   "page": "solder/module5",
+   "stem": "焊點周圍散落小錫珠，這是？",
+   "options": {
+    "A": "完美焊點",
+    "B": "冷焊",
+    "C": "連錫（橋接短路）",
+    "D": "過量錫",
+    "E": "缺錫",
+    "F": "燒焦 PCB",
+    "G": "錫珠飛散",
+    "H": "元件浮起",
+    "I": "潤濕不全（Partial Wetting）"
+   },
+   "answer": "G",
+   "items": []
+  },
+  {
+   "q": "solder.m5.q7",
+   "h": "94ee8a15",
+   "t": "single",
+   "page": "solder/module5",
+   "stem": "焊錫只覆蓋銅環一邊、潤濕角 > 90°，這是？",
+   "options": {
+    "A": "完美焊點",
+    "B": "冷焊",
+    "C": "連錫（橋接短路）",
+    "D": "過量錫",
+    "E": "缺錫",
+    "F": "燒焦 PCB",
+    "G": "錫珠飛散",
+    "H": "元件浮起",
+    "I": "潤濕不全（Partial Wetting）"
+   },
+   "answer": "I",
+   "items": []
+  },
+  {
+   "q": "solder.m5.q8",
+   "h": "aa671236",
+   "t": "single",
+   "page": "solder/module5",
+   "stem": "焊錫太少、看到銅環露出，這是？",
+   "options": {
+    "A": "完美焊點",
+    "B": "冷焊",
+    "C": "連錫（橋接短路）",
+    "D": "過量錫",
+    "E": "缺錫",
+    "F": "燒焦 PCB",
+    "G": "錫珠飛散",
+    "H": "元件浮起",
+    "I": "潤濕不全（Partial Wetting）"
+   },
+   "answer": "E",
+   "items": []
+  },
+  {
+   "q": "solder.m5.q9",
+   "h": "c603bae2",
+   "t": "single",
+   "page": "solder/module5",
+   "stem": "元件本體歪斜、沒貼板，這是？",
+   "options": {
+    "A": "完美焊點",
+    "B": "冷焊",
+    "C": "連錫（橋接短路）",
+    "D": "過量錫",
+    "E": "缺錫",
+    "F": "燒焦 PCB",
+    "G": "錫珠飛散",
+    "H": "元件浮起",
+    "I": "潤濕不全（Partial Wetting）"
+   },
+   "answer": "H",
+   "items": []
+  },
+  {
+   "q": "structure-sim.m2.q0",
+   "h": "4ae4a7dd",
+   "t": "single",
+   "page": "structure-sim/module2",
+   "stem": "艾菲爾鐵塔（Eiffel Tower） 屬於哪一種結構？",
+   "options": {
+    "A": "桁架 Truss",
+    "B": "拱 Arch",
+    "C": "纜索懸吊 Cable / Suspension",
+    "D": "框架 Frame",
+    "E": "殼結構 Shell",
+    "F": "張拉結構 Tensile"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "structure-sim.m2.q1",
+   "h": "1078e05e",
+   "t": "single",
+   "page": "structure-sim/module2",
+   "stem": "羅馬鬥獸場拱門 屬於哪一種結構？",
+   "options": {
+    "A": "桁架 Truss",
+    "B": "拱 Arch",
+    "C": "纜索懸吊 Cable / Suspension",
+    "D": "框架 Frame",
+    "E": "殼結構 Shell",
+    "F": "張拉結構 Tensile"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "structure-sim.m2.q2",
+   "h": "7f651d1d",
+   "t": "single",
+   "page": "structure-sim/module2",
+   "stem": "金門大橋（Golden Gate） 屬於哪一種結構？",
+   "options": {
+    "A": "桁架 Truss",
+    "B": "拱 Arch",
+    "C": "纜索懸吊 Cable / Suspension",
+    "D": "框架 Frame",
+    "E": "殼結構 Shell",
+    "F": "張拉結構 Tensile"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "structure-sim.m2.q3",
+   "h": "c165c5d2",
+   "t": "single",
+   "page": "structure-sim/module2",
+   "stem": "Taipei 101 屬於哪一種結構？",
+   "options": {
+    "A": "桁架 Truss",
+    "B": "拱 Arch",
+    "C": "纜索懸吊 Cable / Suspension",
+    "D": "框架 Frame",
+    "E": "殼結構 Shell",
+    "F": "張拉結構 Tensile"
+   },
+   "answer": "D",
+   "items": []
+  },
+  {
+   "q": "structure-sim.m2.q4",
+   "h": "f50f60f3",
+   "t": "single",
+   "page": "structure-sim/module2",
+   "stem": "雪梨歌劇院屋頂 屬於哪一種結構？",
+   "options": {
+    "A": "桁架 Truss",
+    "B": "拱 Arch",
+    "C": "纜索懸吊 Cable / Suspension",
+    "D": "框架 Frame",
+    "E": "殼結構 Shell",
+    "F": "張拉結構 Tensile"
+   },
+   "answer": "E",
+   "items": []
+  },
+  {
+   "q": "structure-sim.m2.q5",
+   "h": "dd6386e9",
+   "t": "single",
+   "page": "structure-sim/module2",
+   "stem": "帳篷 屬於哪一種結構？",
+   "options": {
+    "A": "桁架 Truss",
+    "B": "拱 Arch",
+    "C": "纜索懸吊 Cable / Suspension",
+    "D": "框架 Frame",
+    "E": "殼結構 Shell",
+    "F": "張拉結構 Tensile"
+   },
+   "answer": "F",
+   "items": []
+  },
+  {
+   "q": "structure-sim.m2.q6",
+   "h": "d7f7315a",
+   "t": "single",
+   "page": "structure-sim/module2",
+   "stem": "木橋桁架 屬於哪一種結構？",
+   "options": {
+    "A": "桁架 Truss",
+    "B": "拱 Arch",
+    "C": "纜索懸吊 Cable / Suspension",
+    "D": "框架 Frame",
+    "E": "殼結構 Shell",
+    "F": "張拉結構 Tensile"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "structure-sim.m2.q7",
+   "h": "cf818aa2",
+   "t": "single",
+   "page": "structure-sim/module2",
+   "stem": "萬神殿圓頂 屬於哪一種結構？",
+   "options": {
+    "A": "桁架 Truss",
+    "B": "拱 Arch",
+    "C": "纜索懸吊 Cable / Suspension",
+    "D": "框架 Frame",
+    "E": "殼結構 Shell",
+    "F": "張拉結構 Tensile"
+   },
+   "answer": "E",
+   "items": []
+  },
+  {
+   "q": "structure-sim.m3.order",
+   "h": "740e65b5",
+   "t": "order",
+   "page": "structure-sim/module3",
+   "stem": "把下方步驟排回正確順序",
+   "options": {},
+   "answer": "1>2>3>4>5>6>7>8",
+   "items": [
+    "定義功能與限制",
+    "形態選擇",
+    "草圖與尺寸",
+    "載重估算",
+    "受力分析",
+    "材料選擇",
+    "製造與組裝",
+    "測試與改良"
+   ]
+  },
+  {
+   "q": "structure-sim.m5.q0",
+   "h": "6ca6d5d0",
+   "t": "scenario",
+   "page": "structure-sim/module5",
+   "stem": "一根長 40cm 的紙條當壓桿，加壓到 200 公克重（約 2 N）時還沒達到紙的抗壓強度就突然向側面彎成 S 形。",
+   "options": {
+    "A": "挫曲",
+    "B": "彎矩失效",
+    "C": "節點脫開"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "structure-sim.m5.q1",
+   "h": "c585f89b",
+   "t": "scenario",
+   "page": "structure-sim/module5",
+   "stem": "紙橋中央承重時，下方先看到紙裂開，上方看到紙皺起，最後從中央折斷。",
+   "options": {
+    "A": "剪切",
+    "B": "彎矩失效",
+    "C": "挫曲"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "structure-sim.m5.q2",
+   "h": "371ef6b5",
+   "t": "scenario",
+   "page": "structure-sim/module5",
+   "stem": "紙橋的桿件完好，但兩根桿子相交的位置膠水裂開，整座橋散架。",
+   "options": {
+    "A": "挫曲",
+    "B": "塑性變形",
+    "C": "節點脫開"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "structure-sim.m5.q3",
+   "h": "0f2c03a7",
+   "t": "scenario",
+   "page": "structure-sim/module5",
+   "stem": "一棟蓋在軟弱黏土上的大樓，完工幾年後整棟慢慢往一側傾斜，但梁柱本身沒有裂縫。",
+   "options": {
+    "A": "基礎沉陷",
+    "B": "共振",
+    "C": "疲勞"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "structure-sim.m5.q4",
+   "h": "a82ae3df",
+   "t": "scenario",
+   "page": "structure-sim/module5",
+   "stem": "橋梁在交通震動下使用 50 年後突然斷裂，平時看不出異狀。",
+   "options": {
+    "A": "剪切",
+    "B": "疲勞",
+    "C": "塑性變形"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "structure.m1.unit0",
+   "h": "30b67342",
+   "t": "single",
+   "page": "structure/module1",
+   "stem": "哪個比較重？",
+   "options": {
+    "A": "1 kN 的力",
+    "B": "一袋 50 kg 的水泥"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "structure.m1.unit1",
+   "h": "7e2cb72f",
+   "t": "single",
+   "page": "structure/module1",
+   "stem": "哪個比較重？",
+   "options": {
+    "A": "500 N 的力",
+    "B": "一台 100 kg 的重型機車"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "structure.m1.unit2",
+   "h": "a0bb68b1",
+   "t": "single",
+   "page": "structure/module1",
+   "stem": "1 MPa 的壓力作用在 1 平方公分上,大約等於在上面放了什麼？",
+   "options": {
+    "A": "一顆蘋果（約 0.1 kg）",
+    "B": "一隻貓（約 4 kg）",
+    "C": "一袋 10 kg 的白米",
+    "D": "一台重機車（約 100 kg）"
+   },
+   "answer": "C",
+   "items": []
+  },
+  {
+   "q": "structure.m2.ppe",
+   "h": "96322562",
+   "t": "game",
+   "page": "structure/module2",
+   "stem": "工地護具配置：安全帽、護目鏡、安全吊帶放到對應部位；拖鞋、耳機、圍巾不能帶",
+   "options": {},
+   "answer": "pass",
+   "items": []
+  },
+  {
+   "q": "structure.m2.sf0",
+   "h": "b1229738",
+   "t": "scenario",
+   "page": "structure/module2",
+   "stem": "一根鋼桿設計承受 50kN，實驗到 120kN 才破壞，安全係數是多少？是否達到本平台 SF ≥ 2.0 的教學門檻？",
+   "options": {
+    "A": "1.2，不符合",
+    "B": "2.4，符合！SF = 120/50 = 2.4"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "structure.m2.sf1",
+   "h": "6e7a362c",
+   "t": "scenario",
+   "page": "structure/module2",
+   "stem": "木橋設計承載 10kN，破壞試驗到 18kN。SF = 1.8，是否可以開放給行人通行？",
+   "options": {
+    "A": "1.8 < 2.0，不安全，不應開放",
+    "B": "差一點，稍微加固就好了"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "structure.m2.sf2",
+   "h": "43f1b006",
+   "t": "scenario",
+   "page": "structure/module2",
+   "stem": "橋桿鋼材 25 年後因腐蝕，有效截面積從 40cm² 減少到 28cm²。原本 SF=2.6，腐蝕後 SF 約多少？",
+   "options": {
+    "A": "仍然 2.6，沒影響",
+    "B": "約 1.82，已低於安全值"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "structure.m2.sf3",
+   "h": "3a6c925e",
+   "t": "scenario",
+   "page": "structure/module2",
+   "stem": "橋梁設計採水平地震係數 0.2g（簡化假設），工程師想省錢把 SF 從 2.5 降到 1.8，選擇輕量材料。這樣做可以嗎？",
+   "options": {
+    "A": "不行！SF<2 在地震國家更危險",
+    "B": "可以，輕量代表地震力也更小"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "structure.m2.sf4",
+   "h": "32e97c6d",
+   "t": "scenario",
+   "page": "structure/module2",
+   "stem": "設計師用竹子橋桿（降伏強度 80MPa），截面積 6cm²，承受最大軸力 30kN。SF 是多少？",
+   "options": {
+    "A": "約 1.6，不安全",
+    "B": "約 1.6，但竹橋可以例外"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "structure.m2.sf5",
+   "h": "bcf2566b",
+   "t": "scenario",
+   "page": "structure/module2",
+   "stem": "一座人行天橋 SF=3.0，工程師說「可以再省一點」，把 SF 降到 2.1。這是合理的節省嗎？",
+   "options": {
+    "A": "合理，2.1 仍達到 SF≥2 門檻",
+    "B": "要看具體情況，考慮維護成本和使用年限"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "structure.m2.sf6",
+   "h": "8c541240",
+   "t": "scenario",
+   "page": "structure/module2",
+   "stem": "台灣颱風期間橋梁同時承受行人、車輛和強風荷重，SF 設計值應該如何考量？",
+   "options": {
+    "A": "只要靜載達到 SF=2 即可",
+    "B": "應以組合載重設計，各工況都需達 SF≥2"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "structure.m2.sf7",
+   "h": "6061cca6",
+   "t": "scenario",
+   "page": "structure/module2",
+   "stem": "混凝土橋墩設計抗壓強度 25MPa，承受壓力 8MPa，SF = 25/8 = 3.125。但混凝土幾乎不能受張力，這時需要？",
+   "options": {
+    "A": "不用管，SF 已足夠",
+    "B": "加入鋼筋（RC）抵抗張力，避免拉力區開裂"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "structure.m2.sf8",
+   "h": "4dc9cd7c",
+   "t": "scenario",
+   "page": "structure/module2",
+   "stem": "一根橋桿截面積 8cm²，鋼材降伏強度 250MPa，最大受力 140kN。這根桿安全嗎？",
+   "options": {
+    "A": "不安全，SF = 200kN／140kN ≈ 1.43 < 2.0",
+    "B": "安全，因為 140kN 看起來不大"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "structure.m2.sf9",
+   "h": "e6b6c3ad",
+   "t": "scenario",
+   "page": "structure/module2",
+   "stem": "安全係數 SF 代表什麼？工程師為什麼不直接把 SF 設計成 1.0（恰好不壞）就好？",
+   "options": {
+    "A": "因為規定要大於 1.0，只是法規要求",
+    "B": "SF 反映材料變異、預測誤差、意外超載的保險——世界上沒有完美的計算"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "structure.m5.q0",
+   "h": "ee04eeb9",
+   "t": "single",
+   "page": "structure/module5",
+   "stem": "塔科馬海峽吊橋（1940）崩塌的根本原因是什麼？",
+   "options": {
+    "A": "橋太重，支承力不足",
+    "B": "空氣動力顫振（flutter）——橋面在風中產生旋轉共振"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "structure.m5.q1",
+   "h": "3785350e",
+   "t": "single",
+   "page": "structure/module5",
+   "stem": "魁北克大橋（1907）為何在建設中崩塌？",
+   "options": {
+    "A": "工人人為破壞",
+    "B": "壓桿挫曲：下弦桿承受的重量超過設計值，導致側向彎折崩潰"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "structure.m5.q2",
+   "h": "b644a076",
+   "t": "single",
+   "page": "structure/module5",
+   "stem": "銀橋（1967）崩塌是什麼失效模式？",
+   "options": {
+    "A": "地震損毀",
+    "B": "腐蝕疲勞：眼板銷孔處的微裂縫擴展到臨界長度後瞬間斷裂"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "structure.m5.q3",
+   "h": "61010f8b",
+   "t": "single",
+   "page": "structure/module5",
+   "stem": "I-35W 橋（2007）調查發現最根本的原因是什麼？",
+   "options": {
+    "A": "鋼材品質不良",
+    "B": "節點板（gusset plate）厚度設計錯誤——只有規定厚度的一半，潛伏 40 年"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "structure.m5.q4",
+   "h": "3872c91e",
+   "t": "single",
+   "page": "structure/module5",
+   "stem": "聖水大橋（1994）崩塌前已有哪些警告訊號？",
+   "options": {
+    "A": "完全沒有任何跡象，突然發生",
+    "B": "橋面裂縫、滲水等外部劣化跡象早已存在，但未進行詳細調查"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "structure.m5.q5",
+   "h": "a45d46e3",
+   "t": "single",
+   "page": "structure/module5",
+   "stem": "FIU 行人天橋（2018）崩塌的主要原因是什麼（NTSB 調查結論）？",
+   "options": {
+    "A": "颱風引發共振",
+    "B": "設計單位算錯關鍵節點的受力與抗剪能力，節點裂縫擴大後發生剪力破壞"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "structure.m5.q6",
+   "h": "0be050ba",
+   "t": "single",
+   "page": "structure/module5",
+   "stem": "921 集集大地震時，台 3 線烏溪橋南下線的橋墩發生了哪一種失效？",
+   "options": {
+    "A": "橋面因強風而共振",
+    "B": "橋墩剪力破壞：舊橋墩的圍束箍筋不足，地震水平力超過橋墩的抗剪與變形能力"
+   },
+   "answer": "B",
+   "items": []
+  },
+  {
+   "q": "structure.m5.q7",
+   "h": "2ce85a37",
+   "t": "single",
+   "page": "structure/module5",
+   "stem": "台灣橋梁最常見的失效原因是什麼（根據高屏大橋等案例）？",
+   "options": {
+    "A": "颱風強風直接吹倒",
+    "B": "橋基沖刷（Bridge Scour）——颱風洪水把橋墩基礎周圍土壤帶走"
+   },
+   "answer": "B",
+   "items": []
+  }
+ ]
+}
