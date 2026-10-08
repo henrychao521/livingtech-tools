@@ -134,17 +134,32 @@ document.addEventListener('DOMContentLoaded', () => {
     return !!p['module' + n];
   }
 
-  document.querySelectorAll('.module-grid .card').forEach((card, i) => {
-    if (moduleDone(i + 1)) {
+  // 模組數與每張卡對應的模組，一律從卡片連到的 pages/moduleN.html 判斷（2026-10-08 稽核）：
+  // 以前寫死 5 個、用卡片順序對應——6 模組的工具做完 1–5 就顯示 100%＋完成橫幅，
+  // 4 模組的 STEAM 全做完只有 80%，多一張非模組卡片或 Onshape 分組時卡片標記也會錯位。
+  const moduleOf = el => {
+    const a = el.matches('a[href]') ? el : el.querySelector('a[href]');
+    const m = a && a.getAttribute('href').match(/pages\/module(\d+)\.html/);
+    return m ? Number(m[1]) : null;
+  };
+  const linked = [...document.querySelectorAll('a[href*="pages/module"]')]
+    .map(moduleOf).filter(n => n);
+  const moduleCount = linked.length ? Math.max(...linked) : 0;
+  if (!moduleCount) return;
+
+  document.querySelectorAll('.module-grid .card').forEach(card => {
+    const n = moduleOf(card);
+    if (n && moduleDone(n)) {
       const tag = card.querySelector('.card-tag');
       if (tag) tag.textContent = '✓ 已完成';
     }
   });
 
   // 計算總進度（M4 以星數計部分進度，滿 15 星=完成）
-  const doneSteps = [1, 2, 3, 5].filter(moduleDone).length;
-  const m4Part = stars > 0 ? Math.min(1, stars / 15) : (moduleDone(4) ? 1 : 0);
-  const totalProgress = (doneSteps + m4Part) / 5; // 0~1
+  const steps = Array.from({ length: moduleCount }, (_, k) => k + 1);
+  const doneSteps = steps.filter(n => n !== 4 && moduleDone(n)).length;
+  const m4Part = moduleCount < 4 ? 0 : (stars > 0 ? Math.min(1, stars / 15) : (moduleDone(4) ? 1 : 0));
+  const totalProgress = (doneSteps + m4Part) / moduleCount; // 0~1
 
   // 在 hero 區下方插入進度儀表板（如果有任何進度）
   if (totalProgress > 0) {

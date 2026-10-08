@@ -1,7 +1,7 @@
 // 教師後台 — 進度彙整、匯出匯入
 
 // === 工具設定 ===
-// moduleCount 預設 5；onshape 10、frc 6
+// moduleCount 預設 5；onshape 10、frc 6、emerging-tech 6、steam 4（與 pages/module*.html 數量一致）
 // physics（物理模擬實驗室）為純影片示範頁、無 localStorage 進度，刻意不列入彙整
 const TOOLS = [
   { id: 'scrollsaw', name: '線鋸機', emoji: '🪚', key: 'scrollsaw_progress_v1', color: '#FF7A00', url: '../scrollsaw/' },
@@ -24,9 +24,9 @@ const TOOLS = [
   { id: 'design-process', name: '產品設計流程', emoji: '🎯', key: 'dp_progress_v1', color: '#059669', url: '../design-process/' },
   { id: 'frc', name: 'FRC 機器人', emoji: '🤖', key: 'frc_progress_v1', color: '#0066B3', url: '../frc/', moduleCount: 6 },
   { id: 'onshape', name: 'Onshape 3D 建模', emoji: '📐', key: 'onshape_progress_v1', color: '#0091BD', url: '../onshape/', moduleCount: 10 },
-  { id: 'emerging-tech', name: '新興科技', emoji: '🚀', key: 'et_progress_v1', color: '#7C3AED', url: '../emerging-tech/' },
+  { id: 'emerging-tech', name: '新興科技', emoji: '🚀', key: 'et_progress_v1', color: '#7C3AED', url: '../emerging-tech/', moduleCount: 6 },
   { id: 'mechatronics', name: '機電整合', emoji: '🔧', key: 'mecha_progress_v1', color: '#0F766E', url: '../mechatronics/' },
-  { id: 'steam', name: 'STEAM 專題', emoji: '🎨', key: 'steam_progress_v1', color: '#DB2777', url: '../steam/' },
+  { id: 'steam', name: 'STEAM 專題', emoji: '🎨', key: 'steam_progress_v1', color: '#DB2777', url: '../steam/', moduleCount: 4 },
   { id: 'lasercut', name: '雷射切割', emoji: '🔺', key: 'laser_progress_v1', color: '#EA580C', url: '../lasercut/' },
 ];
 
