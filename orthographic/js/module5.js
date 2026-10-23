@@ -16,25 +16,39 @@ function saveP(p) { localStorage.setItem(PK, JSON.stringify(p)); }
 // SVG 視圖繪製工具（Round 1 / Round 2 用）
 // =============================================================
 const VIEW_BG = '#1E293B', VIEW_FG = '#A5B4FC', VIEW_EDGE = '#3730A3', VIEW_DASH = '#94A3B8';
+// 視圖類型依 models/orthographic/*.scad 的實際立體（OpenSCAD 的 -Y 為正面）與比例繪製；
+// 三個視圖同一比例尺、各自置中在同尺寸方格 → 第三角法排列時自然「長對正、高平齊、寬相等」。
 const SHAPES = {
   cube:      { label: '立方體', front: 'square', side: 'square', top: 'square', iso: 'cube' },
   cylinder:  { label: '圓柱',   front: 'rect',   side: 'rect',   top: 'circle', iso: 'cylinder' },
   cone:      { label: '圓錐',   front: 'triangle', side: 'triangle', top: 'circle-dot', iso: 'cone' },
   sphere:    { label: '球體',   front: 'circle', side: 'circle', top: 'circle', iso: 'sphere' },
-  lblock:    { label: 'L 型塊', front: 'l-shape', side: 'rect-tall', top: 'rect-split', iso: 'lblock' },
-  step:      { label: '階梯塊', front: 'l-shape', side: 'rect-tall', top: 'rect', iso: 'step' },
-  hole:      { label: '帶圓孔板', front: 'rect-circle-hole', side: 'rect-dash-horiz', top: 'rect-dash-vert', iso: 'hole' },
-  tslot:     { label: 'T 槽塊', front: 't-shape', side: 'rect', top: 't-rev', iso: 'tslot' },
-  bracket:   { label: 'L 角架', front: 'rect', side: 'rect', top: 'l-shape', iso: 'bracket' },
+  lblock:    { label: 'L 型塊', front: 'l-shape', side: 'rect-tall-split', top: 'rect-split', iso: 'lblock' },
+  step:      { label: '階梯塊', front: 'step-l', side: 'rect-tall-split-half', top: 'rect-split-half', iso: 'step' },
+  hole:      { label: '帶圓孔板', front: 'rect-circle-hole', side: 'square-dash-horiz', top: 'rect-dash-vert', iso: 'hole' },
+  tslot:     { label: 'T 槽塊', front: 'tslot-front', side: 'tslot-side', top: 'tslot-top', iso: 'tslot' },
+  bracket:   { label: 'L 角架', front: 'bracket-front', side: 'bracket-side', top: 'l-thin', iso: 'bracket' },
   pyramid:   { label: '金字塔', front: 'triangle', side: 'triangle', top: 'square-diag', iso: 'pyramid' },
 };
 
 // SVG 視圖元件：給定 viewType + size，回傳 SVG 字串
+// 線型以 data-k 標示：visible 可見線（實線）、hidden 隱藏線（虛線）、center 中心線（細鏈線）
 function svgView(type, size = 80) {
-  const s = size, c = s / 2, pad = s * 0.12;
+  const s = size, c = s / 2, pad = s * 0.12, L = s - pad * 2;
   const W = s, H = s;
-  const fill = VIEW_FG, stroke = VIEW_EDGE, dash = VIEW_DASH;
+  const fill = VIEW_FG, stroke = VIEW_EDGE;
   const inner = `<rect x="2" y="2" width="${W - 4}" height="${H - 4}" fill="none" stroke="${stroke}" stroke-width="0.7" stroke-dasharray="2 2" opacity="0.4"/>`;
+  // 以 L 為長邊、置中的外框：wr、hr 為寬、高相對 L 的比例
+  const box = (wr, hr) => { const w = wr * L, h = hr * L; return { x0: c - w / 2, y0: c - h / 2, w, h }; };
+  const rectOf = b => `<rect x="${b.x0}" y="${b.y0}" width="${b.w}" height="${b.h}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`;
+  const poly = p => `<polygon points="${p.map(q => q.join(',')).join(' ')}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`;
+  const vis = (x1, y1, x2, y2) => `<line data-k="visible" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${stroke}" stroke-width="1.5"/>`;
+  const hid = (x1, y1, x2, y2) => `<line data-k="hidden" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${stroke}" stroke-width="1.2" stroke-dasharray="3 2"/>`;
+  const ctr = (x1, y1, x2, y2) => `<line data-k="center" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${stroke}" stroke-width="0.8" stroke-dasharray="6 2 1 2"/>`;
+  // L 形外形：豎臂寬 arm、低段高 low（皆為比例），豎臂在左
+  const lPoly = (b, arm, low) => poly([[b.x0, b.y0], [b.x0 + b.w * arm, b.y0], [b.x0 + b.w * arm, b.y0 + b.h * (1 - low)],
+    [b.x0 + b.w, b.y0 + b.h * (1 - low)], [b.x0 + b.w, b.y0 + b.h], [b.x0, b.y0 + b.h]]);
+  const holeR = L * 36 / 160;   // 帶圓孔板：Ø36 / 寬 80
 
   function shape() {
     switch (type) {
@@ -42,9 +56,6 @@ function svgView(type, size = 80) {
         return `<rect x="${pad}" y="${pad}" width="${s - pad * 2}" height="${s - pad * 2}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`;
       case 'rect':
         return `<rect x="${pad}" y="${pad * 1.8}" width="${s - pad * 2}" height="${s - pad * 3.6}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`;
-      case 'rect-split':
-        // 矩形 + 一條垂直分界線：L 型塊從上方看，高段頂面與低段頂面的交界（位置與 l-shape 的 0.4 寬對齊，長對正）
-        return `<rect x="${pad}" y="${pad * 1.8}" width="${s - pad * 2}" height="${s - pad * 3.6}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/><line x1="${pad + (s - pad * 2) * 0.4}" y1="${pad * 1.8}" x2="${pad + (s - pad * 2) * 0.4}" y2="${s - pad * 1.8}" stroke="${stroke}" stroke-width="1.5"/>`;
       case 'rect-tall':
         return `<rect x="${pad * 1.8}" y="${pad}" width="${s - pad * 3.6}" height="${s - pad * 2}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`;
       case 'circle':
@@ -53,26 +64,51 @@ function svgView(type, size = 80) {
         return `<circle cx="${c}" cy="${c}" r="${(s - pad * 2) / 2}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/><circle cx="${c}" cy="${c}" r="2" fill="${stroke}"/>`;
       case 'triangle':
         return `<polygon points="${c},${pad} ${s - pad},${s - pad} ${pad},${s - pad}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`;
-      case 'l-shape':
-        // 左下 L
-        return `<polygon points="${pad},${pad} ${pad + (s - pad * 2) * 0.4},${pad} ${pad + (s - pad * 2) * 0.4},${pad + (s - pad * 2) * 0.55} ${s - pad},${pad + (s - pad * 2) * 0.55} ${s - pad},${s - pad} ${pad},${s - pad}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`;
-      case 'l-rev':
-        // 階梯：右下大、左上小
-        return `<polygon points="${pad},${pad + (s - pad * 2) * 0.45} ${pad + (s - pad * 2) * 0.4},${pad + (s - pad * 2) * 0.45} ${pad + (s - pad * 2) * 0.4},${pad} ${s - pad},${pad} ${s - pad},${s - pad} ${pad},${s - pad}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`;
       case 't-shape':
         return `<polygon points="${pad},${pad} ${s - pad},${pad} ${s - pad},${pad + (s - pad * 2) * 0.4} ${c + (s - pad * 2) * 0.15},${pad + (s - pad * 2) * 0.4} ${c + (s - pad * 2) * 0.15},${s - pad} ${c - (s - pad * 2) * 0.15},${s - pad} ${c - (s - pad * 2) * 0.15},${pad + (s - pad * 2) * 0.4} ${pad},${pad + (s - pad * 2) * 0.4}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`;
-      case 't-rev':
-        return `<polygon points="${pad},${s - pad} ${s - pad},${s - pad} ${s - pad},${s - pad - (s - pad * 2) * 0.4} ${c + (s - pad * 2) * 0.15},${s - pad - (s - pad * 2) * 0.4} ${c + (s - pad * 2) * 0.15},${pad} ${c - (s - pad * 2) * 0.15},${pad} ${c - (s - pad * 2) * 0.15},${s - pad - (s - pad * 2) * 0.4} ${pad},${s - pad - (s - pad * 2) * 0.4}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`;
-      case 'rect-circle-hole':
-        return `<rect x="${pad}" y="${pad * 1.8}" width="${s - pad * 2}" height="${s - pad * 3.6}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/><circle cx="${c}" cy="${c}" r="${(s - pad * 2) * 0.18}" fill="${VIEW_BG}" stroke="${stroke}" stroke-width="1.5"/>`;
-      case 'rect-dash-vert':
-        // 兩條垂直虛線（孔軸沿 X/Z 方向，從俯視看）
-        return `<rect x="${pad}" y="${pad * 1.8}" width="${s - pad * 2}" height="${s - pad * 3.6}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/><line x1="${c - 8}" y1="${pad * 1.8}" x2="${c - 8}" y2="${s - pad * 1.8}" stroke="${stroke}" stroke-width="1.2" stroke-dasharray="3 2"/><line x1="${c + 8}" y1="${pad * 1.8}" x2="${c + 8}" y2="${s - pad * 1.8}" stroke="${stroke}" stroke-width="1.2" stroke-dasharray="3 2"/>`;
-      case 'rect-dash-horiz':
-        // 兩條水平虛線（孔軸沿 Z 方向，從側視看到孔上下邊界）
-        return `<rect x="${pad}" y="${pad * 1.8}" width="${s - pad * 2}" height="${s - pad * 3.6}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/><line x1="${pad}" y1="${c - 8}" x2="${s - pad}" y2="${c - 8}" stroke="${stroke}" stroke-width="1.2" stroke-dasharray="3 2"/><line x1="${pad}" y1="${c + 8}" x2="${s - pad}" y2="${c + 8}" stroke="${stroke}" stroke-width="1.2" stroke-dasharray="3 2"/>`;
       case 'square-diag':
         return `<rect x="${pad}" y="${pad}" width="${s - pad * 2}" height="${s - pad * 2}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/><line x1="${pad}" y1="${pad}" x2="${s - pad}" y2="${s - pad}" stroke="${stroke}" stroke-width="1"/><line x1="${pad}" y1="${s - pad}" x2="${s - pad}" y2="${pad}" stroke="${stroke}" stroke-width="1"/><circle cx="${c}" cy="${c}" r="2.5" fill="${stroke}"/>`;
+
+      // L 型塊（寬 90 × 深 40 × 高 60；左高臂寬 30、右低座高 30）
+      case 'l-shape': { const b = box(1, 2 / 3); return lPoly(b, 1 / 3, 1 / 2); }
+      case 'rect-split': { const b = box(1, 4 / 9); const x = b.x0 + b.w / 3; return rectOf(b) + vis(x, b.y0, x, b.y0 + b.h); }
+      case 'rect-tall-split': { const b = box(4 / 9, 2 / 3); const y = b.y0 + b.h / 2; return rectOf(b) + vis(b.x0, y, b.x0 + b.w, y); }
+      // 階梯塊（寬 80 × 深 40 × 高 60；上層在左半）
+      case 'step-l': { const b = box(1, 3 / 4); return lPoly(b, 1 / 2, 1 / 2); }
+      case 'rect-split-half': { const b = box(1, 1 / 2); const x = b.x0 + b.w / 2; return rectOf(b) + vis(x, b.y0, x, b.y0 + b.h); }
+      case 'rect-tall-split-half': { const b = box(1 / 2, 3 / 4); const y = b.y0 + b.h / 2; return rectOf(b) + vis(b.x0, y, b.x0 + b.w, y); }
+      // 帶圓孔板（寬 80 × 深 50 × 高 50，Ø36 孔前後貫穿）
+      case 'rect-circle-hole': {
+        const b = box(1, 5 / 8), r = holeR;
+        return rectOf(b) + `<circle cx="${c}" cy="${c}" r="${r}" fill="${VIEW_BG}" stroke="${stroke}" stroke-width="1.5"/>` +
+          ctr(c - r - 4, c, c + r + 4, c) + ctr(c, c - r - 4, c, c + r + 4);
+      }
+      case 'rect-dash-vert': {   // 俯視：孔的左右邊界
+        const b = box(1, 5 / 8), r = holeR;
+        return rectOf(b) + hid(c - r, b.y0, c - r, b.y0 + b.h) + hid(c + r, b.y0, c + r, b.y0 + b.h) + ctr(c, b.y0 - 4, c, b.y0 + b.h + 4);
+      }
+      case 'square-dash-horiz': {   // 右側視：孔的上下邊界
+        const b = box(5 / 8, 5 / 8), r = holeR;
+        return rectOf(b) + hid(b.x0, c - r, b.x0 + b.w, c - r) + hid(b.x0, c + r, b.x0 + b.w, c + r) + ctr(b.x0 - 4, c, b.x0 + b.w + 4, c);
+      }
+      // L 角架（寬 60 × 深 60 × 高 40；俯視 L 形，豎腳在左、橫腳在前，腳厚 1/4）
+      case 'bracket-front': { const b = box(1, 2 / 3); const x = b.x0 + b.w / 4; return rectOf(b) + hid(x, b.y0, x, b.y0 + b.h); }
+      case 'bracket-side': { const b = box(1, 2 / 3); const x = b.x0 + b.w / 4; return rectOf(b) + vis(x, b.y0, x, b.y0 + b.h); }
+      case 'l-thin': { const b = box(1, 1); return lPoly(b, 1 / 4, 1 / 4); }
+      // T 槽塊（寬 80 × 深 30 × 高 60；頂面 T 形槽深一半，橫槽在後方並從背面穿出）
+      case 'tslot-front': {
+        const b = box(1, 3 / 4), yb = b.y0 + b.h / 2, X = k => b.x0 + b.w * k / 8;
+        return rectOf(b) + [1, 3, 5, 7].map(k => hid(X(k), b.y0, X(k), yb)).join('') + hid(X(1), yb, X(7), yb);
+      }
+      case 'tslot-side': {
+        const b = box(3 / 8, 3 / 4), yb = b.y0 + b.h / 2, x1 = b.x0 + b.w / 6, x2 = b.x0 + b.w * 2 / 3;
+        return rectOf(b) + hid(x1, b.y0, x1, yb) + hid(x2, b.y0, x2, yb) + hid(x1, yb, b.x0 + b.w, yb);
+      }
+      case 'tslot-top': {
+        const b = box(1, 3 / 8), X = k => b.x0 + b.w * k / 8, y1 = b.y0 + b.h / 3, y2 = b.y0 + b.h * 5 / 6;
+        const p = [[X(1), b.y0], [X(1), y1], [X(3), y1], [X(3), y2], [X(5), y2], [X(5), y1], [X(7), y1], [X(7), b.y0]];
+        return rectOf(b) + `<polyline data-k="visible" points="${p.map(q => q.join(',')).join(' ')}" fill="none" stroke="${stroke}" stroke-width="1.5"/>`;
+      }
       default:
         return `<text x="${c}" y="${c}" text-anchor="middle" font-size="10" fill="${stroke}">?</text>`;
     }
@@ -128,6 +164,18 @@ function markWrong() {
   if (typeof SoundFX !== 'undefined') SoundFX.error();
 }
 
+// 第三角法排列：俯視在正視上方、右側視在正視右方（長對正、高平齊）
+// cells = { front, side, top }：各格內容（SVG 或「?」方塊）的 HTML
+function tpLayout(cells) {
+  const cell = (k, label) => `<div class="view-cell tp-${k}">${cells[k]}<div class="view-cell-label">${label}</div></div>`;
+  return `<div class="tp-grid" role="group" aria-label="第三角法三視圖">
+        ${cell('top', '俯視 TOP')}
+        <div class="tp-note">第三角法<br>俯視在上<br>右側視在右</div>
+        ${cell('front', '正視 FRONT')}
+        ${cell('side', '右側視 RIGHT')}
+      </div>`;
+}
+
 // =============================================================
 // Round 1: 視圖 → 物件配對
 // =============================================================
@@ -135,13 +183,13 @@ const ROUND1 = [
   { ans: 'cube',     views: ['square','square','square'],         options: ['cube','cylinder','sphere','pyramid'],  expl: '三個視圖都是正方形 → 立方體（六面相等）。' },
   { ans: 'cylinder', views: ['rect','rect','circle'],             options: ['cylinder','cube','cone','sphere'],     expl: '俯視 = 圓 + 正視 / 側視 = 矩形 → 圓柱。' },
   { ans: 'cone',     views: ['triangle','triangle','circle-dot'], options: ['cone','pyramid','cylinder','sphere'],  expl: '俯視帶中心點（圓錐尖）+ 正視 / 側視為三角形 → 圓錐。' },
-  { ans: 'lblock',   views: ['l-shape','rect-tall','rect-split'],       options: ['lblock','tslot','bracket','cube'],     expl: '正視 = L 形 + 俯視 = 矩形加一條分界線（高低兩段的交界）→ L 型塊（兩個方塊相連）。' },
-  { ans: 'hole',     views: ['rect-circle-hole','rect-dash-horiz','rect-dash-vert'], options: ['hole','tslot','step','cylinder'], expl: '正視 = 矩形含實線圓（孔口）+ 側視 = 兩條水平虛線（孔上下邊界）+ 俯視 = 兩條垂直虛線（孔左右邊界）→ 帶圓孔板。' },
+  { ans: 'lblock',   views: ['l-shape','rect-tall-split','rect-split'], options: ['lblock','tslot','bracket','cube'],     expl: '正視 = L 形；俯視 = 矩形加一條垂直分界線（高段頂面與低段頂面的交界，和正視的內角長對正）；右側視 = 矩形加一條水平分界線（低段頂面的高度，和正視內角高平齊）→ L 型塊（高低兩個方塊相連）。' },
+  { ans: 'hole',     views: ['rect-circle-hole','square-dash-horiz','rect-dash-vert'], options: ['hole','tslot','step','cylinder'], expl: '正視 = 矩形含實線圓（孔口）；右側視 = 兩條水平虛線（孔的上下邊界，和圓孔高平齊）；俯視 = 兩條垂直虛線（孔的左右邊界，和圓孔長對正）；細鏈線是孔的中心線 → 帶圓孔板。' },
 ];
 
 function buildRound1() {
   const root = document.getElementById('round-1');
-  root.innerHTML = '<p style="font-size:13.5px;color:#475569;margin-bottom:14px">給你正視・側視・俯視，從 4 個 3D 物件中選對的一個。<span class="hint-toggle" onclick="this.nextElementSibling.style.display=\'inline\';this.style.display=\'none\'">💡 顯示提示</span><span style="display:none;margin-left:8px;color:#64748B">「對齊規則」：長對正：正視長 = 俯視長；高平齊：正視高 = 側視高；寬相等：俯視寬 = 側視寬。</span></p>';
+  root.innerHTML = '<p style="font-size:13.5px;color:#475569;margin-bottom:14px">給你依第三角法排好的三視圖（俯視在正視上方、右側視在正視右方），從 4 個 3D 物件中選對的一個。<span class="hint-toggle" onclick="this.nextElementSibling.style.display=\'inline\';this.style.display=\'none\'">💡 顯示提示</span><span style="display:none;margin-left:8px;color:#64748B">「對齊規則」：長對正：正視長 = 俯視長；高平齊：正視高 = 側視高；寬相等：俯視的深度 = 側視的寬度（俯視下緣、側視左緣都是物體前方）。</span></p>';
   ROUND1.forEach((q, i) => {
     const card = document.createElement('div');
     card.className = 'qcard';
@@ -150,11 +198,7 @@ function buildRound1() {
         <span class="qbadge">Q ${i + 1} / ${ROUND1.length}</span>
         <span style="font-size:12px;color:#94A3B8">視圖 → 物件</span>
       </div>
-      <div class="view-grid">
-        <div class="view-cell">${svgView(q.views[0], 90)}<div class="view-cell-label">正視 FRONT</div></div>
-        <div class="view-cell">${svgView(q.views[1], 90)}<div class="view-cell-label">側視 SIDE</div></div>
-        <div class="view-cell">${svgView(q.views[2], 90)}<div class="view-cell-label">俯視 TOP</div></div>
-      </div>
+      ${tpLayout({ front: svgView(q.views[0], 90), side: svgView(q.views[1], 90), top: svgView(q.views[2], 90) })}
       <p class="qprompt">這是什麼 3D 物件？</p>
       <div class="opt-grid">
         ${shuffled(q.options).map(o => `<div class="opt-cell" data-o="${o}" tabindex="0" role="button" aria-label="${SHAPES[o].label}">${svgIso(o, 90)}<div class="opt-label">${SHAPES[o].label}</div></div>`).join('')}
@@ -200,15 +244,16 @@ function buildRound1() {
 const ROUND2 = [
   { shape: 'cube',     missing: 'side',  known: { front: 'square', top: 'square' }, options: ['square','rect','circle','triangle'], expl: '立方體六面相等 → 三個視圖都是相同正方形。' },
   { shape: 'cylinder', missing: 'top',   known: { front: 'rect',   side: 'rect' },  options: ['circle','square','triangle','rect'],  expl: '圓柱的軸向 = 上下方向 → 俯視 = 圓形。' },
-  { shape: 'lblock',   missing: 'front', known: { side: 'rect-tall', top: 'rect-split' }, options: ['l-shape','rect','t-shape','triangle'], expl: 'L 型塊的「L」是從正視方向看到的形狀；側視看到完整高度 = 矩形。' },
+  { shape: 'lblock',   missing: 'front', known: { side: 'rect-tall-split', top: 'rect-split' }, options: ['l-shape','rect','t-shape','triangle'], expl: '俯視的垂直分界線和右側視的水平分界線，告訴你頂面有高低兩段：高段在左、低段在右，低段高度在側視分界線的位置 → 正視 = L 形。' },
   { shape: 'cone',     missing: 'top',   known: { front: 'triangle', side: 'triangle' }, options: ['circle-dot','circle','triangle','square'], expl: '圓錐俯視 = 圓 + 中央一個尖點（從正上方看尖端）。' },
 ];
 
-const VIEW_KEY = { front: '正視', side: '側視', top: '俯視' };
+const VIEW_KEY = { front: '正視', side: '右側視', top: '俯視' };
+const MISSING_CELL = '<div class="tp-missing">?</div>';
 
 function buildRound2() {
   const root = document.getElementById('round-2');
-  root.innerHTML = '<p style="font-size:13.5px;color:#475569;margin-bottom:14px">給你 3D 物件 + 兩個視圖，從 4 個選項中選出缺失的第三視圖。</p>';
+  root.innerHTML = '<p style="font-size:13.5px;color:#475569;margin-bottom:14px">給你 3D 物件 + 兩個視圖（第三角法排列），從 4 個選項中選出缺失的第三視圖。</p>';
   ROUND2.forEach((q, i) => {
     const card = document.createElement('div');
     card.className = 'qcard';
@@ -219,16 +264,16 @@ function buildRound2() {
         <span class="qbadge">Q ${i + 1} / ${ROUND2.length}</span>
         <span style="font-size:12px;color:#94A3B8">補缺失視圖</span>
       </div>
-      <div style="display:grid;grid-template-columns:120px 1fr;gap:12px;align-items:center">
-        <div style="background:#0F172A;border-radius:8px;padding:10px;text-align:center">
+      <div class="r2-layout">
+        <div class="r2-iso">
           ${svgIso(q.shape, 100)}
           <div style="color:#FBBF24;font-size:11px;font-family:Inter;margin-top:4px">3D 物件</div>
         </div>
-        <div class="view-grid" style="grid-template-columns:repeat(3,1fr)">
-          <div class="view-cell">${q.known.front ? svgView(q.known.front, 80) : `<div style="width:80px;height:80px;background:#0B1322;border:2px dashed #FBBF24;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#FBBF24;font-size:13px;font-weight:700">?</div>`}<div class="view-cell-label">正視 FRONT</div></div>
-          <div class="view-cell">${q.known.side ? svgView(q.known.side, 80) : `<div style="width:80px;height:80px;background:#0B1322;border:2px dashed #FBBF24;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#FBBF24;font-size:13px;font-weight:700">?</div>`}<div class="view-cell-label">側視 SIDE</div></div>
-          <div class="view-cell">${q.known.top ? svgView(q.known.top, 80) : `<div style="width:80px;height:80px;background:#0B1322;border:2px dashed #FBBF24;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#FBBF24;font-size:13px;font-weight:700">?</div>`}<div class="view-cell-label">俯視 TOP</div></div>
-        </div>
+        ${tpLayout({
+          front: q.known.front ? svgView(q.known.front, 80) : MISSING_CELL,
+          side:  q.known.side  ? svgView(q.known.side, 80)  : MISSING_CELL,
+          top:   q.known.top   ? svgView(q.known.top, 80)   : MISSING_CELL,
+        })}
       </div>
       <p class="qprompt" style="margin-top:14px">缺失的 <strong style="color:#4F46E5">${VIEW_KEY[q.missing]}</strong> 是哪一個？</p>
       <div class="opt-grid">
@@ -334,7 +379,7 @@ function buildRound3() {
               <div><div class="vlabel" style="color:#16A34A">目標</div><canvas id="stk-tgt-front-${qi}" width="64" height="64"></canvas></div>
             </div>
             <div class="stack-view">
-              <div><div class="vlabel">側視</div><canvas id="stk-cur-side-${qi}" width="64" height="64"></canvas></div>
+              <div><div class="vlabel">右側視</div><canvas id="stk-cur-side-${qi}" width="64" height="64"></canvas></div>
               <div style="color:#475569;font-size:18px">vs</div>
               <div><div class="vlabel" style="color:#16A34A">目標</div><canvas id="stk-tgt-side-${qi}" width="64" height="64"></canvas></div>
             </div>
@@ -369,8 +414,11 @@ function buildRound3() {
   });
 }
 
-// 把 3D voxel grid 投影到 2D silhouette（從某個軸方向看）
-// axis: 'front' (沿 +Z 看，投影到 xy)、'side' (沿 -X 看，投影到 zy)、'top' (沿 +Y 看，投影到 xz)
+// 把 3D voxel grid 投影到 2D silhouette（CNS 第三角法，與 3D 相機一致：相機在 +Z 前方、y 向上）
+// 回傳「畫面方向」的陣列：out[0] 畫在最上面一列、out[r][0] 畫在最左欄
+//   'front' 正視：從 +Z 看，x 向右、y 向上
+//   'top'   俯視：從 +Y 往下看，x 向右、後方（z=0）在上、前緣（z 大）在下 → 放在正視上方時前緣貼著正視
+//   'side'  右側視：從 +X 看，前方（z 大）在左、後方在右、y 向上 → 放在正視右方
 function projectGrid(grid, axis) {
   const n = grid.length;
   const out = Array.from({ length: n }, () => Array(n).fill(0));
@@ -378,9 +426,9 @@ function projectGrid(grid, axis) {
     for (let y = 0; y < n; y++) {
       for (let z = 0; z < n; z++) {
         if (grid[x][y][z]) {
-          if (axis === 'front') out[y][x] = 1;       // y = row (反向: y=0 在底)、x = col
-          else if (axis === 'side') out[y][z] = 1;    // y = row、z = col（從左看）
-          else if (axis === 'top') out[z][x] = 1;     // z = row、x = col
+          if (axis === 'front') out[n - 1 - y][x] = 1;
+          else if (axis === 'side') out[n - 1 - y][n - 1 - z] = 1;
+          else if (axis === 'top') out[z][x] = 1;
         }
       }
     }
@@ -397,12 +445,12 @@ function drawSilhouette(cv, grid2d, color = '#6366F1', diffMask = null) {
   const n = grid2d.length;
   const cell = Math.floor(Math.min(W, H) / (n + 1));
   const ox = (W - cell * n) / 2, oy = (H - cell * n) / 2;
-  // y 反轉：grid2d[0] 是頂部
+  // grid2d 已是畫面方向（projectGrid 處理過各視圖的上下左右），這裡照列直接畫
   for (let row = 0; row < n; row++) {
     for (let col = 0; col < n; col++) {
-      const v = grid2d[n - 1 - row][col]; // 反轉 row 讓 y=0 在底部
+      const v = grid2d[row][col];
       if (v) {
-        ctx.fillStyle = (diffMask && diffMask[n - 1 - row][col]) ? '#dc2626' : color;
+        ctx.fillStyle = (diffMask && diffMask[row][col]) ? '#dc2626' : color;
         ctx.fillRect(ox + col * cell, oy + row * cell, cell - 1, cell - 1);
       }
       // 格線
@@ -520,17 +568,18 @@ function initStackGame(qi, q) {
     updateViews();
   }
 
+  // 按過「自動完成（放棄）」的題目就不再計分；按「清空」重新開始則恢復計分
+  let gaveUp = false;
   function clearAll() {
+    gaveUp = false;   // 清空＝重新開始；放棄後自己重新堆對仍可過關
     for (let x = 0; x < GRID; x++) for (let y = 0; y < GRID; y++) for (let z = 0; z < GRID; z++) {
       if (userGrid[x][y][z]) removeBlock(x, y, z);
     }
   }
 
-  // 按過「自動完成（放棄）」的題目就不再計分
-  let gaveUp = false;
   function fillTarget() {
-    gaveUp = true;
     clearAll();
+    gaveUp = true;   // 要在 clearAll() 之後設，否則會被清掉
     for (let x = 0; x < GRID; x++) for (let y = 0; y < GRID; y++) for (let z = 0; z < GRID; z++) {
       if (q.target[x][y][z]) addBlock(x, y, z);
     }
@@ -691,9 +740,11 @@ state.total = ROUND1.length + ROUND2.length + ROUND3.length;
 // 作答紀錄（js/sheet-log.js）：三回合合成一份（第 1、2 回合是看圖選擇題，答錯可再試，記第一次選的答案與嘗試次數；
 // 第 3 回合堆方塊算遊戲題，完美匹配＝過關、按「自動完成（放棄）」＝未過關）。全部做完送一筆，中途離開也會送已做的部分
 const ORT_VIEW_NAMES = { square: '正方形', rect: '長方形', circle: '圓形', triangle: '三角形', 'circle-dot': '圓形＋中心點',
-  'l-shape': 'L 形', 't-shape': 'T 形', 'rect-tall': '直立長方形', 'rect-split': '長方形＋分隔線' };
+  'l-shape': 'L 形', 't-shape': 'T 形', 'rect-tall': '直立長方形', 'rect-split': '長方形＋垂直分界線',
+  'rect-tall-split': '直立長方形＋水平分界線', 'rect-circle-hole': '長方形＋圓孔',
+  'square-dash-horiz': '正方形＋兩條水平虛線', 'rect-dash-vert': '長方形＋兩條垂直虛線' };
 const SLQ = window.SheetLog && SheetLog.quiz({ kind: 'game', sendOnLeave: true, questions: [
-  ...ROUND1.map((q, i) => ({ key: 'r1q' + i, t: 'single', stem: '看正視、側視、俯視，這是什麼 3D 物件？（' + q.views.map(v => ORT_VIEW_NAMES[v] || v).join('／') + '）',
+  ...ROUND1.map((q, i) => ({ key: 'r1q' + i, t: 'single', stem: '看正視、右側視、俯視，這是什麼 3D 物件？（' + q.views.map(v => ORT_VIEW_NAMES[v] || v).join('／') + '）',
     options: q.options.map(o => SHAPES[o].label), answer: q.options.indexOf(q.ans) })),
   ...ROUND2.map((q, i) => ({ key: 'r2q' + i, t: 'single', stem: SHAPES[q.shape].label + ' 缺失的' + VIEW_KEY[q.missing] + '是哪一個？',
     options: q.options.map(o => ORT_VIEW_NAMES[o] || o), answer: q.options.indexOf(SHAPES[q.shape][q.missing]) })),
