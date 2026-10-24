@@ -2,7 +2,8 @@
 
 // === 工具設定 ===
 // moduleCount 預設 5；onshape 10、frc 6、emerging-tech 6、steam 4（與 pages/module*.html 數量一致）
-// physics（物理模擬實驗室）為純影片示範頁、無 localStorage 進度，刻意不列入彙整
+// physics（物理模擬實驗室）為影片示範頁，只有頁內 12 題觀念小測的完成徽章（physics_progress_v1：quiz_done／quiz_score），
+// 沒有五段模組進度，刻意不列入彙整
 const TOOLS = [
   { id: 'scrollsaw', name: '線鋸機', emoji: '🪚', key: 'scrollsaw_progress_v1', color: '#FF7A00', url: '../scrollsaw/' },
   { id: 'solder', name: '電烙鐵', emoji: '🔥', key: 'solder_progress_v1', color: '#DC2626', url: '../solder/' },
