@@ -85,7 +85,7 @@ const BRIDGE_TYPES = [
               <rect x="5" y="44" width="18" height="20" fill="#94a3b8"/>
               <rect x="177" y="44" width="18" height="20" fill="#94a3b8"/>
               <text x="100" y="78" text-anchor="middle" font-size="10" fill="#94a3b8" font-family="Inter">上壓下拉</text>`,
-    example: '關西大橋・高速公路交流道',
+    example: '國道高架橋（如國道 1 號五股－楊梅高架段）',
     range: '跨度 5–100m',
   },
   {
@@ -97,7 +97,7 @@ const BRIDGE_TYPES = [
               <rect x="2" y="70" width="16" height="14" fill="#7dd3fc"/>
               <rect x="182" y="70" width="16" height="14" fill="#7dd3fc"/>
               <text x="100" y="82" text-anchor="middle" font-size="9" fill="#0284c7" font-family="Inter" font-weight="700">全桿受壓</text>`,
-    example: '石碇橋・中橫谷關段',
+    example: '關渡大橋（鋼拱橋，跨淡水河）・國姓糯米橋（日治時期石拱橋，南投縣定古蹟）',
     range: '跨度 20–500m',
   },
   {

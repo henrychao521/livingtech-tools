@@ -1,8 +1,8 @@
 // FRC 平台 模組 1
 const PHASES = {
-  auto: { name: '自動期 (Autonomous)', desc: '<strong>15 秒</strong>，機器人完全自主運作，無人類操控。預先寫好的程式判斷場地位置、執行任務（射球、移動、抓取等）。通常是得分關鍵時段，分數加權較高。', color: '#0066B3' },
-  teleop: { name: '操控期 (Teleop)', desc: '<strong>2 分 15 秒</strong>，駕駛員（drive team）用搖桿操作機器人。隊伍 3 機器人聯盟對抗，計算對方策略、收集 game piece、得分。', color: '#FF6600' },
-  endgame: { name: '終局 (Endgame)', desc: '<strong>Teleop 末段，通常 20–30 秒</strong>（依年度賽季而定，例：2024 Crescendo 20 秒、2025 Reefscape 20 秒），有特殊得分機制（爬桿、垂吊、合作協力等）。一場比賽的勝負常在這段時間決定。', color: '#DC2626' },
+  auto: { name: '自動期 (Autonomous)', desc: '<strong>15 秒</strong>（2024、2025 賽季；2026 REBUILT 為 20 秒），機器人完全自主運作，無人類操控。預先寫好的程式判斷場地位置、執行任務（射球、移動、抓取等）。通常是得分關鍵時段，分數加權較高。', color: '#0066B3' },
+  teleop: { name: '操控期 (Teleop)', desc: '<strong>2 分 15 秒</strong>（2026 REBUILT 為 2 分 20 秒），駕駛員（drive team）用搖桿操作機器人。隊伍 3 機器人聯盟對抗，計算對方策略、收集 game piece、得分。', color: '#FF6600' },
+  endgame: { name: '終局 (Endgame)', desc: '<strong>Teleop 末段，通常 20–30 秒</strong>（依年度賽季而定，例：2024 Crescendo、2025 Reefscape 為最後 20 秒；2026 REBUILT 為最後 30 秒），有特殊得分機制（爬桿、垂吊、合作協力等）。一場比賽的勝負常在這段時間決定。', color: '#DC2626' },
 };
 
 const TIMER_TOTAL = 150; // 2:30

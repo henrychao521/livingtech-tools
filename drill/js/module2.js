@@ -106,15 +106,15 @@ function resetScenarios() {
     </div>
 
     <div style="${CARD_ACCIDENT}">
-      <div style="font-weight:700;color:#c2410c;margin-bottom:6px">💥 卡鑽反扭傷害｜手腕骨折、肩膀脫臼案例</div>
-      <p style="margin:0 0 8px;font-size:14px;color:#374151">英國 HSE（Health and Safety Executive）發布的《手持電動工具安全》指引記錄：當鑽頭卡在工件中突然停轉時，電鑽機身會以鑽頭為軸<strong>反向快速旋轉甩動（kickback）</strong>，單手操作者尤其容易因此造成手腕扭傷、骨折，甚至肩膀脫臼。雙手握持可大幅降低此類傷害的嚴重程度。</p>
-      <a href="https://www.hse.gov.uk/pubns/indg229.pdf" target="_blank" rel="noopener noreferrer" style="${TL}">📄 原文來源：HSE INDG229 — Power Drills Safety（英文 PDF）</a>
+      <div style="font-weight:700;color:#c2410c;margin-bottom:6px">💥 鑽孔機具事故預防｜英國 HSE 列出的五件事</div>
+      <p style="margin:0 0 8px;font-size:14px;color:#374151">英國 HSE（Health and Safety Executive）的《Using work equipment safely》在「鑽孔機」一節寫到，為了預防事故：要用夾具或虎鉗固定工件，避免被猛烈旋轉的機器撞擊；操作者要把頭髮綁好，以免被旋轉的主軸、夾頭或刀具捲入；穿合適的工作服，不讓寬鬆衣物被捲入；取下戒指、手套、領帶或圍巾等可能被捲入的物品；戴護目鏡，防止切屑噴進眼睛。</p>
+      <a href="https://www.hse.gov.uk/pubns/indg229.pdf" target="_blank" rel="noopener noreferrer" style="${TL}">📄 原文來源：HSE INDG229 — Using work equipment safely（英文 PDF）</a>
     </div>
 
     <div style="${CARD_RESEARCH}">
-      <div style="font-weight:700;color:#1e40af;margin-bottom:6px">📊 美國每年約 40 萬人次因電動工具受傷</div>
-      <p style="margin:0 0 8px;font-size:14px;color:#374151">美國消費品安全委員會（CPSC）統計，電動手工具每年造成約 40 萬次急診就診，其中手電鑽為最常使用工具之一。常見受傷部位：手指（鑽頭刺穿）、手腕（卡鑽反扭）、眼睛（碎屑噴濺）。正確的個人防護（護目鏡＋雙手握持＋工件固定）可預防絕大多數事故。</p>
-      <a href="https://www.cpsc.gov/Business--Manufacturing/Business-Education/Business-Guidance/Batteries" target="_blank" rel="noopener noreferrer" style="${TL}">📄 參考來源：CPSC — Consumer Safety Statistics（英文）</a>
+      <div style="font-weight:700;color:#1e40af;margin-bottom:6px">📊 美國每年約 36～42 萬人次因電動工具與工作坊設備掛急診</div>
+      <p style="margin:0 0 8px;font-size:14px;color:#374151">美國消費品安全委員會（CPSC）2003 年的危害篩檢報告估計，1997–2002 年間，每年約有 36 萬至 42 萬人次因「電動工具與工作坊設備」（這一類也包含手動工具、千斤頂等）到急診就醫；其中電鑽在 2001 年約 5,800 人次。報告也提到，收到的電鑽事故報告中最常見的是電池與充電器問題（48 件中占 32 件）。</p>
+      <a href="https://www.cpsc.gov/s3fs-public/pdfs/blk_media_hazard_tools.pdf" target="_blank" rel="noopener noreferrer" style="${TL}">📄 原文來源：CPSC — Hazard Screening Report: Power Tools and Workshop Equipment（2003，英文 PDF）</a>
     </div>
 
     <p style="font-size:12px;color:#94a3b8;margin-top:4px">※ 以上連結均為政府官方或研究機構文件，引用於教學安全佐證之用。</p>
