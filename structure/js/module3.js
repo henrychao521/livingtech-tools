@@ -53,6 +53,7 @@ const BRIDGE_INFO = {
       '豎桿受<b style="color:#2563eb">壓力</b>（藍），斜桿受<b style="color:#dc2626">張力</b>（紅）',
       '斜桿只受拉力，可做得又細又長，不怕挫曲',
       '斜桿由上弦往橋中央向下傾：左半 ↘、右半 ↙，在下弦中央會合成 V 字',
+      '注意：本模擬器把荷重放在<b>下弦</b>節點，最外側兩根豎桿要把節點荷重「吊」上去給端斜桿，反而受<b style="color:#dc2626">拉</b>（紅）；中央豎桿接近零力。「豎桿受壓」是荷重在上弦（或中間豎桿）時的情形',
       '台灣鐵路橋、早期公路橋最常見的形式',
     ],
     svg: `<svg viewBox="0 0 360 96" xmlns="http://www.w3.org/2000/svg" style="width:100%">
@@ -700,7 +701,7 @@ function redrawAdv() {
       const mx = (pi.x+pj.x)/2, my = (pi.y+pj.y)/2;
       advCtx.fillStyle = color; advCtx.font = 'bold 10px Inter';
       advCtx.textAlign = 'center'; advCtx.textBaseline = 'middle';
-      advCtx.fillText(`${(force/1000).toFixed(1)}kN`, mx, my-9);
+      advCtx.fillText(`${(Math.abs(force) < 1 ? 0 : force/1000).toFixed(1)}kN`, mx, my-9);
     }
   });
 

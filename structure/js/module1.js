@@ -121,14 +121,16 @@ const BRIDGE_TYPES = [
     svgPath: `<line x1="10" y1="60" x2="190" y2="60" stroke="#0d9488" stroke-width="4"/>
               <line x1="40" y1="25" x2="160" y2="25" stroke="#0d9488" stroke-width="4"/>
               <line x1="10" y1="60" x2="40" y2="25" stroke="#0d9488" stroke-width="2.5"/>
-              <line x1="40" y1="25" x2="80" y2="60" stroke="#dc2626" stroke-width="2.5"/>
-              <line x1="80" y1="60" x2="120" y2="25" stroke="#dc2626" stroke-width="2.5"/>
-              <line x1="120" y1="25" x2="160" y2="60" stroke="#2563eb" stroke-width="2.5"/>
               <line x1="160" y1="25" x2="190" y2="60" stroke="#0d9488" stroke-width="2.5"/>
-              <line x1="80" y1="25" x2="80" y2="60" stroke="#2563eb" stroke-width="2" opacity=".7"/>
-              <line x1="120" y1="25" x2="120" y2="60" stroke="#2563eb" stroke-width="2" opacity=".7"/>
+              <line x1="40" y1="25" x2="70" y2="60" stroke="#dc2626" stroke-width="2.5"/>
+              <line x1="70" y1="25" x2="100" y2="60" stroke="#dc2626" stroke-width="2.5"/>
+              <line x1="130" y1="25" x2="100" y2="60" stroke="#dc2626" stroke-width="2.5"/>
+              <line x1="160" y1="25" x2="130" y2="60" stroke="#dc2626" stroke-width="2.5"/>
+              <line x1="70" y1="25" x2="70" y2="60" stroke="#2563eb" stroke-width="2" opacity=".7"/>
+              <line x1="100" y1="25" x2="100" y2="60" stroke="#2563eb" stroke-width="2" opacity=".7"/>
+              <line x1="130" y1="25" x2="130" y2="60" stroke="#2563eb" stroke-width="2" opacity=".7"/>
               <text x="100" y="78" text-anchor="middle" font-size="9" fill="#0d9488" font-family="Inter" font-weight="700">桿件只承受軸力</text>`,
-    example: '鐵路橋・十九孔橋（舊台鐵）',
+    example: '西螺大橋（華倫桁架）・下淡水溪舊鐵橋（高屏舊鐵橋，普拉特桁架）',
     range: '跨度 30–300m',
   },
 ];

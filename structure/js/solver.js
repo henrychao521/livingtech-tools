@@ -163,7 +163,7 @@ class TrussSolver {
 
 // 材料常數資料庫（供 module3/4 使用）
 // yieldStress＝抗壓（受壓桿）強度；tensileStress＝抗拉強度，省略時與抗壓相同。
-// 混凝土抗拉只有抗壓的約 1/10（模組 2 教的 1～2MPa），取 2MPa。
+// 混凝土抗拉只有抗壓的約 1/10（模組 2 教的約 2～3MPa），保守取 2MPa。
 const MATERIALS = {
   steel:    { name: '鋼', E: 200e9, yieldStress: 250e6, density: 7850, color: '#94a3b8' },
   wood:     { name: '木材', E: 12e9,  yieldStress: 30e6,  density: 600,  color: '#a16207' },
@@ -365,6 +365,19 @@ function drawTruss(ctx, W, H, truss, result, selectedMemberId) {
 
   ctx.clearRect(0, 0, W, H);
 
+  // 力標籤的避讓：6 格桁架畫在 600px 寬的畫布上，豎桿、斜桿、端斜桿的中點都在同一高度，
+  // 標籤全放中點會疊成一團。這裡沿桿件取幾個候選位置，挑第一個不跟已放好的標籤重疊的。
+  const placedLabels = [];
+  const labelOverlaps = r => placedLabels.some(q => r.x < q.x + q.w && r.x + r.w > q.x && r.y < q.y + q.h && r.y + r.h > q.y);
+  if (truss.loads) {
+    // 先把荷重箭頭＋文字的範圍登記進去，桿件標籤才不會壓到
+    truss.loads.forEach(ld => {
+      const nd = nodes.find(n => n.id === ld.nodeId);
+      if (!nd || !ld.fy || Math.abs(ld.fy) < 1) return;
+      placedLabels.push({ x: tx(nd.x) - 16, y: ty(nd.y) - 50, w: 32, h: 46 });
+    });
+  }
+
   // 桿件
   members.forEach(m => {
     const ni = nodes.find(n => n.id === m.n1Id);
@@ -385,14 +398,28 @@ function drawTruss(ctx, W, H, truss, result, selectedMemberId) {
 
     // 力標籤
     if (result) {
-      const mx = (tx(ni.x) + tx(nj.x)) / 2;
-      const my = (ty(ni.y) + ty(nj.y)) / 2;
-      const kN = (force / 1000).toFixed(1);
-      ctx.fillStyle = color;
+      const kN = (Math.abs(force) < 1 ? 0 : force / 1000).toFixed(1); // 零力桿不要印成 -0.0
+      const label = `${force > 0 ? '+' : ''}${kN}kN`;
       ctx.font = 'bold 10px Inter,sans-serif';
+      const w = ctx.measureText(label).width + 4, h = 11;
+      const x1 = tx(ni.x), y1 = ty(ni.y), x2 = tx(nj.x), y2 = ty(nj.y);
+      const Lp = Math.hypot(x2 - x1, y2 - y1) || 1;
+      const nx = -(y2 - y1) / Lp, ny = (x2 - x1) / Lp; // 垂直於桿件的單位向量
+      let best = null;
+      outer: for (const t of [0.5, 0.35, 0.65, 0.25, 0.75]) {
+        for (const side of [-1, 1]) {
+          const px = x1 + (x2 - x1) * t + nx * side * 9;
+          const py = y1 + (y2 - y1) * t + ny * side * 9;
+          const r = { x: px - w / 2, y: py - h / 2, w, h };
+          if (!best) best = r;
+          if (!labelOverlaps(r)) { best = r; break outer; }
+        }
+      }
+      placedLabels.push(best);
+      ctx.fillStyle = color;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText(`${force > 0 ? '+' : ''}${kN}kN`, mx, my - 8);
+      ctx.fillText(label, best.x + w / 2, best.y + h / 2);
     }
   });
 
