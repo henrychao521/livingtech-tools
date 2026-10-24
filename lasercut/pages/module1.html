@@ -31,7 +31,89 @@
     <div class="note">
       <strong>切縫寬度會吃掉尺寸</strong>
       <p>雷射本身有寬度：沿線切時每一邊各吃掉半條切縫，所以件的外形長寬會比圖面小約<strong>一整條切縫</strong>（0.1～0.3 mm），孔則會大約一整條。做卡榫、齒輪這種需要密合的件時，
-      畫圖就要把切縫補償進去（本平台的 <a href="../onshape/" style="color:#0369A1;font-weight:700">Onshape 模組</a>有詳細做法）。</p>
+      畫圖就要把切縫補償進去（本平台的 <a href="../../onshape/" style="color:#0369A1;font-weight:700">Onshape 模組</a>有詳細做法）。</p>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>🔭 機器裡面有什麼：光路與主要部件（俯視）</h3>
+    <p class="muted" style="margin-bottom:12px">
+      雷射光不是從雷射頭「發出」的——它在機器最後方的<strong>雷射管</strong>產生，靠<strong>三面反射鏡</strong>轉折、最後由<strong>聚焦鏡</strong>向下打在材料上。
+      這也是為什麼鏡片髒了、光路歪了，雷射頭看起來正常卻「切不斷」。
+    </p>
+    <div class="lc-stage" style="padding:14px">
+      <svg viewBox="0 0 720 400" role="img" aria-label="CO₂ 雷射切割機俯視示意：雷射管、三面反射鏡、聚焦鏡、蜂巢工作台、排煙口">
+        <defs>
+          <marker id="lcArrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><polygon points="0,0 8,4 0,8" fill="#F87171"/></marker>
+        </defs>
+        <!-- 機殼 -->
+        <rect x="40" y="38" width="640" height="340" rx="10" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+        <!-- 蜂巢工作台 -->
+        <rect x="120" y="150" width="520" height="200" rx="4" fill="#0b1220" stroke="#1e293b"/>
+        <g fill="#1e293b">
+          <g id="lcHexRow"><circle cx="138" cy="166" r="4"/><circle cx="156" cy="166" r="4"/><circle cx="174" cy="166" r="4"/><circle cx="192" cy="166" r="4"/><circle cx="210" cy="166" r="4"/><circle cx="228" cy="166" r="4"/><circle cx="246" cy="166" r="4"/><circle cx="264" cy="166" r="4"/><circle cx="282" cy="166" r="4"/><circle cx="300" cy="166" r="4"/><circle cx="318" cy="166" r="4"/><circle cx="336" cy="166" r="4"/><circle cx="354" cy="166" r="4"/><circle cx="372" cy="166" r="4"/><circle cx="390" cy="166" r="4"/><circle cx="408" cy="166" r="4"/><circle cx="426" cy="166" r="4"/><circle cx="444" cy="166" r="4"/><circle cx="462" cy="166" r="4"/><circle cx="480" cy="166" r="4"/><circle cx="498" cy="166" r="4"/><circle cx="516" cy="166" r="4"/><circle cx="534" cy="166" r="4"/><circle cx="552" cy="166" r="4"/><circle cx="570" cy="166" r="4"/><circle cx="588" cy="166" r="4"/><circle cx="606" cy="166" r="4"/><circle cx="624" cy="166" r="4"/></g>
+          <use href="#lcHexRow" transform="translate(9,16)"/><use href="#lcHexRow" transform="translate(0,32)"/><use href="#lcHexRow" transform="translate(9,48)"/>
+          <use href="#lcHexRow" transform="translate(0,64)"/><use href="#lcHexRow" transform="translate(9,80)"/><use href="#lcHexRow" transform="translate(0,96)"/>
+          <use href="#lcHexRow" transform="translate(9,112)"/><use href="#lcHexRow" transform="translate(0,128)"/><use href="#lcHexRow" transform="translate(9,144)"/>
+          <use href="#lcHexRow" transform="translate(0,160)"/><use href="#lcHexRow" transform="translate(9,176)"/>
+        </g>
+        <!-- 板材 -->
+        <rect x="300" y="200" width="300" height="120" rx="3" fill="#B45309" opacity=".85"/>
+        <!-- 雷射管（後方，水冷） -->
+        <rect x="120" y="58" width="470" height="22" rx="11" fill="#7f1d1d" stroke="#FCA5A5" stroke-width="1.5"/>
+        <rect x="130" y="64" width="450" height="10" rx="5" fill="#FB7185" opacity=".55"/>
+        <!-- 水冷管 -->
+        <path d="M600 63 h40 M600 75 h40" stroke="#38BDF8" stroke-width="3" stroke-linecap="round"/>
+        <!-- 排煙口（後方） -->
+        <rect x="620" y="96" width="44" height="30" rx="4" fill="#1e293b" stroke="#475569"/>
+        <path d="M630 104 h24 M630 111 h24 M630 118 h24" stroke="#475569" stroke-width="2"/>
+        <path d="M664 111 h32" stroke="#94a3b8" stroke-width="2" marker-end="url(#lcArrow)"/>
+        <!-- Y 軸導軌（兩側） -->
+        <rect x="96" y="100" width="6" height="262" fill="#334155"/>
+        <rect x="652" y="140" width="6" height="222" fill="#334155"/>
+        <!-- X 軸龍門（隨 Y 前後移動） -->
+        <rect x="92" y="256" width="572" height="16" rx="4" fill="#475569"/>
+        <!-- 光路 -->
+        <g stroke="#EF4444" stroke-width="2.5" stroke-dasharray="7 5" fill="none">
+          <path d="M120 69 H84"/>
+          <path d="M84 69 V264" marker-end="url(#lcArrow)"/>
+          <path d="M84 264 H402" marker-end="url(#lcArrow)"/>
+        </g>
+        <!-- 反射鏡 1（後左角）/ 2（龍門左端）/ 3（雷射頭上） -->
+        <g stroke="#E2E8F0" stroke-width="4" stroke-linecap="round">
+          <line x1="76" y1="78" x2="92" y2="60"/>
+          <line x1="76" y1="256" x2="92" y2="272"/>
+          <line x1="402" y1="252" x2="420" y2="276"/>
+        </g>
+        <!-- 雷射頭（隨 X 左右移動）＋聚焦鏡 -->
+        <rect x="392" y="244" width="40" height="44" rx="5" fill="#94a3b8"/>
+        <circle cx="412" cy="266" r="9" fill="#BAE6FD" stroke="#0EA5E9" stroke-width="2"/>
+        <circle cx="412" cy="266" r="3" fill="#EF4444"><animate attributeName="r" values="2.5;4.5;2.5" dur=".8s" repeatCount="indefinite"/></circle>
+        <!-- 急停鈕（前右） -->
+        <circle cx="648" cy="366" r="8" fill="#DC2626" stroke="#FCA5A5" stroke-width="2"/>
+        <!-- 標號 -->
+        <g font-family="Inter, 'Noto Sans TC', sans-serif" font-size="12.5" font-weight="700">
+          <text x="300" y="47" fill="#FCA5A5" text-anchor="middle">① CO₂ 雷射管（後方・水冷循環）</text>
+          <text x="104" y="92" fill="#E2E8F0">② 反射鏡 1</text>
+          <text x="104" y="288" fill="#E2E8F0">③ 反射鏡 2</text>
+          <text x="438" y="296" fill="#E2E8F0">④ 反射鏡 3 ＋ ⑤ 聚焦鏡</text>
+          <text x="438" y="312" fill="#94a3b8" font-weight="500" font-size="11">光由此垂直向下打到材料</text>
+          <text x="130" y="340" fill="#64748b">⑥ 蜂巢工作台</text>
+          <text x="642" y="140" fill="#94a3b8" font-size="11" text-anchor="middle">⑦ 排煙口</text>
+          <text x="588" y="370" fill="#FCA5A5" text-anchor="end" font-size="11">⑧ 急停</text>
+          <text x="606" y="86" fill="#38BDF8" font-size="10" font-weight="500">冷卻水</text>
+          <text x="470" y="233" fill="#1e293b" text-anchor="middle" font-size="11">板材</text>
+          <text x="256" y="252" fill="#CBD5E1" font-size="11" font-weight="500">X 軸龍門（整支沿 Y 前後移動）</text>
+        </g>
+      </svg>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px 16px;margin-top:12px;font-size:13.5px;color:#334155;line-height:1.7">
+      <div><strong>① 雷射管</strong>：玻璃管內的 CO₂ 混合氣體放電後發出波長 10.6 µm 的不可見紅外光；靠<strong>循環水</strong>散熱，沒水會燒毀。</div>
+      <div><strong>②③④ 三面反射鏡</strong>：把光從後方轉到龍門、再轉到雷射頭。鏡 2 跟著龍門前後跑、鏡 3 跟著雷射頭左右跑，所以<strong>光路對位</strong>一歪，越遠的角落越切不斷。</div>
+      <div><strong>⑤ 聚焦鏡</strong>：把光束集中成約 0.1 mm 的光點，焦點要落在材料表面（<strong>對焦</strong>）。最容易被煙燻髒，也是保養的第一順位。</div>
+      <div><strong>⑥ 蜂巢工作台</strong>：讓光穿透後不反射回材料背面、也讓煙往下抽；底下累積的碎屑是常見起火源。</div>
+      <div><strong>⑦ 排煙口</strong>：接風管與抽風機，切割前一定要先開。<strong>⑧ 急停鈕</strong>：起火或異常時第一個按的東西。</div>
+      <div><strong>看不見的紅點</strong>：你在雷射頭看到的紅點是另一顆低功率<strong>指示用紅光</strong>（約 650 nm），不是切割用的 CO₂ 雷射——所以就算沒看到紅光，機器仍可能在出光。</div>
     </div>
   </section>
 

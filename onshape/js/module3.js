@@ -113,7 +113,8 @@ function playMasterDemo() {
   const label = el('m3-stage-label');
   const num = el('m3-stage-num');
 
-  const setOpacity = (id, op) => { const e = el(id); if (e) e.style.opacity = op; };
+  // 這些 SVG 元素都帶有 opacity 屬性，anime.js 會去動「屬性」而不是 CSS；若用 style.opacity 歸零會把屬性蓋住，整段動畫都看不到
+  const setOpacity = (id, op) => { const e = el(id); if (e) { e.style.opacity = ''; e.setAttribute('opacity', op); } };
   ['m3-plane-top','m3-plane-front','m3-plane-right','m3-plane-active',
    'm3-sketch','m3-sketch-fixed','m3-dim',
    'm3-box-top-face','m3-box-front','m3-box-side','m3-axes'].forEach(id => setOpacity(id, '0'));
@@ -121,6 +122,7 @@ function playMasterDemo() {
   num.textContent = '';
   el('m3-box-front').setAttribute('points', '220,150 300,150 300,150 220,150');
   el('m3-box-side').setAttribute('points', '300,150 340,130 340,130 300,150');
+  el('m3-box-top-face').setAttribute('points', '220,150 300,150 340,130 260,130');
 
   const tl = anime.timeline({ easing: 'easeInOutQuad' });
 
@@ -156,11 +158,15 @@ function playMasterDemo() {
     .add({ targets: label, opacity: [1,1], duration: 100,
       begin: () => {
         label.textContent = '⑧ Extrude 擠出！'; num.textContent = 'Step 8 / 8';
+        // 擠出方向：從 Top 平面往 +Z（畫面上方）長，與步驟 3 的提示「後續擠出方向自然往上」一致
         anime({ targets: '#m3-box-front',
-          points: '220,150 300,150 300,180 220,180',
+          points: '220,120 300,120 300,150 220,150',
           duration: 900, easing: 'easeOutQuad' });
         anime({ targets: '#m3-box-side',
-          points: '300,150 340,130 340,160 300,180',
+          points: '300,150 340,130 340,100 300,120',
+          duration: 900, easing: 'easeOutQuad' });
+        anime({ targets: '#m3-box-top-face',
+          points: '220,120 300,120 340,100 260,100',
           duration: 900, easing: 'easeOutQuad' });
       } })
     .add({ targets: ['#m3-box-top-face','#m3-box-front','#m3-box-side'], opacity: [0, 1], duration: 600 })
