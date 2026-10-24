@@ -12,7 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/microcontroller.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🧠%3C/text%3E%3C/svg%3E">
-<style>.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:14px}.tab{padding:10px;text-align:center;font-size:12px;border-radius:6px;background:#f1f5f9;cursor:pointer;font-weight:700}.tab.active{background:#6366F1;color:#fff}.code-block{background:#0f172a;color:#e2e8f0;border-radius:10px;padding:12px;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7;overflow-x:auto;margin:8px 0;max-height:200px}</style>
+<style>.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:14px}.tab{padding:10px;text-align:center;font-size:12px;border-radius:6px;background:#f1f5f9;cursor:pointer;font-weight:700}.tab.active{background:#6366F1;color:#fff}.code-block{background:#0f172a;color:#e2e8f0;border-radius:10px;padding:12px;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7;white-space:pre;overflow:auto;margin:8px 0;max-height:260px}</style>
 </head><body data-tool="microcontroller" class="mc-theme">
 <header class="topbar"><div class="brand"><span class="logo">🧠</span><div><h1>微控制器</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
 <main class="module-page">
@@ -41,6 +41,8 @@
           <li>電路圖右：感測器/LED</li>
           <li>橙線：訊號流動</li>
           <li>外接 LED 一定要串 220Ω～330Ω 限流電阻，再接回 GND</li>
+          <li>按鈕用 INPUT_PULLUP：一腳接 D2、另一腳接 GND，按下讀到 LOW</li>
+          <li>直流馬達不能直接接腳位，要經過馬達驅動板（如 L298N）</li>
           <li>觸發按鈕看程式如何反應</li>
         </ul>
       </div>

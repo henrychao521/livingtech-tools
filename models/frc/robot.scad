@@ -14,18 +14,18 @@ color([0.55, 0.56, 0.60]) {
 
 // 輪子（六輪驅動，NEO 馬達）
 color([0.20, 0.20, 0.22])
-  for (x = [-42, -10, 40]) for (y = [-44, 36])
+  for (x = [-40, 0, 40]) for (y = [-44, 44])
     translate([x, y, 4]) rotate([90, 0, 0]) cylinder(h = 8, r = 14, center = true);
 // 輪轂（橘色）
 color([0.90, 0.45, 0.05])
-  for (x = [-42, -10, 40]) for (y = [-44, 36])
+  for (x = [-40, 0, 40]) for (y = [-44, 44])
     translate([x, y, 4]) rotate([90, 0, 0]) cylinder(h = 6, r = 6, center = true);
 
 // 機器人主框（碳纖維板，深灰）
 color([0.22, 0.22, 0.25])
   translate([-50, -35, 8]) cube([100, 70, 4]);
 
-// 電池（LiFePO4，黑色矩形）
+// 電池（12V 鉛酸電池 SLA，黑色矩形；FRC 規則禁用鋰電池）
 color([0.12, 0.12, 0.14])
   translate([-15, -15, 12]) cube([30, 30, 18]);
 color([0.90, 0.08, 0.08])

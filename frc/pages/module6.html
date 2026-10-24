@@ -90,7 +90,7 @@
   <span class="com">// 2️⃣ periodic() — 每 20ms 自動執行（更新狀態 / log）</span>
   <span class="fn">@Override</span>
   <span class="kw">public void</span> <span class="fn">periodic</span>() {
-    <span class="cls">SmartDashboard</span>.<span class="fn">putNumber</span>(<span class="str">"LeftPos"</span>, leftMotor.<span class="fn">getPosition</span>().<span class="fn">getValue</span>());
+    <span class="cls">SmartDashboard</span>.<span class="fn">putNumber</span>(<span class="str">"LeftPos"</span>, leftMotor.<span class="fn">getPosition</span>().<span class="fn">getValueAsDouble</span>());
   }
 
   <span class="com">// 3️⃣ 公開方法（讓 Command 操作）</span>

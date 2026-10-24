@@ -110,6 +110,7 @@ function draw() {
     ctx.fillStyle = '#fff';
     ctx.font = '700 12px Inter';
     ctx.fillText('220Ω 限流電阻', 430, 222);
+    ctx.fillText('D13', 300, 230);
     // LED
     ctx.fillStyle = ledOn ? '#fbbf24' : '#475569';
     ctx.beginPath();
@@ -154,6 +155,18 @@ function draw() {
       ctx.lineTo(270, 380);
       ctx.lineTo(270, 350);
       ctx.stroke();
+      // 按鈕另一腳接 GND（INPUT_PULLUP：按下時 D2 被拉到 LOW）
+      ctx.strokeStyle = '#475569';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(625, 380);
+      ctx.lineTo(700, 380);
+      ctx.stroke();
+      ctx.fillStyle = '#fff';
+      ctx.font = '700 11px Inter';
+      ctx.fillText('D2（INPUT_PULLUP）', 420, 370);
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText('GND', 662, 370);
     }
   } else if (mode === 'distance') {
     // 輸入：HC-SR04 → Arduino（訊號線一直有資料流入）
@@ -176,6 +189,7 @@ function draw() {
     ctx.fillStyle = '#fff';
     ctx.font = '700 11px Inter';
     ctx.fillText('HC-SR04（輸入）', 535, 278);
+    ctx.fillText('Trig / Echo', 385, 230);
     // 障礙物（隨距離移動）
     const obsX = 500 + 70 + distance * 1.8;
     ctx.fillStyle = active ? '#dc2626' : '#a16207';
@@ -201,6 +215,13 @@ function draw() {
     ctx.moveTo(446, 340);
     ctx.lineTo(494, 340);
     ctx.stroke();
+    // 馬達驅動板：Arduino 腳位只能給小電流，馬達要經過驅動板（H 橋）
+    ctx.fillStyle = '#dc2626';
+    ctx.fillRect(296, 318, 62, 44);
+    ctx.fillStyle = '#fff';
+    ctx.font = '700 10px Inter';
+    ctx.fillText('L298N', 327, 336);
+    ctx.fillText('馬達驅動板', 327, 352);
     const spin = (active ? -1 : 1) * t * 0.08; // 太近時反轉（後退）
     [420, 520].forEach((wx, k) => {
       ctx.fillStyle = '#334155';
