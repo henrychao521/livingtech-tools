@@ -106,18 +106,21 @@
             </g>
             <!-- 下電源軌 -->
             <g>
+              <circle cx="80" cy="322" r="2"/><circle cx="100" cy="322" r="2"/><circle cx="120" cy="322" r="2"/><circle cx="140" cy="322" r="2"/><circle cx="160" cy="322" r="2"/><circle cx="180" cy="322" r="2"/><circle cx="200" cy="322" r="2"/><circle cx="220" cy="322" r="2"/><circle cx="240" cy="322" r="2"/><circle cx="260" cy="322" r="2"/><circle cx="280" cy="322" r="2"/><circle cx="300" cy="322" r="2"/><circle cx="320" cy="322" r="2"/><circle cx="340" cy="322" r="2"/><circle cx="360" cy="322" r="2"/><circle cx="380" cy="322" r="2"/><circle cx="400" cy="322" r="2"/>
+            </g>
+            <g>
               <circle cx="80" cy="305" r="2"/><circle cx="100" cy="305" r="2"/><circle cx="120" cy="305" r="2"/><circle cx="140" cy="305" r="2"/><circle cx="160" cy="305" r="2"/><circle cx="180" cy="305" r="2"/><circle cx="200" cy="305" r="2"/><circle cx="220" cy="305" r="2"/><circle cx="240" cy="305" r="2"/><circle cx="260" cy="305" r="2"/><circle cx="280" cy="305" r="2"/><circle cx="300" cy="305" r="2"/><circle cx="320" cy="305" r="2"/><circle cx="340" cy="305" r="2"/><circle cx="360" cy="305" r="2"/><circle cx="380" cy="305" r="2"/><circle cx="400" cy="305" r="2"/>
             </g>
           </g>
         </g>
 
-        <!-- 跳線：紅色（電源）-->
-        <path d="M 100 142 Q 130 80 160 170" stroke="#dc2626" stroke-width="3" fill="none" stroke-linecap="round"/>
-        <circle cx="100" cy="142" r="3" fill="#dc2626"/>
+        <!-- 跳線：紅色（電源）— 從上方正電源軌（+）接到中間區 -->
+        <path d="M 100 125 Q 130 70 160 170" stroke="#dc2626" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <circle cx="100" cy="125" r="3" fill="#dc2626"/>
         <circle cx="160" cy="170" r="3" fill="#dc2626"/>
-        <!-- 跳線：黑色（地）-->
-        <path d="M 280 305 Q 250 360 220 270" stroke="#1a1a1a" stroke-width="3" fill="none" stroke-linecap="round"/>
-        <circle cx="280" cy="305" r="3" fill="#1a1a1a"/>
+        <!-- 跳線：黑色（地）— 從中間區接到下方負電源軌（−）-->
+        <path d="M 280 322 Q 250 370 220 270" stroke="#1a1a1a" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <circle cx="280" cy="322" r="3" fill="#1a1a1a"/>
         <circle cx="220" cy="270" r="3" fill="#1a1a1a"/>
 
         <!-- LED -->
@@ -138,7 +141,7 @@
         <g transform="translate(160,240)">
           <rect x="-18" y="-5" width="36" height="10" rx="3" fill="#fef3c7" stroke="#92400e"/>
           <rect x="-12" y="-5" width="3" height="10" fill="#dc2626"/>
-          <rect x="-7" y="-5" width="3" height="10" fill="#1a1a1a"/>
+          <rect x="-7" y="-5" width="3" height="10" fill="#dc2626"/>
           <rect x="2" y="-5" width="3" height="10" fill="#92400e"/>
           <line x1="-18" y1="0" x2="-25" y2="0" stroke="#9ca3af" stroke-width="1.5"/>
           <line x1="18" y1="0" x2="25" y2="0" stroke="#9ca3af" stroke-width="1.5"/>

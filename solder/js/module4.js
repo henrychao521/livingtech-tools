@@ -345,7 +345,8 @@ function draw() {
   ctx.strokeStyle = 'rgba(255,200,100,.3)';
   ctx.lineWidth = 1.5;
   state.joints.forEach((j, i) => {
-    if (i > 0) {
+    // SMD 關卡：只在同一顆貼片元件的兩個焊墊之間畫走線，不同元件之間不畫斜線
+    if (i > 0 && !(j.smd && state.joints[i - 1].x !== j.x)) {
       ctx.beginPath();
       ctx.moveTo(state.joints[i - 1].x, state.joints[i - 1].y + (j.smd ? 15 : 30));
       ctx.lineTo(j.x, j.y + (j.smd ? 15 : 30));
@@ -387,6 +388,23 @@ function draw() {
     ctx.font = 'bold 11px Inter, sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText('LED', j.x, j.y - 75);
+  } else {
+    // SMD：同一直行上下兩個焊墊之間放一顆貼片元件（兩端金屬電極 + 黑色本體），焊墊露出兩端
+    const byX = {};
+    state.joints.forEach(j => { (byX[j.x] = byX[j.x] || []).push(j); });
+    Object.values(byX).forEach(group => {
+      if (group.length < 2) return;
+      const ys = group.map(j => j.y);
+      const top = Math.min(...ys), bot = Math.max(...ys), x = group[0].x;
+      ctx.fillStyle = '#9ca3af';
+      ctx.fillRect(x - 9, top - 2, 18, bot - top + 4);
+      ctx.fillStyle = '#1f2937';
+      ctx.fillRect(x - 9, top + 6, 18, bot - top - 12);
+      ctx.fillStyle = '#e5e7eb';
+      ctx.font = 'bold 8px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('SMD', x, (top + bot) / 2 + 3);
+    });
   }
 
   // 粒子（煙、火花）

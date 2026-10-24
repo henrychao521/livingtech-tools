@@ -300,7 +300,7 @@ function shuffle(a) {
 
 // ============================================================
 // 互動：PCB 焊點找碴
-// 給一張 PCB SVG，6 個焊點裡有 4 個有問題，找出來
+// 給一張 PCB SVG，8 個接點裡有 4 處問題（連錫跨 2 個接點算 1 處），找出來
 // ============================================================
 (function PCBHotspotHunt() {
   const root = document.getElementById('pcb-hunt');
@@ -343,7 +343,6 @@ function shuffle(a) {
         <circle r="14" fill="#fbbf24" stroke="#b45309" stroke-width="1.5"/>
         <ellipse rx="11" ry="8" fill="#c0c0c0"/>
         <ellipse cx="-3" cy="-3" rx="3" ry="2" fill="rgba(255,255,255,.7)"/>
-        <circle r="4" fill="#0a0a0a"/>
       </g>
       <!-- 焊點 2：冷焊（霧面顆粒）✗ -->
       <g transform="translate(100,200)">
@@ -360,7 +359,6 @@ function shuffle(a) {
         <circle r="14" fill="#fbbf24" stroke="#b45309" stroke-width="1.5"/>
         <ellipse rx="11" ry="8" fill="#c0c0c0"/>
         <ellipse cx="-3" cy="-3" rx="3" ry="2" fill="rgba(255,255,255,.7)"/>
-        <circle r="4" fill="#0a0a0a"/>
       </g>
       <!-- 焊點 4：過量錫（包住元件腳）✗ -->
       <g transform="translate(200,200)">

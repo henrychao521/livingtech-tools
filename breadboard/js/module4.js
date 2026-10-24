@@ -220,7 +220,7 @@ function rowY_top(letter) {
   return BB.y + offsets[letter];
 }
 function rowY_bot(letter) {
-  const offsets = { f: 158, g: 176, h: 194, i: 212, j: 230, rail_p: 260, rail_n: 278 };
+  const offsets = { f: 158, g: 176, h: 194, i: 212, j: 230, rail_p: 250, rail_n: 266 };
   return BB.y + offsets[letter];
 }
 function holeY(letter) {
