@@ -8,21 +8,21 @@ color([0.18, 0.18, 0.18])
 // 兩根鉗口（從中央銷往前延伸）
 color([0.55, 0.55, 0.55]) {
   // 上鉗口
-  translate([0, -3, 3]) rotate([0, 8, 0])
+  translate([0, -3, 3]) rotate([0, 3, 0])
     linear_extrude(height = 4)
       polygon([[0, 0], [60, 1], [60, 4], [0, 8]]);
   // 下鉗口
-  translate([0, -3, -7]) rotate([0, -8, 0])
+  translate([0, -3, -7]) rotate([0, -3, 0])
     linear_extrude(height = 4)
       polygon([[0, 0], [60, 4], [60, 7], [0, 8]]);
 }
 
-// 兩根握把（從銷往後延伸 + 紅色塑膠套）
+// 兩根握把（從銷往後（-X）延伸，與鉗口反向 + 紅色塑膠套）
 color([0.86, 0.15, 0.15]) {
   // 上握把（紅）
-  translate([-3, -4, 5]) rotate([0, -20, 0])
+  translate([3, -4, 5]) mirror([1, 0, 0]) rotate([0, -20, 0])
     cube([55, 8, 5]);
   // 下握把
-  translate([-3, -4, -10]) rotate([0, 20, 0])
+  translate([3, -4, -10]) mirror([1, 0, 0]) rotate([0, 20, 0])
     cube([55, 8, 5]);
 }

@@ -15,9 +15,9 @@ color([0.7, 0.1, 0.1])
 
 // 鋼軸
 color([0.7, 0.7, 0.7])
-  translate([0, 0, 50]) cylinder(h = 60, r = 4);
+  translate([0, 0, 50]) cylinder(h = 55, r = 4);
 
-// 十字頭（PH2 簡化）
+// 十字頭（PH2 簡化，伸出鋼軸末端 z 105–111）
 color([0.55, 0.55, 0.55])
   translate([0, 0, 108]) {
     cube([6, 1.2, 6], center = true);

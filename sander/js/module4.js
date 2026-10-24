@@ -110,13 +110,13 @@ function drawScene() {
     ctx.arc(x, beltY - wheelR + 6, gritSize, 0, Math.PI * 2);
     ctx.fill();
   }
-  // 工作面（壓板——金屬灰，貼著砂帶背面）
+  // 壓板（金屬灰，在砂帶上段「背面」托住砂帶；磨削面朝上給工件）
   ctx.fillStyle = '#334155';
-  ctx.fillRect(150, beltY - wheelR - 8, 460, 8);
+  ctx.fillRect(150, beltY - wheelR + 12, 460, 8);
 
   // 工件
   const wpX = state.workpieceX;
-  const wpY = beltY - wheelR - 25;
+  const wpY = beltY - wheelR - 20; // 工件底面貼在砂帶上段
   ctx.fillStyle = state.burned ? r.m.burnColor : r.m.color;
   ctx.fillRect(wpX, wpY, 100, 20);
   // 工件表面紋理（粗糙感）
@@ -131,7 +131,7 @@ function drawScene() {
 
   // 靠尺
   ctx.fillStyle = '#5b21b6';
-  ctx.fillRect(150, wpY - 30, 460, 18);
+  ctx.fillRect(150, wpY - 22, 460, 18);
 
   // 粉塵粒子
   state.dust.forEach(d => {
@@ -166,7 +166,7 @@ function tickSim() {
   if (Math.random() < 0.5) {
     state.dust.push({
       x: state.workpieceX + Math.random() * 100,
-      y: 220 - 60 - 15,
+      y: 220 - 60,
       r: 1.5 + Math.random() * 2,
       vy: -1 - Math.random() * 2,
       vx: (Math.random() - 0.5) * 3,

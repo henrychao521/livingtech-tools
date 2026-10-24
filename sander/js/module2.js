@@ -93,7 +93,7 @@ function resetScenarios() {
       const g = document.createElementNS('http://www.w3.org/2000/svg','g');
       g.setAttribute('id','sv-goggles');
       g.innerHTML = `
-        <g transform="translate(46,72)">
+        <g transform="translate(79,75) scale(.7)">
           <ellipse cx="22" cy="18" rx="20" ry="12" fill="#1a1a1a" opacity=".85"/>
           <ellipse cx="66" cy="18" rx="20" ry="12" fill="#1a1a1a" opacity=".85"/>
           <line x1="42" y1="18" x2="46" y2="18" stroke="#1a1a1a" stroke-width="4"/>
@@ -108,7 +108,7 @@ function resetScenarios() {
       const g = document.createElementNS('http://www.w3.org/2000/svg','g');
       g.setAttribute('id','sv-mask');
       g.innerHTML = `
-        <g transform="translate(50,124)">
+        <g transform="translate(84,97) scale(.6)">
           <path d="M0 0 Q44 18 88 0 L84 24 Q44 30 4 24 Z" fill="#fff" stroke="#7C3AED" stroke-width="2"/>
           <text x="44" y="18" text-anchor="middle" font-size="9" fill="#7C3AED" font-weight="800" font-family="Inter,sans-serif">N95</text>
           <line x1="0" y1="8" x2="-8" y2="6" stroke="#94a3b8" stroke-width="1.5"/>
@@ -120,11 +120,11 @@ function resetScenarios() {
       const g = document.createElementNS('http://www.w3.org/2000/svg','g');
       g.setAttribute('id','sv-sleeves');
       g.innerHTML = `
-        <g transform="translate(30,195)">
+        <g transform="translate(66,150)">
           <rect x="0" y="0" width="18" height="26" rx="6" fill="#f97316" opacity=".9"/>
-          <rect x="112" y="0" width="18" height="26" rx="6" fill="#f97316" opacity=".9"/>
-          <text x="9" y="38" text-anchor="middle" font-size="8" fill="#ea580c" font-weight="700" font-family="Noto Sans TC,sans-serif">束緊</text>
-          <text x="121" y="38" text-anchor="middle" font-size="8" fill="#ea580c" font-weight="700" font-family="Noto Sans TC,sans-serif">束緊</text>
+          <rect x="70" y="0" width="18" height="26" rx="6" fill="#f97316" opacity=".9"/>
+          <text x="-6" y="38" text-anchor="middle" font-size="8" fill="#ea580c" font-weight="700" font-family="Noto Sans TC,sans-serif">束緊</text>
+          <text x="94" y="38" text-anchor="middle" font-size="8" fill="#ea580c" font-weight="700" font-family="Noto Sans TC,sans-serif">束緊</text>
         </g>`;
       return g;
     },

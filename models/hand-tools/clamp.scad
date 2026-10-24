@@ -19,7 +19,7 @@ color([0.55, 0.55, 0.58])
 color([0.4, 0.4, 0.4]) {
   translate([45, 0, 18]) cylinder(h = 18, r = 2.5);
   // 螺紋示意（用一堆環）
-  for (i = [0:7]) translate([45, 0, 18 + i*2]) rotate([90, 0, 0]) cylinder(h = 0.5, r = 3, center = true);
+  for (i = [0:7]) translate([45, 0, 18 + i*2]) cylinder(h = 0.5, r = 3, center = true);
 }
 
 // T 形手把

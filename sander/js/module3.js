@@ -52,12 +52,12 @@ function renderAnim(type) {
       <text x="200" y="200" text-anchor="middle" font-size="11" fill="#444">集塵連接是粉塵爆炸防範核心</text>
     </svg>`,
     fence: `<svg viewBox="0 0 400 220" style="width:90%;max-width:380px">
-      <rect x="50" y="120" width="300" height="10" fill="#7C3AED"/>
+      <rect x="50" y="120" width="300" height="40" fill="#7C3AED"/>
       <rect x="50" y="80" width="300" height="40" fill="#5b21b6"/>
-      <rect x="120" y="105" width="120" height="20" fill="#a16207"/>
-      <text x="180" y="118" text-anchor="middle" font-size="11" fill="#fff" font-weight="700">工件</text>
+      <rect x="120" y="121" width="120" height="22" fill="#a16207"/>
+      <text x="180" y="136" text-anchor="middle" font-size="11" fill="#fff" font-weight="700">工件</text>
       <text x="200" y="100" text-anchor="middle" font-size="10" fill="#fff" font-weight="700">FENCE 靠尺</text>
-      <path d="M 180 130 L 180 90" stroke="#22c55e" stroke-width="2" stroke-dasharray="3 2"/>
+      <path d="M 180 150 L 180 90" stroke="#22c55e" stroke-width="2" stroke-dasharray="3 2"/>
       <text x="200" y="200" text-anchor="middle" font-size="11" fill="#444">工件平貼靠尺才不會歪斜</text>
     </svg>`,
     start: `<svg viewBox="0 0 400 220" style="width:90%;max-width:380px">
@@ -331,30 +331,30 @@ if (typeof SequencePuzzle === 'function') {
       ctx.fillStyle = '#f97316'; ctx.font = '9px Noto Sans TC,sans-serif'; ctx.textAlign = 'left';
       ctx.fillText('集塵', 482, 103);
 
-      // 工件
+      // 工件（放在砂帶「上段」磨削面上，底面貼砂帶）
       if (workX < W) {
-        const wW = 160, wH = 40;
+        const wW = 160, wH = 40, wY = 96 - wH;
         const wx = Math.min(workX, 420 - wW);
         // 燒焦效果
-        ctx.fillStyle = '#a16207'; rr(ctx, wx, 158, wW, wH, 3); ctx.fill();
+        ctx.fillStyle = '#a16207'; rr(ctx, wx, wY, wW, wH, 3); ctx.fill();
         if (burnAlpha > 0 && speed < 0.8) {
           ctx.fillStyle = `rgba(30,0,0,${Math.min(1, burnAlpha)})`;
-          rr(ctx, wx + wW * 0.2, 158, wW * 0.6, wH, 3); ctx.fill();
+          rr(ctx, wx + wW * 0.2, wY, wW * 0.6, wH, 3); ctx.fill();
         }
         if (speed > 2.0 && stage === 'running') {
-          // 鋸齒紋
+          // 鋸齒紋（磨削面在工件底部）
           ctx.strokeStyle = '#78350f'; ctx.lineWidth = 1.5;
           for (let xi = wx; xi < wx + wW; xi += 8) {
-            ctx.beginPath(); ctx.moveTo(xi, 158); ctx.lineTo(xi + 4, 162); ctx.lineTo(xi + 8, 158); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(xi, wY + wH); ctx.lineTo(xi + 4, wY + wH - 4); ctx.lineTo(xi + 8, wY + wH); ctx.stroke();
           }
         }
         // 工件紋路
         ctx.strokeStyle = 'rgba(255,255,255,.15)'; ctx.lineWidth = 1;
-        for (let yi = 163; yi < 163 + wH - 6; yi += 5) {
+        for (let yi = wY + 5; yi < wY + wH - 6; yi += 5) {
           ctx.beginPath(); ctx.moveTo(wx, yi); ctx.lineTo(wx + wW, yi); ctx.stroke();
         }
         ctx.strokeStyle = '#78350f'; ctx.lineWidth = 1.5;
-        rr(ctx, wx, 158, wW, wH, 3); ctx.stroke();
+        rr(ctx, wx, wY, wW, wH, 3); ctx.stroke();
       }
 
       // 粉塵
@@ -378,9 +378,9 @@ if (typeof SequencePuzzle === 'function') {
       workX -= speed;
       heat = Math.max(0, Math.min(1, heat + (speed < 0.8 ? 0.008 : speed > 2.0 ? 0.002 : -0.004)));
       if (speed < 0.8) burnAlpha += 0.012;
-      // 粉塵生成
+      // 粉塵生成（從工件與砂帶接觸處噴出）
       if (Math.random() < 0.3 + speed * 0.1) {
-        dustP.push({ x: Math.max(100, Math.min(400, W - workX - 80)), y: 155,
+        dustP.push({ x: Math.max(100, Math.min(400, Math.min(workX, 260) + Math.random() * 160)), y: 96,
           vx: (Math.random() - 0.5) * 2, vy: -Math.random() * 2 - 1,
           r: Math.random() * 2.5 + 0.5, a: 0.9 });
       }
