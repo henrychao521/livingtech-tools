@@ -1,0 +1,184 @@
+{
+ "status": "SUCCESS",
+ "conversation_id": "00122d20-59d6-4891-9e84-c9fe1c438270",
+ "results": {
+  "before_lblock": {
+   "answers": [
+    "yes",
+    "no",
+    "yes"
+   ],
+   "expected_after": [
+    "yes",
+    "yes",
+    "yes"
+   ],
+   "match_expected": false
+  },
+  "before_step": {
+   "answers": [
+    "no",
+    "no"
+   ],
+   "expected_after": [
+    "yes",
+    "yes"
+   ],
+   "match_expected": false
+  },
+  "before_hole": {
+   "answers": [
+    "yes",
+    "yes",
+    "yes",
+    "no"
+   ],
+   "expected_after": [
+    "yes",
+    "yes",
+    "yes",
+    "yes"
+   ],
+   "match_expected": false
+  },
+  "before_bracket": {
+   "answers": [
+    "yes",
+    "no",
+    "no"
+   ],
+   "expected_after": [
+    "yes",
+    "yes",
+    "yes"
+   ],
+   "match_expected": false
+  },
+  "before_tslot": {
+   "answers": [
+    "no",
+    "no",
+    "no"
+   ],
+   "expected_after": [
+    "yes",
+    "yes",
+    "yes"
+   ],
+   "match_expected": false
+  },
+  "before_round3": {
+   "answers": [
+    "no",
+    "no"
+   ],
+   "expected_after": [
+    "yes",
+    "yes"
+   ],
+   "match_expected": false
+  },
+  "before_section": {
+   "answers": [
+    "yes",
+    "yes",
+    "no"
+   ],
+   "expected_after": [
+    "yes",
+    "no",
+    "yes"
+   ],
+   "match_expected": false
+  },
+  "after_lblock": {
+   "answers": [
+    "yes",
+    "yes",
+    "yes"
+   ],
+   "expected_after": [
+    "yes",
+    "yes",
+    "yes"
+   ],
+   "match_expected": true
+  },
+  "after_step": {
+   "answers": [
+    "yes",
+    "yes"
+   ],
+   "expected_after": [
+    "yes",
+    "yes"
+   ],
+   "match_expected": true
+  },
+  "after_hole": {
+   "answers": [
+    "yes",
+    "yes",
+    "yes",
+    "yes"
+   ],
+   "expected_after": [
+    "yes",
+    "yes",
+    "yes",
+    "yes"
+   ],
+   "match_expected": true
+  },
+  "after_bracket": {
+   "answers": [
+    "yes",
+    "yes",
+    "yes"
+   ],
+   "expected_after": [
+    "yes",
+    "yes",
+    "yes"
+   ],
+   "match_expected": true
+  },
+  "after_tslot": {
+   "answers": [
+    "yes",
+    "yes",
+    "yes"
+   ],
+   "expected_after": [
+    "yes",
+    "yes",
+    "yes"
+   ],
+   "match_expected": true
+  },
+  "after_round3": {
+   "answers": [
+    "yes",
+    "yes"
+   ],
+   "expected_after": [
+    "yes",
+    "yes"
+   ],
+   "match_expected": true
+  },
+  "after_section": {
+   "answers": [
+    "yes",
+    "no",
+    "yes"
+   ],
+   "expected_after": [
+    "yes",
+    "no",
+    "yes"
+   ],
+   "match_expected": true
+  }
+ }
+}
