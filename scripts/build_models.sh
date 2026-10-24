@@ -13,7 +13,7 @@ if [ ! -x "$OPENSCAD" ]; then
   exit 1
 fi
 
-TARGET="${1:-*}"
+TARGET="${1:-}"   # 空字串＝全部（舊版預設 "*" 被引號包住，find 找不到任何檔）
 MODE="${2:-all}"
 COLOR_SCHEME="Tomorrow Night"   # 深色配色與平台 UI 一致
 IMG_SIZE="240,240"               # 等角預覽圖標準尺寸
@@ -22,7 +22,7 @@ COUNT_STL=0
 COUNT_PNG=0
 FAILED=0
 
-for scad in $(find "$ROOT/models/$TARGET" -name "*.scad" -not -name "_*" -not -name "._*" 2>/dev/null); do
+for scad in $(find "$ROOT/models${TARGET:+/$TARGET}" -name "*.scad" -not -name "_*" -not -name "._*" 2>/dev/null); do
   base="${scad%.scad}"
   stl="${base}.stl"
   png="${base}-iso.png"
