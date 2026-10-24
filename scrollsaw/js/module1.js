@@ -16,7 +16,7 @@ const PARTS = {
     name: '下夾頭（Lower Chuck）',
     role: 'BOTTOM BLADE HOLDER',
     desc: '位於工作台下方，是安裝鋸條的起點。對於初學者，下夾頭較難對準，請務必由老師檢查後再上鎖。',
-    fact: '下夾頭距離工作台只有約 5mm，是視線最受限的部位。'
+    fact: '下夾頭藏在工作台底下，是整台機器視線最受限的部位；很多機型要從側面低頭看、或把工作台傾斜才看得到。'
   },
   table: {
     name: '工作台（Table）',
@@ -28,7 +28,7 @@ const PARTS = {
     name: '壓料腳（壓料桿，Hold-down）',
     role: 'BOARD STABILIZER',
     desc: '一個固定在機身、可調高度的塑膠或金屬腳座，輕壓在木板上方。壓料桿能避免鋸條上下運動時把木板「彈起來」，是初學者最容易忽略卻最重要的安全配件。',
-    fact: '壓料桿是預防木板震彈最重要的部件；OSHA 將其列為線鋸機必備防護。'
+    fact: '壓料桿是預防木板震彈最重要的部件；幾乎所有機型的使用手冊都要求「調到輕貼木板」後才能開機。'
   },
   blower: {
     name: '吹氣管（Dust Blower）',
@@ -57,8 +57,8 @@ const PHOTOS = [
   {
     id: 'operation',
     title: '操作中的線鋸機',
-    desc: '工匠使用線鋸機切割木板的工作畫面，可看出操作姿勢。',
-    relatedPart: '操作姿勢',
+    desc: '操作者扶著木料靠近鋸條的特寫：可看到鋸條、壓在木料上方的壓料腳，以及對準切割點的黃銅吹氣噴嘴。',
+    relatedPart: '壓料腳・吹氣管',
     localPath: 'Scroll_saw.jpg',
     author: 'Agashi5859',
     license: 'CC BY-SA 3.0',
@@ -78,9 +78,9 @@ const PHOTOS = [
   },
   {
     id: 'delta-industrial',
-    title: 'Delta 40-560 工業級線鋸機',
-    desc: '展示於博物館的工業等級機台，整體結構與課堂機型一致，比例更大。',
-    relatedPart: '工業機型',
+    title: 'Delta 40-560 桌上型線鋸機',
+    desc: '架在工作檯上的 16 吋桌上型機台（攝於 AGPI 2018 年會展場），上臂、壓料桿、吹氣管、圓形工作台與外露的馬達都看得很清楚。',
+    relatedPart: '整機結構',
     localPath: 'AGPIConvention2018Delta40-560ScrollSaw.jpg',
     author: 'DanielPenfield',
     license: 'CC BY-SA 4.0',
@@ -89,9 +89,9 @@ const PHOTOS = [
   },
   {
     id: 'power-coping',
-    title: '電磁式電動線鋸機',
-    desc: '採用電磁推動的線鋸機，可看清完整工作台、夾頭與機身結構。',
-    relatedPart: '整機解剖',
+    title: '電磁式線鋸機內部',
+    desc: '拆開外殼的電磁式（power coping saw）線鋸機：中央的線圈與鐵芯就是讓鋸條上下往復的電磁鐵，前方圓孔是鋸條穿過工作台的位置。',
+    relatedPart: '內部構造',
     localPath: 'Power_coping_saw_01.jpg',
     author: 'Alessio Sbarbaro',
     license: 'CC BY-SA 3.0 / GFDL',
@@ -123,7 +123,7 @@ const PHOTOS = [
   {
     id: 'historical',
     title: '古董手動線鋸機（約 1900 年）',
-    desc: '攝於大鍵琴製作工坊內，腳踏式古董機台，可對照看現代電動機型的演進。',
+    desc: '攝於大鍵琴製作工坊內，以手搖飛輪帶動鋸條上下往復的古董機台，可對照看現代電動機型的演進。',
     relatedPart: '歷史對照',
     localPath: 'Dekupiersaege_scroll_saw.jpg',
     author: 'Eva Kröcher (EvaK)',
@@ -244,7 +244,7 @@ function renderPhotos() {
     <strong>📸 圖片來源</strong>　以下 ${PHOTOS.length} 張實物照片皆取自 <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener">Wikimedia Commons</a>（已下載至本平台伺服器，避免外部連結失效）。
     多數採 <strong>CC BY-SA</strong>（創用 CC 姓名標示-相同方式分享）授權，部分為公有領域。
     依授權條款，本平台保留作者署名與授權連結；下游再使用須維持相同授權並標註原作者。
-    完整 attribution 清單見 <a href="../LICENSE_IMAGES.md" target="_blank" rel="noopener">LICENSE_IMAGES.md</a>。
+    完整 attribution 清單見 <a href="../../LICENSE_IMAGES.md" target="_blank" rel="noopener">LICENSE_IMAGES.md</a>。
   `;
   grid.appendChild(banner);
 

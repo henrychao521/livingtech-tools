@@ -3,7 +3,7 @@ const ACHIEVEMENTS = [
   { id: 'first_part', icon: '🔍', name: '初識線鋸', desc: '看完 1 個部位介紹', check: p => (p.module1_seen?.length || 0) >= 1 },
   { id: 'all_parts', icon: '🎓', name: '機械達人', desc: '完成模組 1 全部 8 部位', check: p => p.module1 === true },
   { id: 'safety_pass', icon: '🛡️', name: '安全衛士', desc: '安全規範闖關 95 分以上', check: p => p.safetyPassed === true },
-  { id: 'all_steps', icon: '📖', name: '步驟通', desc: '看完所有 8 個操作步驟', check: p => (p.module3_seen?.length || 0) >= 8 },
+  { id: 'all_steps', icon: '📖', name: '步驟通', desc: '看完所有 9 個操作步驟', check: p => (p.module3_seen?.length || 0) >= 9 },
   { id: 'first_cut', icon: '✂️', name: '初次切割', desc: '完成模組 4 任一關卡', check: p => Object.values(p.module4_levels || {}).some(s => s >= 1) },
   { id: 'three_star', icon: '🌟', name: '三星切割師', desc: '任一關卡達 3 顆星', check: p => Object.values(p.module4_levels || {}).some(s => s >= 3) },
   { id: 'all_levels', icon: '🏆', name: '全關通關', desc: '所有 5 個關卡都至少 1 顆星', check: p => {
