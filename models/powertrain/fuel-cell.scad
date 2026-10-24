@@ -40,13 +40,13 @@ color([0.48, 0.50, 0.55])
     translate([0, 0, 80]) sphere(r = 14);
     translate([0, 0, -15]) sphere(r = 14);
   }
-// 氫氣瓶閥門
+// 氫氣瓶閥門（瓶頂球體頂點在 z = 100 + 14 = 114，閥門要放在球體外面才看得到）
 color([0.72, 0.73, 0.75])
-  translate([60, 0, 100]) {
+  translate([60, 0, 114]) {
     cylinder(h = 12, r = 6);
     rotate([90, 0, 0]) translate([0, 0, -8]) cylinder(h = 16, r = 3);
   }
 
-// 連接管線
+// 連接管線（接在氫氣輸入管末端 x = 45、z = 20，一路通到氫氣瓶壁 x = 46）
 color([0.10, 0.45, 0.80])
-  translate([46, 0, 50]) rotate([0, 90, 0]) cylinder(h = 16, r = 2);
+  translate([44, 0, 20]) rotate([0, 90, 0]) cylinder(h = 10, r = 2);

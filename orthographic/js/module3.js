@@ -54,7 +54,7 @@ const DIM_STATEMENTS = [
   { text: '尺寸應標註在最能表達該特徵形狀的視圖上。', ans: true,
     explain: '正確。例如孔的位置標在能看到圓的視圖、厚度標在側視圖,讀圖的人一眼就懂。' },
   { text: '尺寸數字寫在尺寸線的中斷處或尺寸線上方。', ans: true,
-    explain: '正確。CNS 標準允許數字置於尺寸線中斷處或上方,且不可被任何線條穿過。' },
+    explain: '正確。CNS 3 的作法是寫在尺寸線上方中央（ISO／ANSI 也允許寫在尺寸線中斷處），數字不可被任何線條穿過。' },
 ];
 const dimQuizEl = document.getElementById('dim-quiz');
 if (dimQuizEl) {

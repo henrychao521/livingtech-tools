@@ -88,66 +88,100 @@ function drawPulley() {
   const ma = ropes;
   const force = load / ma;
   const cx = W / 2;
-  // 上方架構
+  // 繩路幾何：n 段「支撐重物的繩」+ 1 段「施力繩」= n+1 條垂直繩段，由左到右排列。
+  // 相鄰兩條繩段交替在「上方繞定滑輪」或「下方繞動滑輪」相接：
+  //   最右邊（施力繩 ↔ 最後一段支撐繩）一定在上方繞定滑輪，往左依序下、上、下…
+  //   最左邊那條繩的自由端：n 為奇數時固定在動滑輪組（下方）、n 為偶數時固定在橫梁（上方）
+  // 定滑輪數 = ceil(n/2)、動滑輪數 = floor(n/2)；n = 1 就是單一定滑輪（只改變方向）
+  const n = ropes;
+  const R = 16;              // 滑輪繩槽半徑（相鄰繩段間距 = 2R）
+  const yBeam = 80, yTop = 130, yBot = 300, yHand = 440;
+  const x0 = cx - n * R;     // 第 0 條繩段的 x；第 i 條在 x0 + 2R·i
+  const X = i => x0 + 2 * R * i;
+  const topAt = i => (n - i) % 2 === 1;   // 第 i、i+1 條之間的連接在上方（定滑輪）？
+  const hangerY = yBot + R + 6;           // 動滑輪組吊架 / 重物掛點
+  // 上方橫梁 + 掛架
   ctx.fillStyle = '#9ca3af';
-  ctx.fillRect(cx - 140, 80, 280, 16);
+  ctx.fillRect(cx - 160, yBeam, 320, 16);
   ctx.fillStyle = '#475569';
-  ctx.fillRect(cx - 6, 60, 12, 22);
-  // 上方滑輪們
-  for (let i = 0; i < Math.ceil(ropes / 2); i++) {
+  ctx.fillRect(cx - 6, yBeam - 20, 12, 20);
+  // 定滑輪吊耳、動滑輪吊架（先畫，讓繩子蓋在上面）
+  ctx.fillStyle = '#6b7280';
+  for (let i = 0; i < n; i++) {
+    const xm = X(i) + R;
+    if (topAt(i)) ctx.fillRect(xm - 3, yBeam + 16, 6, yTop - yBeam - 16);
+    else ctx.fillRect(xm - 3, yBot, 6, hangerY - yBot);
+  }
+  // 繩子：垂直段
+  ctx.strokeStyle = '#16A34A';
+  ctx.lineWidth = 2.5;
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  for (let i = 0; i <= n; i++) {
+    let top = yTop, bot = yBot;
+    if (i === 0) { if (n % 2 === 0) top = yBeam + 16; else bot = hangerY; } // 繩頭固定在橫梁 / 動滑輪組
+    if (i === n) bot = yHand;                                                // 施力端垂到手
+    if (n === 1) bot = i === 0 ? hangerY : yHand;                            // 單定滑輪：左邊直接吊重物
+    ctx.moveTo(X(i), top);
+    ctx.lineTo(X(i), bot);
+  }
+  // 繩子：繞滑輪的半圓
+  for (let i = 0; i < n; i++) {
+    const xm = X(i) + R;
+    if (topAt(i)) { ctx.moveTo(X(i), yTop); ctx.arc(xm, yTop, R, Math.PI, 2 * Math.PI); }
+    else { ctx.moveTo(X(i + 1), yBot); ctx.arc(xm, yBot, R, 0, Math.PI); }
+  }
+  ctx.stroke();
+  // 滑輪本體（半徑略小於繩槽，繩子看起來卡在輪緣）
+  const drawWheel = (x, y) => {
     ctx.fillStyle = '#FCE7F3';
     ctx.strokeStyle = '#DB2777';
     ctx.lineWidth = 3;
     ctx.beginPath();
-    ctx.arc(cx - 40 + i * 40, 110, 18, 0, Math.PI * 2);
+    ctx.arc(x, y, R - 3, 0, Math.PI * 2);
     ctx.fill();
     ctx.stroke();
     ctx.fillStyle = '#DB2777';
     ctx.beginPath();
-    ctx.arc(cx - 40 + i * 40, 110, 5, 0, Math.PI * 2);
+    ctx.arc(x, y, 4, 0, Math.PI * 2);
     ctx.fill();
+  };
+  for (let i = 0; i < n; i++) {
+    const xm = X(i) + R;
+    if (topAt(i)) drawWheel(xm, yTop); else drawWheel(xm, yBot);
   }
-  // 重物
+  // 支撐繩段編號（只標支撐重物的 n 段，施力繩不算）
+  ctx.fillStyle = '#86efac';
+  ctx.font = '700 11px Inter';
+  ctx.textAlign = 'center';
+  for (let i = 0; i < n; i++) ctx.fillText(String(i + 1), X(i) - 9, (yTop + yBot) / 2);
+  // 重物（吊在動滑輪組／第 0 條繩正下方）
   const lw = Math.max(70, Math.min(120, load / 5));
+  const loadCX = n === 1 ? X(0) : (X(0) + X(n - 1)) / 2;
+  const loadTop = hangerY;
   ctx.fillStyle = '#831843';
-  ctx.fillRect(cx - lw/2, 320, lw, 60);
+  if (n > 1) ctx.fillRect(X(0) - R - 2, hangerY - 6, X(n - 1) - X(0) + 2 * R + 4, 6); // 動滑輪組吊架橫桿
+  ctx.fillRect(loadCX - lw / 2, loadTop, lw, 56);
   ctx.fillStyle = '#fff';
   ctx.font = '800 16px Inter';
   ctx.textAlign = 'center';
-  ctx.fillText(`${load} kgw`, cx, 357);
-  // 動滑輪（在重物上）
-  if (ropes > 1) {
-    ctx.fillStyle = '#FCE7F3';
-    ctx.strokeStyle = '#DB2777';
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.arc(cx, 300, 18, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.stroke();
-  }
-  // 繩子
-  ctx.strokeStyle = '#16A34A';
-  ctx.lineWidth = 2.5;
-  for (let i = 0; i < ropes; i++) {
-    const x = cx - (ropes - 1) * 18 / 2 + i * 18;
-    ctx.beginPath();
-    ctx.moveTo(x, 110);
-    ctx.lineTo(x, ropes > 1 ? 300 : 320);
-    ctx.stroke();
-  }
-  // 施力端
-  const px = cx + 100;
-  ctx.strokeStyle = '#16A34A';
-  ctx.beginPath();
-  ctx.moveTo(px, 110);
-  ctx.lineTo(px, 400);
-  ctx.stroke();
+  ctx.fillText(`${load} kgw`, loadCX, loadTop + 34);
+  // 施力端（向下拉的箭頭 + 數值）
+  const px = X(n);
   ctx.fillStyle = '#16A34A';
+  ctx.beginPath();
+  ctx.moveTo(px, yHand + 12);
+  ctx.lineTo(px - 7, yHand - 2);
+  ctx.lineTo(px + 7, yHand - 2);
+  ctx.closePath();
+  ctx.fill();
   ctx.font = '800 16px Inter';
-  ctx.fillText(`拉力 ${force.toFixed(1)} kgw`, px, 430);
+  ctx.textAlign = 'left';
+  ctx.fillText(`拉力 ${force.toFixed(1)} kgw`, px + 14, yHand + 6);
   ctx.font = '700 12px Inter';
   ctx.fillStyle = '#9D174D';
-  ctx.fillText(`MA = ${ma} 段繩 = ${ma} 倍`, cx, 460);
+  ctx.textAlign = 'center';
+  ctx.fillText(`MA = 支撐重物的繩段數 = ${ma} 段 = ${ma} 倍`, cx, 482);
   return { ma, force, load, loadDist: 1.0, effortDist: ma * 1.0 };
 }
 
