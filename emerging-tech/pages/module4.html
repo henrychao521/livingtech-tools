@@ -33,7 +33,7 @@
 
   <section class="panel">
     <h3>🛠️ 第一步：選擇要裝的感測器</h3>
-    <p class="muted" style="margin-bottom:10px">每個感測器都有成本，也各自解鎖一種控制策略。點選加裝或移除。</p>
+    <p class="muted" style="margin-bottom:10px">每個感測器都有成本：人體、溫度、照度感測器會解鎖下方的節能策略；電流感測器不直接省電，在真實教室裡是用來量測用電（本模擬為了方便比較，用電圖一律顯示）。點選加裝或移除。</p>
     <div class="pick-grid" id="sensorPick"></div>
     <div style="margin-top:12px;font-size:14px">
       已裝設 <strong id="sensorCount">0</strong> 個感測器　｜　建置成本 <strong id="sensorCost">NT$ 0</strong>
@@ -80,7 +80,7 @@
     <h3>⚖️ 想一想：節能與舒適、隱私的拉扯</h3>
     <div class="ethics">
       <strong>「有人感測」也是一種行為紀錄</strong>
-      <p>人體感測器能大幅節能，但同時也記錄了「誰、什麼時候、在哪個空間」。
+      <p>人體感測器（PIR）本身只知道「有人／沒人」，不知道是誰；但它留下了「什麼時候、哪個空間有人」的紀錄，若再和課表、門禁刷卡或攝影機資料串在一起，就可能推出是誰在場。
       當這些資料被長期保存、跨系統串接，就能還原個人作息。綠建築的設計因此常要求：
       <strong>只儲存彙總後的數據</strong>（例如「本時段有人／無人」而非「識別到某人」）、
       設定<strong>保存期限</strong>，並公開告知空間內裝有哪些感測器。</p>

@@ -16,7 +16,8 @@ const GROUPS = {
        note: '訓練照片少 → 分布重疊多；外來訪客比例高' },
 };
 
-const state = { tA: 55, tB: 55, lock: true };
+// 2026-10 審查：初始 55 時兩群誤拒率已差 17.1pp，挑戰一一載入就自動達成；改從 45（差 5.0pp）開始，讓學生自己往右調
+const state = { tA: 45, tB: 45, lock: true };
 
 const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
 const nextBtn = document.getElementById('next-btn'), progEl = document.getElementById('prog');
