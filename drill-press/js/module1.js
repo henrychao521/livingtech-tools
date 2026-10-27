@@ -302,7 +302,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
       <summary style="cursor:pointer;font-weight:700;font-size:15px">📎 延伸補充：什麼是「退火失硬」？鑽頭為什麼會燒軟</summary>
       <p style="font-size:14px;color:#374151;line-height:1.8;margin:12px 0 8px"><strong>專業說法：</strong>高速鋼（HSS）鑽頭靠淬火＋回火熱處理得到高硬度；鑽孔時如果摩擦熱讓刃口溫度超過它能承受的範圍，組織會再次改變，硬度下降，稱為「退火失硬」（材料學上較精確的說法是「回火軟化」）。<br><strong>白話說：</strong>鑽頭燒過頭就會「變軟」，軟掉的刃口磨一下就圓了，之後怎麼鑽都鑽不動。看到鑽頭尖端變成<strong>藍色或黑色</strong>，就代表它曾經燒過頭。</p>
       <figure style="margin:10px 0;max-width:330px">
-        <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/a/aa/Tempering_colors_in_steel.jpg/330px-Tempering_colors_in_steel.jpg" alt="鋼材加熱後表面出現由淡黃到藍色的回火色" style="width:100%;border-radius:8px;display:block" loading="lazy" onerror="this.parentNode.style.display='none'">
+        <img src="../assets/photos/tempering-colors.webp" alt="鋼材加熱後表面出現由淡黃到藍色的回火色" style="width:100%;border-radius:8px;display:block" loading="lazy" onerror="this.parentNode.style.display='none'">
         <figcaption style="font-size:12px;color:#64748b;margin-top:4px">圖說：鋼加熱到不同溫度，表面會出現淡黃→褐→紫→藍的「回火色」；顏色越偏藍，代表溫度越高。鑽頭尖端出現藍色，就是過熱的證據。（Zaereth，<a href="https://commons.wikimedia.org/wiki/File:Tempering_colors_in_steel.jpg" target="_blank" rel="noopener" style="color:#2563eb;text-decoration:underline">CC0 · Wikimedia Commons</a>）</figcaption>
       </figure>
       <ul style="margin:8px 0 0;padding-left:20px;line-height:1.8;font-size:14px;color:#475569">

@@ -325,6 +325,13 @@
 - **下載日期**：2026-10-27
 - **位置**：/solder/assets/wiki-photos/desoldering-pump.webp（縮成 320×200 以內 WebP）
 
+### DP-01. Tempering_colors_in_steel.jpg ｜ 鋼的回火色（drill-press/assets/photos/tempering-colors.webp）
+- **作者**：Zaereth
+- **授權**：CC0（[條款連結](https://creativecommons.org/publicdomain/zero/1.0/)）
+- **來源**：https://commons.wikimedia.org/wiki/File:Tempering_colors_in_steel.jpg
+- **下載日期**：2026-10-28
+- **位置**：/drill-press/assets/photos/tempering-colors.webp（縮成寬 660 WebP；原本直接連 Commons，App 離線看不到）
+
 ---
 
 ## 維護指引
