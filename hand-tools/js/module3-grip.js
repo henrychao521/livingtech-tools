@@ -84,12 +84,15 @@
     return `<svg viewBox="0 0 240 120" role="img" aria-label="握姿簡化示意">${DEFS}<rect width="240" height="120" fill="#f8fafc"/>${SKETCH[id] || ''}</svg>`;
   }
   const BASE = '../assets/grip/';
+  // 已放進 hand-tools/assets/grip/ 的實拍檔名（照片或影片）。補上檔案後把檔名加進來，頁面才會去載入；
+  // 不在清單裡的一律只顯示示意圖，不送出會 404 的請求。
+  const AVAILABLE = new Set([]);
   function card(g) {
     const ph = `<div class="grip-ph" data-for="${g.no}">${sketch(g.id)}<p><strong>握姿照片待補（清單編號 ${g.no}）</strong><br>示意，待換實拍｜檔名 <code>hand-tools/assets/grip/${g.img}</code></p></div>`;
-    const vid = g.video ? `<video class="grip-video" controls muted playsinline preload="metadata" hidden><source src="${BASE + g.video}" type="video/mp4"></video>` : '';
+    const vid = g.video && AVAILABLE.has(g.video) ? `<video class="grip-video" controls muted playsinline preload="metadata" hidden><source src="${BASE + g.video}" type="video/mp4"></video>` : '';
     return `<div class="grip-card" id="grip-${g.id}">
       <h4>${g.no}　${g.tool}</h4>
-      <div class="grip-fig"><img src="${BASE + g.img}" alt="${g.tool}握姿實拍" data-optional="1" loading="lazy" hidden>${ph}</div>${vid}
+      <div class="grip-fig">${AVAILABLE.has(g.img) ? `<img src="${BASE + g.img}" alt="${g.tool}握姿實拍" loading="lazy" hidden>` : ''}${ph}</div>${vid}
       <ul><li><strong>握：</strong>${g.grip}</li><li><strong>另一手：</strong>${g.other}</li><li><strong>安全：</strong>${g.safety}</li></ul>
       <p class="grip-cite">📚 參考：${g.cite}（見頁尾資料來源）</p></div>`;
   }

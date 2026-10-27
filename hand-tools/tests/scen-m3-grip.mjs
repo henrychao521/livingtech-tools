@@ -7,6 +7,7 @@ export default async (w, assert) => {
     assert.ok(c.textContent.includes(`握姿照片待補（清單編號 ${no}）`), no + ' 佔位文字');
     assert.ok(c.textContent.includes('示意，待換實拍'), no + ' 示意標記');
     assert.ok(c.querySelector('.grip-ph svg'), no + ' 示意圖');
-    assert.ok(/assets\/grip\/[a-z-]+\.jpg$/.test(c.querySelector('img').getAttribute('src')), no + ' 檔名');
+    assert.ok(/assets\/grip\/[a-z-]+\.jpg$/.test(c.querySelector('.grip-ph code').textContent), no + ' 檔名');
+    assert.strictEqual(c.querySelector('img'), null, no + ' 照片未列入 AVAILABLE 時不載入（避免 404）');
   });
 };
