@@ -380,7 +380,7 @@ window.selectStep = selectStep; window.markDone = markDone;
 
     // Draw layers (cross-section of a simple rectangular object)
     const objW = 140, objH = 120, objX = 40, objY = 38;   // 底邊留空給「截面示意圖」標籤，避免文字疊在底層上
-    const layerPx = lh.mm === '0.10' ? 8 : lh.mm === '0.20' ? 14 : 20;
+    const layerPx = Math.round(parseFloat(lh.mm) * 70);   // 2026-10 審查：層高與畫面高度成正比（0.10→7、0.20→14、0.30→21 px）
     const numLayers = Math.floor(objH / layerPx);
 
     for (let i = 0; i < numLayers; i++) {
