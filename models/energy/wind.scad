@@ -1,4 +1,5 @@
 // 風力發電機 Wind Turbine — 三葉片水平軸式
+// 座標：Z 向上；轉子軸沿 Y 軸（葉片朝 -Y 迎風），葉片在 XZ 平面內旋轉
 $fn = 48;
 
 // 基座（混凝土圓柱）
@@ -18,17 +19,22 @@ color([0.88, 0.89, 0.91])
     }
   }
 
-// 輪轂（hub，圓形）
+// 輪轂（hub，圓柱，沿 -Y 伸出機艙前方）
 color([0.82, 0.83, 0.85])
   translate([0, -14, 210]) rotate([90, 0, 0]) cylinder(h = 10, r = 8);
 
+// 整流罩（spinner，輪轂前端的圓錐）
+color([0.82, 0.83, 0.85])
+  translate([0, -24, 210]) rotate([90, 0, 0]) cylinder(h = 8, r1 = 8, r2 = 2);
+
 // 三片葉片（120° 間隔）
+// 先平移到輪轂中心，再繞轉子軸（Y 軸）旋轉，葉片本身沿徑向（+Z）擠出；
+// 剖面橢圓長軸在旋轉面內（翼弦）、短軸沿轉軸方向（葉片厚度），向葉尖漸縮並略帶扭轉
 for (a = [0, 120, 240])
-  rotate([0, a, 0]) translate([0, -14, 210]) rotate([90, 0, 0]) {
+  translate([0, -20, 210]) rotate([0, a, 0])
     color([0.93, 0.94, 0.96])
-      linear_extrude(height = 90, scale = [0.2, 0.4], twist = -10)
-        ellipse(20, 8);
-  }
+      linear_extrude(height = 90, scale = [0.35, 0.5], twist = -10)
+        ellipse(7, 2.2);
 
 module ellipse(rx, ry) {
   scale([rx, ry]) circle(1);

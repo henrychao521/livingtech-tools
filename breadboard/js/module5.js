@@ -46,8 +46,8 @@ function renderErrorSVG(id) {
       <!-- 直接接：5V → LED → 地（沒電阻）-->
       <line x1="50" y1="50" x2="50" y2="78" stroke="#dc2626" stroke-width="2.2"/>
       <circle cx="50" cy="50" r="2.5" fill="#dc2626"/>
-      <line x1="80" y1="106" x2="80" y2="92" stroke="#1a1a1a" stroke-width="2.2"/>
-      <circle cx="80" cy="106" r="2.5" fill="#1a1a1a"/>
+      <line x1="80" y1="112" x2="80" y2="92" stroke="#1a1a1a" stroke-width="2.2"/>
+      <circle cx="80" cy="112" r="2.5" fill="#1a1a1a"/>
       <!-- 燒毀的 LED（黑色、冒煙）-->
       <ellipse cx="65" cy="78" rx="15" ry="14" fill="#1a1a1a" stroke="#444"/>
       <ellipse cx="65" cy="78" rx="10" ry="8" fill="#4a4a4a"/>
@@ -73,7 +73,7 @@ function renderErrorSVG(id) {
         <ellipse cx="20" cy="92" rx="14" ry="12" fill="#22c55e" opacity=".9"/>
         <ellipse cx="16" cy="88" rx="4" ry="3" fill="rgba(255,255,255,.7)"/>
         <line x1="20" y1="82" x2="20" y2="78" stroke="#9ca3af" stroke-width="1.5"/>
-        <line x1="20" y1="104" x2="20" y2="106" stroke="#9ca3af" stroke-width="1.5"/>
+        <line x1="20" y1="104" x2="20" y2="112" stroke="#9ca3af" stroke-width="1.5"/>
       </g>
       <text x="65" y="32" text-anchor="middle" font-size="9" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">✗ 無電阻 → 燒毀</text>
       <text x="130" y="32" text-anchor="middle" font-size="9" fill="#16a34a" font-weight="700" font-family="Noto Sans TC">✓ 串聯 220Ω</text>
@@ -165,9 +165,9 @@ function renderErrorSVG(id) {
     'short-circuit': `<svg viewBox="0 0 200 140" style="width:90%">
       ${bbBase(true, 'bbg-sc')}
       <!-- 直接從紅軌接到黑軌（無負載）-->
-      <line x1="100" y1="50" x2="100" y2="106" stroke="#dc2626" stroke-width="3"/>
+      <line x1="100" y1="50" x2="100" y2="112" stroke="#dc2626" stroke-width="3"/>
       <circle cx="100" cy="50" r="3.5" fill="#dc2626"/>
-      <circle cx="100" cy="106" r="3.5" fill="#1a1a1a"/>
+      <circle cx="100" cy="112" r="3.5" fill="#1a1a1a"/>
       <!-- 火花動畫 -->
       <g>
         <circle cx="100" cy="80" r="8" fill="#fbbf24" opacity=".8">

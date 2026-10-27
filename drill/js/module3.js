@@ -75,9 +75,9 @@ function renderAnim(type) {
         <!-- 刻度 -->
         <g font-size="9" font-weight="700" fill="#92400e" font-family="Inter">
           <text x="0" y="-46" text-anchor="middle">10</text>
-          <text x="48" y="3" text-anchor="middle">5</text>
-          <text x="58" y="3" text-anchor="middle">⊕</text>
-          <text x="-48" y="3" text-anchor="middle">15</text>
+          <text x="48" y="3" text-anchor="middle">15</text>
+          <text x="34" y="38" text-anchor="middle">⊕</text>
+          <text x="-48" y="3" text-anchor="middle">5</text>
           <text x="0" y="55" text-anchor="middle">1</text>
         </g>
         <!-- 指針 -->

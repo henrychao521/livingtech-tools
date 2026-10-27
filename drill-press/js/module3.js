@@ -2,10 +2,10 @@
 const STEPS = [
   { title: '穿戴護具、整理服儀', desc: '護目鏡（防鐵屑彈飛）、口罩（防粉塵）。長髮綁起、寬鬆袖口塞好、項鍊摘下。\n⚠ 鑽床操作禁戴布手套——手套會被夾頭捲入比沒戴更危險。', tip: '護目鏡要選包覆型，普通眼鏡擋不住側面飛屑。', warn: '禁戴布手套是鑽床操作鐵則。', anim: 'ppe' },
   { title: '選鑽頭、裝入夾頭', desc: '依材料選對鑽頭：木 → 木工螺旋；金屬 → HSS。鑽頭直徑不能超過夾頭規格。\n把鑽頭插入夾頭三爪中心約 70–80% 深，用「鑰匙」鎖三個齒輪孔各一次（讓夾爪平均施力）。', tip: '夾頭三個孔都要鎖一遍，只鎖一個會偏心。', warn: null, anim: 'install' },
-  { title: '⚠ 拔下夾頭鑰匙', desc: '裝完鑽頭、鎖緊後，**必須**把夾頭鑰匙拔下並放回工具盒。沒拔下鑰匙就開機，鑰匙會以高速甩飛——是鑽床最常見的傷害事故。', tip: '養成「鎖完馬上拔」的肌肉記憶，不要分心。', warn: '沒拔鑰匙絕對不能開機。', anim: 'key' },
+  { title: '⚠ 拔下夾頭鑰匙', desc: '裝完鑽頭、鎖緊後，<strong>必須</strong>把夾頭鑰匙拔下並放回工具盒。沒拔下鑰匙就開機，鑰匙會以高速甩飛——是鑽床最常見的傷害事故。', tip: '養成「鎖完馬上拔」的肌肉記憶，不要分心。', warn: '沒拔鑰匙絕對不能開機。', anim: 'key' },
   { title: '依直徑與材料設定轉速', desc: '打開皮帶箱蓋（先確認電源在 OFF）→ 先放鬆皮帶張力 → 把皮帶移到對應的皮帶輪段位 → 重新上緊 → 蓋回。\n通則：直徑越大、材料越硬 → 轉速越慢。\n參考：木材 8mm 約 P4、鋼板 8mm 約 P1–P2。', tip: '機台側邊或皮帶箱蓋內常印有「轉速表」可以對照。', warn: '皮帶換位前一定要拔插頭或斷電。', anim: 'speed' },
-  { title: '工件夾上工作台', desc: '把工件放在工作台上，**必須**用以下方式之一固定：\n• 機用虎鉗（machine vise）\n• C 型夾固定到 T 槽\n• 大型工件直接螺絲鎖工作台\n\n工件下方墊「廢木板」當犧牲層，避免鑽穿工作台。', tip: '小工件絕對不能徒手按——一定要夾住。', warn: '徒手按工件是鑽床最常見事故來源。', anim: 'clamp' },
-  { title: '調整工作台高度', desc: '鬆開工作台後方的鎖具，搖動高度調整桿讓鑽頭尖距工件約 5cm（足夠下降鑽孔的空間）。調好再鎖緊。\n大型工件可能需要把工作台轉到旁邊、用基座當工作面。', tip: '鑽頭與工件接觸時，主軸應該還能再下降至少 5–8cm。', warn: null, anim: 'height' },
+  { title: '工件夾上工作台', desc: '把工件放在工作台上，<strong>必須</strong>用以下方式之一固定：\n• 機用虎鉗（machine vise）\n• C 型夾固定到 T 槽\n• 大型工件直接螺絲鎖工作台\n\n工件下方墊「廢木板」當犧牲層，避免鑽穿工作台。', tip: '小工件絕對不能徒手按——一定要夾住。', warn: '徒手按工件是鑽床最常見事故來源。', anim: 'clamp' },
+  { title: '調整工作台高度', desc: '鬆開工作台後方的鎖具，搖動高度調整桿讓鑽頭尖距工件約 1–2cm（太高會浪費主軸行程，桌上型鑽床主軸行程通常只有 5–6cm）。調好再鎖緊。\n大型工件可能需要把工作台轉到旁邊、用基座當工作面。', tip: '先把主軸壓到底比一比：鑽頭尖要能穿過工件厚度（再加 2–4mm 進入犧牲層），行程不夠就把工作台再升高。', warn: null, anim: 'height' },
   { title: '開機 → 對位 → 進刀鑽孔', desc: '1. 開電源、主軸開始轉動\n2. 觀察是否有異常震動或聲音\n3. 把進刀手柄往下拉，鑽頭緩慢下降\n4. 鑽頭接觸工件後輕推進刀（不要猛力）\n5. 深孔或硬料每鑽 5mm 退鑽一次排屑', tip: '聽聲音判斷：穩定的「呼呼聲」= 正常；「咯咯聲」或「叫聲」= 進刀太猛或鑽頭鈍。', warn: null, anim: 'drill' },
   { title: '退鑽 → 停機 → 清理收工', desc: '1. 鑽穿後慢慢放回手柄，鑽頭完全上升\n2. 關電源、等主軸完全停止（約 5–10 秒）\n3. 用毛刷清掉鐵屑（不可徒手撥）\n4. 鬆夾頭、取下鑽頭歸位\n5. 把夾頭鑰匙放回工具盒\n6. 工作台擦乾淨', tip: '剛鑽完的金屬鑽頭很燙（200°C+），等待數分鐘，先以手背靠近感溫確認不燙再徒手摸，或用鉗子取下。', warn: '主軸停止前不可伸手清理。', anim: 'finish' },
 ];
@@ -55,7 +55,7 @@ function renderAnim(type) {
         <polygon points="70,-10 64,-14 64,-6" fill="#22c55e"/>
         <text x="50" y="-30" text-anchor="middle" font-size="9" fill="#22c55e" font-weight="700">拔下歸位</text>
       </g>
-      <text x="200" y="200" text-anchor="middle" font-size="11" fill="#444" font-weight="700" fill="#dc2626">⚠ 開機前必拔！</text>
+      <text x="200" y="200" text-anchor="middle" font-size="11" font-weight="700" fill="#dc2626">⚠ 開機前必拔！</text>
     </svg>`,
     speed: `<svg viewBox="0 0 400 220" style="width:90%;max-width:380px">
       <rect x="100" y="60" width="200" height="120" rx="6" fill="#1e293b"/>
@@ -93,7 +93,7 @@ function renderAnim(type) {
       <text x="310" y="93" font-size="11" fill="#22c55e" font-weight="700">調高度</text>
       <rect x="170" y="50" width="60" height="20" fill="#6b7280"/>
       <polygon points="195,70 205,70 200,80" fill="#374151"/>
-      <text x="200" y="205" text-anchor="middle" font-size="11" fill="#444">鑽頭尖距工件約 5cm</text>
+      <text x="200" y="205" text-anchor="middle" font-size="11" fill="#444">鑽頭尖距工件約 1–2cm，留足主軸行程</text>
     </svg>`,
     drill: `<svg viewBox="0 0 400 220" style="width:90%;max-width:380px">
       <rect x="80" y="120" width="240" height="50" fill="#a16207"/>
@@ -230,14 +230,14 @@ if (typeof SequencePuzzle === 'function') {
 
   // ─── State ──────────────────────────────
   let stage = 'idle'; // idle | decision | wrong_anim | correct_anim | done_wrong | done_correct
-  let keyAngle = 0;     // key fly rotation
-  let keyPos   = { x: 336, y: 150 }; // key current position
+  let keyAngle = -Math.PI / 2; // key rotation（起始橫插在夾頭側面：柄朝左、齒端插入夾頭）
+  let keyPos   = { x: 378, y: 182 }; // key current position
   let keyTrail = [];    // trail dots
   let spindleAngle = 0; // spindle rotation (correct)
   let flashAlpha   = 0; // red flash (wrong)
   let animId = null;
 
-  const KEY_HOME = { x: 336, y: 150 }; // key in chuck
+  const KEY_HOME = { x: 378, y: 182 }; // key in chuck（齒端插在夾頭左側鑰匙孔）
   const KEY_TOOLBOX = { x: 460, y: 258 }; // tool box
   let keyTarget = { ...KEY_HOME };
 
@@ -446,7 +446,7 @@ if (typeof SequencePuzzle === 'function') {
   document.getElementById('ck-start')?.addEventListener('click', () => {
     stage = 'decision';
     keyPos = { ...KEY_HOME };
-    keyAngle = 0; keyTrail = []; flashAlpha = 0; spindleAngle = 0;
+    keyAngle = -Math.PI / 2; keyTrail = []; flashAlpha = 0; spindleAngle = 0;
     document.getElementById('ck-start').style.display = 'none';
     document.getElementById('ck-decision').style.display = 'flex';
     document.getElementById('ck-result').innerHTML = '';

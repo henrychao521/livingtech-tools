@@ -181,35 +181,44 @@ const CONCEPTS = [
   },
   {
     name: '剖視圖（補充）', icon: '🔪',
-    desc: '物體內部複雜時，「假想切開」展示內部結構。\n切開部分用斜線（45°）剖面線表示材料。',
+    desc: '物體內部複雜時，「假想切開」展示內部結構。\n在相鄰視圖用粗鏈線標出剖切位置（如 A-A，箭頭指觀看方向），切到的材料用 45° 剖面線表示。',
     detail: '常見剖視圖：全剖、半剖、局部剖。塑膠模具、引擎內部都用剖視。',
-    visual: `<svg viewBox="0 0 240 110" width="100%" style="background:#F1F5F9;border-radius:6px;display:block">
+    visual: `<svg viewBox="0 0 240 168" width="100%" style="background:#F1F5F9;border-radius:6px;display:block" role="img" aria-label="剖視圖示意：俯視圖上的 A-A 剖切線，外觀正視圖用虛線，A-A 剖視圖把切到的材料畫上 45 度剖面線">
       <defs>
         <pattern id="hatch45" patternUnits="userSpaceOnUse" width="5" height="5" patternTransform="rotate(45)">
           <line x1="0" y1="0" x2="0" y2="5" stroke="#1E1B4B" stroke-width="0.5"/>
         </pattern>
+        <marker id="cutArrow" viewBox="0 0 6 6" refX="3" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M0,6 L3,0 L6,6 Z" fill="#DC2626"/>
+        </marker>
       </defs>
-      <!-- 左：外觀視圖（不可見孔用虛線）-->
-      <g transform="translate(20,25)">
+      <!-- 左上：俯視圖。方塊中央有一個上下貫穿的圓孔（Ø36）。粗鏈線 A-A＝剖切平面，箭頭指向觀看方向（往後看）-->
+      <g transform="translate(20,8)">
+        <rect x="0" y="0" width="80" height="44" fill="#E0E7FF" stroke="#1E1B4B" stroke-width="1.4"/>
+        <circle cx="40" cy="22" r="18" fill="#F1F5F9" stroke="#1E1B4B" stroke-width="1.4"/>
+        <line x1="-10" y1="22" x2="90" y2="22" stroke="#DC2626" stroke-width="1.2" stroke-dasharray="8 2 2 2"/>
+        <line x1="-6" y1="22" x2="-6" y2="12" stroke="#DC2626" stroke-width="1.2" marker-end="url(#cutArrow)"/>
+        <line x1="86" y1="22" x2="86" y2="12" stroke="#DC2626" stroke-width="1.2" marker-end="url(#cutArrow)"/>
+        <text x="-17" y="10" font-size="9" fill="#DC2626" font-weight="700">A</text>
+        <text x="89" y="12" font-size="9" fill="#DC2626" font-weight="700">A</text>
+        <text x="104" y="25" font-size="8.5" fill="#1E1B4B">俯視（A-A＝剖切位置）</text>
+      </g>
+      <!-- 左下：外觀正視圖（看不到的孔壁用虛線）-->
+      <g transform="translate(20,72)">
         <rect x="0" y="0" width="80" height="60" fill="#E0E7FF" stroke="#1E1B4B" stroke-width="1.4"/>
         <line x1="22" y1="0" x2="22" y2="60" stroke="#1E1B4B" stroke-width="1" stroke-dasharray="4 2"/>
         <line x1="58" y1="0" x2="58" y2="60" stroke="#1E1B4B" stroke-width="1" stroke-dasharray="4 2"/>
-        <line x1="40" y1="0" x2="40" y2="60" stroke="#1E1B4B" stroke-width="0.5" stroke-dasharray="6 2 2 2"/>
-        <text x="40" y="74" text-anchor="middle" font-size="9" fill="#1E1B4B" font-weight="700">外觀視圖（虛線難判讀）</text>
+        <line x1="40" y1="-4" x2="40" y2="64" stroke="#1E1B4B" stroke-width="0.5" stroke-dasharray="6 2 2 2"/>
+        <text x="40" y="76" text-anchor="middle" font-size="9" fill="#1E1B4B" font-weight="700">外觀正視（虛線難判讀）</text>
       </g>
-      <!-- 箭頭 -->
-      <text x="115" y="58" font-size="22" fill="#4F46E5" font-weight="900">→</text>
-      <!-- 右：剖視圖 -->
-      <g transform="translate(140,25)">
-        <!-- 剖面（兩側填斜線）-->
+      <polygon points="108,99 120,99 120,94 130,102 120,110 120,105 108,105" fill="#4F46E5"/>
+      <!-- 右下：A-A 剖視圖。孔上下貫通，所以孔的位置上下都沒有輪廓線；切到的材料畫 45° 剖面線 -->
+      <g transform="translate(140,72)">
         <rect x="0" y="0" width="22" height="60" fill="url(#hatch45)" stroke="#1E1B4B" stroke-width="1.4"/>
         <rect x="58" y="0" width="22" height="60" fill="url(#hatch45)" stroke="#1E1B4B" stroke-width="1.4"/>
-        <!-- 中空空腔 -->
-        <line x1="22" y1="0" x2="22" y2="60" stroke="#1E1B4B" stroke-width="1.4"/>
-        <line x1="58" y1="0" x2="58" y2="60" stroke="#1E1B4B" stroke-width="1.4"/>
-        <line x1="0" y1="0" x2="80" y2="0" stroke="#1E1B4B" stroke-width="1.4"/>
-        <line x1="0" y1="60" x2="80" y2="60" stroke="#1E1B4B" stroke-width="1.4"/>
-        <text x="40" y="74" text-anchor="middle" font-size="9" fill="#1E1B4B" font-weight="700">剖視圖（斜線 = 切到的材料）</text>
+        <line x1="40" y1="-4" x2="40" y2="64" stroke="#1E1B4B" stroke-width="0.5" stroke-dasharray="6 2 2 2"/>
+        <text x="40" y="76" text-anchor="middle" font-size="9" fill="#1E1B4B" font-weight="700">剖視 A-A</text>
+        <text x="40" y="88" text-anchor="middle" font-size="8" fill="#1E1B4B">（斜線＝切到的材料）</text>
       </g>
     </svg>`
   },

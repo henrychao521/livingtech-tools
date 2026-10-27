@@ -1,6 +1,6 @@
 {
  "platform": "livingtech",
- "version": "2026-09-30",
+ "version": "2026-10-24",
  "count": 431,
  "questions": [
   {
@@ -813,12 +813,12 @@
   },
   {
    "q": "drill.m2.s11",
-   "h": "7a547b9f",
+   "h": "b6001116",
    "t": "scenario",
    "page": "drill/module2",
    "stem": "要在磁磚上鑽孔，可以用電鎚模式加磚石鑽頭嗎？",
    "options": {
-    "A": "不行！要用金剛石空心鑽頭，不能用電鎚衝擊",
+    "A": "不行！磁磚要關掉電鎚衝擊，用磁磚專用鑽頭低速鑽",
     "B": "對，電鎚模式加磚石鑽頭效率最高"
    },
    "answer": "A",
@@ -1631,13 +1631,13 @@
   },
   {
    "q": "hand-tools.m2.s4",
-   "h": "84707374",
+   "h": "13ec6ef4",
    "t": "scenario",
    "page": "hand-tools/module2",
-   "stem": "用活動扳手轉螺帽，活動鉗口應該朝哪邊？",
+   "stem": "用活動扳手轉螺帽，施力時應該讓哪個鉗口承受主要的力？",
    "options": {
-    "A": "朝施力的方向（力比較順）",
-    "B": "朝「不施力」的方向（讓固定鉗口承受主要受力）"
+    "A": "活動鉗口（可以調整，比較容易貼合螺帽）",
+    "B": "固定鉗口——把活動鉗口朝向旋轉（施力）方向，主要的力就落在固定鉗口上"
    },
    "answer": "B",
    "items": []
@@ -3514,14 +3514,14 @@
   },
   {
    "q": "orthographic.m2.q0",
-   "h": "db413da6",
+   "h": "db525f0e",
    "t": "single",
    "page": "orthographic/module2",
    "stem": "IKEA 組裝說明書多用哪種視圖？",
    "options": {
-    "A": "三視圖（正投影）",
+    "A": "三視圖（多視正投影）",
     "B": "等角圖 Isometric",
-    "C": "斜視圖 Oblique",
+    "C": "斜投影圖 Oblique",
     "D": "透視圖 Perspective"
    },
    "answer": "B",
@@ -3529,14 +3529,14 @@
   },
   {
    "q": "orthographic.m2.q1",
-   "h": "eb7b96a8",
+   "h": "7fcd981a",
    "t": "single",
    "page": "orthographic/module2",
    "stem": "機械零件加工圖該用哪種？",
    "options": {
-    "A": "三視圖（正投影）",
+    "A": "三視圖（多視正投影）",
     "B": "等角圖 Isometric",
-    "C": "斜視圖 Oblique",
+    "C": "斜投影圖 Oblique",
     "D": "透視圖 Perspective"
    },
    "answer": "A",
@@ -3544,14 +3544,14 @@
   },
   {
    "q": "orthographic.m2.q2",
-   "h": "c8907b5b",
+   "h": "c6bffeba",
    "t": "single",
    "page": "orthographic/module2",
    "stem": "建築師畫給客戶看的外觀效果圖？",
    "options": {
-    "A": "三視圖（正投影）",
+    "A": "三視圖（多視正投影）",
     "B": "等角圖 Isometric",
-    "C": "斜視圖 Oblique",
+    "C": "斜投影圖 Oblique",
     "D": "透視圖 Perspective"
    },
    "answer": "D",
@@ -3559,14 +3559,14 @@
   },
   {
    "q": "orthographic.m2.q3",
-   "h": "1f403217",
+   "h": "3a6702bf",
    "t": "single",
    "page": "orthographic/module2",
    "stem": "老師快速畫黑板示意圖？",
    "options": {
-    "A": "三視圖（正投影）",
+    "A": "三視圖（多視正投影）",
     "B": "等角圖 Isometric",
-    "C": "斜視圖 Oblique",
+    "C": "斜投影圖 Oblique",
     "D": "透視圖 Perspective"
    },
    "answer": "C",
@@ -3574,14 +3574,14 @@
   },
   {
    "q": "orthographic.m2.q4",
-   "h": "76ce1a14",
+   "h": "bac616e3",
    "t": "single",
    "page": "orthographic/module2",
    "stem": "汽車設計師畫車身造型？",
    "options": {
-    "A": "三視圖（正投影）",
+    "A": "三視圖（多視正投影）",
     "B": "等角圖 Isometric",
-    "C": "斜視圖 Oblique",
+    "C": "斜投影圖 Oblique",
     "D": "透視圖 Perspective"
    },
    "answer": "D",
@@ -3589,14 +3589,14 @@
   },
   {
    "q": "orthographic.m2.q5",
-   "h": "f935010a",
+   "h": "cdce96ea",
    "t": "single",
    "page": "orthographic/module2",
    "stem": "工廠技工要按圖製造零件？",
    "options": {
-    "A": "三視圖（正投影）",
+    "A": "三視圖（多視正投影）",
     "B": "等角圖 Isometric",
-    "C": "斜視圖 Oblique",
+    "C": "斜投影圖 Oblique",
     "D": "透視圖 Perspective"
    },
    "answer": "A",
@@ -3604,14 +3604,14 @@
   },
   {
    "q": "orthographic.m2.q6",
-   "h": "22a15729",
+   "h": "dcb6144a",
    "t": "single",
    "page": "orthographic/module2",
    "stem": "LEGO 組裝手冊？",
    "options": {
-    "A": "三視圖（正投影）",
+    "A": "三視圖（多視正投影）",
     "B": "等角圖 Isometric",
-    "C": "斜視圖 Oblique",
+    "C": "斜投影圖 Oblique",
     "D": "透視圖 Perspective"
    },
    "answer": "B",
@@ -3619,14 +3619,14 @@
   },
   {
    "q": "orthographic.m2.q7",
-   "h": "b0d16993",
+   "h": "9724927f",
    "t": "single",
    "page": "orthographic/module2",
    "stem": "玩具產品包裝盒插圖？",
    "options": {
-    "A": "三視圖（正投影）",
+    "A": "三視圖（多視正投影）",
     "B": "等角圖 Isometric",
-    "C": "斜視圖 Oblique",
+    "C": "斜投影圖 Oblique",
     "D": "透視圖 Perspective"
    },
    "answer": "D",
@@ -3693,10 +3693,10 @@
   },
   {
    "q": "orthographic.m5.r1q0",
-   "h": "b7037fe5",
+   "h": "0e924604",
    "t": "single",
    "page": "orthographic/module5",
-   "stem": "看正視、側視、俯視，這是什麼 3D 物件？（正方形／正方形／正方形）",
+   "stem": "看正視、右側視、俯視，這是什麼 3D 物件？（正方形／正方形／正方形）",
    "options": {
     "A": "立方體",
     "B": "圓柱",
@@ -3708,10 +3708,10 @@
   },
   {
    "q": "orthographic.m5.r1q1",
-   "h": "56a99d82",
+   "h": "556f02a7",
    "t": "single",
    "page": "orthographic/module5",
-   "stem": "看正視、側視、俯視，這是什麼 3D 物件？（長方形／長方形／圓形）",
+   "stem": "看正視、右側視、俯視，這是什麼 3D 物件？（長方形／長方形／圓形）",
    "options": {
     "A": "圓柱",
     "B": "立方體",
@@ -3723,10 +3723,10 @@
   },
   {
    "q": "orthographic.m5.r1q2",
-   "h": "b1c5d36f",
+   "h": "4ba68c91",
    "t": "single",
    "page": "orthographic/module5",
-   "stem": "看正視、側視、俯視，這是什麼 3D 物件？（三角形／三角形／圓形＋中心點）",
+   "stem": "看正視、右側視、俯視，這是什麼 3D 物件？（三角形／三角形／圓形＋中心點）",
    "options": {
     "A": "圓錐",
     "B": "金字塔",
@@ -3738,10 +3738,10 @@
   },
   {
    "q": "orthographic.m5.r1q3",
-   "h": "d05c7789",
+   "h": "644ce5ca",
    "t": "single",
    "page": "orthographic/module5",
-   "stem": "看正視、側視、俯視，這是什麼 3D 物件？（L 形／直立長方形／長方形＋分隔線）",
+   "stem": "看正視、右側視、俯視，這是什麼 3D 物件？（L 形／直立長方形＋水平分界線／長方形＋垂直分界線）",
    "options": {
     "A": "L 型塊",
     "B": "T 槽塊",
@@ -3753,10 +3753,10 @@
   },
   {
    "q": "orthographic.m5.r1q4",
-   "h": "ac21b512",
+   "h": "51692fd4",
    "t": "single",
    "page": "orthographic/module5",
-   "stem": "看正視、側視、俯視，這是什麼 3D 物件？（rect-circle-hole／rect-dash-horiz／rect-dash-vert）",
+   "stem": "看正視、右側視、俯視，這是什麼 3D 物件？（長方形＋圓孔／正方形＋兩條水平虛線／長方形＋兩條垂直虛線）",
    "options": {
     "A": "帶圓孔板",
     "B": "T 槽塊",
@@ -3768,10 +3768,10 @@
   },
   {
    "q": "orthographic.m5.r2q0",
-   "h": "79d4daec",
+   "h": "5ff0a3fc",
    "t": "single",
    "page": "orthographic/module5",
-   "stem": "立方體 缺失的側視是哪一個？",
+   "stem": "立方體 缺失的右側視是哪一個？",
    "options": {
     "A": "正方形",
     "B": "長方形",

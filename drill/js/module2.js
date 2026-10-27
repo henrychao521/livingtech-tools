@@ -11,7 +11,7 @@ const SCENARIOS = [
   { q: '鑽孔位置上方有電線或水管，發現時怎麼辦？', a: '小心點繼續鑽，避開就好', b: '停止鑽孔，改換位置或用偵測器確認', correct: 'b', explain: '牆內電線、水管的位置無法用肉眼判斷深度。鑽到電線會觸電/起火、鑽到水管會淹水。要用「金屬/電線偵測器」確認再鑽。' },
   { q: '鑽完孔，要把鑽頭從夾頭取下，正確程序？', a: '先檢查鑽頭已停止旋轉 → 拆電池 → 反轉夾頭環取下', b: '直接轉開夾頭就好', correct: 'a', explain: '取鑽頭時若誤觸扳機，鑽頭會旋轉割傷手指。安全的做法是先拆電池斷電，徹底切斷誤觸發風險。' },
   { q: '發現電池包側面明顯鼓脹，還能繼續使用嗎？', a: '停用，更換膨脹電池再操作', b: '沒關係，電池鼓脹是正常老化', correct: 'a', explain: '鋰電池鼓脹代表內部電解質分解、氣體產生——繼續充電或強力擠壓有起火甚至爆炸風險。應立刻停用、放入耐熱袋、送回收處理。' },
-  { q: '要在磁磚上鑽孔，可以用電鎚模式加磚石鑽頭嗎？', a: '不行！要用金剛石空心鑽頭，不能用電鎚衝擊', b: '對，電鎚模式加磚石鑽頭效率最高', correct: 'a', explain: '電鎚的衝擊力會讓磁磚瞬間龜裂！磁磚鑽孔必須用「金剛石鑽孔器（鑽石空心鑽）」＋低速＋無衝擊模式，且鑽孔時建議加水冷卻。' },
+  { q: '要在磁磚上鑽孔，可以用電鎚模式加磚石鑽頭嗎？', a: '不行！磁磚要關掉電鎚衝擊，用磁磚專用鑽頭低速鑽', b: '對，電鎚模式加磚石鑽頭效率最高', correct: 'a', explain: '電鎚的衝擊力會讓磁磚瞬間龜裂！磁磚鑽孔要用「無衝擊（純旋轉）模式」＋低速，鑽頭選磁磚／玻璃用的碳化鎢尖頭鑽或金剛石空心鑽，鑽孔時建議加水冷卻；鑽穿磁磚碰到後面的磚牆，才改回磚石鑽頭＋衝擊模式。' },
   { q: '鑽孔時產生大量熱氣、冒煙，且進展非常緩慢，原因最可能是？', a: '鑽頭已鈍，應立刻停機更換新鑽頭', b: '只是轉速太高，把速度調低後繼續用力硬鑽，不必檢查鑽頭', correct: 'a', explain: '鑽頭磨鈍後無法切削只能「磨」——大量摩擦熱、少量碎屑是典型症狀。繼續硬鑽只會加速磨損並燒焦材料。換新鑽頭才是正確解法。<br>🔎 怎麼確定是「鈍了」？出來的屑變成細粉而不是捲曲的長屑、用正常力量壓也壓不進去、停機後看刃口已經磨圓發亮——這些都是鈍的訊號。<br>↔ 對照模組 5「過熱燒孔」：模組 5 是從「孔燒焦」這個結果往回找原因，可能是轉速、進刀或鑽頭三者之一，所以先試最簡單的「降轉速、加進刀力」，沒改善再換鑽頭。這題多了「進展非常緩慢」的線索，已經指向鑽頭鈍了；降速只能少冒一點煙，鈍的刃口還是切不動。兩者不矛盾：<strong>先判斷原因，再決定處理順序</strong>。' },
   { q: '在橡木硬木上鑽 12mm 大孔，應該選哪個轉速設定？', a: '低速高扭力（Low gear，300–600 RPM）', b: '高速（High gear，1500 RPM 以上）讓鑽頭轉快一點', correct: 'a', explain: '大直徑鑽頭在硬材料中需要高扭力、低轉速（低速檔 Low gear）。高速會讓鑽頭過熱失去硬度。小直徑鑽頭 + 軟材料才適合高速。' },
   { q: '需要向上仰鑽天花板，最安全的姿勢是？', a: '身體靠牆支撐、護目鏡朝上、側臉避開鑽孔方向', b: '站直往上看對準鑽點，這樣比較準確', correct: 'a', explain: '向上仰鑽時，碎屑會直接落入眼睛！必須穿戴包覆式護目鏡、側臉避開鑽孔方向，身體靠牆穩定重心。否則碎屑入眼或鑽頭脫落都會造成重傷。' },
@@ -106,15 +106,15 @@ function resetScenarios() {
     </div>
 
     <div style="${CARD_ACCIDENT}">
-      <div style="font-weight:700;color:#c2410c;margin-bottom:6px">💥 卡鑽反扭傷害｜手腕骨折、肩膀脫臼案例</div>
-      <p style="margin:0 0 8px;font-size:14px;color:#374151">英國 HSE（Health and Safety Executive）發布的《手持電動工具安全》指引記錄：當鑽頭卡在工件中突然停轉時，電鑽機身會以鑽頭為軸<strong>反向快速旋轉甩動（kickback）</strong>，單手操作者尤其容易因此造成手腕扭傷、骨折，甚至肩膀脫臼。雙手握持可大幅降低此類傷害的嚴重程度。</p>
-      <a href="https://www.hse.gov.uk/pubns/indg229.pdf" target="_blank" rel="noopener noreferrer" style="${TL}">📄 原文來源：HSE INDG229 — Power Drills Safety（英文 PDF）</a>
+      <div style="font-weight:700;color:#c2410c;margin-bottom:6px">💥 鑽孔機具事故預防｜英國 HSE 列出的五件事</div>
+      <p style="margin:0 0 8px;font-size:14px;color:#374151">英國 HSE（Health and Safety Executive）的《Using work equipment safely》在「鑽孔機」一節寫到，為了預防事故：要用夾具或虎鉗固定工件，避免被猛烈旋轉的機器撞擊；操作者要把頭髮綁好，以免被旋轉的主軸、夾頭或刀具捲入；穿合適的工作服，不讓寬鬆衣物被捲入；取下戒指、手套、領帶或圍巾等可能被捲入的物品；戴護目鏡，防止切屑噴進眼睛。</p>
+      <a href="https://www.hse.gov.uk/pubns/indg229.pdf" target="_blank" rel="noopener noreferrer" style="${TL}">📄 原文來源：HSE INDG229 — Using work equipment safely（英文 PDF）</a>
     </div>
 
     <div style="${CARD_RESEARCH}">
-      <div style="font-weight:700;color:#1e40af;margin-bottom:6px">📊 美國每年約 40 萬人次因電動工具受傷</div>
-      <p style="margin:0 0 8px;font-size:14px;color:#374151">美國消費品安全委員會（CPSC）統計，電動手工具每年造成約 40 萬次急診就診，其中手電鑽為最常使用工具之一。常見受傷部位：手指（鑽頭刺穿）、手腕（卡鑽反扭）、眼睛（碎屑噴濺）。正確的個人防護（護目鏡＋雙手握持＋工件固定）可預防絕大多數事故。</p>
-      <a href="https://www.cpsc.gov/Business--Manufacturing/Business-Education/Business-Guidance/Batteries" target="_blank" rel="noopener noreferrer" style="${TL}">📄 參考來源：CPSC — Consumer Safety Statistics（英文）</a>
+      <div style="font-weight:700;color:#1e40af;margin-bottom:6px">📊 美國每年約 36～42 萬人次因電動工具與工作坊設備掛急診</div>
+      <p style="margin:0 0 8px;font-size:14px;color:#374151">美國消費品安全委員會（CPSC）2003 年的危害篩檢報告估計，1997–2002 年間，每年約有 36 萬至 42 萬人次因「電動工具與工作坊設備」（這一類也包含手動工具、千斤頂等）到急診就醫；其中電鑽在 2001 年約 5,800 人次。報告也提到，收到的電鑽事故報告中最常見的是電池與充電器問題（48 件中占 32 件）。</p>
+      <a href="https://www.cpsc.gov/s3fs-public/pdfs/blk_media_hazard_tools.pdf" target="_blank" rel="noopener noreferrer" style="${TL}">📄 原文來源：CPSC — Hazard Screening Report: Power Tools and Workshop Equipment（2003，英文 PDF）</a>
     </div>
 
     <p style="font-size:12px;color:#94a3b8;margin-top:4px">※ 以上連結均為政府官方或研究機構文件，引用於教學安全佐證之用。</p>

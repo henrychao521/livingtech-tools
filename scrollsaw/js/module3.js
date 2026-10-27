@@ -177,22 +177,22 @@ function renderAnim(type) {
           <rect x="197" y="58" width="6" height="122" fill="#222">
             <animate attributeName="y" values="58;62;58" dur="0.25s" repeatCount="indefinite"/>
           </rect>
-          <!-- 鋸齒（細節，朝下）-->
+          <!-- 鋸齒（細節，齒尖朝下：直角三角形，斜邊在上、平底在下）-->
           <g fill="#222">
-            <polygon points="197,75 193,79 197,83">
-              <animate attributeName="points" values="197,75 193,79 197,83;197,79 193,83 197,87;197,75 193,79 197,83" dur="0.25s" repeatCount="indefinite"/>
+            <polygon points="197,75 197,83 192,83">
+              <animate attributeName="points" values="197,75 197,83 192,83;197,79 197,87 192,87;197,75 197,83 192,83" dur="0.25s" repeatCount="indefinite"/>
             </polygon>
-            <polygon points="197,95 193,99 197,103">
-              <animate attributeName="points" values="197,95 193,99 197,103;197,99 193,103 197,107;197,95 193,99 197,103" dur="0.25s" repeatCount="indefinite"/>
+            <polygon points="197,95 197,103 192,103">
+              <animate attributeName="points" values="197,95 197,103 192,103;197,99 197,107 192,107;197,95 197,103 192,103" dur="0.25s" repeatCount="indefinite"/>
             </polygon>
-            <polygon points="197,115 193,119 197,123">
-              <animate attributeName="points" values="197,115 193,119 197,123;197,119 193,123 197,127;197,115 193,119 197,123" dur="0.25s" repeatCount="indefinite"/>
+            <polygon points="197,115 197,123 192,123">
+              <animate attributeName="points" values="197,115 197,123 192,123;197,119 197,127 192,127;197,115 197,123 192,123" dur="0.25s" repeatCount="indefinite"/>
             </polygon>
-            <polygon points="197,135 193,139 197,143">
-              <animate attributeName="points" values="197,135 193,139 197,143;197,139 193,143 197,147;197,135 193,139 197,143" dur="0.25s" repeatCount="indefinite"/>
+            <polygon points="197,135 197,143 192,143">
+              <animate attributeName="points" values="197,135 197,143 192,143;197,139 197,147 192,147;197,135 197,143 192,143" dur="0.25s" repeatCount="indefinite"/>
             </polygon>
-            <polygon points="197,155 193,159 197,163">
-              <animate attributeName="points" values="197,155 193,159 197,163;197,159 193,163 197,167;197,155 193,159 197,163" dur="0.25s" repeatCount="indefinite"/>
+            <polygon points="197,155 197,163 192,163">
+              <animate attributeName="points" values="197,155 197,163 192,163;197,159 197,167 192,167;197,155 197,163 192,163" dur="0.25s" repeatCount="indefinite"/>
             </polygon>
           </g>
         </g>
@@ -230,9 +230,9 @@ function renderAnim(type) {
           <line x1="247" y1="167" x2="242" y2="162"/>
         </g>
         <!-- 標籤 -->
-        <text x="115" y="125" font-size="12" fill="#666" font-family="Inter">慢</text>
-        <text x="276" y="125" font-size="12" fill="#666" font-family="Inter">快</text>
-        <text x="195" y="48" font-size="11" fill="#666" font-family="Inter">800 SPM</text>
+        <text x="100" y="125" text-anchor="middle" font-size="12" fill="#666" font-family="Noto Sans TC,sans-serif">慢</text>
+        <text x="300" y="125" text-anchor="middle" font-size="12" fill="#666" font-family="Noto Sans TC,sans-serif">快</text>
+        <text x="200" y="28" text-anchor="middle" font-size="11" fill="#666" font-family="Inter">中速 ≈ 800 SPM</text>
         <!-- 指針（中速擺動）-->
         <g>
           <line x1="200" y1="120" x2="200" y2="65" stroke="#FF7A00" stroke-width="5" stroke-linecap="round">
@@ -256,20 +256,22 @@ function renderAnim(type) {
         <path d="M100 162 Q200 160 300 165" fill="none" stroke="rgba(80,40,10,.2)"/>
         <!-- 機身懸臂 -->
         <rect x="170" y="20" width="60" height="30" fill="#FF7A00"/>
-        <!-- 壓料桿 -->
+        <!-- 鋸條（壓料腳要緊鄰鋸條）-->
+        <rect x="223" y="50" width="5" height="130" fill="#1a1a1a"/>
+        <!-- 壓料桿：由上方降下，腳座跟著桿子一起下來、停在木板表面（木板頂 y=155）-->
         <g>
           <rect x="160" y="50" width="80" height="6" fill="#888" rx="2">
             <animate attributeName="y" values="50;58;58;58;50" dur="3s" repeatCount="indefinite"/>
           </rect>
-          <rect x="195" y="56" width="6" height="40" fill="#888">
+          <rect x="195" y="56" width="6" height="56" fill="#888">
             <animate attributeName="y" values="56;64;64;64;56" dur="3s" repeatCount="indefinite"/>
-            <animate attributeName="height" values="40;90;90;90;40" dur="3s" repeatCount="indefinite"/>
+            <animate attributeName="height" values="56;84;84;84;56" dur="3s" repeatCount="indefinite"/>
           </rect>
-          <rect x="180" y="146" width="36" height="10" rx="3" fill="#666">
-            <animate attributeName="y" values="146;150;150;150;146" dur="3s" repeatCount="indefinite"/>
+          <rect x="180" y="108" width="40" height="10" rx="3" fill="#666">
+            <animate attributeName="y" values="108;145;145;145;108" dur="3s" repeatCount="indefinite"/>
           </rect>
-          <rect x="184" y="152" width="28" height="3" rx="1" fill="#444">
-            <animate attributeName="y" values="152;156;156;156;152" dur="3s" repeatCount="indefinite"/>
+          <rect x="184" y="114" width="32" height="3" rx="1" fill="#444">
+            <animate attributeName="y" values="114;151;151;151;114" dur="3s" repeatCount="indefinite"/>
           </rect>
         </g>
         <!-- 標示箭頭 -->
@@ -289,21 +291,28 @@ function renderAnim(type) {
         <rect x="80" y="100" width="240" height="80" fill="#d4a574"/>
         <path d="M80 130 Q200 125 320 135" fill="none" stroke="rgba(80,40,10,.2)"/>
         <path d="M80 155 Q200 150 320 158" fill="none" stroke="rgba(80,40,10,.15)"/>
-        <!-- 鉛筆畫的切割線 -->
+        <!-- 鉛筆畫的切割線：左邊窄條是廢料、右邊是要保留的作品 -->
         <line x1="100" y1="100" x2="100" y2="180" stroke="#222" stroke-width="1.5" stroke-dasharray="4 3"/>
-        <text x="80" y="92" font-family="Noto Sans TC,sans-serif" font-size="12" fill="#555">切割線</text>
-        <!-- 鋸條 -->
-        <rect x="103" y="80" width="6" height="120" fill="#1a1a1a"/>
-        <line x1="106" y1="80" x2="106" y2="200" stroke="#fff" stroke-width=".5" stroke-dasharray="2 2"/>
+        <line x1="100" y1="100" x2="112" y2="92" stroke="#555" stroke-width=".8"/>
+        <text x="114" y="95" font-family="Noto Sans TC,sans-serif" font-size="12" fill="#555">切割線（鉛筆）</text>
+        <rect x="80" y="100" width="20" height="80" fill="rgba(0,0,0,.08)"/>
+        <text x="76" y="136" text-anchor="end" font-family="Noto Sans TC,sans-serif" font-size="10" fill="#777">廢料側</text>
+        <text x="76" y="150" text-anchor="end" font-family="Noto Sans TC,sans-serif" font-size="10" fill="#777">（線左邊）</text>
+        <text x="210" y="172" text-anchor="middle" font-family="Noto Sans TC,sans-serif" font-size="10" fill="#777">保留的作品</text>
+        <!-- 鋸條：下在切割線的「廢料側」（線的左邊），與線之間留約 1mm -->
+        <rect x="91" y="80" width="6" height="120" fill="#1a1a1a"/>
+        <line x1="94" y1="80" x2="94" y2="200" stroke="#fff" stroke-width=".5" stroke-dasharray="2 2"/>
         <!-- 對準動畫光環 -->
-        <circle cx="106" cy="140" r="10" fill="none" stroke="#FF7A00" stroke-width="2">
+        <circle cx="94" cy="140" r="10" fill="none" stroke="#FF7A00" stroke-width="2">
           <animate attributeName="r" values="6;20;6" dur="1.6s" repeatCount="indefinite"/>
           <animate attributeName="opacity" values="1;0;1" dur="1.6s" repeatCount="indefinite"/>
         </circle>
-        <circle cx="106" cy="140" r="4" fill="#FF7A00"/>
-        <!-- 1mm 標示 -->
-        <line x1="103" y1="220" x2="100" y2="220" stroke="#E14A4A" stroke-width="2"/>
-        <text x="115" y="234" font-family="Noto Sans TC,sans-serif" font-size="11" fill="#E14A4A" font-weight="700">外側保留 1mm（修整空間）</text>
+        <circle cx="94" cy="140" r="4" fill="#FF7A00"/>
+        <!-- 1mm 標示（鋸條右緣到切割線）-->
+        <line x1="97" y1="220" x2="100" y2="220" stroke="#E14A4A" stroke-width="2"/>
+        <line x1="97" y1="216" x2="97" y2="224" stroke="#E14A4A" stroke-width="1"/>
+        <line x1="100" y1="216" x2="100" y2="224" stroke="#E14A4A" stroke-width="1"/>
+        <text x="106" y="234" font-family="Noto Sans TC,sans-serif" font-size="11" fill="#E14A4A" font-weight="700">鋸條貼著線的廢料側，保留線約 1mm（修整空間）</text>
       </svg>`,
 
     hands: `
@@ -403,9 +412,9 @@ function renderAnim(type) {
         <!-- 導孔標示 -->
         <line x1="166" y1="142" x2="112" y2="212" stroke="#E14A4A" stroke-width="1.5" stroke-dasharray="4 3"/>
         <text x="20" y="228" font-family="Noto Sans TC,sans-serif" font-size="11" fill="#E14A4A" font-weight="700">導孔 ≥ 6mm（鑽在廢料區內）</text>
-        <!-- 關機徽章 -->
-        <rect x="292" y="16" width="92" height="26" rx="6" fill="#E14A4A"/>
-        <text x="338" y="34" text-anchor="middle" fill="#fff" font-size="12" font-weight="700" font-family="Noto Sans TC,sans-serif">穿鋸條＝關機</text>
+        <!-- 關機徽章（放左上角，避免蓋住上夾頭說明文字）-->
+        <rect x="16" y="16" width="92" height="26" rx="6" fill="#E14A4A"/>
+        <text x="62" y="34" text-anchor="middle" fill="#fff" font-size="12" font-weight="700" font-family="Noto Sans TC,sans-serif">穿鋸條＝關機</text>
       </svg>`,
 
     shutdown: `

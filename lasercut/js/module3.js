@@ -11,7 +11,7 @@ const OPS = [
     note: '線條必須是<strong>向量路徑</strong>；點陣圖無法切割。' },
   { id: 'score', ico: '✏️', name: '刻線 Score', col: '#2563EB', sw: '#2563EB',
     what: '同樣沿線走，但能量<strong>只在表面留下痕跡</strong>，不切斷。',
-    param: '中速 × 低功率（約 100 mm/s、10～15%）',
+    param: '快速 × 低功率（約 100 mm/s、10～15%）',
     use: '摺線、對位記號、需要保留連接的裝飾線。',
     note: '刻線深度會隨材料變化很大，務必先試切。RDWorks 裡沒有獨立的刻線模式，刻線同樣選 Cut，只是改用高速、低功率。' },
   { id: 'engrave', ico: '🖌️', name: '雕刻 Scan', col: '#111827', sw: '#111827',

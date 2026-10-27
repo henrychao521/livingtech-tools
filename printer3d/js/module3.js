@@ -379,7 +379,7 @@ window.selectStep = selectStep; window.markDone = markDone;
     ctx.fillRect(0, 0, 220, 180);
 
     // Draw layers (cross-section of a simple rectangular object)
-    const objW = 140, objH = 120, objX = 40, objY = 50;
+    const objW = 140, objH = 120, objX = 40, objY = 38;   // 底邊留空給「截面示意圖」標籤，避免文字疊在底層上
     const layerPx = lh.mm === '0.10' ? 8 : lh.mm === '0.20' ? 14 : 20;
     const numLayers = Math.floor(objH / layerPx);
 

@@ -85,7 +85,7 @@ const BRIDGE_TYPES = [
               <rect x="5" y="44" width="18" height="20" fill="#94a3b8"/>
               <rect x="177" y="44" width="18" height="20" fill="#94a3b8"/>
               <text x="100" y="78" text-anchor="middle" font-size="10" fill="#94a3b8" font-family="Inter">上壓下拉</text>`,
-    example: '關西大橋・高速公路交流道',
+    example: '國道高架橋（如國道 1 號五股－楊梅高架段）',
     range: '跨度 5–100m',
   },
   {
@@ -97,7 +97,7 @@ const BRIDGE_TYPES = [
               <rect x="2" y="70" width="16" height="14" fill="#7dd3fc"/>
               <rect x="182" y="70" width="16" height="14" fill="#7dd3fc"/>
               <text x="100" y="82" text-anchor="middle" font-size="9" fill="#0284c7" font-family="Inter" font-weight="700">全桿受壓</text>`,
-    example: '石碇橋・中橫谷關段',
+    example: '關渡大橋（鋼拱橋，跨淡水河）・國姓糯米橋（日治時期石拱橋，南投縣定古蹟）',
     range: '跨度 20–500m',
   },
   {
@@ -121,14 +121,16 @@ const BRIDGE_TYPES = [
     svgPath: `<line x1="10" y1="60" x2="190" y2="60" stroke="#0d9488" stroke-width="4"/>
               <line x1="40" y1="25" x2="160" y2="25" stroke="#0d9488" stroke-width="4"/>
               <line x1="10" y1="60" x2="40" y2="25" stroke="#0d9488" stroke-width="2.5"/>
-              <line x1="40" y1="25" x2="80" y2="60" stroke="#dc2626" stroke-width="2.5"/>
-              <line x1="80" y1="60" x2="120" y2="25" stroke="#dc2626" stroke-width="2.5"/>
-              <line x1="120" y1="25" x2="160" y2="60" stroke="#2563eb" stroke-width="2.5"/>
               <line x1="160" y1="25" x2="190" y2="60" stroke="#0d9488" stroke-width="2.5"/>
-              <line x1="80" y1="25" x2="80" y2="60" stroke="#2563eb" stroke-width="2" opacity=".7"/>
-              <line x1="120" y1="25" x2="120" y2="60" stroke="#2563eb" stroke-width="2" opacity=".7"/>
+              <line x1="40" y1="25" x2="70" y2="60" stroke="#dc2626" stroke-width="2.5"/>
+              <line x1="70" y1="25" x2="100" y2="60" stroke="#dc2626" stroke-width="2.5"/>
+              <line x1="130" y1="25" x2="100" y2="60" stroke="#dc2626" stroke-width="2.5"/>
+              <line x1="160" y1="25" x2="130" y2="60" stroke="#dc2626" stroke-width="2.5"/>
+              <line x1="70" y1="25" x2="70" y2="60" stroke="#2563eb" stroke-width="2" opacity=".7"/>
+              <line x1="100" y1="25" x2="100" y2="60" stroke="#2563eb" stroke-width="2" opacity=".7"/>
+              <line x1="130" y1="25" x2="130" y2="60" stroke="#2563eb" stroke-width="2" opacity=".7"/>
               <text x="100" y="78" text-anchor="middle" font-size="9" fill="#0d9488" font-family="Inter" font-weight="700">桿件只承受軸力</text>`,
-    example: '鐵路橋・十九孔橋（舊台鐵）',
+    example: '西螺大橋（華倫桁架）・下淡水溪舊鐵橋（高屏舊鐵橋，普拉特桁架）',
     range: '跨度 30–300m',
   },
 ];

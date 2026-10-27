@@ -117,7 +117,7 @@ function solveScenario() {
     // 單台卡車停在跨中（最不利位置）：整台重量集中在中央節點
     truss.loads.push({ nodeId: `L${Math.round(panels / 2)}`, fx: 0, fy: -sc.loadPerNode });
   } else if (sc.special === 'train') {
-    // 4 個軸重在跨中附近節點
+    // 4 個軸重放在 L1、L2、L(n-2)、L(n-1) 四個下弦節點（中央節點不放）
     const axes = [1, 2, panels-2, panels-1].filter(i => i >= 1 && i < panels);
     axes.forEach(i => truss.loads.push({ nodeId: `L${i}`, fx: 0, fy: -sc.loadPerNode }));
   } else {

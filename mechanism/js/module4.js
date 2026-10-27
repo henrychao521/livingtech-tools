@@ -176,9 +176,12 @@ function drawGear() {
   const n2 = parseInt($('s-n2').value);
   angle += 0.02;
   const cx1 = 220, cy1 = 250;
+  // r = 齒根圓（圓盤）半徑，齒高 10 → 節圓半徑 ≈ r + 5；同模數時 r2 / r1 = N2 / N1
   const r1 = 80;
   const r2 = 80 * n2 / n1;
-  const cx2 = cx1 + r1 + r2 + 4;
+  const TOOTH_H = 10;
+  // 中心距 = 兩節圓半徑和 = r1 + r2 + 齒高，齒尖剛好探到對方齒根圓，不會互相穿透
+  const cx2 = cx1 + r1 + r2 + TOOTH_H;
   const cy2 = cy1;
 
   function drawGearShape(cx, cy, r, teeth, rot, color, edge) {
@@ -199,7 +202,7 @@ function drawGear() {
       ctx.save();
       ctx.translate(tx, ty);
       ctx.rotate(a);
-      ctx.fillRect(0, -2, 10, 4);
+      ctx.fillRect(0, -2, TOOTH_H, 4);
       ctx.restore();
     }
     ctx.fillStyle = '#0F766E';
@@ -217,7 +220,8 @@ function drawGear() {
   }
 
   drawGearShape(cx1, cy1, r1, n1, angle, '#CCFBF1', '#14B8A6');
-  drawGearShape(cx2, cy2, r2, n2, -angle * (n1 / n2), '#FEF3C7', '#F59E0B');
+  // 從動輪反向轉、角速度 × N1/N2；再錯開半個齒距（π/N2），主動輪的齒才會對到從動輪的齒槽（外嚙合）
+  drawGearShape(cx2, cy2, r2, n2, -angle * (n1 / n2) + Math.PI / n2, '#FEF3C7', '#F59E0B');
   // 標籤
   ctx.fillStyle = '#0F766E';
   ctx.font = '700 14px Inter';

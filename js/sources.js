@@ -5,11 +5,11 @@
 window.SOURCES = {
   // ---------- 共用平台來源（每個工具都會包含的基底）----------
   _platform: [
-    { tag: 'CURR', text: '教育部《十二年國教課程綱要 — 自然科學領域・科技領域》。生 J-A2「工具機具與材料的選用」、生 J-B3「設計與製作能力」。', url: 'https://cirn.moe.edu.tw/' },
+    { tag: 'CURR', text: '教育部《十二年國民基本教育課程綱要 — 科技領域》生活科技第四學習階段。學習內容 生 P-IV-3「手工具的操作與使用」、生 P-IV-4「材料的選用與加工處理」、生 P-IV-6「常用的機具操作與使用」；學習表現 設 c-IV-1「能運用設計流程，實際設計並製作科技產品以解決問題」。', url: 'https://cirn.moe.edu.tw/' },
     { tag: 'HLE',  text: '翰林版《國中生活科技》1上–3下（K0–K5 各章節對應實作）。', url: 'https://www.hle.com.tw/' },
   ],
 
-  // ---------- 19 個工具 ----------
+  // ---------- 各工具 ----------
   scrollsaw: [
     { tag: 'OSHA', text: 'U.S. OSHA 29 CFR 1910.213《Woodworking Machinery Requirements》— 線鋸機防護裝置規範。', url: 'https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.213' },
     { tag: 'CNS',  text: 'CNS 8050《手工金屬鋸條》（與線鋸鋸條尺寸／齒形對應）。', url: 'https://www.cnsonline.com.tw/' },
@@ -45,13 +45,13 @@ window.SOURCES = {
   ],
 
   steam: [
-    { tag: 'IEEE', text: 'IEEE 754 與 ASCII (ANSI X3.4) 標準 — 位元組、字元編碼與數值表示的基礎。', url: 'https://www.unicode.org/charts/' },
+    { tag: 'ASCII', text: 'ASCII（ANSI X3.4）與 Unicode 字元編碼表 — 位元組與字元編碼的基礎（模組 1 的 65 = \'A\'）。', url: 'https://www.unicode.org/charts/' },
     { tag: 'UNI',  text: 'Unicode Consortium《UTF-8 編碼規範》— 中文字為何需要 2–4 個位元組。', url: 'https://www.unicode.org/faq/utf_bom.html' },
     { tag: 'CS',   text: 'CS Unplugged（University of Canterbury, CC BY-NC-SA）— 不插電運算思維教學法，二進位與排序網路等活動的國際參考。', url: 'https://www.csunplugged.org/' },
     { tag: 'ALGO', text: 'Cormen et al.《Introduction to Algorithms》— 氣泡／選擇／插入排序的比較次數與 O(n²) 分析。', url: 'https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/' },
     { tag: 'ISO',  text: 'ISO 16《Acoustics — Standard tuning frequency》— A4 = 440 Hz 標準音高。', url: 'https://www.iso.org/standard/3601.html' },
     { tag: 'PHYS', text: 'OpenStax《College Physics》— 聲波、傅立葉合成與薄透鏡公式 1/f = 1/dₒ + 1/dᵢ、放大率 m = −dᵢ/dₒ。', url: 'https://openstax.org/details/books/college-physics-2e' },
-    { tag: 'CURR', text: '教育部十二年國教課程綱要 — 資 J-A2 運算思維與問題解決、自然 Ea 波動與光、數學 N 數與量。', url: 'https://cirn.moe.edu.tw/' },
+    { tag: 'CURR', text: '教育部十二年國教課程綱要 — 科技領域核心素養 科-J-A2「運用科技工具，理解與歸納問題」；資訊科技 資 A-IV-2「簡單的排序與搜尋演算法」、資 D-IV-2「數位資料的表示方法」；自然科學 Ka「波動、光及聲音」；數學 N「數與量」。', url: 'https://cirn.moe.edu.tw/' },
   ],
 
   lasercut: [
@@ -63,7 +63,7 @@ window.SOURCES = {
     { tag: 'NIOSH', text: 'NIOSH《Control of Smoke From Laser/Electric Arc Surgical Procedures》與雷射加工排煙建議 — 加工煙塵（LGAC）之危害與局部排氣需求。', url: 'https://www.cdc.gov/niosh/' },
     { tag: 'PVC',  text: '美國 EPA / 各國職衛資料：含氯高分子（PVC）熱裂解會產生氯化氫（HCl）與戴奧辛類化合物，為雷切禁用材料之依據。', url: 'https://www.epa.gov/' },
     { tag: 'HLE',  text: '趙珩宇《雷射切割課程》教學文（livingtech.education, 2017）— 七步驟流程與三種加工方式的課堂實作紀錄。', url: 'https://livingtech.education/2017/02/07/%E9%9B%B7%E5%B0%84%E5%88%87%E5%89%B2%E8%AA%B2%E7%A8%8B/' },
-    { tag: 'CURR', text: '教育部十二年國教科技領域課程綱要 — 生 A-IV-1 材料與加工方法、生 P-IV-4 設計與製作流程。', url: 'https://cirn.moe.edu.tw/' },
+    { tag: 'CURR', text: '教育部十二年國教科技領域課程綱要 — 生 P-IV-4「材料的選用與加工處理」、生 P-IV-6「常用的機具操作與使用」。', url: 'https://cirn.moe.edu.tw/' },
   ],
 
   mechatronics: [
@@ -72,7 +72,7 @@ window.SOURCES = {
     { tag: 'CTRL', text: 'Åström & Murray《Feedback Systems: An Introduction for Scientists and Engineers》(Princeton, 開放取用) — 比例／微分控制與過度增益振盪的理論依據。', url: 'https://www.cds.caltech.edu/~murray/amwiki/' },
     { tag: 'HCSR', text: 'HC-SR04 超音波模組 Datasheet — 量測範圍約 2–400 cm、波束角約 15°、盲區與時序規格。', url: 'https://www.handsontec.com/dataspecs/HC-SR04-Ultrasonic.pdf' },
     { tag: 'IPC',  text: 'IPC-A-620《Acceptability of Cable and Wire Harness Assemblies》— 接線與壓接品質，對應除錯章節的接觸不良判讀。', url: 'https://www.ipc.org/' },
-    { tag: 'CURR', text: '教育部十二年國教科技領域課程綱要 — 生 J-B3 設計與製作能力、3 下統整專題「自動化裝置」。', url: 'https://cirn.moe.edu.tw/' },
+    { tag: 'CURR', text: '教育部十二年國教科技領域課程綱要 — 生 A-IV-5「日常科技產品的電與控制應用」、設 c-IV-1「能運用設計流程，實際設計並製作科技產品以解決問題」；3 下統整專題「自動化裝置」。', url: 'https://cirn.moe.edu.tw/' },
   ],
 
   'emerging-tech': [
@@ -83,7 +83,7 @@ window.SOURCES = {
     { tag: 'MILG', text: 'Milgram & Kishino《A Taxonomy of Mixed Reality Visual Displays》(1994) — 虛實連續體（Reality–Virtuality Continuum），VR／AR／MR 分類的原始依據。', url: 'https://search.ieice.org/bin/summary.php?id=e77-d_12_1321' },
     { tag: 'ASHRAE', text: 'ASHRAE Standard 55《Thermal Environmental Conditions for Human Occupancy》— 室內舒適溫濕度範圍，作為節能控制策略的舒適度底線。', url: 'https://www.ashrae.org/technical-resources/bookstore/standard-55-thermal-environmental-conditions-for-human-occupancy' },
     { tag: 'EBA',  text: '經濟部能源署《能源統計手冊》與建築節能相關指引 — 空調與照明耗電占比、節能措施效益估算依據。', url: 'https://www.esist.org.tw/' },
-    { tag: 'CURR', text: '教育部十二年國教科技領域課程綱要 — 生 J-C3 新興科技對社會的影響、資 J-A2 運算思維與科技應用。', url: 'https://cirn.moe.edu.tw/' },
+    { tag: 'CURR', text: '教育部十二年國教科技領域課程綱要 — 生 A-IV-6「新興科技的應用」、生 A-IV-3「科技與社會的互動關係」；核心素養 科-J-C1「具備科技倫理與法律概念」。', url: 'https://cirn.moe.edu.tw/' },
     { tag: 'REDC', text: '中華民國紅十字會 — 急救訓練資訊。', url: 'https://www.redcross.org.tw/home.jsp?serno=202202180035' },
   ],
 
@@ -196,7 +196,7 @@ window.SOURCES = {
 
   'hand-tools': [
     { tag: 'OSHA', text: '勞動部職業安全衛生署《手工具作業安全衛生指引》與 OSHA 29 CFR 1910.244。', url: 'https://www.osha.gov.tw/' },
-    { tag: 'CURR', text: '教育部國民及學前教育署《十二年國教課程綱要》生 J-A2、生 J-B3。', url: 'https://cirn.moe.edu.tw/' },
+    { tag: 'CURR', text: '教育部《十二年國教課程綱要・科技領域》生 P-IV-3「手工具的操作與使用」、生 P-IV-4「材料的選用與加工處理」。', url: 'https://cirn.moe.edu.tw/' },
     { tag: 'HLE',  text: '翰林版《國中生活科技 1 上》K3「設計與製作的基礎」。', url: 'https://www.hle.com.tw/' },
     { tag: 'STAN', text: 'Stanley Black & Decker《Hand Tool Care & Maintenance Guide》。', url: 'https://www.stanleyblackanddecker.com/' },
     { tag: 'LV',   text: 'Lee Valley Tools《Files & Rasps Care》— 銼刀單向使用與保養。', url: 'https://www.leevalley.com/en-ca/learn/articles/files-and-rasps' },

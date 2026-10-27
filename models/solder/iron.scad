@@ -1,17 +1,20 @@
 // 電烙鐵 Soldering Iron — 握把 + 加熱芯 + 烙鐵頭
 $fn = 40;
 
-// 握把（藍色塑膠）
-color([0.12, 0.30, 0.68])
-  cylinder(h = 90, r1 = 14, r2 = 10);
+// 握把（藍色塑膠）：z=0 半徑 14 → z=90 半徑 10 的錐形
+handle_h  = 90;
+handle_r0 = 14;
+handle_r1 = 10;
+function handle_r(z) = handle_r0 - (handle_r0 - handle_r1) * z / handle_h;
 
-// 防滑紋
+color([0.12, 0.30, 0.68])
+  cylinder(h = handle_h, r1 = handle_r0, r2 = handle_r1);
+
+// 防滑紋：凸環半徑跟著握把錐度走（原本固定 r=10.5，整圈埋在握把裡看不到）
 color([0.08, 0.20, 0.52])
   for (z = [10, 20, 30, 40, 50, 60, 70])
-    translate([0, 0, z]) difference() {
-      cylinder(h = 5, r = 10.5);
-      translate([0, 0, -1]) cylinder(h = 7, r = 9);
-    }
+    translate([0, 0, z])
+      cylinder(h = 5, r1 = handle_r(z) + 0.8, r2 = handle_r(z + 5) + 0.8);
 
 // 握把前端蓋（金屬環）
 color([0.65, 0.65, 0.68]) {

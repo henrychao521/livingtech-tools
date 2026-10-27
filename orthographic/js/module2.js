@@ -1,10 +1,10 @@
 // 三視圖 模組 2：4 種視圖類型
 const TYPES = [
-  { id: 'ortho', name: '三視圖（正投影）', use: '工程製造、機械圖、家具圖', pros: '尺寸精確、好標註、製造業通用', cons: '不夠直觀、需訓練才能判讀',
+  { id: 'ortho', name: '三視圖（多視正投影）', use: '工程製造、機械圖、家具圖', pros: '尺寸精確、好標註、製造業通用', cons: '不夠直觀、需訓練才能判讀',
     viz: '<svg viewBox="0 0 200 100"><!-- 第三角法：俯視在正視上方、側視在正視右方；側視寬 = 俯視深 = 20 --><rect x="20" y="8" width="40" height="20" fill="#E0E7FF" stroke="#3730A3"/><rect x="20" y="36" width="40" height="40" fill="#E0E7FF" stroke="#3730A3"/><rect x="68" y="36" width="20" height="40" fill="#E0E7FF" stroke="#3730A3"/></svg>' },
-  { id: 'iso', name: '等角圖 Isometric', use: 'IKEA 組裝說明書、簡報示意', pros: '簡單立體、所有平行邊保持比例', cons: '會有透視假象、看起來像「歪的方塊」',
+  { id: 'iso', name: '等角圖 Isometric', use: 'IKEA 組裝說明書、簡報示意', pros: '簡單立體、所有平行邊保持比例', cons: '軸線斜 30°、圓會變成橢圓，看起來像「歪的方塊」；它是平行投影（軸測投影），沒有近大遠小',
     viz: '<svg viewBox="0 0 200 100"><polygon points="100,20 135,40 100,60 65,40" fill="#A5B4FC" stroke="#3730A3"/><polygon points="65,40 100,60 100,95 65,75" fill="#818CF8" stroke="#3730A3"/><polygon points="100,60 135,40 135,75 100,95" fill="#6366F1" stroke="#3730A3"/></svg>' },
-  { id: 'oblique', name: '斜視圖 Oblique', use: '快速手繪示意、教學圖', pros: '正面保持原比例、繪製簡單', cons: '看起來會「拉長」失真',
+  { id: 'oblique', name: '斜投影圖 Oblique', use: '快速手繪示意、教學圖（有些課本稱「斜視圖」；製圖上的「斜視圖」另指傾斜面的輔助視圖）', pros: '正面保持原比例、繪製簡單', cons: '看起來會「拉長」失真',
     viz: '<svg viewBox="0 0 200 100"><rect x="40" y="30" width="60" height="40" fill="#A5B4FC" stroke="#3730A3"/><polygon points="100,30 130,15 130,55 100,70" fill="#6366F1" stroke="#3730A3"/><polygon points="40,30 70,15 130,15 100,30" fill="#818CF8" stroke="#3730A3"/></svg>' },
   { id: 'persp', name: '透視圖 Perspective', use: '建築設計、產品渲染、視覺效果', pros: '最接近人眼所見、視覺真實', cons: '不能直接量測、複雜度高',
     viz: '<svg viewBox="0 0 200 100"><polygon points="40,30 130,40 150,55 30,50" fill="#A5B4FC" stroke="#3730A3"/><polygon points="40,30 30,50 30,85 40,80" fill="#818CF8" stroke="#3730A3"/><polygon points="130,40 150,55 150,75 130,80" fill="#6366F1" stroke="#3730A3"/></svg>' },
@@ -29,9 +29,9 @@ const QUIZ = [
   { q: 'IKEA 組裝說明書多用哪種視圖？', ans: 'iso', explain: '等角圖最常用 — 既能看立體、又能標準化生產。' },
   { q: '機械零件加工圖該用哪種？', ans: 'ortho', explain: '三視圖必須的 — 製造業要精確尺寸、加工資訊。' },
   { q: '建築師畫給客戶看的外觀效果圖？', ans: 'persp', explain: '透視圖最接近人眼所見 — 賣房子才感人。' },
-  { q: '老師快速畫黑板示意圖？', ans: 'oblique', explain: '斜視圖最快 — 正面保持原比例、向後拉一斜線就是。' },
+  { q: '老師快速畫黑板示意圖？', ans: 'oblique', explain: '斜投影圖最快 — 正面保持原比例、向後拉一斜線就是。' },
   { q: '汽車設計師畫車身造型？', ans: 'persp', explain: '透視圖 — 設計造型要看視覺感受。' },
-  { q: '工廠技工要按圖製造零件？', ans: 'ortho', explain: '三視圖 — 製造業唯一能精確標尺寸的視圖。' },
+  { q: '工廠技工要按圖製造零件？', ans: 'ortho', explain: '三視圖 — 每個視圖都是真實形狀與尺寸，最適合完整標註、照圖加工。' },
   { q: 'LEGO 組裝手冊？', ans: 'iso', explain: '等角圖 — 簡單立體、可看清每塊位置。' },
   { q: '玩具產品包裝盒插圖？', ans: 'persp', explain: '透視圖 — 視覺效果最佳，吸引消費者。' },
 ];
@@ -47,7 +47,7 @@ QUIZ.forEach((q, i) => {
   div.className = 'quiz-item';
   div.style.cssText = 'background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px';
   div.innerHTML = `<p style="font-size:14px;margin-bottom:6px"><strong>題 ${i + 1}：</strong>${q.q}</p>
-    <div class="choice-grid" style="grid-template-columns:repeat(4,1fr)">${TYPES.map(t => `<button class="choice" data-q="${i}" data-c="${t.id}">${t.name.split(' ')[0].replace('（正投影）', '')}</button>`).join('')}</div>
+    <div class="choice-grid" style="grid-template-columns:repeat(4,1fr)">${TYPES.map(t => `<button class="choice" data-q="${i}" data-c="${t.id}">${t.name.split(' ')[0].replace('（多視正投影）', '')}</button>`).join('')}</div>
     <div class="feedback-slot"></div>`;
   quizEl.appendChild(div);
 });

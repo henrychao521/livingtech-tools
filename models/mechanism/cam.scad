@@ -11,13 +11,15 @@ color([0.06, 0.46, 0.42])
   rotate([90, 0, 0]) cylinder(h = 12, r = 3.5, center = true);
 
 // 從動件（圓盤底 + 桿）
+// 凸輪長軸 24、短軸 24×0.65 = 15.6；圖示為短軸朝上（最低點），凸輪頂在 z = 15.6
+// 從動件圓盤 r = 7 → 圓心放 z = 22.6，圓盤底剛好貼住凸輪（舊值 18 會陷進凸輪 4.6）
 color([0.86, 0.4, 0.2]) {
   // 底部圓盤（壓在凸輪上）
-  translate([0, 0, 18]) rotate([90, 0, 0]) cylinder(h = 6, r = 7, center = true);
+  translate([0, 0, 22.6]) rotate([90, 0, 0]) cylinder(h = 6, r = 7, center = true);
   // 直桿
-  translate([-3, -3, 22]) cube([6, 6, 28]);
+  translate([-3, -3, 26]) cube([6, 6, 28]);
 }
 
 // 導向支架
 color([0.28, 0.34, 0.43])
-  translate([-10, -5, 38]) cube([20, 10, 4]);
+  translate([-10, -5, 42]) cube([20, 10, 4]);

@@ -13,7 +13,7 @@ const TYPES = [
 const VIZ_NAMES = ['truss', 'arch', 'cable', 'frame', 'shell', 'tensile'];
 const VIZ = Object.fromEntries(VIZ_NAMES.map(n => [
   n,
-  `<img src="../../models/structure-sim/${n}-iso.png" alt="${n}" style="width:100%;height:140px;object-fit:contain;background:#1E293B;border-radius:8px;display:block" loading="lazy">`
+  `<img src="../../models/structure-sim/${n}-iso.png" alt="${n}" style="width:100%;height:100%;object-fit:contain;background:#1E293B;border-radius:8px;display:block" loading="lazy">`
 ]));
 
 const PK = 'struct_progress_v1';
@@ -27,7 +27,7 @@ TYPES.forEach(t => {
   card.style.cssText = 'background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px;cursor:pointer;transition:all .2s';
   card.innerHTML = `
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-      <div style="width:80px;height:50px">${VIZ[t.viz]}</div>
+      <div style="flex:0 0 80px;width:80px;height:80px">${VIZ[t.viz]}</div>
       <h4 style="margin:0;color:#1E3A8A;font-size:15px">${t.name}</h4>
     </div>
     <p style="font-size:12.5px;color:#555;margin:4px 0"><strong>原理：</strong>${t.principle}</p>

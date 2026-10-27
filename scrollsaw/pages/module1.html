@@ -172,14 +172,15 @@
               <rect x="297" y="235" width="6" height="130" fill="#1a1a1a"/>
               <rect x="298" y="235" width="4" height="130" fill="url(#m1-bladeG)" opacity=".5"/>
               <line x1="300" y1="235" x2="300" y2="365" stroke="#fff" stroke-width=".7" stroke-dasharray="2 2"/>
+              <!-- 鋸齒：齒尖朝下（朝工作台），用直角三角形表示 -->
               <g fill="#222">
-                <polygon points="297,250 295,253 297,256"/>
-                <polygon points="297,265 295,268 297,271"/>
-                <polygon points="297,280 295,283 297,286"/>
-                <polygon points="297,295 295,298 297,301"/>
-                <polygon points="297,310 295,313 297,316"/>
-                <polygon points="297,325 295,328 297,331"/>
-                <polygon points="297,340 295,343 297,346"/>
+                <polygon points="297,250 297,256 294,256"/>
+                <polygon points="297,265 297,271 294,271"/>
+                <polygon points="297,280 297,286 294,286"/>
+                <polygon points="297,295 297,301 294,301"/>
+                <polygon points="297,310 297,316 294,316"/>
+                <polygon points="297,325 297,331 294,331"/>
+                <polygon points="297,340 297,346 294,346"/>
               </g>
             </g>
 
@@ -200,16 +201,18 @@
               <line x1="225" y1="245" x2="195" y2="225" stroke="#666" stroke-width="4" stroke-linecap="round"/>
               <rect x="225" y="240" width="60" height="6" fill="#888" rx="2"/>
               <rect x="245" y="246" width="40" height="8" fill="#aaa" rx="2"/>
-              <rect x="262" y="254" width="6" height="38" fill="#888"/>
-              <rect x="252" y="290" width="26" height="10" rx="3" fill="#666"/>
-              <rect x="254" y="298" width="22" height="3" rx="1" fill="#444"/>
+              <!-- 壓料腳：桿子垂到工作台上方、腳座緊鄰鋸條（實機壓料腳是輕貼在木板上，不會停在半空） -->
+              <rect x="262" y="254" width="6" height="86" fill="#888"/>
+              <rect x="252" y="338" width="26" height="10" rx="3" fill="#666"/>
+              <rect x="254" y="346" width="22" height="3" rx="1" fill="#444"/>
             </g>
 
-            <path d="M350 260 Q 335 285 318 295 Q 308 300 304 305" stroke="#444" stroke-width="4" fill="none" stroke-linecap="round"/>
-            <circle cx="304" cy="305" r="3.5" fill="#1a1a1a"/>
+            <!-- 吹氣管：從機身延伸、噴嘴對準工作台上的切割點 -->
+            <path d="M350 260 Q 335 300 318 330 Q 308 345 305 352" stroke="#444" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <circle cx="305" cy="352" r="3.5" fill="#1a1a1a"/>
             <g opacity=".5">
-              <line x1="296" y1="306" x2="290" y2="308" stroke="#888" stroke-width="1" stroke-linecap="round" stroke-dasharray="2 2"/>
-              <line x1="294" y1="310" x2="286" y2="312" stroke="#888" stroke-width="1" stroke-linecap="round" stroke-dasharray="2 2"/>
+              <line x1="297" y1="354" x2="291" y2="357" stroke="#888" stroke-width="1" stroke-linecap="round" stroke-dasharray="2 2"/>
+              <line x1="295" y1="358" x2="287" y2="361" stroke="#888" stroke-width="1" stroke-linecap="round" stroke-dasharray="2 2"/>
             </g>
 
             <g opacity=".7">
@@ -240,12 +243,12 @@
                 <text class="hotspot-label" x="200" y="399">4</text>
               </g>
               <g class="hotspot-group" data-id="hold-down">
-                <circle class="hotspot" cx="265" cy="295" r="14"/>
-                <text class="hotspot-label" x="265" y="299">5</text>
+                <circle class="hotspot" cx="265" cy="343" r="14"/>
+                <text class="hotspot-label" x="265" y="347">5</text>
               </g>
               <g class="hotspot-group" data-id="blower">
-                <circle class="hotspot" cx="320" cy="280" r="14"/>
-                <text class="hotspot-label" x="320" y="284">6</text>
+                <circle class="hotspot" cx="325" cy="318" r="14"/>
+                <text class="hotspot-label" x="325" y="322">6</text>
               </g>
               <g class="hotspot-group" data-id="speed">
                 <circle class="hotspot" cx="384" cy="285" r="14"/>
@@ -332,9 +335,9 @@
   </div>
 </main>
 
-<script src="../../js/main.js"></script><script src="../../js/sheet-config.js?v=1"></script><script src="../../js/sheet-log.js?v=1"></script><script src="../../js/sources.js"></script>
+<script src="../../js/main.js"></script><script src="../../js/sheet-config.js?v=1"></script><script src="../../js/sheet-log.js?v=1"></script><script src="../../js/sources.js?v=2"></script>
 <script src="../../js/audio.js"></script>
-<script src="../js/module1.js"></script>
-<script type="module" src="../js/module1-3d.js"></script>
+<script src="../js/module1.js?v=2"></script>
+<script type="module" src="../js/module1-3d.js?v=2"></script>
 </body>
 </html>

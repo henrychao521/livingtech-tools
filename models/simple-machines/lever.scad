@@ -8,9 +8,10 @@ module lever_bar() {
 }
 
 module fulcrum() {
-  // 三角支點：底寬 20、高 18，在桿下方
+  // 三角支點：底寬 24、高 18，置中在桿正下方（頂點頂住桿底 z = 0）
+  // rotate([90,0,0]) 會把拉伸方向 +Z 轉成 −Y，所以 y 要先平移 +8 才會落在 y∈[-8,8]
   color([0.51, 0.09, 0.26])
-    translate([0, -8, -18]) rotate([90, 0, 0])
+    translate([0, 8, -18]) rotate([90, 0, 0])
       linear_extrude(height = 16)
         polygon([[-12, 0], [12, 0], [0, 18]]);
 }

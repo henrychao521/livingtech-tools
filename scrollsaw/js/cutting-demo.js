@@ -235,13 +235,13 @@ class CuttingDemo {
     ctx.fillStyle = bladeGrad;
     ctx.fillRect(bladeX - 3, bladeY - 95, 6, 190);
 
-    // 鋸齒
+    // 鋸齒：面向 +X（愛心從頂端凹口起鋸、先往右切，鋸齒朝向尚未切到的木料；與模組 4 一致）
     ctx.fillStyle = '#222';
     for (let y = bladeY - 85; y < bladeY + 85; y += 8) {
       ctx.beginPath();
-      ctx.moveTo(bladeX - 3, y);
-      ctx.lineTo(bladeX - 5, y + 3);
-      ctx.lineTo(bladeX - 3, y + 6);
+      ctx.moveTo(bladeX + 3, y);
+      ctx.lineTo(bladeX + 5, y + 3);
+      ctx.lineTo(bladeX + 3, y + 6);
       ctx.fill();
     }
 

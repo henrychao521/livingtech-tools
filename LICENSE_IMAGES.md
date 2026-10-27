@@ -32,7 +32,7 @@
 - **來源**：https://commons.wikimedia.org/wiki/File:Scroll_saw_-_Dremel.jpg
 - **下載日期**：2026-05-10
 
-### 3. AGPIConvention2018Delta40-560ScrollSaw.jpg ｜ Delta 40-560 工業級線鋸機
+### 3. AGPIConvention2018Delta40-560ScrollSaw.jpg ｜ Delta 40-560 桌上型線鋸機
 - **作者**：DanielPenfield
 - **授權**：CC BY-SA 4.0（[條款連結](https://creativecommons.org/licenses/by-sa/4.0/)）
 - **來源**：https://commons.wikimedia.org/wiki/File:AGPIConvention2018Delta40-560ScrollSaw.jpg

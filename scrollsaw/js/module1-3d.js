@@ -198,7 +198,7 @@ class ScrollSaw3D {
     // 通風孔（左右兩側）
     [-1.4, 1.4].forEach(x => {
       for (let i = 0; i < 6; i++) {
-        const v = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.05, 0.7), new THREE.MeshStandardMaterial({ color: 0x111 }));
+        const v = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.05, 0.7), new THREE.MeshStandardMaterial({ color: 0x111111 }));
         v.position.set(x, 1.0 + i * 0.18, -0.85);
         this.scene.add(v);
       }
@@ -206,15 +206,16 @@ class ScrollSaw3D {
 
     // ============================================================
     // 3. 下臂（horizontal cantilever 從馬達箱底部向前延伸）
+    //    壓低到底座上方，讓工作台底下留出放下夾頭的空間
     // ============================================================
     const lowerArm = new THREE.Mesh(new THREE.BoxGeometry(0.45, 0.4, 2.2), matBodyLight);
-    lowerArm.position.set(0, 0.78, 0.4);
+    lowerArm.position.set(0, 0.6, 0.4);
     lowerArm.castShadow = true;
     this.scene.add(lowerArm);
 
     // 下臂前端的鋸條安裝口（黑色方塊）
     const lowerHousing = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.3, 0.3), matBlack);
-    lowerHousing.position.set(0, 0.78, 1.5);
+    lowerHousing.position.set(0, 0.6, 1.5);
     this.scene.add(lowerHousing);
 
     // ============================================================
@@ -225,7 +226,7 @@ class ScrollSaw3D {
     table.castShadow = true; table.receiveShadow = true;
     tableGroup.add(table);
     // 鋸縫
-    const slot = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.13, 0.6), new THREE.MeshStandardMaterial({ color: 0x222 }));
+    const slot = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.13, 0.6), new THREE.MeshStandardMaterial({ color: 0x222222 }));
     slot.position.set(0, 0, 0);
     tableGroup.add(slot);
     // 邊緣傾角刻度條
@@ -266,18 +267,20 @@ class ScrollSaw3D {
     this.scene.add(authorLogo);
 
     // ============================================================
-    // 6. 鋸條（連接上下夾頭，垂直）
+    // 6. 鋸條（連接上下夾頭，垂直；下端穿過工作台到下夾頭 y=0.89，上端到上夾頭 y=2.68）
     // ============================================================
-    const blade = new THREE.Mesh(new THREE.BoxGeometry(0.04, 1.6, 0.06), new THREE.MeshStandardMaterial({ color: BLADE_DARK, metalness: 0.9, roughness: 0.2 }));
-    blade.position.set(0, 1.92, 1.0);
+    const BLADE_Y = 1.785;
+    this.bladeRestY = BLADE_Y;
+    const blade = new THREE.Mesh(new THREE.BoxGeometry(0.04, 1.8, 0.06), new THREE.MeshStandardMaterial({ color: BLADE_DARK, metalness: 0.9, roughness: 0.2 }));
+    blade.position.set(0, BLADE_Y, 1.0);
     blade.castShadow = true;
     this.registerPart(blade, 'blade', '鋸條');
     this.scene.add(blade);
 
-    // 鋸齒紋路
+    // 鋸齒紋路：鋸齒在鋸條「前緣」（+Z，面向站在機台前方的操作者），只畫工作台以上的部分
     for (let i = 0; i < 16; i++) {
-      const tooth = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.04, 0.02), matMetal);
-      tooth.position.set(0.04, 1.2 + i * 0.09, 1.0);
+      const tooth = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.03, 0.04), matMetal);
+      tooth.position.set(0, 1.18 + i * 0.09, 1.05);
       this.scene.add(tooth);
     }
 
@@ -296,25 +299,29 @@ class ScrollSaw3D {
     this.scene.add(upperScrew);
 
     // ============================================================
-    // 8. 下夾頭（位於工作台下方、下臂前端）
+    // 8. 下夾頭（位於工作台「下方」、下臂前端上；工作台底面 y≈0.99）
     // ============================================================
     const lowerChuck = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.18, 0.22), matBlack);
-    lowerChuck.position.set(0, 1.16, 1.0);
+    lowerChuck.position.set(0, 0.89, 1.0);
     lowerChuck.castShadow = true;
     this.registerPart(lowerChuck, 'lower-chuck', '下夾頭');
     this.scene.add(lowerChuck);
     const lowerScrew = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.12, 12), matMetal);
     lowerScrew.rotation.z = Math.PI / 2;
-    lowerScrew.position.set(0.18, 1.16, 1.0);
+    lowerScrew.position.set(0.18, 0.89, 1.0);
     this.scene.add(lowerScrew);
 
     // ============================================================
-    // 9. 壓料桿（從上夾頭附近垂下，緊靠鋸條）
+    // 9. 壓料桿（從上夾頭旁垂下，腳座停在工作台面上方一點點、緊靠鋸條側邊）
     // ============================================================
     const holdGroup = new THREE.Group();
-    const matHold = new THREE.MeshStandardMaterial({ color: 0x666, metalness: 0.65, roughness: 0.35 });
-    const hRod = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.85, 12), matHold);
-    hRod.position.set(0, -0.43, 0);
+    const matHold = new THREE.MeshStandardMaterial({ color: 0x666666, metalness: 0.65, roughness: 0.35 });
+    // 與上夾頭座相連的橫向支架
+    const hBracket = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.06, 0.1), matHold);
+    hBracket.position.set(-0.12, 0, 0);
+    holdGroup.add(hBracket);
+    const hRod = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 1.2, 12), matHold);
+    hRod.position.set(0, -0.6, 0);
     holdGroup.add(hRod);
     const hFootGroup = new THREE.Group();
     const hFoot = new THREE.Mesh(new THREE.BoxGeometry(0.45, 0.08, 0.18), new THREE.MeshStandardMaterial({ color: 0x4a4a4a }));
@@ -324,20 +331,20 @@ class ScrollSaw3D {
     hClip.rotation.x = Math.PI;
     hClip.position.set(0, 0.04, 0);
     hFootGroup.add(hClip);
-    hFootGroup.position.set(0, -0.9, 0);
+    hFootGroup.position.set(0, -1.25, 0);   // 腳座 y≈1.25，離台面(1.11)約一片木板厚
     holdGroup.add(hFootGroup);
-    holdGroup.position.set(0.18, 2.5, 1.0);
+    holdGroup.position.set(0.3, 2.5, 1.0);
     holdGroup.traverse(m => { if (m.isMesh) m.castShadow = true; });
     this.registerGroup(holdGroup, 'hold-down', '壓料桿');
     this.scene.add(holdGroup);
 
     // ============================================================
-    // 10. 吹氣管（從懸臂下方一條彈性管延伸到鋸條切割點）
+    // 10. 吹氣管（從懸臂下方一條彈性管延伸到工作台面上的切割點）
     // ============================================================
     const tubeCurve = new THREE.QuadraticBezierCurve3(
       new THREE.Vector3(0.5, 2.6, 0.6),
-      new THREE.Vector3(0.35, 2.35, 0.85),
-      new THREE.Vector3(0.18, 1.85, 0.98)
+      new THREE.Vector3(0.5, 2.0, 0.95),
+      new THREE.Vector3(0.16, 1.3, 1.06)
     );
     const tubeGeom = new THREE.TubeGeometry(tubeCurve, 24, 0.04, 10, false);
     const tube = new THREE.Mesh(tubeGeom, new THREE.MeshStandardMaterial({ color: 0x2a2a2a, roughness: 0.5 }));
@@ -364,7 +371,7 @@ class ScrollSaw3D {
     const dialBase = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 0.04, 32), new THREE.MeshStandardMaterial({ color: 0xfafafa, roughness: 0.4 }));
     dialBase.rotation.z = Math.PI / 2;
     dialGroup.add(dialBase);
-    const dialKnob = new THREE.Mesh(new THREE.BoxGeometry(0.035, 0.14, 0.03), new THREE.MeshStandardMaterial({ color: 0x222 }));
+    const dialKnob = new THREE.Mesh(new THREE.BoxGeometry(0.035, 0.14, 0.03), new THREE.MeshStandardMaterial({ color: 0x222222 }));
     dialKnob.position.x = 0.04;
     dialGroup.add(dialKnob);
     dialGroup.position.set(1.45, 1.85, -0.6);
@@ -387,12 +394,12 @@ class ScrollSaw3D {
     // ============================================================
     this.labels = {};
     const labelData = {
-      blade: { pos: [0.25, 1.92, 1.2], num: 1 },
+      blade: { pos: [-0.25, 1.9, 1.2], num: 1 },
       'upper-chuck': { pos: [0.25, 2.68, 1.2], num: 2 },
-      'lower-chuck': { pos: [0.25, 1.16, 1.2], num: 3 },
+      'lower-chuck': { pos: [0.3, 0.89, 1.35], num: 3 },
       table: { pos: [-1.6, 1.1, 0.95], num: 4 },
-      'hold-down': { pos: [-0.4, 1.7, 1.1], num: 5 },
-      blower: { pos: [0.5, 2.45, 0.85], num: 6 },
+      'hold-down': { pos: [0.75, 1.3, 1.1], num: 5 },
+      blower: { pos: [0.7, 2.1, 0.9], num: 6 },
       speed: { pos: [1.7, 1.85, -0.6], num: 7 },
       switch: { pos: [1.7, 1.55, -0.45], num: 8 },
     };
@@ -507,9 +514,10 @@ class ScrollSaw3D {
   animate() {
     requestAnimationFrame(() => this.animate());
     this.controls.update();
-    if (this.bladeRunning && this.parts.blade) {
-      const t = performance.now();
-      this.parts.blade.position.y = 2.9 + Math.sin(t / 18) * 0.06;
+    if (this.parts.blade) {
+      // 以安裝位置為中心上下往復；停止時回到原位（之前寫死 2.9 會讓鋸條跳到上夾頭上方）
+      const rest = this.bladeRestY ?? this.parts.blade.position.y;
+      this.parts.blade.position.y = this.bladeRunning ? rest + Math.sin(performance.now() / 18) * 0.06 : rest;
     }
     // 標籤永遠面向鏡頭（sprite 內建，不需處理）
     this.renderer.render(this.scene, this.camera);

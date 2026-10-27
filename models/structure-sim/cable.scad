@@ -1,5 +1,13 @@
-// 纜索懸吊 Cable / Suspension — 兩塔 + 主纜 + 吊桿 + 橋面
+// 纜索懸吊 Cable / Suspension — 兩塔 + 下垂主纜（拋物線）+ 吊桿 + 橋面 + 錨碇
 include <_common.scad>
+
+TOWER_X = 27.5;   // 塔中心 x
+TOWER_TOP = 32;   // 塔頂高度
+SAG_Z = 12;       // 主纜跨中最低點高度
+DECK_Z = -14;     // 橋面上表面高度
+
+// 主纜高度（拋物線：塔頂 32、跨中 12）
+function z_main(x) = SAG_Z + (TOWER_TOP - SAG_Z) * (x * x) / (TOWER_X * TOWER_X);
 
 // 橋面
 color([0.55, 0.45, 0.35])
@@ -8,30 +16,30 @@ color([0.55, 0.45, 0.35])
 // 兩座塔
 color([0.36, 0.42, 0.55]) {
   translate([-30, -3, -18]) cube([5, 6, 50]);
-  translate([25, -3, -18]) cube([5, 6, 50]);
-  // 塔頂橫梁
-  translate([-30, -3, 28]) cube([5, 6, 4]);
-  translate([25, -3, 28]) cube([5, 6, 4]);
+  translate([ 25, -3, -18]) cube([5, 6, 50]);
 }
 
-// 主纜（簡化為兩段直線：左塔頂 → 中央低點 → 右塔頂）
+// 主纜（中跨：拋物線以短直段串成；邊跨：從塔頂拉到兩端錨碇）
 color([0.16, 0.16, 0.16]) {
-  // 主纜左半（從左塔頂下垂到中央）
-  hull() {
-    translate([-27.5, 0, 32]) sphere(r = 1.5);
-    translate([0, 0, 12]) sphere(r = 1.5);
+  for (x = [-TOWER_X : 2.5 : TOWER_X - 2.5]) {
+    hull() {
+      translate([x, 0, z_main(x)]) sphere(r = 1.5);
+      translate([x + 2.5, 0, z_main(x + 2.5)]) sphere(r = 1.5);
+    }
   }
-  // 主纜右半
-  hull() {
-    translate([0, 0, 12]) sphere(r = 1.5);
-    translate([27.5, 0, 32]) sphere(r = 1.5);
+  // 邊跨拉索（背索）到錨碇
+  for (s = [-1, 1]) hull() {
+    translate([s * TOWER_X, 0, TOWER_TOP]) sphere(r = 1.5);
+    translate([s * 48, 0, DECK_Z]) sphere(r = 1.5);
   }
 }
 
-// 吊桿（垂直細線從主纜到橋面）
+// 錨碇（兩端固定主纜的混凝土塊）
+color([0.45, 0.45, 0.45])
+  for (s = [-1, 1]) translate([s * 47 - 3, -5, -18]) cube([6, 10, 6]);
+
+// 吊桿（垂直細桿從主纜吊住橋面；只受張力）
 color([0.86, 0.25, 0.25])
   for (x = [-20, -10, 0, 10, 20]) {
-    // 主纜在 x 位置的高度（拋物線近似）
-    z_main = 12 + (x*x) * 0.025;
-    translate([x - 0.4, -0.4, -14]) cube([0.8, 0.8, z_main + 14]);
+    translate([x - 0.4, -0.4, DECK_Z]) cube([0.8, 0.8, z_main(x) - DECK_Z]);
   }

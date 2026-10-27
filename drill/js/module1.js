@@ -162,14 +162,14 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
   ];
 
   const MAT = [
-    { mat: '松木 / 軟木', bit: 'wood', rpm: '1200–2000', note: '順紋鑽，輕鬆排屑' },
+    { mat: '松木 / 軟木', bit: 'wood', rpm: '800–1500', note: '順紋鑽，輕鬆排屑；小孔可稍快' },
     { mat: '硬木 / 合板', bit: 'wood', rpm: '800–1500', note: '深孔定時退屑' },
-    { mat: 'MDF 密集板', bit: 'hss', rpm: '1000–2000', note: '木工鑽或 HSS 皆可；粉塵多，戴口罩' },
+    { mat: 'MDF 密集板', bit: 'hss', rpm: '800–1500', note: '木工鑽或 HSS 皆可；粉塵多，戴口罩' },
     { mat: '鋼板 / 鐵管', bit: 'hss', rpm: '300–700', note: '加切削液降溫' },
     { mat: '鋁 / 銅', bit: 'hss', rpm: '600–1500', note: '可加切削油冷卻' },
     { mat: '塑膠 / 壓克力', bit: 'hss', rpm: '600–1200', note: '慢速防龜裂' },
     { mat: '磚牆 / 混凝土', bit: 'masonry', rpm: '300–600', note: '配電鎚衝擊模式' },
-    { mat: '木材大孔 >20mm', bit: 'spade', rpm: '600–1200', note: '低速防木材撕裂' },
+    { mat: '木材大孔 >20mm', bit: 'spade', rpm: '600–1200', note: '中速、輕進刀防木材撕裂' },
     { mat: '鉸鏈槽 / 圓盲孔', bit: 'forstner', rpm: '200–800', note: '必須極低速，防焦黑' },
     { mat: '螺絲埋頭槽', bit: 'countersink', rpm: '600–1500', note: '一鑽搞定導孔+錐槽' },
   ];
@@ -308,12 +308,12 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
           <circle cx="90" cy="58" r="32" fill="#374151" stroke="#475569" stroke-width="2"/>
           <circle cx="90" cy="58" r="9" fill="#1e293b"/>
           <g id="rev-fwd">
-            <path d="M 68 34 A 30 30 0 1 1 112 34" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round"/>
-            <polygon points="114,27 118,40 106,37" fill="#22c55e"/>
+            <path d="M 67 91 A 40 40 0 1 1 113 91" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round"/>
+            <polygon points="106,96 116,95 110,87" fill="#22c55e"/>
           </g>
           <g id="rev-rev" display="none">
-            <path d="M 112 34 A 30 30 0 1 0 68 34" fill="none" stroke="#f97316" stroke-width="3" stroke-linecap="round"/>
-            <polygon points="66,27 62,40 74,37" fill="#f97316"/>
+            <path d="M 113 91 A 40 40 0 1 0 67 91" fill="none" stroke="#f97316" stroke-width="3" stroke-linecap="round"/>
+            <polygon points="74,96 64,95 70,87" fill="#f97316"/>
           </g>
           <text id="rev-lbl" x="90" y="62" text-anchor="middle" font-size="12" fill="#22c55e" font-family="Inter,sans-serif" font-weight="800">FWD</text>
           <text id="rev-use" x="90" y="106" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Inter">鑽孔 / 鎖螺絲</text>
@@ -372,7 +372,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
   function updateSpeed() {
     const r = rpm / 2000;
     const needle = document.getElementById('speed-needle');
-    if (needle) needle.setAttribute('transform', `rotate(${-90 + r * 180} 90 82)`);
+    if (needle) needle.setAttribute('transform', `rotate(${r * 180} 90 82)`);  // 指針原本指向左側 0 刻度，0→2000 RPM 順時針掃 180°
     const arc = document.getElementById('speed-arc');
     if (arc) arc.setAttribute('stroke-dasharray', `${r * 204} 204`);
     const rpmTxt = document.getElementById('speed-rpm');

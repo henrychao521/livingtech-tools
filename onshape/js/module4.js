@@ -16,15 +16,15 @@ const METHODS = [
       <!-- 底面草圖 -->
       <rect class="ext-sketch" x="30" y="100" width="80" height="0" fill="url(#ext-g)" stroke="#075985" stroke-width="1.5"/>
       <!-- 頂面斜投影（3D 透視） -->
-      <polygon class="ext-top" points="30,100 60,80 140,80 110,100" fill="#bae6fd" stroke="#075985" stroke-width="1.5" opacity="0"/>
-      <polygon class="ext-side" points="110,100 140,80 140,100 110,100" fill="#0284c7" stroke="#075985" stroke-width="1.5" opacity="0"/>
+      <polygon class="ext-top" points="30,80 55,62 135,62 110,80" fill="#bae6fd" stroke="#075985" stroke-width="1.5" opacity="0"/>
+      <polygon class="ext-side" points="110,100 135,82 135,62 110,80" fill="#0284c7" stroke="#075985" stroke-width="1.5" opacity="0"/>
       <!-- 草圖底線（dashed） -->
       <rect x="30" y="100" width="80" height="0" fill="none" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="3 2" class="ext-base"/>
       <!-- 向上箭頭 -->
       <g class="ext-arrow" opacity="0">
-        <line x1="120" y1="100" x2="120" y2="50" stroke="#dc2626" stroke-width="2"/>
-        <polygon points="120,50 116,56 124,56" fill="#dc2626"/>
-        <text x="125" y="78" font-size="9" fill="#dc2626" font-weight="700">擠出</text>
+        <line x1="18" y1="100" x2="18" y2="58" stroke="#dc2626" stroke-width="2"/>
+        <polygon points="18,56 14,62 22,62" fill="#dc2626"/>
+        <text x="2" y="52" font-size="9" fill="#dc2626" font-weight="700">擠出</text>
       </g>
       <text x="70" y="135" text-anchor="middle" font-size="10" fill="#075985">2D 草圖 → 3D 立體</text>
     </svg>`,
@@ -118,9 +118,14 @@ METHODS.forEach(m => {
 });
 
 // === anime.js 動畫定義（簡化版：直接設 style + timeline） ===
+// 卡片內的 SVG 元素多半帶有 opacity 屬性，anime.js 會去動「屬性」而不是 CSS；
+// 若用 style.opacity 歸零，inline style 會蓋住屬性，動畫跑完也看不到結果，所以 opacity 一律寫回屬性
 function setStyle(el, props) {
   if (!el) return;
-  for (const k in props) el.style[k] = props[k];
+  for (const k in props) {
+    if (k === 'opacity') { el.style.opacity = ''; el.setAttribute('opacity', props[k]); }
+    else el.style[k] = props[k];
+  }
 }
 
 function playExtrude(svg) {

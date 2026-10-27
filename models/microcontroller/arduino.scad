@@ -34,20 +34,26 @@ color([0.12, 0.12, 0.14])
 color([0.75, 0.76, 0.78])
   translate([10, -4, 2]) cube([5, 8, 5]);
 
-// 數位 I/O 接頭（黑色排針）
+// 數位 I/O 接頭（黑色排針，沿長邊、與 USB 邊垂直；D0–D13、GND、AREF 共 16 pin）
 color([0.12, 0.12, 0.14])
-  translate([-26, -34, 2]) cube([52, 5, 6]);
+  translate([21, -31, 2]) cube([5, 41, 6]);
 color([0.85, 0.85, 0.88])
-  for (i = [0:12])
-    translate([-24 + i*4, -34, 7]) cylinder(h = 8, r = 1);
+  for (i = [0:15])
+    translate([23.5, -29 + i*2.5, 7]) cylinder(h = 8, r = 1);
 
-// 類比輸入接頭
+// 電源接頭（另一長邊、靠 USB／DC 端；IOREF、RESET、3.3V、5V、GND、GND、Vin）
 color([0.12, 0.12, 0.14])
-  translate([-26, -34, 2]) cube([28, 5, 6]);
+  translate([-26, -2, 2]) cube([5, 20, 6]);
+color([0.85, 0.85, 0.88])
+  for (i = [0:7])
+    translate([-23.5, 0 + i*2.5, 7]) cylinder(h = 8, r = 1);
 
-// 電源接頭（下方）
+// 類比輸入接頭（同一長邊、遠離 USB 端；A0–A5）
 color([0.12, 0.12, 0.14])
-  translate([-26, 20, 2]) cube([18, 5, 6]);
+  translate([-26, -31, 2]) cube([5, 16, 6]);
+color([0.85, 0.85, 0.88])
+  for (i = [0:5])
+    translate([-23.5, -29 + i*2.5, 7]) cylinder(h = 8, r = 1);
 
 // 電容（圓柱）
 color([0.10, 0.50, 0.20])
@@ -57,17 +63,17 @@ color([0.10, 0.50, 0.20])
 
 // 電源 LED（紅）
 color([0.90, 0.10, 0.10])
-  translate([-20, 16, 2]) cylinder(h = 4, r = 1.5);
+  translate([-16, 16, 2]) cylinder(h = 4, r = 1.5);
 
 // TX/RX LED（綠）
 color([0.10, 0.85, 0.20])
-  translate([-16, 16, 2]) cylinder(h = 4, r = 1.5);
-color([0.10, 0.85, 0.20])
   translate([-12, 16, 2]) cylinder(h = 4, r = 1.5);
+color([0.10, 0.85, 0.20])
+  translate([-8, 16, 2]) cylinder(h = 4, r = 1.5);
 
 // 重置按鈕
 color([0.82, 0.08, 0.08])
-  translate([-22, 4, 2]) cube([6, 6, 4]);
+  translate([-16, 4, 2]) cube([6, 6, 4]);
 
 // 電壓穩壓器
 color([0.15, 0.15, 0.18])

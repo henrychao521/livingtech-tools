@@ -50,7 +50,8 @@ const LEVELS = {
       const pts = [];
       for (let t = 0; t <= 100; t++) {
         const a = t * Math.PI * 2 / 100;
-        const x = 80 * Math.sin(a);
+        // 標準心形線 x = sin³a（與模組 5 的愛心圖樣、首頁演示一致；原本少了三次方，畫出來像葉子而不是愛心）
+        const x = 80 * Math.pow(Math.sin(a), 3);
         const y = -(13 * Math.cos(a) - 5 * Math.cos(2*a) - 2 * Math.cos(3*a) - Math.cos(4*a)) * 4;
         pts.push([x + 80, y + 60]);
       }
@@ -343,13 +344,13 @@ function drawBlade() {
   bladeGrad.addColorStop(1, '#333');
   ctx.fillStyle = bladeGrad;
   ctx.fillRect(BLADE_X - 3, BLADE_Y - 110, 6, 220);
-  // 鋸齒
+  // 鋸齒：面向 +X（關卡路徑都從起點往右切，木板向左送，鋸齒要朝向尚未切到的木料）
   ctx.fillStyle = '#222';
   for (let y = BLADE_Y - 100; y < BLADE_Y + 100; y += 8) {
     ctx.beginPath();
-    ctx.moveTo(BLADE_X - 3, y);
-    ctx.lineTo(BLADE_X - 5, y + 3);
-    ctx.lineTo(BLADE_X - 3, y + 6);
+    ctx.moveTo(BLADE_X + 3, y);
+    ctx.lineTo(BLADE_X + 5, y + 3);
+    ctx.lineTo(BLADE_X + 3, y + 6);
     ctx.fill();
   }
   // 運轉熱光（正在切時）

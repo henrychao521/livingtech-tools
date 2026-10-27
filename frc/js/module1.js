@@ -1,8 +1,8 @@
 // FRC 平台 模組 1
 const PHASES = {
-  auto: { name: '自動期 (Autonomous)', desc: '<strong>15 秒</strong>，機器人完全自主運作，無人類操控。預先寫好的程式判斷場地位置、執行任務（射球、移動、抓取等）。通常是得分關鍵時段，分數加權較高。', color: '#0066B3' },
-  teleop: { name: '操控期 (Teleop)', desc: '<strong>2 分 15 秒</strong>，駕駛員（drive team）用搖桿操作機器人。隊伍 3 機器人聯盟對抗，計算對方策略、收集 game piece、得分。', color: '#FF6600' },
-  endgame: { name: '終局 (Endgame)', desc: '<strong>Teleop 末段，通常 20–30 秒</strong>（依年度賽季而定，例：2024 Crescendo 20 秒、2025 Reefscape 20 秒），有特殊得分機制（爬桿、垂吊、合作協力等）。一場比賽的勝負常在這段時間決定。', color: '#DC2626' },
+  auto: { name: '自動期 (Autonomous)', desc: '<strong>15 秒</strong>（2024、2025 賽季；2026 REBUILT 為 20 秒），機器人完全自主運作，無人類操控。預先寫好的程式判斷場地位置、執行任務（射球、移動、抓取等）。通常是得分關鍵時段，分數加權較高。', color: '#0066B3' },
+  teleop: { name: '操控期 (Teleop)', desc: '<strong>2 分 15 秒</strong>（2026 REBUILT 為 2 分 20 秒），駕駛員（drive team）用搖桿操作機器人。隊伍 3 機器人聯盟對抗，計算對方策略、收集 game piece、得分。', color: '#FF6600' },
+  endgame: { name: '終局 (Endgame)', desc: '<strong>Teleop 末段，通常 20–30 秒</strong>（依年度賽季而定，例：2024 Crescendo、2025 Reefscape 為最後 20 秒；2026 REBUILT 為最後 30 秒），有特殊得分機制（爬桿、垂吊、合作協力等）。一場比賽的勝負常在這段時間決定。', color: '#DC2626' },
 };
 
 const TIMER_TOTAL = 150; // 2:30
@@ -33,13 +33,13 @@ const PARTS = {
     name: 'Bumper（保險桿）',
     role: 'IMPACT PROTECTION',
     desc: '紅色或藍色的緩衝桿，繞機器人四周一圈。FRC 規則要求所有機器人都必須裝 bumper；bumper 顏色必須對應 alliance，每場比賽前換色。',
-    fact: 'Bumper 規範（規則 R402）：padding 至少 2.25" 深、4.5" 高，使用 pool noodle 填充；bumper zone 須在離地 2.5"–5.75" 之間。比賽前必須通過 inspector 檢查。',
+    fact: 'Bumper 規範（2024–2025 賽季手冊 R401–R405）：緩衝層用兩根直徑約 2.5" 的泳池浮條（pool noodle）上下疊成約 5" 高，背板為 3/4" 合板，外覆布料並標示隊號；整個 bumper 須落在離地 0–7.5" 的 bumper zone 內。比賽前必須通過 inspector 檢查。',
   },
   frame: {
     name: 'Frame（主框架）',
     role: 'CHASSIS',
     desc: '機器人的「骨架」。常用 2x1 鋁管 (例：80/20 系列) 或自製 CNC 鋁板組合。尺寸限制：frame perimeter（不含 bumper，bumper 裝在周長外側）≤ 120"；起始高度與伸展限制以當季手冊為準（2024：起始高度 ≤ 4 ft、伸展超出 frame perimeter 不可超過 12"）。',
-    fact: '重量上限：2024 賽季為 ≤ 125.5 lbs（不含 bumper、電池）；2025 起改為 ≤ 115 lbs。比賽前要在 scale 上量測，超重就會被取消資格。',
+    fact: '重量上限：2024 賽季為 ≤ 125 lbs（不含 bumper、電池）；2025 起改為 ≤ 115 lbs。比賽前要在 scale 上量測，超重就會被取消資格。',
   },
   battery: {
     name: '電池（Battery）',
