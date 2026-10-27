@@ -366,9 +366,7 @@ function drawBlade() {
   }
   ctx.restore();
 
-  // 下夾頭
-  ctx.fillStyle = '#1a1a1a';
-  ctx.fillRect(BLADE_X - 18, BLADE_Y + 110, 36, 18);
+  // （2026-10 審查：這是俯視圖，下夾頭在工作台下方看不到，不再畫在木板上）
 
   // 鋸條中心點
   ctx.fillStyle = '#FF7A00';
@@ -481,8 +479,13 @@ canvas.addEventListener('pointermove', e => {
 
   const { dist: d, segIdx, t } = distanceToPath(blade.x, blade.y);
   state.maxOffset = Math.max(state.maxOffset, d);
-  const totalSeg = state.level.path.length - 1;
-  state.pathProgress = Math.min(1, (segIdx + t) / totalSeg);
+  // 2026-10 審查：原本直接取「最近線段」當進度，封閉路徑（L4、L5）起點旁就是終點線段，一動就 97% 過關；
+  // 改成沿路徑弧長計算，而且每次只能往前推進一小段（≤ 30 px，正常推進一次 pointermove 只有幾 px），跳過去的不算
+  const P = state.level.path;
+  if (!state.segLen) { state.segLen = P.slice(1).map((q, i) => Math.hypot(q[0] - P[i][0], q[1] - P[i][1])); state.pathLen = state.segLen.reduce((a, b) => a + b, 0); state.progPx = 0; }
+  const candPx = state.segLen.slice(0, segIdx).reduce((a, b) => a + b, 0) + t * state.segLen[segIdx];
+  if (candPx > state.progPx && candPx - state.progPx <= 30) state.progPx = candPx;
+  state.pathProgress = Math.min(1, state.progPx / state.pathLen);
 
   if (d > state.level.tolerance) {
     state.errors++;
@@ -564,7 +567,7 @@ function succeed() {
   showResult(true, stars, {
     '最大偏移': toMM(state.maxOffset).toFixed(1) + ' mm',
     '失誤次數': state.errors,
-    '超速時間': state.overspeedCount + ' 幀',
+    '超速次數': state.overspeedCount + ' 次',
     '完成度': Math.round(state.pathProgress * 100) + '%',
   });
 }

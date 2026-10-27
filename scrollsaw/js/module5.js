@@ -151,7 +151,7 @@ const TEMPLATES = [
       const cx = 150, cy = 150;
       // 蝴蝶曲線（簡化版）
       for (let t = 0; t <= 200; t++) {
-        const a = (t / 200) * Math.PI * 4;
+        const a = (t / 200) * Math.PI * 2;   // 2026-10 審查：r(a) 週期是 2π，原本跑到 4π 會把同一條路徑畫兩遍、長度與尖角數加倍
         const r = Math.exp(Math.cos(a)) - 2 * Math.cos(4 * a);
         pts.push([cx + 30 * r * Math.cos(a), cy + 30 * r * Math.sin(a)]);
       }
@@ -221,8 +221,9 @@ function analyzeTemplate(t) {
   const len = pathLength(t.path);
   const sharpAngles = countSharpAngles(t.path);
   const lenCM = (len / 25).toFixed(1);
-  // 粗估：以初學者每分鐘約 1 公分計；實際依木材、厚度與機台差很多，介面上標為「粗估」
-  const timeSec = Math.round(len / 25 * 60);
+  // 粗估：假設初學者含轉角平均每分鐘約 10 公分（2026-10 審查：原本每分鐘 1 公分，30 公分的小圖要半小時，偏離常理）；
+  // 實際依木材、厚度與機台差很多，介面標示「粗估」並寫出假設
+  const timeSec = Math.round(len / 25 / 10 * 60);
   document.getElementById('stat-len').textContent = `${lenCM} cm`;
   document.getElementById('stat-time').textContent = formatTime(timeSec);
   const diffMap = { easy: '★☆☆', mid: '★★☆', hard: '★★★' };
@@ -233,7 +234,7 @@ function analyzeTemplate(t) {
   if (t.diff === 'hard') tips.push(`<li>難度較高，建議先在模組 4 把 L4、L5 練到 3 顆星再嘗試。</li>`);
   if (t.id === 'fish' || t.id === 'cat') tips.push(`<li>這個圖形是「外輪廓」切割，從邊緣開始，沿線回到起點即可分離。</li>`);
   if (t.id === 'gear') tips.push(`<li>齒輪是「外輪廓」切割，從邊緣切入即可，不需要穿鋸條。齒根的尖角可以先在廢料側鑽小孔（釋放孔），切到那裡比較好轉向。</li>`);
-  if (t.id === 'butterfly' || t.id === 'flower') tips.push(`<li>蝴蝶/花朵的對稱曲線可以先畫好對稱軸，切到一半翻面繼續。</li>`);
+  if (t.id === 'butterfly' || t.id === 'flower') tips.push(`<li>蝴蝶/花朵是對稱曲線，先畫出對稱軸確認左右對稱，切割時順著輪廓連續鋸，不要中途翻面（翻面後背面沒有畫線、方向也會顛倒）。</li>`);
   tips.push(`<li>建議先用鉛筆把路徑畫在木板上，並以 <strong>0.5mm 細芯</strong>保持線條清晰。</li>`);
   tips.push(`<li>切完後保留 <strong>1mm</strong> 修整空間，用銼刀修平輪廓。</li>`);
 
@@ -384,21 +385,34 @@ document.getElementById('upload-input').addEventListener('change', e => {
       try {
         const parser = new DOMParser();
         const doc = parser.parseFromString(ev.target.result, 'image/svg+xml');
-        const path = doc.querySelector('path');
-        if (path) {
-          showToast('SVG 已載入（簡易模式：以路徑外框估算）', '');
-          analyzeTemplate({
-            id: 'custom', name: file.name, diff: 'mid', desc: '使用者上傳',
-            path: [[60, 60], [240, 60], [240, 240], [60, 240], [60, 60]],
-          });
-        }
+        const src = doc.querySelector('path');
+        // 2026-10 審查：原本不管上傳什麼都套用固定正方形；改成真的沿第一條 path 取樣 200 點（不處理 transform）
+        if (!src || !src.getAttribute('d')) { showToast('SVG 裡找不到 path，請改用現成圖樣', 'warn'); return; }
+        const NS = 'http://www.w3.org/2000/svg';
+        const host = document.createElementNS(NS, 'svg');
+        host.setAttribute('style', 'position:absolute;width:0;height:0;visibility:hidden');
+        const p = document.createElementNS(NS, 'path');
+        p.setAttribute('d', src.getAttribute('d'));
+        host.appendChild(p); document.body.appendChild(host);
+        const L = typeof p.getTotalLength === 'function' ? p.getTotalLength() : 0;
+        const raw = [];
+        for (let i = 0; L > 0 && i <= 200; i++) { const q = p.getPointAtLength(L * i / 200); raw.push([q.x, q.y]); }
+        host.remove();
+        if (raw.length < 3) { showToast('SVG 路徑無法分析，請改用現成圖樣', 'warn'); return; }
+        // 縮放到和現成圖樣相同的 60–240 範圍（長邊 180，等於約 7 公分）
+        const xs = raw.map(q => q[0]), ys = raw.map(q => q[1]);
+        const minX = Math.min(...xs), minY = Math.min(...ys);
+        const k = 180 / Math.max(Math.max(...xs) - minX, Math.max(...ys) - minY, 1e-6);
+        showToast('SVG 已載入（只讀第一條路徑）', '');
+        analyzeTemplate({ id: 'custom', name: file.name, diff: 'mid', desc: '使用者上傳',
+          path: raw.map(([x, y]) => [60 + (x - minX) * k, 60 + (y - minY) * k]) });
       } catch (err) {
         showToast('SVG 解析失敗', 'bad');
       }
     };
     reader.readAsText(file);
   } else {
-    showToast('PNG 上傳尚未支援，請使用 SVG 或選擇現成圖樣', 'warn');
+    showToast('目前只支援 SVG 向量圖，請改用 SVG 或選擇現成圖樣', 'warn');
   }
 });
 

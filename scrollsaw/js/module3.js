@@ -31,7 +31,7 @@ const STEPS = [
   {
     title: '對準切割線',
     anim: 'align',
-    desc: '把鋸條對準切割線的「廢料側」（一般外輪廓是線的外側；內挖時廢料在線的內側），保留線約 1mm，後續用銼刀修平。確認手部位置在「安全三角區」（雙手拇指在木板邊緣、距鋸條至少 5 公分）。',
+    desc: '把鋸條對準切割線的「廢料側」（一般外輪廓是線的外側；內挖時廢料在線的內側），保留線約 1mm，後續用銼刀修平。確認雙手都在鋸條周圍的危險區外（雙手拇指在木板邊緣、距鋸條至少 5 公分）。',
     tip: '切割線要事先用 0.5mm 的鉛筆畫，太粗的線無法精確對位。',
     warn: null,
   },
@@ -342,9 +342,10 @@ function renderAnim(type) {
           <rect x="20" y="-12" width="5" height="16" rx="2" fill="#F5C49A"/>
           <rect x="27" y="-10" width="5" height="14" rx="2" fill="#F5C49A"/>
         </g>
-        <!-- 安全三角區 -->
-        <polygon points="200,80 110,180 290,180" fill="rgba(46,189,102,.15)" stroke="#2EBD66" stroke-width="1.5" stroke-dasharray="4 3"/>
-        <text x="200" y="170" text-anchor="middle" font-family="Noto Sans TC,sans-serif" font-size="11" fill="#1b6e3a" font-weight="700">安全三角區</text>
+        <!-- 2026-10 審查：原本把鋸條前方的三角形標成綠色「安全三角區」，等於叫學生把手放在鋸條附近；
+             改成鋸條周圍標紅色危險區，雙手在區外 -->
+        <circle cx="200" cy="130" r="48" fill="rgba(225,74,74,.12)" stroke="#E14A4A" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <text x="200" y="196" text-anchor="middle" font-family="Noto Sans TC,sans-serif" font-size="11" fill="#b91c1c" font-weight="700">鋸條周圍危險區：手指不可進入</text>
         <!-- 距離標示 -->
         <line x1="115" y1="235" x2="195" y2="235" stroke="#444" stroke-width="1"/>
         <text x="155" y="232" text-anchor="middle" font-family="Noto Sans TC,sans-serif" font-size="10" fill="#444">≥ 5cm</text>
@@ -459,8 +460,9 @@ window.markDone = markDone;
 if (typeof Interactions !== 'undefined') {
   Interactions.SequencePuzzle({
     container: '#seq-puzzle',
-    items: STEPS.map(s => s.title),
-    title: '把打亂的步驟排回正確順序',
+    // 2026-10 審查：「內挖切割」是另一套子流程（鑽孔、穿鋸條要在切割前），不屬於一般外輪廓切割的線性順序，排序題不放
+    items: STEPS.filter(s => !s.title.startsWith('內挖')).map(s => s.title),
+    title: '把一般外輪廓切割的步驟排回正確順序（內挖切割另有流程，不在這題）',
     onComplete: () => {
       try {
         const k = 'scrollsaw_progress_v1';
