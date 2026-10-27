@@ -162,8 +162,10 @@
     </g>`;
 
     // 脫落預備（隱藏）
-    html += `<g id="ws-stripped" style="display:none">
-      <rect x="${wireStartX}" y="${cy - lvl.insR}" width="${stripPx}" height="${lvl.insR * 2}" rx="${lvl.insR}" fill="url(#ws-ins-${currentLevel})" opacity=".6"/>
+    // 2026-10 審查：前端外皮原本隱藏，還沒剝線銅芯就已經露出；改成一開始完整包覆，剝線成功才拉走
+    html += `<g id="ws-stripped">
+      <rect x="${wireStartX}" y="${cy - lvl.insR}" width="${stripPx}" height="${lvl.insR * 2}" rx="${lvl.insR}" fill="url(#ws-ins-${currentLevel})" filter="url(#ws-shadow)"/>
+      <rect x="${wireStartX}" y="${cy - lvl.insR + 2}" width="${stripPx}" height="3" fill="#fff" opacity=".25"/>
     </g>`;
 
     // 切口標線
@@ -211,9 +213,9 @@
       const hx = cx - 18 + i * 12;
       // 孔徑：24 最小、18 最大（r = 3.0, 3.8, 4.6, 5.4）
       const rr = 3 + i * 0.8;
-      const isCorrect = (g === lvl.stripperHole);
+      // 2026-10 審查：不再用綠框標出正確孔位（等於直接給答案），只標學生自己選的孔
       const isSel = (g === stripperGauge);
-      html += `<circle cx="${hx}" cy="${holeY}" r="${rr}" fill="${isSel ? '#fbbf24' : '#1f2937'}" stroke="${isCorrect ? '#16A34A' : 'none'}" stroke-width="${isCorrect ? 1.5 : 0}"/>`;
+      html += `<circle cx="${hx}" cy="${holeY}" r="${rr}" fill="${isSel ? '#fbbf24' : '#1f2937'}"/>`;
       html += `<text x="${hx}" y="${holeY + rr + 11}" font-size="7" fill="#cbd5e1" text-anchor="middle">${g}</text>`;
     });
     // 標示：選中的孔對到電線
@@ -282,7 +284,7 @@
     const [pMin, pMax] = lvl.cutterPressureWindow;
 
     if (maxP > pMax + 15) checks.nick = 'fail-severe';      // 銅芯斷裂
-    else if (maxP > pMax)  checks.nick = 'fail-nick';        // 刻痕 > 10%
+    else if (maxP > pMax)  checks.nick = 'fail-nick';        // 刻痕
     else if (lvl.strands > 1 && maxP > pMax - 5) checks.nick = 'warn-strand'; // 多芯斷股風險
     else checks.nick = 'pass';
 
@@ -305,8 +307,8 @@
     const labels = {
       nick: {
         'pass': { icon: '✓', text: '銅芯無刻痕（IPC 合格）', cls: 'ok' },
-        'warn-strand': { icon: '⚠', text: '銅芯輕微刻痕（< 10%，多芯有斷股風險）', cls: 'warn' },
-        'fail-nick': { icon: '✗', text: '銅芯刻痕 ≥ 10% 直徑（IPC 不合格）', cls: 'bad' },
+        'warn-strand': { icon: '⚠', text: '刀口壓得太深，銅芯可能已有輕微刻痕（多芯線容易斷股），建議剪掉重剝', cls: 'warn' },
+        'fail-nick': { icon: '✗', text: '銅芯有刻痕（不合格，剪掉重剝）', cls: 'bad' },
         'fail-severe': { icon: '✗', text: '銅芯被切斷', cls: 'bad' },
       },
       edge: {
@@ -345,13 +347,13 @@
       // 三類結果動畫
       if (result.checks.edge === 'fail-uncut' || result.checks.edge === 'fail-loose') {
         // 外皮沒切斷 → 整條被拉走再彈回
-        [insulation, core, cutMark].forEach(g => {
+        [insulation, stripped, core, cutMark].forEach(g => {
           if (!g) return;
           g.style.transition = 'transform .55s ease-out';
           g.style.transform = 'translateX(60px)';
         });
         setTimeout(() => {
-          [insulation, core, cutMark].forEach(g => {
+          [insulation, stripped, core, cutMark].forEach(g => {
             if (!g) return;
             g.style.transition = 'transform .35s cubic-bezier(.5,1.8,.6,1)';
             g.style.transform = 'translateX(0)';
@@ -373,7 +375,6 @@
         }, 350);
       } else if (result.checks.nick === 'fail-nick' || result.checks.nick === 'warn-strand') {
         // 刻痕 / 斷股
-        stripped.style.display = '';
         stripped.style.transition = 'transform .55s ease-out, opacity .55s';
         stripped.style.transform = 'translateX(-40px)';
         stripped.style.opacity = '0';
@@ -393,7 +394,6 @@
         }, 250);
       } else {
         // 成功：外皮乾淨脫落
-        stripped.style.display = '';
         stripped.style.transition = 'transform .6s ease-out, opacity .6s';
         stripped.style.transform = 'translateX(-50px)';
         stripped.style.opacity = '0';
@@ -415,7 +415,7 @@
 
     if (r.ok) {
       el.className = 'ws-result show win';
-      el.innerHTML = `<h4>🎉 通過 IPC-A-620 工藝檢查</h4>
+      el.innerHTML = `<h4>🎉 通過工藝檢查（檢查項目參考 IPC/WHMA-A-620）</h4>
         <p style="margin:4px 0;font-size:13px">露出長度 ${r.lenMm.toFixed(1)}mm</p>
         <div class="ws-result-checks">${checksHtml}</div>`;
       if (!cleared.has(lvl.id)) {
@@ -427,7 +427,7 @@
       }
     } else {
       el.className = 'ws-result show lose';
-      el.innerHTML = `<h4>❌ 未達 IPC-A-620 標準</h4>
+      el.innerHTML = `<h4>❌ 未通過工藝檢查</h4>
         <p style="margin:4px 0;font-size:13px">露出長度 ${r.lenMm.toFixed(1)}mm　・　提示：${lvl.hint}</p>
         <div class="ws-result-checks">${checksHtml}</div>`;
       if (typeof playError === 'function') playError();
