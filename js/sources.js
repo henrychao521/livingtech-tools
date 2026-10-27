@@ -195,7 +195,7 @@ window.SOURCES = {
   ],
 
   'hand-tools': [
-    { tag: 'OSHA', text: '勞動部職業安全衛生署《手工具作業安全衛生指引》與 OSHA 29 CFR 1910.244。', url: 'https://www.osha.gov.tw/' },
+    { tag: 'OSHA', text: '勞動部職業安全衛生署《手工具作業安全衛生指引》與 OSHA 29 CFR 1910.242。', url: 'https://www.osha.gov.tw/' },
     { tag: 'CURR', text: '教育部《十二年國教課程綱要・科技領域》生 P-IV-3「手工具的操作與使用」、生 P-IV-4「材料的選用與加工處理」。', url: 'https://cirn.moe.edu.tw/' },
     { tag: 'HLE',  text: '翰林版《國中生活科技 1 上》K3「設計與製作的基礎」。', url: 'https://www.hle.com.tw/' },
     { tag: 'STAN', text: 'Stanley Black & Decker《Hand Tool Care & Maintenance Guide》。', url: 'https://www.stanleyblackanddecker.com/' },

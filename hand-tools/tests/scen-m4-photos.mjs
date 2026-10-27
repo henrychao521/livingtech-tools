@@ -11,7 +11,7 @@ export default async (w, assert) => {
     for (const im of imgs) { const k = im.getAttribute('src').match(/([a-z-]+)\.webp$/)[1]; assert.ok(credits[k], '缺出處：' + k); }
     assert.strictEqual(b.querySelector('.opt-label').textContent, b.dataset.c, '選項文字不變');
   }
-  btns.find(b => b.dataset.q === '0' && b.dataset.c === '羊角錘').click();
+  btns.find(b => b.dataset.q === '0' && b.dataset.c === '羊角鎚').click();
   assert.ok(d.querySelector('.quiz-item .feedback.success'), '答對要顯示正確回饋');
   assert.ok(d.querySelector('.photo-credits li'), '頁面要列照片出處');
 };

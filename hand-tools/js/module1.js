@@ -4,7 +4,7 @@
 //        [7] ANSI/ASME B107・北星《手工具圖鑑》；[8] ILOSH《校園實習工場安全管理手冊》
 const TOOLS = [
   { id: 'hammer', name: '鎚類 Hammers', icon: '🔨',
-    types: '羊角錘 claw hammer（敲釘＋拔釘）、橡膠槌 mallet（不傷工件）、銅頭錘 copper（金屬整形）、小釘鎚 tack hammer（小釘）',
+    types: '羊角鎚 claw hammer（敲釘＋拔釘）、橡膠槌 mallet（不傷工件）、銅頭鎚 copper（金屬整形）、小釘鎚 tack hammer（小釘）',
     use: '釘釘子、敲打、輕度整形',
     tip: '握握把末端揮動：輕敲小釘以手腕為主；一般釘釘子由手肘帶動前臂揮動，手腕保持穩定、對準釘頭。釘前可用尖嘴鉗或定釘器夾住釘子定位，避免敲到手指。',
     risk: '敲到手指——握工件的手要遠離釘點。釘子彈飛——戴護目鏡。',
@@ -14,7 +14,7 @@ const TOOLS = [
     types: '一字 slot、十字 Phillips（PH0–PH3）、星型 Torx、內六角 Hex',
     use: '鎖緊或鬆開螺絲',
     tip: '十字螺絲要選對尺寸（PH0–PH3）。太大太小都會崩牙。鎖前確認刀頭穩穩卡進螺絲頭。',
-    risk: '崩牙螺絲拆不出來——選對尺寸。手滑刺到手——另一手扶穩工件。',
+    risk: '崩牙螺絲拆不出來——選對尺寸。手滑刺到手——小工件不要拿在手上鎖，先放在工作台上或用虎鉗夾住（澳洲 WorkSafe Tasmania 工場安全指引：小零件不要拿在手上用起子，放進虎鉗）。',
     cite: '[4][7]' },
 
   { id: 'saw', name: '鋸類 Saws', icon: '🪚',
@@ -60,7 +60,7 @@ const TOOLS = [
     cite: '[1]' },
 
   { id: 'clamp', name: '夾具 Clamps & Vise', icon: '🧷',
-    types: 'C 型夾、F 型夾、檯虎鉗 bench vise、彈簧夾、皮帶夾',
+    types: 'C 型夾、F 型夾、桌虎鉗 bench vise、彈簧夾、皮帶夾',
     use: '固定工件做後續加工（鋸、銼、鑽、磨）',
     tip: '夾木工件要墊軟材（薄木片）防止夾痕。施力到「工件不動」即可，過緊會壓扁工件或留壓痕。',
     risk: '沒夾穩工件做加工——工件飛出傷人。所有切削加工的工件都應確實固定<sup>[1][8]</sup>。',
@@ -70,7 +70,7 @@ const TOOLS = [
     types: '中心衝 center punch（鑽前打點）、衝棒 pin punch（敲入定位銷）、沉釘衝 nail set（把釘頭打入木面下）、樣衝 prick punch（劃線交點）',
     use: '在金屬上打點定位、敲入或敲出銷子、把釘頭打入木材表面下',
     tip: '中心衝在鑽金屬孔前必用——讓鑽頭起鑽不偏滑。衝棒、中心衝要用圓頭鎚（球頭鎚）等金屬鎚敲擊，力量集中；不要用橡膠槌（彈性吸力、鋼衝會打傷槌面）。',
-    risk: '敲擊時握工件的手指要離擊點 5 cm 以上；衝具尖端使用後請保護收納，避免散落工作台。',
+    risk: '工件用虎鉗或夾具固定，不用手拿工件；衝具尖端使用後請保護收納，避免散落工作台。',
     cite: '[3][4]' },
 ];
 
@@ -96,7 +96,8 @@ TOOLS.forEach(t => {
     <p style="font-size:12.5px;color:#666;margin:4px 0"><strong>用途：</strong>${t.use}</p>
     <p style="font-size:12px;color:#16A34A;background:#DCFCE7;padding:6px 10px;border-radius:5px;margin:6px 0"><strong>💡 訣竅：</strong>${t.tip}</p>
     <p style="font-size:12px;color:#dc2626"><strong>⚠ 風險：</strong>${t.risk}</p>
-    <p style="font-size:11px;color:#94a3b8;margin-top:4px"><strong>📚 參考：</strong>${t.cite}（見頁尾資料來源）</p>`;
+    <p style="font-size:11px;color:#94a3b8;margin-top:4px"><strong>📚 參考：</strong>${t.cite}（見頁尾資料來源）</p>
+    <p style="font-size:10.5px;color:#94a3b8;margin-top:2px">工具模型圖：本站以 OpenSCAD 建模繪製</p>`;
   card.addEventListener('click', () => {
     if (!seen.has(t.id)) {
       seen.add(t.id); card.style.background = '#F1F5F9';

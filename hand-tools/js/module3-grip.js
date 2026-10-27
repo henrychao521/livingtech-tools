@@ -5,7 +5,7 @@
 // 待補素材清單：docs/待補素材清單.md（由 tools/ 產生，與本檔資料同源）
 (function (root) {
   const GRIPS = [
-    { no: 'H-01', id: 'hammer', tool: '羊角錘', img: 'hammer-grip-side.jpg', video: 'hammer-swing-side.mp4', sec: 6, angle: '側面（與鎚子揮動的平面垂直），鏡頭與工作台同高',
+    { no: 'H-01', id: 'hammer', tool: '羊角鎚', img: 'hammer-grip-side.jpg', video: 'hammer-swing-side.mp4', sec: 6, angle: '側面（與鎚子揮動的平面垂直），鏡頭與工作台同高',
       grip: '握握把末端；輕敲小釘以手腕為主，一般釘釘子由手肘帶動前臂揮動，手腕保持穩定、對準釘頭', other: '扶釘的手遠離釘點，或用尖嘴鉗夾住釘子定位',
       safety: '戴護目鏡（釘子可能彈飛）', cite: '[1][4]' },
     { no: 'H-02', id: 'driver', tool: '螺絲起子', img: 'driver-grip-side.jpg', angle: '側面斜上方 45°，看得到刀頭卡進螺絲頭',
@@ -14,14 +14,14 @@
     { no: 'H-03', id: 'backsaw', tool: '夾背鋸（日式拉切／西式推切）', img: 'backsaw-grip-side.jpg', video: 'backsaw-stroke-side.mp4', sec: 8, angle: '側面，鏡頭對準鋸條平面；另拍一張俯視看起鋸拇指位置',
       grip: '握把手；長鋸用全臂、短鋸用前臂帶動', other: '起鋸時用拇指側面扶住鋸條，離鋸齒一段距離',
       safety: '工件先用夾具夾緊；依鋸子種類在推或拉時施力', cite: '[3][4]' },
-    { no: 'H-04', id: 'hacksaw', tool: '鋼鋸', img: 'hacksaw-grip-side.jpg', video: 'hacksaw-stroke-side.mp4', sec: 8, angle: '側面，工件夾在檯虎鉗上，鏡頭與鋸弓同平面',
+    { no: 'H-04', id: 'hacksaw', tool: '鋼鋸', img: 'hacksaw-grip-side.jpg', video: 'hacksaw-stroke-side.mp4', sec: 8, angle: '側面，工件夾在桌虎鉗上，鏡頭與鋸弓同平面',
       grip: '一手握把手、另一手扶鋸弓前端；推時施力、拉回放鬆', other: '扶鋸弓前端的手在鋸弓上，不碰鋸條',
-      safety: '工件夾緊在檯虎鉗；鋸條鋸齒朝前（推切）', cite: '[3][4]' },
+      safety: '工件夾緊在桌虎鉗；鋸條鋸齒朝前（推切）', cite: '[3][4]' },
     { no: 'H-05', id: 'coping', tool: '線鋸（弓形）', img: 'coping-saw-grip-front.jpg', angle: '正面稍高，看得到鋸條與工件上的線',
       grip: '握把手，鋸條垂直工件上下運動', other: '工件先夾緊（見步驟 3），扶工件的手遠離鋸條',
       safety: '看鋸條齒向判斷推切或拉切（鋸齒朝把手就是拉切）', cite: '[3][4]' },
-    { no: 'H-06', id: 'file', tool: '銼刀', img: 'file-grip-side.jpg', video: 'file-stroke-side.mp4', sec: 6, angle: '側面，工件夾在檯虎鉗上',
-      grip: '一手握柄、另一手扶壓銼刀前端', other: '工件夾在檯虎鉗上，不用手拿工件',
+    { no: 'H-06', id: 'file', tool: '銼刀', img: 'file-grip-side.jpg', video: 'file-stroke-side.mp4', sec: 6, angle: '側面，工件夾在桌虎鉗上',
+      grip: '一手握柄、另一手扶壓銼刀前端', other: '工件夾在桌虎鉗上，不用手拿工件',
       safety: '只推著銼（單向），回拉時抬起；銼刀一定要裝柄', cite: '[1][6]' },
     { no: 'H-07', id: 'pliers', tool: '鉗子（尖嘴鉗、斜口鉗）', img: 'pliers-grip-top.jpg', angle: '俯視，手與鉗子都入鏡',
       grip: '握把手中段（控制好）', other: '剪線時側著剪（碎片不朝人）',
@@ -33,7 +33,7 @@
       grip: '握扳手柄，朝自己「拉」而不是推', other: '不要放在扳手可能滑脫的路徑上',
       safety: '活動扳手先把調整輪轉到夾緊；梅花扳手比開口扳手不易打滑', cite: '[4][7]' },
     { no: 'H-10', id: 'punch', tool: '中心衝＋鎚子', img: 'punch-grip-side.jpg', angle: '側面，鏡頭與工件同高',
-      grip: '一手握衝具、衝尖對準記號；另一手握鎚子（握法同 H-01），用圓頭鎚等金屬鎚敲擊', other: '握工件的手指離擊點 5 cm 以上',
+      grip: '一手握衝具、衝尖對準記號；另一手握鎚子（握法同 H-01），用圓頭鎚等金屬鎚敲擊', other: '工件用虎鉗或夾具固定，不用手拿工件；持衝具的手握穩衝具中段',
       safety: '不要用橡膠槌敲衝具；用完衝尖要保護收納', cite: '[3][4]' },
   ];
 
