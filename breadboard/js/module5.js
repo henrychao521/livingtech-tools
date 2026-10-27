@@ -96,17 +96,17 @@ function renderErrorSVG(id) {
       <rect x="54" y="72" width="2.5" height="9" fill="#dc2626"/>
       <rect x="59" y="72" width="2.5" height="9" fill="#92400e"/>
       <circle cx="35" cy="76" r="1.8" fill="#475569"/><circle cx="80" cy="76" r="1.8" fill="#475569"/>
-      <!-- LED 反接：短腳（−，陰極）插在電阻那條直行，長腳（+，陽極）插在接地那條直行 -->
-      <line x1="85" y1="88" x2="80" y2="88" stroke="#9ca3af" stroke-width="1.5"/>
-      <line x1="94" y1="88" x2="95" y2="100" stroke="#9ca3af" stroke-width="1.5"/>
-      <ellipse cx="90" cy="82" rx="8" ry="7" fill="#475569" stroke="#1f2937"/>
-      <ellipse cx="87" cy="79" rx="2.5" ry="2" fill="rgba(255,255,255,.4)"/>
-      <circle cx="80" cy="88" r="1.8" fill="#475569"/><circle cx="95" cy="100" r="1.8" fill="#475569"/>
-      <text x="74" y="96" font-size="7" fill="#dc2626" font-weight="700">短腳 −</text>
-      <text x="99" y="98" font-size="7" fill="#dc2626" font-weight="700">長腳 +</text>
+      <!-- LED 反接：短腳（−，陰極）插在電阻那條直行（x=80），長腳（+，陽極）插在 x=110 那條直行 -->
+      <line x1="91" y1="86" x2="80" y2="88" stroke="#9ca3af" stroke-width="1.5"/>
+      <line x1="99" y1="86" x2="110" y2="94" stroke="#9ca3af" stroke-width="1.5"/>
+      <ellipse cx="95" cy="80" rx="8" ry="7" fill="#475569" stroke="#1f2937"/>
+      <ellipse cx="92" cy="77" rx="2.5" ry="2" fill="rgba(255,255,255,.4)"/>
+      <circle cx="80" cy="88" r="1.8" fill="#475569"/><circle cx="110" cy="94" r="1.8" fill="#475569"/>
+      <text x="60" y="104" font-size="7" fill="#dc2626" font-weight="700">短腳 −</text>
+      <text x="128" y="96" font-size="7" fill="#dc2626" font-weight="700">長腳 +</text>
       <!-- 黑跳線：長腳那條直行 → −軌（接反了：陽極被接到地）-->
-      <path d="M 95 94 Q 113 96 110 112" stroke="#1a1a1a" stroke-width="1.8" fill="none"/>
-      <circle cx="95" cy="94" r="2.2" fill="#1a1a1a"/><circle cx="110" cy="112" r="2.2" fill="#1a1a1a"/>
+      <path d="M 110 100 Q 124 102 125 112" stroke="#1a1a1a" stroke-width="1.8" fill="none"/>
+      <circle cx="110" cy="100" r="2.2" fill="#1a1a1a"/><circle cx="125" cy="112" r="2.2" fill="#1a1a1a"/>
       <text x="140" y="70" text-anchor="middle" font-size="9" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">⛔ 不通</text>
       <text x="100" y="32" text-anchor="middle" font-size="10" fill="#dc2626" font-weight="700" font-family="Noto Sans TC">⚠ LED 反接 → 不導通、不亮</text>
     </svg>`,
