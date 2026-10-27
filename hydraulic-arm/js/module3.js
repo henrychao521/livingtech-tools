@@ -25,10 +25,15 @@ STEPS.forEach((s, i) => {
   item.addEventListener('click', () => selectStep(i));
   stepListEl.appendChild(item);
 });
+// 每一步的說明圖（js/module3-figs.js，本站程式繪製）
+function figHTML(i) {
+  const svg = (window.HA_M3_FIGS || [])[i];
+  return svg ? `<figure class="step-fig">${svg}<figcaption>圖 ${i + 1}　${STEPS[i].title}（示意圖，本站繪製）</figcaption></figure>` : '';
+}
 function selectStep(i) {
   const s = STEPS[i];
   document.querySelectorAll('.step-item').forEach((el, k) => el.classList.toggle('active', k === i));
-  stepDetailEl.innerHTML = `<span class="step-step">STEP ${i + 1} / ${STEPS.length}</span><h3>${s.title}</h3><p class="step-desc">${s.desc.replace(/\n/g, '<br>')}</p>${s.tip ? `<div class="step-tip"><strong>💡 提示：</strong>${s.tip}</div>` : ''}<div style="display:flex;gap:8px;margin-top:18px">${i > 0 ? `<button class="btn btn-ghost" onclick="selectStep(${i - 1})">← 上一步</button>` : ''}${i < STEPS.length - 1 ? `<button class="btn btn-primary" onclick="selectStep(${i + 1})">下一步 →</button>` : '<span class="btn btn-primary" style="background:#22c55e">已完成 ✓</span>'}</div>`;
+  stepDetailEl.innerHTML = `<span class="step-step">STEP ${i + 1} / ${STEPS.length}</span><h3>${s.title}</h3><p class="step-desc">${s.desc.replace(/\n/g, '<br>')}</p>${figHTML(i)}${s.tip ? `<div class="step-tip"><strong>💡 提示：</strong>${s.tip}</div>` : ''}<div style="display:flex;gap:8px;margin-top:18px">${i > 0 ? `<button class="btn btn-ghost" onclick="selectStep(${i - 1})">← 上一步</button>` : ''}${i < STEPS.length - 1 ? `<button class="btn btn-primary" onclick="selectStep(${i + 1})">下一步 →</button>` : '<span class="btn btn-primary" style="background:#22c55e">已完成 ✓</span>'}</div>`;
   if (!seenSteps.has(i)) {
     seenSteps.add(i);
     document.querySelectorAll('.step-item')[i].classList.add('seen');
