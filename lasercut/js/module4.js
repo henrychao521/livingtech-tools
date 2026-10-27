@@ -176,15 +176,16 @@ function update() {
 }
 
 // ---------- 挑戰 ----------
+// 2026-10 審查：挑戰都是「切割」的結果，刻線／雕刻模式下不算（原本上方判定失敗、下方卻顯示達成）
 const QUESTS = [
   { id: 'q_clean', text: '把 3 mm 合板「剛好切透、邊緣乾淨」', hint: '說明書的起點：約 20 mm/s、65%',
-    test: (r) => state.mat === 'wood' && state.t === 3 && r.level === 'clean' },
+    test: (r) => state.mode === 'cut' && state.mat === 'wood' && state.t === 3 && r.level === 'clean' },
   { id: 'q_under', text: '做出「切痕很深但沒斷」的失敗狀態', hint: '把速度調快一點，或功率降一點',
-    test: (r) => r.level === 'partial' },
+    test: (r) => state.mode === 'cut' && r.level === 'partial' },
   { id: 'q_burn',  text: '做出「切透但邊緣焦黑」', hint: '速度調得很慢，或功率拉滿',
-    test: (r) => r.level === 'burn' || r.level === 'fire' },
+    test: (r) => state.mode === 'cut' && r.level === 'burn' || r.level === 'fire' },
   { id: 'q_thick', text: '挑戰厚板：把 5 mm 的密集板（MDF）也乾淨切透', hint: '密集板比合板密，同樣厚度要更多能量',
-    test: (r) => state.mat === 'mdf' && state.t === 5 && r.level === 'clean' },
+    test: (r) => state.mode === 'cut' && state.mat === 'mdf' && state.t === 5 && r.level === 'clean' },
 ];
 const done = new Set(loadP().module4_quests || []);
 
