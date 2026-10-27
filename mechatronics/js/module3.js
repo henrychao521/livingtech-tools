@@ -153,7 +153,8 @@ function updateHUD() {
   const c = car;
   document.getElementById('tVal').textContent = (c ? c.t : 0).toFixed(2) + ' s';
   document.getElementById('pVal').textContent = Math.min(100, Math.round((c ? c.prog : 0) / PERIM * 100)) + ' %';
-  document.getElementById('eVal').textContent = c ? c.e.toFixed(1) : '0';
+  // 2026-10 審查：畫布 y 軸向下，程式內 e>0 是「線在畫面上車子右側」；頁面約定以實體車為準（e>0＝線在左側），顯示時取負號對齊
+  document.getElementById('eVal').textContent = c ? (c.e === 0 ? 0 : -c.e).toFixed(1) : '0';
   document.getElementById('zVal').textContent = c ? c.zig : 0;
   document.getElementById('leds').innerHTML = OFFS.map((o, i) =>
     `<div class="sensor-led ${c && c.sensors[i] ? 'on' : ''}">S${i + 1}</div>`).join('');

@@ -99,7 +99,7 @@ function draw(r) {
 }
 
 const QUESTS = [
-  { id: 'q_blind', text: '讓障礙物落進盲區，看程式收到什麼', hint: '距離拉到 2 cm 以內',
+  { id: 'q_blind', text: '讓障礙物落進盲區，看程式收到什麼', hint: '距離拉到 2 cm 以下（規格書量測範圍是 2–400 cm，2 cm 本身還量得到）',
     test: (r) => r.fail === '盲區' },
   { id: 'q_angle', text: '物體明明在前面，卻因為角度而量不到', hint: '把傾角調大，或選玻璃這種光滑面',
     test: (r) => r.fail === '回音太弱' && state.ang >= 30 },
