@@ -17,7 +17,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/style.css">
 <link rel="stylesheet" href="../../css/svg-effects.css">
-<link rel="stylesheet" href="../css/onshape.css">
+<link rel="stylesheet" href="../css/onshape.css?v=2">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📐%3C/text%3E%3C/svg%3E">
 </head>
 <body data-tool="onshape" class="onshape-theme">
@@ -43,14 +43,17 @@
   </div>
 
   <section class="panel">
-    <h3>① 看完整示範影片（珩宇老師 L4）</h3>
-    <p class="muted" style="margin-bottom:14px">L4 用一個方塊範例完整示範 8 個步驟。看完再回來對照下方圖解。</p>
-    <div class="os-video-wrap">
-      <iframe src="https://www.youtube.com/embed/sU38GMGAlBE?list=PLugQzHmEY4QhEzPd3mJyjrZTBnaDravVj"
-        title="Onshape 方塊繪製（草圖+擠出操作）"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen></iframe>
+    <h3>① 完整示範：8 個步驟的畫面</h3>
+    <p class="muted" style="margin-bottom:12px">照著珩宇老師 L4「方塊繪製」的流程，把每一步在 Onshape 裡會看到的畫面畫成示意圖（本站繪製，不是實際截圖）。按「下一步」或點下面的數字切換。</p>
+    <div class="os-steps" id="os-steps">
+      <div class="os-steps-stage" id="os-steps-stage"></div>
+      <p class="os-steps-cap" id="os-steps-cap"></p>
+      <div class="os-steps-nav"><button type="button" id="os-steps-prev">← 上一步</button><div class="os-steps-dots" id="os-steps-dots"></div><button type="button" id="os-steps-next">下一步 →</button></div>
     </div>
+    <p style="margin-top:14px"><a class="os-yt-card" href="https://www.youtube.com/watch?v=sU38GMGAlBE&amp;list=PLugQzHmEY4QhEzPd3mJyjrZTBnaDravVj" target="_blank" rel="noopener">
+      <span class="os-yt-play" aria-hidden="true">▶</span>
+      <span class="os-yt-text"><b>看珩宇老師 L4 完整示範影片（方塊繪製：草圖＋擠出）</b><small>YouTube 影片・點按用瀏覽器觀看（需連網）</small></span>
+    </a></p>
   </section>
 
   <section class="panel">
@@ -112,7 +115,7 @@
 
   <section class="panel">
     <h3>③ 8 步驟詳細圖解</h3>
-    <p class="muted" style="margin-bottom:20px">每張卡點開（或對照影片）理解該步驟的目的與操作。</p>
+    <p class="muted" style="margin-bottom:20px">每張卡附上該步驟的示意畫面；點卡片會標記為已讀，並把上面的示範切到這一步。</p>
     <div class="os-step-grid" id="step-cards"></div>
   </section>
 
@@ -127,21 +130,15 @@
 
   <section class="panel">
     <h3>④ 進階：繪製順序與常見錯誤（L4a + L4b）</h3>
-    <p class="muted" style="margin-bottom:14px">L4a 講「為什麼順序很重要」、L4b 講「繪製順序對特徵的影響」。</p>
+    <p class="muted" style="margin-bottom:14px">L4a 講「為什麼順序很重要」、L4b 講「繪製順序對特徵的影響」。重點：先畫草圖、標好尺寸讓它全黑，再做特徵；之後要改尺寸，回到草圖改，後面的特徵會跟著更新。</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px">
       <div>
         <span class="os-video-label">L4a・常見錯誤解析</span>
-        <div class="os-video-wrap">
-          <iframe src="https://www.youtube.com/embed/YAPMk4udSeI?list=PLugQzHmEY4QhEzPd3mJyjrZTBnaDravVj"
-            title="L4a 常見錯誤解析" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
+        <a class="os-yt-card" href="https://www.youtube.com/watch?v=YAPMk4udSeI&amp;list=PLugQzHmEY4QhEzPd3mJyjrZTBnaDravVj" target="_blank" rel="noopener"><span class="os-yt-play" aria-hidden="true">▶</span><span class="os-yt-text"><b>L4a 常見錯誤解析</b><small>YouTube・點按用瀏覽器觀看（需連網）</small></span></a>
       </div>
       <div>
         <span class="os-video-label">L4b・繪製順序</span>
-        <div class="os-video-wrap">
-          <iframe src="https://www.youtube.com/embed/wYVALBdV0fE?list=PLugQzHmEY4QhEzPd3mJyjrZTBnaDravVj"
-            title="L4b 繪製順序" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
+        <a class="os-yt-card" href="https://www.youtube.com/watch?v=wYVALBdV0fE&amp;list=PLugQzHmEY4QhEzPd3mJyjrZTBnaDravVj" target="_blank" rel="noopener"><span class="os-yt-play" aria-hidden="true">▶</span><span class="os-yt-text"><b>L4b 繪製順序</b><small>YouTube・點按用瀏覽器觀看（需連網）</small></span></a>
       </div>
     </div>
   </section>
@@ -162,6 +159,7 @@
 <script src="../../js/audio.js"></script>
 <script src="../../js/interactions.js?v=2"></script>
 <script src="../../vendor/anime.min.js"></script>
-<script src="../js/module3.js?v=2"></script>
+<script src="../js/module3-screens.js?v=1"></script>
+<script src="../js/module3.js?v=3"></script>
 </body>
 </html>

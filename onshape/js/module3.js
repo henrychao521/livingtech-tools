@@ -54,6 +54,33 @@ const OS_PROGRESS_KEY = 'onshape_progress_v1';
 let progress; try { progress = JSON.parse(localStorage.getItem(OS_PROGRESS_KEY)) || {}; } catch { progress = {}; }
 let viewed = new Set(progress.module3_steps || []);
 
+// 8 步驟示意畫面（js/module3-screens.js，本站程式繪製）。卡片縮圖與上方輪播共用；
+// 同一張 SVG 放兩次時 id 會重複，所以卡片縮圖用去掉 id 的版本
+const SCREENS_RAW = window.OS_M3_SCREENS || [];
+const SCREENS = SCREENS_RAW.map((svg, i) => svg.replace(/\bid="([^"]+)"/g, 'id="c$1"').replace(/url\(#([^)]+)\)/g, 'url(#c$1)').replace(/href="#([^"]+)"/g, 'href="#c$1"'));
+
+// 示範輪播
+(function () {
+  const stage = document.getElementById('os-steps-stage');
+  if (!stage || !SCREENS_RAW.length) return;
+  const cap = document.getElementById('os-steps-cap'), dots = document.getElementById('os-steps-dots');
+  let cur = 0;
+  dots.innerHTML = STEPS.map((_, i) => `<button type="button" aria-label="第 ${i + 1} 步">${i + 1}</button>`).join('');
+  function show(i) {
+    cur = (i + STEPS.length) % STEPS.length;
+    stage.innerHTML = SCREENS_RAW[cur];
+    cap.innerHTML = `<b>步驟 ${cur + 1}／${STEPS.length}　${STEPS[cur].title}</b><br>${STEPS[cur].desc}`;
+    dots.querySelectorAll('button').forEach((b, k) => b.classList.toggle('on', k === cur));
+    document.getElementById('os-steps-prev').disabled = cur === 0;
+    document.getElementById('os-steps-next').disabled = cur === STEPS.length - 1;
+  }
+  dots.querySelectorAll('button').forEach((b, k) => b.addEventListener('click', () => show(k)));
+  document.getElementById('os-steps-prev').addEventListener('click', () => show(cur - 1));
+  document.getElementById('os-steps-next').addEventListener('click', () => show(cur + 1));
+  window.__osShowStep = show;
+  show(0);
+})();
+
 // 渲染 8 步驟卡片
 const grid = document.getElementById('step-cards');
 STEPS.forEach((s, i) => {
@@ -62,7 +89,7 @@ STEPS.forEach((s, i) => {
   card.dataset.idx = i;
   card.innerHTML = `
     <div class="os-num">${i + 1}</div>
-    <div style="font-size:32px;margin:14px 0 8px">${s.icon}</div>
+    ${SCREENS[i] ? `<div class="os-step-shot">${SCREENS[i]}</div>` : `<div style="font-size:32px;margin:14px 0 8px">${s.icon}</div>`}
     <h4>${s.title}</h4>
     <p>${s.desc}</p>
     <p style="margin-top:6px;font-size:11px;color:var(--text-muted);font-style:italic">💡 ${s.tip}</p>
@@ -78,6 +105,7 @@ STEPS.forEach((s, i) => {
     }
     localStorage.setItem(OS_PROGRESS_KEY, JSON.stringify(progress));
     document.getElementById('step-progress').textContent = `已學習 ${viewed.size} / 8 步`;
+    if (typeof window.__osShowStep === 'function') window.__osShowStep(i);
     if (typeof SoundFX !== 'undefined') SoundFX.click();
   });
   if (viewed.has(i)) {
