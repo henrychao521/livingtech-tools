@@ -45,8 +45,8 @@ function calc() {
   const time = parseInt(els.time.value);
   const baseRa = GRIT_RA[grit];
   const ra = baseRa.toFixed(1);
-  // 去料量（教學模擬值，mm）：粗粒度 × 時間 × 進料速度；砂磨幾秒只去掉零點幾公釐，最大約 1 mm
-  const remove = Math.round((1 / (gi + 1)) * time * feed * 2) / 100;
+  // 去料量（教學模擬值，mm）：粗粒度 × 接觸時間 ×（6 − 進料檔位）（2026-10 審查：原本乘進料速度，變成越快去料越多；進料越快同一處接觸砂帶越短、去料越少。範圍仍是 0–1 mm，中速時數值不變）
+  const remove = Math.round((1 / (gi + 1)) * time * (6 - feed) * 2) / 100;
   // 過熱：時間長 + 進料慢 + 硬材料
   const heatScore = (time / 5) * (1 / (feed / 3)) * m.hardness;
   const heatLabel = heatScore < 0.7 ? '低' : heatScore < 1.3 ? '中' : heatScore < 2.0 ? '高' : '極高';
@@ -117,6 +117,11 @@ function drawScene() {
   // 工件
   const wpX = state.workpieceX;
   const wpY = beltY - wheelR - 20; // 工件底面貼在砂帶上段
+  // 後方靠板（2026-10 審查：原本畫成懸在工件上方的長條；靠板在砂帶後方、從台面立起，工件靠著它，所以畫在工件後面）
+  ctx.fillStyle = 'rgba(91,33,182,.55)';
+  ctx.fillRect(150, wpY - 14, 460, beltY - wheelR - (wpY - 14));
+  ctx.fillStyle = '#ede9fe'; ctx.font = '700 11px Noto Sans TC, sans-serif'; ctx.textAlign = 'left';
+  ctx.fillText('後方靠板', 156, wpY - 2);
   ctx.fillStyle = state.burned ? r.m.burnColor : r.m.color;
   ctx.fillRect(wpX, wpY, 100, 20);
   // 工件表面紋理（粗糙感）
@@ -129,9 +134,6 @@ function drawScene() {
     ctx.stroke();
   }
 
-  // 靠尺
-  ctx.fillStyle = '#5b21b6';
-  ctx.fillRect(150, wpY - 22, 460, 18);
 
   // 粉塵粒子
   state.dust.forEach(d => {
@@ -203,7 +205,8 @@ function showResult() {
     msg = `❌ 工件焦黑！接觸時間太長 / 進料太慢，表面已燒毀無法救。應該${r.feed < 3 ? '加快進料' : '縮短接觸時間'}。`;
   } else if (r.heatScore > 1.5) {
     level = 'bad';
-    msg = `⚠ 過熱嚴重，工件溫度過高。實際操作會燒焦或退火。降低接觸時間或加快進料。`;
+    const HOT = { softwood: '木材表面會燒焦變黑', hardwood: '木材表面會燒焦變黑', plastic: '塑膠會軟化、熔融並黏在砂帶上', aluminum: '鋁會變得很燙、碎屑黏在砂帶上' };
+    msg = `⚠ 過熱嚴重（本模擬的簡化估算）：實際操作時${HOT[els.mat.value] || '工件會過熱受損'}。降低接觸時間或加快進料。`;
   } else if (r.grit < r.m.idealGrit[0] || r.grit > r.m.idealGrit[1]) {
     // 直接用粒度號數和這個材料的建議範圍比較
     level = 'warn';
@@ -219,6 +222,8 @@ function showResult() {
     level = 'warn';
     msg = `⚠ 可接受但不理想。表面 Ra = ${r.ra}μm。建議：${r.nextGrit}。`;
   }
+  // 2026-10 審查：選鋁時提醒，木工砂磨機多接木屑集塵，能不能磨金屬要依機台說明書與學校規定
+  if (els.mat.value === 'aluminum') msg += '　⚠ 砂磨金屬會產生很燙的碎屑；接木屑集塵的木工砂磨機能不能磨金屬，要依機台說明書與學校實習工場規定，先問老師。';
   els.verdict.className = 'verdict ' + level;
   els.verdict.textContent = msg;
 }
