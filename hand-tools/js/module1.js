@@ -89,7 +89,7 @@ TOOLS.forEach(t => {
   const isoMap = { hammer: 'hammer', driver: 'driver', saw: 'saw', file: 'file', pliers: 'pliers', wrench: 'wrench', measure: 'measure', cutter: 'knife', clamp: 'clamp', punch: 'punch' };
   const iso = isoMap[t.id] || t.id;
   card.innerHTML = `<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
-    <img src="../../models/hand-tools/${iso}-iso.png" alt="${t.name}" style="width:64px;height:64px;object-fit:contain;background:#1E293B;border-radius:6px;flex-shrink:0" loading="lazy">
+    <img src="../../models/hand-tools/${iso}-iso.png?v=2" alt="${t.name}" style="width:64px;height:64px;object-fit:contain;background:#1E293B;border-radius:6px;flex-shrink:0" loading="lazy">
     <h4 style="margin:0;color:#334155">${t.name}</h4>
   </div>
     <p style="font-size:12.5px;color:#666;margin:4px 0"><strong>類型：</strong>${t.types}</p>

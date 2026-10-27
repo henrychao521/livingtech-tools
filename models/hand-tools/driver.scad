@@ -17,9 +17,10 @@ color([0.7, 0.1, 0.1])
 color([0.7, 0.7, 0.7])
   translate([0, 0, 50]) cylinder(h = 55, r = 4);
 
-// 十字頭（PH2 簡化，伸出鋼軸末端 z 105–111）
+// 十字頭（PH2 簡化）：2026-10 修正：原本是平頭十字方塊；PH 刀頭是往前收尖的十字（四片翼從軸徑收到尖端）
 color([0.55, 0.55, 0.55])
-  translate([0, 0, 108]) {
-    cube([6, 1.2, 6], center = true);
-    cube([1.2, 6, 6], center = true);
-  }
+  for (a = [0, 90]) rotate([0, 0, a])
+    hull() {
+      translate([0, 0, 104]) cube([8, 1.8, 0.2], center = true);
+      translate([0, 0, 117]) cube([0.8, 1.2, 0.2], center = true);
+    }
