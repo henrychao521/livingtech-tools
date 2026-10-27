@@ -5,7 +5,7 @@ const PARTS = {
   motor: { name: '馬達（Motor）', role: 'POWER UNIT', desc: '桌上型常見約 1/3–3/4 馬力（約 250–550W，各廠牌型號比較見本頁「延伸補充」），透過皮帶或直接驅動砂帶滾輪與砂盤轉軸。能連續使用多久、何時該讓馬達休息，各機型不同，請依機台說明書規定。', fact: '聞到焦味或砂帶轉速下降 = 馬達過熱。立刻停機、拔插頭、報告老師，讓機台自然冷卻；不可自行打開機殼。' },
   fence: { name: '靠板（Fence）', role: 'WORKPIECE GUIDE', desc: '工作面後方的金屬導向板，提供工件穩定支撐。預設與砂面垂直，可調到 45° 做斜角倒角。靠板與砂帶之間應保持極小間隙（< 2mm）避免工件被夾入。', fact: '工件必須平貼靠板，這樣磨出來才會平直。沒貼靠板 → 工件會在砂帶上「跳舞」，磨出來歪斜不平。' },
   switch: { name: '電源開關（On/Off Switch）', role: 'POWER CONTROL', desc: '機台前方的綠色 ON 按鈕，紅色 OFF 按鈕。多數機台採「拍板式」開關蓋——拍下即停機，方便緊急時不假思索直接拍。', fact: '開機前先確認拍板開關位置，演練一次不用看就能拍下；砂磨時雙手穩住工件。' },
-  dust: { name: '集塵口（Dust Collection Port）', role: 'DUST EVACUATION', desc: '砂磨會產生大量粉塵——木屑粉、塑膠粉、金屬粉。集塵口連接工坊吸塵器或集塵桶，是「粉塵爆炸防範」的核心。', fact: '⚠ 木屑粉達一定濃度（40g/m³）遇火源會爆炸。集塵連接不是選項，是必要設備。' },
+  dust: { name: '集塵口（Dust Collection Port）', role: 'DUST EVACUATION', desc: '砂磨會產生大量粉塵——木屑粉、塑膠粉、金屬粉。集塵口連接工坊吸塵器或集塵桶，是「粉塵爆炸防範」的核心。', fact: '⚠ 木屑粉塵在空氣中達到一定濃度、遇到火源就可能爆炸（爆炸下限依粒徑、含水率而不同）。集塵連接不是選項，是必要設備。' },
   tension: { name: '砂帶張力調整（Belt Tension）', role: 'BELT ADJUSTER', desc: '帶式砂磨機側面的調整旋鈕，控制前後滾輪間距以調整砂帶張力。張力太鬆砂帶會滑脫飛出，張力太緊砂帶壽命會減半。', fact: '正確張力：徒手按砂帶中央，能下壓約 5mm 且不會晃動。換新砂帶後通常要重新調整。' },
   stop: { name: '緊急停止（Emergency Stop）', role: 'E-STOP', desc: '大紅色按鈕，遇到工件飛起、衣物捲入、煙霧等緊急狀況時，用手掌拍下立即斷電。多數機台有「鎖定式」設計——拍下後要拉起才能重新啟動。', fact: '緊急停止位置學生應該背得出來——遇到狀況不用思考、直接伸手拍。' },
 };
@@ -220,7 +220,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
     },
     {
       id: 'spindle', name: '主軸式（鼓式）砂磨機', en: 'Spindle / Drum Sander', color: '#b45309',
-      photo: { url: null, credit: '主軸式示意圖（Wikimedia Commons 無授權近代照片）', link: null },
+      photo: { url: null, credit: '本站繪製示意圖（Wikimedia Commons 找不到可用授權的近代照片）', link: null },
       desc: '垂直立式砂鼓（drum）高速旋轉，可額外加上「震盪」（oscillating）上下往返運動以均勻分散磨損。專門用於磨削工件的「內弧面」（圓形孔、曲線內側），是其他砂磨機無法替代的機型。',
       specs: '砂鼓直徑：13–76mm（多組可換）；轉速：1700–2000 RPM',
       safety: [
