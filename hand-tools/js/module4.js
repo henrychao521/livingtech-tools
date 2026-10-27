@@ -64,6 +64,23 @@ const QUIZ = [
     cite: '[1][8]' },
 ];
 
+// 每個選項配一張工具照片（js/photo-credits.js 列出處；檔案在 ../assets/wiki-photos/）
+const OPT_IMG = {
+  '羊角錘': ['claw-hammer'], '橡膠槌': ['rubber-mallet'], '尖嘴鉗': ['needle-nose-pliers'], '一字螺絲起子': ['flat-screwdriver'],
+  '十字螺絲起子': ['phillips-screwdriver'], '六角扳手': ['hex-key'], '線鋸': ['coping-saw'], '鋼鋸 / 金工剪': ['hacksaw', 'tin-snips'],
+  '美工刀': ['utility-knife'], '鎚子': ['claw-hammer'], '平銼刀': ['flat-file'], '半圓銼刀': ['half-round-file'], '圓銼刀': ['round-file'],
+  '三角銼刀': ['triangular-file'], '剝線鉗': ['wire-stripper'], '斜口鉗': ['diagonal-pliers'], '活動扳手': ['adjustable-wrench'],
+  '梅花扳手': ['box-wrench'], '直尺': ['steel-ruler'], '捲尺': ['tape-measure'], '游標卡尺': ['vernier-caliper'], '角尺': ['try-square'],
+  '夾背鋸': ['back-saw'], '鋼鋸': ['hacksaw'], '剪刀': ['scissors'], '美工刀 + 鋼尺 + 切割墊': ['utility-knife', 'steel-ruler'],
+  '只用美工刀（徒手扶紙）': ['utility-knife'], 'C 型夾夾在桌邊': ['c-clamp'], '檯虎鉗（bench vise）': ['bench-vise'], '尖嘴鉗手持': ['needle-nose-pliers'],
+  '徒手按住': [],
+};
+function optFigure(o) {
+  const ks = OPT_IMG[o] || [];
+  if (!ks.length) return `<span class="opt-fig opt-fig-empty" aria-hidden="true">✋</span>`;
+  return `<span class="opt-fig">${ks.map(k => `<img src="../assets/wiki-photos/${k}.webp" alt="" loading="lazy">`).join('')}</span>`;
+}
+
 const PK = 'ht_progress_v1';
 function loadP() { try { return JSON.parse(localStorage.getItem(PK)) || {}; } catch { return {}; } }
 function saveP(p) { localStorage.setItem(PK, JSON.stringify(p)); }
@@ -79,7 +96,7 @@ QUIZ.forEach((q, i) => {
   div.className = 'quiz-item';
   div.style.cssText = 'background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px';
   div.innerHTML = `<p style="font-size:14px;margin-bottom:8px"><span style="font-size:24px">${q.icon}</span> <strong>任務 ${i + 1}：</strong>${q.task}</p>
-    <div class="choice-grid" style="grid-template-columns:1fr 1fr">${q.options.map(o => `<button class="choice" data-q="${i}" data-c="${o}" style="text-align:left;font-size:12.5px">${o}</button>`).join('')}</div>
+    <div class="choice-grid" style="grid-template-columns:1fr 1fr">${q.options.map(o => `<button class="choice choice-pic" data-q="${i}" data-c="${o}">${optFigure(o)}<span class="opt-label">${o}</span></button>`).join('')}</div>
     <div class="feedback-slot"></div>`;
   quizEl.appendChild(div);
 });
@@ -103,5 +120,15 @@ quizEl.querySelectorAll('.choice').forEach(b => b.addEventListener('click', () =
     showToast(`🎓 ${correct}/${QUIZ.length} 答對`, 'good');
   }
 }));
+// 照片出處（頁面底部）
+(function () {
+  const C = window.HT_PHOTO_CREDITS || {};
+  const keys = [...new Set(Object.values(OPT_IMG).flat())];
+  const box = document.createElement('section');
+  box.className = 'panel photo-credits';
+  box.innerHTML = `<details><summary>📷 選項照片出處（Wikimedia Commons）</summary><ol>${keys.map(k => C[k] ? `<li>${C[k].t}｜${C[k].a}｜${C[k].l}｜<a href="${C[k].u}" target="_blank" rel="noopener">原始頁面</a></li>` : '').join('')}</ol><p>下載日期 2026-10-27；縮成 320×200 以內並轉為 WebP，未改動內容。</p></details>`;
+  const nav = document.querySelector('.module-nav-bottom');
+  if (nav) nav.parentNode.insertBefore(box, nav);
+})();
 // 重新整理／重新進入：已完成過就直接解鎖下一關（不必重答）
 if (loadP().module4) { nextBtn.style.opacity = 1; nextBtn.style.pointerEvents = 'auto'; }
