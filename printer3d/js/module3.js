@@ -4,9 +4,9 @@ const STEPS = [
   { title: '匯入切片軟體', desc: '常用切片軟體：Cura（免費）、PrusaSlicer（免費）、Bambu Studio。把 STL 拖入軟體，選擇你的印表機型號。', tip: '確認模型擺放方向：底面要平、避免懸空。', warn: null, anim: 'slicer' },
   { title: '調整切片參數', desc: '層高（0.2mm 標準）、填充密度（15–20% 一般、80%+ 結構件）、列印速度（50–100mm/s）、支撐（懸空角度 > 45° 才需要）。', tip: '初學者：使用內建「PLA 標準」配置即可。', warn: null, anim: 'params' },
   { title: '匯出 G-code', desc: '切片完成後匯出 .gcode 檔，存到 SD 卡或透過 Wi-Fi / USB 傳給印表機。預估時間和耗材重量會顯示在切片軟體中。', tip: '檔名要避免中文與空格，部分機型不認得。', warn: null, anim: 'gcode' },
-  { title: '預熱噴頭與熱床', desc: 'PLA：噴頭 200°C / 熱床 60°C\nPETG：噴頭 240°C / 熱床 85°C\nABS：噴頭 250°C / 熱床 100°C\n預熱完成才進行校正——熱脹冷縮會改變高度。', tip: '可在切片時順便預熱，等到列印開始溫度也達標。', warn: null, anim: 'heat' },
+  { title: '預熱噴頭與熱床', desc: 'PLA：噴頭 200°C / 熱床 60°C\nPETG：噴頭 240°C / 熱床 85°C\nABS：噴頭 250°C / 熱床 100°C\n預熱完成才進行校正——熱脹冷縮會改變高度。', tip: '可在切片時順便預熱，等到列印開始溫度也達標。', warn: '預熱後噴頭與熱床都很燙，校正時手只拿紙，不要碰噴嘴、加熱塊與熱床表面。', anim: 'heat' },
   { title: '熱床校正', desc: '預熱完成後 → 將噴頭手動移到四角 → 用 A4 紙確認摩擦阻力 → 微調螺絲。某些機型有自動調平（auto bed leveling）。', tip: 'A4 紙能略微通過、有阻力是最佳距離（約 0.1mm）。', warn: '校正不準是「首層失敗」最大原因。', anim: 'calibrate' },
-  { title: '開始列印 ＆ 觀察首層', desc: '前 3–5 層是關鍵。守在機台旁觀察：絲線有沒有黏熱床？有沒有跑位？有沒有跳針（漏層）？', tip: '首層 OK 後就可以放心離開（但仍要定期巡視）。', warn: null, anim: 'print' },
+  { title: '開始列印 ＆ 觀察首層', desc: '前 3–5 層是關鍵。守在機台旁觀察：線材有沒有黏熱床？有沒有跑位？有沒有漏層、缺料？', tip: '首層 OK 後就可以放心離開（但仍要定期巡視）。', warn: null, anim: 'print' },
   { title: '取件 ＆ 後處理', desc: '等熱床冷卻到 < 40°C → 用鏟刀斜插底部撬起 → 移除支撐結構 → 用銼刀或砂紙修平接縫 → 必要時噴漆/上色。', tip: 'PLA 可用 400→1000 號砂紙沾水由粗到細研磨，表面會更平滑。', warn: '熱床還燙的時候強拔會傷模型也傷熱床。', anim: 'remove' },
 ];
 
@@ -128,7 +128,7 @@ function renderAnim(type) {
       <rect x="40" y="120" width="320" height="20" fill="#7f1d1d"/>
       <rect x="40" y="118" width="320" height="4" fill="#dc2626"/>
       <!-- 噴頭 -->
-      <g transform="translate(200,80)">
+      <g transform="translate(100,91)"><!-- 2026-10：噴嘴尖端（y=113）壓在 A4 紙正上方 -->
         <rect x="-20" y="-30" width="40" height="40" rx="3" fill="#1e293b"/>
         <rect x="-18" y="-26" width="36" height="12" fill="#dc2626"/>
         <text x="0" y="-18" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">200°C</text>
@@ -136,7 +136,7 @@ function renderAnim(type) {
       </g>
       <!-- A4 紙（穿過噴頭與熱床之間）-->
       <rect x="60" y="113" width="80" height="5" fill="#fefce8" stroke="#94a3b8" stroke-width=".8"/>
-      <text x="100" y="106" text-anchor="middle" font-size="8" fill="#475569" font-family="Noto Sans TC">A4 紙</text>
+      <text x="146" y="118" text-anchor="start" font-size="8" fill="#475569" font-family="Noto Sans TC">A4 紙</text>
       <!-- 標示間距 -->
       <line x1="60" y1="125" x2="60" y2="113" stroke="#16a34a" stroke-width=".5"/>
       <text x="50" y="108" font-size="8" fill="#16a34a" font-weight="700">0.1mm</text>
@@ -459,7 +459,7 @@ window.selectStep = selectStep; window.markDone = markDone;
     const mins = estMins % 60;
     const timeStr = hours > 0 ? `${hours} 小時 ${mins} 分` : `${mins} 分鐘`;
     const strength = inf.pct === '80' ? '高強度 ★★★' : inf.pct === '50' ? '中強度 ★★' : '輕量 ★';
-    const quality = lh.mm === '0.10' ? '精緻 ★★★' : lh.mm === '0.20' ? '標準 ★★' : '快速 ★';
+    const quality = lh.mm === '0.10' ? '精緻 ★★★' : lh.mm === '0.20' ? '標準 ★★' : '較粗 ★（但印得快）';
     document.getElementById('slice-info').innerHTML = `
       <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:13px">
         <span style="color:#64748b">層高</span><strong>${lh.mm} mm（${lh.label}）</strong>

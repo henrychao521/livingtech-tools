@@ -222,7 +222,11 @@ function drawModel() {
       ctx.ellipse(cx, currentY + layerH / 2, w / 2, layerH * .8, 0, 0, Math.PI * 2);
       ctx.fill();
     } else {
-      ctx.fillRect(left, currentY, w, layerH + 1);
+      // 2026-10 審查：花瓶、小船每層寬度不同，高亮層要用該層的實際寬度，不能用最大外框
+      const ratio = visibleLayers / totalLayers;
+      const profile = m.shape === 'vase' ? 0.6 + 0.5 * Math.sin(ratio * Math.PI)
+        : m.shape === 'boat' ? (ratio < 0.5 ? 1 : 1 - (ratio - 0.5) * 0.7) : 1;
+      ctx.fillRect(cx - w * profile / 2, currentY, w * profile, layerH + 1);
     }
     // 閃爍光暈
     const glow = ctx.createRadialGradient(cx, currentY, 0, cx, currentY, 60);
@@ -235,7 +239,9 @@ function drawModel() {
 
 function drawPrinter() {
   // X 軸框架（橫桿）
-  const armY = printState.running ? H - 100 - (MODELS[params.model].height * 4 * (printState.progress + 0.05)) : 80;
+  // 2026-10 審查：噴頭總成從橫桿往下 54 px 才到噴嘴尖端；原本沒扣，噴嘴一開始就插進熱床、全程在模型裡拖行。
+  // 改成噴嘴尖端＝目前列印層的頂面（熱床面 H-100 往上「模型高度 × 進度」）
+  const armY = printState.running ? H - 100 - 54 - (MODELS[params.model].height * 4 * printState.progress) - 2 : 80;
   ctx.fillStyle = '#475569';
   ctx.fillRect(60, armY, W - 120, 8);
   // 噴頭
@@ -258,7 +264,7 @@ function drawPrinter() {
   ctx.lineTo(noseX, armY + 54);
   ctx.closePath();
   ctx.fill();
-  // 列印中的絲線
+  // 列印中的線材
   if (printState.running) {
     ctx.strokeStyle = MODELS[params.model].color;
     ctx.lineWidth = 2;

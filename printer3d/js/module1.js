@@ -1,13 +1,13 @@
 // 3D 印表機 模組 1：認識部件
 const PARTS = {
-  nozzle: { name: '噴嘴（Nozzle）', role: 'NOZZLE TIP', desc: '熔融塑料絲（filament）從噴嘴擠出的位置。標準孔徑 0.4mm，會影響細節度與列印速度。較細孔徑（0.2mm）細節好但慢；較大（0.6–0.8mm）速度快但粗糙。', fact: '噴嘴是耗材，會磨損。黃銅噴嘴印一般 PLA/PETG 建議 300–600 小時更換；硬化鋼噴嘴印含碳/含金屬磨料絲可延長至 1000+ 小時（All3DP）。' },
-  hotend: { name: '加熱頭（Hot-End）', role: 'HEATER BLOCK', desc: '把絲線加熱到熔融狀態的金屬塊，內含加熱棒與熱敏電阻。常見溫度：PLA 190–220°C、PETG 230–250°C、ABS 240–260°C。', fact: '加熱頭旁邊一定要有散熱風扇，否則熱會傳到上方造成「堵料」。' },
+  nozzle: { name: '噴嘴（Nozzle）', role: 'NOZZLE TIP', desc: '熔融的塑膠線材（filament）從噴嘴擠出的位置。標準孔徑 0.4mm，會影響細節度與列印速度。較細孔徑（0.2mm）細節好但慢；較大（0.6–0.8mm）速度快但粗糙。', fact: '噴嘴是耗材，會磨損。黃銅噴嘴印一般 PLA/PETG 建議 300–600 小時更換；硬化鋼噴嘴印含碳/含金屬磨料絲可延長至 1000+ 小時（All3DP）。' },
+  hotend: { name: '加熱頭（Hot-End）', role: 'HEATER BLOCK', desc: '把線材加熱到熔融狀態的金屬塊，內含加熱棒與熱敏電阻。常見溫度：PLA 190–220°C、PETG 230–250°C、ABS 240–260°C。', fact: '加熱頭旁邊一定要有散熱風扇，否則熱會傳到上方造成「堵料」。' },
   bed: { name: '加熱平台（Heated Bed）', role: 'HEATED BUILD PLATE', desc: '列印物件附著的平面。可加熱以幫助第一層附著（PLA 約 60°C，ABS 約 100°C）。表面材質：玻璃、PEI 板、磁性彈簧鋼板等。', fact: '熱床平整度是列印成功的最大關鍵。每次列印前都要校正。' },
-  'x-axis': { name: 'X 軸（X-axis gantry）', role: 'HORIZONTAL TRAVEL', desc: '帶動噴頭左右移動的橫桿；噴頭所在、沿橫桿滑動的滑座稱為 Carriage。透過皮帶 + 步進馬達精確定位。', fact: 'X 軸皮帶鬆動會造成鬼影（ringing）或層位移；「Z 紋」是 Z 軸絲桿偏心造成的水平條紋，見模組 5。' },
-  'z-axis': { name: 'Z 軸（Vertical Lift）', role: 'LAYER HEIGHT', desc: '控制噴頭上下移動的螺桿（梯形螺桿或滾珠螺桿）。每列印完一層就上升一個「層高」（即每層高度，通常 0.1–0.3mm）。', fact: 'Z 軸校正不準會讓首層過鬆（黏不住）或過緊（壓扁絲線堵住噴嘴）。' },
-  extruder: { name: '擠出機（Extruder）', role: 'FILAMENT FEEDER', desc: '把絲線推進加熱頭的馬達 + 齒輪組。分兩種：直接式／近端式（Direct，馬達在噴頭旁）和遠端式（Bowden，馬達裝在框架上、經鐵氟龍管送料）。', fact: '遠端式噴頭輕、移動快，但回抽（避免漏料）反應慢、距離要拉長；直接式回抽反應快，列印 TPU 等軟性線材較佳。' },
-  filament: { name: '絲線（Filament）', role: 'PRINTING MATERIAL', desc: 'PLA 是最常見、最容易列印的材料（玉米澱粉製、低毒、低溫）。其他常見：PETG（耐用）、ABS（強度高但有毒煙）、TPU（軟性）。直徑 1.75mm 為主流。', fact: 'PLA 含雜質或受潮會「啵啵」響、列印表面有氣泡。要密封防潮保存。' },
-  lcd: { name: '控制面板 / LCD', role: 'CONTROL INTERFACE', desc: '顯示列印進度、溫度、剩餘時間。可手動調整溫度、Z 高度（baby step）、暫停 / 繼續、緊急停止。', fact: '緊急按下「停止」按鈕時，噴頭會停在當前位置，不會自動歸位，要手動移開避免熔毀模型。' },
+  'x-axis': { name: 'X 軸（X-axis gantry）', role: 'HORIZONTAL TRAVEL', desc: '帶動噴頭左右移動的橫桿；噴頭所在、沿橫桿滑動的滑座稱為 Carriage。透過皮帶 + 步進馬達精確定位。', fact: 'X 軸皮帶鬆動會造成鬼影（ringing）或層位移；「Z 紋」是 Z 軸螺桿偏心造成的水平條紋，見模組 5。' },
+  'z-axis': { name: 'Z 軸（Vertical Lift）', role: 'LAYER HEIGHT', desc: '控制噴頭上下移動的螺桿（梯形螺桿或滾珠螺桿）。每列印完一層就上升一個「層高」（即每層高度，通常 0.1–0.3mm）。', fact: 'Z 軸校正不準會讓首層過鬆（黏不住）或過緊（壓扁線材堵住噴嘴）。' },
+  extruder: { name: '擠出機（Extruder）', role: 'FILAMENT FEEDER', desc: '把線材推進加熱頭的馬達 + 齒輪組。分兩種：直接式／近端式（Direct，馬達在噴頭旁）和遠端式（Bowden，馬達裝在框架上、經鐵氟龍管送料）。', fact: '遠端式噴頭輕、移動快，但回抽（避免漏料）反應慢、距離要拉長；直接式回抽反應快，列印 TPU 等軟性線材較佳。' },
+  filament: { name: '線材（Filament）', role: 'PRINTING MATERIAL', desc: 'PLA 是最常見、最容易列印的材料（玉米澱粉製、低毒、低溫）。其他常見：PETG（耐用）、ABS（強度高但有毒煙）、TPU（軟性）。直徑 1.75mm 為主流。', fact: 'PLA 含雜質或受潮會「啵啵」響、列印表面有氣泡。要密封防潮保存。' },
+  lcd: { name: '控制面板 / LCD', role: 'CONTROL INTERFACE', desc: '顯示列印進度、溫度、剩餘時間。可手動調整溫度、Z 高度（baby step）、暫停 / 繼續、緊急停止。', fact: '緊急按下「停止」按鈕時，噴頭會停在當前位置，不會自動歸位。噴頭仍然很燙，不要用手去推噴頭；請老師處理（例如用控制面板把 Z 軸抬高）。' },
 };
 
 const seenSet = new Set();
@@ -71,11 +71,13 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
     {
       id: 'warp', name: '翹曲（Warping）', icon: '↗', color: '#dc2626',
       ref: { name: 'Prusa Knowledge Base — Warping', url: 'https://help.prusa3d.com/article/warping_2011' },
-      svg: `<rect x="30" y="128" width="240" height="45" fill="#16a34a"/>
-        <path d="M 30 128 Q 80 108 140 124 Q 200 136 270 110" stroke="#dc2626" stroke-width="3.5" fill="none" stroke-dasharray="6 3"/>
-        <path d="M 30 128 L 30 152 L 95 152 Q 78 128 30 128 Z" fill="#86efac" opacity=".6"/>
-        <text x="150" y="96" text-anchor="middle" font-size="12" fill="#dc2626" font-weight="700">角落翹起脫離熱床</text>
-        <line x1="150" y1="100" x2="200" y2="115" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3 2"/>`,
+      // 2026-10 審查：原圖把物件畫在熱床裡、左角還貼著床面；改成中間貼床、兩角往上翹
+      svg: `<rect x="20" y="128" width="260" height="22" fill="#475569"/><rect x="20" y="128" width="260" height="4" fill="#dc2626"/>
+        <text x="150" y="145" text-anchor="middle" font-size="9" fill="#fff">熱床</text>
+        <path d="M 40 114 Q 150 142 260 114 L 260 98 Q 150 126 40 98 Z" fill="#16a34a" stroke="#14532d" stroke-width="1.5"/>
+        <path d="M 40 114 L 40 128 M 260 114 L 260 128" stroke="#dc2626" stroke-width="2" stroke-dasharray="3 2"/>
+        <text x="150" y="80" text-anchor="middle" font-size="12" fill="#dc2626" font-weight="700">角落翹起脫離熱床</text>
+        <line x1="190" y1="84" x2="255" y2="110" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3 2"/>`,
       cause: '熱床溫度不足 / 材料冷卻過快收縮 / 首層沒壓實。ABS 收縮率約 0.8%，翹曲最嚴重；PLA 約 0.3%，較輕微。',
       fix: '① 熱床升溫（PLA: 60°C, ABS: 100°C） ② 塗口紅膠（或使用 PEI 板） ③ 切片加 Brim（邊緣；不是不接觸物件的裙邊 Skirt） ④ 降低散熱風扇轉速 ⑤ 使用封閉式機箱印 ABS'
     },
@@ -99,9 +101,9 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
         <rect x="80" y="118" width="130" height="28" fill="#64748b"/>
         <rect x="126" y="88" width="130" height="28" fill="#94a3b8"/>
         <rect x="126" y="58" width="130" height="28" fill="#cbd5e1"/>
-        <line x1="80" y1="148" x2="126" y2="88" stroke="#dc2626" stroke-width="2" stroke-dasharray="5 3"/>
-        <line x1="210" y1="148" x2="256" y2="88" stroke="#dc2626" stroke-width="2" stroke-dasharray="5 3"/>
-        <text x="155" y="45" text-anchor="middle" font-size="12" fill="#7c3aed" font-weight="700">每層偏移一段距離</text>`,
+        <line x1="210" y1="117" x2="256" y2="117" stroke="#dc2626" stroke-width="2"/>
+        <polygon points="256,117 248,113 248,121" fill="#dc2626"/>
+        <text x="155" y="45" text-anchor="middle" font-size="12" fill="#7c3aed" font-weight="700">從某一層起整個錯位</text>`,
       cause: '步進馬達「失步」— 皮帶過鬆 / 加速度太高 / 列印中撞到物件 / 馬達電流不足。',
       fix: '① 鎖緊或更換 X/Y 皮帶 ② 降低加速度（Acceleration: 2000→1000 mm/s²） ③ 降低列印速度 ④ 確認運動軸沒有異物阻礙'
     },
