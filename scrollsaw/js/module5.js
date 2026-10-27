@@ -96,7 +96,7 @@ const TEMPLATES = [
     id: 'gear',
     name: '齒輪',
     diff: 'hard',
-    desc: '8 齒・內外切換',
+    desc: '8 齒・內外切換（方齒示意，不是真正的漸開線齒形）',
     path: (() => {
       const pts = [];
       const cx = 150, cy = 150, n = 8;
@@ -220,7 +220,7 @@ function analyzeTemplate(t) {
 
   const len = pathLength(t.path);
   const sharpAngles = countSharpAngles(t.path);
-  const lenCM = (len / 25).toFixed(1);
+  const lenCM = (len / 25).toFixed(1);   // 比例尺：圖樣畫在 60–240 的範圍（180 單位）≈ 7.2 公分 → 25 單位 = 1 公分（2026-10 審查：介面標示此假設）
   // 粗估：假設初學者含轉角平均每分鐘約 10 公分（2026-10 審查：原本每分鐘 1 公分，30 公分的小圖要半小時，偏離常理）；
   // 實際依木材、厚度與機台差很多，介面標示「粗估」並寫出假設
   const timeSec = Math.round(len / 25 / 10 * 60);
