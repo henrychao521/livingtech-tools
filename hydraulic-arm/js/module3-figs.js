@@ -55,12 +55,19 @@
       <rect x="24" y="26" width="116" height="66" rx="2" fill="${CARD}" stroke="${DARK}" stroke-width="1.8"/>
       <rect x="24" y="92" width="116" height="8" fill="${CARD}" stroke="${DARK}" stroke-width="1.2"/>
       <path d="M 26 96 Q 30 92 34 96 T 42 96 T 50 96 T 58 96 T 66 96 T 74 96 T 82 96 T 90 96 T 98 96 T 106 96 T 114 96 T 122 96 T 130 96 T 138 96" fill="none" stroke="${DARK}" stroke-width="1"/>
-      <rect x="158" y="28" width="142" height="36" rx="3" fill="none" stroke="${METAL}" stroke-width="1" stroke-dasharray="3,3"/>
-      ${syringeH(164, 31, 0, RED_W, 24)}
-      ${syringeH(164, 48, 0, RED_W, 24)}
-      <rect x="158" y="68" width="142" height="36" rx="3" fill="none" stroke="${METAL}" stroke-width="1" stroke-dasharray="3,3"/>
-      ${syringeH(164, 71, 0, RED_W, 24)}
-      ${syringeH(164, 88, 0, RED_W, 24)}
+      <!-- 2026-10 審查：4 軸 × 每軸 2 支（主動＋從動）＝ 8 支，與步驟 1 文字一致 -->
+      <rect x="158" y="27" width="162" height="18" rx="3" fill="none" stroke="${METAL}" stroke-width="1" stroke-dasharray="3,3"/>
+      ${syringeH(162, 30, 0, RED_W, 22)}
+      ${syringeH(240, 30, 0, RED_W, 22)}
+      <rect x="158" y="47" width="162" height="18" rx="3" fill="none" stroke="${METAL}" stroke-width="1" stroke-dasharray="3,3"/>
+      ${syringeH(162, 50, 0, RED_W, 22)}
+      ${syringeH(240, 50, 0, RED_W, 22)}
+      <rect x="158" y="67" width="162" height="18" rx="3" fill="none" stroke="${METAL}" stroke-width="1" stroke-dasharray="3,3"/>
+      ${syringeH(162, 70, 0, RED_W, 22)}
+      ${syringeH(240, 70, 0, RED_W, 22)}
+      <rect x="158" y="87" width="162" height="18" rx="3" fill="none" stroke="${METAL}" stroke-width="1" stroke-dasharray="3,3"/>
+      ${syringeH(162, 90, 0, RED_W, 22)}
+      ${syringeH(240, 90, 0, RED_W, 22)}
       <ellipse cx="68" cy="158" rx="32" ry="18" fill="none" stroke="${DARK}" stroke-width="5"/>
       <ellipse cx="68" cy="158" rx="32" ry="18" fill="none" stroke="${SYR}" stroke-width="3"/>
       <ellipse cx="68" cy="158" rx="22" ry="12" fill="none" stroke="${DARK}" stroke-width="5"/>
@@ -85,7 +92,7 @@
       <polygon points="296,130 336,130 332,178 300,178" fill="${SYR}" stroke="${DARK}" stroke-width="1.8"/>
       <polygon points="298,144 334,144 331,176 301,176" fill="${RED_W}" stroke="${DARK}" stroke-width="1"/>
       ${leader(78, 100, 78, 113, 78, 125, "瓦楞紙板（波浪芯）", "middle")}
-      ${leader(220, 28, 220, 16, 224, 21, "針筒 ×4（兩組）", "start")}
+      ${leader(220, 28, 220, 16, 224, 21, "針筒 ×8（4 組，每組 2 支）", "start")}
       ${leader(68, 176, 68, 194, 68, 206, "透明軟管", "middle")}
       ${leader(155, 168, 155, 194, 155, 206, "兩腳釘", "middle")}
       ${leader(235, 172, 235, 194, 235, 206, "美工刀、鋼尺", "middle")}
@@ -189,7 +196,7 @@
       <polygon points="140,39 133,38 135,44" fill="${ACCENT}"/>
       ${leader(63, 86, 38, 118, 38, 132, "肩部關節", "middle")}
       ${leader(99, 48, 100, 26, 100, 20, "力臂 d", "middle", ACCENT)}
-      ${leader(146, 67, 232, 67, 236, 70, "推桿接大臂支點", "start")}
+      ${leader(146, 67, 232, 67, 236, 70, "推桿接大臂（施力點）", "start")}
       ${leader(200, 162, 242, 138, 246, 142, "熱熔膠筒身固定", "start")}
       ${badge(5)}
     </svg>`,
