@@ -109,10 +109,13 @@ function initLevel(lvlId) {
 }
 
 // === 鍵盤 / 指針（滑鼠＋觸控筆＋手指） ===
+// 觸控時烙鐵頭畫在指尖左上方（js/pointer-offset.js），手指不會擋住烙鐵頭與接點；滑鼠不偏移
+let touchAim = null;   // { x, y }：手指實際位置（畫布座標），只在觸控拖曳中有值，用來畫指尖圈與放大鏡
 function aimIron(e) {
-  const rect = canvas.getBoundingClientRect();
-  mouseX = Math.max(0, Math.min(canvas.width, (e.clientX - rect.left) * (canvas.width / rect.width)));
-  mouseY = Math.max(0, Math.min(canvas.height, (e.clientY - rect.top) * (canvas.height / rect.height)));
+  const t = window.SolderPointer.tipFromPointer(e, canvas.getBoundingClientRect(), canvas.width, canvas.height);
+  mouseX = t.x;
+  mouseY = t.y;
+  touchAim = t.offset ? { x: t.fingerX, y: t.fingerY } : null;
 }
 canvas.addEventListener('pointermove', aimIron);
 canvas.addEventListener('pointerdown', e => {
@@ -122,8 +125,8 @@ canvas.addEventListener('pointerdown', e => {
   if (e.pointerType === 'mouse') state.pressing = true;
   try { canvas.setPointerCapture(e.pointerId); } catch (_) {}
 });
-canvas.addEventListener('pointerup', e => { if (e.pointerType === 'mouse') state.pressing = false; });
-canvas.addEventListener('pointercancel', () => { state.pressing = false; });
+canvas.addEventListener('pointerup', e => { if (e.pointerType === 'mouse') state.pressing = false; touchAim = null; });
+canvas.addEventListener('pointercancel', () => { state.pressing = false; touchAim = null; });
 canvas.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') state.pressing = false; });
 window.addEventListener('keydown', e => {
   if (e.code === 'Space') { state.pressing = true; e.preventDefault(); }
@@ -421,7 +424,39 @@ function draw() {
   if (state.ironVisible) {
     drawIron(mouseX, mouseY);
     drawSolderWire(mouseX, mouseY);
+    if (touchAim) drawTouchAid(touchAim.x, touchAim.y, mouseX, mouseY);
   }
+}
+
+// 觸控輔助：指尖圈＋指尖到烙鐵頭的虛線，並在畫面上方角落放一個 2.5 倍放大鏡看烙鐵頭與接點
+function drawTouchAid(fx, fy, tx, ty) {
+  ctx.save();
+  ctx.strokeStyle = 'rgba(255,255,255,.55)';
+  ctx.lineWidth = 2;
+  ctx.setLineDash([6, 6]);
+  ctx.beginPath(); ctx.moveTo(fx, fy); ctx.lineTo(tx, ty); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.beginPath(); ctx.arc(fx, fy, 26, 0, Math.PI * 2); ctx.stroke();
+  // 放大鏡：放在烙鐵頭的另一側上角，避免擋到正在焊的地方
+  const R = 78, Z = 2.5;
+  const cx = tx < canvas.width / 2 ? canvas.width - R - 12 : R + 12;
+  const cy = R + 12;
+  const src = (2 * R) / Z;
+  ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.closePath();
+  ctx.fillStyle = '#0a3d1f'; ctx.fill();
+  ctx.save(); ctx.clip();
+  // 來源框夾在畫布內（舊版 Safari 對超出邊界的來源框會丟例外）
+  const sx = Math.max(0, Math.min(canvas.width - src, tx - src / 2));
+  const sy = Math.max(0, Math.min(canvas.height - src, ty - src / 2));
+  ctx.drawImage(canvas, sx, sy, src, src, cx - R, cy - R, 2 * R, 2 * R);
+  ctx.restore();
+  ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 4;
+  ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.stroke();
+  ctx.strokeStyle = 'rgba(255,255,255,.7)'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(cx - 8, cy); ctx.lineTo(cx + 8, cy); ctx.moveTo(cx, cy - 8); ctx.lineTo(cx, cy + 8); ctx.stroke();
+  ctx.fillStyle = '#fbbf24'; ctx.font = 'bold 16px Inter, sans-serif'; ctx.textAlign = 'center';
+  ctx.fillText('放大 2.5×', cx, cy + R + 18);
+  ctx.restore();
 }
 
 // 錫絲：模擬真實焊接的雙手技法——左手烙鐵、右手送錫。
