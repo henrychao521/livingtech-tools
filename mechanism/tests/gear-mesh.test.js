@@ -27,7 +27,7 @@ function cross(o, a, b) { return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) *
 function segX(a, b, c, d) { return cross(a, b, c) * cross(a, b, d) < 0 && cross(c, d, a) * cross(c, d, b) < 0; }
 
 const m = 6; // 任意模數（結果以 m 為單位回報）
-const PAIRS = [[12, 12], [12, 40], [14, 28], [18, 18], [20, 12], [24, 12], [17, 31], [30, 45], [40, 16], [48, 24], [13, 37], [25, 25]];
+const PAIRS = [[12, 10], [12, 12], [12, 40], [14, 28], [18, 18], [20, 12], [24, 12], [17, 31], [30, 45], [40, 16], [48, 24], [13, 37], [25, 25]];
 let checks = 0;
 const rows = [];
 for (const [z1, z2] of PAIRS) {
