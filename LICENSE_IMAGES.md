@@ -116,6 +116,208 @@
 - **製作**：OpenSCAD 建模、Blender 渲染；視圖線條由程式從 3D 模型正投影算出（可見線、隱藏線、中心線），並以獨立解析驗算
 - **授權**：本站自製，隨網站授權使用
 
+
+### 液壓手臂、機構運動、Onshape、手工具、電烙鐵的說明圖（2026-10-27）
+- `hydraulic-arm/js/module3-figs.js`：液壓手臂製作步驟圖 8 張
+- `mechanism/js/module3-figs.js`：可動卡片製作步驟圖 8 張
+- `onshape/js/module3-screens.js`：Onshape 操作示意畫面 8 張（程式繪製的示意，不是軟體截圖）
+- `onshape/js/module5-sketches.js`：草圖錯誤與正確對照 16 張＋圖例（依 ISO 128／ISO 129-1 線型與尺寸標註）
+- 手工具模組 1 工具卡模型圖（OpenSCAD）、模組 3 握姿示意圖；電烙鐵烙鐵頭外形圖、安全場景與焊接剖面動畫
+- **授權**：本站自製（程式繪製），隨網站授權使用
+
+---
+
+## 手工具與電烙鐵照片（Wikimedia Commons，2026-10-27 下載）
+
+### HT-01. Claw hammer-1.jpg ｜ 羊角錘（claw-hammer.webp）
+- **作者**：Shakespeare（英文維基百科）
+- **授權**：CC BY-SA 3.0（[條款連結](https://creativecommons.org/licenses/by-sa/3.0)）
+- **來源**：https://commons.wikimedia.org/wiki/File:Claw_hammer-1.jpg
+- **下載日期**：2026-10-27
+- **位置**：/hand-tools/assets/wiki-photos/claw-hammer.webp（縮成 320×200 以內 WebP）
+
+### HT-02. Rubber mallet for jewellery.jpg ｜ 橡膠槌（rubber-mallet.webp）
+- **作者**：Mauro Cateb
+- **授權**：CC BY-SA 3.0（[條款連結](https://creativecommons.org/licenses/by-sa/3.0)）
+- **來源**：https://commons.wikimedia.org/wiki/File:Rubber_mallet_for_jewellery.jpg
+- **下載日期**：2026-10-27
+- **位置**：/hand-tools/assets/wiki-photos/rubber-mallet.webp（縮成 320×200 以內 WebP）
+
+### HT-03. Long-nosePliers.jpg ｜ 尖嘴鉗（needle-nose-pliers.webp）
+- **作者**：Raysonho @ Open Grid Scheduler / Grid Engine
+- **授權**：CC0（[條款連結](http://creativecommons.org/publicdomain/zero/1.0/deed.en)）
+- **來源**：https://commons.wikimedia.org/wiki/File:Long-nosePliers.jpg
+- **下載日期**：2026-10-27
+- **位置**：/hand-tools/assets/wiki-photos/needle-nose-pliers.webp（縮成 320×200 以內 WebP）
+
+### HT-04. Big flat screwdriver.jpg ｜ 一字螺絲起子（flat-screwdriver.webp）
+- **作者**：Jiří Sedláček
+- **授權**：CC BY-SA 4.0（[條款連結](https://creativecommons.org/licenses/by-sa/4.0)）
+- **來源**：https://commons.wikimedia.org/wiki/File:Big_flat_screwdriver.jpg
+- **下載日期**：2026-10-27
+- **位置**：/hand-tools/assets/wiki-photos/flat-screwdriver.webp（縮成 320×200 以內 WebP）
+
+### HT-05. CacciavitePanciaStella.JPG ｜ 十字螺絲起子（phillips-screwdriver.webp）
+- **作者**：Jespeer
+- **授權**：CC BY-SA 4.0（[條款連結](https://creativecommons.org/licenses/by-sa/4.0)）
+- **來源**：https://commons.wikimedia.org/wiki/File:CacciavitePanciaStella.JPG
+- **下載日期**：2026-10-27
+- **位置**：/hand-tools/assets/wiki-photos/phillips-screwdriver.webp（縮成 320×200 以內 WebP）
+
+### HT-06. Имбусовые Г-образные ключи.jpg ｜ 六角扳手（hex-key.webp）
+- **作者**：Schekinov Alexey Victorovich
+- **授權**：CC BY-SA 4.0（[條款連結](https://creativecommons.org/licenses/by-sa/4.0)）
+- **來源**：https://commons.wikimedia.org/wiki/File:%D0%98%D0%BC%D0%B1%D1%83%D1%81%D0%BE%D0%B2%D1%8B%D0%B5_%D0%93-%D0%BE%D0%B1%D1%80%D0%B0%D0%B7%D0%BD%D1%8B%D0%B5_%D0%BA%D0%BB%D1%8E%D1%87%D0%B8.jpg
+- **下載日期**：2026-10-27
+- **位置**：/hand-tools/assets/wiki-photos/hex-key.webp（縮成 320×200 以內 WebP）
+
+### HT-07. Coping saw 2.jpg ｜ 線鋸（弓形）（coping-saw.webp）
+- **作者**：Pitoutom
+- **授權**：Public domain
+- **來源**：https://commons.wikimedia.org/wiki/File:Coping_saw_2.jpg
+- **下載日期**：2026-10-27
+- **位置**：/hand-tools/assets/wiki-photos/coping-saw.webp（縮成 320×200 以內 WebP）
+
+### HT-08. Hacksaw with grey handle.jpg ｜ 鋼鋸（hacksaw.webp）
+- **作者**：Luke Milburn
+- **授權**：CC BY 2.0（[條款連結](https://creativecommons.org/licenses/by/2.0)）
+- **來源**：https://commons.wikimedia.org/wiki/File:Hacksaw_with_grey_handle.jpg
+- **下載日期**：2026-10-27
+- **位置**：/hand-tools/assets/wiki-photos/hacksaw.webp（縮成 320×200 以內 WebP）
+
+### HT-09. Blechschere.jpg ｜ 金工剪（tin-snips.webp）
+- **作者**：Pavel Krok（德文維基百科）
+- **授權**：CC BY-SA 2.0 de（[條款連結](https://creativecommons.org/licenses/by-sa/2.0/de/deed.en)）
+- **來源**：https://commons.wikimedia.org/wiki/File:Blechschere.jpg
+- **下載日期**：2026-10-27
+- **位置**：/hand-tools/assets/wiki-photos/tin-snips.webp（縮成 320×200 以內 WebP）
+
+### HT-10. Box-cutter.jpg ｜ 美工刀（utility-knife.webp）
+- **作者**：Evan-Amos
+- **授權**：Public domain
+- **來源**：https://commons.wikimedia.org/wiki/File:Box-cutter.jpg
+- **下載日期**：2026-10-27
+- **位置**：/hand-tools/assets/wiki-photos/utility-knife.webp（縮成 320×200 以內 WebP）
+
+### HT-11. Grov fladfil.jpg ｜ 平銼刀（flat-file.webp）
+- **作者**：B. Askholm（推定）
+- **授權**：CC BY-SA 3.0（[條款連結](http://creativecommons.org/licenses/by-sa/3.0/)）
+- **來源**：https://commons.wikimedia.org/wiki/File:Grov_fladfil.jpg
+- **下載日期**：2026-10-27
+- **位置**：/hand-tools/assets/wiki-photos/flat-file.webp（縮成 320×200 以內 WebP）
+
+### HT-12. Half-Round File.jpg ｜ 半圓銼刀（half-round-file.webp）
+- **作者**：Luke Milburn
+- **授權**：CC BY 2.0（[條款連結](https://creativecommons.org/licenses/by/2.0)）
+- **來源**：https://commons.wikimedia.org/wiki/File:Half-Round_File.jpg
+- **下載日期**：2026-10-27
+- **位置**：/hand-tools/assets/wiki-photos/half-round-file.webp（縮成 320×200 以內 WebP）
+
+### HT-13. Round File.jpg ｜ 圓銼刀（round-file.webp）
+- **作者**：Luke Milburn
+- **授權**：CC BY 2.0（[條款連結](https://creativecommons.org/licenses/by/2.0)）
+- **來源**：https://commons.wikimedia.org/wiki/File:Round_File.jpg
+- **下載日期**：2026-10-27
+- **位置**：/hand-tools/assets/wiki-photos/round-file.webp（縮成 320×200 以內 WebP）
+
+### HT-14. Dreikantfeile für eine Feilmaschine.jpg ｜ 三角銼刀（triangular-file.webp）
+- **作者**：Glenn McKechnie
+- **授權**：CC BY-SA 3.0（[條款連結](https://creativecommons.org/licenses/by-sa/3.0)）
+- **來源**：https://commons.wikimedia.org/wiki/File:Dreikantfeile_f%C3%BCr_eine_Feilmaschine.jpg
+- **下載日期**：2026-10-27
+- **位置**：/hand-tools/assets/wiki-photos/triangular-file.webp（縮成 320×200 以內 WebP）
+
+### HT-15. Beta 1602.jpg ｜ 剝線鉗（wire-stripper.webp）
+- **作者**：Carnby
+- **授權**：CC BY-SA 4.0（[條款連結](https://creativecommons.org/licenses/by-sa/4.0)）
+- **來源**：https://commons.wikimedia.org/wiki/File:Beta_1602.jpg
+- **下載日期**：2026-10-27
+- **位置**：/hand-tools/assets/wiki-photos/wire-stripper.webp（縮成 320×200 以內 WebP）
+
+### HT-16. Seitenschneider.JPG ｜ 斜口鉗（diagonal-pliers.webp）
+- **作者**：CSonic（德文維基百科）
+- **授權**：CC BY-SA 3.0（[條款連結](http://creativecommons.org/licenses/by-sa/3.0/)）
+- **來源**：https://commons.wikimedia.org/wiki/File:Seitenschneider.JPG
+- **下載日期**：2026-10-27
+- **位置**：/hand-tools/assets/wiki-photos/diagonal-pliers.webp（縮成 320×200 以內 WebP）
+
+### HT-17. Chrome Vanadium Adjustable Wrench.jpg ｜ 活動扳手（adjustable-wrench.webp）
+- **作者**：MrX
+- **授權**：CC BY-SA 3.0（[條款連結](https://creativecommons.org/licenses/by-sa/3.0)）
+- **來源**：https://commons.wikimedia.org/wiki/File:Chrome_Vanadium_Adjustable_Wrench.jpg
+- **下載日期**：2026-10-27
+- **位置**：/hand-tools/assets/wiki-photos/adjustable-wrench.webp（縮成 320×200 以內 WebP）
+
+### HT-18. Gedore No. 7 combination wrenches 6–19 mm.jpg ｜ 梅花（複合）扳手（box-wrench.webp）
+- **作者**：Lucasbosch
+- **授權**：CC BY-SA 3.0（[條款連結](https://creativecommons.org/licenses/by-sa/3.0)）
+- **來源**：https://commons.wikimedia.org/wiki/File:Gedore_No._7_combination_wrenches_6%E2%80%9319_mm.jpg
+- **下載日期**：2026-10-27
+- **位置**：/hand-tools/assets/wiki-photos/box-wrench.webp（縮成 320×200 以內 WebP）
+
+### HT-19. Lucky Ruler.jpg ｜ 鋼尺（steel-ruler.webp）
+- **作者**：damianosullivan
+- **授權**：CC BY-SA 3.0（[條款連結](https://creativecommons.org/licenses/by-sa/3.0)）
+- **來源**：https://commons.wikimedia.org/wiki/File:Lucky_Ruler.jpg
+- **下載日期**：2026-10-27
+- **位置**：/hand-tools/assets/wiki-photos/steel-ruler.webp（縮成 320×200 以內 WebP）
+
+### HT-20. Measuring-tape.jpg ｜ 捲尺（tape-measure.webp）
+- **作者**：Evan-Amos
+- **授權**：Public domain
+- **來源**：https://commons.wikimedia.org/wiki/File:Measuring-tape.jpg
+- **下載日期**：2026-10-27
+- **位置**：/hand-tools/assets/wiki-photos/tape-measure.webp（縮成 320×200 以內 WebP）
+
+### HT-21. Mahr MarCal 16 N vernier caliper.png ｜ 游標卡尺（vernier-caliper.webp）
+- **作者**：Lucasbosch
+- **授權**：CC BY-SA 3.0（[條款連結](https://creativecommons.org/licenses/by-sa/3.0)）
+- **來源**：https://commons.wikimedia.org/wiki/File:Mahr_MarCal_16_N_vernier_caliper.png
+- **下載日期**：2026-10-27
+- **位置**：/hand-tools/assets/wiki-photos/vernier-caliper.webp（縮成 320×200 以內 WebP）
+
+### HT-22. Try Square.jpg ｜ 角尺（try-square.webp）
+- **作者**：Luke Milburn
+- **授權**：CC BY 2.0（[條款連結](https://creativecommons.org/licenses/by/2.0)）
+- **來源**：https://commons.wikimedia.org/wiki/File:Try_Square.jpg
+- **下載日期**：2026-10-27
+- **位置**：/hand-tools/assets/wiki-photos/try-square.webp（縮成 320×200 以內 WebP）
+
+### HT-23. Tenon Saw.jpg ｜ 夾背鋸（back-saw.webp）
+- **作者**：Luke Milburn
+- **授權**：CC BY 2.0（[條款連結](https://creativecommons.org/licenses/by/2.0)）
+- **來源**：https://commons.wikimedia.org/wiki/File:Tenon_Saw.jpg
+- **下載日期**：2026-10-27
+- **位置**：/hand-tools/assets/wiki-photos/back-saw.webp（縮成 320×200 以內 WebP）
+
+### HT-24. Pair of scissors with black handle, 2015-06-07.jpg ｜ 剪刀（scissors.webp）
+- **作者**：Crisco 1492
+- **授權**：CC BY-SA 4.0（[條款連結](https://creativecommons.org/licenses/by-sa/4.0)）
+- **來源**：https://commons.wikimedia.org/wiki/File:Pair_of_scissors_with_black_handle,_2015-06-07.jpg
+- **下載日期**：2026-10-27
+- **位置**：/hand-tools/assets/wiki-photos/scissors.webp（縮成 320×200 以內 WebP）
+
+### HT-25. Charade 20 answer.jpg ｜ C 型夾（c-clamp.webp）
+- **作者**：Andy / Andrew Fogg
+- **授權**：CC BY 2.0（[條款連結](https://creativecommons.org/licenses/by/2.0)）
+- **來源**：https://commons.wikimedia.org/wiki/File:Charade_20_answer.jpg
+- **下載日期**：2026-10-27
+- **位置**：/hand-tools/assets/wiki-photos/c-clamp.webp（縮成 320×200 以內 WebP）
+
+### HT-26. An engineer's vise.jpg ｜ 檯虎鉗（bench-vise.webp）
+- **作者**：Dmitry Makeev
+- **授權**：CC BY-SA 4.0（[條款連結](https://creativecommons.org/licenses/by-sa/4.0)）
+- **來源**：https://commons.wikimedia.org/wiki/File:An_engineer%27s_vise.jpg
+- **下載日期**：2026-10-27
+- **位置**：/hand-tools/assets/wiki-photos/bench-vise.webp（縮成 320×200 以內 WebP）
+
+### HT-27. Desoldering pump.jpg ｜ 吸錫器（desoldering-pump.webp）
+- **作者**：Ansgar Hellwig
+- **授權**：CC BY-SA 2.0 de（[條款連結](https://creativecommons.org/licenses/by-sa/2.0/de/deed.en)）
+- **來源**：https://commons.wikimedia.org/wiki/File:Desoldering_pump.jpg
+- **下載日期**：2026-10-27
+- **位置**：/solder/assets/wiki-photos/desoldering-pump.webp（縮成 320×200 以內 WebP）
+
 ---
 
 ## 維護指引
@@ -129,4 +331,4 @@
 
 ---
 
-最後更新：2026-05-10
+最後更新：2026-10-27
