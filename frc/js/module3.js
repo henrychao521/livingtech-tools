@@ -69,6 +69,9 @@ function loadP() { try { return JSON.parse(localStorage.getItem(PK)) || {}; } ca
 function saveP(p) { localStorage.setItem(PK, JSON.stringify(p)); }
 const sp = loadP();
 if (sp.module3_seen) sp.module3_seen.forEach(i => seenSteps.add(i));
+// 2026-10 審查：重新整理後依已存的進度還原「已學習 N / 7 步」，全部看完就解鎖下一關
+progressEl.textContent = `已學習 ${seenSteps.size} / 7 步`;
+if (seenSteps.size === STEPS.length && nextBtn) { nextBtn.style.opacity = 1; nextBtn.style.pointerEvents = 'auto'; }
 
 STEPS.forEach((s, i) => {
   const node = document.createElement('div');
