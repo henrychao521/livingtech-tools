@@ -64,7 +64,7 @@ m.add(cap, "black_plastic", "cap")
 m.add(slider, "black_plastic", "slider")
 m.add(rail + rail_side + rail_side2 + nose, "steel", "rail")
 m.add(blade, "blade", "blade")
-m.add(lines & Pos(L + 60, 0, 0) * Box(400, 5, 200) if False else lines, "dark_steel", "score")
+m.add(lines, "dark_steel", "score")
 
 m.dim("blade_width", BW, "OLFA LB 刀片：寬 18 mm")
 m.dim("blade_length", BL, "OLFA LB 刀片：全長 110 mm、刃長 100 mm、8 節")

@@ -29,8 +29,7 @@ def half(sign):
                                (-14, T_HANDLE / 2), (-200, T_HANDLE / 2), close=True))
     solid = solid & Pos(0, 0, -100) * extrude(thick, amount=200)
     # 搭接：支點圓內，上片留 y≥0、下片留 y≤0
-    lap = Pos(0, -s * T_HEAD / 4 * 1.0 - s * 0.0, 0) * Box(2 * R_JOINT + 2, T_HEAD / 2 + 0.02, 2 * R_JOINT + 2)
-    lap = (Rot(90, 0, 0) * Cylinder(R_JOINT + 0.6, T_HEAD + 2)) & Pos(0, s * T_HEAD / 4 * -1, 0) * Box(40, T_HEAD / 2 + 0.01, 40)
+    lap = (Rot(90, 0, 0) * Cylinder(R_JOINT + 0.6, T_HEAD + 2)) & Pos(0, -s * T_HEAD / 4, 0) * Box(40, T_HEAD / 2 + 0.01, 40)
     solid = solid - lap
     # 剪線刃：鉗口根部菱形缺口
     cut = Plane.XZ * make_face(Polyline((9, 0), (14, s * 1.8), (19, 0), close=True))
@@ -38,7 +37,7 @@ def half(sign):
     # 鉗口內側鋸齒（細溝）
     for i in range(8):
         x = 22 + i * 2.6
-        solid = solid - Pos(x, 0, s * 0.0) * Box(0.8, 12, 0.7)
+        solid = solid - Pos(x, 0, 0) * Box(0.8, 12, 0.7)
     # 握把套（塑膠）
     grip_c = [(-34, -s * 10.3), (-70, -s * 14.0), (X_END + 6, -s * 17.0)]
     grip2d = trace(Polyline(*grip_c), line_width=14.0) + Pos(X_END + 6, -s * 17.0) * Circle(7.0)

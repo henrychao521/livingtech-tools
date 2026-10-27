@@ -18,7 +18,6 @@ for i in range(6):
     a = i * 60
     g = Pos(42, 0, 0) * Rot(a, 0, 0) * Pos(0, 0, 16.2) * Box(64, 4.5, 3.2)
     handle -= g
-handle = Rot(0, 0, 0) * handle
 # 握把前端黑色護套
 ferrule = Pos(HANDLE - 6, 0, 0) * (Rot(0, 90, 0) * Cylinder(10.6, 12))
 
