@@ -17,7 +17,7 @@ function drawCrank() {
   const l = parseInt($('s-l').value);
   const speed = parseInt($('s-speed').value);
   angle += SPEEDS[speed];
-  const cx = 180, cy = 250;
+  const cx = 140, cy = 230;
   // 機架線
   ctx.strokeStyle = '#475569';
   ctx.lineWidth = 3;
@@ -25,14 +25,14 @@ function drawCrank() {
   ctx.moveTo(50, cy);
   ctx.lineTo(720, cy);
   ctx.stroke();
-  // 曲柄圓盤
-  ctx.fillStyle = '#CCFBF1';
-  ctx.strokeStyle = '#14B8A6';
-  ctx.lineWidth = 3;
+  // 曲柄銷的圓形軌跡（虛線）＋曲柄桿
+  ctx.strokeStyle = 'rgba(20,184,166,.6)';
+  ctx.setLineDash([5, 5]);
+  ctx.lineWidth = 2;
   ctx.beginPath();
   ctx.arc(cx, cy, r, 0, Math.PI * 2);
-  ctx.fill();
   ctx.stroke();
+  ctx.setLineDash([]);
   ctx.fillStyle = '#0F766E';
   ctx.beginPath();
   ctx.arc(cx, cy, 8, 0, Math.PI * 2);
@@ -40,6 +40,10 @@ function drawCrank() {
   // 曲柄銷
   const px = cx + r * Math.cos(angle);
   const py = cy + r * Math.sin(angle);
+  ctx.strokeStyle = '#14B8A6';
+  ctx.lineWidth = 10;
+  ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(px, py); ctx.stroke();
   ctx.fillStyle = '#DC2626';
   ctx.beginPath();
   ctx.arc(px, py, 8, 0, Math.PI * 2);
@@ -64,22 +68,23 @@ function drawCrank() {
   ctx.setLineDash([6, 4]);
   ctx.lineWidth = 2;
   ctx.beginPath();
-  ctx.moveTo(cx + r + 20, cy - 30);
-  ctx.lineTo(W - 40, cy - 30);
-  ctx.moveTo(cx + r + 20, cy + 30);
-  ctx.lineTo(W - 40, cy + 30);
+  const railX0 = cx + l - r - 30;           // 滑塊最左邊的位置（θ = 180°）
+  const railX1 = Math.min(W - 10, cx + l + r + 30);
+  ctx.moveTo(railX0, cy - 30);
+  ctx.lineTo(railX1, cy - 30);
+  ctx.moveTo(railX0, cy + 30);
+  ctx.lineTo(railX1, cy + 30);
   ctx.stroke();
   ctx.setLineDash([]);
   // 軌道顯示
   ctx.fillStyle = '#14B8A6';
-  ctx.font = '700 14px Inter';
+  ctx.font = '700 20px "Noto Sans TC", sans-serif';
   ctx.textAlign = 'left';
-  ctx.fillText(`角度 ${(angle * 180 / Math.PI % 360).toFixed(0)}°`, 16, 30);
-  ctx.fillText(`滑塊位置 x = R cos θ + √(L² - R²sin²θ)`, 16, 55);
-  ctx.fillText(`= ${(sx - cx).toFixed(1)} px`, 16, 80);
+  ctx.fillText(`曲柄角 θ = ${(angle * 180 / Math.PI % 360).toFixed(0)}°`, 16, 30);
+  ctx.fillText(`滑塊 x = R cos θ + √(L² − R²sin²θ) = ${(sx - cx).toFixed(1)} px`, 16, 58);
   // 行程指示
-  ctx.fillStyle = '#DC2626';
-  ctx.fillText(`行程 = 2R = ${2 * r} px`, 16, 110);
+  ctx.fillStyle = '#F87171';
+  ctx.fillText(`行程 = 2R = ${2 * r} px`, 16, 86);
   drawCrankTrace((sx - cx - l) / r, Math.cos(angle));
 }
 
@@ -112,132 +117,116 @@ function drawCrankTrace(d, ref) {
   plot('ref', '#64748b', [5, 4]);
   plot('d', '#14B8A6', []);
   ctx.fillStyle = '#94a3b8';
-  ctx.font = '700 12px Inter';
+  ctx.font = '700 17px "Noto Sans TC", sans-serif';
   ctx.textAlign = 'left';
   ctx.fillText('滑塊位移–時間（實線）　正弦參考（虛線）', x0 + 6, yMid - amp - 14);
 }
 
+// 凸輪：橢圓凸輪＋平底從動件（從動件只能上下滑）。平底從動件的高度＝凸輪在垂直方向的最大伸展量，
+// 接觸點會左右移動，所以平底要夠寬。橢圓每轉一圈從動件上下 2 次，升程＝長半軸 − 短半軸。
 function drawCam() {
-  const ecc = parseFloat($('s-ecc').value);
+  const k = parseFloat($('s-ecc').value);
   const speed = parseInt($('s-cspeed').value);
   angle += SPEEDS[speed];
-  const cx = 280, cy = 250;
-  // 旋轉的凸輪（橢圓）
+  const cx = 300, cy = 300;
+  const a = 100, b = 100 * (1 - k);
   ctx.save();
   ctx.translate(cx, cy);
   ctx.rotate(angle);
-  const a = 100;
-  const b = 100 * (1 - ecc);
-  ctx.fillStyle = '#CCFBF1';
-  ctx.strokeStyle = '#14B8A6';
-  ctx.lineWidth = 3;
-  ctx.beginPath();
-  ctx.ellipse(0, 0, a, b, 0, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.stroke();
-  ctx.fillStyle = '#0F766E';
-  ctx.beginPath();
-  ctx.arc(0, 0, 8, 0, Math.PI * 2);
-  ctx.fill();
+  ctx.fillStyle = '#CCFBF1'; ctx.strokeStyle = '#14B8A6'; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.ellipse(0, 0, a, b, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+  ctx.strokeStyle = '#DC2626'; ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(a * 0.8, 0); ctx.stroke();
+  ctx.fillStyle = '#0F766E'; ctx.beginPath(); ctx.arc(0, 0, 8, 0, Math.PI * 2); ctx.fill();
   ctx.restore();
-  // 從動件位置：凸輪上方接觸點的 Y
-  // 旋轉橢圓上方點到中心的最大距離
-  // 公式：r(θ) = a·b / √(a²sin²θ + b²cos²θ) - 簡化用上方
-  // 此處用簡化模型：垂直線與旋轉橢圓的交點
-  // 從動件接觸 Y 座標：找凸輪輪廓最上方點
-  // 簡化：a 和 b 旋轉後在垂直方向的投影
   const ca = Math.cos(angle), sa = Math.sin(angle);
-  const top = Math.sqrt(a * a * sa * sa + b * b * ca * ca);
-  const followerY = cy - top - 20;
-  // 從動件
+  const h = Math.sqrt(a * a * sa * sa + b * b * ca * ca);        // 垂直方向最大伸展
+  const xc = -(a * a - b * b) * sa * ca / h;                       // 接觸點水平位置
+  const faceW = 2 * ((a * a - b * b) / (a + b)) + 40;              // 平底寬度（涵蓋接觸點左右移動範圍）
+  const faceY = cy - h;
   ctx.fillStyle = '#14B8A6';
-  ctx.fillRect(cx - 12, followerY, 24, 20);
-  // 從動件桿
-  ctx.strokeStyle = '#0F766E';
-  ctx.lineWidth = 4;
-  ctx.beginPath();
-  ctx.moveTo(cx, followerY);
-  ctx.lineTo(cx, 50);
-  ctx.stroke();
-  // 上方支架
-  ctx.fillStyle = '#475569';
-  ctx.fillRect(cx - 50, 30, 100, 14);
-  // 軌道
+  ctx.fillRect(cx - faceW / 2, faceY - 14, faceW, 14);
+  ctx.strokeStyle = '#0F766E'; ctx.lineWidth = 6;
+  ctx.beginPath(); ctx.moveTo(cx, faceY - 14); ctx.lineTo(cx, 60); ctx.stroke();
+  // 導套
+  ctx.fillStyle = '#475569'; ctx.fillRect(cx - 22, 70, 14, 50); ctx.fillRect(cx + 8, 70, 14, 50);
+  // 接觸點
+  ctx.fillStyle = '#F43F5E'; ctx.beginPath(); ctx.arc(cx + xc, faceY, 5, 0, Math.PI * 2); ctx.fill();
   ctx.fillStyle = '#14B8A6';
-  ctx.font = '700 14px Inter';
+  ctx.font = '700 20px "Noto Sans TC", sans-serif';
   ctx.textAlign = 'left';
-  ctx.fillText(`凸輪角 ${(angle * 180 / Math.PI % 360).toFixed(0)}°`, 16, 30);
-  ctx.fillText(`偏心率 ${ecc.toFixed(2)} （越大上下幅度越大）`, 16, 55);
-  ctx.fillText(`從動件位置 = ${(cy - followerY).toFixed(1)} px`, 16, 80);
+  ctx.fillText(`凸輪角 ${(angle * 180 / Math.PI % 360).toFixed(0)}°`, 470, 40);
+  ctx.fillText(`升程 = 長半軸 − 短半軸`, 470, 70);
+  ctx.fillText(`　　 = ${a} − ${b.toFixed(0)} = ${(a - b).toFixed(0)} px`, 470, 98);
+  ctx.fillText(`從動件高度 ${h.toFixed(0)} px`, 470, 128);
+  ctx.fillStyle = '#94a3b8'; ctx.font = '600 17px "Noto Sans TC", sans-serif';
+  ctx.fillText('橢圓凸輪轉一圈，從動件上下 2 次', 470, 160);
+  ctx.fillText('紅點＝接觸點（會左右移動）', 470, 186);
 }
 
+// 齒輪組：漸開線齒形（gear-geometry.js），兩輪模數相同、中心距 = m(N₁+N₂)/2，從動輪錯開半個齒距讓齒對齒槽
+const gearCache = {};
+function gearPath(z, m) {
+  const key = z + ':' + m.toFixed(3);
+  if (!gearCache[key]) {
+    const g = GearGeom.gearOutline(z, m);
+    const p = new Path2D();
+    g.pts.forEach(([x, y], i) => i ? p.lineTo(x, y) : p.moveTo(x, y));
+    p.closePath();
+    gearCache[key] = { g, p };
+  }
+  return gearCache[key];
+}
 function drawGear() {
   const n1 = parseInt($('s-n1').value);
   const n2 = parseInt($('s-n2').value);
-  angle += 0.02;
-  const cx1 = 220, cy1 = 250;
-  // r = 齒根圓（圓盤）半徑，齒高 10 → 節圓半徑 ≈ r + 5；同模數時 r2 / r1 = N2 / N1
-  const r1 = 80;
-  const r2 = 80 * n2 / n1;
-  const TOOTH_H = 10;
-  // 中心距 = 兩節圓半徑和 = r1 + r2 + 齒高，齒尖剛好探到對方齒根圓，不會互相穿透
-  const cx2 = cx1 + r1 + r2 + TOOTH_H;
-  const cy2 = cy1;
-
-  function drawGearShape(cx, cy, r, teeth, rot, color, edge) {
+  angle += 0.012;
+  // 模數依畫面寬度決定（兩輪永遠同一個模數）
+  const m = Math.min(9, 640 / (n1 + n2 + 2), 400 / (Math.max(n1, n2) + 2));
+  const a = GearGeom.centerDistance(m, n1, n2);
+  const G1 = gearPath(n1, m), G2 = gearPath(n2, m);
+  const cy = 280;
+  const cx1 = (W - (G1.g.ra + a + G2.g.ra)) / 2 + G1.g.ra;
+  const cx2 = cx1 + a;
+  const th1 = angle, th2 = GearGeom.drivenAngle(angle, n1, n2);
+  function one(G, cx, rot, fill, edge) {
     ctx.save();
     ctx.translate(cx, cy);
     ctx.rotate(rot);
-    ctx.fillStyle = color;
-    ctx.strokeStyle = edge;
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.arc(0, 0, r, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.stroke();
-    for (let i = 0; i < teeth; i++) {
-      const a = (i / teeth) * Math.PI * 2;
-      const tx = Math.cos(a) * r;
-      const ty = Math.sin(a) * r;
-      ctx.save();
-      ctx.translate(tx, ty);
-      ctx.rotate(a);
-      ctx.fillRect(0, -2, TOOTH_H, 4);
-      ctx.restore();
-    }
-    ctx.fillStyle = '#0F766E';
-    ctx.beginPath();
-    ctx.arc(0, 0, 8, 0, Math.PI * 2);
-    ctx.fill();
-    // 旋轉指示線
-    ctx.strokeStyle = '#DC2626';
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.lineTo(r * 0.7, 0);
-    ctx.stroke();
+    ctx.fillStyle = fill; ctx.strokeStyle = edge; ctx.lineWidth = 2;
+    ctx.fill(G.p); ctx.stroke(G.p);
+    // 節圓（虛線）
+    ctx.setLineDash([6, 5]); ctx.strokeStyle = 'rgba(15,23,42,.45)'; ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.arc(0, 0, G.g.rp, 0, Math.PI * 2); ctx.stroke(); ctx.setLineDash([]);
+    // 軸與旋轉指示線（指向第 0 齒中心）
+    ctx.strokeStyle = '#DC2626'; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(G.g.rf * 0.8, 0); ctx.stroke();
+    ctx.fillStyle = '#0F766E'; ctx.beginPath(); ctx.arc(0, 0, 7, 0, Math.PI * 2); ctx.fill();
     ctx.restore();
   }
-
-  drawGearShape(cx1, cy1, r1, n1, angle, '#CCFBF1', '#14B8A6');
-  // 從動輪反向轉、角速度 × N1/N2；再錯開半個齒距（π/N2），主動輪的齒才會對到從動輪的齒槽（外嚙合）
-  drawGearShape(cx2, cy2, r2, n2, -angle * (n1 / n2) + Math.PI / n2, '#FEF3C7', '#F59E0B');
+  one(G1, cx1, th1, '#CCFBF1', '#0F766E');
+  one(G2, cx2, th2, '#FEF3C7', '#B45309');
+  // 連心線與節點
+  ctx.strokeStyle = 'rgba(148,163,184,.8)'; ctx.lineWidth = 1; ctx.setLineDash([3, 4]);
+  ctx.beginPath(); ctx.moveTo(cx1, cy); ctx.lineTo(cx2, cy); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle = '#F43F5E'; ctx.beginPath(); ctx.arc(cx1 + G1.g.rp, cy, 4, 0, Math.PI * 2); ctx.fill();
   // 標籤
-  ctx.fillStyle = '#0F766E';
-  ctx.font = '700 14px Inter';
+  ctx.font = '700 19px "Noto Sans TC", sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText(`主動輪 N₁=${n1}`, cx1, cy1 + r1 + 30);
-  ctx.fillStyle = '#92400E';
-  ctx.fillText(`從動輪 N₂=${n2}`, cx2, cy2 + r2 + 25);
-  // 計算
+  ctx.fillStyle = '#5EEAD4';
+  ctx.fillText(`主動輪 N₁=${n1}`, cx1, Math.min(H - 12, cy + G1.g.ra + 26));
+  ctx.fillStyle = '#FCD34D';
+  ctx.fillText(`從動輪 N₂=${n2}`, cx2, Math.min(H - 12, cy + G2.g.ra + 26));
   ctx.fillStyle = '#14B8A6';
-  ctx.font = '700 14px Inter';
+  ctx.font = '700 20px "Noto Sans TC", sans-serif';
   ctx.textAlign = 'left';
   ctx.fillText(`齒輪比 i = N₂/N₁ = ${n2}/${n1} = ${(n2 / n1).toFixed(2)}`, 16, 30);
-  ctx.fillText(`速度比 ω₂/ω₁ = ${(n1 / n2).toFixed(2)} 倍`, 16, 55);
-  ctx.fillText(`扭力比 T₂/T₁ = ${(n2 / n1).toFixed(2)} 倍`, 16, 80);
-  ctx.fillStyle = '#DC2626';
-  ctx.fillText(n1 === n2 ? '→ 等速、只改變方向' : n1 > n2 ? '→ 增速減扭' : '→ 減速增扭', 16, 105);
+  ctx.fillText(`速度比 ω₂/ω₁ = ${(n1 / n2).toFixed(2)}　扭力比 T₂/T₁ = ${(n2 / n1).toFixed(2)}`, 16, 58);
+  ctx.fillStyle = '#94a3b8';
+  ctx.font = '600 17px "Noto Sans TC", sans-serif';
+  ctx.fillText(`同模數 m，中心距 = m(N₁+N₂)/2；齒對齒槽、紅點＝節點`, 16, 84);
+  ctx.fillStyle = '#F87171';
+  ctx.font = '700 19px "Noto Sans TC", sans-serif';
+  ctx.fillText(n1 === n2 ? '→ 等速、只改變方向' : n1 > n2 ? '→ 增速減扭（從動輪轉得快）' : '→ 減速增扭（從動輪轉得慢）', 16, 110);
 }
 
 function loop() {
@@ -251,7 +240,7 @@ function loop() {
   } else if (mode === 'cam') {
     drawCam();
     $('info').textContent = '運動類型：圓周旋轉 → 規律抬升 / 落下';
-    $('info2').textContent = `偏心率=${$('s-ecc').value}`;
+    $('info2').textContent = `扁度 k=${$('s-ecc').value}`;
   } else if (mode === 'gear') {
     drawGear();
     $('info').textContent = '運動類型：旋轉動力傳遞與變速';

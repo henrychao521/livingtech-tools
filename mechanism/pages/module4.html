@@ -49,11 +49,11 @@
         <div id="crank-controls">
           <div class="slider-row">
             <label>曲柄半徑 R <span class="v" id="v-r">60 px</span></label>
-            <input type="range" id="s-r" min="20" max="100" step="2" value="60">
+            <input type="range" id="s-r" min="20" max="80" step="2" value="60">
           </div>
           <div class="slider-row">
             <label>連桿長度 L <span class="v" id="v-l">160 px</span></label>
-            <input type="range" id="s-l" min="100" max="240" step="4" value="160">
+            <input type="range" id="s-l" min="120" max="240" step="4" value="160">
           </div>
           <div class="slider-row">
             <label>轉速 <span class="v" id="v-speed">中</span></label>
@@ -63,7 +63,7 @@
 
         <div id="cam-controls" style="display:none">
           <div class="slider-row">
-            <label>凸輪偏心率 <span class="v" id="v-ecc">0.5</span></label>
+            <label>凸輪扁度 k（短半軸＝長半軸×(1−k)） <span class="v" id="v-ecc">0.50</span></label>
             <input type="range" id="s-ecc" min="0.1" max="0.9" step="0.05" value="0.5">
           </div>
           <div class="slider-row">
@@ -75,11 +75,11 @@
         <div id="gear-controls" style="display:none">
           <div class="slider-row">
             <label>主動輪齒數 N₁ <span class="v" id="v-n1">24</span></label>
-            <input type="range" id="s-n1" min="12" max="48" step="2" value="24">
+            <input type="range" id="s-n1" min="12" max="48" step="1" value="24">
           </div>
           <div class="slider-row">
             <label>從動輪齒數 N₂ <span class="v" id="v-n2">12</span></label>
-            <input type="range" id="s-n2" min="6" max="24" step="2" value="12">
+            <input type="range" id="s-n2" min="12" max="48" step="1" value="12">
           </div>
         </div>
 
@@ -94,7 +94,9 @@
         <ul>
           <li>R 越大 = 滑塊行程越大</li>
           <li>L 越長 = 位移曲線（實線）越接近正弦參考（虛線）</li>
-          <li>L 太短會卡死（必須 L > R）</li>
+          <li>連桿要比曲柄長（L &gt; R）才轉得過去；這裡限制 L ≥ 120、R ≤ 80，滑塊不會撞到曲柄</li>
+          <li>凸輪越扁，升程（長半軸 − 短半軸）越大；橢圓凸輪轉一圈，從動件上下 2 次</li>
+          <li>齒輪：兩輪模數 m 要相同，中心距 = m(N₁+N₂)/2；一輪的齒要對準另一輪的齒槽，才能順暢嚙合</li>
           <li>齒輪比 i = N<sub>從動</sub> / N<sub>驅動</sub> = N₂ / N₁；轉速反比 ω₁ / ω₂ = N₂ / N₁（主動輪齒數多於從動輪 → 從動輪轉得快但扭力小）</li>
         </ul>
       </div>
@@ -103,5 +105,5 @@
 
   <div class="module-nav-bottom"><a href="module3.html" class="btn btn-ghost">← 上一關</a><a href="module5.html" class="btn btn-primary">下一關 →</a></div>
 </main>
-<script src="../../js/main.js"></script><script src="../../js/sheet-config.js?v=1"></script><script src="../../js/sheet-log.js?v=1"></script><script src="../../js/sources.js?v=2"></script><script src="../../js/audio.js"></script><script src="../js/module4.js?v=2"></script>
+<script src="../../js/main.js"></script><script src="../../js/sheet-config.js?v=1"></script><script src="../../js/sheet-log.js?v=1"></script><script src="../../js/sources.js?v=2"></script><script src="../../js/audio.js"></script><script src="../js/gear-geometry.js?v=1"></script><script src="../js/module4.js?v=3"></script>
 </body></html>
