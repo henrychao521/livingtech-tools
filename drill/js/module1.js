@@ -2,7 +2,7 @@
 const PARTS = {
   trigger: { name: '扳機（Trigger / Variable Speed）', role: 'SPEED CONTROL', desc: '控制鑽頭轉速的關鍵元件。輕扣慢轉、深扣全速。多數型號為「無段變速」（0–2000 RPM）：可從零開始穩定加速，方便起鑽不打滑。', fact: '起鑽一定要「輕扣」慢速定位後再加速，直接全速會打滑、偏鑽、傷工件。' },
   reverse: { name: '正反轉開關（Forward / Reverse）', role: 'DIRECTION SWITCH', desc: '位於扳機正上方的撥桿。FWD（正轉）= 鎖緊、鑽孔；REV（反轉）= 退鑽、拆螺絲。中間位置為「鎖定」可防止誤觸扳機。', fact: '反轉除了退鑽，也能在鑽頭卡住時「微抖」鬆開——但要先停機、雙手扶穩再切換。' },
-  torque: { name: '扭力環 / 離合器（Torque Collar）', role: 'CLUTCH SELECTOR', desc: '位於夾頭後方，可旋轉的環圈。刻度 1–20+ 段代表離合器跳脫的扭力大小：數字越大，鎖入越深。最後的「鑽頭符號」表示鎖死不跳脫（純鑽孔用）。', fact: '鎖石膏板 1–3、薄夾板 4–7、硬木／厚板 10–16、鑽孔模式關閉離合器。刻度依廠牌而異，先在廢料上試鎖。鎖螺絲時設對扭力可避免崩牙或斷頭。' },
+  torque: { name: '扭力環 / 離合器（Torque Collar）', role: 'CLUTCH SELECTOR', desc: '位於夾頭後方，可旋轉的環圈。刻度 1–20+ 段代表離合器跳脫的扭力大小：數字越大，鎖入越深。最後的「鑽頭符號」表示鎖死不跳脫（純鑽孔用）。下方互動只取 1、5、10、15 與鑽孔檔示範。', fact: '鎖石膏板 1–3、薄夾板 4–7、硬木／厚板 10–16、鑽孔模式關閉離合器。刻度依廠牌而異，先在廢料上試鎖。鎖螺絲時設對扭力可避免崩牙或斷頭。' },
   chuck: { name: '夾頭（Keyless Chuck）', role: 'BIT HOLDER', desc: '夾持鑽頭的金屬機構。新型多為「免鑰匙夾頭」：手轉前環即可鬆緊三爪。常見規格 10mm / 13mm（可夾的最大鑽頭「柄徑」；鏟形鑽、開孔器是細柄，可以鑽比夾頭大的孔）。', fact: '有棘輪的夾頭要轉到「咔咔咔」聽到聲音才算真正夾緊；沒有棘輪的要轉到轉不動，裝好都要搖一搖確認不晃。沒夾緊鑽頭會在工件裡甩動造成偏鑽或飛出。' },
   bit: { name: '鑽頭（Drill Bit）', role: 'CUTTING EDGE', desc: '實際切削材料的部分。常見三類：高速鋼（HSS）鑽金屬與塑膠、木工螺旋鑽頭（含中心尖）鑽木材、磚石鑽頭（碳化鎢頭）鑽磚牆。直徑通常 1.5–13mm。', fact: '鑽頭鈍了會「燒黑」、出粉變少。木工鑽鑽金屬會立刻崩刃；磚石鑽鑽木材會很慢且燒焦。選錯鑽頭容易崩刃、損壞工件；不論用哪種鑽頭，操作電鑽都要全程戴護目鏡。' },
   battery: { name: '電池組（Battery Pack）', role: 'POWER SOURCE', desc: '可拆式鋰電池，常見規格 18V 5Ah（亦有 12V/20V/40V）。電量指示燈顯示剩餘電量。連續鑽硬材或大孔時電池會發燙——要讓它休息。', fact: '鋰電池儲存時請放在 40–60% 電量（不要充滿也不要放光），可以減緩電池老化。' },
@@ -90,7 +90,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
     {
       id: 'wood', name: '木工螺旋', color: '#a16207',
       material: '木材 · 夾板 · MDF',
-      rpm: '中低速（500–1500 RPM）', tip: '中心尖（定位針）',
+      rpm: '中低速（800–1500 RPM，大直徑再放慢）', tip: '中心尖（定位針）',
       desc: '最前端有細長定位尖，起鑽零偏移。螺旋刀翼設計，快速切削木纖維並把木屑往外排。深孔木材鑽孔首選。鑽金屬會馬上崩刃。',
       photo: { url: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e4/Group_of_drill_bits.jpg/330px-Group_of_drill_bits.jpg', caption: '各式鑽頭組合：左側螺旋型即為木工用鑽頭', page: 'https://commons.wikimedia.org/wiki/File:Group_of_drill_bits.jpg', license: 'CC BY-SA 3.0 · Mo7amedsalim / Wikimedia Commons' },
       svg: `<rect x="10" y="44" width="130" height="12" rx="2" fill="#a16207"/>
@@ -257,7 +257,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
       <div style="${CS}">
         <div style="font-weight:700;font-size:14px">① 扭力環（離合器）</div>
         <div style="display:flex;gap:5px;flex-wrap:wrap" id="torq-btns">
-          ${[1,5,10,15,'🔩'].map(t=>`<button data-t="${t}" style="${BS};flex:1">${t}</button>`).join('')}
+          ${[1,5,10,15,'🔩'].map(t=>`<button data-t="${t}" style="${BS};flex:1">${t === '🔩' ? '鑽孔檔' : t}</button>`).join('')}
         </div>
         <svg viewBox="0 0 180 112" style="width:100%;background:#1e293b;border-radius:8px">
           <rect x="20" y="64" width="140" height="38" rx="3" fill="#a16207"/>
@@ -324,7 +324,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
       <div style="${CS}">
         <div style="font-weight:700;font-size:14px">④ 模式選擇</div>
         <div style="display:flex;gap:5px">
-          <button data-mode="drill" style="${BS};flex:1;font-size:11px">🔩 鑽孔</button>
+          <button data-mode="drill" style="${BS};flex:1;font-size:11px">鑽孔</button>
           <button data-mode="driver" style="${BS};flex:1;font-size:11px">🪛 起子</button>
           <button data-mode="hammer" style="${BS};flex:1;font-size:11px">⚡ 電鎚</button>
         </div>
@@ -347,7 +347,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
     '5':  '扭力 5：薄夾板——中等扭力鎖入，一般薄板螺絲適用。',
     '10': '扭力 10：實木——深度鎖入，適合結構木螺絲。',
     '15': '扭力 15：硬木 / 厚板——高阻力場景，到位後跳脫。',
-    '🔩': '🔩 鑽孔模式：離合器完全鎖死，全力輸出，純鑽孔用（不跳脫）。',
+    '🔩': '鑽孔模式（扭力環轉到鑽頭圖示那一格）：離合器不跳脫，全力輸出，純鑽孔用。',
   };
   sec.querySelectorAll('#torq-btns [data-t]').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -448,7 +448,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
       <text x="90" y="108" text-anchor="middle" font-size="9" fill="#ef4444" font-family="Inter">旋轉+衝擊 · 磚牆混凝土</text>`,
   };
   const MODE_NOTE = {
-    drill:  '鑽孔模式（🔩）：連續旋轉，無衝擊。扭力環轉到鑽頭圖示 = 離合器鎖死，全力輸出。適合木材、金屬、塑膠。',
+    drill:  '鑽孔模式：連續旋轉，無衝擊。扭力環轉到鑽頭圖示 = 離合器鎖死，全力輸出。適合木材、金屬、塑膠。',
     driver: '起子模式：旋轉鎖螺絲，到達設定扭力後離合器打滑、發出「咔咔」聲，鑽頭不再轉入（馬達仍在轉，要放開扳機），防止螺絲頭擰爛、鎖過頭。',
     hammer: '電鎚模式（⚡）：旋轉 + 高頻軸向衝擊，專為混凝土、磚牆設計。必須搭配碳化鎢磚石鑽頭，切勿用於磁磚（龜裂）。',
   };
