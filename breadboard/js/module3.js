@@ -32,9 +32,9 @@ STEPS.forEach((s, i) => {
   stepListEl.appendChild(item);
 });
 
-// 回頭複習或重新整理：已完成八步就還原進度文字並解鎖下一關
+// 回頭複習或重新整理：先還原進度文字（2026-10 審查：原本只有八步全完成才更新，做了一半重新整理會顯示 0 / 8）；八步完成才解鎖下一關
+stepProgressEl.textContent = `已學習 ${seenSteps.size} / 8 步`;
 if (savedProg.module3 || seenSteps.size === STEPS.length) {
-  stepProgressEl.textContent = `已學習 ${seenSteps.size} / 8 步`;
   document.getElementById('next-btn').style.opacity = 1;
   document.getElementById('next-btn').style.pointerEvents = 'auto';
 }
