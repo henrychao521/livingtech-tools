@@ -63,11 +63,11 @@ function renderAnim(type) {
       <g transform="translate(250,120)"><circle r="18" fill="#9ca3af"/><circle r="5" fill="#0f172a"/></g>
       <path d="M 172 100 L 232 100 M 172 140 L 232 140" stroke="#0f172a" stroke-width="4"/>
       <g font-size="9" font-family="Inter" font-weight="700">
-        <text x="305" y="90" fill="#22c55e">2400 RPM (木)</text>
-        <text x="305" y="110" fill="#22c55e">1700 RPM</text>
-        <text x="305" y="130" fill="#22c55e">1100 RPM</text>
-        <text x="305" y="150" fill="#22c55e">720 RPM</text>
-        <text x="305" y="170" fill="#dc2626">500 RPM (鋼)</text>
+        <text x="305" y="90" fill="#22c55e">P5 2400 RPM</text>
+        <text x="305" y="110" fill="#22c55e">P4 1700 RPM（木 8mm）</text>
+        <text x="305" y="130" fill="#22c55e">P3 1100 RPM</text>
+        <text x="305" y="150" fill="#dc2626">P2 720 RPM（鋼 8mm）</text>
+        <text x="305" y="170" fill="#dc2626">P1 500 RPM（鋼 8mm）</text>
       </g>
       <text x="200" y="205" text-anchor="middle" font-size="11" fill="#444">皮帶位置決定主軸轉速</text>
     </svg>`,
