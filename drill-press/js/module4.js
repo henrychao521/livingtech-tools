@@ -115,11 +115,14 @@ function drawScene() {
   // 鑽頭
   const bitW = r.dia * 1.2;
   ctx.fillStyle = '#6b7280';
-  ctx.fillRect(W/2 - bitW/2, state.bitY + 40, bitW, H - 218 - (state.bitY + 40) + state.holeDepth);
+  // 2026-10 審查：鑽尖原本在 H-210，未鑽孔就已插進工件（工件頂面 H-220）。
+  // 改成鑽尖 = 工件頂面 + 已鑽深度；鑽完（深度 18）鑽尖剛好到工件底面
+  const tipY = H - 220 + state.holeDepth, coneY = tipY - 8;
+  ctx.fillRect(W/2 - bitW/2, state.bitY + 40, bitW, coneY - (state.bitY + 40));
   ctx.beginPath();
-  ctx.moveTo(W/2 - bitW/2, H - 218 + state.holeDepth);
-  ctx.lineTo(W/2 + bitW/2, H - 218 + state.holeDepth);
-  ctx.lineTo(W/2, H - 210 + state.holeDepth);
+  ctx.moveTo(W/2 - bitW/2, coneY);
+  ctx.lineTo(W/2 + bitW/2, coneY);
+  ctx.lineTo(W/2, tipY);
   ctx.closePath();
   ctx.fillStyle = '#4b5563';
   ctx.fill();

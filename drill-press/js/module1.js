@@ -207,7 +207,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
         <polygon points="150,43 170,50 150,57" fill="#4b5563"/>`,
     },
     {
-      id: 'wood', name: '木工螺旋鑽頭', color: '#a16207',
+      id: 'wood', name: '木工三尖鑽頭（Brad Point）', color: '#a16207',
       material: '木材 · 合板 · MDF',
       belt: 'P4–P5（1700–2400 RPM）', tip: '中心定位尖 + 螺旋刃',
       desc: '前端有銳利的中心定位尖，確保不偏鑽；外緣切刃先劃破木纖維，螺旋槽快速排出木屑。木材鑽孔首選，孔邊緣整潔。',
@@ -237,8 +237,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
         <rect x="130" y="34" width="28" height="32" rx="2" fill="#7c3aed"/>
         <rect x="133" y="37" width="4" height="26" fill="#a78bfa"/>
         <rect x="151" y="37" width="4" height="26" fill="#a78bfa"/>
-        <line x1="144" y1="66" x2="144" y2="72" stroke="#5b21b6" stroke-width="3"/>
-        <polygon points="140,72 148,72 144,78" fill="#5b21b6"/>`,
+        <polygon points="158,47 166,50 158,53" fill="#5b21b6"/>`,
     },
     {
       id: 'step', name: '階梯鑽（Step Drill）', color: '#0369a1',
@@ -401,7 +400,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
       ],
       bestFor: '大型工件、職業訓練、工廠批量加工',
       warn: '機台重量達 50–120kg，搬移需要多人協作；緊急停止鈕一定要確認位置。',
-      photo: { url: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c9/Drillpress.jpg/330px-Drillpress.jpg', caption: '落地式立式鑽床', license: 'CC BY-SA · Wikimedia Commons', page: 'https://commons.wikimedia.org/wiki/File:Drillpress.jpg' },
+      photo: { url: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c9/Drillpress.jpg/330px-Drillpress.jpg', caption: '落地式立式鑽床', license: 'LHOON · CC BY-SA 2.5 · Wikimedia Commons', page: 'https://commons.wikimedia.org/wiki/File:Drillpress.jpg' },
     },
     {
       id: 'horizontal',

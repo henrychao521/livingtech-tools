@@ -1,6 +1,6 @@
 // 鑽床 模組 2：安全闖關
 const SCENARIOS = [
-  { q: '把鑽頭裝進鑽床夾頭後，下一步？', a: '直接按開關鑽孔', b: '把夾頭鑰匙拔下、確認沒留在夾頭上才開機', correct: 'b', explain: '夾頭鑰匙沒拔下開機會以高速被甩飛，可能擊中眼睛或臉部。這是鑽床「永遠的第一守則」：開機前先確認鑰匙在工具盒裡。' },
+  { q: '把鑽頭裝進鑽床夾頭後，下一步？', a: '直接按開關鑽孔', b: '把夾頭鑰匙拔下、確認沒留在夾頭上才開機', correct: 'b', explain: '夾頭鑰匙沒拔下就開機，主軸一轉鑰匙會被甩出並可能造成傷害（OSHA 鑽床訓練講稿）。這是鑽床「永遠的第一守則」：開機前先確認鑰匙在工具盒裡。' },
   { q: '想鑽一塊小金屬片，工件可以用手按住嗎？', a: '絕對不行！要用機用虎鉗或 C 型夾固定在工作台上', b: '小心一點按住就可以', correct: 'a', explain: '小工件最容易被鑽頭咬住甩起來變「飛刀」。鑽床扭力大，徒手按住的工件會直接被扯飛，手指可能被切傷。' },
   { q: '要在不鏽鋼板上鑽 10mm 的孔，要用什麼轉速？', a: '最高速（2400 RPM）', b: '低速（P1–P2，約 500–720 RPM），並加切削液', correct: 'b', explain: '鋼比木材硬，高速會讓鑽頭瞬間燒掉。鑽鋼要降速、加切削液散熱；直徑越大越慢，3mm 以下的小鑽頭可以稍快。轉速由皮帶位置決定。' },
   { q: '長頭髮的同學要操作鑽床，怎麼處理？', a: '必須先綁起來，最好加戴髮網或鴨舌帽', b: '把頭髮塞進衣領就好', correct: 'a', explain: '鑽床主軸轉速 500–2400 RPM，頭髮一捲入就會被瞬間扯入夾頭。長髮、寬鬆袖口、項鍊、圍巾、領帶都要先處理。' },
@@ -111,28 +111,23 @@ function resetScenarios() {
   const sec = document.createElement('section');
   sec.className = 'panel';
   sec.innerHTML = `
-    <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:6px">⚠️ 真實事故案例參考</h3>
-    <p style="color:#64748b;font-size:14px;margin-bottom:16px">以下為美國 OSHA 官方記錄的鑽床事故資料，作為安全規範的具體佐證。</p>
+    <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:6px">⚠️ 官方安全文件怎麼說</h3>
+    <p style="color:#64748b;font-size:14px;margin-bottom:16px">以下摘自美國職業安全衛生署（OSHA）的鑽床安全文件。原文為英文，引號內附原句，中文為本站翻譯。</p>
 
     <div style="${CARD_ACCIDENT}">
-      <div style="font-weight:700;color:#c2410c;margin-bottom:6px">🔑 夾頭鑰匙甩飛致傷｜OSHA 官方文件明確記載</div>
-      <p style="margin:0 0 8px;font-size:14px;color:#374151">美國職業安全衛生署（OSHA）在其鑽床操作訓練腳本中明確指出：「若夾頭鑰匙未在開機前取出，鑽床啟動時主軸轉速瞬間將鑰匙以高速甩飛，成為危險飛射物，可能擊中眼部或臉部造成重傷。」這是全球技術教育中被反覆強調的<strong>鑽床第一守則</strong>。</p>
+      <div style="font-weight:700;color:#c2410c;margin-bottom:6px">🔑 夾頭鑰匙｜OSHA 鑽床訓練講稿</div>
+      <p style="margin:0 0 8px;font-size:14px;color:#374151">“Be sure to remove chuck key from chuck when finished tightening it otherwise it will be thrown from chuck when the spindle is turned on and can cause injury.”<br>（鎖緊後務必把夾頭鑰匙從夾頭取下，否則主軸一啟動，鑰匙會被甩出夾頭並可能造成傷害。）</p>
+      <p style="margin:0 0 8px;font-size:14px;color:#374151">同一份講稿也提到：靠鑽孔區太近、戴手套、穿寬鬆衣物、長髮未束或配戴首飾，都可能造成嚴重的手部傷害；工件沒有夾在工作台上，可能被甩出而傷到操作者或旁人。</p>
       <a href="https://www.osha.gov/sites/default/files/2021-04/Drill%20Press%20-%20Trainer%20Script.pdf" target="_blank" rel="noopener noreferrer" style="${TL}">📄 原文來源：OSHA Drill Press Trainer Script（英文 PDF）</a>
     </div>
 
     <div style="${CARD_GOV}">
-      <div style="font-weight:700;color:#15803d;margin-bottom:6px">🏛️ OSHA 鑽床安全 eTool｜典型傷害模式資料庫</div>
-      <p style="margin:0 0 8px;font-size:14px;color:#374151">OSHA 木工機械 eTool 完整記錄了鑽床常見傷害模式：包括布手套被夾頭捲入（Entanglement）、未固定工件被甩飛（Workpiece ejection）、長頭髮捲入（Hair entanglement），以及未墊犧牲板造成的鑽床台面損傷。所有模式均附有實際事故案例摘要與預防措施。</p>
+      <div style="font-weight:700;color:#15803d;margin-bottom:6px">🏛️ 用手握工件鑽孔｜OSHA 木工 eTool</div>
+      <p style="margin:0 0 8px;font-size:14px;color:#374151">“One of the most common causes of accidents that occur on a drill press is poor operator judgment. Often the operator will attempt to hand-hold the stock while drilling.”<br>（鑽床事故最常見的原因之一是操作者判斷不當，常見的是用手握著工件鑽孔；鑽頭吃進工件時會卡住並把工件從手中扭走，變成失控旋轉的木塊。）</p>
       <a href="https://www.osha.gov/etools/woodworking/production/machines-tools/drill-press" target="_blank" rel="noopener noreferrer" style="${TL}">📄 原文來源：OSHA eTool — Drill Press（英文）</a>
     </div>
 
-    <div style="${CARD_GOV}">
-      <div style="font-weight:700;color:#15803d;margin-bottom:6px">📊 美國統計：機械工具每年造成逾 1.8 萬人住院</div>
-      <p style="margin:0 0 8px;font-size:14px;color:#374151">根據美國勞工統計局（Bureau of Labor Statistics）職業傷害統計資料，各類機械工具（含鑽床、車床、銑床）每年約造成 18,090 名工人需要住院治療，其中鑽孔相關傷害佔金屬加工事故的相當大比例。此數據說明了嚴格遵守操作規範的重要性。</p>
-      <a href="https://www.bls.gov/iif/home.htm" target="_blank" rel="noopener noreferrer" style="${TL}">📄 資料來源：Bureau of Labor Statistics — Injuries, Illnesses and Fatalities（英文）</a>
-    </div>
-
-    <p style="font-size:12px;color:#94a3b8;margin-top:4px">※ 以上連結均為美國政府官方文件，引用於教學安全佐證之用。</p>
+    <p style="font-size:12px;color:#94a3b8;margin-top:4px">※ 以上為美國政府官方文件；國內規定請以職業安全衛生法規與學校實習工場安全守則為準。</p>
   `;
   const nav = document.querySelector('.module-nav-bottom');
   if (nav) nav.parentNode.insertBefore(sec, nav);
@@ -279,7 +274,9 @@ function resetScenarios() {
     } else if (correct) {
       if (typeof SoundFX !== 'undefined') SoundFX.warn?.() ?? SoundFX.error?.();
       { const el = dragged; el.classList.add('wrong-shake'); setTimeout(() => el.classList.remove('wrong-shake'), 400); }
-      showPpeFb(`位置不對，請放到「${zone.dataset.label}」對應部位`, 'error');
+      // 2026-10 審查：原本顯示的是「放錯的那一格」名稱，等於叫學生把護目鏡戴在腳上；改成查這件裝備真正對應的部位
+      const target = document.querySelector(`.dropzone[data-accept="${id}"]`);
+      showPpeFb(`位置不對，「${zone.dataset.label}」不是這件裝備的位置${target ? `，請放到「${target.dataset.label}」` : ''}`, 'error');
     } else {
       if (typeof SoundFX !== 'undefined') SoundFX.error();
       { const el = dragged; el.classList.add('wrong-shake'); setTimeout(() => el.classList.remove('wrong-shake'), 400); }
