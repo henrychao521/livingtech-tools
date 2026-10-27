@@ -298,7 +298,10 @@ function update() {
     }
 
     // 修正模式：烙鐵加熱不良焊點 1 秒以上、按住「吸錫」才吸掉舊錫（和送錫分開）
-    if (j.defective && state.contactPad === j && state.desoldering && state.contactPad.heatTime > 1.0) {
+    // 連錫跨在這個點和下一個點之間：烙鐵放在兩端任一點加熱都能吸（2026-10 審查）
+    const nextJ = state.joints[state.joints.indexOf(j) + 1];
+    const onIt = state.contactPad === j || (j.defective === 'bridge' && nextJ && state.contactPad === nextJ);
+    if (j.defective && onIt && state.desoldering && state.contactPad.heatTime > 1.0) {
       j.defective = null;
       j.status = 'empty';
       j.solderAmount = 0;
@@ -348,8 +351,15 @@ function draw() {
   ctx.strokeStyle = 'rgba(255,200,100,.3)';
   ctx.lineWidth = 1.5;
   state.joints.forEach((j, i) => {
-    // SMD 關卡：只在同一顆貼片元件的兩個焊墊之間畫走線，不同元件之間不畫斜線
-    if (i > 0 && !(j.smd && state.joints[i - 1].x !== j.x)) {
+    // SMD 關卡（2026-10 審查）：同一顆貼片元件兩端焊墊之間畫走線等於把元件短路；改成每個焊墊各自往外引出一段走線
+    if (j.smd) {
+      ctx.beginPath();
+      ctx.moveTo(j.x, j.y);
+      ctx.lineTo(j.x, j.y + (j.y < 250 ? -40 : 40));
+      ctx.stroke();
+      return;
+    }
+    if (i > 0) {
       ctx.beginPath();
       ctx.moveTo(state.joints[i - 1].x, state.joints[i - 1].y + (j.smd ? 15 : 30));
       ctx.lineTo(j.x, j.y + (j.smd ? 15 : 30));
@@ -360,6 +370,8 @@ function draw() {
 
   // 焊墊（接點）
   state.joints.forEach(j => drawPad(j));
+  // 焊點最後才畫：連錫會蓋住相鄰焊墊（2026-10 審查：原本下一個焊墊的銅環畫在連錫上面）
+  state.joints.forEach(j => drawJoint(j));
 
   // 元件腳（一般焊點才有，SMD 沒有）
   state.joints.forEach(j => {
@@ -390,7 +402,7 @@ function draw() {
     ctx.fillStyle = '#fff';
     ctx.font = 'bold 11px Inter, sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText('LED', j.x, j.y - 75);
+    ctx.fillText('測試點 TP', j.x, j.y - 75);   // 2026-10 審查：單一焊點的元件不能標 LED（LED 有兩支腳）
   } else {
     // SMD：同一直行上下兩個焊墊之間放一顆貼片元件（兩端金屬電極 + 黑色本體），焊墊露出兩端
     const byX = {};
@@ -524,8 +536,6 @@ function drawPad(j) {
     ctx.fill();
   }
 
-  // 焊點外觀
-  drawJoint(j);
 }
 
 function drawJoint(j) {

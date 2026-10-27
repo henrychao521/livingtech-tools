@@ -24,7 +24,7 @@ const STEPS = [
   {
     title: '對齊接點',
     anim: 'align',
-    desc: '把要焊接的元件腳穿過 PCB 的孔位，從背面用一隻手扶住。元件腳要稍微留長（約 2mm），方便焊接後修剪。',
+    desc: '把要焊接的元件腳穿過 PCB 的孔位，元件貼平板面。用電路板夾具固定，或把背面的腳稍微往外彎，讓翻面後元件不會掉；焊接時不要用手扶元件（腳和焊墊會被烙鐵加熱）。多出來的腳等焊點凝固後（步驟 8）再剪，剪的時候不要剪到焊點。',
     tip: '焊接前先把元件腳折成 45°（軸向元件），可以防止元件掉下來。',
     warn: null,
   },
@@ -315,7 +315,7 @@ if (typeof Interactions !== 'undefined') {
   sec.id = 'desolder-guide';
   sec.innerHTML = `
     <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:6px">🧯 拆焊：焊錯了怎麼救</h3>
-    <p style="color:#64748b;font-size:14px;margin-bottom:16px">焊錯位置、錫橋短路、冷焊要重焊——都不用慌。把錫「請」下來的工具有兩種：吸錫器與吸錫帶。模組 4 的 L5 關卡（修正錯誤焊）就是在練這件事。</p>
+    <p style="color:#64748b;font-size:14px;margin-bottom:16px">焊錯位置、錫橋短路、冷焊要重焊——都不用慌。把錫「請」下來的工具有兩種：吸錫器與吸錫線。模組 4 的 L5 關卡（修正錯誤焊）就是在練這件事。</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px">
       <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:16px 18px">
         <h4 style="margin:0 0 10px;font-size:15px;color:#1e293b">💉 吸錫器（四步）</h4>
@@ -327,16 +327,16 @@ if (typeof Interactions !== 'undefined') {
         </ol>
       </div>
       <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:16px 18px">
-        <h4 style="margin:0 0 10px;font-size:15px;color:#1e293b">🎗️ 吸錫帶（三步）</h4>
+        <h4 style="margin:0 0 10px;font-size:15px;color:#1e293b">🎗️ 吸錫線（三步）</h4>
         <ol style="margin:0;padding-left:20px;font-size:13px;color:#374151;line-height:1.9">
-          <li><strong>帶壓在焊點上</strong>：把吸錫帶（銅編織帶）平放蓋住要拆的焊點。</li>
-          <li><strong>烙鐵隔帶加熱</strong>：烙鐵頭壓在帶子上，熱量穿過帶子熔化下方焊錫。</li>
-          <li><strong>錫被吸入編織帶</strong>：毛細作用讓熔錫「爬」進帶子，帶子變銀色就成功了。用過的段落剪掉。</li>
+          <li><strong>線壓在焊點上</strong>：把吸錫線（銅編織線）平放蓋住要拆的焊點。</li>
+          <li><strong>烙鐵隔著吸錫線加熱</strong>：烙鐵頭壓在吸錫線上，熱量穿過吸錫線熔化下方焊錫。</li>
+          <li><strong>錫被吸入編織線</strong>：毛細作用讓熔錫「爬」進編織線，吸錫線變銀色就成功了。用過的段落剪掉。</li>
         </ol>
       </div>
     </div>
     <div style="margin-top:12px;padding:10px 14px;background:#fff7ed;border-left:3px solid #f97316;border-radius:6px;font-size:13px;color:#9a3412;line-height:1.7">
-      <strong>⚠ RoHS 無鉛焊錫提醒：</strong>無鉛焊錫（RoHS，例如老師示範用的 SAC305）熔點比本校課堂用的含鉛錫高，拆焊時需要略高的溫度（約 360°C）與更久的加熱時間，別以為「加熱兩秒還沒熔」是工具壞了。
+      <strong>⚠ RoHS 無鉛焊錫提醒：</strong>無鉛焊錫（RoHS，例如老師示範用的 SAC305）熔點比含鉛錫（Sn63Pb37）高，拆焊時需要略高的溫度（約 360°C）與更久的加熱時間，別以為「加熱兩秒還沒熔」是工具壞了。
     </div>
     <div style="margin-top:10px;padding:10px 14px;background:#f0fdf4;border-left:3px solid #22c55e;border-radius:6px;font-size:13px;color:#15803d;line-height:1.7">
       <strong>💡 拆完之後：</strong>孔位清乾淨、銅環沒受損，就可以照前面八個步驟重新焊一次。拆焊不是失敗，是每個焊接高手都會的「後悔藥」。

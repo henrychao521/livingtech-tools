@@ -81,11 +81,11 @@ const EQUIP_VISUALS = {
 
 const SCENARIOS = [
   {
-    q: '剛使用完的電烙鐵，過多久才能直接用手摸？',
-    a: '等待冷卻約 10–15 分鐘，摸前先用手背靠近測試溫度',
-    b: '拔電後 2 分鐘',
+    q: '剛使用完的電烙鐵，拔掉電源後可以馬上用手摸烙鐵頭確認溫度嗎？',
+    a: '不行，放回烙鐵架讓它自然冷卻，不要用手摸測試溫度',
+    b: '可以，拔電後烙鐵頭就不燙了',
     correct: 'a',
-    explain: '烙鐵頭從 350°C 冷卻到能徒手摸的溫度約需 10–15 分鐘（依環境而定）。徒手摸前一定要先用手背靠近感受溫度。'
+    explain: 'HAKKO 說明書：通電時烙鐵頭溫度 200–480°C，不要碰烙鐵頭與附近的金屬部分。關掉電源後金屬不會立刻變涼，放回烙鐵架讓它自然冷卻，不要用手去摸測試溫度。'
   },
   {
     q: '焊接時聞到刺鼻味怎麼辦？',
@@ -445,8 +445,8 @@ function updateScore() {
     </div>
 
     <div style="${CARD_RESEARCH}">
-      <div style="font-weight:700;color:#1e40af;margin-bottom:6px">🫁 焊接煙霧致職業性哮喘｜OSHA 職業健康研究</div>
-      <p style="margin:0 0 8px;font-size:14px;color:#374151">助焊劑（Flux）加熱揮發產生的煙霧中含有多種刺激性化合物，長期吸入可引發<strong>職業性哮喘（Occupational Asthma）</strong>。美國 OSHA 將焊接煙霧列為工作場所有害物，要求焊接站必須配備局部抽排煙（LEV）系統。史丹佛大學 EHS 安全規範同樣明確：「Flux fumes can cause occupational asthma in sensitive individuals」。</p>
+      <div style="font-weight:700;color:#1e40af;margin-bottom:6px">🫁 焊接煙霧致職業性氣喘｜OSHA 職業健康研究</div>
+      <p style="margin:0 0 8px;font-size:14px;color:#374151">助焊劑（Flux）加熱揮發產生的煙霧中含有多種刺激性化合物，長期吸入可引發<strong>職業性氣喘（Occupational Asthma）</strong>。美國 OSHA 將焊接煙霧列為工作場所有害物，要求焊接站必須配備局部抽排煙（LEV）系統。史丹佛大學 EHS 安全規範同樣明確：「Flux fumes can cause occupational asthma in sensitive individuals」。</p>
       <a href="https://ehs.stanford.edu/reference/soldering-safety" target="_blank" rel="noopener noreferrer" style="${TL}">📄 原文來源：Stanford EHS — Soldering Safety（英文）</a>
     </div>
 

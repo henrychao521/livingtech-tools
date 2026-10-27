@@ -49,7 +49,7 @@ const PARTS = {
     photo: '../assets/livingtech-photos/solder-wire.jpg',
     name: '焊錫絲（Solder Wire）',
     role: '填充金屬',
-    desc: '中空管狀，內含助焊劑（flux）。常見直徑 0.6mm（精細）、0.8mm（一般）、1.0mm（粗）。本校課堂使用 0.8mm 含鉛錫（Sn63Pb37），老師另備一卷無鉛錫（SAC305）示範比較。',
+    desc: '中空管狀，內含助焊劑（flux）。常見直徑 0.6mm（精細）、0.8mm（一般）、1.0mm（粗）。課堂常用 0.8mm 含鉛錫（Sn63Pb37）；若使用無鉛錫（例如 SAC305），熔點較高，可對照比較。',
     fact: '含鉛錫熔點 183°C、較好上手，但焊完一定要洗手；無鉛錫熔點較高，比較見下方「焊錫絲種類」。'
   },
 };
@@ -156,7 +156,7 @@ document.querySelectorAll('.part-chip').forEach(c => {
     {
       id: 'bevel', name: '斜切頭（C 型，馬蹄形）', en: 'Bevel Tip',
       color: '#d97706',
-      best: 'SMD 拖焊（Drag Soldering）、IC 陣腳快速焊',
+      best: 'SMD 拖焊（Drag Soldering）、IC 接腳快速焊',
       avoid: '通孔單點精細焊',
       note: '拖焊技術：把大量錫倒在 IC 腳上，再用這個頭一次拖過去帶走多餘錫，速度極快。進階技巧。',
     },
@@ -243,7 +243,7 @@ document.querySelectorAll('.part-chip').forEach(c => {
           mp:'183°C', temp:'315–343°C', skill:'⭐ 新手首選',
           pro:'熔點低、流動性佳、焊點光亮、好學習',
           con:'含鉛（對人體有毒，學後洗手）',
-          note:'本校課堂使用這一種。焊完務必洗手，不要用手摸口鼻，焊接區不飲食。' },
+          note:'課堂常用這一種。焊完務必洗手，不要用手摸口鼻，焊接區不飲食。' },
         { name: '無鉛錫（SAC305）', badge:'🟢', color:'#16a34a',
           mp:'約 217–221°C', temp:'371–400°C', skill:'⭐⭐ 進階',
           pro:'符合 RoHS 環保法規，無鉛安全',
@@ -302,8 +302,8 @@ document.querySelectorAll('.part-chip').forEach(c => {
           how:'按下彈簧 → 烙鐵加熱錫到熔融 → 吸嘴貼緊焊點 → 按下釋放鈕 → 錫被吸入',
           best:'通孔大量吸錫，速度快', warn:'需要雙手協調，一手烙鐵一手吸',
           photo:'../assets/wiki-photos/desoldering-pump.webp', credit:'照片：Desoldering pump.jpg｜Ansgar Hellwig｜CC BY-SA 2.0 de｜<a href="https://commons.wikimedia.org/wiki/File:Desoldering_pump.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>' },
-        { name:'吸錫線（銅辮子 Desoldering Braid）', badge:'🧵', color:'#7c3aed',
-          how:'把銅辮子壓在焊點上 → 烙鐵加熱辮子 → 毛細管效應把錫吸進辮子',
+        { name:'吸錫線（Desoldering Braid，銅編織線）', badge:'🧵', color:'#7c3aed',
+          how:'把吸錫線壓在焊點上 → 烙鐵隔著吸錫線加熱 → 毛細作用把錫吸進編織線',
           best:'SMD 連錫、細密間距清理，不需吸力', warn:'單次使用段要剪掉，費料較多' },
       ].map(d => `<div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:12px;border-top:4px solid ${d.color}">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
