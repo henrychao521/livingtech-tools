@@ -32,9 +32,10 @@ function drawLever() {
   // 支點
   ctx.fillStyle = '#9D174D';
   ctx.beginPath();
-  ctx.moveTo(pivotX - 14, beamY + 4);
-  ctx.lineTo(pivotX + 14, beamY + 4);
-  ctx.lineTo(pivotX, beamY + 36);
+  // 2026-10 審查：支點三角形尖端朝上頂住桿子、底邊在下（原本畫成倒三角）
+  ctx.moveTo(pivotX, beamY + 4);
+  ctx.lineTo(pivotX - 14, beamY + 36);
+  ctx.lineTo(pivotX + 14, beamY + 36);
   ctx.closePath();
   ctx.fill();
   // 抗力（重物）
@@ -217,23 +218,23 @@ function drawIncline() {
   ctx.translate(objCX, objCY);
   ctx.rotate(-rad);
   ctx.fillStyle = '#831843';
-  ctx.fillRect(-30, -40, 60, 30);
+  ctx.fillRect(-30, -32, 60, 30);   // 2026-10 審查：底邊貼齊斜面（斜面邊線粗 4，往上讓 2 px），原本懸空 10 px
   ctx.fillStyle = '#fff';
   ctx.font = '700 12px Inter';
   ctx.textAlign = 'center';
-  ctx.fillText(`${load} kgw`, 0, -22);
+  ctx.fillText(`${load} kgw`, 0, -13);
   // 施力箭頭（沿斜面往上，方向 (cos θ, −sin θ)；在旋轉後的座標系就是 +x 方向）
   ctx.strokeStyle = '#16A34A';
   ctx.fillStyle = '#16A34A';
   ctx.lineWidth = 5;
   ctx.beginPath();
-  ctx.moveTo(34, -25);
-  ctx.lineTo(96, -25);
+  ctx.moveTo(34, -17);
+  ctx.lineTo(96, -17);
   ctx.stroke();
   ctx.beginPath();
-  ctx.moveTo(110, -25);
-  ctx.lineTo(94, -33);
-  ctx.lineTo(94, -17);
+  ctx.moveTo(110, -17);
+  ctx.lineTo(94, -25);
+  ctx.lineTo(94, -9);
   ctx.closePath();
   ctx.fill();
   ctx.restore();
@@ -269,7 +270,7 @@ function drawIncline() {
   ctx.fillStyle = '#9D174D';
   ctx.font = '800 14px Inter';
   ctx.textAlign = 'left';
-  ctx.fillText(`需 ${force.toFixed(1)} kgw 推力`, 30, 50);
+  ctx.fillText(`需 ${force.toFixed(1)} kgw 施力`, 30, 50);
   ctx.fillText(`需走 ${length.toFixed(2)}m 距離`, 30, 75);
   return { ma, force, load, loadDist: height, effortDist: length };
 }
