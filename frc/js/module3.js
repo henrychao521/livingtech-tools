@@ -14,7 +14,7 @@ const STEPS = [
     desc: '看上屆比賽影片、頂尖隊伍的 reveal video、Chief Delphi 討論。理解別人怎麼解、有沒有可借用的設計。',
     deliverable: '參考設計清單（連結 + 截圖 + 為什麼有效）',
     tip: '推薦觀看：Ri3D（48 小時造機器人挑戰）、Reveal Videos、Team 254/1678 的 build blog。',
-    warn: '抄襲不可恥但要標明出處。學習 ≠ 直接複製。',
+    warn: '參考別隊的設計不可恥，但一定要標明出處；照抄而不註明就是抄襲。學習 ≠ 直接複製。',
   },
   {
     short: '構想',
@@ -51,7 +51,7 @@ const STEPS = [
   {
     short: '迭代',
     title: 'Iterate：賽季中持續優化',
-    desc: '區賽後依比賽表現改機器人。常見：加 bumper 防撞、優化 autonomous、改 manipulator 動作速度。',
+    desc: '區賽後依比賽表現改機器人。常見：補強 bumper 固定與耐磨（bumper 是規則強制裝備，不是選配）、優化 autonomous、改 manipulator 動作速度。',
     deliverable: '改機 changelog + 每場比賽的後賽檢討',
     tip: '區域賽之後到世界錦標賽前的這段時間是真正的進化期，頂尖隊伍此時做主要改機。賽季結束後的 Off-season 則可以練新機構、帶新人。',
     warn: '迭代不是「整台重做」。每次只改一個變因，否則無法判斷有沒有變好。',

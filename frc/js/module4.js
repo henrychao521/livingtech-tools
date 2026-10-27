@@ -12,8 +12,9 @@ const CONFIG = {
 // 配置選項的得分加權
 const DRIVES = {
   tank: { speed: 3, agility: 2, difficulty: 1, defense: 4, name: 'Tank Drive', emoji: '🚜' },
-  mecanum: { speed: 3.5, agility: 4, difficulty: 2.5, defense: 3, name: 'Mecanum', emoji: '↔️' },
-  swerve: { speed: 4.5, agility: 5, difficulty: 5, defense: 2, name: 'Swerve', emoji: '🌀' },
+  // 2026-10 審查：Mecanum 的 45° 滾子側向抓地力低、容易被推走，抗推最弱；Swerve 每輪都是一般輪胎、可鎖成 X 形抗推
+  mecanum: { speed: 3.5, agility: 4, difficulty: 2.5, defense: 1.5, name: 'Mecanum', emoji: '↔️' },
+  swerve: { speed: 4.5, agility: 5, difficulty: 5, defense: 3.5, name: 'Swerve', emoji: '🌀' },
 };
 const MANIPS = {
   'intake-only': { teleopScore: 8, autoCap: 5, reliability: 4.5, weight: 1, name: '僅 Intake' },
@@ -55,7 +56,8 @@ function update() {
   // 得分計算
   // Teleop 估算：manipulator 得分 * 移動速度因子 * 可靠度
   const teleopMatchCount = m.teleopScore * (d.speed / 4) * (m.reliability / 5);
-  const autoScore = Math.min(a.score, m.autoCap * (a.complexity / 5 + 0.3));
+  // 走出起點（mobility）只靠底盤移動，不受機構上限影響；要得分的自動程式才受機構 autoCap 限制
+  const autoScore = CONFIG.auto === 'basic' ? a.score : Math.min(a.score, m.autoCap * (a.complexity / 5 + 0.3));
   const endScore = e.score;
   // 防守得分 (drive 影響)
   const defenseBonus = d.defense * 1.5;
@@ -70,21 +72,30 @@ function update() {
     <div class="stat-row"><span>🤖 自動期</span><span class="val">${autoScore.toFixed(1)} pts</span></div>
     <div class="stat-row"><span>🏁 終局</span><span class="val">${endScore} pts</span></div>
     <div class="stat-row"><span>🛡️ 防守加成</span><span class="val">+${defenseBonus.toFixed(1)} pts</span></div>
-    <div class="stat-row"><span>⚙️ 設計難度</span><span class="val ${d.difficulty + m.weight + a.complexity > 10 ? 'bad' : d.difficulty + m.weight > 6 ? 'warn' : 'good'}">${(d.difficulty + m.weight + a.complexity).toFixed(1)} / 15</span></div>
+    <div class="stat-row"><span>⚙️ 設計難度</span><span class="val ${d.difficulty + m.weight + a.complexity > 10 ? 'bad' : d.difficulty + m.weight + a.complexity > 6 ? 'warn' : 'good'}">${(d.difficulty + m.weight + a.complexity).toFixed(1)} / 15</span></div>
     <div class="stat-row"><span>💪 可靠度</span><span class="val ${m.reliability >= 4 ? 'good' : m.reliability >= 3 ? '' : 'bad'}">${m.reliability.toFixed(1)} / 5</span></div>
   `;
 
   // 建議
+  // 2026-10 審查：建議要看目前選了什麼，不能固定一句（已選合作爬或射擊機構時原本仍建議升級成同一項）
+  const ORDER_END = ['park', 'climb', 'harmony'];
+  const nextEnd = ORDER_END[ORDER_END.indexOf(CONFIG.end) + 1];
+  const endTip = nextEnd
+    ? `可考慮把 endgame 升級為${ENDS[nextEnd].name}（+${ENDS[nextEnd].score - e.score} 分）。`
+    : 'endgame 已是最高的合作爬，下一步可強化自動期或提高機構可靠度。';
+  const manipTip = (CONFIG.manip === 'shooter' || CONFIG.manip === 'combo')
+    ? '建議：機構已有射擊能力，下一步先提高可靠度、加強自動期或升級底盤。'
+    : '建議：把 manipulator 升級或加入射擊機構，可大幅提升 teleop 得分。';
   let rec = '';
   let recClass = '';
   if (totalScore >= 55) {
     rec = '🏆 <strong>頂級配置！</strong>這套組合預測能在區域賽進入 alliance pick（前 8 強）。但難度高，需要充足時間製造與測試。建議：駕駛員至少 100+ practice match。';
     recClass = 'success';
   } else if (totalScore >= 40) {
-    rec = '✅ <strong>穩健配置！</strong>實用度高，適合多數隊伍。在區域賽應能進入中段。可考慮把 endgame 升級為合作（+8 分）。';
+    rec = '✅ <strong>穩健配置！</strong>實用度高，適合多數隊伍。在區域賽應能進入中段。' + endTip;
     recClass = 'success';
   } else if (totalScore >= 25) {
-    rec = '⚠️ <strong>基本配置！</strong>能比賽但難拿名次。建議：把 manipulator 升級或加入射擊機構，可大幅提升 teleop 得分。';
+    rec = '⚠️ <strong>基本配置！</strong>能比賽但難拿名次。' + manipTip;
     recClass = 'warn';
   } else {
     rec = '❌ <strong>太基礎了！</strong>這套配置在大部分賽季可能僅能 mobility + park。建議至少升級一個項目，比例考量：先升 manipulator > autonomous > drivetrain > endgame。';
