@@ -113,7 +113,7 @@
   // Step 2: 進入 Part Studio
   const svg2 = wrapSvg(
     2,
-    "步驟2：進入 Part Studio 1 檢視左側特徵清單與三個垂直基準平面",
+    "步驟2：進入 Part Studio 1 檢視左側特徵清單與三個互相垂直的基準平面",
     baseChrome(
       ["Origin", "Top", "Front", "Right"],
       [
@@ -245,7 +245,7 @@
   // Step 7: 退出草圖
   const svg7 = wrapSvg(
     7,
-    "步驟7：點選繪圖區右上角綠色勾勾結束草圖並在清單產生 Sketch 1",
+    "步驟7：點選繪圖區左上方草圖對話框的綠色勾勾結束草圖並在清單產生 Sketch 1",
     baseChrome(
       ["Origin", "Top", "Front", "Right", "Sketch 1"],
       [
@@ -270,12 +270,13 @@
       `<polygon points="152,92 149,99 155,99" fill="#334155"/>` +
       `<polygon points="152,164 149,157 155,157" fill="#334155"/>` +
       txt(146, 128, "50", { size: 11, anchor: "middle", fill: "#334155", transform: "rotate(-90 146 128)" }) +
-      `<rect x="220" y="28" width="90" height="26" rx="4" fill="#f8fafc" stroke="#334155" stroke-width="1.2"/>` +
-      txt(228, 45, "Sketch 1", { size: 11, bold: true, fill: "#0f172a" }) +
-      `<circle cx="290" cy="41" r="9" fill="#16a34a"/>` +
-      txt(290, 45, "✓", { size: 12, bold: true, anchor: "middle", fill: "#ffffff" }) +
-      `<circle cx="290" cy="41" r="12" fill="none" stroke="#f97316" stroke-width="2"/>` +
-      callout(248, 62, 92, 22, "按 ✓ 結束草圖", 290, 62, 290, 53) +
+      // 2026-10 審查：Onshape 的草圖對話框浮在繪圖區左上方（和步驟 8 的 Extrude 對話框同一處），不是右上角
+      `<rect x="86" y="28" width="90" height="26" rx="4" fill="#f8fafc" stroke="#334155" stroke-width="1.2"/>` +
+      txt(94, 45, "Sketch 1", { size: 11, bold: true, fill: "#0f172a" }) +
+      `<circle cx="156" cy="41" r="9" fill="#16a34a"/>` +
+      txt(156, 45, "✓", { size: 12, bold: true, anchor: "middle", fill: "#ffffff" }) +
+      `<circle cx="156" cy="41" r="12" fill="none" stroke="#f97316" stroke-width="2"/>` +
+      callout(250, 30, 92, 22, "按 ✓ 結束草圖", 250, 41, 168, 41) +
       noteLine(86, 112, "清單多一項", 84, 108, 66, 128) +
       noteLine(162, 190, "黑色線條維持定義", 202, 178, 202, 164)
   );

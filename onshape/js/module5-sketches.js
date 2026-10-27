@@ -309,8 +309,10 @@
 
   // 選錯平面：等角圖。可見邊＝粗實線、隱藏邊＝細虛線；三個基準平面用細實線方框
   function renderPlane(good, opts) {
-    const S = 1.0, cx = 120, cy = 95, c30 = Math.cos(Math.PI / 6), s30 = 0.5;
-    const pj = (x, y, z) => [f(cx + (x - y) * c30 * S), f(cy + (x + y) * s30 * S - z * S)];
+    // 2026-10 審查：原本視線來自 (+x,+y,+z)，等於從背後看，Front 平面跑到右邊、Right 平面跑到左邊；
+    // 改成 Onshape 預設等角視角，視線來自 (+x,−y,+z)：Front（XZ）在左前、Right（YZ）在右
+    const S = 1.0, cx = 70, cy = 120, c30 = Math.cos(Math.PI / 6), s30 = 0.5;
+    const pj = (x, y, z) => [f(cx + (x + y) * c30 * S), f(cy + (x - y) * s30 * S - z * S)];
     let g = '';
     const poly = (pts, attrs) => `<polygon points="${pts.map(p => pj(...p).join(',')).join(' ')}" ${attrs}/>`;
     const L = 70;
@@ -327,9 +329,9 @@
     for (let i = 0; i < 2; i++) for (let j = 0; j < 2; j++) { edges.push([V(i, j, 0), V(i, j, 1), i, j, null]); }
     for (let i = 0; i < 2; i++) for (let k = 0; k < 2; k++) { edges.push([V(i, 0, k), V(i, 1, k), i, null, k]); }
     for (let j = 0; j < 2; j++) for (let k = 0; k < 2; k++) { edges.push([V(0, j, k), V(1, j, k), null, j, k]); }
-    // 視線來自 (+x,+y,+z)：與角點 (x0,y0,z0) 相連的三條邊被擋住
+    // 視線來自 (+x,−y,+z)：離視線最遠的角點是 (x0,y1,z0)，和它相連的三條邊被擋住
     edges.forEach(([a, b, i, j, k]) => {
-      const hidden = (i === 0 || i === null) && (j === 0 || j === null) && (k === 0 || k === null);
+      const hidden = (i === 0 || i === null) && (j === 1 || j === null) && (k === 0 || k === null);
       const [ax, ay] = pj(...a), [bx, by] = pj(...b);
       g += hidden
         ? `<line x1="${ax}" y1="${ay}" x2="${bx}" y2="${by}" stroke="#111827" stroke-width="${THIN}" stroke-dasharray="${HIDDEN_DASH}"/>`
@@ -338,7 +340,7 @@
     // 可見面淡色
     g = poly([V(0, 0, 1), V(1, 0, 1), V(1, 1, 1), V(0, 1, 1)], 'fill="#dbeafe" fill-opacity=".8"') +
         poly([V(1, 0, 0), V(1, 1, 0), V(1, 1, 1), V(1, 0, 1)], 'fill="#bfdbfe" fill-opacity=".8"') +
-        poly([V(0, 1, 0), V(1, 1, 0), V(1, 1, 1), V(0, 1, 1)], 'fill="#93c5fd" fill-opacity=".8"') + g;
+        poly([V(0, 0, 0), V(1, 0, 0), V(1, 0, 1), V(0, 0, 1)], 'fill="#93c5fd" fill-opacity=".8"') + g;   // 可見面：z1、x1、y0（法向量與視線 (1,−1,1) 內積 > 0）
     // 原點
     const [ox, oy] = pj(0, 0, 0);
     g += `<circle cx="${ox}" cy="${oy}" r="2.4" fill="none" stroke="#6b7280" stroke-width="${THIN}"/>`;

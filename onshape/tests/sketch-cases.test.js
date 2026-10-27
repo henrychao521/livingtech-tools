@@ -110,6 +110,12 @@ for (const c of CASES) {
   if (c.plane) {
     const b = render(c, 'bad'), g = render(c, 'good');
     ok(/stroke-dasharray/.test(b) && /stroke-dasharray/.test(g), '3D 圖有隱藏線（虛線）');
+    // Onshape 預設等角視角（視線來自 +x、−y、+z）：Front 平面在前下方、Right 平面在後上方；隱藏線剛好 3 條
+    for (const svg of [b, g]) {
+      const ly = t => +new RegExp('<text x="[\\d.]+" y="([\\d.]+)"[^>]*>' + t).exec(svg)[1];
+      ok(ly('Front（前）') > ly('Right（右）'), 'Front 平面標籤在 Right 平面標籤下方（靠近觀看者）');
+      ok((svg.match(/stroke-dasharray/g) || []).length === 3, '隱藏邊 3 條');
+    }
     continue;
   }
   const G = analyze(c.good), B = analyze(c.bad);

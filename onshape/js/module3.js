@@ -39,14 +39,14 @@ const STEPS = [
   {
     title: '退出草圖',
     icon: '↩️',
-    desc: '按右上角的綠色勾勾（✓）關閉草圖，回到 3D 視角。草圖會出現在 feature tree。',
-    tip: '退出後仍可雙擊 feature tree 中的草圖名稱重新進入編輯。',
+    desc: '按草圖對話框（浮在繪圖區左上方）的綠色勾勾（✓）關閉草圖，回到 3D 視角。草圖會出現在 feature tree。',
+    tip: '退出後仍可在 feature tree 的草圖名稱上按兩下，重新進入編輯。',
   },
   {
     title: '套用特徵（Extrude）',
     icon: '🚀',
     desc: '選中剛才的草圖 → 點 Extrude（擠出）→ 輸入深度（如 10mm）→ 預覽 → 確認。3D 物件誕生！',
-    tip: '深度可以輸入負數：正負號就像向量的方向，輸入 10mm 往一側長、輸入 -10mm 就往草圖另一側長（和按深度欄旁的反向箭頭效果一樣）。想兩邊一起長就選對稱（Symmetric）。',
+    tip: '想往草圖另一側長，按深度欄旁的反向箭頭（Opposite direction）切換方向；想兩邊一起長就選對稱（Symmetric）。',
   },
 ];
 
