@@ -222,8 +222,12 @@ function draw() {
     ctx.font = '700 10px Inter';
     ctx.fillText('L298N', 327, 336);
     ctx.fillText('馬達驅動板', 327, 352);
-    const spin = (active ? -1 : 1) * t * 0.08; // 太近時反轉（後退）
+    // 2026-10 審查：差速車兩輪同向反轉只會直線後退；照程式 moveBack() 0.5 秒 → turnLeft() 0.5 秒輪流畫
+    // （約 30 格＝0.5 秒）：後退＝兩輪反轉；左轉＝左輪反轉、右輪正轉
+    const backing = active && Math.floor(t / 30) % 2 === 0;
+    const dirs = !active ? [1, 1] : backing ? [-1, -1] : [-1, 1];
     [420, 520].forEach((wx, k) => {
+      const spin = dirs[k] * t * 0.08;
       ctx.fillStyle = '#334155';
       ctx.beginPath();
       ctx.arc(wx, 340, 26, 0, Math.PI * 2);
@@ -243,7 +247,7 @@ function draw() {
     });
     ctx.fillStyle = active ? '#dc2626' : '#22c55e';
     ctx.font = '800 13px Inter';
-    ctx.fillText(active ? '↺ 後退＋左轉' : '↻ 前進', 470, 410);
+    ctx.fillText(!active ? '↻ 前進' : backing ? '↓ 後退（兩輪反轉）' : '↰ 左轉（左輪反轉、右輪正轉）', 470, 410);
   }
 
   // 訊號流動小點

@@ -5,7 +5,7 @@ const MCUS = [
     bad: '無 Wi-Fi / 藍牙、處理速度慢、無內建感測器',
     use: '基礎電子課程、創意公仔燈、簡易自動化、學校 STEAM' },
   { id: 'microbit', iso: 'microbit', name: 'BBC micro:bit V2', icon: '🎨', cpu: 'ARM Cortex-M4 @ 64MHz', memory: '512 KB Flash / 128 KB RAM', pins: '25 腳位（含按鈕、LED 矩陣）',
-    price: 'NT$ 600-800', wireless: '藍牙 BLE 5.1＋micro:bit 無線廣播（無 Wi-Fi）', ide: 'MakeCode（圖形化）/ Python', good: '英國 BBC 設計、內建 LED 矩陣 + 加速度計 + 麥克風 + 喇叭、藍牙、圖形化編程',
+    price: 'NT$ 600-800', wireless: '藍牙 BLE 5.1＋micro:bit 無線廣播（無 Wi-Fi）', ide: 'MakeCode（圖形化）/ Python', good: '英國 BBC 設計、內建 LED 矩陣 + 加速度計 + 麥克風 + 喇叭、藍牙、圖形化程式設計',
     bad: '價格較高、擴充性受限、無 Wi-Fi',
     use: '國小到國中入門、體育穿戴、互動藝術、UK 全國中小學標配' },
   { id: 'esp32', iso: 'esp32', name: 'ESP32', icon: '📡', cpu: 'Xtensa LX6 雙核 @ 240MHz', memory: '4 MB Flash / 520 KB RAM', pins: '36 腳位（GPIO + ADC + DAC）',
