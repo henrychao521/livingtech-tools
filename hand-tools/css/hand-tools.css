@@ -13,3 +13,27 @@
 .verdict { padding:14px; border-radius:10px; margin-top:10px; font-size:14px; font-weight:700; }
 .verdict.good { background:#dcfce7; color:#15803d; border-left:4px solid #22c55e; }
 .verdict.warn { background:#fef9c3; color:#a16207; border-left:4px solid #eab308; }
+
+/* 模組 3：各工具握姿卡（實拍待補時顯示示意） */
+.grip-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+.grip-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 12px; }
+.grip-card h4 { margin: 0 0 8px; font-size: 15px; color: #334155; }
+.grip-fig img { width: 100%; aspect-ratio: 4 / 3; object-fit: contain; background: #f1f5f9; border-radius: 8px; display: block; }
+.grip-ph { border: 2px dashed #cbd5e1; border-radius: 8px; padding: 6px; background: #f8fafc; }
+.grip-ph svg { width: 100%; display: block; }
+.grip-ph p { margin: 6px 0 0; font-size: 12px; color: #64748b; line-height: 1.5; }
+.grip-ph code { font-size: 11px; word-break: break-all; }
+.grip-video { width: 100%; margin-top: 8px; border-radius: 8px; }
+.grip-card ul { margin: 8px 0 0; padding-left: 18px; font-size: 13px; line-height: 1.6; color: #334155; }
+.grip-cite { font-size: 11px; color: #94a3b8; margin: 6px 0 0; }
+@media (max-width: 600px) { .grip-grid { grid-template-columns: 1fr; } }
+
+/* 模組 4：選項配工具照片 */
+.choice.choice-pic { display: flex; flex-direction: column; align-items: stretch; gap: 6px; text-align: center !important; font-size: 12.5px; padding: 8px; }
+.choice-pic .opt-fig { display: flex; gap: 4px; justify-content: center; align-items: center; height: 72px; background: #fff; border-radius: 8px; overflow: hidden; }
+.choice-pic .opt-fig img { max-width: 100%; max-height: 72px; object-fit: contain; min-width: 0; flex: 1 1 0; }
+.choice-pic .opt-fig-empty { font-size: 36px; color: #94a3b8; }
+.choice-pic .opt-label { line-height: 1.35; }
+.photo-credits { font-size: 12px; color: #64748b; }
+.photo-credits summary { cursor: pointer; font-weight: 700; color: #334155; }
+.photo-credits ol { padding-left: 20px; line-height: 1.7; margin: 8px 0; word-break: break-word; }
