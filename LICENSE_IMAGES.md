@@ -97,6 +97,12 @@
 - **來源**：https://commons.wikimedia.org/wiki/File:Dekupiersaege_scroll_saw.jpg
 - **下載日期**：2026-05-10
 
+### 9. Drillpress.jpg ｜ 落地式立式鑽床（鑽床模組 1 機型卡片，直接引用 Commons 縮圖網址）
+- **作者**：LHOON（英文維基百科帳號）
+- **授權**：CC BY-SA 2.5（[條款連結](https://creativecommons.org/licenses/by-sa/2.5/)）
+- **來源**：https://commons.wikimedia.org/wiki/File:Drillpress.jpg
+- **核對日期**：2026-10-28（以 Commons API 查作者與授權；卡片原本缺作者，已補上）
+
 ---
 
 ## 使用本平台的下游須知
@@ -123,13 +129,14 @@
 - `onshape/js/module3-screens.js`：Onshape 操作示意畫面 8 張（程式繪製的示意，不是軟體截圖）
 - `onshape/js/module5-sketches.js`：草圖錯誤與正確對照 16 張＋圖例（依 ISO 128／ISO 129-1 線型與尺寸標註）
 - 手工具模組 1 工具卡模型圖（OpenSCAD）、模組 3 握姿示意圖；電烙鐵烙鐵頭外形圖、安全場景與焊接剖面動畫
+- 2026-10-28 全章檢查修正時重畫或新增：雷射切割模組 4 試切卡示意圖、麵包板模組 5 故障接線圖、3D 列印模組 1 翹曲／層位移圖與鐵氟龍導管
 - **授權**：本站自製（程式繪製），隨網站授權使用
 
 ---
 
 ## 手工具與電烙鐵照片（Wikimedia Commons，2026-10-27 下載）
 
-### HT-01. Claw hammer-1.jpg ｜ 羊角錘（claw-hammer.webp）
+### HT-01. Claw hammer-1.jpg ｜ 羊角鎚（claw-hammer.webp）
 - **作者**：Shakespeare（英文維基百科）
 - **授權**：CC BY-SA 3.0（[條款連結](https://creativecommons.org/licenses/by-sa/3.0)）
 - **來源**：https://commons.wikimedia.org/wiki/File:Claw_hammer-1.jpg
@@ -304,7 +311,7 @@
 - **下載日期**：2026-10-27
 - **位置**：/hand-tools/assets/wiki-photos/c-clamp.webp（縮成 320×200 以內 WebP）
 
-### HT-26. An engineer's vise.jpg ｜ 檯虎鉗（bench-vise.webp）
+### HT-26. An engineer's vise.jpg ｜ 桌虎鉗（bench-vise.webp）
 - **作者**：Dmitry Makeev
 - **授權**：CC BY-SA 4.0（[條款連結](https://creativecommons.org/licenses/by-sa/4.0)）
 - **來源**：https://commons.wikimedia.org/wiki/File:An_engineer%27s_vise.jpg
