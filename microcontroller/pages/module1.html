@@ -17,7 +17,7 @@
 <main class="module-page">
   <div class="module-header"><div><span class="module-step">MODULE 01</span><h2>3 大微控制器比較</h2><p class="muted">Arduino / micro:bit / ESP32——選對工具事半功倍。</p></div><div class="muted" id="prog">已認識 0 / 3 種</div></div>
     <!-- TRIPO-3D --><section class="panel">
-    <h3>🔭 寫實 3D 模型 <span style="font-size:12px;font-weight:500;color:#64748b;margin-left:6px">旋轉 · 縮放</span></h3>
+    <h3>🔭 3D 示意模型（AI 生成） <span style="font-size:12px;font-weight:500;color:#64748b;margin-left:6px">旋轉 · 縮放</span></h3>
     <p class="muted" style="margin-bottom:14px">拖曳可旋轉、滾輪縮放，從各角度認識微控制器(Arduino)的外觀構造。<span style="font-size:12px;color:#94a3b8">（AI 生成示意模型，僅供認識外形）</span></p>
     <div style="background:#1e293b;border-radius:14px;overflow:hidden">
       <model-viewer src="../assets/models/microcontroller.glb" loading="eager" reveal="auto" camera-controls auto-rotate auto-rotate-delay="0" rotation-per-second="20deg" environment-image="neutral" shadow-intensity="1" style="width:100%;height:360px;--poster-color:#1e293b"></model-viewer>
@@ -30,7 +30,7 @@
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px">
       <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;border-left:5px solid #dc2626">
         <h4 style="color:#b91c1c;margin-bottom:6px">🔌 ① 3.3V 與 5V 不可混接</h4>
-        <p style="font-size:13px;color:#444;line-height:1.7">ESP32 與多數感測器是 <strong>3.3V 邏輯</strong>，腳位誤接 5V 會直接燒毀；Arduino UNO 則是 <strong>5V 邏輯</strong>。兩者的<strong>訊號線不可直接互接</strong>，必須經過邏輯準位轉換模組（Level Shifter）。</p>
+        <p style="font-size:13px;color:#444;line-height:1.7">ESP32 與多數感測器是 <strong>3.3V 邏輯</strong>，腳位誤接 5V 會直接燒毀；Arduino UNO 則是 <strong>5V 邏輯</strong>。UNO 的 5V 輸出<strong>絕對不能直接</strong>接到 ESP32 的腳位；反過來 ESP32 的 3.3V 輸出接 UNO 輸入，雖然通常會被判為 HIGH（ATmega328P 規格書：HIGH 門檻約 0.6 × 5V = 3.0V），但餘裕很小。兩邊要互接時（尤其 I²C 這類雙向線），一律經過邏輯準位轉換模組（Level Shifter）最保險。</p>
       </div>
       <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;border-left:5px solid #f59e0b">
         <h4 style="color:#b45309;margin-bottom:6px">🔋 ② 接線前一律先斷電</h4>
