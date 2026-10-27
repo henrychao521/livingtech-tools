@@ -20,14 +20,14 @@
     <h3>🔭 3D 工具模型(可旋轉) <span style="font-size:12px;font-weight:500;color:#64748b;margin-left:6px">點名稱切換 · 拖曳旋轉 · 滾輪縮放</span></h3>
     <p class="muted" style="margin-bottom:12px">依產品型錄與標準尺寸（例如活動扳手全長 200 mm、鉗口與柄夾 15°；十字起子 PH2 × 100）以 build123d 參數化建模，從各角度認識工具外形。尺寸出處見 models/tool-glb/。</p>
     <div id="t3d-tabs" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px">
-      <button type="button" class="t3d-btn" data-src="hammer.glb">鎚子</button>
-      <button type="button" class="t3d-btn" data-src="knife.glb">美工刀</button>
-      <button type="button" class="t3d-btn" data-src="wrench.glb">活動扳手</button>
-      <button type="button" class="t3d-btn" data-src="pliers.glb">尖嘴鉗</button>
-      <button type="button" class="t3d-btn" data-src="screwdriver.glb">十字起子</button>
+      <button type="button" class="t3d-btn" data-src="hammer.glb?v=2">鎚子</button>
+      <button type="button" class="t3d-btn" data-src="knife.glb?v=2">美工刀</button>
+      <button type="button" class="t3d-btn" data-src="wrench.glb?v=2">活動扳手</button>
+      <button type="button" class="t3d-btn" data-src="pliers.glb?v=2">尖嘴鉗</button>
+      <button type="button" class="t3d-btn" data-src="screwdriver.glb?v=2">十字起子</button>
     </div>
     <div style="background:#1e293b;border-radius:14px;overflow:hidden">
-      <model-viewer id="t3d-viewer" src="../assets/models/hammer.glb" loading="eager" camera-controls auto-rotate auto-rotate-delay="0" rotation-per-second="20deg" environment-image="neutral" shadow-intensity="1" style="width:100%;height:340px;--poster-color:#1e293b"></model-viewer>
+      <model-viewer id="t3d-viewer" src="../assets/models/hammer.glb?v=2" loading="eager" camera-controls auto-rotate auto-rotate-delay="0" rotation-per-second="20deg" environment-image="neutral" shadow-intensity="1" style="width:100%;height:340px;--poster-color:#1e293b"></model-viewer>
     </div>
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
     <script>
