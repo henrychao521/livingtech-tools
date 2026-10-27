@@ -1,7 +1,7 @@
 {
  "platform": "livingtech",
- "version": "2026-10-24",
- "count": 431,
+ "version": "2026-10-27",
+ "count": 434,
  "questions": [
   {
    "q": "breadboard.m2.s0",
@@ -3693,135 +3693,135 @@
   },
   {
    "q": "orthographic.m5.r1q0",
-   "h": "0e924604",
+   "h": "57280b15",
    "t": "single",
    "page": "orthographic/module5",
-   "stem": "看正視、右側視、俯視，這是什麼 3D 物件？（正方形／正方形／正方形）",
+   "stem": "看第三角法三視圖（L 形塊），選出對應的 3D 物件",
    "options": {
-    "A": "立方體",
-    "B": "圓柱",
-    "C": "球體",
-    "D": "金字塔"
+    "A": "L 形塊",
+    "B": "倒 T 形塊",
+    "C": "三階梯塊",
+    "D": "凹槽塊"
    },
    "answer": "A",
    "items": []
   },
   {
    "q": "orthographic.m5.r1q1",
-   "h": "556f02a7",
+   "h": "bc389fc8",
    "t": "single",
    "page": "orthographic/module5",
-   "stem": "看正視、右側視、俯視，這是什麼 3D 物件？（長方形／長方形／圓形）",
+   "stem": "看第三角法三視圖（前斜切塊），選出對應的 3D 物件",
    "options": {
-    "A": "圓柱",
-    "B": "立方體",
-    "C": "圓錐",
-    "D": "球體"
+    "A": "前斜切塊",
+    "B": "斜坡塊",
+    "C": "長方塊",
+    "D": "L 形塊"
    },
    "answer": "A",
    "items": []
   },
   {
    "q": "orthographic.m5.r1q2",
-   "h": "4ba68c91",
+   "h": "7876cc60",
    "t": "single",
    "page": "orthographic/module5",
-   "stem": "看正視、右側視、俯視，這是什麼 3D 物件？（三角形／三角形／圓形＋中心點）",
+   "stem": "看第三角法三視圖（圓孔板），選出對應的 3D 物件",
    "options": {
-    "A": "圓錐",
-    "B": "金字塔",
-    "C": "圓柱",
-    "D": "球體"
+    "A": "圓孔板",
+    "B": "沉頭孔塊",
+    "C": "雙層圓柱",
+    "D": "長孔板"
    },
    "answer": "A",
    "items": []
   },
   {
    "q": "orthographic.m5.r1q3",
-   "h": "644ce5ca",
+   "h": "bc7537f1",
    "t": "single",
    "page": "orthographic/module5",
-   "stem": "看正視、右側視、俯視，這是什麼 3D 物件？（L 形／直立長方形＋水平分界線／長方形＋垂直分界線）",
+   "stem": "看第三角法三視圖（T 形槽塊），選出對應的 3D 物件",
    "options": {
-    "A": "L 型塊",
-    "B": "T 槽塊",
-    "C": "L 角架",
-    "D": "立方體"
+    "A": "T 形槽塊",
+    "B": "鳩尾槽塊",
+    "C": "凹槽塊",
+    "D": "V 形槽塊"
    },
    "answer": "A",
    "items": []
   },
   {
    "q": "orthographic.m5.r1q4",
-   "h": "51692fd4",
+   "h": "6e8a9e87",
    "t": "single",
    "page": "orthographic/module5",
-   "stem": "看正視、右側視、俯視，這是什麼 3D 物件？（長方形＋圓孔／正方形＋兩條水平虛線／長方形＋兩條垂直虛線）",
+   "stem": "看第三角法三視圖（沉頭孔塊），選出對應的 3D 物件",
    "options": {
-    "A": "帶圓孔板",
-    "B": "T 槽塊",
-    "C": "階梯塊",
-    "D": "圓柱"
+    "A": "沉頭孔塊",
+    "B": "圓孔板",
+    "C": "雙層圓柱",
+    "D": "凸台座"
    },
    "answer": "A",
    "items": []
   },
   {
    "q": "orthographic.m5.r2q0",
-   "h": "5ff0a3fc",
+   "h": "f3633c08",
    "t": "single",
    "page": "orthographic/module5",
-   "stem": "立方體 缺失的右側視是哪一個？",
+   "stem": "三階梯塊 缺失的右側視圖是哪一個？",
    "options": {
-    "A": "正方形",
-    "B": "長方形",
-    "C": "圓形",
-    "D": "三角形"
+    "A": "正確的右側視圖",
+    "B": "左側視圖（階梯被擋住，分界線變虛線）",
+    "C": "L 形塊的右側視圖（只有一條分界線）",
+    "D": "高度不對的矩形"
    },
    "answer": "A",
    "items": []
   },
   {
    "q": "orthographic.m5.r2q1",
-   "h": "2c9f4d1e",
+   "h": "9cc6122e",
    "t": "single",
    "page": "orthographic/module5",
-   "stem": "圓柱 缺失的俯視是哪一個？",
+   "stem": "前斜切塊 缺失的俯視圖是哪一個？",
    "options": {
-    "A": "圓形",
-    "B": "正方形",
-    "C": "三角形",
-    "D": "長方形"
+    "A": "正確的俯視圖",
+    "B": "仰視圖（分界線看不到，變虛線）",
+    "C": "前後顛倒（分界線畫到後方）",
+    "D": "分界線方向錯（左右分界）"
    },
    "answer": "A",
    "items": []
   },
   {
    "q": "orthographic.m5.r2q2",
-   "h": "e9e29a7f",
+   "h": "670b94d0",
    "t": "single",
    "page": "orthographic/module5",
-   "stem": "L 型塊 缺失的正視是哪一個？",
+   "stem": "T 形槽塊 缺失的俯視圖是哪一個？",
    "options": {
-    "A": "L 形",
-    "B": "長方形",
-    "C": "T 形",
-    "D": "三角形"
+    "A": "正確的俯視圖",
+    "B": "寬槽畫成實線（其實被擋住）",
+    "C": "漏畫寬槽的虛線",
+    "D": "鳩尾槽塊的俯視圖"
    },
    "answer": "A",
    "items": []
   },
   {
    "q": "orthographic.m5.r2q3",
-   "h": "fe3a113a",
+   "h": "97145aac",
    "t": "single",
    "page": "orthographic/module5",
-   "stem": "圓錐 缺失的俯視是哪一個？",
+   "stem": "沉頭孔塊 缺失的正視圖是哪一個？",
    "options": {
-    "A": "圓形＋中心點",
-    "B": "圓形",
-    "C": "三角形",
-    "D": "正方形"
+    "A": "正確的正視圖",
+    "B": "沉頭畫到底面（上下顛倒）",
+    "C": "孔畫成實線（孔在內部看不到）",
+    "D": "寬度不對（這是右側視圖）"
    },
    "answer": "A",
    "items": []
@@ -3844,6 +3844,51 @@
    "stem": "方塊堆疊：T 形塊（俯視看像 T）（三視圖完全符合目標）",
    "options": {},
    "answer": "pass",
+   "items": []
+  },
+  {
+   "q": "orthographic.m5.r1q5",
+   "h": "98e4e887",
+   "t": "single",
+   "page": "orthographic/module5",
+   "stem": "看第三角法三視圖（L 形孔塊），選出對應的 3D 物件",
+   "options": {
+    "A": "L 形孔塊",
+    "B": "角架",
+    "C": "肋板角架",
+    "D": "L 形塊"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "orthographic.m5.r2q4",
+   "h": "68c95a0c",
+   "t": "single",
+   "page": "orthographic/module5",
+   "stem": "角架 缺失的右側視圖是哪一個？",
+   "options": {
+    "A": "正確的右側視圖",
+    "B": "左側視圖（立板跑到左邊）",
+    "C": "孔畫成實線",
+    "D": "肋板角架的右側視圖"
+   },
+   "answer": "A",
+   "items": []
+  },
+  {
+   "q": "orthographic.m5.r2q5",
+   "h": "60b4a957",
+   "t": "single",
+   "page": "orthographic/module5",
+   "stem": "L 形孔塊 缺失的俯視圖是哪一個？",
+   "options": {
+    "A": "正確的俯視圖",
+    "B": "仰視圖（從底下看）",
+    "C": "立板的孔畫成實線",
+    "D": "左右相反"
+   },
+   "answer": "A",
    "items": []
   },
   {

@@ -12,12 +12,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/orthographic.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📐%3C/text%3E%3C/svg%3E">
+<style>
+  .step-fig{margin:10px 0 4px;background:#fff;border:1px solid var(--border);border-radius:10px;padding:8px;text-align:center}
+  .step-fig img{width:100%;max-width:420px;height:auto;display:block;margin:0 auto}
+  .step-fig figcaption{font-size:11.5px;color:var(--text-muted);margin-top:4px}
+  .pp-list{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+  .pp-item{position:relative;background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:6px 6px 8px;display:flex;flex-direction:column;align-items:center;gap:4px}
+  .pp-item img{width:100%;height:auto;display:block;border-radius:6px}
+  .pp-no{position:absolute;top:6px;left:6px;background:#4F46E5;color:#fff;font-weight:800;font-size:12px;border-radius:999px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-family:Inter,sans-serif}
+  .pp-name{font-size:12.5px;font-weight:700;color:#1E1B4B;text-align:center}
+  .pp-btns{display:flex;gap:6px}
+  .pp-btns button{min-width:44px;min-height:34px;border:1px solid var(--border);background:#F8FAFC;border-radius:8px;font-size:14px;cursor:pointer}
+  .pp-btns button:disabled{opacity:.35;cursor:default}
+  .pp-item.pp-ok{border-color:var(--success);background:var(--success-light,#DCFCE7)}
+</style>
 </head><body data-tool="orthographic" class="ort-theme">
 <header class="topbar"><div class="brand"><span class="logo">📐</span><div><h1>三視圖</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
 <main class="module-page">
   <div class="module-header"><div><span class="module-step" style="background:var(--accent-light);color:#5b21b6">MODULE 03</span><h2>8 步驟視圖繪製</h2><p class="muted">從 3D 物件到完整三視圖。</p></div><div class="muted" id="step-progress">已學習 0 / 8 步</div></div>
   <div class="steps-layout"><div class="step-list" id="step-list"></div><div class="step-detail" id="step-detail"></div></div>
-  <section style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:24px;margin-top:24px"><h3 style="font-size:19px;margin-bottom:8px">🧩 排序測驗</h3><div id="seq-puzzle"></div></section>
+  <section style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:24px;margin-top:24px"><h3 style="font-size:19px;margin-bottom:8px">🧩 排序測驗：看圖排順序</h3><div id="seq-puzzle"></div></section>
   <section style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:24px;margin-top:24px">
     <h3 style="font-size:19px;margin-bottom:8px">📐 尺寸標註判斷練習</h3>
     <p class="muted" style="margin-bottom:14px">下面是一張已標註尺寸的 L 形前視圖。判斷右側 4 條敘述是「正確」的標註原則,還是「錯誤」的做法。</p>
@@ -59,5 +73,5 @@
   </section>
   <div class="module-nav-bottom"><a href="module2.html" class="btn btn-ghost">← 上一關</a><a href="module4.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a></div>
 </main>
-<script src="../../js/main.js"></script><script src="../../js/sheet-config.js?v=1"></script><script src="../../js/sheet-log.js?v=1"></script><script src="../../js/sources.js?v=2"></script><script src="../../js/audio.js"></script><script src="../../js/interactions.js?v=2"></script><script src="../js/module3.js?v=4"></script>
+<script src="../../js/main.js"></script><script src="../../js/sheet-config.js?v=1"></script><script src="../../js/sheet-log.js?v=1"></script><script src="../../js/sources.js?v=2"></script><script src="../../js/audio.js"></script><script src="../../js/interactions.js?v=2"></script><script src="../js/module3.js?v=5"></script>
 </body></html>

@@ -7,19 +7,41 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-YCXP16QQM1');
-</script><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+</script><meta charset="UTF-8"><script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js"}}</script><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>模組 1：三視圖原理</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/orthographic.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📐%3C/text%3E%3C/svg%3E">
+<style>
+  .gb-stage{background:#F8FAFC;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+  .gb-stage canvas{display:block;width:100%;height:clamp(260px,62vw,440px);touch-action:pan-y}
+  .gb-ctrl{display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap}
+  .gb-ctrl input[type=range]{flex:1;min-width:140px;accent-color:#4F46E5}
+  .gb-play{padding:8px 14px;font-size:13px;min-width:88px}
+  .gb-mode{display:inline-flex;border:1px solid var(--border);border-radius:999px;overflow:hidden}
+  .gb-mode button{border:none;background:#fff;padding:6px 12px;font-size:12.5px;font-weight:700;cursor:pointer;color:#334155}
+  .gb-mode button.active{background:#4F46E5;color:#fff}
+  .gb-caption{margin-top:8px;font-size:14px;line-height:1.7;color:#1E1B4B;min-height:3.4em;background:#EEF2FF;border-radius:8px;padding:8px 10px}
+  .ov-fig svg{display:block;margin:0 auto}
+  .proj-fig{display:flex;align-items:center;justify-content:center;gap:4px;background:#F1F5F9;border-radius:6px;padding:8px 4px}
+  .proj-fig .pf-col{text-align:center;font-size:10.5px;font-weight:700;color:#1E1B4B}
+  .proj-fig .pf-arrow{color:#4F46E5;font-size:16px;font-weight:800}
+  .proj-fig .pf-plane{border:1.5px dashed #64748B;background:#fff;border-radius:3px;padding:2px}
+</style>
 </head><body data-tool="orthographic" class="ort-theme">
 <header class="topbar"><div class="brand"><span class="logo">📐</span><div><h1>三視圖</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
 <main class="module-page">
   <div class="module-header"><div><span class="module-step">MODULE 01</span><h2>三視圖核心概念</h2><p class="muted">投影原理 + 6 個面 + 線型規範。</p></div><div class="muted" id="prog">已認識 0 / 6 項</div></div>
-  <section class="panel"><h3>🎬 概念動畫：立體物投影成視圖</h3>
-    <video src="../../assets/videos/orthographic.mp4" controls playsinline loop preload="metadata"
-           style="width:100%;border-radius:12px;background:#000;aspect-ratio:16/9"></video>
-    <p class="muted" style="margin-top:8px;font-size:13px">💡 AI 生成的概念示意動畫，呈現「把立體物往不同方向投影、得到多個平面視圖」的概念。實際三視圖與物體的精確對應關係，請以下方教具與課本為準。</p>
+  <section class="panel" id="glassbox"><h3>🎬 概念動畫：玻璃盒投影與展開</h3>
+    <p class="muted" style="margin-bottom:10px">把物體放進透明的玻璃盒，從盒外六個方向垂直看進去，把看到的輪廓描在玻璃上；再把盒子攤平，就得到<b>第三角法</b>的視圖排列。可以拖曳進度條慢慢看。</p>
+    <div class="gb-stage"><canvas aria-label="玻璃盒投影與展開動畫"></canvas></div>
+    <div class="gb-ctrl">
+      <button type="button" class="btn btn-primary gb-play" data-act="play">⏸ 暫停</button>
+      <input type="range" min="0" max="1000" value="0" aria-label="動畫進度">
+      <span class="gb-mode" role="group" aria-label="顯示幾個面"><button type="button" data-mode="six" class="active">六面</button><button type="button" data-mode="three">三面</button></span>
+    </div>
+    <p class="gb-caption" aria-live="polite"></p>
+    <p class="muted" style="margin-top:6px;font-size:12px">本站繪製：物體是物件庫的「L 形孔塊」，玻璃上的線條由 3D 模型（OpenSCAD）正投影計算產生——粗實線＝看得到的輪廓、虛線＝被擋住的輪廓、細鏈線＝孔的中心線。</p>
   </section>
   <!-- OPENSCAD-3D --><section class="panel">
     <h3>🧊 立體教具(可旋轉) <span style="font-size:12px;font-weight:500;color:#64748b;margin-left:6px">點名稱切換 · 拖曳旋轉 · 自己想三視圖</span></h3>
@@ -54,5 +76,6 @@
   <section class="panel"><h3>6 個核心概念</h3><div id="grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px"></div></section>
   <div class="module-nav-bottom"><a href="../index.html" class="btn btn-ghost">← 回首頁</a><a href="module2.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a></div>
 </main>
-<script src="../../js/main.js"></script><script src="../../js/sheet-config.js?v=1"></script><script src="../../js/sheet-log.js?v=1"></script><script src="../../js/sources.js?v=2"></script><script src="../../js/audio.js"></script><script src="../js/module1.js?v=3"></script>
+<script src="../../js/main.js"></script><script src="../../js/sheet-config.js?v=1"></script><script src="../../js/sheet-log.js?v=1"></script><script src="../../js/sources.js?v=2"></script><script src="../../js/audio.js"></script><script src="../../models/orthographic/library/library-data.js?v=1"></script><script src="../js/ortho-views.js?v=1"></script><script src="../js/module1.js?v=4"></script>
+<script type="module" src="../js/module1-glassbox.js?v=1"></script>
 </body></html>

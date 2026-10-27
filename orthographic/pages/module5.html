@@ -26,17 +26,15 @@
   .view-cell{background:#0F172A;border-radius:8px;padding:8px;text-align:center}
   .view-cell svg{display:block;margin:0 auto;background:#1E293B;border-radius:4px}
   .view-cell-label{font-size:10.5px;color:#FBBF24;font-family:Inter;letter-spacing:.05em;margin-top:6px}
-  /* 第三角法排列：俯視在正視上方、右側視在正視右方；兩欄等寬，視圖方格同尺寸 → 長對正、高平齊 */
-  .tp-grid{display:grid;grid-template-columns:repeat(2,max-content);gap:6px;justify-content:center;margin:10px 0}
-  .tp-grid .view-cell{padding:6px}
-  .tp-grid svg{max-width:100%;height:auto}
-  .tp-note{align-self:center;justify-self:center;font-size:11px;line-height:1.6;color:#94A3B8;text-align:center}
-  .tp-missing{width:80px;height:80px;margin:0 auto;background:#0B1322;border:2px dashed #FBBF24;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#FBBF24;font-size:13px;font-weight:700;box-sizing:border-box}
+  /* 第三角法排版由 ortho-views.js 產生單一 SVG（同比例尺 → 長對正、高平齊、寬相等） */
+  .tp-wrap{display:flex;justify-content:center;margin:10px 0;background:#1E293B;border-radius:10px;padding:6px}
+  .tp-wrap svg{display:block;max-width:100%;height:auto}
   .r2-layout{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:center}
-  .r2-iso{background:#0F172A;border-radius:8px;padding:10px;text-align:center;width:120px;box-sizing:border-box}
+  .r2-iso{background:#0F172A;border-radius:8px;padding:10px;text-align:center;width:170px;max-width:100%;box-sizing:border-box}
+  .opt-letter{display:inline-block;font-weight:800;color:#4F46E5}
+  .opt-cell svg{max-width:100%;height:auto}
   .opt-cell img{max-width:100%;height:auto}
   @media (max-width:520px){.opt-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-  @media (max-width:360px){.tp-grid{gap:4px}.tp-grid .view-cell{padding:4px}.view-cell-label{font-size:9.5px;letter-spacing:0}}
   .opt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
   .opt-cell{background:#fff;border:2px solid var(--border);border-radius:10px;cursor:pointer;padding:6px;transition:all .2s;text-align:center}
   .opt-cell:hover:not(.disabled){border-color:#4F46E5;transform:translateY(-2px)}
@@ -80,12 +78,12 @@
       <h2>Projection Game — 視圖闖關</h2>
       <p class="muted">三輪遞進挑戰：視圖配對 → 缺失補完 → 方塊堆疊。培養 2D ↔ 3D 雙向轉換能力。</p>
     </div>
-    <div class="score-pill">⭐ <span id="score">0</span> / <span id="total">11</span></div>
+    <div class="score-pill">⭐ <span id="score">0</span> / <span id="total">14</span></div>
   </div>
 
   <div class="round-tabs">
-    <div class="round-tab active" data-r="1">Round 1<small>視圖 → 物件（5 題）</small></div>
-    <div class="round-tab" data-r="2">Round 2<small>補缺失視圖（4 題）</small></div>
+    <div class="round-tab active" data-r="1">Round 1<small>視圖 → 物件（6 題）</small></div>
+    <div class="round-tab" data-r="2">Round 2<small>補缺失視圖（6 題）</small></div>
     <div class="round-tab" data-r="3">Round 3<small>方塊堆疊建構（2 題）</small></div>
   </div>
 
@@ -124,21 +122,20 @@
         <div style="color:#FBBF24;font-size:10.5px;font-weight:700;font-family:Inter;letter-spacing:.04em;margin-bottom:8px">四視圖同步顯示</div>
         <svg viewBox="0 0 180 120" xmlns="http://www.w3.org/2000/svg" style="width:100%">
           <rect x="2"  y="2"  width="84" height="54" fill="#0F172A" rx="4" stroke="#334155" stroke-width="1"/>
-          <rect x="94" y="2"  width="84" height="54" fill="#0F172A" rx="4" stroke="#334155" stroke-width="1"/>
+          <rect x="94" y="2"  width="84" height="54" fill="#1E3A5F" rx="4" stroke="#4F46E5" stroke-width="1.5"/>
           <rect x="2"  y="64" width="84" height="54" fill="#0F172A" rx="4" stroke="#334155" stroke-width="1"/>
-          <rect x="94" y="64" width="84" height="54" fill="#1E3A5F" rx="4" stroke="#4F46E5" stroke-width="1.5"/>
-          <text x="44"  y="12" text-anchor="middle" font-size="8" fill="#FBBF24" font-family="Inter" font-weight="700">正視 FRONT</text>
-          <text x="136" y="12" text-anchor="middle" font-size="8" fill="#FBBF24" font-family="Inter" font-weight="700">側視 SIDE</text>
-          <text x="44"  y="74" text-anchor="middle" font-size="8" fill="#FBBF24" font-family="Inter" font-weight="700">俯視 TOP</text>
-          <text x="136" y="74" text-anchor="middle" font-size="8" fill="#93C5FD" font-family="Inter" font-weight="700">3D 互動旋轉</text>
-          <!-- 正視：L形 -->
-          <polygon points="20,20 44,20 44,32 32,32 32,40 20,40" fill="none" stroke="#6366F1" stroke-width="1.5"/>
-          <!-- 側視：矩形 -->
-          <rect x="110" y="20" width="28" height="28" fill="none" stroke="#6366F1" stroke-width="1.5"/>
-          <!-- 俯視：L形 -->
-          <polygon points="20,82 52,82 52,90 32,90 32,100 20,100" fill="none" stroke="#6366F1" stroke-width="1.5"/>
-          <!-- 3D 等角塊 -->
-          <g transform="translate(136,93)" stroke="#93C5FD" stroke-width="1.2" fill="none">
+          <rect x="94" y="64" width="84" height="54" fill="#0F172A" rx="4" stroke="#334155" stroke-width="1"/>
+          <text x="44"  y="12" text-anchor="middle" font-size="8" fill="#FBBF24" font-family="Inter" font-weight="700">俯視 TOP</text>
+          <text x="136" y="12" text-anchor="middle" font-size="8" fill="#93C5FD" font-family="Inter" font-weight="700">3D 互動旋轉</text>
+          <text x="44"  y="74" text-anchor="middle" font-size="8" fill="#FBBF24" font-family="Inter" font-weight="700">正視 FRONT</text>
+          <text x="136" y="74" text-anchor="middle" font-size="8" fill="#FBBF24" font-family="Inter" font-weight="700">右側視 RIGHT</text>
+          <!-- L 形塊：俯視在正視正上方（長對正）、右側視在正視正右方（高平齊） -->
+          <rect x="26" y="22" width="36" height="24" fill="none" stroke="#6366F1" stroke-width="1.5"/>
+          <line x1="38" y1="22" x2="38" y2="46" stroke="#6366F1" stroke-width="1.5"/>
+          <polygon points="26,80 38,80 38,98 62,98 62,110 26,110" fill="none" stroke="#6366F1" stroke-width="1.5"/>
+          <rect x="124" y="80" width="24" height="30" fill="none" stroke="#6366F1" stroke-width="1.5"/>
+          <line x1="124" y1="98" x2="148" y2="98" stroke="#6366F1" stroke-width="1.5"/>
+          <g transform="translate(136,33)" stroke="#93C5FD" stroke-width="1.2" fill="none">
             <polygon points="0,-13 11,-7 11,7 0,13 -11,7 -11,-7"/>
             <line x1="0" y1="-13" x2="0" y2="0"/>
             <line x1="11" y1="-7" x2="0" y2="0"/>
@@ -168,5 +165,6 @@
 </script>
 
 <script src="../../js/main.js"></script><script src="../../js/sheet-config.js?v=1"></script><script src="../../js/sheet-log.js?v=1"></script><script src="../../js/sources.js?v=2"></script><script src="../../js/audio.js"></script>
-<script type="module" src="../js/module5.js?v=4"></script>
+<script src="../../models/orthographic/library/library-data.js?v=1"></script><script src="../js/ortho-views.js?v=1"></script><script src="../js/ortho-bank.js?v=1"></script>
+<script type="module" src="../js/module5.js?v=5"></script>
 </body></html>

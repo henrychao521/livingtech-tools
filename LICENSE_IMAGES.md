@@ -109,6 +109,13 @@
 
 公有領域與 GFDL 授權圖片技術上沒有 ShareAlike 義務，但 CC BY-SA 圖片的「同樣授權」要求仍必須遵守。
 
+## 本站自製圖片
+
+### 三視圖物件庫（`models/orthographic/library/`、`orthographic/assets/steps/`）
+- **內容**：18 個教學物件的 STL、等角渲染（WebP）、第三角法三視圖／六視圖 SVG、模組 3 的 8 張步驟圖
+- **製作**：OpenSCAD 建模、Blender 渲染；視圖線條由程式從 3D 模型正投影算出（可見線、隱藏線、中心線），並以獨立解析驗算
+- **授權**：本站自製，隨網站授權使用
+
 ---
 
 ## 維護指引

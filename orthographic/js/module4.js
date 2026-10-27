@@ -1,259 +1,155 @@
-// 三視圖 模組 4：3D ↔ 三視圖互動投影器（Three.js + OpenSCAD 模型）
-// - 主視窗：PerspectiveCamera + OrbitControls，學生可拖曳旋轉真實 3D 物件
-// - 三個小視窗：OrthographicCamera 從 +Z（正視）/ +X（右側視）/ +Y（俯視）三個固定方向投影（CNS 3 第三角投影法）
-// - 物件 mesh 由 OpenSCAD 參數化建模生成 STL，前端 STLLoader 載入
-//   座標系：OpenSCAD 是 Z-up（建模時 Z 軸朝上），Three.js 預設 Y-up
-//   → 載入後繞 X 軸旋轉 -90° 對齊（使 OpenSCAD 的 Z 變成 Three.js 的 Y）
-// 依據：CNS 3《工程製圖》、ISO 128
-
+// 三視圖 模組 4：3D ↔ 三視圖互動投影器（2026-10-27 改版）
+// - 上方大的 3D 視窗：物件庫的實體（OpenSCAD → STL），OrbitControls 拖曳旋轉、雙指縮放；鏡頭自動框住整個物體（手機直式也看得到全貌）
+// - 下方：同一個物體的第三角法三視圖／六視圖，線條由 3D 模型正投影計算（可見線、隱藏線、中心線），
+//   不是即時算圖的剪影——所以看得到虛線與中心線。
+// 座標：物件庫 X 寬、Y 深（y=0 為正面）、Z 高；Three.js 鏡頭 up 設成 +Z，不旋轉模型。
+// 依據：CNS 3《工程製圖》、ISO 128（線型）、ISO 5456-2（第三角法）
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { STLLoader } from 'three/addons/loaders/STLLoader.js';
 
+const OV = window.OrthoViews, LIB = window.ORTHO_LIB;
 const PK = 'ort_progress_v1';
 function loadP() { try { return JSON.parse(localStorage.getItem(PK)) || {}; } catch { return {}; } }
-function saveP(p) { localStorage.setItem(PK, JSON.stringify(p)); }
+function saveP(p) { try { localStorage.setItem(PK, JSON.stringify(p)); } catch { /* 無痕模式 */ } }
 
-const INFOS = {
-  cube:     '立方體：6 個面都一樣 = 三視圖都是相同的正方形（L = W = H）。',
-  cylinder: '圓柱：正視 / 側視 = 矩形，俯視 = 圓形。曲面投影到平面會變成直線。',
-  cone:     '圓錐：正視 / 側視 = 三角形，俯視 = 圓形（含尖點圓心）。',
-  step:     '階梯塊：正視 = L 形（左高右低的階梯輪廓）；俯視 = 矩形加一條分界線（上層頂面與下層頂面的高低分界）；側視 = 矩形加一條分界線（從右看，上層右面與下層右面的分界）。旋轉 3D 物件，從正視方向就能清楚看到階梯輪廓。',
-  l:        'L 型塊：左邊高臂＋右邊低座兩個方塊組合。正視 = L 形；俯視 = 矩形加一條垂直分界線（高臂頂面與低座頂面的交界）；側視 = 矩形加一條水平分界線（從右看，低座右面在下、高臂右面在上）。',
-  hole:     '孔板：圓孔軸垂直於正面。正視可看到圓孔的實線輪廓；側視與俯視因為孔軸與視線垂直，孔以兩條平行虛線表示貫穿（內部不可見）。注意：左邊 3D 畫面只顯示看得到的輪廓，不會畫出虛線；工程圖要把孔畫成虛線（見模組 5）。',
-  tslot:    'T 槽塊：頂面挖一道 T 字形溝槽，槽深為塊高的一半；T 的橫槽在後方、從背面穿出。俯視 = 矩形內看到 T 形槽口（實線）；正視與側視 = 矩形，槽被外壁擋住，用虛線畫出槽壁與槽底。左邊 3D 畫面只顯示看得到的輪廓，不會畫虛線。',
-  wedge:    '楔形塊：正視 = 三角形，俯視 = 矩形，側視 = 矩形（注意斜面的對應）。',
-  sphere:   '球體：從任何方向看都一樣 = 三視圖都是同直徑的圓。',
-  pyramid:  '金字塔（正四角錐）：正視 / 側視 = 三角形，俯視 = 正方形加兩條對角線（四個斜面交於頂點）。',
-  bracket:  'L 角架（角鐵）：L 形截面沿高度（上下）方向延伸，所以俯視 = L 形（左邊一腳、前面一腳）。正視 = 矩形，內角被前腳擋住，畫一條虛線；側視 = 矩形加一條實線（從右看，前腳的端面和後方豎腳的內面前後錯開）。',
+const LEVELS = { 1: '基礎', 2: '進階', 3: '挑戰', 4: '綜合' };
+const HINTS = {
+  block: '三個視圖都是矩形：正視 60×30、俯視 60×40、右側視 40×30，沒有內部線條。',
+  lblock: '正視是 L 形；俯視在立板和底座交界有一條實線（和正視的內角長對正）；右側視在高 15 有一條實線（底座頂面，高平齊）。',
+  step3: '正視是三階梯；俯視兩條垂直實線、右側視兩條水平實線（每個台階的交界都看得到）。切到「六視圖」看看：左側視圖的這兩條線變成虛線。',
+  tee: '正視是倒 T；俯視兩條垂直實線是立板兩側。右側視只有一條水平實線——和 L 形塊的右側視一模一樣，所以只看一個視圖不能確定形狀。',
+  notch: '正視是凹字形（槽前後貫穿，直接看得到）；俯視兩條垂直實線是槽壁；右側視看不到槽，用一條水平虛線表示槽底。',
+  chamfer: '右側視是五邊形，缺角在左上——右側視的左邊是物體正面，所以斜面在前上方。正視在高 20、俯視在離正面 15 處各有一條實線，是斜面和正面、頂面的交線。',
+  ramp: '正視就是斜坡的真實輪廓；俯視在 x=20 有一條實線（平頂和斜面的交線）；右側視在高 15 有一條實線，上面那一塊是斜面。',
+  holeplate: '俯視是圓（孔口看得到）；正視、右側視用兩條虛線表示孔壁；細鏈線是孔的中心線，在俯視圖畫成十字。',
+  vblock: '正視直接看到 V 形槽；俯視三條實線是槽口兩邊和槽底；右側視看不到槽，一條水平虛線是槽底。',
+  tslot: '正視直接看到 T 形槽；俯視只看得到窄的槽口（實線），下面較寬的槽被擋住（虛線）；右側視兩條水平虛線是寬槽的上下面。',
+  dovetail: '正視看到上窄下寬的鳩尾槽；俯視的槽口是實線，較寬的槽底兩側是虛線；右側視一條水平虛線是槽底。',
+  cbore: '俯視兩個同心圓：大圓是沉頭、小圓是貫穿孔。正視、右側視的虛線上寬下窄，表示沉頭在頂面。',
+  cylstack: '俯視三個同心圓（下層圓柱、上層圓柱、孔）；圓柱在正視、右側視變成矩形，中心線畫在軸上，孔用虛線。',
+  bracket: '正視看得到立板的圓孔（實線圓），底板的孔被擋住是虛線；俯視看得到底板兩個孔，立板的孔是虛線；右側視是 L 形，兩種孔都是虛線。',
+  lhole: '正視是 L 形，立板裡的水平虛線是左右貫穿的孔；右側視看得到這個孔的圓；俯視右邊的圓是底座的垂直孔。',
+  slotplate: '俯視是長圓孔（兩個半圓＋兩條直線），中心線沿長度一條、兩端圓心各一條；正視的虛線是長孔兩端，右側視的虛線是長孔兩側。',
+  boss: '俯視：凸台、中心孔、四角四個小孔都是圓；正視、右側視：凸台是矩形，中心孔從凸台頂一路貫穿到底（虛線），四角小孔也是虛線。',
+  rib: '正視是 L 形加一條斜線（肋板的斜邊）；俯視的兩條水平實線是肋板兩側；右側視看得到肋板斜面，兩條直線是肋板兩側。',
 };
 
-// ========== STL 載入工廠（OpenSCAD pipeline）==========
-// 共 11 種物件的 STL 檔在 ../../models/orthographic/
-// 物件名 → 對應檔名（與 .scad 同名）
-const STL_NAMES = ['cube', 'cylinder', 'cone', 'sphere', 'step', 'lblock', 'l', 'hole', 'tslot', 'wedge', 'bracket', 'pyramid'];
-const FILENAME_ALIAS = { l: 'lblock' };  // module5.html / module4.html 可能用 'l'，但檔名是 lblock
+/* ---- 3D 視窗 ---- */
+const host = document.getElementById('vp-main');
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+host.appendChild(renderer.domElement);
+renderer.domElement.setAttribute('aria-label', '可旋轉的 3D 物件');
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0F172A);
+scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+const dl = new THREE.DirectionalLight(0xffffff, 0.9); dl.position.set(60, -120, 160); scene.add(dl);
+const dl2 = new THREE.DirectionalLight(0xffffff, 0.35); dl2.position.set(-80, 60, 40); scene.add(dl2);
+const camera = new THREE.PerspectiveCamera(32, 1, 1, 3000);
+camera.up.set(0, 0, 1);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true; controls.dampingFactor = 0.08; controls.enablePan = false;
+const group = new THREE.Group(); scene.add(group);
+const grid = new THREE.GridHelper(200, 20, 0x334155, 0x1E293B); grid.rotation.x = Math.PI / 2; scene.add(grid);
 
-const stlLoader = new STLLoader();
-const geometryCache = new Map();
-
-function loadSTLGeometry(name) {
-  const file = FILENAME_ALIAS[name] || name;
-  if (geometryCache.has(file)) return Promise.resolve(geometryCache.get(file));
-  return new Promise((resolve, reject) => {
-    stlLoader.load(
-      `../../models/orthographic/${file}.stl`,
-      geo => {
-        // OpenSCAD 預設 Z-up，Three.js 預設 Y-up → 繞 X 軸旋轉 -90°
-        geo.rotateX(-Math.PI / 2);
-        geo.computeBoundingBox();
-        // 物件居中（OpenSCAD 中已大部分置中，這裡再 normalize 一次防呆）
-        const bb = geo.boundingBox;
-        const cx = (bb.min.x + bb.max.x) / 2;
-        const cy = (bb.min.y + bb.max.y) / 2;
-        const cz = (bb.min.z + bb.max.z) / 2;
-        geo.translate(-cx, -cy, -cz);
-        geo.computeVertexNormals();
-        geometryCache.set(file, geo);
-        resolve(geo);
-      },
-      undefined,
-      err => reject(err)
-    );
-  });
+const geoCache = new Map();
+function loadGeo(id) {
+  if (!geoCache.has(id)) geoCache.set(id, fetch('../../models/orthographic/library/' + id + '.stl?v=1')
+    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.arrayBuffer(); })
+    .then(buf => {
+      const dv = new DataView(buf), n = dv.getUint32(80, true), pos = new Float32Array(n * 9);
+      for (let i = 0; i < n; i++) for (let j = 0; j < 9; j++) pos[i * 9 + j] = dv.getFloat32(84 + i * 50 + 12 + j * 4, true);
+      const g = new THREE.BufferGeometry();
+      g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      g.computeVertexNormals(); g.computeBoundingBox();
+      return g;
+    }));
+  return geoCache.get(id);
 }
-
-// 物件工廠：載入 STL → 組合 mesh + 輪廓線
-async function makeShape(name) {
-  const group = new THREE.Group();
-  const mat = new THREE.MeshPhongMaterial({ color: 0x6366F1, flatShading: false, side: THREE.DoubleSide, shininess: 25 });
-  const edgeMat = new THREE.LineBasicMaterial({ color: 0x1E1B4B, linewidth: 1 });
-  try {
-    const geo = await loadSTLGeometry(name);
-    const mesh = new THREE.Mesh(geo, mat);
-    group.add(mesh);
-    // 輪廓線（thresholdAngle 30° 隱藏平滑面上的邊）
-    const edges = new THREE.LineSegments(new THREE.EdgesGeometry(geo, 30), edgeMat);
-    group.add(edges);
-  } catch (e) {
-    console.error('STL 載入失敗：', name, e);
-    // fallback：顯示一個紅色立方體提示錯誤
-    const fb = new THREE.Mesh(new THREE.BoxGeometry(30, 30, 30), new THREE.MeshBasicMaterial({ color: 0xff0000 }));
-    group.add(fb);
-  }
-  return group;
-}
-
-// ========== Viewport 建立 ==========
-function makeViewport(container, isMain) {
-  const w = container.clientWidth || 320;
-  const h = container.clientHeight || 240;
-  const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x0F172A);
-
-  // 燈光
-  const amb = new THREE.AmbientLight(0xffffff, 0.55);
-  scene.add(amb);
-  const dir = new THREE.DirectionalLight(0xffffff, 0.85);
-  dir.position.set(80, 100, 120);
-  scene.add(dir);
-
-  let camera;
-  if (isMain) {
-    camera = new THREE.PerspectiveCamera(40, w / h, 1, 1000);
-    camera.position.set(120, 90, 140);
-    camera.lookAt(0, 0, 0);
-  } else {
-    // 正交相機 — 視野大小手動定（保持物件在框內）
-    const size = 110;
-    const aspect = w / h;
-    camera = new THREE.OrthographicCamera(-size * aspect / 2, size * aspect / 2, size / 2, -size / 2, 1, 1000);
-  }
-
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
-  renderer.setPixelRatio(window.devicePixelRatio);
+let fit = { c: new THREE.Vector3(), r: 60 };
+function frameCamera(reset) {
+  const w = host.clientWidth, h = host.clientHeight;
+  if (!w || !h) return;
   renderer.setSize(w, h);
-  container.appendChild(renderer.domElement);
-
-  return { scene, camera, renderer, container, isMain, current: null };
-}
-
-// 設定正交相機從特定方向看
-function aimOrthoCamera(camera, axis) {
-  // STL 載入時已 rotateX(-90°)：OpenSCAD (x, y, z) → Three.js (x, z, -y)，OpenSCAD 的正面（-Y）轉成 +Z。
-  // CNS 3 第三角法慣例：
-  //   - 正視 = 站在物體前方往後看（相機在 +Z）
-  //   - 俯視 = 從上往下看（+Y → -Y）
-  //   - 側視 = 從右方往左看（+X → -X）—— 「右側視圖」放右邊（第三角投影）
-  // 但實作上對於 Three.js 預設座標（Y 向上、Z 向觀者）：
-  //   - 正視 = camera 在 (0, 0, R)，看 (0, 0, 0)，up = (0, 1, 0)
-  //   - 俯視 = camera 在 (0, R, 0)，看 (0, 0, 0)，up = (0, 0, -1)
-  //   - 側視（右視）= camera 在 (R, 0, 0)，看 (0, 0, 0)，up = (0, 1, 0)
-  const R = 200;
-  if (axis === 'front') {
-    camera.position.set(0, 0, R);
-    camera.up.set(0, 1, 0);
-  } else if (axis === 'top') {
-    camera.position.set(0, R, 0);
-    camera.up.set(0, 0, -1);
-  } else if (axis === 'side') {
-    camera.position.set(R, 0, 0);
-    camera.up.set(0, 1, 0);
+  camera.aspect = w / h; camera.updateProjectionMatrix();
+  const vf = THREE.MathUtils.degToRad(camera.fov), hf = 2 * Math.atan(Math.tan(vf / 2) * camera.aspect);
+  const dist = fit.r / Math.sin(Math.min(vf, hf) / 2) * 1.04;
+  controls.minDistance = dist * 0.45; controls.maxDistance = dist * 2.2;
+  if (reset) {
+    const dir = new THREE.Vector3(1.0, -1.45, 0.95).normalize();
+    controls.target.copy(fit.c);
+    camera.position.copy(fit.c).addScaledVector(dir, dist);
+  } else {
+    const d = camera.position.clone().sub(controls.target);
+    camera.position.copy(controls.target).addScaledVector(d.normalize(), dist);
   }
-  camera.lookAt(0, 0, 0);
-}
-
-// ========== 初始化 ==========
-const mainVP = makeViewport(document.getElementById('vp-main'), true);
-const frontVP = makeViewport(document.getElementById('vp-front'), false);
-const sideVP = makeViewport(document.getElementById('vp-side'), false);
-const topVP = makeViewport(document.getElementById('vp-top'), false);
-
-aimOrthoCamera(frontVP.camera, 'front');
-aimOrthoCamera(sideVP.camera, 'side');
-aimOrthoCamera(topVP.camera, 'top');
-
-// 主視窗加 OrbitControls + 座標軸輔助
-const controls = new OrbitControls(mainVP.camera, mainVP.renderer.domElement);
-controls.enableDamping = true;
-controls.dampingFactor = 0.08;
-controls.minDistance = 80;
-controls.maxDistance = 400;
-const axesHelper = new THREE.AxesHelper(60);
-mainVP.scene.add(axesHelper);
-
-// 三視圖加格線
-function addGridFloor(scene, axis) {
-  const grid = new THREE.GridHelper(160, 8, 0x334155, 0x1E293B);
-  if (axis === 'front') grid.rotation.x = Math.PI / 2; // 在 XY 平面
-  else if (axis === 'side') grid.rotation.z = Math.PI / 2; // 在 YZ 平面
-  // top 視角的 grid 預設就是 XZ 平面（不變）
-  scene.add(grid);
-}
-addGridFloor(frontVP.scene, 'front');
-addGridFloor(sideVP.scene, 'side');
-addGridFloor(topVP.scene, 'top');
-
-// ========== 切換物件 ==========
-let currentShape = 'cube';
-let loadingShape = false;
-
-async function setShape(name) {
-  if (loadingShape) return;
-  loadingShape = true;
-  currentShape = name;
-  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.s === name));
-  document.getElementById('info').textContent = INFOS[name] || '';
-
-  // 從 4 個 scene 移除舊 group。注意：geometry 是共用快取，不要 dispose！
-  // 只移除 mesh / line，不 dispose geometry
-  [mainVP, frontVP, sideVP, topVP].forEach(vp => {
-    if (vp.current) {
-      vp.scene.remove(vp.current);
-      vp.current.traverse(o => {
-        if (o.material) o.material.dispose();
-      });
-    }
-  });
-
-  // 平行載入 4 個 group（共用 STL geometry cache 後其實只第 1 次需要 fetch）
-  const groups = await Promise.all([makeShape(name), makeShape(name), makeShape(name), makeShape(name)]);
-  [mainVP, frontVP, sideVP, topVP].forEach((vp, i) => {
-    vp.scene.add(groups[i]);
-    vp.current = groups[i];
-  });
-
-  const p = loadP();
-  p.module4 = true;
-  p[`module4_${name}`] = true;
-  saveP(p);
-  loadingShape = false;
-}
-
-document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => setShape(t.dataset.s)));
-
-document.getElementById('btn-reset').addEventListener('click', () => {
-  mainVP.camera.position.set(120, 90, 140);
-  mainVP.camera.lookAt(0, 0, 0);
-  controls.target.set(0, 0, 0);
   controls.update();
-});
+}
+let token = 0;
+async function show3D(id) {
+  const my = ++token;
+  let geo;
+  try { geo = await loadGeo(id); } catch (e) { console.error('STL 載入失敗', id, e); return; }
+  if (my !== token) return;
+  group.clear();
+  group.add(new THREE.Mesh(geo, new THREE.MeshPhongMaterial({ color: 0x8B9CF5, shininess: 25, side: THREE.DoubleSide })));
+  group.add(new THREE.LineSegments(new THREE.EdgesGeometry(geo, 20), new THREE.LineBasicMaterial({ color: 0x1E1B4B })));
+  const bb = geo.boundingBox, c = new THREE.Vector3(), s = new THREE.Vector3();
+  bb.getCenter(c); bb.getSize(s);
+  /* 正視方向箭頭（橘色）：在正面前方，指向 +Y */
+  const L = Math.max(16, s.y * 0.5);
+  group.add(new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), new THREE.Vector3(c.x, bb.min.y - L - 5, bb.min.z + s.z * 0.35), L, 0xF97316, L * 0.35, L * 0.22));
+  grid.position.set(c.x, c.y, bb.min.z - 0.05);
+  const lo = bb.min.clone(); lo.y -= L + 5;
+  const box = new THREE.Box3(lo, bb.max.clone());
+  fit = { c: box.getCenter(new THREE.Vector3()), r: box.getSize(new THREE.Vector3()).length() / 2 };
+  frameCamera(true);
+}
 
-// ========== 渲染迴圈 ==========
+/* ---- 三視圖／六視圖（物件庫線條） ---- */
+let cur = 'lblock', mode = 'three';
+const viewsHost = document.getElementById('m4-views');
+function drawViews() {
+  const o = LIB.objects[cur];
+  const w = Math.max(260, Math.min(640, viewsHost.clientWidth || 340));
+  const v = mode === 'six' ? o.views : { front: o.views.front, top: o.views.top, right: o.views.right };
+  viewsHost.innerHTML = OV.svgLayout(v, mode, { maxWidth: w, maxHeight: mode === 'six' ? 560 : 520,
+    projLines: document.getElementById('m4-proj').checked && mode === 'three', title: o.name + (mode === 'six' ? '的六視圖' : '的三視圖') });
+}
+function setShape(id) {
+  cur = id;
+  document.querySelectorAll('.m4-obj').forEach(b => b.classList.toggle('active', b.dataset.s === id));
+  const o = LIB.objects[id];
+  document.getElementById('info').innerHTML = `<strong>${o.name}</strong>（${LEVELS[o.level]}，寬 ${o.size[0]}、深 ${o.size[1]}、高 ${o.size[2]} mm）：${o.desc}<br><span style="color:#1E1B4B">👀 ${HINTS[id] || ''}</span>`;
+  show3D(id); drawViews();
+  const p = loadP(); p.module4 = true; p['module4_' + id] = true; saveP(p);
+}
+
+/* 物件選單：依難度分組 */
+(function buildPicker() {
+  const wrap = document.getElementById('m4-picker');
+  wrap.innerHTML = [1, 2, 3, 4].map(lv => `<div class="m4-lv"><span class="m4-lv-t lv${lv}">${LEVELS[lv]}</span>` +
+    LIB.order.filter(id => LIB.objects[id].level === lv).map(id => `<button type="button" class="m4-obj" data-s="${id}">${LIB.objects[id].name}</button>`).join('') + '</div>').join('');
+  wrap.querySelectorAll('.m4-obj').forEach(b => b.addEventListener('click', () => { setShape(b.dataset.s); if (typeof SoundFX !== 'undefined') SoundFX.click(); }));
+})();
+document.querySelectorAll('[data-mode]').forEach(b => b.addEventListener('click', () => {
+  mode = b.dataset.mode;
+  document.querySelectorAll('[data-mode]').forEach(x => x.classList.toggle('active', x === b));
+  drawViews();
+}));
+document.getElementById('m4-proj').addEventListener('change', drawViews);
+document.getElementById('btn-reset').addEventListener('click', () => frameCamera(true));
+
+let rsT = 0;
+window.addEventListener('resize', () => { frameCamera(false); clearTimeout(rsT); rsT = setTimeout(drawViews, 120); });
 function render() {
   if (document.hidden) { window.__rafPaused = true; return; }
   controls.update();
-  [mainVP, frontVP, sideVP, topVP].forEach(vp => {
-    vp.renderer.render(vp.scene, vp.camera);
-  });
+  renderer.render(scene, camera);
   requestAnimationFrame(render);
 }
-
-// 視窗 resize 處理
-function onResize() {
-  [mainVP, frontVP, sideVP, topVP].forEach(vp => {
-    const w = vp.container.clientWidth;
-    const h = vp.container.clientHeight;
-    if (vp.isMain) {
-      vp.camera.aspect = w / h;
-      vp.camera.updateProjectionMatrix();
-    } else {
-      const size = 110;
-      const aspect = w / h;
-      vp.camera.left = -size * aspect / 2;
-      vp.camera.right = size * aspect / 2;
-      vp.camera.top = size / 2;
-      vp.camera.bottom = -size / 2;
-      vp.camera.updateProjectionMatrix();
-    }
-    vp.renderer.setSize(w, h);
-  });
-}
-window.addEventListener('resize', onResize);
-
-setShape('cube');
-render();
-// 分頁切到背景時 rAF 自動停止，切回來再續跑（省電，教室平板友善）
 document.addEventListener('visibilitychange', () => {
   if (!document.hidden && window.__rafPaused) { window.__rafPaused = false; render(); }
 });
+setShape(cur);
+render();

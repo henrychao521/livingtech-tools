@@ -13,21 +13,25 @@
 <link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/orthographic.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📐%3C/text%3E%3C/svg%3E">
 <style>
-  .tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:14px}
-  .tab{padding:10px;text-align:center;font-size:12px;border-radius:6px;background:#f1f5f9;cursor:pointer;font-weight:700}
-  .tab.active{background:#4F46E5;color:#fff}
-  .ort3d-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:10px;height:560px;background:#0F172A;padding:10px;border-radius:14px}
-  .vp{position:relative;border-radius:8px;background:#1E293B;overflow:hidden}
-  .vp-label{position:absolute;top:6px;left:8px;font-size:11px;color:#FBBF24;font-family:Inter;font-weight:700;letter-spacing:.05em;background:rgba(0,0,0,.35);padding:2px 8px;border-radius:4px;z-index:2}
-  .vp-axes{position:absolute;bottom:6px;left:8px;font-size:10px;color:#94A3B8;font-family:Inter;z-index:2}
-  .vp-hint{position:absolute;bottom:6px;right:8px;font-size:10px;color:#64748B;font-family:Inter;z-index:2}
-  .vp-grid{display:grid;grid-template-rows:1fr 1fr 1fr;gap:8px}
-  #vp-main{cursor:grab}
-  #vp-main:active{cursor:grabbing}
-  .reset-btn{position:absolute;top:6px;right:8px;font-size:11px;background:rgba(99,102,241,.85);color:#fff;border:none;padding:4px 10px;border-radius:6px;cursor:pointer;z-index:3}
-  .reset-btn:hover{background:#6366F1}
-  /* 手機窄螢幕：按鈕移到右下角，避免蓋住左上的「3D 物件」標籤 */
-  @media (max-width:600px){.reset-btn{top:auto;bottom:6px}}
+  .m4-3d{position:relative;border-radius:12px;background:#0F172A;overflow:hidden;height:clamp(320px,92vw,520px);touch-action:none}
+  .m4-3d canvas{display:block;width:100%;height:100%}
+  .vp-label{position:absolute;top:8px;left:10px;font-size:11.5px;color:#FBBF24;font-family:Inter,sans-serif;font-weight:700;background:rgba(0,0,0,.35);padding:3px 8px;border-radius:4px;z-index:2;pointer-events:none}
+  .vp-legend{position:absolute;bottom:8px;left:10px;font-size:11.5px;color:#FDBA74;font-weight:700;z-index:2;background:rgba(0,0,0,.35);padding:3px 8px;border-radius:4px;pointer-events:none}
+  .reset-btn{position:absolute;top:8px;right:10px;font-size:12px;background:rgba(99,102,241,.9);color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;z-index:3}
+  .m4-lv{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:6px}
+  .m4-lv-t{font-size:11px;font-weight:800;color:#fff;border-radius:999px;padding:2px 9px;margin-right:2px}
+  .m4-lv-t.lv1{background:#16A34A}.m4-lv-t.lv2{background:#2563EB}.m4-lv-t.lv3{background:#D97706}.m4-lv-t.lv4{background:#DC2626}
+  .m4-obj{border:1.5px solid var(--border);background:#F8FAFC;border-radius:999px;padding:6px 11px;font-size:13px;font-weight:700;cursor:pointer;color:#1E293B;min-height:34px}
+  .m4-obj.active{background:#4F46E5;border-color:#4F46E5;color:#fff}
+  #info{margin-top:12px;background:#E0E7FF;padding:12px;border-radius:8px;font-size:13.5px;line-height:1.75;color:#3730A3}
+  .m4-tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:8px;font-size:13px}
+  .m4-seg{display:inline-flex;border:1px solid var(--border);border-radius:999px;overflow:hidden}
+  .m4-seg button{border:none;background:#fff;padding:6px 12px;font-size:13px;font-weight:700;cursor:pointer;color:#334155}
+  .m4-seg button.active{background:#4F46E5;color:#fff}
+  #m4-views{background:#fff;border:1px solid var(--border);border-radius:10px;padding:6px}
+  #m4-views svg{display:block;margin:0 auto}
+  .line-legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:#475569;margin-top:8px}
+  .line-legend svg{vertical-align:middle;margin-right:4px}
 </style>
 </head><body data-tool="orthographic" class="ort-theme">
 <header class="topbar"><div class="brand"><span class="logo">📐</span><div><h1>三視圖</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
@@ -36,74 +40,44 @@
     <div>
       <span class="module-step" style="background:var(--success-light);color:#1b6e3a">MODULE 04 ・ 核心</span>
       <h2>3D ↔ 三視圖（互動投影器）</h2>
-      <p class="muted">左：可拖曳旋轉的 3D 物件・右：依 CNS 3 第三角投影法即時呈現正視 / 側視 / 俯視。</p>
+      <p class="muted">上：可拖曳旋轉的 3D 物件・下：同一個物件依 CNS 3 第三角投影法排好的三視圖（含隱藏線、中心線）。</p>
     </div>
   </div>
 
-  <div class="practice-layout">
-    <div class="ort-canvas-wrap" style="padding:0">
-      <div class="ort3d-grid">
-        <!-- 主 3D 視窗（可旋轉）-->
-        <div id="vp-main" class="vp">
-          <span class="vp-label">🖱 3D 物件（拖曳旋轉、滾輪縮放）</span>
-          <button class="reset-btn" id="btn-reset">↺ 重置視角</button>
-          <span class="vp-axes" id="vp-main-axes">X 紅・Y 綠・Z 藍</span>
-        </div>
-        <!-- 三視圖（固定方向）-->
-        <div class="vp-grid">
-          <div id="vp-front" class="vp">
-            <span class="vp-label" style="color:#60A5FA">正視 FRONT</span>
-            <span class="vp-axes">從 +Z 方向看（觀者前方）</span>
-          </div>
-          <div id="vp-side" class="vp">
-            <span class="vp-label" style="color:#34D399">側視 SIDE</span>
-            <span class="vp-axes">從 +X 方向看（右側視）</span>
-          </div>
-          <div id="vp-top" class="vp">
-            <span class="vp-label" style="color:#FBBF24">俯視 TOP</span>
-            <span class="vp-axes">從 +Y 方向看（往下）</span>
-          </div>
-        </div>
-      </div>
+  <section class="panel">
+    <div id="m4-picker" aria-label="選擇物件"></div>
+    <div id="vp-main" class="m4-3d" style="margin-top:8px">
+      <span class="vp-label">🖱 拖曳旋轉・雙指或滾輪縮放</span>
+      <button class="reset-btn" id="btn-reset" type="button">↺ 重置視角</button>
+      <span class="vp-legend">橘色箭頭＝正視方向</span>
     </div>
+    <div id="info"></div>
+    <p style="margin-top:8px;font-size:11.5px;color:#94A3B8">🔧 18 個物件由 <a href="https://openscad.org/" target="_blank" rel="noopener" style="color:#4F46E5">OpenSCAD</a> 參數化建模（models/orthographic/library/），下方視圖由同一個 3D 模型正投影計算產生（本站繪製）。</p>
+  </section>
 
-    <div class="sim-side">
-      <div style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px">
-        <h4 style="font-size:13px;color:var(--text-muted);text-transform:uppercase;margin-bottom:10px">選擇物件</h4>
-        <div class="tabs">
-          <div class="tab active" data-s="cube">立方體</div>
-          <div class="tab" data-s="cylinder">圓柱</div>
-          <div class="tab" data-s="step">階梯塊</div>
-        </div>
-        <div class="tabs" style="margin-top:6px">
-          <div class="tab" data-s="l">L 型塊</div>
-          <div class="tab" data-s="hole">孔板</div>
-          <div class="tab" data-s="cone">圓錐</div>
-        </div>
-        <div class="tabs" style="margin-top:6px">
-          <div class="tab" data-s="tslot">T 槽塊</div>
-          <div class="tab" data-s="wedge">楔形塊</div>
-          <div class="tab" data-s="bracket">L 角架</div>
-        </div>
-        <div class="tabs" style="margin-top:6px;grid-template-columns:repeat(2,1fr)">
-          <div class="tab" data-s="sphere">球體</div>
-          <div class="tab" data-s="pyramid">金字塔</div>
-        </div>
-        <p style="margin-top:10px;font-size:11px;color:#94A3B8;text-align:center">🔧 物件模型由 <a href="https://openscad.org/" target="_blank" style="color:#4F46E5">OpenSCAD</a> 參數化建模生成（.scad → .stl → Three.js）</p>
-        <div style="margin-top:14px;background:#E0E7FF;padding:12px;border-radius:8px;font-size:13px;color:#3730A3" id="info">立方體：6 個面都一樣 = 三視圖都是相同的正方形。</div>
-      </div>
-
-      <div class="help-card">
-        <strong>💡 觀察重點（CNS 3 第三角投影法）</strong>
-        <ul>
-          <li><strong>長對正</strong>：正視長 = 俯視長</li>
-          <li><strong>高平齊</strong>：正視高 = 側視高</li>
-          <li><strong>圓→方</strong>：曲面物體某方向投影會變直線</li>
-          <li><strong>虛線</strong>：物體內部 / 背後不可見輪廓</li>
-          <li><strong>體會立體</strong>：先看 3D 物件，再驗證三個固定方向的投影</li>
-        </ul>
-      </div>
+  <section class="panel">
+    <h3 style="margin-bottom:8px">📐 第三角法視圖（CNS 3）</h3>
+    <div class="m4-tools">
+      <span class="m4-seg" role="group" aria-label="視圖數量"><button type="button" data-mode="three" class="active">三視圖</button><button type="button" data-mode="six">六視圖</button></span>
+      <label><input type="checkbox" id="m4-proj" checked> 投影對齊線</label>
     </div>
+    <div id="m4-views"></div>
+    <div class="line-legend" aria-label="線型說明">
+      <span><svg width="28" height="6"><line x1="1" y1="3" x2="27" y2="3" stroke="#111827" stroke-width="2.2"/></svg>粗實線＝看得見的輪廓</span>
+      <span><svg width="28" height="6"><line x1="1" y1="3" x2="27" y2="3" stroke="#111827" stroke-width="1.3" stroke-dasharray="5 3"/></svg>虛線＝被擋住的輪廓</span>
+      <span><svg width="28" height="6"><line x1="1" y1="3" x2="27" y2="3" stroke="#111827" stroke-width="0.9" stroke-dasharray="12 3 2 3"/></svg>細鏈線＝中心線</span>
+    </div>
+  </section>
+
+  <div class="help-card">
+    <strong>💡 觀察重點（CNS 3 第三角投影法）</strong>
+    <ul>
+      <li><strong>位置</strong>：俯視在正視正上方、右側視在正視正右方（六視圖：仰視在下、左側視在左、後視在最右）</li>
+      <li><strong>長對正</strong>：正視長 = 俯視長；<strong>高平齊</strong>：正視高 = 側視高；<strong>寬相等</strong>：俯視的深度 = 側視的寬度</li>
+      <li><strong>方向</strong>：俯視圖的下緣、右側視圖的左緣，都是物體的正面</li>
+      <li><strong>虛線</strong>：被擋住的輪廓；可見線和虛線重疊時只畫實線</li>
+      <li><strong>先看 3D、再對照視圖</strong>：把 3D 物件轉到正前方、正上方、正右方，和下方視圖比對</li>
+    </ul>
   </div>
 
   <div class="module-nav-bottom"><a href="module3.html" class="btn btn-ghost">← 上一關</a><a href="module5.html" class="btn btn-primary">下一關 →</a></div>
@@ -120,5 +94,6 @@
 </script>
 
 <script src="../../js/main.js"></script><script src="../../js/sheet-config.js?v=1"></script><script src="../../js/sheet-log.js?v=1"></script><script src="../../js/sources.js?v=2"></script><script src="../../js/audio.js"></script>
-<script type="module" src="../js/module4.js?v=3"></script>
+<script src="../../models/orthographic/library/library-data.js?v=1"></script><script src="../js/ortho-views.js?v=1"></script>
+<script type="module" src="../js/module4.js?v=4"></script>
 </body></html>

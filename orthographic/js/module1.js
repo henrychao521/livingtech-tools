@@ -1,4 +1,5 @@
 // 三視圖 模組 1：核心概念（含立體示範圖）
+// 前三張概念圖由 useLibrary() 依物件庫產生（第三角法、六視圖、投影對齊）；STEP_ISO_MINI 只剩舊版備援用
 // 每個概念配一張精準的 SVG 教學圖，依 CNS 3 與工程圖學標準繪製
 
 // 共用 isometric step block（與 hero 一致的投影座標）— 縮小版
@@ -38,7 +39,7 @@ const CONCEPTS = [
   },
   {
     name: '6 個基本視圖', icon: '🎲',
-    desc: '一個物體可從 6 個方向投影：正視（前視）、後視、左側視、右側視、俯視、仰視。實作通常只畫 3 個就夠。',
+    desc: '一個物體可從 6 個方向投影：正視（前視）、俯視、仰視、左側視、右側視、後視。第三角法排列：俯視在正視正上方、仰視在正下方、左側視在左、右側視在右、後視接在右側視的右邊。實作通常只畫 3 個就夠。',
     detail: '選擇原則：選最能表達物體特徵的 3 個視圖。圓柱通常選正視 + 俯視兩個。',
     visual: `<svg viewBox="0 0 272 130" width="100%" style="background:#F1F5F9;border-radius:6px;display:block">
       <!-- 中央立體（step） -->
@@ -223,6 +224,22 @@ const CONCEPTS = [
     </svg>`
   },
 ];
+
+// 2026-10-27：「第三角投影法」「6 個基本視圖」「投影對齊」三張圖改用物件庫（OpenSCAD 實體正投影算出的線條），
+// 取代原本手繪、不完整的示意圖。物件＝L 形孔塊（models/orthographic/library/lhole）。
+(function useLibrary() {
+  const OV = window.OrthoViews, L = window.ORTHO_LIB;
+  if (!OV || !L || !L.objects.lhole) return;
+  const o = L.objects.lhole, v = o.views;
+  const iso = OV.svgSingle(v.iso, { pxPerMm: 1.0, pad: 3, title: '物體（等角圖）' });
+  const front = OV.svgSingle(v.front, { pxPerMm: 0.85, pad: 4, title: '描在投影面上的正視圖' });
+  CONCEPTS[0].visual = `<div class="proj-fig" role="img" aria-label="第三角法：視線先穿過投影面才到物體">
+      <div class="pf-col"><div style="font-size:26px;line-height:1">👁️</div>觀察者</div><div class="pf-arrow">→</div>
+      <div class="pf-col"><div class="pf-plane">${front}</div>投影面</div><div class="pf-arrow">→</div>
+      <div class="pf-col">${iso}<div>物體</div></div></div>`;
+  CONCEPTS[1].visual = `<div class="ov-fig">${OV.svgLayout(v, 'six', { maxWidth: 330, gapMm: 12, title: o.name + '的六個基本視圖（第三角法）' })}</div>`;
+  CONCEPTS[2].visual = `<div class="ov-fig">${OV.svgLayout({ front: v.front, top: v.top, right: v.right }, 'three', { maxWidth: 300, projLines: true, title: '第三角法三視圖與投影對齊線' })}</div>`;
+})();
 
 const PK = 'ort_progress_v1';
 function loadP() { try { return JSON.parse(localStorage.getItem(PK)) || {}; } catch { return {}; } }

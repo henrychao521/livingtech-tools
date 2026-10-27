@@ -22,11 +22,9 @@ function grabSafe(src, name) {
   throw new Error(`宣告未結束：${name}`);
 }
 
-// VIEW_BG 那一行同時宣告 VIEW_FG／VIEW_EDGE／VIEW_DASH
-const GRAB = ['VIEW_BG', 'SHAPES', 'svgView', 'GRID', 'makeEmptyGrid', 'projectGrid', 'calcMatch', 'calcDiff',
-  'ROUND1', 'ROUND2', 'ROUND3'];
-export const NAMES = ['VIEW_BG', 'VIEW_FG', 'VIEW_EDGE', 'VIEW_DASH', 'SHAPES', 'svgView', 'GRID',
-  'makeEmptyGrid', 'projectGrid', 'calcMatch', 'calcDiff', 'ROUND1', 'ROUND2', 'ROUND3'];
+// 2026-10-27：第 1、2 回合改用物件庫（ortho-bank.js、ortho-views.js），由 library.test.mjs 測；這裡只抽第 3 回合的純邏輯
+const GRAB = ['GRID', 'makeEmptyGrid', 'projectGrid', 'calcMatch', 'calcDiff', 'ROUND3'];
+export const NAMES = ['GRID', 'makeEmptyGrid', 'projectGrid', 'calcMatch', 'calcDiff', 'ROUND3'];
 
 export function load(extra = []) {
   const src = fs.readFileSync(MODULE5, 'utf8');
