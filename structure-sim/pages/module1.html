@@ -26,15 +26,15 @@
     <h3 style="margin:0 0 6px">🏛️ 結構形式立體(可旋轉) <span style="font-size:12px;font-weight:500;color:#64748b;margin-left:6px">點名稱切換 · 拖曳旋轉</span></h3>
     <p class="muted" style="margin-bottom:12px">六種常見結構形式的立體示意,旋轉觀察桿件如何組成。模型由 OpenSCAD 參數化建模(原始檔開源,可改尺寸/3D 列印)。</p>
     <div id="st3d-tabs" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px">
-      <button type="button" class="st3d-btn" data-src="truss.glb">桁架</button>
-      <button type="button" class="st3d-btn" data-src="arch.glb">拱</button>
-      <button type="button" class="st3d-btn" data-src="frame.glb">框架</button>
-      <button type="button" class="st3d-btn" data-src="shell.glb">殼</button>
-      <button type="button" class="st3d-btn" data-src="cable.glb">纜索懸吊</button>
+      <button type="button" class="st3d-btn" data-src="truss.glb?v=2">桁架</button>
+      <button type="button" class="st3d-btn" data-src="arch.glb?v=2">拱</button>
+      <button type="button" class="st3d-btn" data-src="frame.glb?v=2">框架</button>
+      <button type="button" class="st3d-btn" data-src="shell.glb?v=2">殼</button>
+      <button type="button" class="st3d-btn" data-src="cable.glb?v=2">纜索懸吊</button>
       <button type="button" class="st3d-btn" data-src="tensile.glb">張拉結構</button>
     </div>
     <div style="background:#1e293b;border-radius:14px;overflow:hidden">
-      <model-viewer id="st3d-viewer" src="../assets/models/truss.glb" loading="eager" camera-controls auto-rotate auto-rotate-delay="0" rotation-per-second="22deg" environment-image="neutral" shadow-intensity="1" style="width:100%;height:320px;--poster-color:#1e293b"></model-viewer>
+      <model-viewer id="st3d-viewer" src="../assets/models/truss.glb?v=2" loading="eager" camera-controls auto-rotate auto-rotate-delay="0" rotation-per-second="22deg" environment-image="neutral" shadow-intensity="1" style="width:100%;height:320px;--poster-color:#1e293b"></model-viewer>
     </div>
     <p class="muted" style="margin-top:8px;font-size:13px">💡 OpenSCAD 原始碼與可列印 STL 在 repo 的 <code>models/structure-sim/</code>(見 models/README)。</p>
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
@@ -141,5 +141,5 @@
   <div class="parts-checklist" id="parts-checklist"></div>
   <div class="module-nav-bottom"><a href="../index.html" class="btn btn-ghost">← 回首頁</a><a href="module2.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a></div>
 </main>
-<script src="../../js/main.js"></script><script src="../../js/sheet-config.js?v=1"></script><script src="../../js/sheet-log.js?v=1"></script><script src="../../js/sources.js"></script><script src="../../js/audio.js"></script><script src="../js/module1.js"></script>
+<script src="../../js/main.js"></script><script src="../../js/sheet-config.js?v=1"></script><script src="../../js/sheet-log.js?v=1"></script><script src="../../js/sources.js?v=2"></script><script src="../../js/audio.js"></script><script src="../js/module1.js"></script>
 </body></html>
