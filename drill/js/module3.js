@@ -7,7 +7,7 @@ const STEPS = [
   { title: '標位置、固定工件', desc: '用鉛筆在鑽孔位置畫「十字」。金屬鑽孔可用中心衝（center punch）敲一個小凹點，防止偏鑽。工件必須用 C 型夾或桌上虎鉗固定在工作台上，下方墊廢板防止鑽穿桌面。', tip: '雙手鑽孔時，工件絕對不能用手或膝蓋壓——一定要夾。', warn: '工件不固定是最常見的傷害來源。', anim: 'mark' },
   { title: '起鑽：點壓 + 慢速', desc: '雙手握姿勢就位（主手扳機、輔助手托電池底座；有側把手就用側把手，手遠離夾頭）。鑽頭垂直對準鉛筆十字、輕扣扳機，以約 10–20% 的轉速慢速起鑽，讓鑽頭咬入材料。咬入後再逐漸加深扣扳機加速。', tip: '鑽頭必須與工件「90°垂直」——歪斜會偏鑽或斷頭。', warn: null, anim: 'start' },
   { title: '鑽孔：穩定進刀、定時退屑', desc: '保持垂直、穩定進刀（不要太用力推，讓鑽頭自己切）。每鑽 5–10mm 退鑽一次清理鐵屑（pecking）。深孔或硬材料更頻繁退屑。聽到「轉速突然下降」就是進刀太猛。', tip: '木材鑽出來是「捲花」狀，金屬是「螺旋狀屑」，磚石是「粉末」——順利時的訊號。', warn: '進刀過快會折斷鑽頭、燒馬達。', anim: 'drill' },
-  { title: '退鑽 ＆ 收工', desc: '鑽穿後維持正轉、低速垂直抽出，離開工件再放開扳機（反轉只在卡鑽時使用）。檢查孔徑是否符合需求，必要時用大一號鑽頭擴孔或用銼刀修毛邊。最後：拆電池 → 拆鑽頭 → 鑽頭歸位 → 清理工作台。', tip: '鑽完馬上把鑽頭從夾頭取下，避免下次別人誤觸扳機。', warn: '剛鑽完的金屬鑽頭很燙（200°C+），等待數分鐘，先以手背靠近感溫確認不燙再徒手摸，或用鉗子取下。', anim: 'finish' },
+  { title: '退鑽 ＆ 收工', desc: '鑽穿後維持正轉、低速垂直抽出，離開工件再放開扳機（反轉只在卡鑽時使用）。檢查孔徑是否符合需求，必要時用大一號鑽頭擴孔或用銼刀修毛邊。最後：拆電池 → 拆鑽頭 → 鑽頭歸位 → 清理工作台。', tip: '鑽完馬上把鑽頭從夾頭取下，避免下次別人誤觸扳機。', warn: '剛鑽完的鑽頭和工件可能很燙，會造成燙傷（OSHA 鑽床訓練講稿：some work pieces may be very hot after drilling）；先等它冷卻，或用鉗子取下，不要直接徒手摸。', anim: 'finish' },
 ];
 
 function renderAnim(type) {
@@ -76,7 +76,7 @@ function renderAnim(type) {
         <g font-size="9" font-weight="700" fill="#92400e" font-family="Inter">
           <text x="0" y="-46" text-anchor="middle">10</text>
           <text x="48" y="3" text-anchor="middle">15</text>
-          <text x="34" y="38" text-anchor="middle">⊕</text>
+          <g transform="translate(34,38)" fill="#dc2626"><rect x="-1.6" y="-9" width="3.2" height="7"/><polygon points="-1.6,-2 1.6,-2 0,2"/><title>鑽頭圖示（純鑽孔）</title></g>
           <text x="-48" y="3" text-anchor="middle">5</text>
           <text x="0" y="55" text-anchor="middle">1</text>
         </g>
@@ -221,8 +221,8 @@ stepProgressEl.textContent = `已學習 ${seenSteps.size} / ${STEPS.length} 步`
     { id: 'drywall', name: '石膏板', icon: '🧱', range: [1, 3], note: '最輕扭力，避免螺絲穿頭損壞板材' },
     { id: 'thin',    name: '薄夾板 ≤12mm', icon: '🪵', range: [4, 7], note: '中低扭力，到位後離合器自動跳脫' },
     { id: 'hard',    name: '硬木 / 厚板', icon: '🌲', range: [10, 16], note: '中高扭力，硬材阻力大需要更大扭力' },
-    { id: 'concrete',name: '混凝土壁釘', icon: '🪨', range: [18, 20], note: '最高扭力，螺絲要先敲入導孔' },
-    { id: 'drill',   name: '純鑽孔模式', icon: '⚙️', range: [21, 21], note: '轉到「⊕ 鑽頭符號」鎖死離合器，專用於鑽孔' },
+    { id: 'concrete',name: '混凝土壁釘', icon: '🪨', range: [18, 20], note: '最高扭力；先鑽好孔、把塑膠壁虎（壁塞）敲入孔中，再把螺絲鎖進壁虎' },
+    { id: 'drill',   name: '純鑽孔模式', icon: '⚙️', range: [21, 21], note: '轉到「鑽頭圖示」那一格，離合器不跳脫，專用於鑽孔' },
   ];
   const SCREWS = [
     { id: 'small', name: 'M3 / 細螺絲', mod: -1 },
@@ -278,8 +278,8 @@ stepProgressEl.textContent = `已學習 ${seenSteps.size} / ${STEPS.length} 步`
     const screw = SCREWS.find(s => s.id === selScrew);
     let low = isDrill ? 21 : Math.max(1, mat.range[0] + screw.mod);
     let high = isDrill ? 21 : Math.min(20, mat.range[1] + screw.mod);
-    const rangeLabel = isDrill ? '⊕ 鑽頭符號' : `${low}–${high}`;
-    // 指針角度：刻度 v 對應 -130° + v/21 × 260°（10 約在頂端、⊕＝21 在 +130°）；下方刻度標籤用同一公式算座標
+    const rangeLabel = isDrill ? '鑽頭圖示' : `${low}–${high}`;
+    // 指針角度：刻度 v 對應 -130° + v/21 × 260°（10 約在頂端、鑽頭圖示＝21 在 +130°）；下方刻度標籤用同一公式算座標
     const mid = isDrill ? 21 : (low + high) / 2;
     const angle = -130 + (mid / 21) * 260;
     const rad = angle * Math.PI / 180;
@@ -296,7 +296,7 @@ stepProgressEl.textContent = `已學習 ${seenSteps.size} / ${STEPS.length} 步`
             <text x="25.7" y="49.2" text-anchor="middle">5</text>
             <text x="56" y="26.2" text-anchor="middle">10</text>
             <text x="90.6" y="42.2" text-anchor="middle">15</text>
-            <text x="88.3" y="86.8" text-anchor="middle" fill="#dc2626">⊕</text>
+            <g transform="translate(88.3,86.8)" fill="#dc2626"><rect x="-1.6" y="-9" width="3.2" height="7"/><polygon points="-1.6,-2 1.6,-2 0,2"/><title>鑽頭圖示（純鑽孔）</title></g>
           </g>
           <line x1="60" y1="60" x2="${nx}" y2="${ny}" stroke="#dc2626" stroke-width="3" stroke-linecap="round"/>
           <circle cx="60" cy="60" r="5" fill="#dc2626"/>
@@ -449,7 +449,9 @@ if (typeof SequencePuzzle === 'function') {
     /* drill body (rotates on kickback) */
     ctx.save();
     ctx.translate(DRILL_CX, drillY);
-    if (stage === 'wrong') ctx.rotate(kickAngle);
+    // 2026-10 審查：反扭力是繞鑽頭軸（垂直軸）轉，正視圖看到的是機身左右甩、寬度變窄再翻面，
+    // 不是在畫面平面上像風車一樣翻滾；用水平縮放模擬繞垂直軸旋轉，鑽頭留在孔裡
+    if (stage === 'wrong') ctx.scale(Math.cos(kickAngle), 1);
 
     /* hands */
     const hColor = stage === 'wrong' ? '#dc2626' : '#475569';
@@ -570,7 +572,7 @@ if (typeof SequencePuzzle === 'function') {
       document.getElementById('kb-result').innerHTML = `
         <div class="feedback error" style="margin-top:8px">
           <strong>✗ 錯誤應對：繼續施力</strong><br>
-          鑽頭卡住後繼續推力，電鑽以鑽頭為軸高速反扭甩動，造成手腕扭傷或骨折，機器也可能甩飛傷人。
+          鑽頭卡住後繼續推力，電鑽機身會以鑽頭為軸反向扭轉甩動，可能扭傷手腕，機身也可能脫手。
           <br><br><strong>正確做法：立刻鬆開扳機 → 切反轉 → 低速慢慢退出。</strong>
         </div>`;
       document.getElementById('kb-start-wrap').style.display = 'flex';

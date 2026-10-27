@@ -4,7 +4,7 @@ const PARTS = {
   reverse: { name: '正反轉開關（Forward / Reverse）', role: 'DIRECTION SWITCH', desc: '位於扳機正上方的撥桿。FWD（正轉）= 鎖緊、鑽孔；REV（反轉）= 退鑽、拆螺絲。中間位置為「鎖定」可防止誤觸扳機。', fact: '反轉除了退鑽，也能在鑽頭卡住時「微抖」鬆開——但要先停機、雙手扶穩再切換。' },
   torque: { name: '扭力環 / 離合器（Torque Collar）', role: 'CLUTCH SELECTOR', desc: '位於夾頭後方，可旋轉的環圈。刻度 1–20+ 段代表離合器跳脫的扭力大小：數字越大，鎖入越深。最後的「鑽頭符號」表示鎖死不跳脫（純鑽孔用）。', fact: '鎖石膏板 1–3、薄夾板 4–7、硬木／厚板 10–16、鑽孔模式關閉離合器。刻度依廠牌而異，先在廢料上試鎖。鎖螺絲時設對扭力可避免崩牙或斷頭。' },
   chuck: { name: '夾頭（Keyless Chuck）', role: 'BIT HOLDER', desc: '夾持鑽頭的金屬機構。新型多為「免鑰匙夾頭」：手轉前環即可鬆緊三爪。常見規格 10mm / 13mm（可夾的最大鑽頭「柄徑」；鏟形鑽、開孔器是細柄，可以鑽比夾頭大的孔）。', fact: '有棘輪的夾頭要轉到「咔咔咔」聽到聲音才算真正夾緊；沒有棘輪的要轉到轉不動，裝好都要搖一搖確認不晃。沒夾緊鑽頭會在工件裡甩動造成偏鑽或飛出。' },
-  bit: { name: '鑽頭（Drill Bit）', role: 'CUTTING EDGE', desc: '實際切削材料的部分。常見三類：高速鋼（HSS）鑽金屬與塑膠、木工螺旋鑽頭（含中心尖）鑽木材、磚石鑽頭（碳化鎢頭）鑽磚牆。直徑通常 1.5–13mm。', fact: '鑽頭鈍了會「燒黑」、出粉變少。木工鑽鑽金屬會立刻崩刃；磚石鑽鑽木材會很慢且燒焦。選錯鑽頭比沒戴護目鏡危險。' },
+  bit: { name: '鑽頭（Drill Bit）', role: 'CUTTING EDGE', desc: '實際切削材料的部分。常見三類：高速鋼（HSS）鑽金屬與塑膠、木工螺旋鑽頭（含中心尖）鑽木材、磚石鑽頭（碳化鎢頭）鑽磚牆。直徑通常 1.5–13mm。', fact: '鑽頭鈍了會「燒黑」、出粉變少。木工鑽鑽金屬會立刻崩刃；磚石鑽鑽木材會很慢且燒焦。選錯鑽頭容易崩刃、損壞工件；不論用哪種鑽頭，操作電鑽都要全程戴護目鏡。' },
   battery: { name: '電池組（Battery Pack）', role: 'POWER SOURCE', desc: '可拆式鋰電池，常見規格 18V 5Ah（亦有 12V/20V/40V）。電量指示燈顯示剩餘電量。連續鑽硬材或大孔時電池會發燙——要讓它休息。', fact: '鋰電池儲存時請放在 40–60% 電量（不要充滿也不要放光），可以減緩電池老化。' },
   motor: { name: '馬達（Brushless Motor）', role: 'POWER UNIT', desc: '提供旋轉動力的電動機。新型多為「無刷馬達」（BLDC）：扭力大、發熱少、壽命長。後方有散熱孔，使用時不要堵住。', fact: '長時間連續鑽會讓馬達過熱觸發保護（自動停轉）。聞到燒焦味要立刻停止、放在通風處 5–10 分鐘。' },
   grip: { name: '握把（Pistol Grip）', role: 'ERGONOMIC HANDLE', desc: '槍型把手，含防滑橡膠紋理。正確握法：主手握把、食指放扳機、虎口頂頭部。另一手托住電池底座或機身下方；有側把手（輔助手柄）就一定要用，手不要靠近夾頭—— 切勿單手操作。輔助手放哪裡各廠牌說法略有不同，使用前先看你手上這台的說明書（見本頁下方「延伸補充」）。', fact: '雙手握的姿勢能在鑽頭突然卡住時用身體吸收反作用力，避免手電鑽「翻轉甩飛」。' },
@@ -71,7 +71,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
     {
       id: 'hss', name: 'HSS 高速鋼', color: '#6b7280',
       material: '金屬 · 塑膠 · 木材（應急）',
-      rpm: '高速（≤ 2000 RPM）', tip: '118° 磨尖',
+      rpm: '依材料：鋼 300–700、鋁銅 600–1500 RPM（HSS 的「高速」是指鋼材耐高溫，不是要開全速）', tip: '118° 磨尖',
       desc: '最通用的鑽頭。尖端 118° 切削角，鑽鋼鐵、鋁、銅、塑膠都適合。鑽木材不如木工鑽頭精確，但能應急。刀刃呈螺旋排屑槽。',
       photo: { url: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a8/HSS_Twist_Drill_into_Aluminium_with_Lubricant.jpg/330px-HSS_Twist_Drill_into_Aluminium_with_Lubricant.jpg', caption: 'HSS 鑽頭正在鑽削鋁板（施加切削液）', page: 'https://commons.wikimedia.org/wiki/File:HSS_Twist_Drill_into_Aluminium_with_Lubricant.jpg', license: 'CC BY-SA 3.0 · Wikimedia Commons' },
       svg: `<rect x="10" y="42" width="140" height="16" rx="2" fill="#9ca3af"/>
@@ -449,7 +449,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
   };
   const MODE_NOTE = {
     drill:  '鑽孔模式（🔩）：連續旋轉，無衝擊。扭力環轉到鑽頭圖示 = 離合器鎖死，全力輸出。適合木材、金屬、塑膠。',
-    driver: '起子模式：旋轉鎖螺絲，到達設定扭力後「咔」一聲跳脫自動停止，防止螺絲頭擰爛。',
+    driver: '起子模式：旋轉鎖螺絲，到達設定扭力後離合器打滑、發出「咔咔」聲，鑽頭不再轉入（馬達仍在轉，要放開扳機），防止螺絲頭擰爛、鎖過頭。',
     hammer: '電鎚模式（⚡）：旋轉 + 高頻軸向衝擊，專為混凝土、磚牆設計。必須搭配碳化鎢磚石鑽頭，切勿用於磁磚（龜裂）。',
   };
   sec.querySelectorAll('[data-mode]').forEach(btn => {

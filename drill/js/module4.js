@@ -10,8 +10,8 @@ const MATERIALS = {
   wood: { name: '軟木', color: '#a16207', dust: '#92400e', vc: [10, 45], idealBit: 'wood', hardness: 1, dustType: 'curl' },
   hardwood: { name: '硬木', color: '#78350f', dust: '#451a03', vc: [8, 30], idealBit: 'wood', hardness: 2, dustType: 'curl' },
   plastic: { name: '塑膠', color: '#0891b2', dust: '#67e8f9', vc: [8, 25], idealBit: 'hss', hardness: 1.5, dustType: 'strip' },
-  aluminum: { name: '鋁', color: '#cbd5e1', dust: '#94a3b8', vc: [10, 40], idealBit: 'hss', hardness: 2.5, dustType: 'spiral' },
-  steel: { name: '不鏽鋼', color: '#475569', dust: '#94a3b8', vc: [4, 16], idealBit: 'hss', hardness: 4, dustType: 'spiral' },
+  aluminum: { name: '鋁', color: '#cbd5e1', dust: '#94a3b8', vc: [10, 40], idealBit: 'hss', hardness: 2.5, dustType: 'spiral', metal: true },
+  steel: { name: '不鏽鋼', color: '#475569', dust: '#94a3b8', vc: [4, 16], idealBit: 'hss', hardness: 4, dustType: 'spiral', metal: true },
 };
 const BIT_NAMES = { wood: '木工螺旋', hss: 'HSS 高速鋼', masonry: '磚石碳化鎢' };
 
@@ -50,7 +50,8 @@ function readParams() {
   // 適配性
   let match = 'OK';
   if (b !== m.idealBit) {
-    if (m.idealBit === 'hss' && b === 'wood') match = '✗ 木工鑽鑽金屬會崩刃';
+    if (m.metal && b === 'wood') match = '✗ 木工鑽鑽金屬會崩刃';
+    else if (b === 'wood') match = '⚠ 木工鑽鑽塑膠，孔緣容易崩裂，建議改用 HSS';  // 2026-10 審查：塑膠不是金屬，不該判成崩刃
     else if (m.idealBit === 'wood' && b === 'hss') match = '⚠ 可用但效率差';
     else if (b === 'masonry' && m.idealBit !== 'masonry') match = '✗ 磚石鑽不適合此材料';
     else match = '⚠ 不理想';
@@ -64,7 +65,7 @@ function readParams() {
   // 偏鑽：重進刀 + 大直徑為主；起鑽轉速太快鑽頭容易打滑，轉速越高風險越高
   const biasScore = (0.5 + 0.5 * rpm / 2000) * (feed / 5) * (dia / 13);
   const biasLabel = biasScore < 0.15 ? '低' : biasScore < 0.4 ? '中' : '高';
-  // 離合器：扭力環不在 ⊕ 時，段位低於這個材料與直徑所需的扭力就會跳脫
+  // 離合器：扭力環不在鑽孔模式 時，段位低於這個材料與直徑所需的扭力就會跳脫
   const clutchNeed = Math.min(20, Math.ceil(m.hardness * dia / 1.5));
   const clutchSlip = torque > 0 && torque < clutchNeed;
   return { m, b, dia, rpm, feed, torque, match, vc, cutLabel, heatScore, heatLabel, biasScore, biasLabel, clutchSlip };
@@ -75,7 +76,7 @@ function updateValueDisplays() {
   els.vRpm.textContent = els.rpm.value + ' RPM';
   els.vFeed.textContent = FEED_LABEL[parseInt(els.feed.value)];
   const t = parseInt(els.torque.value);
-  els.vTorque.textContent = t === 0 ? '鑽孔模式 ⊕' : `第 ${t} 段`;
+  els.vTorque.textContent = t === 0 ? '鑽孔模式（鑽頭圖示）' : `第 ${t} 段`;
 }
 
 function updateEstimates() {
@@ -267,7 +268,7 @@ function tickSim() {
   state.chips = state.chips.filter(c => { c.x += c.vx; c.y += c.vy; c.vy += 0.1; c.life--; return c.life > 0; });
   state.smoke = state.smoke.filter(s => { s.y += s.vy; s.r += 0.2; s.alpha -= 0.015; return s.alpha > 0; });
 
-  // 扭力環不在 ⊕ 且段位不夠：鑽頭咬入後離合器跳脫，無法繼續進刀
+  // 扭力環不在鑽孔模式 且段位不夠：鑽頭咬入後離合器跳脫，無法繼續進刀
   if (p.clutchSlip && state.holeDepth >= 15) {
     state.drilling = false;
     showResult();
@@ -290,7 +291,7 @@ function showResult() {
     msg = `❌ 失敗：${p.match}。鑽頭可能崩刃或無法切入。`;
   } else if (p.clutchSlip) {
     level = 'bad';
-    msg = `❌ 離合器跳脫：扭力環第 ${p.torque} 段扭力不夠，鑽頭停在孔裡。鑽孔請把扭力環轉到 ⊕（鑽孔模式）。`;
+    msg = `❌ 離合器跳脫：扭力環第 ${p.torque} 段扭力不夠，鑽頭停在孔裡。鑽孔請把扭力環轉到鑽頭圖示（鑽孔模式）。`;
   } else if (p.heatScore > 2 || p.biasScore > 0.5) {
     level = 'bad';
     const reasons = [];
@@ -300,7 +301,7 @@ function showResult() {
   } else if (p.heatScore > 1.2 || p.biasScore > 0.3 || p.match !== 'OK' || p.cutLabel !== '理想' || p.torque > 0) {
     level = 'warn';
     const issues = [];
-    if (p.torque > 0) issues.push('扭力環沒轉到 ⊕（鑽孔應鎖死離合器）');
+    if (p.torque > 0) issues.push('扭力環沒轉到鑽頭圖示（鑽孔模式離合器不跳脫）');
     if (p.heatScore > 1.2) issues.push('有點熱');
     if (p.biasScore > 0.3) issues.push('略偏');
     if (p.match !== 'OK') issues.push('鑽頭非最佳');

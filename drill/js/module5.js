@@ -34,9 +34,9 @@ const FAULTS = [
   },
   {
     name: '金屬毛邊（Burr）',
-    symptom: '鑽穿金屬後孔緣有翻起的毛刺，徒手摸會割傷。',
+    symptom: '鑽穿金屬後孔緣有翻起的毛邊，徒手摸會割傷。',
     cause: '高速鋼鑽頭推穿瞬間扯起金屬。鑽完通常都會有。',
-    fix: '1. 用 90° 倒角刀 countersink 或去毛刺刀（deburring tool）修整孔緣（首選）\n2. 沒有專用刀具時可用精細銼刀手動修角\n3. ⚠ 不建議用「大一號鑽頭代替倒角刀」——容易把孔徑擴大或產生新毛刺（業界僅在臨時情境用）\n4. 鑽鋁時加切削油從源頭減少毛邊',
+    fix: '1. 用 90° 倒角刀 countersink 或去毛邊刀（deburring tool）修整孔緣（首選）\n2. 沒有專用刀具時可用精細銼刀手動修角\n3. ⚠ 不建議用「大一號鑽頭代替倒角刀」——容易把孔徑擴大或產生新毛邊（業界僅在臨時情境用）\n4. 鑽鋁時加切削油從源頭減少毛邊',
     icon: '✂',
     color: '#94a3b8',
   },
@@ -57,10 +57,10 @@ const FAULTS = [
     color: '#0891b2',
   },
   {
-    name: '燒鑽頭（Bit Tempering）',
+    name: '燒鑽頭（Burnt Bit，過熱失去硬度）',
     symptom: '鑽頭尖端變藍黑色，鑽不下去也回不去。',
     cause: '鑽金屬時轉速太高、沒加切削油（cooling lubricant）、連續鑽不退屑。',
-    fix: '1. 鑽不鏽鋼：轉速降到 300–600 RPM\n2. 加切削油（machine cutting oil）或工程用機油\n3. 鑽 3–5mm 就退鑽散熱\n4. 燒過的鑽頭硬度永久下降，建議淘汰',
+    fix: '1. 鑽不鏽鋼：轉速降到 300–600 RPM\n2. 加金屬切削油（cutting oil）或切削膏\n3. 鑽 3–5mm 就退鑽散熱\n4. 燒過的鑽頭硬度永久下降，建議淘汰',
     icon: '🌡',
     color: '#dc2626',
   },
@@ -109,10 +109,10 @@ const QUIZ_CASES = [
     explain: '鑽穿瞬間底面碎裂 = 毛邊。要在工件下方墊「廢板」當犧牲層，或從正反兩面分別鑽到一半。',
   },
   {
-    visual: `<svg viewBox="0 0 120 100"><rect x="10" y="40" width="100" height="40" fill="#475569"/><ellipse cx="60" cy="60" rx="12" ry="4" fill="#000"/><rect x="50" y="44" width="20" height="6" fill="#1e3a8a"/><circle cx="60" cy="47" r="6" fill="#1e3a8a"/><text x="60" y="95" text-anchor="middle" font-size="8" fill="#444">D: 不鏽鋼鑽頭尖變藍黑色</text></svg>`,
+    visual: `<svg viewBox="0 0 120 100"><rect x="10" y="40" width="100" height="40" fill="#475569"/><ellipse cx="60" cy="60" rx="12" ry="4" fill="#000"/><rect x="50" y="44" width="20" height="6" fill="#1e3a8a"/><circle cx="60" cy="47" r="6" fill="#1e3a8a"/><text x="60" y="95" text-anchor="middle" font-size="8" fill="#444">D: 鑽不鏽鋼時，鑽頭尖變藍黑色</text></svg>`,
     options: ['過熱燒孔', '鑽頭斷裂', '燒鑽頭'],
     correct: 2,
-    explain: '鑽頭尖變藍黑色 = 燒鑽頭（tempering）。鑽不鏽鋼轉速要降到 300–600 RPM 並加切削油。燒過的鑽頭硬度永久下降，建議淘汰。',
+    explain: '鑽頭尖變藍黑色 = 燒鑽頭（過熱讓鑽頭過度回火、失去硬度）。鑽不鏽鋼轉速要降到 300–600 RPM 並加切削油。燒過的鑽頭硬度永久下降，建議淘汰。',
   },
   {
     visual: `<svg viewBox="0 0 120 100"><rect x="10" y="40" width="100" height="40" fill="#a16207"/><circle cx="60" cy="60" r="18" fill="#000"/><text x="60" y="60" text-anchor="middle" font-size="20">⛔</text><text x="60" y="92" text-anchor="middle" font-size="8" fill="#444">E: 鑽頭卡住、手電鑽身體被翻轉</text></svg>`,
