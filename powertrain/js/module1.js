@@ -23,7 +23,7 @@ POWERS.forEach(p => {
     <img src="../../models/powertrain/${p.iso}-iso.png" alt="${p.name}" style="width:64px;height:64px;object-fit:contain;background:#1E293B;border-radius:6px;flex-shrink:0" loading="lazy">
     <h4 style="margin:0;color:#9A3412">${p.name}</h4>
   </div>
-    <p style="font-size:12.5px;color:#EA580C;font-weight:700;background:#FFEDD5;padding:5px 10px;border-radius:5px;display:inline-block">效率 ${p.eff}%</p>
+    <p style="font-size:12.5px;color:#EA580C;font-weight:700;background:#FFEDD5;padding:5px 10px;border-radius:5px;display:inline-block">${p.id === 'hyd' ? '傳動效率（不是動力來源）' : '能量轉換效率'}約 ${p.eff}%</p>
     <p style="font-size:13px;color:#444;margin:8px 0">${p.desc}</p>
     <p style="font-size:12.5px;color:#16A34A"><strong>優：</strong>${p.pros}</p>
     <p style="font-size:12.5px;color:#dc2626"><strong>缺：</strong>${p.cons}</p>
