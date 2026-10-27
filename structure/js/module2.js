@@ -213,7 +213,8 @@ function checkUnlock() {
     'st-helmet': () => {
       const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
       g.setAttribute('id', 'sv-helmet');
-      g.innerHTML = `<g transform="translate(80,42)">
+      // 2026-10 審查：安全帽戴在頭頂（原本蓋住眼睛），護目鏡對齊眼睛（原本掛在胸口）
+      g.innerHTML = `<g transform="translate(80,14)">
         <ellipse cx="30" cy="14" rx="30" ry="18" fill="#f59e0b"/>
         <ellipse cx="30" cy="20" rx="30" ry="7" fill="#fbbf24"/>
         <rect x="6" y="22" width="48" height="5" rx="2" fill="#fbbf24"/>
@@ -224,7 +225,7 @@ function checkUnlock() {
     'st-goggles': () => {
       const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
       g.setAttribute('id', 'sv-goggles');
-      g.innerHTML = `<g transform="translate(84,90)">
+      g.innerHTML = `<g transform="translate(84,46)">
         <ellipse cx="14" cy="12" rx="12" ry="8" fill="#1a1a1a" opacity=".8"/>
         <ellipse cx="38" cy="12" rx="12" ry="8" fill="#1a1a1a" opacity=".8"/>
         <line x1="26" y1="12" x2="26" y2="12" stroke="#1a1a1a" stroke-width="3"/>
@@ -303,7 +304,9 @@ function checkUnlock() {
     } else if (correct) {
       if (typeof SoundFX !== 'undefined') SoundFX.warn();
       { const el = dragged; el.classList.add('wrong-shake'); setTimeout(() => el.classList.remove('wrong-shake'), 400); }
-      showFb(`位置不對，請拖到「${zone.dataset.label}」區域`, 'error');
+      // 2026-10 審查：原本提示的是放錯的那一格，改成這件護具真正對應的區域
+      const target = document.querySelector(`.svg-dropzone[data-accept="${id}"]`);
+      showFb(`位置不對，「${zone.dataset.label}」不是這件護具的位置${target ? `，請拖到「${target.dataset.label}」` : ''}`, 'error');
     } else {
       if (typeof SoundFX !== 'undefined') SoundFX.error();
       { const el = dragged; el.classList.add('wrong-shake'); setTimeout(() => el.classList.remove('wrong-shake'), 400); }

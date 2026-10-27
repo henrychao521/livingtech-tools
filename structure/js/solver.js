@@ -475,6 +475,22 @@ function drawTruss(ctx, W, H, truss, result, selectedMemberId) {
     });
   }
 
+  // 水平載重箭頭（2026-10 審查：颱風、地震情境有水平力 fx，原本只畫垂直箭頭）
+  if (truss.loads) {
+    truss.loads.forEach(ld => {
+      const nd = nodes.find(n => n.id === ld.nodeId);
+      if (!nd || !ld.fx || Math.abs(ld.fx) < 1) return;
+      const x0 = tx(nd.x), y0 = ty(nd.y) + 14, dir = Math.sign(ld.fx);
+      const xs = x0 - dir * 30, xe = x0 - dir * 4;
+      ctx.beginPath(); ctx.moveTo(xs, y0); ctx.lineTo(xe, y0);
+      ctx.strokeStyle = '#7c3aed'; ctx.lineWidth = 2.5; ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(xe + dir * 2, y0); ctx.lineTo(xe - dir * 8, y0 - 5); ctx.lineTo(xe - dir * 8, y0 + 5);
+      ctx.fillStyle = '#7c3aed'; ctx.fill();
+      ctx.font = 'bold 9px Inter,sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText(`${Math.abs(ld.fx / 1000).toFixed(1)} kN`, xs, y0 + 13);
+    });
+  }
+
   // 載重箭頭
   if (truss.loads) {
     truss.loads.forEach(ld => {

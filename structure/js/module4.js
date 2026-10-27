@@ -175,7 +175,7 @@ function solveScenario() {
 
   let verdictHtml = '';
   if (stars === 0) {
-    verdictHtml = `<div class="feedback error">❌ SF=${isFinite(minSF)?minSF.toFixed(2):'∞'} < ${sfThreshold}，未通過。嘗試換鋼材或增大桁高。</div>`;
+    verdictHtml = `<div class="feedback error">❌ SF=${isFinite(minSF)?minSF.toFixed(2):'∞'} < ${sfThreshold}，未通過。嘗試換用強度較高的材料（例如鋼材）。</div>`;
   } else if (stars === 1) {
     verdictHtml = `<div class="feedback success">⭐ 通過！SF=${minSF.toFixed(2)} ≥ ${sfThreshold}。</div>`;
   } else if (stars === 2) {

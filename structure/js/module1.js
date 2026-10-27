@@ -13,7 +13,7 @@ const HOTSPOTS = {
     name: '上弦桿（Top Chord）',
     role: 'COMPRESSION MEMBER',
     desc: '桁架橋最上方的水平桿件，承受垂直荷重後<strong>受壓</strong>——就像拱的「壓力線」在這裡。上弦桿必須夠粗壯才不會「挫曲」（橫向彎折）。',
-    formula: gradeText({ '7': '', '8': 'F = -P（壓力，負號代表受壓）', '9': 'σ = F/A，臨界挫曲力 Pcr = π²EI/L²' }),
+    formula: gradeText({ '7': '', '8': 'F < 0 代表壓力（負號表示受壓；實際大小要看荷重、跨度與桁高）', '9': 'σ = F/A，臨界挫曲力 Pcr = π²EI/L²' }),
     color: '#2563eb', tag: '受壓',
     fact: '上弦桿太細或太長時，會突然側向彎折——這就是「挫曲」（Buckling），是壓桿最怕的失效模式。'
   },
@@ -21,7 +21,7 @@ const HOTSPOTS = {
     name: '下弦桿（Bottom Chord）',
     role: 'TENSION MEMBER',
     desc: '桁架橋最下方的水平桿件，垂直荷重讓它<strong>受拉</strong>伸長。鋼和繩索最擅長受拉，木材和混凝土則不擅長承受張力。',
-    formula: gradeText({ '7': '', '8': 'F = +P（張力，正號代表受拉）', '9': 'σ = F/A ≤ σ_allow' }),
+    formula: gradeText({ '7': '', '8': 'F > 0 代表張力（正號表示受拉；實際大小要看荷重、跨度與桁高）', '9': 'σ = F/A ≤ σ_allow' }),
     color: '#dc2626', tag: '受拉',
     fact: '下弦桿受張力，不會挫曲。但受拉桿件也要注意銷孔、螺栓孔的應力集中——銀橋（Silver Bridge）就是懸吊鏈眼桿的銷孔處裂開而倒塌。'
   },
@@ -46,8 +46,8 @@ const HOTSPOTS = {
     role: 'PINNED BOUNDARY',
     desc: '可以旋轉但不能移動的支承，同時提供<strong>水平</strong>與<strong>垂直</strong>反力。橋的一端通常設鉸支承，固定住橋的位置。',
     formula: gradeText({ '7': '', '8': '可提供水平與垂直反力（只有垂直荷重時 Rx=0）', '9': 'ΣFx：Rx=0；ΣFy：Ry鉸 + Ry滾 = P' }),
-    color: '#0f766e', tag: '固定端',
-    fact: '橋用鉸支承的原因：讓橋可以對溫度膨脹做出「旋轉」反應，不把熱漲力硬傳到墩台，避免開裂。'
+    color: '#0f766e', tag: '鉸接端',
+    fact: '橋用鉸支承的原因：讓梁端在載重下彎曲時能自由轉一點角度，不把彎矩硬傳到墩台；溫度造成的水平伸縮則交給另一端的滾支承吸收。'
   },
   'roller-support': {
     name: '滾支承（Roller Support）',
@@ -55,7 +55,7 @@ const HOTSPOTS = {
     desc: '只提供<strong>垂直</strong>反力，水平方向自由滑動。橋的另一端通常設滾支承，允許橋在溫度變化時自由伸縮。',
     formula: gradeText({ '7': '', '8': 'Rx=0，Ry = P·a/L（a＝荷重到鉸支承的距離）', '9': 'ΣM_pin = 0 → Ry = P·a/L' }),
     color: '#0d9488', tag: '滑動端',
-    fact: '如果把橋兩端都固定（雙鉸），夏天熱漲的力可以輕易讓橋墩崩潰。台灣多橋就是一端鉸、一端滾。'
+    fact: '如果兩端都用鉸支承，橋面熱脹冷縮時沒有地方伸縮，會對橋墩產生很大的水平推力。所以常見做法是一端鉸、一端滾。'
   },
   'joint': {
     name: '節點（Joint / Node）',
@@ -96,7 +96,7 @@ const BRIDGE_TYPES = [
               <line x1="10" y1="70" x2="190" y2="70" stroke="#0284c7" stroke-width="2" stroke-dasharray="5 4" opacity=".5"/>
               <rect x="2" y="70" width="16" height="14" fill="#7dd3fc"/>
               <rect x="182" y="70" width="16" height="14" fill="#7dd3fc"/>
-              <text x="100" y="82" text-anchor="middle" font-size="9" fill="#0284c7" font-family="Inter" font-weight="700">全桿受壓</text>`,
+              <text x="100" y="82" text-anchor="middle" font-size="9" fill="#0284c7" font-family="Inter" font-weight="700">拱圈受壓</text>`,
     example: '關渡大橋（鋼拱橋，跨淡水河）・國姓糯米橋（日治時期石拱橋，南投縣定古蹟）',
     range: '跨度 20–500m',
   },
@@ -111,7 +111,7 @@ const BRIDGE_TYPES = [
               <line x1="100" y1="20" x2="170" y2="65" stroke="#f59e0b" stroke-width="2"/>
               <line x1="10" y1="65" x2="190" y2="65" stroke="#92400e" stroke-width="5" stroke-linecap="round"/>
               <text x="100" y="82" text-anchor="middle" font-size="9" fill="#f59e0b" font-family="Inter" font-weight="700">索拉・塔壓</text>`,
-    example: '淡江大橋（2026 年通車，主跨 450 m，世界最長單塔不對稱斜張橋）・高屏溪斜張橋（國道 3 號）・高雄大港橋（斜張式旋轉橋）・楊梅交流道',
+    example: '淡江大橋（2026 年通車，主跨 450 m，世界最長單塔不對稱斜張橋）・高屏溪斜張橋（國道 3 號）・高雄大港橋（斜張式旋轉橋）',
     range: '跨度 100–1000m',
   },
   {
