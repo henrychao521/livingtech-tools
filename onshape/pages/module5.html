@@ -17,7 +17,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/style.css">
 <link rel="stylesheet" href="../../css/svg-effects.css">
-<link rel="stylesheet" href="../css/onshape.css">
+<link rel="stylesheet" href="../css/onshape.css?v=2">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📐%3C/text%3E%3C/svg%3E">
 </head>
 <body data-tool="onshape" class="onshape-theme">
@@ -43,13 +43,15 @@
 
   <section class="panel">
     <h3>① 8 種常見草圖 / 特徵錯誤</h3>
-    <p class="muted" style="margin-bottom:14px">每張卡上方是「錯誤示意」，下方是「為什麼會這樣」與「如何修正」。</p>
-    <div class="os-err-grid" id="err-gallery"></div>
+    <p class="muted" style="margin-bottom:10px">每張卡上面是「錯誤」、下面是「修正後」的草圖。圖依 ISO 128（線型）與 ISO 129-1（尺寸標註）繪製，線的顏色照 Onshape 的規則：藍＝未完全定義、黑＝完全定義、紅＝過度定義。</p>
+    <details class="os-legend"><summary>看圖例（線型、顏色、限制條件符號）</summary><div id="sk-legend"></div>
+      <p class="muted" style="font-size:12px;margin:6px 0 0">Onshape 畫面上的限制條件是小圖示（灰底黑符號＝正常、紅底白符號＝有問題），本頁用簡化符號表示；構造線在 Onshape 畫面上是淡色虛線，本頁照製圖慣例用細鏈線畫。顏色規則見 <a href="https://cad.onshape.com/help/Content/Sketch/troubleshooting_sketch_geometry.htm" target="_blank" rel="noopener">Onshape 官方說明：Troubleshooting Sketch Geometry</a>（英文）。</p></details>
+    <div class="os-err-grid paired" id="err-gallery"></div>
   </section>
 
   <section class="panel">
     <h3>② 錯誤判讀挑戰</h3>
-    <p class="muted" style="margin-bottom:14px">看圖選錯誤類型。每題 12.5 分，共 8 題。</p>
+    <p class="muted" style="margin-bottom:14px">每題給一張有問題的草圖，選出是哪一種錯誤。每題 12.5 分，共 8 題。</p>
     <div id="err-quiz"></div>
     <div id="err-result"></div>
   </section>
@@ -57,23 +59,19 @@
   <section class="panel">
     <h3>③ 進階：可動物件與機構運動（L8）</h3>
     <p class="muted" style="margin-bottom:14px">珩宇老師示範用 Onshape 的 Assembly 做出凸輪機構玩具，零件之間定義 mate（連接關係）後就能模擬運動。</p>
-    <div class="os-video-wrap">
-      <iframe src="https://www.youtube.com/embed/0nGZzAY8GGU?list=PLugQzHmEY4QhEzPd3mJyjrZTBnaDravVj"
-        title="L8 可動物件 Onshape 組合操作（凸輪機構）"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen></iframe>
-    </div>
+    <a class="os-yt-card" href="https://www.youtube.com/watch?v=0nGZzAY8GGU&amp;list=PLugQzHmEY4QhEzPd3mJyjrZTBnaDravVj" target="_blank" rel="noopener">
+      <span class="os-yt-play" aria-hidden="true">▶</span>
+      <span class="os-yt-text"><b>L8 可動物件 Onshape 組合操作（凸輪機構）</b><small>珩宇老師的 YouTube 影片・點按用瀏覽器觀看（需連網）</small></span>
+    </a>
   </section>
 
   <section class="panel">
     <h3>④ 進階：結構受力模擬 CAE（L9）</h3>
     <p class="muted" style="margin-bottom:14px">Onshape 整合 CAEplex 可以做有限元素分析（FEA）— 看看你的設計在受力下會不會斷掉。</p>
-    <div class="os-video-wrap">
-      <iframe src="https://www.youtube.com/embed/uoWaeMUNcGc?list=PLugQzHmEY4QhEzPd3mJyjrZTBnaDravVj"
-        title="L9 Onshape 結構受力模擬"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen></iframe>
-    </div>
+    <a class="os-yt-card" href="https://www.youtube.com/watch?v=uoWaeMUNcGc&amp;list=PLugQzHmEY4QhEzPd3mJyjrZTBnaDravVj" target="_blank" rel="noopener">
+      <span class="os-yt-play" aria-hidden="true">▶</span>
+      <span class="os-yt-text"><b>L9 Onshape 結構受力模擬</b><small>珩宇老師的 YouTube 影片・點按用瀏覽器觀看（需連網）</small></span>
+    </a>
   </section>
 
   <section class="panel">
@@ -95,6 +93,7 @@
 
 <script src="../../js/main.js"></script><script src="../../js/sheet-config.js?v=1"></script><script src="../../js/sheet-log.js?v=1"></script><script src="../../js/sources.js?v=2"></script>
 <script src="../../js/audio.js"></script>
-<script src="../js/module5.js?v=2"></script>
+<script src="../js/module5-sketches.js?v=1"></script>
+<script src="../js/module5.js?v=3"></script>
 </body>
 </html>

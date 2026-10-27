@@ -180,3 +180,32 @@
 .term-aside dd { margin: 0 0 4px; color: var(--text-soft); }
 .term-aside a { color: var(--primary-dark); text-decoration: underline; }
 .tag-ext { display: inline-block; font-size: 11px; font-weight: 600; padding: 1px 8px; margin-left: 6px; border-radius: 999px; background: #eceff3; color: #4b5563; vertical-align: middle; }
+
+/* ── 2026-10 App 回饋修正：模組 5 草圖對照、模組 3 步驟輪播、YouTube 連結卡（取代嵌入影片） ── */
+.os-err-pair { display: grid; grid-template-columns: 1fr; gap: 6px; padding: 8px; background: #f8fafc; }
+.os-err-panel { margin: 0; background: #fff; border-radius: 10px; border: 1px solid var(--border); padding: 4px; }
+.os-err-panel.bad { border-color: #fecaca; } .os-err-panel.good { border-color: #bbf7d0; }
+.os-err-panel figcaption { font-size: 12px; font-weight: 700; padding: 2px 6px; }
+.os-err-panel.bad figcaption { color: #b91c1c; } .os-err-panel.good figcaption { color: #15803d; }
+.os-err-panel svg, .os-quiz-fig svg, #sk-legend svg { width: 100%; height: auto; display: block; }
+.os-quiz-fig { max-width: 420px; margin: 0 0 10px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.os-legend { margin: 0 0 14px; font-size: 13.5px; } .os-legend > summary { cursor: pointer; font-weight: 700; color: var(--primary-dark); }
+#sk-legend { max-width: 420px; margin-top: 8px; }
+.os-yt-card { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 12px; background: #1f2937; color: #fff; text-decoration: none; max-width: 720px; }
+.os-yt-card:hover { background: #111827; }
+.os-yt-play { flex: 0 0 48px; height: 48px; border-radius: 50%; background: #dc2626; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+.os-yt-text { display: flex; flex-direction: column; gap: 2px; } .os-yt-text small { opacity: .8; font-size: 12.5px; }
+.os-steps { max-width: 720px; margin: 0 auto; }
+.os-steps-stage { position: relative; background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.os-steps-stage svg { width: 100%; height: auto; display: block; }
+.os-steps-cap { margin: 10px 2px 0; font-size: 14px; line-height: 1.7; }
+.os-steps-cap b { color: var(--primary-dark); }
+.os-steps-nav { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 10px; }
+.os-steps-nav button { min-height: 40px; padding: 0 16px; border-radius: 10px; border: 1px solid var(--border); background: #fff; font-weight: 700; cursor: pointer; }
+.os-steps-dots { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+.os-steps-dots button { width: 28px; min-height: 28px; padding: 0; border-radius: 50%; font-size: 12px; }
+.os-steps-dots button.on { background: var(--primary); color: #fff; border-color: var(--primary); }
+.os-err-grid.paired { grid-template-columns: 1fr; }
+@media (min-width: 900px) { .os-err-grid.paired { grid-template-columns: repeat(2, 1fr); } }
+.os-step .os-step-shot { margin: 16px 0 8px; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: #fff; }
+.os-step .os-step-shot svg { width: 100%; max-width: none; height: auto; margin: 0; }
