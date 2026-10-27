@@ -210,3 +210,42 @@
   font-size: 12px; font-weight: 700; color: #B83333;
   white-space: nowrap; pointer-events: none;
 }
+
+/* 模組 3：剖面動畫圖說與出處 */
+.m3-anim-cap { font-size: 12px !important; color: #64748b !important; margin: -16px 0 12px !important; text-align: center; }
+.m3-src { margin-top: 10px; font-size: 12px; color: #64748b; }
+.m3-src summary { cursor: pointer; font-weight: 700; }
+.m3-src ul { padding-left: 18px; margin: 6px 0 0; line-height: 1.6; }
+.step-detail sup { font-size: 10px; color: #2563eb; }
+
+/* 模組 1：部位互動區在手機直式時縮掉上下留白，讓圖＋說明在一屏內（2026-10 使用者回饋） */
+.solder-theme .parts-layout .saw-stage { min-height: 0; padding: 12px; }
+.solder-theme .parts-layout .parts-info { min-height: 0; }
+.solder-theme .parts-info .part-photo { display: flex; gap: 12px; align-items: center; margin-top: 12px; background: #f8fafc; border-radius: 10px; padding: 8px; }
+.solder-theme .parts-info .part-photo img { width: 96px; height: 96px; object-fit: contain; background: #fff; border-radius: 8px; flex-shrink: 0; }
+.solder-theme .parts-info .part-photo span { font-size: 12px; color: #64748b; line-height: 1.5; }
+@media (max-width: 900px) {
+  .solder-theme .parts-layout { gap: 10px; }
+  .solder-theme .parts-layout .saw-stage { padding: 6px; border-radius: 12px; }
+  .solder-theme .parts-layout .parts-info { padding: 14px 16px; }
+  .solder-theme .parts-info h3 { font-size: 18px; margin-bottom: 2px; }
+  .solder-theme .parts-info .role { margin-bottom: 6px; }
+  .solder-theme .parts-info .desc { font-size: 14px; line-height: 1.6; }
+  .solder-theme .parts-info .empty { padding: 8px; }
+  .solder-theme .parts-info .empty .empty-icon { font-size: 28px; margin-bottom: 4px; }
+  .solder-theme .parts-checklist { margin-top: 10px; gap: 6px; }
+}
+/* 模組 1：烙鐵頭外形圖與工具照片一律完整顯示、不裁切 */
+.solder-theme .tip-figure { width: 100%; max-width: 360px; background: #1e293b; border-radius: 10px; display: block; }
+.solder-theme .tool-photo { width: 100%; height: 120px; object-fit: contain; background: #fff; border-radius: 8px; margin-bottom: 8px; display: block; }
+
+/* 模組 2：工作台場景、依據、錯誤示範照片 */
+@media (max-width: 900px) { .solder-theme #scene { min-height: 0; padding: 8px; } }
+.m2-basis { margin-top: 14px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px 14px; font-size: 13px; color: #334155; line-height: 1.7; }
+.m2-basis summary { cursor: pointer; font-weight: 700; color: #0f172a; }
+.m2-basis ul { padding-left: 18px; margin: 8px 0 4px; }
+.m2-basis li { margin-bottom: 6px; }
+.m2-basis-note { font-size: 12px; color: #64748b; margin: 4px 0 0; }
+.m2-bad-photo { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 12px; background: #fef2f2; border-radius: 10px; padding: 10px; font-size: 13px; color: #7f1d1d; line-height: 1.6; }
+.m2-bad-photo img { width: 160px; max-width: 100%; height: 120px; object-fit: contain; background: #fff; border-radius: 8px; }
+.m2-bad-photo span { font-size: 12px; color: #64748b; }

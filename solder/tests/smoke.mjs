@@ -23,6 +23,7 @@ w.HTMLCanvasElement.prototype.getContext = function () {
 };
 w.__canvasCalls = calls;
 w.matchMedia = () => ({ matches: false, addListener() {}, removeListener() {}, addEventListener() {}, removeEventListener() {} });
+w.HTMLElement.prototype.scrollIntoView = function () {}; w.Element.prototype.scrollIntoView = function () {};
 w.showToast = () => {}; w.SoundFX = new Proxy({}, { get: () => () => {} });
 w.onerror = (m) => { errors.push('onerror: ' + m); };
 const ctx = dom.getInternalVMContext();

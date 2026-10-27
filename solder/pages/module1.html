@@ -17,7 +17,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/style.css">
 <link rel="stylesheet" href="../../css/svg-effects.css">
-<link rel="stylesheet" href="../css/solder.css">
+<link rel="stylesheet" href="../css/solder.css?v=4">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🔥%3C/text%3E%3C/svg%3E">
 </head>
 <body data-tool="solder" class="solder-theme">
@@ -37,14 +37,14 @@
     <div>
       <span class="module-step">MODULE 01</span>
       <h2>認識電烙鐵與焊接耗材</h2>
-      <p class="muted">點擊圖中的橘色標記，認識每個部位與耗材的功能。</p>
+      <p class="muted">點圖中的橘色數字（或下方名稱），認識每個部位與耗材。</p>
     </div>
     <div class="muted" id="progress-text">已認識 0 / 8 個項目</div>
   </div>
 
   <div class="parts-layout">
     <div class="saw-stage">
-      <svg viewBox="0 0 600 540" class="saw-svg svg-shadow-soft" id="iron-svg">
+      <svg viewBox="0 128 600 352" class="saw-svg svg-shadow-soft" id="iron-svg">
         <defs>
           <linearGradient id="m1-handle" x1="0" x2="1" y1="0" y2="0">
             <stop offset="0" stop-color="#1d4ed8"/>
@@ -207,60 +207,6 @@
 
   <div class="parts-checklist" id="parts-checklist"></div>
 
-  <section class="panel" style="margin-top:32px">
-    <h3>📷 實物照片對照</h3>
-    <p class="muted" style="margin-bottom:14px">以下 6 張照片來自 <a href="https://livingtech.education" target="_blank" rel="noopener" style="color:var(--accent)">珩宇老師生活科技教學網</a>，搭配本模組的部位介紹一起看，建立 SVG 圖示與真實工具的對應。</p>
-    <div class="error-grid" id="real-photos">
-      <div class="error-card">
-        <div class="err-visual" style="background:#fff;height:160px;padding:8px"><img src="../assets/livingtech-photos/iron.jpg" alt="電烙鐵" style="max-height:100%;max-width:100%;object-fit:contain"></div>
-        <span class="err-tag" style="background:var(--success-light);color:var(--success)">PX-232</span>
-        <h4>電烙鐵實物</h4>
-        <p>標準型號的電烙鐵。可看到握柄、發熱段、烙鐵頭三個主要部分。</p>
-      </div>
-      <div class="error-card">
-        <div class="err-visual" style="background:#fff;height:160px;padding:8px"><img src="../assets/livingtech-photos/iron-stand.jpeg" alt="烙鐵架" style="max-height:100%;max-width:100%;object-fit:contain"></div>
-        <span class="err-tag" style="background:var(--success-light);color:var(--success)">必備</span>
-        <h4>烙鐵架</h4>
-        <p>金屬底座 + 螺旋彈簧。烙鐵離手必須立刻放架上，不可直接放桌面。</p>
-      </div>
-      <div class="error-card">
-        <div class="err-visual" style="background:#fff;height:160px;padding:8px"><img src="../assets/livingtech-photos/sponge.png" alt="海綿" style="max-height:100%;max-width:100%;object-fit:contain"></div>
-        <span class="err-tag" style="background:var(--success-light);color:var(--success)">耗材</span>
-        <h4>清潔海綿</h4>
-        <p>使用前要先沾水擰乾。焊接過程中烙鐵頭要定期在海綿上擦乾淨。</p>
-      </div>
-      <div class="error-card">
-        <div class="err-visual" style="background:#fff;height:160px;padding:8px"><img src="../assets/livingtech-photos/solder-wire.jpg" alt="焊錫絲" style="max-height:100%;max-width:100%;object-fit:contain"></div>
-        <span class="err-tag" style="background:var(--success-light);color:var(--success)">耗材</span>
-        <h4>焊錫絲</h4>
-        <p>中空管狀，內含助焊劑。常用 0.8mm 含鉛錫（Sn63Pb37）。</p>
-      </div>
-      <div class="error-card">
-        <div class="err-visual" style="background:#fff;height:160px;padding:8px"><img src="../assets/livingtech-photos/desolder.jpg" alt="吸錫器" style="max-height:100%;max-width:100%;object-fit:contain"></div>
-        <span class="err-tag" style="background:var(--accent-light);color:var(--accent)">進階工具</span>
-        <h4>吸錫器</h4>
-        <p>用於去除焊接錯誤的焊錫。先加熱熔化錫 → 按下吸錫器吸走多餘錫。</p>
-      </div>
-      <div class="error-card">
-        <div class="err-visual" style="background:#fff;height:160px;padding:8px"><img src="../assets/livingtech-photos/bad-environment.jpg" alt="錯誤示範" style="max-height:100%;max-width:100%;object-fit:contain"></div>
-        <span class="err-tag" style="background:var(--danger-light);color:var(--danger)">⚠ 錯誤示範</span>
-        <h4>不當的工作環境</h4>
-        <p>桌面雜亂、有易燃物、烙鐵亂放。這種環境下發生意外的機率極高。</p>
-      </div>
-    </div>
-    <p class="muted" style="font-size:12px;margin-top:14px;text-align:center">圖片來源：<a href="https://livingtech.education/2017/03/30/%e5%9f%ba%e6%9c%ac%e9%9b%bb%e5%ad%90%e9%8a%b2%e6%8e%a5%ef%bc%88%e7%b7%a8%e8%bc%af%e4%b8%ad%ef%bc%89/" target="_blank" rel="noopener" style="color:var(--accent)">珩宇老師「基本電子銲接」</a></p>
-  </section>  <section class="panel">
-    <h3>🖥️ 3D 模型檢視</h3>
-    <p class="muted" style="margin-bottom:14px">OpenSCAD 繪製的電烙鐵結構模型，展示握把、加熱芯、陶瓷加熱套筒與刀形烙鐵頭。</p>
-    <div style="display:flex;align-items:center;justify-content:center;background:#1E293B;border-radius:12px;padding:24px;border:1px solid var(--border)">
-      <img src="../../models/solder/iron-iso.png" alt="電烙鐵 3D 模型" style="max-width:320px;width:100%;image-rendering:crisp-edges">
-    </div>
-    <p style="font-size:11px;color:var(--text-muted);margin-top:10px;text-align:center">
-      🖥️ 模型由 OpenSCAD 參數化建模繪製
-    </p>
-  </section>
-
-
 
   <div class="module-nav-bottom">
     <a href="../index.html" class="btn btn-ghost">← 回首頁</a>
@@ -270,6 +216,7 @@
 
 <script src="../../js/main.js"></script><script src="../../js/sheet-config.js?v=1"></script><script src="../../js/sheet-log.js?v=1"></script><script src="../../js/sources.js?v=2"></script>
 <script src="../../js/audio.js"></script>
-<script src="../js/module1.js?v=2"></script>
+<script src="../js/tip-shapes.js?v=1"></script>
+<script src="../js/module1.js?v=3"></script>
 </body>
 </html>
