@@ -24,7 +24,7 @@
   <div class="module-header"><div><span class="module-step">MODULE 01</span><h2>認識結構三元素 + 五種內力</h2><p class="muted">點擊圖中藍色標記，認識結構的基本語彙。</p></div><div class="muted" id="progress-text">已認識 0 / 8 項</div></div>
   <!-- OPENSCAD-3D --><section class="panel" style="background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:16px;margin-bottom:18px">
     <h3 style="margin:0 0 6px">🏛️ 結構形式立體(可旋轉) <span style="font-size:12px;font-weight:500;color:#64748b;margin-left:6px">點名稱切換 · 拖曳旋轉</span></h3>
-    <p class="muted" style="margin-bottom:12px">六種常見結構形式的立體示意,旋轉觀察桿件如何組成。模型由 OpenSCAD 參數化建模(原始檔開源,可改尺寸/3D 列印)。</p>
+    <p class="muted" style="margin-bottom:12px">六種常見結構形式的立體示意,旋轉觀察桿件如何組成。模型由本站以 OpenSCAD 參數化建模（本站自製，原始檔開源，可改尺寸、3D 列印）。</p>
     <div id="st3d-tabs" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px">
       <button type="button" class="st3d-btn" data-src="truss.glb?v=2">桁架</button>
       <button type="button" class="st3d-btn" data-src="arch.glb?v=2">拱</button>
@@ -64,6 +64,9 @@
         <g filter="url(#m1structShadow)">
           <line x1="120" y1="200" x2="560" y2="200" stroke="#1E3A8A" stroke-width="6"/>
           <line x1="120" y1="380" x2="560" y2="380" stroke="#1E3A8A" stroke-width="6"/>
+          <!-- 2026-10 審查：補兩端豎桿，支承節點才有桿件傳遞垂直反力（原本端部未閉合、是不穩定機構） -->
+          <line x1="120" y1="200" x2="120" y2="380" stroke="#1D4ED8" stroke-width="4"/>
+          <line x1="560" y1="200" x2="560" y2="380" stroke="#1D4ED8" stroke-width="4"/>
           <line x1="220" y1="200" x2="220" y2="380" stroke="#1D4ED8" stroke-width="4"/>
           <line x1="340" y1="200" x2="340" y2="380" stroke="#1D4ED8" stroke-width="4"/>
           <line x1="460" y1="200" x2="460" y2="380" stroke="#1D4ED8" stroke-width="4"/>
@@ -77,8 +80,8 @@
 
         <!-- 支承 -->
         <g fill="#1E3A8A">
-          <polygon points="108,380 132,380 120,395"/>
-          <polygon points="548,380 572,380 560,395"/>
+          <polygon points="120,388 106,404 134,404"/>
+          <polygon points="560,388 546,404 574,404"/>
         </g>
 
         <!-- 載重箭頭 -->

@@ -194,7 +194,8 @@ function draw() {
     if (loaded && forces[i]) {
       const f = forces[i].force;
       strokeW = 2 + Math.min(6, Math.abs(f) / 50);
-      stroke = f < 0 ? '#dc2626' : '#1E40AF'; // 負=張力（紅）正=壓力（藍）
+      // 2026-10 審查：零桿（軸力≈0）維持灰色，與圖例「灰色＝未受力」一致；原本 0 會落到藍色（壓力）
+      stroke = Math.abs(f) < 0.01 ? '#9ca3af' : f < 0 ? '#dc2626' : '#1E40AF'; // 負=張力（紅）正=壓力（藍）
     }
     ctx.strokeStyle = stroke;
     ctx.lineWidth = strokeW;
@@ -321,6 +322,8 @@ els.reset.addEventListener('click', () => {
   animProgress = 0;
   els.verdict.className = 'verdict warn';
   els.verdict.textContent = '點「施加荷重」看結果';
+  // 2026-10 審查：重置時一併清空數值面板，不留上一次的結果
+  els.eTens.textContent = els.eComp.textContent = els.eReact.textContent = els.eDefl.textContent = '—';
 });
 
 updateVals();
