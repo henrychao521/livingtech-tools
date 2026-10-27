@@ -12,29 +12,64 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/svg-effects.css"><link rel="stylesheet" href="../css/hydraulic-arm.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💪%3C/text%3E%3C/svg%3E">
-<style>.controls{background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px}.slider-row{margin-bottom:14px}.slider-row label{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px}.slider-row .v{font-family:var(--font-mono);font-weight:700;color:#075985}.slider-row input{width:100%}</style>
+<style>.controls{background:#fff;border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:12px}
+.ax-row{background:#f8fafc;border-radius:10px;padding:8px 10px;margin-bottom:10px}
+.ax-head{display:flex;justify-content:space-between;gap:8px;font-size:14px;align-items:baseline}
+.ax-head .v{font-family:var(--font-mono);font-weight:700;color:#075985;white-space:nowrap}
+.ax-pair{width:100%;height:auto;display:block;margin:4px 0}
+.ax-slider{display:flex;align-items:center;gap:8px;font-size:13px;color:#475569;font-weight:700}
+.ax-slider input{flex:1;min-height:32px}
+.ax-note{font-size:12.5px;color:#475569;margin-top:2px}.ax-note.warn{color:#b45309;font-weight:700}
+.opt-row{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;font-size:13.5px;margin-bottom:10px}
+.opt-row select{font-size:14px;padding:4px 6px}
+#spec-note{font-size:12.5px;color:#0c4a6e;background:#e0f2fe;border-radius:8px;padding:6px 10px;margin-bottom:10px}
+.audit{width:100%;border-collapse:collapse;font-size:13px}.audit th,.audit td{border:1px solid var(--border);padding:6px 8px;vertical-align:top;text-align:left}.audit th{background:#f1f5f9}
+.tbl-scroll{overflow-x:auto}</style>
 </head><body data-tool="hydraulic-arm" class="ha-theme">
 <header class="topbar"><div class="brand"><span class="logo">💪</span><div><h1>液壓手臂</h1><p class="subtitle">生活科技互動教學平台</p></div></div><a href="../index.html" class="module-back">← 回首頁</a></header>
 <main class="module-page">
-  <div class="module-header"><div><span class="module-step" style="background:var(--success-light);color:#1b6e3a">MODULE 04 ・ 核心</span><h2>4 軸液壓手臂模擬器</h2><p class="muted">用 4 個滑桿控制手臂——把瓶子從 A 點搬到 B 點。</p></div></div>
+  <div class="module-header"><div><span class="module-step" style="background:var(--success-light);color:#1b6e3a">MODULE 04 ・ 核心</span><h2>4 軸液壓手臂模擬器</h2><p class="muted">每一軸是一對針筒：推拉控制台上的「主動針筒」，水經過水管推動手臂上的「從動針筒」。把瓶子從右前方搬到左前方的目標區。</p></div></div>
   <div class="practice-layout">
     <div class="ha-canvas-wrap">
-      <canvas id="ha-canvas" width="760" height="500"></canvas>
+      <canvas id="ha-canvas" width="720" height="520" aria-label="液壓手臂側視與俯視模擬圖"></canvas>
+      <p style="color:#94a3b8;font-size:12.5px;margin:8px 2px 0">彩色的筒＝手臂上的從動針筒（藍色是水），顏色對應右邊的第 1～4 對。側視圖只看得到手臂所在的直立平面；基座轉向看右上角的俯視圖。</p>
     </div>
     <div class="sim-side">
       <div class="controls">
-        <h4 style="font-size:13px;color:var(--text-muted);text-transform:uppercase;margin-bottom:10px">液壓控制台</h4>
-        <div class="slider-row"><label>🔄 軸 1 基座旋轉（側視圖以左右位移示意） <span class="v" id="v1">0°</span></label><input type="range" id="s1" min="-90" max="90" value="0"></div>
-        <div class="slider-row"><label>⬆ 軸 2 大臂上下 <span class="v" id="v2">45°</span></label><input type="range" id="s2" min="-20" max="80" value="45"></div>
-        <div class="slider-row"><label>↗ 軸 3 小臂彎曲 <span class="v" id="v3">90°</span></label><input type="range" id="s3" min="-30" max="120" value="90"></div>
-        <div class="slider-row"><label>🦞 軸 4 夾爪開合 <span class="v" id="v4">30 mm</span></label><input type="range" id="s4" min="0" max="60" value="30"></div>
-        <button id="btn-reset" class="btn btn-ghost" style="width:100%">↺ 重置</button>
-        <div id="verdict" class="verdict good" style="margin-top:10px">🎯 試著把瓶子搬到綠色目標</div>
+        <h4 style="font-size:13px;color:var(--text-muted);margin-bottom:8px">液壓控制台（推＝主動針筒推進去）</h4>
+        <div class="opt-row">
+          <label>主動針筒 <select id="sel-master"><option value="5">5 ml</option><option value="10" selected>10 ml（和從動一樣）</option><option value="20">20 ml</option></select></label>
+          <label><input type="checkbox" id="chk-air"> 管內沒排乾淨（有空氣）</label>
+        </div>
+        <div id="spec-note"></div>
+        <div id="axis-controls"></div>
+        <button id="btn-reset" class="btn btn-ghost" style="width:100%">↺ 重來（重新充水、瓶子放回）</button>
+        <div id="verdict" class="verdict warn" style="margin-top:10px">🎯 先把基座轉向瓶子</div>
       </div>
-      <div class="help-card"><strong>💡 操作提示</strong><ul><li>夾爪要對準瓶子才能抓住</li><li>夾爪寬度 ≤ 35mm 才能夾緊</li><li>大臂+小臂組合決定高度</li><li>側視圖看不到轉動，基座旋轉以「左右位置」示意，不是真的平移</li></ul></div>
+      <div class="help-card"><strong>💡 操作提示</strong><ul>
+        <li>推主動針筒，從動針筒就伸出；拉回來，從動針筒就縮回。一對針筒只管一個關節。</li>
+        <li>從動針筒伸到底（或夾爪夾到東西）時，水擠不進去，手上的針筒就推不動——水幾乎不能被壓縮。</li>
+        <li>主動針筒比較細：推得多、從動端走得少但比較省力；比較粗則相反（行程比＝截面積的反比）。</li>
+        <li>勾選「有空氣」：換方向時要先把空氣壓扁或拉開，手臂會慢半拍、動得少——這就是排氣沒做好的感覺。</li>
+      </ul></div>
     </div>
   </div>
+
+  <details class="panel" style="margin-top:20px">
+    <summary style="font-weight:700;cursor:pointer">🔍 模擬器怎麼算的（和實際手臂對照）</summary>
+    <div class="tbl-scroll" style="margin-top:10px"><table class="audit">
+      <tr><th>項目</th><th>實際的針筒液壓手臂</th><th>這個模擬器</th></tr>
+      <tr><td>操作</td><td>手上推拉 4 支主動針筒</td><td>4 個滑桿＝4 支主動針筒的推入量（左拉右推）</td></tr>
+      <tr><td>傳動</td><td>水不可壓縮：主動端擠出的水量＝從動端吸進的水量</td><td>A<sub>主</sub>×Δx<sub>主</sub>＝A<sub>從</sub>×Δx<sub>從</sub>；同規格針筒走一樣多，不同規格行程比＝截面積反比</td></tr>
+      <tr><td>方向</td><td>推→從動伸出；拉→縮回</td><td>相同</td></tr>
+      <tr><td>對應</td><td>每一對只接一個關節</td><td>第 1 對基座、第 2 對大臂、第 3 對小臂、第 4 對夾爪，互不影響</td></tr>
+      <tr><td>伸縮變轉動</td><td>從動針筒兩端用銷釘接在前後兩節上，和關節組成三角形</td><td>由針筒長度用餘弦定理算關節夾角，伸長＝夾角變大</td></tr>
+      <tr><td>範圍</td><td>針筒行程有限，關節不能轉一整圈；夾爪合到底或夾到東西就停</td><td>基座約 ±45°、大臂約 −18°～52°、小臂下彎約 40°～114°；超出時滑桿推不動並說明原因</td></tr>
+      <tr><td>空氣</td><td>空氣會被壓縮，手臂有延遲、會彈、力量變小</td><td>勾選後：換方向時有一段「空推」（約 0.75 ml）</td></tr>
+    </table></div>
+    <p class="muted" style="font-size:12.5px;margin-top:8px">針筒內徑是常見規格的約值（5 ml 約 12.5 mm、10 ml 約 14.5 mm、20 ml 約 19.1 mm），各廠牌不同，實作時請自己量。</p>
+  </details>
   <div class="module-nav-bottom"><a href="module3.html" class="btn btn-ghost">← 上一關</a><a href="module5.html" class="btn btn-primary" id="next-btn" style="opacity:.4;pointer-events:none">下一關 →</a></div>
 </main>
-<script src="../../js/main.js"></script><script src="../../js/sheet-config.js?v=1"></script><script src="../../js/sheet-log.js?v=1"></script><script src="../../js/sources.js?v=2"></script><script src="../../js/audio.js"></script><script src="../js/module4.js"></script>
+<script src="../../js/main.js"></script><script src="../../js/sheet-config.js?v=1"></script><script src="../../js/sheet-log.js?v=1"></script><script src="../../js/sources.js?v=2"></script><script src="../../js/audio.js"></script><script src="../js/ha-model.js?v=1"></script><script src="../js/module4.js?v=2"></script>
 </body></html>
