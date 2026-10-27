@@ -13,7 +13,8 @@ const PRESETS = [
   { id: 'eq',   ico: '⚖️', name: '等大成像', dobj: 20, f: 10, h: 6, meta: 'do = 2f → 等大倒立實像' },
 ];
 
-const state = { dobj: 30, f: 10, h: 6 };
+// 2026-10 審查：初始物距 30、焦距 10 時已是倒立縮小實像，載入就自動達成「做出相機」；改成 2 倍焦距（等大，四個挑戰都不成立）
+const state = { dobj: 20, f: 10, h: 6 };
 const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
 
 function solve() {

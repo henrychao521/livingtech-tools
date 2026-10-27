@@ -95,7 +95,7 @@ function renderParity() {
     v.textContent = `🚨 偵測到錯誤！翻了 ${flipped} 個位元（奇數），同位檢查發現不一致 → 接收端會要求重傳。`;
   } else {
     v.className = 'verdict warn';
-    v.textContent = `⚠️ 危險：翻了 ${flipped} 個位元（偶數），1 的個數又變回一致——同位檢查<strong>完全查不出來</strong>，錯誤資料會被當成正確的收下。`;
+    v.innerHTML = `⚠️ 危險：翻了 ${flipped} 個位元（偶數），1 的個數又變回一致——同位檢查<strong>完全查不出來</strong>，錯誤資料會被當成正確的收下。`;
   }
   check();
 }
