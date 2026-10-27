@@ -167,7 +167,7 @@ document.querySelectorAll('.part-chip').forEach(c => {
       <span style="display:flex;align-items:center;gap:5px"><span style="width:11px;height:11px;border-radius:3px;background:#93c5fd;display:inline-block"></span>接地軌</span>
     </div>
     <div style="margin-top:18px;display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;background:#f1f5f9;border-radius:10px;padding:14px">
-      <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/Metal_contacts_within_a_breadboard.jpg/330px-Metal_contacts_within_a_breadboard.jpg"
+      <img src="../assets/photos/metal-contacts-within-a-breadboard.webp"
            alt="麵包板內部金屬條實物照片"
            style="width:180px;height:auto;border-radius:8px;flex-shrink:0;object-fit:cover"
            onerror="this.style.display='none'">

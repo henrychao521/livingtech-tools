@@ -332,6 +332,34 @@
 - **下載日期**：2026-10-28
 - **位置**：/drill-press/assets/photos/tempering-colors.webp（縮成寬 660 WebP；原本直接連 Commons，App 離線看不到）
 
+### Schlagbohrer_für_Mauerwerk_18mm_Durchmesser,_Masonry_bit_1671.JPG ｜ /drill/assets/photos/schlagbohrer-f-r-mauerwerk-18mm-durchmes.webp
+- **作者**：Hedwig Storch
+- **授權**：CC BY-SA 3.0（[條款連結](https://creativecommons.org/licenses/by-sa/3.0)）
+- **來源**：https://commons.wikimedia.org/wiki/File:Schlagbohrer_f%C3%BCr_Mauerwerk_18mm_Durchmesser%2C_Masonry_bit_1671.JPG
+- **下載日期**：2026-10-28
+- **位置**：/drill/assets/photos/schlagbohrer-f-r-mauerwerk-18mm-durchmes.webp（縮成寬 660 以內 WebP；原本直接連 Commons，App 離線看不到）
+
+### HSS_Twist_Drill_into_Aluminium_with_Lubricant.jpg ｜ /drill/assets/photos/hss-twist-drill-into-aluminium-with-lubr.webp
+- **作者**：JJ Harrison (https://www.jjharrison.com.au/)
+- **授權**：CC BY-SA 3.0（[條款連結](https://creativecommons.org/licenses/by-sa/3.0)）
+- **來源**：https://commons.wikimedia.org/wiki/File:HSS_Twist_Drill_into_Aluminium_with_Lubricant.jpg
+- **下載日期**：2026-10-28
+- **位置**：/drill/assets/photos/hss-twist-drill-into-aluminium-with-lubr.webp、/drill-press/assets/photos/hss-twist-drill-into-aluminium-with-lubr.webp（縮成寬 660 以內 WebP；原本直接連 Commons，App 離線看不到）
+
+### Group_of_drill_bits.jpg ｜ /drill/assets/photos/group-of-drill-bits.webp
+- **作者**：Mo7amedsalim
+- **授權**：CC BY-SA 3.0（[條款連結](https://creativecommons.org/licenses/by-sa/3.0)）
+- **來源**：https://commons.wikimedia.org/wiki/File:Group_of_drill_bits.jpg
+- **下載日期**：2026-10-28
+- **位置**：/drill/assets/photos/group-of-drill-bits.webp（縮成寬 660 以內 WebP；原本直接連 Commons，App 離線看不到）
+
+### Metal_contacts_within_a_breadboard.jpg ｜ /breadboard/assets/photos/metal-contacts-within-a-breadboard.webp
+- **作者**：Zeroping
+- **授權**：CC BY 4.0（[條款連結](https://creativecommons.org/licenses/by/4.0)）
+- **來源**：https://commons.wikimedia.org/wiki/File:Metal_contacts_within_a_breadboard.jpg
+- **下載日期**：2026-10-28
+- **位置**：/breadboard/assets/photos/metal-contacts-within-a-breadboard.webp（縮成寬 660 以內 WebP；原本直接連 Commons，App 離線看不到）
+
 ---
 
 ## 維護指引
@@ -345,4 +373,4 @@
 
 ---
 
-最後更新：2026-10-27
+最後更新：2026-10-28

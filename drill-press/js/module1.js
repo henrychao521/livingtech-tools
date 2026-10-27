@@ -195,7 +195,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
       belt: 'P1–P2（500–720 RPM）', tip: '118° 磨尖螺旋刃',
       desc: '最通用的金屬鑽頭，螺旋排屑槽讓切屑順暢排出。鑽鐵/鋼時建議加切削液（切削油）冷卻降溫，延長鑽頭壽命。不適合木材（缺少中心定位尖）。',
       note: '鑽鋼必須用切削液，否則鑽頭在數分鐘內即因過熱而退火失硬。<br>💬 白話說：鑽頭硬，是因為出廠時經過「熱處理」把鋼變硬；如果鑽孔時摩擦熱讓鑽頭燒到發藍、發黑，等於把那道熱處理抵銷掉，鑽頭就「變軟」了——刃口一下就磨圓，之後再也鑽不動，只能換新。（嚴格說，高速鋼過熱變軟在材料學上叫「回火軟化」，比較精確。）',
-      photo: { url: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a8/HSS_Twist_Drill_into_Aluminium_with_Lubricant.jpg/330px-HSS_Twist_Drill_into_Aluminium_with_Lubricant.jpg', caption: 'HSS 鑽頭鑽削鋁材（施切削液）', page: 'https://commons.wikimedia.org/wiki/File:HSS_Twist_Drill_into_Aluminium_with_Lubricant.jpg', license: 'CC BY-SA 3.0 · Wikimedia Commons' },
+      photo: { url: '../assets/photos/hss-twist-drill-into-aluminium-with-lubr.webp', caption: 'HSS 鑽頭鑽削鋁材（施切削液）', page: 'https://commons.wikimedia.org/wiki/File:HSS_Twist_Drill_into_Aluminium_with_Lubricant.jpg', license: 'CC BY-SA 3.0 · Wikimedia Commons' },
       svg: `<rect x="10" y="43" width="140" height="14" rx="2" fill="#9ca3af"/>
         <g stroke="#4b5563" stroke-width="1" opacity=".7">
           <line x1="18" y1="43" x2="23" y2="57"/><line x1="30" y1="43" x2="35" y2="57"/>
@@ -400,7 +400,7 @@ document.querySelectorAll('.part-chip').forEach(c => c.addEventListener('click',
       ],
       bestFor: '大型工件、職業訓練、工廠批量加工',
       warn: '機台重量達 50–120kg，搬移需要多人協作；緊急停止鈕一定要確認位置。',
-      photo: { url: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c9/Drillpress.jpg/330px-Drillpress.jpg', caption: '落地式立式鑽床', license: 'LHOON · CC BY-SA 2.5 · Wikimedia Commons', page: 'https://commons.wikimedia.org/wiki/File:Drillpress.jpg' },
+      photo: { url: '../assets/photos/drillpress.webp', caption: '落地式立式鑽床', license: 'LHOON · CC BY-SA 2.5 · Wikimedia Commons', page: 'https://commons.wikimedia.org/wiki/File:Drillpress.jpg' },
     },
     {
       id: 'horizontal',
