@@ -53,23 +53,32 @@
       ${mitt(56, 66, 0, '握握把')}<path d="M40 30 a14 6 0 1 0 28 0" fill="none" stroke="#dc2626" stroke-width="2" marker-end="url(#gArr)"/>`,
     backsaw: `<polygon points="20,50 170,50 170,92 20,92" fill="#cbd5e1"/><rect x="20" y="44" width="150" height="8" fill="${T}"/>
       <path d="M20,92 ${Array.from({ length: 25 }, (_, i) => `L${26 + i * 6},${i % 2 ? 92 : 97}`).join(' ')} L170,92" fill="#94a3b8"/>
-      <path d="M170 42 L212 42 L218 96 L170 96 Z" fill="${W}"/>${mitt(196, 70, 0, '握把手')}<circle cx="34" cy="86" r="7" fill="#fde2c4" stroke="#b07a4f"/><text x="34" y="114" font-size="10" text-anchor="middle" fill="#7c4a22" ${F}>拇指扶鋸條（離齒）</text>`,
+      <path d="M170 42 L212 42 L218 96 L170 96 Z" fill="${W}"/>${mitt(196, 70, 0, '握把手')}<circle cx="34" cy="62" r="7" fill="#fde2c4" stroke="#b07a4f"/><text x="8" y="36" font-size="10" fill="#7c4a22" ${F}>起鋸：拇指扶鋸條（離齒）</text>
+      <line x1="22" y1="106" x2="112" y2="106" stroke="#dc2626" stroke-width="2.5" marker-end="url(#gArr)" marker-start="url(#gArr)"/><text x="8" y="119" font-size="10" fill="#dc2626" ${F}>推或拉時施力（依鋸種）</text>`,
     hacksaw: `<path d="M30 40 L190 40 L190 86 M30 40 L30 86" fill="none" stroke="${T}" stroke-width="6"/><line x1="30" y1="80" x2="190" y2="80" stroke="#94a3b8" stroke-width="4"/>
       <path d="M190 40 L222 48 L222 92 L196 92 Z" fill="#1e3a8a"/>${mitt(210, 72, 0, '握把手')}${mitt(36, 30, 0, '扶前端')}${arrow(150, 106, 90, 106)}<text x="120" y="102" font-size="10" text-anchor="middle" fill="#dc2626" ${F}>推時施力</text>`,
-    coping: `<path d="M40 24 L40 96 M40 24 L170 24 L170 96" fill="none" stroke="${T}" stroke-width="6"/><line x1="40" y1="94" x2="170" y2="94" stroke="#94a3b8" stroke-width="2"/>
-      <rect x="160" y="96" width="20" height="22" rx="4" fill="${W}"/>${mitt(170, 100, 0, '')}<text x="206" y="112" font-size="10" fill="#7c4a22" ${F}>握把手</text>`,
+    coping: `<path d="M40 30 L40 92 M40 30 L170 30 L170 92" fill="none" stroke="${T}" stroke-width="6"/><line x1="40" y1="92" x2="170" y2="92" stroke="#94a3b8" stroke-width="2"/>
+      <rect x="170" y="86" width="52" height="13" rx="5" fill="${W}"/>${mitt(198, 92, 0, '')}<text x="236" y="56" font-size="10" text-anchor="end" fill="#7c4a22" ${F}>握把手</text>
+      <line x1="60" y1="108" x2="150" y2="108" stroke="#dc2626" stroke-width="2.5" marker-end="url(#gArr)" marker-start="url(#gArr)"/><text x="40" y="20" font-size="10" fill="#dc2626" ${F}>沿鋸條方向來回運動</text>`,
     file: `<rect x="20" y="56" width="56" height="22" rx="9" fill="${W}"/><polygon points="76,58 210,62 210,72 76,76" fill="#94a3b8"/>
       ${Array.from({ length: 18 }, (_, i) => `<line x1="${82 + i * 7}" y1="59" x2="${78 + i * 7}" y2="75" stroke="#64748b"/>`).join('')}
       ${mitt(46, 66, 0, '握柄')}${mitt(188, 46, 0, '扶壓前端')}${arrow(90, 104, 170, 104)}<text x="130" y="100" font-size="10" text-anchor="middle" fill="#dc2626" ${F}>只推不拉</text>`,
-    pliers: `<path d="M20 50 L120 62 L210 54 L210 60 L120 68 Z" fill="${T}"/><path d="M20 84 L120 72 L210 66 L210 72 L120 78 Z" fill="${T}"/>
-      <path d="M20 46 L110 60 L110 66 L20 56 Z M20 88 L110 74 L110 80 L20 96 Z" fill="#dc2626"/><circle cx="120" cy="69" r="5" fill="#334155"/>${mitt(62, 72, 0, '握把手中段')}`,
-    knife: `<rect x="10" y="30" width="220" height="30" fill="#e2e8f0" stroke="#94a3b8"/>${Array.from({ length: 21 }, (_, i) => `<line x1="${14 + i * 10}" y1="30" x2="${14 + i * 10}" y2="${i % 5 ? 36 : 40}" stroke="#64748b"/>`).join('')}
-      <rect x="10" y="62" width="220" height="46" fill="#bbf7d0" opacity=".6"/>${mitt(110, 46, 0, '')}<text x="140" y="24" font-size="10" fill="#7c4a22" ${F}>壓緊鋼尺</text>
-      <rect x="196" y="70" width="44" height="12" rx="3" fill="#facc15" transform="rotate(-8 196 70)"/>${arrow(200, 96, 60, 96)}<text x="130" y="116" font-size="10" text-anchor="middle" fill="#dc2626" ${F}>刀貼尺、往遠離身體方向切</text>`,
+    pliers: `<path d="M210 56 L130 62 L120 70 L130 74 L210 64 Z" fill="${T}"/><path d="M210 82 L130 78 L120 70 L130 66 L210 74 Z" fill="${T}" opacity=".85"/>
+      <path d="M118 66 L24 40 L20 48 L116 72 Z" fill="#dc2626"/><path d="M118 74 L24 100 L20 92 L116 68 Z" fill="#dc2626"/><circle cx="120" cy="70" r="6" fill="#334155"/>
+      ${mitt(62, 70, 0, '握把手中段')}<line x1="30" y1="22" x2="30" y2="38" stroke="#dc2626" stroke-width="2.5" marker-end="url(#gArr)"/><line x1="30" y1="118" x2="30" y2="102" stroke="#dc2626" stroke-width="2.5" marker-end="url(#gArr)"/>
+      <text x="40" y="20" font-size="10" fill="#dc2626" ${F}>握緊＝鉗口閉合</text>`,
+    knife: `<rect x="10" y="30" width="220" height="28" fill="#e2e8f0" stroke="#94a3b8"/>${Array.from({ length: 21 }, (_, i) => `<line x1="${14 + i * 10}" y1="30" x2="${14 + i * 10}" y2="${i % 5 ? 36 : 40}" stroke="#64748b"/>`).join('')}
+      <rect x="10" y="58" width="220" height="56" fill="#bbf7d0" opacity=".6"/><line x1="10" y1="58" x2="230" y2="58" stroke="#dc2626" stroke-width="1" stroke-dasharray="4 3"/>
+      <g transform="translate(200,30) scale(.8)">${mitt(0, 0, 0, '')}</g><text x="12" y="20" font-size="10" fill="#7c4a22" ${F}>壓尺的手在刀後方、不越過切割線</text>
+      <polygon points="120,59 132,62 132,70" fill="#cbd5e1" stroke="#64748b"/><rect x="132" y="61" width="56" height="13" rx="3" fill="#facc15"/>
+      <g transform="translate(166,90) scale(.75)">${mitt(0, 0, 0, '')}</g>
+      ${arrow(112, 66, 30, 66)}<text x="70" y="84" font-size="10" text-anchor="middle" fill="#dc2626" ${F}>刀貼尺邊往前切</text>`,
     wrench: `<rect x="40" y="60" width="150" height="14" rx="6" fill="${T}"/><circle cx="40" cy="67" r="20" fill="${T}"/><circle cx="40" cy="67" r="9" fill="#f8fafc"/>
       ${mitt(172, 66, 0, '握柄端')}${arrow(196, 30, 196, 104)}<text x="210" y="70" font-size="10" fill="#dc2626" ${F}>拉</text>`,
-    punch: `<rect x="96" y="30" width="18" height="60" rx="3" fill="#94a3b8"/><polygon points="96,90 114,90 105,104" fill="${T}"/><rect x="20" y="104" width="200" height="12" fill="#cbd5e1"/>
-      ${mitt(86, 62, 0, '')}<text x="30" y="58" font-size="10" fill="#7c4a22" ${F}>握衝具</text><rect x="150" y="14" width="60" height="14" rx="3" fill="${T}"/><rect x="176" y="28" width="8" height="40" fill="${W}"/>${arrow(160, 40, 120, 32)}`,
+    punch: `<rect x="96" y="46" width="18" height="50" rx="3" fill="#94a3b8"/><polygon points="96,96 114,96 105,106" fill="${T}"/><rect x="20" y="106" width="200" height="12" fill="#cbd5e1"/>
+      ${mitt(78, 74, 0, '')}<text x="8" y="100" font-size="10" fill="#7c4a22" ${F}>握衝具</text>
+      <rect x="86" y="22" width="38" height="16" rx="3" fill="${T}"/><rect x="124" y="26" width="96" height="8" rx="3" fill="${W}"/>
+      <line x1="105" y1="2" x2="105" y2="19" stroke="#dc2626" stroke-width="2.5" marker-end="url(#gArr)"/><text x="114" y="14" font-size="10" fill="#dc2626" ${F}>對準頂端垂直往下敲</text>`,
   };
   function sketch(id) {
     return `<svg viewBox="0 0 240 120" role="img" aria-label="握姿簡化示意">${DEFS}<rect width="240" height="120" fill="#f8fafc"/>${SKETCH[id] || ''}</svg>`;
