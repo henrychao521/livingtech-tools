@@ -11,70 +11,72 @@ function saveSolderProgress(p) {
   localStorage.setItem(PROGRESS_KEY_S, JSON.stringify(p));
 }
 
-// 座標依新的 viewBox 500×540
+// 座標依 viewBox 500×540（2026-10 改成較擬真的工作台正面場景：學生坐在工作台後方）
+// 外形參考：護目鏡有側護片與頭帶；排煙器是桌上型（風扇＋活性碳濾網，放在焊點旁）；
+// 烙鐵架有厚重底座、斜放的彈簧座、清潔海綿與銅絲球。
 const EQUIP_VISUALS = {
   goggles: { render: () => `
-    <g transform="translate(106,158)">
-      <ellipse cx="16" cy="12" rx="22" ry="13" fill="#1a1a1a"/>
-      <ellipse cx="72" cy="12" rx="22" ry="13" fill="#1a1a1a"/>
-      <line x1="38" y1="12" x2="50" y2="12" stroke="#1a1a1a" stroke-width="4"/>
-      <ellipse cx="16" cy="12" rx="18" ry="10" fill="rgba(135,206,250,.65)"/>
-      <ellipse cx="72" cy="12" rx="18" ry="10" fill="rgba(135,206,250,.65)"/>
-      <ellipse cx="11" cy="9" rx="4" ry="2" fill="rgba(255,255,255,.7)"/>
-      <ellipse cx="67" cy="9" rx="4" ry="2" fill="rgba(255,255,255,.7)"/>
-      <!-- 鬆緊帶 -->
-      <line x1="-4" y1="14" x2="4" y2="13" stroke="#444" stroke-width="2"/>
-      <line x1="92" y1="14" x2="100" y2="13" stroke="#444" stroke-width="2"/>
+    <g>
+      <path d="M163 166 Q160 150 172 150 L228 150 Q240 150 237 166" fill="none" stroke="#334155" stroke-width="4"/>
+      <path d="M166 156 Q168 150 176 150 L224 150 Q232 150 234 156 L236 176 Q236 186 226 186 L210 186 Q204 186 200 178 Q196 186 190 186 L174 186 Q164 186 164 176 Z"
+        fill="rgba(186,230,253,.45)" stroke="#1f2937" stroke-width="3"/>
+      <path d="M164 158 L158 162 L158 180 L165 182 Z M236 158 L242 162 L242 180 L235 182 Z" fill="rgba(148,163,184,.8)" stroke="#1f2937" stroke-width="1.5"/>
+      <g fill="#1f2937"><circle cx="182" cy="152" r="1.2"/><circle cx="190" cy="152" r="1.2"/><circle cx="210" cy="152" r="1.2"/><circle cx="218" cy="152" r="1.2"/></g>
+      <path d="M172 158 L184 158" stroke="rgba(255,255,255,.85)" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M212 158 L224 158" stroke="rgba(255,255,255,.85)" stroke-width="2.5" stroke-linecap="round"/>
     </g>` },
   apron: { render: () => `
     <g>
-      <path d="M120 210 Q150 218 180 210 L182 330 L118 330 Z" fill="#5C4033"/>
-      <!-- 圍裙頸帶 -->
-      <path d="M120 210 Q130 196 150 196 Q170 196 180 210" fill="none" stroke="#3a2618" stroke-width="3" stroke-linecap="round"/>
-      <!-- 中央口袋 -->
-      <rect x="135" y="270" width="30" height="38" rx="2" fill="rgba(0,0,0,.2)"/>
-      <text x="150" y="252" text-anchor="middle" font-size="11" fill="#FFB066" font-weight="700" font-family="Inter,sans-serif">SAFETY</text>
+      <path d="M184 228 Q186 206 200 206 Q214 206 216 228" fill="none" stroke="#1e293b" stroke-width="4"/>
+      <path d="M178 228 L222 228 L230 296 Q236 326 238 350 L162 350 Q164 326 170 296 Z" fill="#334155" stroke="#0f172a" stroke-width="1.5"/>
+      <path d="M170 296 L140 300 M230 296 L260 300" stroke="#1e293b" stroke-width="4" stroke-linecap="round"/>
+      <rect x="184" y="300" width="32" height="26" rx="2" fill="#475569" stroke="#0f172a"/>
+      <path d="M182 232 L218 232" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
     </g>` },
   ventilation: { render: () => `
-    <g transform="translate(310,40)">
-      <!-- 窗戶 -->
-      <rect x="0" y="0" width="80" height="80" fill="#dbeafe" stroke="#1e40af" stroke-width="2"/>
-      <line x1="40" y1="0" x2="40" y2="80" stroke="#1e40af"/>
-      <line x1="0" y1="40" x2="80" y2="40" stroke="#1e40af"/>
-      <!-- 排煙風扇 -->
-      <g transform="translate(105,15)">
-        <rect x="0" y="0" width="50" height="50" fill="#475569" rx="4"/>
-        <circle cx="25" cy="25" r="18" fill="#1e293b"/>
-        <g fill="#94a3b8">
-          <ellipse cx="25" cy="10" rx="3" ry="14"><animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="2s" repeatCount="indefinite"/></ellipse>
-          <ellipse cx="25" cy="10" rx="3" ry="14" transform="rotate(60 25 25)"><animateTransform attributeName="transform" type="rotate" from="60 25 25" to="420 25 25" dur="2s" repeatCount="indefinite"/></ellipse>
-          <ellipse cx="25" cy="10" rx="3" ry="14" transform="rotate(120 25 25)"><animateTransform attributeName="transform" type="rotate" from="120 25 25" to="480 25 25" dur="2s" repeatCount="indefinite"/></ellipse>
-        </g>
-        <text x="25" y="65" text-anchor="middle" font-size="9" fill="#1e293b" font-family="Noto Sans TC">排煙器</text>
-      </g>
-      <!-- 通風指示箭頭 -->
-      <path d="M -10 25 L 90 25" stroke="#10b981" stroke-width="2" fill="none" stroke-dasharray="4 3"><animate attributeName="stroke-dashoffset" values="0;-14" dur="1s" repeatCount="indefinite"/></path>
+    <g>
+      <path d="M186 388 Q150 360 104 314" fill="none" stroke="#10b981" stroke-width="2.5" stroke-dasharray="6 5"><animate attributeName="stroke-dashoffset" values="0;-22" dur="1s" repeatCount="indefinite"/></path>
+      <path d="M200 382 Q170 330 112 296" fill="none" stroke="#10b981" stroke-width="2" stroke-dasharray="6 5" opacity=".7"><animate attributeName="stroke-dashoffset" values="0;-22" dur="1.2s" repeatCount="indefinite"/></path>
+      <rect x="24" y="336" width="10" height="14" fill="#111827"/><rect x="102" y="336" width="10" height="14" fill="#111827"/>
+      <rect x="18" y="250" width="100" height="90" rx="7" fill="#1f2937"/>
+      <rect x="26" y="258" width="84" height="74" rx="4" fill="#374151"/>
+      <g stroke="#4b5563" stroke-width="1">${[0,1,2,3,4,5,6].map(i => `<line x1="${30 + i * 12}" y1="260" x2="${30 + i * 12}" y2="330"/>`).join('')}</g>
+      <circle cx="68" cy="295" r="30" fill="#111827" stroke="#6b7280" stroke-width="2"/>
+      <circle cx="68" cy="295" r="20" fill="none" stroke="#6b7280" stroke-width="1.5"/>
+      <g fill="#9ca3af"><g><animateTransform attributeName="transform" type="rotate" from="0 68 295" to="360 68 295" dur="0.8s" repeatCount="indefinite"/>
+        <ellipse cx="68" cy="282" rx="5" ry="12"/><ellipse cx="68" cy="282" rx="5" ry="12" transform="rotate(120 68 295)"/><ellipse cx="68" cy="282" rx="5" ry="12" transform="rotate(240 68 295)"/></g></g>
+      <circle cx="68" cy="295" r="4" fill="#d1d5db"/>
+      <circle cx="108" cy="262" r="3" fill="#22c55e"/>
+      <text x="68" y="368" text-anchor="middle" font-size="10" fill="#3f2d17" font-family="Noto Sans TC,sans-serif">排煙器</text>
     </g>` },
-  'iron-stand': { render: () => `
-    <g transform="translate(310,400)">
-      <!-- 桌上的烙鐵架底座 -->
-      <rect x="0" y="48" width="100" height="38" rx="4" fill="#374151"/>
-      <rect x="6" y="44" width="88" height="6" fill="#1f2937"/>
-      <!-- 海綿盤 -->
-      <rect x="14" y="26" width="42" height="20" rx="2" fill="#4b5563"/>
-      <rect x="17" y="22" width="36" height="6" fill="#fbbf24"/>
-      <!-- 彈簧（烙鐵插座）-->
-      <path d="M 65 36 Q 75 12 92 22 Q 100 28 95 8" fill="none" stroke="#9ca3af" stroke-width="3" stroke-linecap="round"/>
-      <!-- 烙鐵橫躺在架上 -->
-      <g transform="translate(15,2)">
-        <rect x="0" y="0" width="55" height="11" rx="5" fill="#3b82f6"/>
-        <circle cx="14" cy="5" r="3" fill="#22c55e"/>
-        <rect x="55" y="2" width="14" height="8" fill="#9ca3af"/>
-        <polygon points="69,2 78,5 69,8" fill="#dc2626"/>
+  'iron-stand': { render: () => {
+    // 彈簧座：沿斜軸畫一串橢圓圈
+    const ax = [474, 412], bx = [404, 330];
+    const coil = Array.from({ length: 13 }, (_, i) => {
+      const t = i / 12, cx = ax[0] + (bx[0] - ax[0]) * t, cy = ax[1] + (bx[1] - ax[1]) * t;
+      return `<ellipse cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" rx="14" ry="5" transform="rotate(-40 ${cx.toFixed(1)} ${cy.toFixed(1)})" fill="none" stroke="#9ca3af" stroke-width="2.4"/>`;
+    }).join('');
+    return `
+    <g>
+      <path d="M326 452 L338 420 L486 420 L496 452 Z" fill="#27272a"/>
+      <rect x="326" y="450" width="170" height="8" rx="2" fill="#18181b"/>
+      <rect x="342" y="404" width="72" height="20" rx="3" fill="#3f3f46"/>
+      <rect x="347" y="396" width="62" height="16" rx="3" fill="#eab308"/>
+      <rect x="374" y="398" width="8" height="12" rx="2" fill="#a16207"/>
+      <ellipse cx="444" cy="420" rx="22" ry="7" fill="#3f3f46"/>
+      <path d="M422 420 L424 398 Q444 388 464 398 L466 420 Z" fill="#a16207"/>
+      <path d="M428 400 Q436 392 444 400 Q452 392 460 400 M430 408 Q438 400 446 408 Q454 400 462 408" stroke="#facc15" stroke-width="1.6" fill="none"/>
+      <path d="M470 420 L478 410" stroke="#52525b" stroke-width="8"/>
+      ${coil}
+      <g transform="translate(404,330) rotate(-130.5)">
+        <rect x="0" y="-5" width="18" height="10" fill="#d4d4d8"/>
+        <rect x="18" y="-11" width="70" height="22" rx="9" fill="#1d4ed8"/>
+        <rect x="26" y="-11" width="4" height="22" fill="#1e40af"/><rect x="36" y="-11" width="4" height="22" fill="#1e40af"/><rect x="46" y="-11" width="4" height="22" fill="#1e40af"/>
       </g>
-      <!-- 標籤 -->
-      <text x="50" y="105" text-anchor="middle" font-size="10" fill="#444" font-family="Noto Sans TC">烙鐵架（必備）</text>
-    </g>` },
+      <path d="M347 263 Q330 300 410 312 T 500 300" stroke="#111827" stroke-width="5" fill="none"/>
+      <text x="378" y="444" text-anchor="middle" font-size="9" fill="#e5e7eb" font-family="Noto Sans TC,sans-serif">海綿</text>
+      <text x="444" y="444" text-anchor="middle" font-size="9" fill="#e5e7eb" font-family="Noto Sans TC,sans-serif">銅絲球</text>
+    </g>`; } },
 };
 
 const SCENARIOS = [
@@ -257,8 +259,9 @@ function handleDrop(zone) {
     dragged.style.outline = '';
     dressupScore += 7.5;
     addEquipToScene(id);
+    sceneSvg.querySelectorAll(`[data-zone-label="${accept}"]`).forEach(el => { el.style.display = 'none'; });  // 放好後隱藏提示字，不和圖形重疊
     if (typeof SoundFX !== 'undefined') SoundFX.success();
-    showFeedback(`✓ 正確！`, 'success');
+    showFeedback(`✓ 正確！${getRightReason(id)}`, 'success');
   } else if (correct) {
     if (typeof SoundFX !== 'undefined') SoundFX.warn();
     { const el = dragged; el.classList.add('wrong-shake'); setTimeout(() => el.classList.remove('wrong-shake'), 400); }
@@ -290,10 +293,20 @@ function addEquipToScene(id) {
 }
 
 function getWrongReason(id) {
+  // 只引用說明書與法規原文（見頁面「本關依據」）
   return {
-    paper: '紙張遇 350°C 立即燒焦冒煙，可能引發火災。',
-    'bare-hand': '烙鐵頭高達 350°C，三度燙傷只需要 1 秒。',
-    cup: '飲料潑灑會造成短路、觸電風險，且污染焊接區域。',
+    paper: 'HAKKO 說明書：不要讓烙鐵頭靠近或碰到可燃物；不用時把烙鐵放在烙鐵架上。',
+    'bare-hand': 'HAKKO 說明書：通電時烙鐵頭溫度 200–480°C，不要碰烙鐵頭與附近的金屬部分。',
+    cup: '《鉛中毒預防規則》第 44 條：鉛作業場所禁止飲食或吸菸。HAKKO 說明書也提醒：不要讓焊台沾濕、不要用濕手操作。',
+  }[id] || '';
+}
+// 放對時顯示依據（短句，完整原文見「本關依據」）
+function getRightReason(id) {
+  return {
+    goggles: '依據《職業安全衛生設施規則》第 287 條：防護眼鏡。',
+    apron: '依據《職業安全衛生設施規則》第 287 條：防護衣。',
+    ventilation: '依據《職業安全衛生設施規則》第 292 條（局部排氣、整體換氣）；HAKKO 說明書：作業區要通風良好。',
+    'iron-stand': 'HAKKO 說明書：不使用時把烙鐵放在烙鐵架上。',
   }[id] || '';
 }
 
