@@ -12,176 +12,295 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>教師後台 ｜ 生活科技互動教學平台</title>
+<meta name="description" content="生活科技互動教學平台的教師後台：彙整學生交來的進度檔、查看班級卡關的工具，並提供排課建議與課綱對應。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/style.css">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E👨‍🏫%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%232E6B57'/%3E%3Cpath d='M8 9h16M16 9v14M16 16h6M10 16v7M7 23h18' stroke='%23F7F6F2' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>
-.teacher-theme { --primary: #4F46E5; --primary-dark: #3730A3; --primary-light: #E0E7FF; --primary-glow: rgba(79,70,229,.3); --accent: #EAB308; --accent-light: #FEF9C3; }
-.teacher-theme .brand .logo { filter: drop-shadow(0 2px 4px rgba(79,70,229,.4)); }
-.tab-bar { display:flex; gap:8px; max-width:1100px; margin:0 auto; padding:24px 36px 0; flex-wrap:wrap; }
-.tab-btn { background:#fff; border:1.5px solid var(--border); padding:10px 18px; border-radius:10px; cursor:pointer; font-family:var(--font-sans); font-size:14px; font-weight:600; transition:all .2s; }
-.tab-btn:hover { border-color:var(--primary); }
-.tab-btn.active { background:var(--primary); color:#fff; border-color:var(--primary); }
-.tab-pane { display:none; max-width:1100px; margin:0 auto; padding:30px 36px 60px; }
-.tab-pane.active { display:block; animation:fadeInUp .3s var(--easing); }
+/* 教師後台：點名簿與方格紙。只在這頁覆寫，不動全站共用的 css/style.css */
+.teacher-theme {
+  --t-bg: #F7F6F2;          /* 紙白 */
+  --t-surface: #FFFEFB;
+  --t-sunk: #EFEDE7;
+  --t-line: rgba(28,27,24,.10);
+  --t-line-strong: rgba(28,27,24,.20);
+  --t-ink: #1C1B18;         /* 鉛筆黑 */
+  --t-ink-2: #4D4A43;
+  --t-ink-3: #66625A;
+  --t-guide: #D6D2C8;       /* 還沒劃的筆畫 */
+  --t-accent: #2E6B57;      /* 黑板綠 */
+  --t-accent-ink: #24564A;
+  --t-accent-soft: #E3ECE7;
+  --t-on-accent: #F7F6F2;
+  --t-danger: #A33A2C;
+  --t-ease: cubic-bezier(.2,0,0,1);
+  --primary: var(--t-accent); --primary-dark: var(--t-accent-ink); --primary-light: var(--t-accent-soft);
+  --text: var(--t-ink); --text-soft: var(--t-ink-2); --text-muted: var(--t-ink-3);
+  --border: var(--t-line); --bg: var(--t-bg); --bg-soft: var(--t-sunk);
+  background: var(--t-bg); color: var(--t-ink);
+}
+html, body.teacher-theme { overflow-x: clip; }
+[hidden] { display: none !important; }
+.teacher-theme .topbar { background: var(--t-surface); }
+.teacher-theme .topnav a { transition: color .15s var(--t-ease), background-color .15s var(--t-ease); }
+.teacher-theme .topnav a:hover { color: var(--t-accent-ink); background: var(--t-accent-soft); }
+.teacher-theme .topnav .home-link { color: var(--t-accent-ink); font-weight: 500; }
+.teacher-theme a:focus-visible, .teacher-theme button:focus-visible, .teacher-theme [tabindex]:focus-visible {
+  outline: 2px solid var(--t-accent); outline-offset: 2px; border-radius: 4px;
+}
 
-.upload-zone { display:block; background:#fff; border:2px dashed var(--border-strong); border-radius:18px; padding:40px; text-align:center; transition:all .25s; cursor:pointer; }
-.upload-zone.over { border-color:var(--primary); background:var(--primary-light); }
-/* 檔案輸入框視覺上隱藏但保留鍵盤焦點（用 hidden 會讓鍵盤使用者按不到）*/
-.visually-hidden { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
-.upload-zone:focus-within, .export-btn:focus-within { outline:3px solid var(--primary); outline-offset:3px; }
-.tab-btn:focus-visible { outline:3px solid var(--primary); outline-offset:2px; }
-.upload-zone .upload-icon { font-size:48px; margin-bottom:10px; }
-.upload-zone h4 { font-size:18px; margin-bottom:6px; }
-.upload-zone p { font-size:13px; color:var(--text-muted); }
+.wrap { max-width: 1160px; margin: 0 auto; padding-inline: max(16px, min(32px, 4vw)); }
 
-.student-table { width:100%; background:#fff; border:1px solid var(--border); border-radius:14px; overflow-x:auto; margin-top:24px; }
-/* 手機上欄位原本被擠成一字一行：給表格最小寬度，外框橫向捲動 */
-.student-table table { width:100%; min-width:560px; border-collapse:collapse; font-size:13px; }
-.student-table th { white-space:nowrap; }
-.student-table thead { background:var(--bg-soft); }
-.student-table th { padding:12px 14px; text-align:left; font-weight:700; color:var(--text-soft); border-bottom:1px solid var(--border); }
-.student-table td { padding:10px 14px; border-bottom:1px dashed var(--border); }
-.student-table tr:last-child td { border-bottom:none; }
-.student-table tr:hover { background:var(--bg-soft); }
-.tool-cell { display:inline-flex; align-items:center; gap:6px; font-weight:600; }
-.progress-cell { display:inline-block; width:80px; height:6px; background:var(--bg-soft); border-radius:999px; overflow:hidden; vertical-align:middle; margin-right:6px; }
-.progress-cell-fill { height:100%; background:linear-gradient(90deg,var(--primary),var(--success)); }
-.stars-cell { color:var(--warning); font-size:14px; letter-spacing:1px; }
+/* 分頁：底線式 */
+.tab-bar { display: flex; gap: 4px; flex-wrap: wrap; border-bottom: 1px solid var(--t-line); margin-top: 24px; }
+.tab-btn {
+  background: none; border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px;
+  padding: 12px 16px; font-family: var(--font-head); font-size: 15px; font-weight: 500; color: var(--t-ink-3);
+  cursor: pointer; transition: color .15s var(--t-ease), border-color .15s var(--t-ease);
+}
+.tab-btn:hover { color: var(--t-ink); }
+.tab-btn.active { color: var(--t-ink); border-bottom-color: var(--t-accent); }
+.tab-btn:active { color: var(--t-accent-ink); }
+.tab-pane { display: none; padding-block: 32px 64px; }
+.tab-pane.active { display: block; animation: paneIn .18s var(--t-ease); }
+@keyframes paneIn { from { opacity: 0; } to { opacity: 1; } }
 
-.resource-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; margin-top:18px; }
-.resource-card { background:#fff; border:1px solid var(--border); border-radius:14px; padding:20px; transition:all .25s; }
-.resource-card:hover { transform:translateY(-2px); box-shadow:var(--shadow-md); border-color:var(--primary); }
-.resource-card .res-icon { font-size:36px; margin-bottom:10px; }
-.resource-card h4 { font-size:16px; margin-bottom:6px; }
-.resource-card p { font-size:13px; color:var(--text-soft); margin-bottom:10px; line-height:1.6; }
+.pane-head { display: grid; gap: 4px; margin-bottom: 24px; }
+.pane-head h2 { font-family: var(--font-head); font-size: 24px; font-weight: 500; text-wrap: balance; }
+.pane-head p { color: var(--t-ink-2); max-width: 40em; line-height: 1.75; }
+.block-title { font-family: var(--font-head); font-size: 17px; font-weight: 500; margin: 40px 0 12px; }
+.note { font-size: 13px; color: var(--t-ink-3); line-height: 1.7; }
 
-.export-btn { display:inline-block; background:var(--success); color:#fff; padding:8px 16px; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; border:none; }
-.export-btn:hover { background:#1e9450; }
+/* 登記簿表格 */
+.ledger { background: var(--t-surface); border: 1px solid var(--t-line); border-radius: 12px; overflow-x: auto; }
+.ledger table { width: 100%; min-width: 560px; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+.ledger th { font-weight: 500; font-size: 13px; color: var(--t-ink-3); text-align: left; white-space: nowrap; padding: 12px 16px; border-bottom: 1px solid var(--t-line-strong); background: var(--t-surface); }
+.ledger td { padding: 12px 16px; border-bottom: 1px solid var(--t-line); vertical-align: middle; }
+.ledger tr:last-child td { border-bottom: 0; }
+.ledger td.num, .ledger th.num { text-align: right; }
+.ledger td.nowrap { white-space: nowrap; }
+.ledger .tool-name { font-weight: 500; white-space: nowrap; }
+.ledger .sub { display: block; font-size: 12px; color: var(--t-ink-3); margin-top: 4px; }
+.ledger a { color: var(--t-accent-ink); text-decoration: none; white-space: nowrap; }
+.ledger a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.ledger .empty { color: var(--t-guide); }
+
+/* 招牌細節：正字劃記 */
+.tally { display: inline-flex; gap: 4px; vertical-align: middle; }
+.tally svg { width: 20px; height: 20px; }
+.tally .on { stroke: var(--t-ink); }
+.tally .off { stroke: var(--t-guide); }
+.tally-wrap { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
+.tally-wrap .frac { color: var(--t-ink-2); }
+
+/* 個別進度：學生欄固定 */
+.roster th:first-child, .roster td:first-child { position: sticky; left: 0; background: var(--t-surface); z-index: 1; box-shadow: 1px 0 0 var(--t-line); }
+.roster .seat { display: block; font-size: 12px; color: var(--t-ink-3); white-space: nowrap; }
+.roster .who { white-space: nowrap; font-weight: 500; }
+.roster .cell { display: grid; gap: 4px; white-space: nowrap; }
+.roster .meta { font-size: 12px; color: var(--t-ink-3); }
+
+/* 班級總覽 */
+.figures { display: flex; flex-wrap: wrap; gap: 12px 48px; padding: 20px 24px; background: var(--t-surface); border: 1px solid var(--t-line); border-radius: 12px; }
+.figure { display: grid; gap: 4px; }
+.figure .label { font-size: 13px; color: var(--t-ink-3); }
+.figure .value { font-family: var(--font-head); font-size: 28px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.figure .value small { font-size: 14px; color: var(--t-ink-3); font-weight: 400; margin-left: 4px; }
+.rank .bar { position: relative; width: 160px; height: 8px; background: var(--t-sunk); border-radius: 4px; overflow: hidden; display: inline-block; vertical-align: middle; }
+.rank .bar i { position: absolute; inset: 0 auto 0 0; background: var(--t-ink-2); border-radius: 4px; }
+.rank tr.focus .bar i { background: var(--t-accent); }
+.rank tr.focus .tool-name::after { content: "最需要補強"; margin-left: 8px; font-size: 12px; font-weight: 400; color: var(--t-accent-ink); }
+
+/* 上傳區 */
+.upload-zone {
+  display: grid; justify-items: center; gap: 8px; text-align: center; cursor: pointer;
+  padding: 32px 24px; background: var(--t-surface); border: 1.5px dashed var(--t-line-strong); border-radius: 12px;
+  transition: border-color .15s var(--t-ease), background-color .15s var(--t-ease);
+}
+.upload-zone:hover, .upload-zone.over { border-color: var(--t-accent); background: var(--t-accent-soft); }
+.upload-zone:focus-within { outline: 2px solid var(--t-accent); outline-offset: 2px; }
+.upload-zone svg { width: 28px; height: 28px; stroke: var(--t-ink-2); }
+.upload-zone .title { font-family: var(--font-head); font-size: 16px; font-weight: 500; }
+.upload-zone .hint { font-size: 13px; color: var(--t-ink-3); }
+.upload-zone code { font-family: inherit; background: var(--t-sunk); padding: 0 4px; border-radius: 4px; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+.steps { counter-reset: step; display: grid; gap: 8px; margin-top: 24px; padding: 0; list-style: none; }
+.steps li { counter-increment: step; display: grid; grid-template-columns: 24px 1fr; gap: 8px; font-size: 14px; color: var(--t-ink-2); line-height: 1.7; }
+.steps li::before { content: counter(step); font-variant-numeric: tabular-nums; color: var(--t-accent-ink); font-weight: 500; }
+
+/* 動作列 */
+.actions { display: grid; background: var(--t-surface); border: 1px solid var(--t-line); border-radius: 12px; }
+.action { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 8px 24px; align-items: center; padding: 20px 24px; border-bottom: 1px solid var(--t-line); }
+.action:last-child { border-bottom: 0; }
+.action h3 { font-family: var(--font-head); font-size: 16px; font-weight: 500; }
+.action p { font-size: 13px; color: var(--t-ink-3); line-height: 1.7; margin-top: 4px; }
+.btn-t {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 0 16px;
+  font: 500 14px var(--font-head); border-radius: 8px; cursor: pointer; white-space: nowrap;
+  background: var(--t-accent); color: var(--t-on-accent); border: 1px solid var(--t-accent);
+  transition: background-color .15s var(--t-ease), transform .1s var(--t-ease);
+}
+.btn-t:hover { background: var(--t-accent-ink); }
+.btn-t:active { transform: scale(.98); }
+.btn-t:focus-within { outline: 2px solid var(--t-accent); outline-offset: 2px; }
+.block-title .note { margin-left: 8px; font-family: var(--font-sans); }
+.btn-t.quiet { background: var(--t-surface); color: var(--t-ink); border-color: var(--t-line-strong); }
+.btn-t.quiet:hover { background: var(--t-sunk); }
+.btn-t.danger { background: var(--t-surface); color: var(--t-danger); border-color: currentColor; }
+.btn-t.danger:hover { background: #F6E9E6; }
+.danger-zone { margin-top: 40px; }
+.danger-zone .actions { border-color: rgba(163,58,44,.25); }
+
+.cite { font-size: 12px; color: var(--t-ink-3); margin-top: 12px; line-height: 1.7; }
+
+@media (max-width: 640px) {
+  .action { grid-template-columns: 1fr; }
+  .rank .bar { width: 96px; }
+  .figure .value { font-size: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tab-pane.active { animation: none; }
+  .teacher-theme * { transition: none !important; }
+}
 </style>
 </head>
 <body class="teacher-theme">
 <header class="topbar">
   <div class="brand">
-    <span class="logo">👨‍🏫</span>
     <div>
       <h1>教師後台</h1>
-      <p class="subtitle">班級管理 ・ 進度檢視 ・ 教學資源</p>
+      <p class="subtitle">生活科技互動教學平台</p>
     </div>
   </div>
-  <nav class="topnav">
-    <a href="#dashboard">總覽</a>
+  <nav class="topnav" aria-label="教師後台">
+    <a href="#overview">本機進度</a>
     <a href="#class">班級進度</a>
     <a href="#resources">教學資源</a>
-    <a href="../" style="color:var(--primary-dark);font-weight:600">← 平台首頁</a>
+    <a href="../" class="home-link">回平台首頁</a>
   </nav>
 </header>
 
-<main>
+<main class="wrap">
   <div class="tab-bar" role="tablist" aria-label="教師後台功能">
-    <button class="tab-btn active" data-tab="overview" role="tab" id="tab-overview" aria-controls="pane-overview" aria-selected="true">📊 個人進度（本機）</button>
-    <button class="tab-btn" data-tab="class" role="tab" id="tab-class" aria-controls="pane-class" aria-selected="false" tabindex="-1">👥 班級彙整</button>
-    <button class="tab-btn" data-tab="resources" role="tab" id="tab-resources" aria-controls="pane-resources" aria-selected="false" tabindex="-1">📚 教學資源</button>
-    <button class="tab-btn" data-tab="export" role="tab" id="tab-export" aria-controls="pane-export" aria-selected="false" tabindex="-1">📤 匯出工具</button>
+    <button class="tab-btn active" data-tab="overview" role="tab" id="tab-overview" aria-controls="pane-overview" aria-selected="true">本機進度</button>
+    <button class="tab-btn" data-tab="class" role="tab" id="tab-class" aria-controls="pane-class" aria-selected="false" tabindex="-1">班級彙整</button>
+    <button class="tab-btn" data-tab="resources" role="tab" id="tab-resources" aria-controls="pane-resources" aria-selected="false" tabindex="-1">教學資源</button>
+    <button class="tab-btn" data-tab="export" role="tab" id="tab-export" aria-controls="pane-export" aria-selected="false" tabindex="-1">匯出與匯入</button>
   </div>
 
-  <div class="tab-pane active" data-tab="overview" role="tabpanel" id="pane-overview" aria-labelledby="tab-overview">
-    <h3 class="section-title" style="text-align:left;font-size:24px">本機學生進度</h3>
-    <p class="muted">從這台瀏覽器（學生個人裝置或共用電腦）讀取的當前進度。</p>
+  <section class="tab-pane active" data-tab="overview" role="tabpanel" id="pane-overview" aria-labelledby="tab-overview">
+    <div class="pane-head">
+      <h2>本機學生進度</h2>
+      <p>從這台瀏覽器（學生個人裝置或共用電腦）讀取的當前進度。</p>
+    </div>
     <div id="local-progress"></div>
-    <p class="muted" style="font-size:13px;margin-top:20px">💡 教學現場建議流程：學生在自己裝置上完成學習 → 點選工具首頁的「匯出進度」按鈕 → 把 JSON 檔交給老師 → 老師在「班級彙整」分頁上傳所有學生的檔案。</p>
-  </div>
+    <h3 class="block-title">教學現場建議流程</h3>
+    <ol class="steps">
+      <li>學生在自己裝置上完成學習</li>
+      <li>點選工具首頁的「匯出進度」按鈕</li>
+      <li>把 JSON 檔交給老師</li>
+      <li>老師在「班級彙整」分頁上傳所有學生的檔案</li>
+    </ol>
+  </section>
 
-  <div class="tab-pane" data-tab="class" role="tabpanel" id="pane-class" aria-labelledby="tab-class">
-    <h3 class="section-title" style="text-align:left;font-size:24px">班級進度彙整</h3>
-    <p class="muted">上傳多名學生的進度 JSON 檔（從學生「匯出進度」取得），系統會合併成班級總表。</p>
+  <section class="tab-pane" data-tab="class" role="tabpanel" id="pane-class" aria-labelledby="tab-class">
+    <div class="pane-head">
+      <h2>班級進度彙整</h2>
+      <p>上傳多名學生的進度 JSON 檔（從學生「匯出進度」取得），系統會合併成班級總表。</p>
+    </div>
     <label class="upload-zone" id="upload-zone">
-      <div class="upload-icon">📥</div>
-      <h4>拖曳或點擊上傳學生進度 JSON 檔</h4>
-      <p>可一次上傳多份。檔名建議格式：「班級_座號_姓名.json」（例：701_15_王小明.json）</p>
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V4M7 9l5-5 5 5M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+      <span class="title">拖曳或點擊上傳學生進度 JSON 檔</span>
+      <span class="hint">可一次上傳多份。檔名建議格式：<code>班級_座號_姓名.json</code>（例：701_15_王小明.json）</span>
       <input type="file" id="upload-input" accept=".json" multiple class="visually-hidden">
     </label>
     <div id="upload-notice" role="status"></div>
     <div id="class-result"></div>
-  </div>
+  </section>
 
-  <div class="tab-pane" data-tab="resources" role="tabpanel" id="pane-resources" aria-labelledby="tab-resources">
-    <h3 class="section-title" style="text-align:left;font-size:24px">教學資源</h3>
-    <p class="muted">本平台對應 108 課綱、教學排課建議、學習單範本與工具課程銜接。</p>
-
-    <h4 style="margin-top:24px;margin-bottom:8px;font-size:18px">📋 排課建議</h4>
-    <div style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px;line-height:1.9">
-      <p><strong>單元 1（4 節課）：認識與安全</strong></p>
-      <ul style="padding-left:24px;color:var(--text-soft)">
-        <li>第 1 節：模組 1（認識結構） + 模組 2（安全規範）— 機具類需達安全門檻才通關；知識類測驗答完即記錄，分數顯示在下方進度表的 M2 欄</li>
-        <li>第 2 節：模組 3（操作步驟）+ 課堂演示</li>
-        <li>第 3 節：模組 4 模擬練習，課末測驗</li>
-        <li>第 4 節：實體機具操作（先安全的工具）</li>
-      </ul>
-      <p style="margin-top:16px"><strong>單元 2（2–3 節課）：應用與創作</strong></p>
-      <ul style="padding-left:24px;color:var(--text-soft)">
-        <li>模組 5（創作 / 故障排除）</li>
-        <li>個人或小組創作專題</li>
-        <li>成果展示與互評</li>
-      </ul>
+  <section class="tab-pane" data-tab="resources" role="tabpanel" id="pane-resources" aria-labelledby="tab-resources">
+    <div class="pane-head">
+      <h2>教學資源</h2>
+      <p>本平台對應 108 課綱、教學排課建議、學習單範本與工具課程銜接。</p>
     </div>
 
-    <h4 style="margin-top:32px;margin-bottom:8px;font-size:18px">📂 各工具教學資源</h4>
-    <div class="resource-grid" id="resource-grid"></div>
-
-    <h4 style="margin-top:32px;margin-bottom:8px;font-size:18px">🎓 課綱對應</h4>
-    <div style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px;line-height:1.8">
-      <p style="margin-bottom:8px"><strong>課綱對應（生活科技・第四學習階段）</strong></p>
-      <ul style="padding-left:24px;color:var(--text-soft)">
-        <li><strong>生 P-IV-3 手工具的操作與使用</strong>／<strong>生 P-IV-6 常用的機具操作與使用</strong>（學習內容）— 所有工具的模組 2「安全闖關」與模組 3「操作步驟」對應</li>
-        <li><strong>設 c-IV-1</strong> 能運用設計流程，實際設計並製作科技產品以解決問題（學習表現）— 模組 4「模擬」+ 模組 5「創作」對應</li>
-        <li><strong>生 A-IV-5 日常科技產品的電與控制應用</strong>（學習內容）— 電烙鐵、麵包板、微控制器平台對應</li>
-        <li><strong>生 A-IV-6 新興科技的應用</strong>（學習內容）— 新興科技（AI 辨識／生物辨識／XR／物聯網／穿戴／群體公平）、3D 印表機、雷射切割、Onshape 3D 建模平台對應</li>
-        <li><strong>設 s-IV-2</strong> 能運用基本工具進行材料處理與組裝（學習表現）— 手工具、線鋸機、鑽床等實作模組對應</li>
-      </ul>
-      <p style="font-size:12px;color:var(--text-muted);margin-top:8px">※ 條目依國家教育研究院《十二年國民基本教育課程綱要・科技領域》生活科技第四學習階段（國中 7-9 年級）。</p>
+    <h3 class="block-title">排課建議</h3>
+    <div class="ledger">
+      <table>
+        <thead><tr><th>單元</th><th>節次</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td rowspan="4" class="tool-name">單元 1（4 節課）<span class="sub">認識與安全</span></td><td class="nowrap">第 1 節</td><td>模組 1（認識結構）＋模組 2（安全規範）— 機具類需達安全門檻才通關；知識類測驗答完即記錄，分數顯示在「班級彙整」個別進度表的測驗欄</td></tr>
+          <tr><td class="nowrap">第 2 節</td><td>模組 3（操作步驟）＋課堂演示</td></tr>
+          <tr><td class="nowrap">第 3 節</td><td>模組 4 模擬練習，課末測驗</td></tr>
+          <tr><td class="nowrap">第 4 節</td><td>實體機具操作（先安全的工具）</td></tr>
+          <tr><td rowspan="3" class="tool-name">單元 2（2–3 節課）<span class="sub">應用與創作</span></td><td class="nowrap">—</td><td>模組 5（創作／故障排除）</td></tr>
+          <tr><td class="nowrap">—</td><td>個人或小組創作專題</td></tr>
+          <tr><td class="nowrap">—</td><td>成果展示與互評</td></tr>
+        </tbody>
+      </table>
     </div>
-  </div>
 
-  <div class="tab-pane" data-tab="export" role="tabpanel" id="pane-export" aria-labelledby="tab-export">
-    <h3 class="section-title" style="text-align:left;font-size:24px">匯出工具</h3>
-    <p class="muted">把當前瀏覽器的進度匯出成檔案，方便傳給老師或備份。</p>
-    <div class="resource-grid" style="margin-top:18px">
-      <div class="resource-card">
-        <div class="res-icon">📤</div>
-        <h4>匯出個人進度（JSON）</h4>
-        <p>把所有工具的進度合併成一個 JSON 檔。學生用此檔交給老師。</p>
-        <button class="export-btn" onclick="exportProgressJSON()">下載 progress.json</button>
+    <h3 class="block-title">各工具教學資源</h3>
+    <div class="ledger">
+      <table>
+        <thead><tr><th>工具</th><th>內容</th><th>連結</th></tr></thead>
+        <tbody id="resource-grid"></tbody>
+      </table>
+    </div>
+
+    <h3 class="block-title">課綱對應（生活科技・第四學習階段）</h3>
+    <div class="ledger">
+      <table>
+        <thead><tr><th>條目</th><th>類別</th><th>本平台對應</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tool-name">生 P-IV-3</span><span class="sub">手工具的操作與使用</span></td><td rowspan="2">學習內容</td><td rowspan="2">所有工具的模組 2「安全闖關」與模組 3「操作步驟」</td></tr>
+          <tr><td><span class="tool-name">生 P-IV-6</span><span class="sub">常用的機具操作與使用</span></td></tr>
+          <tr><td><span class="tool-name">設 c-IV-1</span><span class="sub">能運用設計流程，實際設計並製作科技產品以解決問題</span></td><td>學習表現</td><td>模組 4「模擬」＋模組 5「創作」</td></tr>
+          <tr><td><span class="tool-name">生 A-IV-5</span><span class="sub">日常科技產品的電與控制應用</span></td><td>學習內容</td><td>電烙鐵、麵包板、微控制器平台</td></tr>
+          <tr><td><span class="tool-name">生 A-IV-6</span><span class="sub">新興科技的應用</span></td><td>學習內容</td><td>新興科技（AI 辨識／生物辨識／XR／物聯網／穿戴／群體公平）、3D 印表機、雷射切割、Onshape 3D 建模平台</td></tr>
+          <tr><td><span class="tool-name">設 s-IV-2</span><span class="sub">能運用基本工具進行材料處理與組裝</span></td><td>學習表現</td><td>手工具、線鋸機、鑽床等實作模組</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="cite">※ 條目依國家教育研究院《十二年國民基本教育課程綱要・科技領域》生活科技第四學習階段（國中 7-9 年級）。</p>
+  </section>
+
+  <section class="tab-pane" data-tab="export" role="tabpanel" id="pane-export" aria-labelledby="tab-export">
+    <div class="pane-head">
+      <h2>匯出與匯入</h2>
+      <p>把當前瀏覽器的進度匯出成檔案，方便傳給老師或備份。</p>
+    </div>
+    <div class="actions">
+      <div class="action">
+        <div><h3>匯出個人進度（JSON）</h3><p>把所有工具的進度合併成一個 JSON 檔。學生用此檔交給老師。</p></div>
+        <button class="btn-t" onclick="exportProgressJSON()">下載 progress.json</button>
       </div>
-      <div class="resource-card">
-        <div class="res-icon">📊</div>
-        <h4>匯出班級表（CSV）</h4>
-        <p>需先在「班級彙整」分頁上傳學生檔案。產生 Excel 可開啟的 CSV 表。</p>
-        <button class="export-btn" onclick="exportClassCSV()">下載 class.csv</button>
+      <div class="action">
+        <div><h3>匯出班級表（CSV）</h3><p>需先在「班級彙整」分頁上傳學生檔案。產生 Excel 可開啟的 CSV 表。</p></div>
+        <button class="btn-t quiet" onclick="exportClassCSV()">下載 class.csv</button>
       </div>
-      <div class="resource-card">
-        <div class="res-icon">🔄</div>
-        <h4>匯入個人進度</h4>
-        <p>從之前匯出的 JSON 檔還原進度。可用來在不同電腦間同步。</p>
-        <label class="export-btn" style="cursor:pointer">
-          選擇檔案
-          <input type="file" accept=".json" class="visually-hidden" onchange="importProgressJSON(event)">
-        </label>
-      </div>
-      <div class="resource-card">
-        <div class="res-icon">🗑️</div>
-        <h4>清除本機進度</h4>
-        <p>把本機所有工具的進度清空（不可復原）。</p>
-        <button class="export-btn" style="background:var(--danger)" onclick="clearLocalProgress()">清除</button>
+      <div class="action">
+        <div><h3>匯入個人進度</h3><p>從之前匯出的 JSON 檔還原進度。可用來在不同電腦間同步。</p></div>
+        <label class="btn-t quiet">選擇檔案<input type="file" accept=".json" class="visually-hidden" onchange="importProgressJSON(event)"></label>
       </div>
     </div>
-  </div>
+    <div class="danger-zone">
+      <h3 class="block-title">清除資料</h3>
+      <div class="actions">
+        <div class="action">
+          <div><h3>清除本機進度</h3><p>把本機所有工具的進度清空（不可復原）。</p></div>
+          <button class="btn-t danger" onclick="clearLocalProgress()">清除本機進度</button>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
 
 <script src="../js/main.js"></script><script src="../js/sheet-config.js?v=1"></script><script src="../js/sheet-log.js?v=1"></script>
 <script src="../js/audio.js"></script>
-<script src="js/teacher.js?v=2"></script>
+<script src="js/teacher.js?v=4"></script>
 </body>
 </html>

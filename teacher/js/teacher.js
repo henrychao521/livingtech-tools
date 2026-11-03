@@ -32,15 +32,25 @@ const TOOLS = [
 ];
 
 // === 分頁切換 ===
+function selectTab(tab) {
+  const btn = document.querySelector(`.tab-btn[data-tab="${tab}"]`);
+  if (!btn) return false;
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.toggle('active', b === btn);
+    b.setAttribute('aria-selected', b === btn ? 'true' : 'false');
+    b.tabIndex = b === btn ? 0 : -1;
+  });
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('active', p.dataset.tab === tab));
+  return true;
+}
+// 頂端導覽連到 #overview／#class／#resources；以前的 #dashboard 等錨點不存在，點了沒反應
+const tabFromHash = () => selectTab(location.hash.slice(1));
+window.addEventListener('hashchange', tabFromHash);
+tabFromHash();
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    const tab = btn.dataset.tab;
-    document.querySelectorAll('.tab-btn').forEach(b => {
-      b.classList.toggle('active', b === btn);
-      b.setAttribute('aria-selected', b === btn ? 'true' : 'false');
-      b.tabIndex = b === btn ? 0 : -1;
-    });
-    document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('active', p.dataset.tab === tab));
+    selectTab(btn.dataset.tab);
+    history.replaceState(null, '', '#' + btn.dataset.tab);
   });
   // ARIA 分頁：左右方向鍵切換
   btn.addEventListener('keydown', e => {
@@ -56,6 +66,23 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 function esc(v) {
   return String(v == null ? '' : v).replace(/[&<>"']/g, c => (
     { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+// === 正字劃記：老師登記簿的習慣，一個「正」五筆＝五個模組 ===
+// 筆順：上橫、中豎、右短橫、左豎、下橫。完成的筆畫用墨色，還沒完成的淡淡留著當格線。
+const TALLY_STROKES = ['M3 3H17', 'M10 3V17', 'M10 10H15', 'M5 10V17', 'M2 17H18'];
+function tally(done, total) {
+  let html = '';
+  for (let g = 0; g * 5 < total; g++) {
+    const n = Math.min(5, total - g * 5);
+    html += '<svg viewBox="0 0 20 20" fill="none" stroke-width="1.8" stroke-linecap="round">' +
+      TALLY_STROKES.slice(0, n).map((d, i) => `<path class="${g * 5 + i < done ? 'on' : 'off'}" d="${d}"/>`).join('') +
+      '</svg>';
+  }
+  return `<span class="tally" role="img" aria-label="完成 ${done}／${total} 個模組">${html}</span>`;
+}
+function tallyCell(done, total) {
+  return `<span class="tally-wrap">${tally(done, total)}<span class="frac">${done}／${total}</span></span>`;
 }
 
 // === 進度計算核心（各工具模組數可變：onshape 10、frc 6、其餘 5） ===
@@ -99,18 +126,18 @@ function calcToolProgress(tool) {
 // === 渲染本機進度 ===
 function renderLocalProgress() {
   const container = document.getElementById('local-progress');
-  let html = `<div class="student-table"><table><thead><tr><th>工具</th><th>已完成模組</th><th>進度</th><th>★ 總星數</th><th>動作</th></tr></thead><tbody>`;
+  let html = `<div class="ledger"><table><thead><tr><th>工具</th><th>已完成模組</th><th class="num">完成率</th><th class="num">模擬星數</th><th>連結</th></tr></thead><tbody>`;
   TOOLS.forEach(t => {
     const p = calcToolProgress(t);
     const extras = (p.extras || []).map(e =>
-      `<div style="font-size:11px;color:var(--text-muted);margin-top:3px">補充・${e.label} ${e.done}/${e.total}</div>`
+      `<span class="sub">補充・${e.label} ${e.done}／${e.total}</span>`
     ).join('');
     html += `<tr>
-      <td><span class="tool-cell" style="color:${esc(t.color)}">${t.emoji} ${esc(t.name)}</span></td>
-      <td>${p.completed} / ${p.total}${extras}</td>
-      <td><span class="progress-cell"><span class="progress-cell-fill" style="width:${p.percent}%"></span></span>${p.percent}%</td>
-      <td><span class="stars-cell">★</span> ${p.stars} / ${p.maxStars}</td>
-      <td><a href="${esc(t.url)}" style="color:var(--primary);font-weight:600">前往 →</a></td>
+      <td class="tool-name">${esc(t.name)}</td>
+      <td>${tallyCell(p.completed, p.total)}${extras}</td>
+      <td class="num">${p.percent}%</td>
+      <td class="num">★ ${p.stars}／${p.maxStars}</td>
+      <td><a href="${esc(t.url)}" aria-label="開啟${esc(t.name)}">開啟</a></td>
     </tr>`;
   });
   html += '</tbody></table></div>';
@@ -259,44 +286,66 @@ function renderClassResult() {
     return { tool: t, ...counts };
   });
 
-  let html = `<h4 style="margin-top:30px;margin-bottom:12px">班級統計（${classData.length} 位學生）</h4>`;
-  html += `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:24px">`;
-  stats.forEach(s => {
-    if (s.count === 0) return;
-    const avgComplete = (s.totalCompleted / s.count).toFixed(1);
-    const avgStars = (s.totalStars / s.count).toFixed(1);
-    html += `<div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:24px">${s.tool.emoji}</span><strong style="color:${esc(s.tool.color)}">${esc(s.tool.name)}</strong></div>
-      <div style="font-size:12px;color:var(--text-muted)">使用人數：${s.count} / ${classData.length}</div>
-      <div style="font-size:12px;color:var(--text-muted)">平均完成：${avgComplete} / ${s.tool.moduleCount || 5} 模組</div>
-      <div style="font-size:12px;color:var(--text-muted)">平均星數：★${avgStars}</div>
+  // 總覽：三個數字＋依平均完成率由低到高排的工具（最上面＝最需要補強）
+  const used = stats.filter(s => s.count > 0).map(s => {
+    const total = s.tool.moduleCount || 5;
+    const avgComplete = s.totalCompleted / s.count;
+    return { ...s, total, avgComplete, rate: avgComplete / total, avgStars: s.totalStars / s.count };
+  }).sort((a, b) => a.rate - b.rate || b.count - a.count);
+  const allDone = used.reduce((n, s) => n + s.totalCompleted, 0);
+  let html = `<h3 class="block-title">班級總覽</h3>
+    <div class="figures">
+      <div class="figure"><span class="label">學生</span><span class="value">${classData.length}<small>人</small></span></div>
+      <div class="figure"><span class="label">有學生交進度的工具</span><span class="value">${used.length}<small>／${TOOLS.length} 個</small></span></div>
+      <div class="figure"><span class="label">平均每人完成</span><span class="value">${(allDone / classData.length).toFixed(1)}<small>個模組</small></span></div>
     </div>`;
-  });
-  html += '</div>';
+  if (used.length) {
+    html += `<h3 class="block-title">各工具完成情形<span class="note">（依平均完成率由低到高）</span></h3>
+      <div class="ledger rank"><table><thead><tr><th>工具</th><th class="num">使用人數</th><th>平均完成率</th><th class="num">平均完成</th><th class="num">平均星數</th></tr></thead><tbody>`;
+    used.forEach((s, i) => {
+      html += `<tr${i === 0 && used.length > 1 ? ' class="focus"' : ''}>
+        <td class="tool-name">${esc(s.tool.name)}</td>
+        <td class="num">${s.count}／${classData.length}</td>
+        <td><span class="bar"><i style="width:${Math.round(s.rate * 100)}%"></i></span> ${Math.round(s.rate * 100)}%</td>
+        <td class="num">${s.avgComplete.toFixed(1)}／${s.total} 模組</td>
+        <td class="num">★ ${s.avgStars.toFixed(1)}</td>
+      </tr>`;
+    });
+    html += '</tbody></table></div>';
+  }
 
-  // 個人表
-  html += `<h4 style="margin-bottom:12px">個別進度</h4><div class="student-table"><table><thead><tr><th>學生</th>`;
-  TOOLS.forEach(t => html += `<th style="color:${t.color}">${t.emoji} ${t.name}</th>`);
-  html += `<th>總計</th></tr></thead><tbody>`;
+  // 個別進度：只列有學生交進度的工具（CSV 匯出仍是全部工具）
+  const cols = TOOLS.filter(t => used.some(s => s.tool.id === t.id));
+  html += `<h3 class="block-title">個別進度</h3>
+    <p class="note" style="margin-bottom:12px">正字＝完成模組，★＝模組 4 模擬關卡星數，「測驗」＝模組 2 測驗分數。只列有學生交進度的 ${cols.length} 個工具，匯出 CSV 會包含全部 ${TOOLS.length} 個。</p>
+    <div class="ledger roster"><table><thead><tr><th>學生</th>`;
+  cols.forEach(t => html += `<th>${esc(t.name)}</th>`);
+  html += `<th class="num">總計</th></tr></thead><tbody>`;
+  const grandTotal = TOOLS.reduce((s, t) => s + (t.moduleCount || 5), 0);
   classData.forEach(d => {
-    html += `<tr><td><strong>${esc(d.studentName)}</strong></td>`;
+    // 檔名慣例「班級_座號_姓名」拆成兩行顯示，名字不再被斷在中間
+    const m = String(d.studentName).match(/^(\d+)_(\d+)_(.+)$/);
+    const who = m ? `<span class="seat">${esc(m[1])} 班 ${esc(m[2])} 號</span><span class="who">${esc(m[3])}</span>`
+                  : `<span class="who">${esc(d.studentName)}</span>`;
+    html += `<tr><td>${who}</td>`;
     let totalComplete = 0, totalStars = 0;
     TOOLS.forEach(t => {
       const raw = d.tools && d.tools[t.id];
+      const shown = cols.includes(t);
       if (!raw) {
-        html += `<td style="color:var(--text-light)">—</td>`;
-      } else {
-        const p = computeFromRaw(raw, t.moduleCount || 5);
-        totalComplete += p.completed;
-        totalStars += p.stars;
-        // 知識類模組 2 只要答完就記完成，分數才看得出是真的會還是猜的
-        const q2 = Number(raw.module2_score);
-        const q2txt = Number.isFinite(q2) && q2 > 0 ? ` <span style="color:var(--text-muted);font-size:11px">M2:${q2}</span>` : '';
-        html += `<td><span class="progress-cell"><span class="progress-cell-fill" style="width:${p.percent}%"></span></span>${p.completed}/${p.total} ★${p.stars}${q2txt}</td>`;
+        if (shown) html += `<td class="empty" aria-label="未交">—</td>`;
+        return;
       }
+      const p = computeFromRaw(raw, t.moduleCount || 5);
+      totalComplete += p.completed;
+      totalStars += p.stars;
+      if (!shown) return;
+      // 知識類模組 2 只要答完就記完成，分數才看得出是真的會還是猜的
+      const q2 = Number(raw.module2_score);
+      const q2txt = Number.isFinite(q2) && q2 > 0 ? `　測驗 ${q2}` : '';
+      html += `<td><span class="cell">${tally(p.completed, p.total)}<span class="meta">${p.completed}／${p.total}　★${p.stars}${q2txt}</span></span></td>`;
     });
-    const grandTotal = TOOLS.reduce((s, t) => s + (t.moduleCount || 5), 0);
-    html += `<td><strong>${totalComplete}/${grandTotal} 模組　★${totalStars}</strong></td></tr>`;
+    html += `<td class="num"><strong>${totalComplete}／${grandTotal}</strong><span class="sub">★ ${totalStars}</span></td></tr>`;
   });
   html += '</tbody></table></div>';
 
@@ -353,13 +402,12 @@ const RESOURCE_DESC = {
 };
 const resourceGrid = document.getElementById('resource-grid');
 TOOLS.forEach(t => {
-  const card = document.createElement('div');
-  card.className = 'resource-card';
-  card.innerHTML = `
-    <div class="res-icon">${t.emoji}</div>
-    <h4>${esc(t.name)}</h4>
-    <p>${esc(RESOURCE_DESC[t.id] || '5 模組教學資源、課程銜接、學生答題情境分析。')}</p>
-    <a href="${esc(t.url)}" style="color:${esc(t.color)};font-weight:600;font-size:13px">前往 ${esc(t.name)} 平台 →</a>
+  const row = document.createElement('tr');
+  const n = t.moduleCount || 5;
+  row.innerHTML = `
+    <td class="tool-name">${esc(t.name)}</td>
+    <td>${RESOURCE_DESC[t.id] ? esc(RESOURCE_DESC[t.id]) : `<span class="note">${n} 個模組</span>`}</td>
+    <td><a href="${esc(t.url)}" aria-label="開啟${esc(t.name)}">開啟</a></td>
   `;
-  resourceGrid.appendChild(card);
+  resourceGrid.appendChild(row);
 });
