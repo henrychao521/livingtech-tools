@@ -30,7 +30,7 @@ class Model:
             if f.endswith(".stl"):
                 os.remove(os.path.join(d, f))
         man = []
-        for label, shape, mat, tol in self.parts:
+        for label, shape, mat, tol in resolve_overlaps(self.parts):
             p = os.path.join(d, f"{label}.stl")
             export_stl(shape, p, tolerance=tol or self.tol, angular_tolerance=self.ang)
             man.append({"label": label, "mat": mat, "stl": p, "volume_mm3": round(shape.volume, 1)})
@@ -42,6 +42,51 @@ class Model:
         json.dump(info, open(os.path.join(d, "manifest.json"), "w"), ensure_ascii=False, indent=1)
         print("EXPORTED", self.name, info["bbox_mm"], len(man), "parts")
         return info
+
+
+def resolve_overlaps(parts):
+    """匯出前消掉貼齊的重疊面（2026-11-07，qa_glb.py 抓到 7 件 z-fighting）：
+    1. 同材質零件先聯集成一個實體（內部相接面消失）。
+    2. 不同材質互相嵌入時，從體積大的扣掉體積小的（例如錘頭扣掉錘面），兩者只剩背對背的接觸面。
+    外框不變：聯集與相減都不會改變整組零件的外輪廓。布林失敗就保留原形並印出來。"""
+    groups = {}
+    for label, shape, mat, tol in parts:
+        g = groups.setdefault(mat, [label, [], mat, tol])
+        g[1].append(shape)
+        if tol is not None:
+            g[3] = tol if g[3] is None else min(g[3], tol)
+    merged = []
+    for mat, (label, shapes, _, tol) in groups.items():
+        # 一個零件也可能是多個互相重疊的實體湊成的 Compound（例如橋的支承），一律拆成實體再聯集
+        solids = [so for sh in shapes for so in sh.solids()]
+        sh = Compound(solids) if solids else shapes[0]
+        if len(solids) > 1:
+            try:
+                sh = solids[0].fuse(*solids[1:]).clean()
+            except Exception as e:
+                print("  fuse failed:", mat, type(e).__name__)
+        merged.append([mat if len(shapes) > 1 else label, sh, mat, tol])
+    for i in range(len(merged)):
+        for j in range(len(merged)):
+            if i == j:
+                continue
+            a, b = merged[i], merged[j]
+            if a[1].volume <= b[1].volume:
+                continue
+            try:
+                inter = a[1] & b[1]   # .intersect() 回傳 ShapeList，沒有 volume
+                v = inter.volume if inter is not None else 0
+            except Exception:
+                v = 0
+            if v > 1e-3:
+                try:
+                    cut = a[1].cut(b[1])
+                    if cut.volume > 0:
+                        a[1] = cut
+                        print(f"  cut {b[0]}({b[2]}) out of {a[0]}({a[2]}): {v:.1f} mm3")
+                except Exception as e:
+                    print("  cut failed:", a[0], b[0], type(e).__name__)
+    return [tuple(x) for x in merged]
 
 
 def poly(pts, plane=Plane.XY):
