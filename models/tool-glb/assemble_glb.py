@@ -69,8 +69,12 @@ for p in man["parts"]:
     bpy.ops.wm.stl_import(filepath=p["stl"], global_scale=0.001)
     ob = bpy.context.selected_objects[0]
     ob.name = p["label"]
+    # 把 0.001 縮放套進網格（2026-11-07：沒套用時 glb 每個節點都帶 scale 0.001）
+    bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
     bm = bmesh.new(); bm.from_mesh(ob.data)
     bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=1e-7)
+    # 布林運算後的細碎三角形（邊長 < 0.05 mm）收掉，免得在接縫留下貼齊的碎面
+    bmesh.ops.dissolve_degenerate(bm, dist=5e-5, edges=bm.edges)
     bm.to_mesh(ob.data); bm.free()
     ob.data.materials.clear(); ob.data.materials.append(get_mat(p["mat"]))
     by_mat.setdefault(p["mat"], []).append(ob)
@@ -94,6 +98,6 @@ bpy.ops.object.select_all(action="SELECT")
 bpy.ops.export_scene.gltf(filepath=out, export_format="GLB", use_selection=False, export_apply=True,
                           export_yup=True, export_materials="EXPORT",
                           export_draco_mesh_compression_enable=True, export_draco_mesh_compression_level=7,
-                          export_draco_position_quantization=14, export_draco_normal_quantization=10,
+                          export_draco_position_quantization=16, export_draco_normal_quantization=10,
                           export_draco_texcoord_quantization=10, export_texcoords=False)
 print("GLB", out, os.path.getsize(out))
