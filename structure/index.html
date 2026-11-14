@@ -17,16 +17,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/style.css">
 <link rel="stylesheet" href="../css/svg-effects.css">
-<link rel="stylesheet" href="css/structure.css">
+<link rel="stylesheet" href="css/structure.css?v=dialog1">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🏗️%3C/text%3E%3C/svg%3E">
 </head>
 <body data-tool="structure" class="home structure-theme">
 
 <!-- 年級選擇 Modal -->
-<div class="grade-modal-overlay" id="grade-modal" style="display:none">
+<dialog class="grade-modal-overlay" id="grade-modal" aria-labelledby="grade-modal-title">
   <div class="grade-modal">
     <div style="font-size:48px;margin-bottom:10px">🏗️</div>
-    <h2>選擇你的年級</h2>
+    <h2 id="grade-modal-title">選擇你的年級</h2>
     <p class="sub">系統將依年級調整說明深度與功能開放範圍，之後可回到首頁，點頂部的年級徽章隨時切換。</p>
     <div class="grade-grid">
       <button class="grade-btn" data-grade="7">
@@ -51,7 +51,7 @@
       </button>
     </div>
   </div>
-</div>
+</dialog>
 
 <header class="topbar">
   <div class="brand">
@@ -62,7 +62,7 @@
     </div>
   </div>
   <nav class="topnav">
-    <span class="grade-badge" id="grade-badge-top" style="display:none" onclick="document.getElementById('grade-modal').style.display='flex'">
+    <span class="grade-badge" id="grade-badge-top" style="display:none" onclick="document.getElementById('grade-modal').showModal()">
       <span id="grade-badge-text">七年級</span> ▾
     </span>
     <a href="#modules">學習模組</a>
@@ -224,18 +224,23 @@ function applyGrade(g) {
   const badgeText = document.getElementById('grade-badge-text');
   badge.style.display = 'inline-flex';
   badgeText.textContent = GRADE_LABELS[g] || '七年級';
-  document.getElementById('grade-modal').style.display = 'none';
-  const p = loadP(); p.grade = g; saveP(p);
+  const p = loadP(); p.grade = g; saveP(p);          // 先存年級再關視窗（close 事件會檢查有沒有選）
+  document.getElementById('grade-modal').close();
 }
 
 // 初始化
 const p = loadP();
 if (!p.grade) {
-  document.getElementById('grade-modal').style.display = 'flex';
+  document.getElementById('grade-modal').showModal();
 } else {
   applyGrade(p.grade);
 }
 
+// 第一次進站一定要選年級；之後從徽章重開時可以用 Esc 關掉。
+// 使用者還沒和頁面互動前，瀏覽器不讓網頁擋 Esc（cancel 的 preventDefault 無效），所以再加一層：沒選年級就被關掉時自動重開。
+const gradeModal = document.getElementById('grade-modal');
+gradeModal.addEventListener('cancel', e => { if (!loadP().grade) e.preventDefault(); });
+gradeModal.addEventListener('close', () => { if (!loadP().grade && !gradeModal.open) gradeModal.showModal(); });
 document.querySelectorAll('.grade-btn').forEach(btn => {
   btn.addEventListener('click', () => applyGrade(btn.dataset.grade));
 });

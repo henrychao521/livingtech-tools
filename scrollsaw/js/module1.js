@@ -277,10 +277,11 @@ function renderPhotos() {
 function openLightbox(url, photo) {
   let modal = document.querySelector('.photo-modal');
   if (!modal) {
-    modal = document.createElement('div');
+    modal = document.createElement('dialog');   // 原生 <dialog>：Esc 可關、焦點不會跑到背後
     modal.className = 'photo-modal';
+    modal.setAttribute('aria-label', '照片放大檢視');
     document.body.appendChild(modal);
-    modal.addEventListener('click', () => modal.classList.remove('show'));
+    modal.addEventListener('click', () => modal.close());
   }
   modal.innerHTML = `
     <img src="${url}" alt="${photo.title}">
@@ -289,7 +290,7 @@ function openLightbox(url, photo) {
       <br><a href="${photo.sourceUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation()">查看原始來源 →</a>
     </div>
   `;
-  modal.classList.add('show');
+  if (!modal.open) modal.showModal();
   if (typeof SoundFX !== 'undefined') SoundFX.pop();
 }
 

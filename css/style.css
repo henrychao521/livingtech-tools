@@ -1061,7 +1061,7 @@ footer {
   padding: 24px;
   cursor: zoom-out;
 }
-.photo-modal.show { display: flex; animation: fadeIn .2s; }
+.photo-modal.show, dialog.photo-modal[open] { display: flex; animation: fadeIn .2s; }
 .photo-modal img {
   max-width: 90vw;
   max-height: 80vh;
@@ -1755,7 +1755,19 @@ footer {
   justify-content: center;
   z-index: 300;
 }
-.result-modal.show { display: flex; animation: fadeIn .3s; }
+.result-modal.show, dialog.result-modal[open] { display: flex; animation: fadeIn .3s; }
+/* 原生 <dialog>（showModal）：蓋滿視窗，沿用原本的半透明底與置中排版；
+   overscroll-behavior 讓捲動不會帶到底下的頁面（Safari 尚未支援非捲動容器，屬漸進增強） */
+dialog.result-modal, dialog.photo-modal {
+  width: 100vw; height: 100vh; height: 100dvh;
+  max-width: none; max-height: none;
+  margin: 0; border: 0; color: inherit;
+  overscroll-behavior: contain;
+}
+dialog.result-modal { padding: 0; }
+dialog.result-modal::backdrop, dialog.photo-modal::backdrop {
+  background: transparent; overflow: hidden; overscroll-behavior: contain;
+}
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 .result-card {
   background: #fff;
