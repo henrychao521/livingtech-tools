@@ -782,15 +782,18 @@ function showResult(stars, detail) {
   document.getElementById('r-stars').textContent = '★'.repeat(stars) + '☆'.repeat(3 - stars);
   document.getElementById('r-stars').style.color = stars > 0 ? '#FFB400' : '#999';
   document.getElementById('r-detail').innerHTML = Object.entries(detail).map(([k, v]) => `<div><span>${k}</span><strong>${v}</strong></div>`).join('');
-  modal.classList.add('show');
+  if (!modal.open) modal.showModal();   // 原生 <dialog>：鎖住鍵盤焦點、背景不可互動
 }
 
+// 過關視窗一定要選一個按鈕：擋掉 Esc（Safari 還不支援 closedby="none"）
+document.getElementById('result-modal').addEventListener('cancel', e => e.preventDefault());
+
 document.getElementById('r-retry').onclick = () => {
-  document.getElementById('result-modal').classList.remove('show');
+  document.getElementById('result-modal').close();
   initLevel(state.levelId);
 };
 document.getElementById('r-next').onclick = () => {
-  document.getElementById('result-modal').classList.remove('show');
+  document.getElementById('result-modal').close();
   const order = ['L1', 'L2', 'L3', 'L4', 'L5'];
   const idx = order.indexOf(state.levelId);
   const next = order[Math.min(order.length - 1, idx + 1)];
